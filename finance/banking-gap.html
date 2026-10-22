@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Banking Gap Report | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.escalation-banner{padding:14px 18px;background:#fff3e0;border:1px solid #ffb300;border-radius:8px;border-left:4px solid #e65100;margin-bottom:16px}
+.gap-row-esc td{background:#fff8e1!important}
+.gap-row-resolved td{background:#f1f8e9!important;opacity:.7}
+.days-chip{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;display:inline-block}
+.days-ok{background:#e8f5e9;color:#1b5e20}
+.days-warn{background:#fff8e1;color:#e65100}
+.days-esc{background:#fce4ec;color:#c62828}
+.bulk-bar{background:#e3f2fd;border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:13px}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input{font-size:12px;padding:5px 8px;border:1px solid #e0e0e0;border-radius:6px;height:32px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html" class="active"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Banking Gap Report</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Banking Gap — On Hold Commissions</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" id="bulkReleaseBtn" onclick="bulkRelease()" disabled><i class="fas fa-unlock"></i>Bulk Release (<span id="bulkCount">0</span>)</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Banking Gap Report')"><i class="fas fa-download"></i>Export CSV</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- â”€â”€ Escalation Alert â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div class="escalation-banner">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <i class="fas fa-exclamation-triangle" style="color:#e65100;font-size:20px;margin-top:1px;flex-shrink:0"></i>
+        <div>
+          <div style="font-weight:700;color:#e65100;font-size:14px;margin-bottom:4px"><i class="fas fa-bell" style="margin-right:6px"></i>Escalation Alert — 90-Day Threshold Reached</div>
+          <div style="font-size:13px;color:#5f6368;margin-bottom:6px"><strong>2 agents</strong> have had commissions on hold for 90+ days. Finance Manager (Linda Torres) has been notified via email. Immediate follow-up required.</div>
+          <div style="font-size:12px;color:#5f6368">Agents: <strong>Sandra Williams (NPN 7731004)</strong> — 94 days, $1,204.00 held &nbsp;&middot;&nbsp; <strong>David Chen (NPN 5512290)</strong> — 91 days, $903.00 held</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- â”€â”€ KPI Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-pause-circle"></i></div><div><div class="stat-label">Total Amount On Hold</div><div class="stat-val">$4,818.00</div><div class="stat-sub" style="color:#c62828">6 agents affected</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-users"></i></div><div><div class="stat-label">Agents w/ Banking Gap</div><div class="stat-val">6</div><div class="stat-sub text-muted">4 held / 2 escalated</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-clock"></i></div><div><div class="stat-label">Avg Days On Hold</div><div class="stat-val">52</div><div class="stat-sub" style="color:#e65100">2 exceed 90-day threshold</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Resolved This Month</div><div class="stat-val">3</div><div class="stat-sub" style="color:#2e7d32">$1,806.00 released</div></div></div></div>
+    </div>
+
+    <!-- â”€â”€ Filter Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:8px"></i>Filters</h5><button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i>Clear All</button></div>
+      <div class="card-body" style="padding:12px 16px">
+        <div class="filter-bar">
+          <label style="font-size:12px;color:#5f6368;margin:0">Status:</label>
+          <select id="fStatus" onchange="filterGaps()">
+            <option value="">All Statuses</option>
+            <option value="held">On Hold — Unverified</option>
+            <option value="escalated">Escalated (90+ days)</option>
+            <option value="resolved">Recently Resolved</option>
+          </select>
+          <label style="font-size:12px;color:#5f6368;margin:0">Hierarchy:</label>
+          <select id="fHierarchy" onchange="filterGaps()">
+            <option value="">All Hierarchy Levels</option>
+            <option value="direct">Direct-to-Plan</option>
+            <option value="agency">Agency Agent</option>
+            <option value="mga">MGA</option>
+            <option value="fmo">FMO</option>
+          </select>
+          <label style="font-size:12px;color:#5f6368;margin:0">Days on Hold:</label>
+          <select id="fDays" onchange="filterGaps()">
+            <option value="">Any Duration</option>
+            <option value="1-30">1–30 days</option>
+            <option value="31-60">31–60 days</option>
+            <option value="61-90">61–90 days</option>
+            <option value="90+">90+ days (Escalated)</option>
+          </select>
+          <input type="text" id="fSearch" oninput="filterGaps()" placeholder="&#xf002; Search NPN or agent name..." style="width:220px;font-family:inherit">
+        </div>
+        <div id="filterSummary" style="font-size:11px;color:#5f6368;margin-top:8px;display:none"></div>
+      </div>
+    </div>
+
+    <!-- â”€â”€ Bulk Select Bar (shown when checkboxes selected) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div id="bulkBar" class="bulk-bar" style="display:none">
+      <i class="fas fa-check-square" style="color:#0d47a1"></i>
+      <span id="bulkBarLabel" style="font-weight:600">0 agents selected</span>
+      <span style="color:#5f6368">Â·</span>
+      <span id="bulkBarAmount" style="color:#c62828;font-weight:700">$0.00 on hold</span>
+      <button class="btn-pr btn-sm" style="margin-left:auto" onclick="bulkRelease()"><i class="fas fa-unlock"></i>Release Selected Commissions</button>
+      <button class="btn-ol btn-sm" onclick="clearSelection()"><i class="fas fa-times"></i>Clear</button>
+    </div>
+
+    <!-- â”€â”€ Banking Gap Table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-exclamation-triangle" style="margin-right:8px;color:#e65100"></i>Agents with Commission Hold — Banking Gap</h5>
+        <span id="rowCount" style="font-size:12px;color:#5f6368">Showing 7 records</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('gapTable','banking-gap_gapTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="gapTable">
+          <thead>
+            <tr>
+              <th style="width:36px"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)" title="Select all eligible"></th>
+              <th>NPN</th>
+              <th>Agent Name</th>
+              <th>Hierarchy</th>
+              <th>Payment Method</th>
+              <th>Banking Status</th>
+              <th>Held Cycles</th>
+              <th>Total On Hold</th>
+              <th>Last Notified</th>
+              <th>Days On Hold</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="gapBody">
+            <!-- Escalated rows -->
+            <tr class="gap-row-esc" data-status="escalated" data-hierarchy="direct" data-days="94" data-verified="false" data-npn="7731004" data-name="Sandra Williams" data-amount="1204.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>7731004</strong></td>
+              <td><a href="#" onclick="viewAgent('7731004');return false" style="color:#0d47a1;font-weight:600">Sandra Williams</a></td>
+              <td>Direct-to-Plan</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-red">No Banking Details</span></td>
+              <td>3 cycles</td>
+              <td style="font-weight:700;color:#c62828">$1,204.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-esc">94 days <i class="fas fa-exclamation-triangle" style="margin-left:3px"></i></span></td>
+              <td>
+                <button class="btn-pr btn-sm" style="background:#c62828;border-color:#c62828;margin-bottom:2px" onclick="releaseSingle('7731004','Sandra Williams','1204.00',false)"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('7731004','Sandra Williams')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('7731004')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr class="gap-row-esc" data-status="escalated" data-hierarchy="agency" data-days="91" data-verified="false" data-npn="5512290" data-name="David Chen" data-amount="903.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>5512290</strong></td>
+              <td><a href="#" onclick="viewAgent('5512290');return false" style="color:#0d47a1;font-weight:600">David Chen</a></td>
+              <td>Agency — GA-012</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-red">Doc Unverified</span></td>
+              <td>2 cycles</td>
+              <td style="font-weight:700;color:#c62828">$903.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-esc">91 days <i class="fas fa-exclamation-triangle" style="margin-left:3px"></i></span></td>
+              <td>
+                <button class="btn-pr btn-sm" style="background:#c62828;border-color:#c62828;margin-bottom:2px" onclick="releaseSingle('5512290','David Chen','903.00',false)"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('5512290','David Chen')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('5512290')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <!-- Active held rows -->
+            <tr data-status="held" data-hierarchy="direct" data-days="45" data-verified="false" data-npn="9912345" data-name="Kevin Nguyen" data-amount="601.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>9912345</strong></td>
+              <td><a href="#" onclick="viewAgent('9912345');return false" style="color:#0d47a1;font-weight:600">Kevin Nguyen</a></td>
+              <td>Direct-to-Plan</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-amber">Doc Pending Review</span></td>
+              <td>1 cycle</td>
+              <td style="font-weight:700;color:#e65100">$601.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-warn">45 days</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="releaseSingle('9912345','Kevin Nguyen','601.00',false)" style="margin-bottom:2px"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('9912345','Kevin Nguyen')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('9912345')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr data-status="held" data-hierarchy="agency" data-days="38" data-verified="false" data-npn="8834521" data-name="Maria Lopez" data-amount="602.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>8834521</strong></td>
+              <td><a href="#" onclick="viewAgent('8834521');return false" style="color:#0d47a1;font-weight:600">Maria Lopez</a></td>
+              <td>Agency — GA-001</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-amber">No Banking Details</span></td>
+              <td>1 cycle</td>
+              <td style="font-weight:700;color:#e65100">$602.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-warn">38 days</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="releaseSingle('8834521','Maria Lopez','602.00',false)" style="margin-bottom:2px"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('8834521','Maria Lopez')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('8834521')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr data-status="held" data-hierarchy="mga" data-days="22" data-verified="true" data-npn="6620093" data-name="Robert Kim" data-amount="904.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>6620093</strong></td>
+              <td><a href="#" onclick="viewAgent('6620093');return false" style="color:#0d47a1;font-weight:600">Robert Kim</a></td>
+              <td>MGA — Southeast</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-blue">Pre-Note Pending</span></td>
+              <td>1 cycle</td>
+              <td style="font-weight:700;color:#e65100">$904.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-warn">22 days</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="releaseSingle('6620093','Robert Kim','904.00',true)" style="margin-bottom:2px"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('6620093','Robert Kim')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('6620093')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr data-status="held" data-hierarchy="direct" data-days="14" data-verified="false" data-npn="4430812" data-name="Angela Torres" data-amount="604.00">
+              <td><input type="checkbox" class="row-cb" onchange="updateBulkBar()"></td>
+              <td><strong>4430812</strong></td>
+              <td><a href="#" onclick="viewAgent('4430812');return false" style="color:#0d47a1;font-weight:600">Angela Torres</a></td>
+              <td>Direct-to-Plan</td>
+              <td>Paper Check</td>
+              <td><span class="bdg b-amber">Address Unconfirmed</span></td>
+              <td>1 cycle</td>
+              <td style="font-weight:700;color:#e65100">$604.00</td>
+              <td style="font-size:11px;color:#5f6368">05 23,2026</td>
+              <td><span class="days-chip days-ok">14 days</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="releaseSingle('4430812','Angela Torres','604.00',false)" style="margin-bottom:2px"><i class="fas fa-unlock"></i>Release</button>
+                <button class="btn-ol btn-sm" onclick="notifyAgent('4430812','Angela Torres')"><i class="fas fa-bell"></i>Notify</button>
+                <button class="btn-ol btn-sm" onclick="viewAgent('4430812')"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+            <!-- Resolved row -->
+            <tr class="gap-row-resolved" data-status="resolved" data-hierarchy="agency" data-days="0" data-verified="true" data-npn="8823441" data-name="James Martinez" data-amount="0">
+              <td><input type="checkbox" class="row-cb" disabled></td>
+              <td>8823441</td>
+              <td>James Martinez</td>
+              <td>Agency — GA-001</td>
+              <td>ACH Direct Deposit</td>
+              <td><span class="bdg b-green">Verified</span></td>
+              <td>1 cycle (resolved)</td>
+              <td style="color:#2e7d32;font-weight:700">$0.00 <span style="font-size:11px;color:#5f6368">(released)</span></td>
+              <td style="font-size:11px;color:#5f6368">—</td>
+              <td><span class="days-chip days-ok">Resolved May 1</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewAgent('8823441')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr id="noResultsRow" style="display:none">
+              <td colspan="11" style="text-align:center;padding:24px;color:#999"><i class="fas fa-search" style="margin-right:8px"></i>No records match the current filters.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- â”€â”€ Release History â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>Recent Release Activity</h5><span style="font-size:11px;color:#5f6368">Audit trail of commission hold &amp; release actions</span></div>
+      <div class="card-body" style="padding:8px 16px" id="releaseLog">
+        <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f3f4;font-size:12px">
+          <span style="color:#5f6368;white-space:nowrap;min-width:155px">05 01,2026 14:30</span>
+          <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#e8f5e9;color:#1b5e20;white-space:nowrap">RELEASED</span>
+          <span>James Martinez (NPN 8823441) — $602.00 released by Finance Admin (D. Park). Banking details verified; included in BATCH-2026-05.</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f3f4;font-size:12px">
+          <span style="color:#5f6368;white-space:nowrap;min-width:155px">04 28,2026 10:15</span>
+          <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#e3f2fd;color:#0d47a1;white-space:nowrap">NOTIFIED</span>
+          <span>Automated 7-day reminder sent to 6 agents with banking gaps. Next reminder: 06 04,2026.</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f3f4;font-size:12px">
+          <span style="color:#5f6368;white-space:nowrap;min-width:155px">04 21,2026 10:15</span>
+          <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#e8f5e9;color:#1b5e20;white-space:nowrap">RELEASED</span>
+          <span>Tanya Brown (NPN 3310022) — $602.00 released by Finance Admin (D. Park). Included in BATCH-2026-04.</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px 0;font-size:12px">
+          <span style="color:#5f6368;white-space:nowrap;min-width:155px">03 17,2026 09:00</span>
+          <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#fce4ec;color:#c62828;white-space:nowrap">HOLD PLACED</span>
+          <span>Commission calculation cycle detected banking gap for 8 agents. Automated notifications dispatched. Total held: $6,020.00.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- VIEW AGENT MODAL -->
+<div id="viewAgentModal" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#0d47a1"><i class="fas fa-user-circle" style="margin-right:8px"></i>Agent Banking Details</h6>
+      <button onclick="document.getElementById('viewAgentModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px" id="viewAgentBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('viewAgentModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- VERIFY BANKING MODAL -->
+<div id="verifyBankModal" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-shield-alt" style="margin-right:8px"></i>Verify Banking Details to Release</h6>
+      <button onclick="document.getElementById('verifyBankModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px" id="verifyBankBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('verifyBankModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" id="verifyAndReleaseBtn" onclick="verifyAndRelease()"><i class="fas fa-check-circle" style="margin-right:6px"></i>Verify & Release</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   FILTER
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function filterGaps() {
+  var status    = document.getElementById('fStatus').value.toLowerCase();
+  var hierarchy = document.getElementById('fHierarchy').value.toLowerCase();
+  var days      = document.getElementById('fDays').value;
+  var search    = document.getElementById('fSearch').value.toLowerCase();
+  var rows      = document.querySelectorAll('#gapBody tr[data-status]');
+  var visible   = 0;
+
+  rows.forEach(function(row) {
+    var rStatus    = (row.dataset.status    || '').toLowerCase();
+    var rHierarchy = (row.dataset.hierarchy || '').toLowerCase();
+    var rDays      = parseInt(row.dataset.days || '0');
+    var rName      = (row.dataset.name || '').toLowerCase();
+    var rNpn       = (row.dataset.npn  || '').toLowerCase();
+    var show = true;
+
+    if (status    && rStatus    !== status)    show = false;
+    if (hierarchy && !rHierarchy.includes(hierarchy)) show = false;
+    if (search    && !rName.includes(search) && !rNpn.includes(search)) show = false;
+    if (days) {
+      if (days === '1-30'  && !(rDays >= 1  && rDays <= 30))  show = false;
+      if (days === '31-60' && !(rDays >= 31 && rDays <= 60)) show = false;
+      if (days === '61-90' && !(rDays >= 61 && rDays <= 90)) show = false;
+      if (days === '90+'   && rDays < 90)                     show = false;
+    }
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  var noRow = document.getElementById('noResultsRow');
+  noRow.style.display = visible === 0 ? '' : 'none';
+  document.getElementById('rowCount').textContent = 'Showing ' + visible + ' record' + (visible !== 1 ? 's' : '');
+  var hasFilters = status || hierarchy || days || search;
+  var sumEl = document.getElementById('filterSummary');
+  sumEl.style.display = hasFilters ? 'block' : 'none';
+  if (hasFilters) sumEl.textContent = visible + ' matching record(s) found. Clear filters to see all.';
+}
+
+function clearFilters() {
+  document.getElementById('fStatus').value = '';
+  document.getElementById('fHierarchy').value = '';
+  document.getElementById('fDays').value = '';
+  document.getElementById('fSearch').value = '';
+  filterGaps();
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   BULK SELECT
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function toggleSelectAll(cb) {
+  var checkboxes = document.querySelectorAll('#gapBody .row-cb:not(:disabled)');
+  checkboxes.forEach(function(c) { c.checked = cb.checked; });
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  var checked = document.querySelectorAll('#gapBody .row-cb:checked');
+  var count = checked.length;
+  var total = 0;
+  checked.forEach(function(c) {
+    var row = c.closest('tr');
+    total += parseFloat(row.dataset.amount || '0');
+  });
+  var bulkBar = document.getElementById('bulkBar');
+  var bulkBtn = document.getElementById('bulkReleaseBtn');
+  bulkBar.style.display = count > 0 ? 'flex' : 'none';
+  document.getElementById('bulkBarLabel').textContent = count + ' agent' + (count !== 1 ? 's' : '') + ' selected';
+  document.getElementById('bulkBarAmount').textContent = '$' + total.toFixed(2) + ' on hold';
+  document.getElementById('bulkCount').textContent = count;
+  bulkBtn.disabled = count === 0;
+  document.getElementById('selectAll').checked = (count > 0 && count === document.querySelectorAll('#gapBody .row-cb:not(:disabled)').length);
+  document.getElementById('selectAll').indeterminate = (count > 0 && count < document.querySelectorAll('#gapBody .row-cb:not(:disabled)').length);
+}
+
+function clearSelection() {
+  document.querySelectorAll('#gapBody .row-cb').forEach(function(c){ c.checked = false; });
+  document.getElementById('selectAll').checked = false;
+  updateBulkBar();
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   RELEASE SINGLE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function releaseSingle(npn, name, amount, isVerified) {
+  if (!isVerified) {
+    var row = document.querySelector('tr[data-npn="' + npn + '"]');
+    var bankStatus = row ? row.querySelector('.bdg').textContent.trim() : '';
+    if (bankStatus === 'No Banking Details' || bankStatus === 'Address Unconfirmed' || bankStatus === 'Doc Unverified') {
+      openVerifyModal(npn, name, amount, bankStatus);
+      return;
+    }
+  }
+  if (!confirm('Release held commissions for ' + name + ' (NPN ' + npn + ')?\n\nAmount: $' + amount + '\n\nThis will include the held amount in the next scheduled payment batch.\n\nConfirm release?')) return;
+  showToast('Commissions released for ' + name + ' (NPN ' + npn + '). $' + amount + ' will be included in the next payment batch.', 'success');
+  addReleaseLog(name, npn, amount);
+  /* Update row to resolved state */
+  var row = document.querySelector('tr[data-npn="' + npn + '"]');
+  if (row) {
+    row.classList.add('gap-row-resolved');
+    row.dataset.status = 'resolved';
+    row.dataset.days = '0';
+    row.cells[6].innerHTML = row.cells[6].textContent + ' (resolved)';
+    row.cells[7].innerHTML = '<span style="color:#2e7d32;font-weight:700">$0.00</span> <span style="font-size:11px;color:#5f6368">(released)</span>';
+    row.cells[9].innerHTML = '<span class="days-chip days-ok">Resolved</span>';
+    row.cells[10].innerHTML = '<button class="btn-ol btn-sm" onclick="viewAgent(\'' + npn + '\')"><i class="fas fa-eye"></i>View</button>';
+    row.querySelector('.row-cb') && (row.querySelector('.row-cb').disabled = true);
+    row.querySelector('.row-cb') && (row.querySelector('.row-cb').checked = false);
+    updateBulkBar();
+  }
+}
+
+var pendingVerifyNpn = '', pendingVerifyName = '', pendingVerifyAmount = '';
+
+function openVerifyModal(npn, name, amount, bankStatus) {
+  pendingVerifyNpn = npn;
+  pendingVerifyName = name;
+  pendingVerifyAmount = amount;
+
+  var statusMsg = '';
+  var formFields = '';
+  if (bankStatus === 'No Banking Details') {
+    statusMsg = '<div style="padding:10px 14px;background:#ffebee;border-radius:6px;border-left:4px solid #c62828;margin-bottom:16px;font-size:12px"><i class="fas fa-exclamation-circle" style="color:#c62828;margin-right:6px"></i><strong>No banking details on file.</strong> Enter and verify banking information below to release held commissions.</div>';
+    formFields = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Bank Name</label><input type="text" class="form-control form-control-sm" id="vfBankName" placeholder="e.g. Chase Bank"></div>' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Account Type</label><select class="form-select form-select-sm" id="vfAcctType"><option>Checking</option><option>Savings</option></select></div>' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Routing Number</label><input type="text" class="form-control form-control-sm" id="vfRouting" maxlength="9" placeholder="9 digits"></div>' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Account Number</label><input type="text" class="form-control form-control-sm" id="vfAcctNum" placeholder="Account #"></div>' +
+      '</div>' +
+      '<div style="margin-top:12px"><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Upload Voided Check or Bank Letter</label><input type="file" class="form-control form-control-sm" id="vfDoc" accept=".pdf,.jpg,.png"></div>';
+  } else if (bankStatus === 'Address Unconfirmed') {
+    statusMsg = '<div style="padding:10px 14px;background:#fff3e0;border-radius:6px;border-left:4px solid #e65100;margin-bottom:16px;font-size:12px"><i class="fas fa-map-marker-alt" style="color:#e65100;margin-right:6px"></i><strong>Mailing address not confirmed.</strong> Verify address below to release via paper check.</div>';
+    formFields = '<div style="display:grid;grid-template-columns:1fr;gap:12px">' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Street Address</label><input type="text" class="form-control form-control-sm" id="vfStreet" placeholder="123 Main St, Apt 4B"></div>' +
+      '<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px">' +
+        '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">City</label><input type="text" class="form-control form-control-sm" id="vfCity" placeholder="City"></div>' +
+        '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">State</label><input type="text" class="form-control form-control-sm" id="vfState" maxlength="2" placeholder="FL"></div>' +
+        '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">ZIP</label><input type="text" class="form-control form-control-sm" id="vfZip" maxlength="10" placeholder="33101"></div>' +
+      '</div></div>';
+  } else {
+    statusMsg = '<div style="padding:10px 14px;background:#e3f2fd;border-radius:6px;border-left:4px solid #1565c0;margin-bottom:16px;font-size:12px"><i class="fas fa-file-alt" style="color:#1565c0;margin-right:6px"></i><strong>Document uploaded but unverified.</strong> Review and approve the uploaded bank document below.</div>';
+    formFields = '<div style="padding:14px;background:#f8f9fa;border-radius:8px;text-align:center;margin-bottom:12px">' +
+      '<i class="fas fa-file-pdf" style="font-size:32px;color:#c62828;margin-bottom:6px"></i>' +
+      '<div style="font-size:12px;font-weight:600">voided_check_' + npn + '.pdf</div>' +
+      '<div style="font-size:11px;color:#5f6368;margin-top:2px">Uploaded: 06 02,2026 | Size: 1.2 MB</div>' +
+      '<button class="btn-ol btn-sm" style="margin-top:8px" onclick="showToast(\'Opening document preview...\',\'info\')"><i class="fas fa-eye" style="margin-right:4px"></i>Preview Document</button>' +
+      '</div>' +
+      '<div><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:4px">Verification Notes</label><textarea class="form-control form-control-sm" id="vfNotes" rows="2" placeholder="Confirm document matches agent name and account details..."></textarea></div>';
+  }
+
+  document.getElementById('verifyBankBody').innerHTML =
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #e8eaed">' +
+      '<div style="width:40px;height:40px;border-radius:50%;background:#ffebee;display:flex;align-items:center;justify-content:center"><i class="fas fa-user" style="color:#c62828"></i></div>' +
+      '<div><div style="font-weight:700">' + name + '</div><div style="font-size:12px;color:#5f6368">NPN: ' + npn + ' &nbsp;|&nbsp; Held: <strong style="color:#c62828">$' + amount + '</strong></div></div>' +
+    '</div>' +
+    statusMsg + formFields +
+    '<div style="margin-top:14px;padding:10px;background:#e8f5e9;border-radius:6px;font-size:11px;color:#1b5e20"><i class="fas fa-info-circle" style="margin-right:6px"></i>After verification, held commissions of <strong>$' + amount + '</strong> will be released to the next payment batch.</div>';
+
+  document.getElementById('verifyBankModal').classList.add('open');
+}
+
+function verifyAndRelease() {
+  document.getElementById('verifyBankModal').classList.remove('open');
+  showToast('Banking details verified for ' + pendingVerifyName + '. $' + pendingVerifyAmount + ' released to next payment batch.', 'success');
+  addReleaseLog(pendingVerifyName, pendingVerifyNpn, pendingVerifyAmount);
+  var row = document.querySelector('tr[data-npn="' + pendingVerifyNpn + '"]');
+  if (row) {
+    row.classList.add('gap-row-resolved');
+    row.dataset.status = 'resolved';
+    row.dataset.days = '0';
+    row.querySelector('.bdg').textContent = 'Verified';
+    row.querySelector('.bdg').className = 'bdg bdg-green';
+    row.cells[7].innerHTML = '<span style="color:#2e7d32;font-weight:700">$0.00</span> <span style="font-size:11px;color:#5f6368">(released)</span>';
+    row.cells[9].innerHTML = '<span class="days-chip days-ok">Resolved</span>';
+    row.cells[10].innerHTML = '<button class="btn-ol btn-sm" onclick="viewAgent(\'' + pendingVerifyNpn + '\')"><i class="fas fa-eye"></i>View</button>';
+    row.querySelector('.row-cb') && (row.querySelector('.row-cb').disabled = true);
+    row.querySelector('.row-cb') && (row.querySelector('.row-cb').checked = false);
+    updateBulkBar();
+  }
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   BULK RELEASE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function bulkRelease() {
+  var checked = document.querySelectorAll('#gapBody .row-cb:checked');
+  if (checked.length === 0) { showToast('No agents selected. Select at least one agent to release.', 'error'); return; }
+
+  var names = [], total = 0, blocked = [];
+  checked.forEach(function(c) {
+    var row = c.closest('tr');
+    var bankStatus = row.querySelector('.bdg').textContent.trim();
+    if (bankStatus === 'No Banking Details' || bankStatus === 'Address Unconfirmed') {
+      blocked.push(row.dataset.name);
+    } else {
+      names.push(row.dataset.name + ' ($' + parseFloat(row.dataset.amount).toFixed(2) + ')');
+      total += parseFloat(row.dataset.amount || '0');
+    }
+  });
+
+  if (blocked.length > 0) {
+    showToast('Cannot release for ' + blocked.length + ' agent(s) with unverified banking details: ' + blocked.join(', ') + '. Please verify banking details first.', 'error');
+    return;
+  }
+  if (!confirm('Bulk release commissions for ' + names.length + ' agent(s)?\n\n' + names.join('\n') + '\n\nTotal: $' + total.toFixed(2) + '\n\nAll amounts will be included in the next payment batch.')) return;
+
+  names.forEach(function(n, i) {
+    var row = document.querySelectorAll('#gapBody .row-cb:checked')[0];
+    if (!row) return;
+    var tr = row.closest('tr');
+    releaseSingleSilent(tr);
+  });
+  checked.forEach(function(c) { releaseSingleSilent(c.closest('tr')); });
+  clearSelection();
+  showToast('Bulk release complete. $' + total.toFixed(2) + ' for ' + names.length + ' agent(s) queued for next payment batch.', 'success');
+}
+
+function releaseSingleSilent(row) {
+  if (!row || row.dataset.status === 'resolved') return;
+  row.classList.add('gap-row-resolved');
+  row.dataset.status = 'resolved';
+  row.cells[9].innerHTML = '<span class="days-chip days-ok">Resolved</span>';
+  row.cells[10].innerHTML = '<button class="btn-ol btn-sm" onclick="viewAgent(\'' + row.dataset.npn + '\')"><i class="fas fa-eye"></i>View</button>';
+  row.querySelector('.row-cb') && (row.querySelector('.row-cb').disabled = true);
+  row.querySelector('.row-cb') && (row.querySelector('.row-cb').checked = false);
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   NOTIFY / VIEW
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function notifyAgent(npn, name) {
+  showToast('Reminder sent to ' + name + ' (NPN ' + npn + '). Email dispatched: "Action Required — Provide Banking Details to Release Commission Hold." Next auto-reminder in 7 days.', 'info');
+  /* Update last notified cell */
+  var row = document.querySelector('tr[data-npn="' + npn + '"]');
+  if (row) {
+    var now = new Date();
+    var ts = now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    row.cells[8].textContent = ts;
+    row.cells[8].style.color = '#1b5e20';
+  }
+}
+
+function viewAgent(npn) {
+  var agentInfo = {
+    '7731004': {name:'Sandra Williams',hierarchy:'Direct-to-Plan',email:'s.williams@gmail.com',phone:'(305) 555-0189',method:'ACH Direct Deposit',status:'No Banking Details',held:'$1,204.00',cycles:'3 cycles',days:'94 days',lastNotified:'05 23,2026',notes:'Agent has not responded to 3 notification attempts. Escalated to Finance Manager on May 15.'},
+    '5512290': {name:'David Chen',hierarchy:'Agency — GA-012',email:'d.chen@agencyga012.com',phone:'(404) 555-0231',method:'ACH Direct Deposit',status:'Doc Unverified',held:'$903.00',cycles:'2 cycles',days:'91 days',lastNotified:'05 23,2026',notes:'Voided check uploaded but image was blurry. Re-upload requested May 10.'},
+    '9912345': {name:'Kevin Nguyen',hierarchy:'Direct-to-Plan',email:'k.nguyen@outlook.com',phone:'(813) 555-0344',method:'ACH Direct Deposit',status:'Doc Pending Review',held:'$601.00',cycles:'1 cycle',days:'45 days',lastNotified:'05 23,2026',notes:'Bank letter uploaded May 8. Awaiting Finance verification.'},
+    '8834521': {name:'Maria Lopez',hierarchy:'Agency — GA-001',email:'m.lopez@healthfirst.com',phone:'(786) 555-0412',method:'ACH Direct Deposit',status:'No Banking Details',held:'$602.00',cycles:'1 cycle',days:'38 days',lastNotified:'05 23,2026',notes:'New agent onboarded Apr 28. Invitation to submit banking sent.'},
+    '6620093': {name:'Robert Kim',hierarchy:'MGA — Southeast',email:'r.kim@semga.com',phone:'(678) 555-0567',method:'ACH Direct Deposit',status:'Pre-Note Pending',held:'$904.00',cycles:'1 cycle',days:'22 days',lastNotified:'05 23,2026',notes:'Pre-note $0.00 transaction sent May 20. Awaiting bank confirmation (3-5 business days).'},
+    '4430812': {name:'Angela Torres',hierarchy:'Direct-to-Plan',email:'a.torres@yahoo.com',phone:'(407) 555-0678',method:'Paper Check',status:'Address Unconfirmed',held:'$604.00',cycles:'1 cycle',days:'14 days',lastNotified:'05 23,2026',notes:'Mailing address not confirmed. Agent asked to verify via portal.'},
+    '8823441': {name:'James Martinez',hierarchy:'Agency — GA-001',email:'james.martinez@healthfirst.com',phone:'(786) 555-0147',method:'ACH Direct Deposit',status:'Verified',held:'$0.00 (released)',cycles:'1 cycle (resolved)',days:'Resolved May 1',lastNotified:'—',notes:'Banking details verified. Payments resumed.'}
+  };
+  var a = agentInfo[npn];
+  if (!a) { showToast('Agent data not found for NPN ' + npn, 'error'); return; }
+  var statusColor = a.status === 'Verified' ? '#1b5e20' : a.status.indexOf('No ') === 0 ? '#c62828' : '#e65100';
+  document.getElementById('viewAgentBody').innerHTML =
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e8eaed">' +
+      '<div style="width:48px;height:48px;border-radius:50%;background:#e3f2fd;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#0d47a1">' + a.name.split(' ').map(function(n){return n[0]}).join('') + '</div>' +
+      '<div><div style="font-size:16px;font-weight:700">' + a.name + '</div><div style="font-size:12px;color:#5f6368">NPN: ' + npn + ' | ' + a.hierarchy + '</div></div>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">' +
+      '<div><div class="text-muted" style="font-size:11px">Email</div><div>' + a.email + '</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Phone</div><div>' + a.phone + '</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Payment Method</div><div>' + a.method + '</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Banking Status</div><div style="color:' + statusColor + ';font-weight:600">' + a.status + '</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Amount Held</div><div style="font-weight:700">' + a.held + '</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Hold Duration</div><div>' + a.days + ' (' + a.cycles + ')</div></div>' +
+      '<div><div class="text-muted" style="font-size:11px">Last Notified</div><div>' + a.lastNotified + '</div></div>' +
+    '</div>' +
+    '<div style="margin-top:14px;padding:10px 12px;background:#f8f9fa;border-radius:6px;font-size:12px"><strong>Notes:</strong> ' + a.notes + '</div>';
+  document.getElementById('viewAgentModal').classList.add('open');
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   AUDIT LOG
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function addReleaseLog(name, npn, amount) {
+  var now = new Date();
+  var ts = now.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  var log = document.getElementById('releaseLog');
+  var div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f3f4;font-size:12px;background:#e8f5e9;border-radius:4px;margin-bottom:4px;padding:8px;';
+  div.innerHTML = '<span style="color:#5f6368;white-space:nowrap;min-width:155px">' + ts + '</span>'
+    + '<span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#e8f5e9;color:#1b5e20;white-space:nowrap">RELEASED</span>'
+    + '<span>' + name + ' (NPN ' + npn + ') — $' + amount + ' released by Finance Admin (D. Park). Included in next payment batch.</span>';
+  log.insertBefore(div, log.firstChild);
+}
+</script>
+</body>
+</html>

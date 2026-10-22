@@ -1,0 +1,204 @@
+##### SIDEBAR variant used by 14 pages: analytics.html, audit-trail.html, compliance-hold.html, dashboard.html, document-search.html, exclusion-monitoring.html, export-panel.html, onboarding-review.html, override-queue.html, reactivation.html, rules-config.html, screened-agents.html, soa-compliance.html, training-tracker.html
+- Dashboard [dashboard.html]
+## Agent Compliance
+- Compliance Holds [compliance-hold.html]
+- Reactivation [reactivation.html]
+- Onboarding Cases [onboarding-review.html]
+- Training Tracker [training-tracker.html]
+- Override Co-sign [override-queue.html]
+## Monitoring & Audit
+- SOA Compliance [soa-compliance.html]
+- OIG/SAM Exclusions [exclusion-monitoring.html]
+- Compliance Analytics [analytics.html]
+- Audit Trail [audit-trail.html]
+- Document Search [document-search.html]
+- Export Panel [export-panel.html]
+## Configuration
+- Rules Configuration [rules-config.html]
+
+=== /compliance/analytics.html | Compliance Analytics | Gold Kidney
+ACTIVE NAV: Compliance Analytics
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Analytics — Module Dashboard | BC: 
+CARDS/SECTIONS: Compliance Trends (6-Month) || NIPR Alert Breakdown || Agent Credentials Status || SOA Compliance Rate Over Time || Flagged Transactions
+TABLE1 (4 rows) cols: Flag Type | Agent | NPN | Details | Amount | Status | Action
+   row1: Retroactive Recovery Robert Chen 4421098 Agent found unlicensed at time of sale (May 2026). All commissions for affected enrollments subject to full recovery. $2,340 Under Review
+BUTTONS: Export
+MODALS/DRAWERS: flagModal:Flag Detail ; flagModalTitle: ; flagModalBody:
+BADGES: Retroactive Recovery | Under Review | Rapid Disenrollment | Chargeback Pending | Renewal Continuity | Confirmed | Rate Compliance | Validated
+CHARTS: 4 canvas line,doughnut,bar
+
+=== /compliance/audit-trail.html | Compliance Audit Trail & Analytics | Gold Kidney
+ACTIVE NAV: Audit Trail
+USER: DM Diana Murphy Compliance Officer Full Audit Access
+HEADER: Audit Trail & Usage Analytics | BC: 
+ALERT: Immutable Audit Log: All records are append-only and cannot be modified or deleted by any user, including System Admin. Sensitive fields (SSN, MBI, bank account, routing number, EI
+CARDS/SECTIONS: Search & Filter — All fields combinable || Audit Log || Per-User Breakdown
+TABLE1 (0 rows) cols: Timestamp | User Name | Role | Action Type | Entity Type | Entity Name / ID | Field Changed | Old Value | New Value | IP Address | Session ID
+TABLE2 (0 rows) cols: User Name | Role | Visit Count | Avg Time on Screen (sec) | Last Visited
+FORM LABELS: Date Range Start | Date Range End | Action Type | Entity Type | Entity ID / NPN | User Who Performed Action | IP Address | Role: | Time Period: | Module:
+SELECTS: [All Action Types, Form Field Saved, Form Submitted, Document Uploaded, Document Approved, Document Rejected, NIPR License Check, AHIP Validation, IBR Background Check, CSNP Verification, Hierarchy Transfer Executed, Invitation Sent,...] [All Entity Types, Agent, Org, Invitation, Document, Override, Hierarchy, Session, System] [All Roles, System Admin, Compliance Officer, Agent, Agency Admin] [All Modules, Onboarding, Enrollment, Commission, Admin, Leads, Documents, Reports]
+PLACEHOLDERS: Agent NPN, Case ID, Org ID... | Name or user ID... | e.g. 10.0.1.42
+BUTTONS: Compliance Audit Log | Usage Analytics Dashboard | Search | Clear Filters | Export to CSV | Export to Excel | Reset | Export CSV
+MODALS/DRAWERS: drillDownPanel:Per-User Breakdown
+
+=== /compliance/compliance-hold.html | Compliance Hold Queue | Gold Kidney
+ACTIVE NAV: Compliance Holds
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Hold Queue | BC: Review & Resolve Holds | SLA Tracked | Audit Logged
+KPIs: Active Holds=12 ; Pending Review=5 ; Awaiting Verification=3 ; Resolved (30d)=28 ; Avg Resolution=3.2d ; SLA Breach Risk=2
+TABLE1 (0 rows) cols: Hold ID | Agent | NPN | State | Reason | Priority | Status | Enrollments | SLA | Opened | Actions
+SELECTS: [All Statuses, Pending Review, Awaiting Verification, Under Investigation] [All Reasons, License Suspension, License Revocation, License Expiration, Reinstatement Review, AHIP Lapse] [All Priority, Critical, High, Medium] [All States, FL, TX, CA, NY]
+PLACEHOLDERS: Search NPN or agent name...
+BUTTONS: Clear
+
+=== /compliance/dashboard.html | Compliance Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Admin Dashboard | BC: Compliance Overview | NIPR | AHIP | SOA | Holds
+ALERT: Auto-Hold Triggered: 2 agents placed on Compliance Hold today due to expired AHIP certifications.
+ALERT: 3 agents' NIPR licenses expire within 30 days in Florida and Georgia.
+ALERT: SOA compliance rate is 98.5% — above 98% target. No immediate action required.
+KPIs: Agents on Compliance Hold=8 ; NIPR Alerts Today=3 ; AHIP Expiring in 30 Days=12 ; SOA Compliance Rate=98.5%
+CARDS/SECTIONS: Pending Actions || Quick Actions || Recent NIPR Alerts (Last 5) || Compliance Alerts
+TABLE1 (5 rows) cols: Timestamp | Agent | NPN | Alert Type | State | Action
+   row1: 2026-05-29 06:00 Michael Torres 54321098 License Expired TX Review
+BUTTONS: Refresh Now | Export to Excel | Review
+BADGES: 6 items | COMPLIANCE HOLD | REACTIVATION | C-SNP | PQAT | AUDIT ALERT | License Expired | License Not Found | License Suspended | CE Hours Incomplete | Expiring Soon
+LINKS: compliance-hold.html ../enrollment-ops/csnp-review.html audit-trail.html
+JS NAV: compliance-hold.html
+
+=== /compliance/document-search.html | Document Search | Gold Kidney Compliance
+ACTIVE NAV: Document Search
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Document Search | BC: 
+ALERT: Centralized Repository Access: Search all compliance documents — executed SOAs, enrollment applications, C-SNP verification forms, PQAT records, CMS acknowledgments, producer contr
+CARDS/SECTIONS: Search Filters || Search Results
+TABLE1 (8 rows) cols: Document ID | Type | Member / Agent | MBI / NPN | Filed Date | Effective Date | Filed By | Retention | 
+   row1: DOC-2026-4201 SOA Frank Johnson Agent: J. Martinez 1EG4-TE5-MK72 NPN: 8823441 06 01,2026 07 01,2026 SYSTEM (auto-filed) 10 yr (CMS)
+FORM LABELS: Member Name | Member MBI | Agent NPN | Document Type | Date From | Date To
+SELECTS: [All Types, Scope of Appointment (SOA), Enrollment Application, C-SNP Verification Form, PQAT Record, CMS Acknowledgment, Producer Contract, AHIP Certificate, Physician Attestation, Compliance Attestation, Marketing Material (Approved), HRA Form,...]
+PLACEHOLDERS: Member name... | MBI... | NPN...
+BUTTONS: Search | Clear | Export to Excel
+BADGES: SOA | Enrollment App | C-SNP Form | CMS Ack | Physician Attestation | Producer Contract | HRA Form
+
+=== /compliance/exclusion-monitoring.html | OIG/SAM Exclusion Monitoring | Gold Kidney
+ACTIVE NAV: OIG/SAM Exclusions
+USER: DM Diana Murphy Compliance Officer
+HEADER: OIG/SAM Exclusion Monitoring | BC: CMS-Required Monthly Exclusion Screening
+KPIs: Total Agents Screened=245 ; Clear=242 ; Potential Matches=2 ; Confirmed Exclusions=1 ; Next Scheduled Run=Jul 1
+CARDS/SECTIONS: Monthly Exclusion Check History || Positive Match Review Queue (3) || Investigation Workflow || Resolved Cases — Historical Record || Regulatory Requirements & Policy
+TABLE1 (30 rows) cols: Run Date | Agents Screened | OIG Checked | SAM Checked | Matches Found | Confirmed | Auto-Holds | Status
+   row1: 06 01,2026 245 Yes Yes 3 1 1 Complete
+TABLE2 (3 rows) cols: Match ID | Agent | NPN | Database | Match Type | Confidence | Status | Auto-Hold
+   row1: EXC-2026-001 Robert Williams 5567234 OIG-LEIE Exact Name + NPI 99% Confirmed Applied
+TABLE3 (6 rows) cols: Case ID | Agent | NPN | Database | Detected | Resolved | Outcome | CMS Notified
+   row1: EXC-2025-004 David Chen 3345678 OIG-LEIE 11 01,2025 11 15,2025 Terminated 11 20,2025
+SELECTS: [All Years, 2026, 2025, 2024] [All Months, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov,...]
+BADGES: Complete | OIG-LEIE | Confirmed | SAM | Investigating | Terminated | Cleared — False Positive
+LINKS: screened-agents.html?month=Jun&year=2026&count=245 screened-agents.html?month=May&year=2026&count=238 screened-agents.html?month=Apr&year=2026&count=234 screened-agents.html?month=Mar&year=2026&count=229 screened-agents.html?month=Feb&year=2026&count=221 screened-agents.html?month=Jan&year=2026&count=215 screened-agents.html?month=Dec&year=2025&count=210 screened-agents.html?month=Nov&year=2025&count=205 screened-agents.html?month=Oct&year=2025&count=198 screened-agents.html?month=Sep&year=2025&count=192 screened-agents.html?month=Aug&year=2025&count=188 screened-agents.html?month=Jul&year=2025&count=183 screened-agents.html?month=Jun&year=2025&count=178 screened-agents.html?month=May&year=2025&count=172 screened-agents.html?month=Apr&year=2025&count=165 screened-agents.html?month=Mar&year=2025&count=160 screened-agents.html?month=Feb&year=2025&count=155 screened-agents.html?month=Jan&year=2025&count=150 screened-agents.html?month=Dec&year=2024&count=145 screened-agents.html?month=Nov&year=2024&count=140 screened-agents.html?month=Oct&year=2024&count=135 screened-agents.html?month=Sep&year=2024&count=130 screened-agents.html?month=Aug&year=2024&count=125 screened-agents.html?month=Jul&year=2024&count=120 screened-agents.html?month=Jun&year=2024&count=112 screened-agents.html?month=May&year=2024&count=105 screened-agents.html?month=Apr&year=2024&count=98 screened-agents.html?month=Mar&year=2024&count=90 screened-agents.html?month=Feb&year=2024&count=85 screened-agents.html?month=Jan&year=2024&count=80
+
+=== /compliance/export-panel.html | Data Export Panel | Compliance
+ACTIVE NAV: Export Panel
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Data Export Panel | BC: 
+ALERT: PHI Handling Notice: Exports containing PHI must be transmitted only via approved secure channels. All export activity is logged in the audit trail. Do not distribute PHI exports v
+CARDS/SECTIONS: Recent Exports
+TABLE1 (4 rows) cols: Export ID | Requested By | Timestamp | Filters Applied | Format | Records | PHI | Status | 
+   row1: EXP-2026-0037 K. Foster May 23 16:00 CSV 3,841 Masked Ready
+FORM LABELS: Date Range | Portal / Action Type (Multi-Select) | Action Type (Multi-Select) | Agent / Agency | Plan | State | Member Condition | PHI Masking | Mask PHI in export (MBI/DOB shown as ***) | Include full PHI (requires 2FA confirmation)
+SELECTS: [Agent Portal, Admin Portal, Finance Portal, Enrollment Ops, Member Portal, Agency Admin, Compliance] [All Actions, PHI Accessed, Enrollment Submitted, SOA Created, Commission Rule Changed, Incentive Approved / Rejected, Batch Approved / Released, HRA Submitted, C-SNP Verified] [All Agents & Agencies, James Martinez — NPN 8823441, Sarah Chen — NPN 7712309, Michael Torres — NPN 9934221, HealthFirst Distribution (AGY-001), SunState Insurance (AGY-002)] [All Plans, StarPlus ESRD SNP 2026, KidneyCare CKD SNP 2026, HeartCare H&D SNP 2026, BrightChoice HMO 2026, DiabetesCare SNP 2026] [All States, FL — Florida, GA — Georgia, TX — Texas] [All Conditions, ESRD (End Stage Renal Disease), CKD (Chronic Kidney Disease), Heart Failure & Diabetes, Diabetes Only, No Chronic Condition]
+BUTTONS: Preview Results | Generate Export | Export to Excel
+BADGES: CSV | Masked | Ready | PDF | Full PHI — 2FA | Encrypted ZIP
+
+=== /compliance/onboarding-review.html | Onboarding Cases Review | Gold Kidney Compliance
+ACTIVE NAV: Onboarding Cases
+USER: DM Diana Murphy Compliance Officer
+HEADER: Onboarding Cases — Compliance Review | BC: 
+ALERT: Payer-Side Review: View all documents and attestations uploaded by agents during onboarding. Raise queries or request corrections for specific checks — agents are notified and can 
+KPIs: Pending Review=7 ; Queries Open=3 ; Approved (30d)=18 ; Denied (30d)=2
+CARDS/SECTIONS: Onboarding Cases Queue
+TABLE1 (6 rows) cols: Case ID | Agent | NPN | Submitted | License | Appt | AHIP | Training | Background | Status | Actions
+   row1: OB-2026-0401 Sarah Kim 7712099 06 05,2026 Pending Review Review
+SELECTS: [All Statuses, Pending Review, Query Raised, Resubmitted, Approved, Denied] [All Gates, State License, State Appointment, AHIP, Training, Background Check]
+PLACEHOLDERS: Search NPN or agent name...
+BUTTONS: Apply | Reset | Export to Excel | Review | View
+MODALS/DRAWERS: reviewModal:Onboarding Case Review — OB-2026-0401
+BADGES: Pending Review | Query Raised | Resubmitted | Approved | Denied
+
+=== /compliance/override-queue.html | Override Co-sign Queue | Gold Kidney Compliance
+ACTIVE NAV: Override Co-sign
+USER: DM Diana Murphy Compliance Officer
+HEADER: Override Co-sign Queue | BC: 
+ALERT: Compliance Co-sign Required: Overrides requiring Compliance approval are held in pending status until Compliance co-signs. These overrides allow operational flexibility while maint
+KPIs: Pending Co-sign=4 ; Approved (30d)=11 ; Rejected (30d)=2 ; Avg Response Time=4.1h
+CARDS/SECTIONS: Overrides Requiring Compliance Co-sign
+TABLE1 (6 rows) cols: Override ID | Type | Agent/Entity | Initiated By | Justification | Requested | Status | Actions
+   row1: OVR-2026-0051 Onboarding Lisa Wang (NPN: 6609812) Sandra Adams System Admin Background check pending >10 days; IBR vendor delay confirmed. Agent passed all other gates. Request to activate provisionally per carrier SLA e
+SELECTS: [All Statuses, Pending Co-sign, Approved, Rejected] [All Override Types, Onboarding Validation, Commission Rate, Enrollment Exception, License Waiver]
+PLACEHOLDERS: Search...
+BUTTONS: Export to Excel | Approve | Reject | View
+BADGES: Onboarding | Pending Co-sign | Commission | Enrollment | License | Approved | Rejected
+
+=== /compliance/reactivation.html | Reactivation Workflow | Gold Kidney Compliance
+ACTIVE NAV: Reactivation
+USER: DM Diana Murphy Compliance Officer
+HEADER: Agent Reactivation Workflow | BC: Dashboard Hold Queue Reactivation
+KPIs: Pending Reactivations=4 ; Completed This Month=6 ; Rejected=1 ; Avg. Processing Time=2.3d
+CARDS/SECTIONS: Reactivation Requests
+TABLE1 (4 rows) cols: Agent | NPN | Previous Status | Hold Reason | Request Date | Workflow Step | Assigned To | 
+   row1: Sarah Kim 7712099 Compliance Hold NIPR license expired (FL) 05 22,2026 Step 3: Admin Review Carlos Ortiz Review
+SELECTS: [All Status, In Progress, Pending Review, Approved, Rejected]
+PLACEHOLDERS: Search agent
+BUTTONS: Export to Excel
+MODALS/DRAWERS: reviewModal:Reactivation Case Review — Sarah Kim ; initiateModal:Initiate Reactivation Workflow ; rejectModal:Reject Reactivation
+LINKS: onboarding-review.html?npn=7712099 onboarding-review.html?npn=6654321 onboarding-review.html?npn=4478923 onboarding-review.html?npn=2234561
+
+=== /compliance/rules-config.html | Compliance Rules Configuration | Gold Kidney
+ACTIVE NAV: Rules Configuration
+USER: DM Diana Murphy Compliance Officer
+HEADER: Compliance Rules Configuration | BC: 
+ALERT: Rule Configuration: Changes take effect on the configured effective date. Use Simulation Mode to model the impact of rule changes on the active agent population before activation. 
+CARDS/SECTIONS: Simulation Mode || Recent Rule Changes
+TABLE1 (3 rows) cols: Date | Rule | Change | Effective | Approved By
+   row1: 05 15,2026 AHIP Grace Period 7 days → 14 days 01 01,2027 Diana Murphy
+FORM LABELS: AHIP Renewal Deadline | Grace Period (days) | Expiry Warning Threshold (days) | Auto-Hold on Non-Renewal | Effective Date | Initial Check Required | Repeat Frequency (months) | On Fail Action | Vendor Delay Threshold (days) | Minimum Days Before Enrollment | SOA Validity Window (days) | Reject if SOA After Enrollment | Retention Period (years) | Re-verification Frequency (months) | Advance Notice (days) | On Miss: Auto-Disenroll | Renewal Check Frequency | Pre-Expiry Warning (days) | Block Enrollment on Expired Appointment | Monitoring Frequency | Alert on License Suspension | OEC Feed Update SLA (hours) | Notify Parties
+SELECTS: [Yes — Auto Compliance Hold, No — Manual Review] [Route to Compliance Review Queue, Auto-Reject (Immediate Termination)] [Yes — Reject and flag for compliance review, No — Warn only] [Place on Hold — 30 day cure period, Auto-Disenroll after grace] [Annually (before license expiry), Semi-annually, Quarterly] [Yes — Block until renewed, No — Warn only] [Daily (6:00 AM UTC), Twice Daily, Weekly] [Immediate — Auto Compliance Hold + notifications, Manual review first]
+BUTTONS: Export to Excel
+
+=== /compliance/screened-agents.html | Screened Agents | Exclusion Monitoring | Gold Kidney
+ACTIVE NAV: OIG/SAM Exclusions
+USER: DM Diana Murphy Compliance Officer
+HEADER: Agents Screened | BC: OIG/SAM Exclusion Monitoring Screened Agents
+TABLE1 (0 rows) cols: # | Agent Name | NPN | Level | Agency | State | OIG-LEIE | SAM | Overall | Screened On
+SELECTS: [All Results, Clear, Match Found] [All States, Florida, California, Texas, New York, Illinois, Pennsylvania, Ohio, Georgia, North Carolina, Michigan] [All Levels, Agent, Broker, GA, MGA, SGA]
+PLACEHOLDERS: Search by name, NPN, or agency...
+
+=== /compliance/soa-compliance.html | SOA Compliance Center | Gold Kidney
+ACTIVE NAV: SOA Compliance
+USER: DM Diana Murphy Compliance Officer
+HEADER: SOA Compliance Center | BC: Scope of Appointment Tracking & Monitoring
+KPIs: SOA Compliance Rate=98.5% ; Missing SOA=4 ; Late SOA=7 ; Invalid SOA=2 ; Expired SOA=3
+CARDS/SECTIONS: All SOA Records
+TABLE1 (42 rows) cols: Enrollment | Agent | Member | SOA Status | SOA Type | Enrollment Date | SOA Date | Gap (Days) | Actions
+   row1: ENR-2026-00612 James Martinez (8823441) Robert Thompson Valid Electronic 06 15,2026 06 14,2026 0 View
+SELECTS: [All Status, Missing, Late, Invalid, Expired, Valid] [All Types, Electronic, Paper]
+PLACEHOLDERS: Search agent or enrollment...
+BUTTONS: Clear | Export Full Dataset | View | Request | Hold | Accept | Resend
+MODALS/DRAWERS: soaModal:SOA Document Detail ; soaModalBody:
+BADGES: Valid | Missing | Late | Invalid | Expired
+
+=== /compliance/training-tracker.html | Training & Certification Tracker | Gold Kidney Compliance
+ACTIVE NAV: Training Tracker
+USER: DM Diana Murphy Compliance Officer
+HEADER: Training & Certification Tracker | BC: 
+ALERT: Training Packages: Configurable sets of training segments assigned by carrier, plan type, state, or combination. Includes: General Compliance Training (all agents), Regulatory Trai
+ALERT: Auto-Termination Rule: If AHIP certificate is not renewed by the start of the new plan year, agent is automatically placed on Compliance Hold and cannot sell until renewed. Enrollm
+KPIs: Fully Compliant=142 ; AHIP Expiring (30d)=12 ; AHIP Lapsed=3 ; Training In Progress=8
+CARDS/SECTIONS: Active Training Packages || Agent Training & Certification Status
+TABLE1 (6 rows) cols: Agent | NPN | State | AHIP Status | AHIP Expiry | AHIP Score | General | Regulatory | Product | Completion Date | Overall
+   row1: J. Martinez 8823441 FL Current 12 31,2026 94% ESRD 01 15,2026 Compliant
+SELECTS: [All Statuses, Fully Compliant, In Progress, AHIP Expiring, AHIP Lapsed, Training Incomplete] [All Packages, General Compliance, Regulatory, ESRD Product, CKD Product] [All States, Florida, Texas, California, Georgia]
+PLACEHOLDERS: Search NPN or name...
+BUTTONS: Export to Excel
+BADGES: Current | Compliant | Expiring | AHIP Expiring | In Progress | Lapsed | Hold — AHIP Lapsed | Pending Upload

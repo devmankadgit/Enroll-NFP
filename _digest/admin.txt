@@ -1,0 +1,701 @@
+##### SIDEBAR variant used by 42 pages: access-restrictions.html, agency-agents.html, agency-details.html, agent-feed.html, agent-invitations.html, agent-lifecycle.html, agent-training-progress.html, agents.html, ahip-config.html, ahip-renewals.html, audit-log.html, auth-config.html, campaigns.html, carrier-setup.html, commission-approval.html, commission-config.html, commission-rules.html, compliance-rules.html, compliance-tracker.html, dashboard.html, document-lifecycle.html, exceptions.html, feature-toggles.html, hierarchy.html, integrations.html, leads.html, master-data.html, module-summaries.html, monitoring.html, nipr-alerts.html, notification-templates.html, notifications-config.html, onboarding-cases.html, onboarding-docs-config.html, plan-catalog.html, recredentialing.html, reports.html, roles.html, templates.html, training-admin.html, training-package-create.html, users.html
+- Dashboard [dashboard.html]
+## Agent & Producer
+- Agent Management [agents.html]
+- Agent Invitations [agent-invitations.html]
+- Onboarding Cases [onboarding-cases.html]
+- Producer Hierarchy [hierarchy.html]
+- Annual Re-Credentialing 5 [recredentialing.html]
+- Daily Agent Feed [agent-feed.html]
+- Agency Details [agency-details.html]
+## Members & Leads
+- Leads & Assignment [leads.html]
+## Commissions & Finance
+- Commission Rules [commission-rules.html]
+- Commission Approval [commission-approval.html]
+## Training & Compliance
+- Training Management [#]
+  - Training Package [training-admin.html]
+  - Create Training Package [training-package-create.html]
+  - Agent Training Progress [agent-training-progress.html]
+## System & Configuration
+- User Management [#]
+  - User Details [users.html]
+  - Roles & Permissions [roles.html]
+  - Feature Toggles [feature-toggles.html]
+- Plan Catalog [plan-catalog.html]
+- Carrier Profile Management [carrier-setup.html]
+- Notifications Config [notifications-config.html]
+- Document Templates [templates.html]
+- Master Data [master-data.html]
+- Integration Hub [integrations.html]
+- Reports [reports.html]
+- Exceptions & Disputes [exceptions.html]
+- Audit Log [audit-log.html]
+
+=== /admin/access-restrictions.html | Access Restrictions | Gold Kidney Admin Portal
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Access Restrictions & Security | BC: Field Masking, Session Management & IP Allowlist
+ALERT: Field Masking: Sensitive fields are masked (e.g., SSN shows as ***-**-1234) based on role. Users must have explicit "Unmask" permission to view full values. All unmask actions are 
+ALERT: IP Allowlist: When enabled, only connections from listed IP addresses/ranges will be allowed for the specified roles. Use with caution — incorrect configuration can lock out users.
+CARDS/SECTIONS: Field-Level Masking Configuration || Session Management || IP Allowlist Configuration
+TABLE1 (5 rows) cols: Field | Module | Masking Pattern | Agent | Agency Admin | Enroll Ops | Finance | Admin
+   row1: SSN / MBI Enrollment, Members ***-**-1234 Masked Masked Full Masked Full
+TABLE2 (2 rows) cols: User | IP Address | Device | Started | Last Activity | Actions
+   row1: Karen White 10.0.1.45 Chrome / Windows 11 May 25, 9:00 AM 2 min ago Current
+TABLE3 (3 rows) cols: IP / CIDR Range | Label | Applies To | Added By | Actions
+   row1: 10.0.0.0/16 Corporate Office Network All Internal Roles K. White Remove
+FORM LABELS: Session Timeout (minutes) | Max Concurrent Sessions | Force Re-Auth for Sensitive Actions | Remember Device | Failed Login Lockout | IP Allowlist Enforcement | Add IP/CIDR | Label | Applies To
+SELECTS: [1 (most secure), 2, 3, Unlimited] [Enabled — Require password for: payment changes, user creation, role changes, Disabled] [30 days, 14 days, 7 days, Disabled (always 2FA)] [3 attempts → 15 min lock, 5 attempts → 30 min lock, 10 attempts → 1 hour lock] [Disabled (all IPs allowed), Enabled for Internal Roles Only (Enrollment Ops, Finance, Compliance, Admin), Enabled for All Roles] [All Internal Roles, Platform Admin Only, Finance Only, Specific User]
+PLACEHOLDERS: e.g., 192.168.1.0/24 | e.g., Branch Office Miami
+BUTTONS: Export to Excel | Save Session Settings | Terminate | Remove | Add
+BADGES: Current
+
+=== /admin/agency-agents.html | Agency Agents | Gold Kidney Admin
+ACTIVE NAV: Agent Management
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agency Agents | BC: Dashboard Agency Details Agents
+KPIs: Agency=Premier Medicare Group ; Active Agents=72 ; Pending=9 ; Inactive=5
+CARDS/SECTIONS: Agents Under Premier Medicare Group
+TABLE1 (0 rows) cols: Agent Name | NPN | Email | Phone | State | License Type | Appointed | Status
+FORM LABELS: Status: | State: | License Type: | Search:
+SELECTS: [All Statuses, Active, Pending, Inactive] [All States, FL, TX, GA, CA, AL] [All Types, Health, Life & Health, Medicare Supplement]
+PLACEHOLDERS: Agent name, NPN, email...
+BUTTONS: Export to Excel | Reset
+
+=== /admin/agency-details.html | Agency Details | Gold Kidney Admin
+ACTIVE NAV: Agency Details
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agency Details | BC: Dashboard Agency Details
+KPIs: Total Agencies=24 ; Active=20 ; Pending=3 ; Deactivated=1
+CARDS/SECTIONS: Agency Listing
+TABLE1 (6 rows) cols: Agency Name | Agency Type | Tax ID | Primary Contact | State(s) | Agents | Status | Actions
+   row1: Premier Medicare Group FMO 59-3847201 Angela Rivera FL, TX, GA 86 Active Edit
+FORM LABELS: Agency Type: | Status: | State: | Search:
+SELECTS: [All Types, FMO, MGA, SGA, GA] [All Statuses, Active, Pending, Deactivated] [All States, FL, TX, CA, NY, GA, AL, OR, WA, OK, NJ]
+PLACEHOLDERS: Agency name or Tax ID...
+BUTTONS: Export to Excel | Reset | Edit | Reactivate
+MODALS/DRAWERS: createModal:Add Agency ; editModal:Edit Agency
+BADGES: FMO | Active | MGA | GA | SGA | Pending | Deactivated
+LINKS: agency-agents.html?agency=Premier%20Medicare%20Group agency-agents.html?agency=Southeast%20Health%20Advisors agency-agents.html?agency=Pacific%20Coast%20Insurance agency-agents.html?agency=Heartland%20Benefits agency-agents.html?agency=Sunshine%20Senior%20Solutions agency-agents.html?agency=Liberty%20Health%20Partners
+
+=== /admin/agent-feed.html | Daily Agent Feed | Gold Kidney Admin
+ACTIVE NAV: Daily Agent Feed
+USER: SA Sandra Adams Carrier Admin
+HEADER: Daily Agent Feed & OEC Distribution | BC: Dashboard Agent Feed
+KPIs: Today's Feed=Processed ; Status Changes=3 ; Mismatches=1 ; Last OEC Distribution=6:00 AM
+CARDS/SECTIONS: Feed Processing History || Agent Status Changes — Today || Feed Configuration || OEC Vendor Destinations || Feed Generation Engine Configuration || Feed Delivery Log
+TABLE1 (5 rows) cols: Date | Feed Type | Source | Records | New | Updated | Errors | Duration | Status | 
+   row1: 05 24,2026 Daily Agent Roster SFTP (auto) 143 0 3 0 2 min Success Details
+TABLE2 (3 rows) cols: Agent | NPN | Previous Status | New Status | Trigger | Action Required
+   row1: Robert Chen 8834221 Active Compliance Hold NIPR license expired (FL) Notify agent; block enrollment
+TABLE3 (4 rows) cols: Vendor | Type | Feed Format | Schedule | Status | Last Delivery | Actions
+   row1: OEC Vendor A (Connecture) SFTP Batch Full File (CSV) Daily 2:30 AM ET Active May 25, 02:31 AM Configure
+TABLE4 (5 rows) cols: Date/Time | Vendor | File | Size | Records | Delivery Method | Status | Retries | ACK
+   row1: May 25, 02:31 AM Connecture ENROLLAXIS_AGENT_ROSTER_CONN_20260525.csv 48 KB 487 SFTP Delivered 0/3 Confirmed
+FORM LABELS: Agent Roster Feed | OEC Distribution Feed | MMR File Processing | Error Handling | Generation Schedule | Daily Run Time: | Run on weekends | Generate even if no changes (heartbeat file) | Inclusion Criteria | Active (Ready to Sell) agents | Pending agents (onboarding) | Inactive agents | Compliance Hold agents (marked as Not Ready) | Terminated agents | Fields Included in Feed | Agent NPN | Agent Name (First, Last) | Status (Active/Not Ready) | State Appointments (list) | Hierarchy Position | Plan Year Flags | AHIP Certification Status | E&O Coverage Status | Email Address | Phone Number | Agency Name | File Naming Convention
+SELECTS: [All Vendors, Connecture, SunFire, MedicareCENTER] [All Status, Delivered, Failed, Retrying]
+BUTTONS: Export to Excel | Details | Save Config | Add Vendor | Configure | Save | Export
+MODALS/DRAWERS: addVendorModal:Add OEC Vendor Destination ; editVendorModal:Configure Vendor — Connecture ; manualUploadModal:Manual Feed Upload ; feedDetailModal:Feed Processing Detail
+BADGES: Success | Partial | Active | Compliance Hold | Pending | Inactive | Terminated | Delivered | 200 OK | Retry Success | Failed (3/3)
+
+=== /admin/agent-invitations.html | Agent Invitations | Carrier Admin
+ACTIVE NAV: Agent Invitations
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agent Invitations | BC: 
+KPIs: =18 ; =7 ; =5 ; =4 ; =2
+TABLE1 (0 rows) cols:  | Recipient | Email | NPN | Level | Upline Org | Sent Date | Status | Expiry | Accepted Date | Sent By | Actions
+FORM LABELS: First Name * | Last Name * | Email Address * | I confirm | NPN (optional ? triggers duplicate check) | Admin confirms reuse of terminated NPN record | Hierarchy Level * | Role Type * | Upline Organization * | Plan Year * | Invitation Expiry (hours from send time, default 72) | Personal Message to Recipient (optional, max 500 chars) | Upload CSV (firstName,lastName,email,npn,level,role,uplineOrgId,planYear,message) | Status | Hierarchy Level | Sent By | Date From | Upline Org
+SELECTS: [Select Level, GA (General Agency), MGA (Managing General Agency), Agent/Broker] [Individual Agent, Agency Admin] [Search / Select Upline Org, HealthFirst Distribution (GA-2201), Coastal Medicare Partners (GA-2288), SunBridge Medicare Advisors (MGA-1014)] [2026 (Active), 2027 (Draft)] [All Statuses, Draft, Sent, Opened, Accepted, Expired, Cancelled, Rejected] [All Levels, Agent/Broker, GA, MGA, SGA] [All Senders, Sandra Adams, James Rollins] [All Orgs, HealthFirst Distribution, Coastal Medicare Partners, SunBridge Medicare] [? Bulk Action ?, Resend Selected, Cancel Selected]
+PLACEHOLDERS: e.g. James | e.g. Rivera | agent@example.com | e.g. 88234419 | E.g. We look forward to having you as part of our network! Please complete your contracting within 72 hours.
+BUTTONS: Send Invitation | Invitation Dashboard 5 | Download Template | Send Bulk Invitations | Prefill Data | Reset | Prefill Filters | Export CSV | Apply | Clear
+MODALS/DRAWERS: invDetailModal:Invitation Detail ; sendInviteQuickModal:Quick Send Invitation
+
+=== /admin/agent-lifecycle.html | Agent Lifecycle | NFP Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agent Lifecycle & Status Management | BC: Status Transitions | Allowed Rules Enforced | History Timeline | 11/12-Month Inactivity Monitor
+KPIs: =2 ; =1
+CARDS/SECTIONS: Agent Roster || Lifecycle Status Flow || Allowed Transitions & Triggers || Recent Status Transitions || Transition Audit Log
+TABLE1 (7 rows) cols: Agent | NPN | Status | Last Enrollment | Inactivity | Upline | Last Change | Actions
+   row1: Robert Chen 12345678 Compliance Hold 2026-03-15 2.4 mo Southeast Agency 2026-05-27 History Change
+TABLE2 (6 rows) cols: Agent | NPN | From | To | Trigger | Triggered By | Date/Time | 
+   row1: Alex Rivera 6601234 Pending Active All onboarding gates passed System 05 25,2026 09:14 AM Detail
+TABLE3 (6 rows) cols: Timestamp | Agent | From |  | To | Trigger | Type | By | Notified
+   row1: 2026-05-25 09:14 Alex Rivera NPN 6601234 Pending Active Onboarding complete — all gates passed Auto System Agent, Upline
+FORM LABELS: From | To
+SELECTS: [All Statuses, Pending, Active, Inactive, Compliance Hold, Suspended, Terminated] [All Types, Automated, Manual, System Event]
+PLACEHOLDERS: Search agent name or NPN... | Search agent
+BUTTONS: Clear | History | Change | Add Rule | Edit | Export | Export to Excel | Detail
+MODALS/DRAWERS: transitionModal:Manual Status Transition ; addTransitionModal:Add Transition Rule ; editTransitionModal:Edit Transition Rule ; detailModal:Transition Detail
+
+=== /admin/agent-training-progress.html | Agent Training Progress | Gold Kidney Admin Portal
+ACTIVE NAV: Agent Training Progress
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agent Training Progress | BC: Dashboard Training Agent Training Progress
+KPIs: Completed=2 ; In Progress=1 ; Not Started=1 ; Overdue=2 ; Ready to Sell=2 ; Overall Completion=50%
+CARDS/SECTIONS: Completion Dashboard: Gold Kidney 2026 Product Training
+TABLE1 (4 rows) cols: Agent | NPN | Agency | Assigned Date | Start Date | Due Date | End Date | Module 1 | Module 2 | Module 3 | Quiz | Attempts | Pass/Fail | Status | Ready to Sell | Actions
+   row1: James Martinez 8823441 Acme Insurance 04 28,2026 05 04,2026 06 01,2026 05 28,2026 92% 1 Pass Complete Ready to Sell
+FORM LABELS: Package: | Status: | Agency:
+SELECTS: [All Packages, Gold Kidney 2026 Product Training, AEP 2027 Certification, Compliance & CMS Guidelines] [All, Complete, In Progress, Not Started] [All Agencies, Acme Insurance, FL Health Partners, Southeast Benefits]
+BUTTONS: Export CSV | Export to Excel
+BADGES: Pass | Complete | — | In Progress | Not Started
+
+=== /admin/agents.html | Agent Management | NFP Admin
+ACTIVE NAV: Agent Management
+USER: SA Sandra Adams Carrier Admin
+HEADER: Agent Management | BC: All Agents — Personal, License, Contract, Certifications, Documents & Status
+CARDS/SECTIONS: Agent Roster
+TABLE1 (0 rows) cols: Agent Name | NPN | Level | Upline Agency | License State(s) | AHIP | E&O Insurance | Status | Actions
+FORM LABELS: Status: | Level: | State: | Search:
+SELECTS: [All Statuses, Active, Pending Approval, On Hold, Suspended, Inactive, Rejected] [All Levels, Agent/Broker, GA, MGA] [All States, FL, TX, CA, IL, GA]
+PLACEHOLDERS: Name, NPN, email...
+BUTTONS: Clear | Export to Excel
+MODALS/DRAWERS: agentProfileModal:Agent Profile ; profileModalTitle: ; profileModalSub: ; actionConfirmModal:Confirm Action
+
+=== /admin/ahip-config.html | AHIP Integration Config | NFP Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: AHIP Certification Integration Configuration | BC: API Credentials | Certificate Validity | Renewal Reminders | Course Delivery | Auto-Fallback
+CARDS/SECTIONS: AHIP API Endpoint & Credentials || Certificate Validity Period || Renewal Reminder Schedule || In-Portal AHIP Course Delivery || Configuration Change Audit Log
+TABLE1 (4 rows) cols: Timestamp | Changed By | Field | Details
+   row1: 2026-05-10 09:00:00 Sandra Adams API Key Credentials updated (value not logged per security policy)
+FORM LABELS: AHIP API Endpoint URL * | Auth Method * | API Key / Token * | Connection Timeout (ms) | Test with NPN (optional) | Fallback Mode (when AHIP API is unreachable) | Max Retries Before Fallback | Plan Year * | Validity Period Start * | Validity Period End * | Reminder Days Before Expiry * (must be in descending order, e.g. 60, 30, 7) | Reminder Notification Channels | Email (agent) | SMS (agent) | In-portal notification (agent) | Email (direct upline admin) | Escalation to Broker Support | Notification Template | AHIP Course API Endpoint * | Course API Key * | Course Completion = Certificate Issued | Allow Retake on Fail
+SELECTS: [API Key (Header), OAuth 2.0, Basic Auth] [Manual Upload Mode (agent submits certificate PDF), Block Onboarding Gate Until API Recovers, Queue for Retry Only] [2025, 2026, 2027] [Annual Recertification Reminder (Default), Custom AHIP Reminder Template] [Yes ? auto-mark AHIP gate as complete on course pass, No ? still require certificate upload after course] [Yes (unlimited retakes), Yes (max 3 attempts), No]
+PLACEHOLDERS: e.g. 12345678 | Days | https://courses.ahip.org/api/v1/... | Course API credentials
+BUTTONS: Acknowledge | Run Test | Add | Export to Excel
+LINKS: notification-templates.html
+
+=== /admin/ahip-renewals.html | AHIP Renewal Status | NFP Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: AHIP Renewal Status & Reminder Tracking | BC: Automated Reminders | Duplicate Prevention | Escalation | Auto Compliance Hold
+KPIs: =181 ; =12 ; =3 ; =49 ; =2 ; =1
+CARDS/SECTIONS: AHIP Certificate Status ? All Agents || Reminder & Event Audit Log
+TABLE1 (0 rows) cols:  | Agent Name | NPN | Training Year | Certification | Cert Status | Expiry Date | Days Left | Reminders Sent (PY2026) | Escalated | Actions
+TABLE2 (6 rows) cols: Timestamp | Agent | NPN | Event Type | Details
+   row1: 2026-05-24 06:00:01 Michael Torres 54321098 7-Day Escalation Broker Support notified. Agent has not renewed. PY2026. Duplicate check: first escalation this plan year ? sent.
+SELECTS: [All Statuses, Valid, Expiring Soon, Upcoming, Expired, Renewed, Compliance Hold]
+PLACEHOLDERS: Agent name or NPN...
+BUTTONS: View | Clear | Send Reminder (Selected) | Export | Export to Excel
+MODALS/DRAWERS: uploadModal:Upload Renewed AHIP Certificate
+
+=== /admin/audit-log.html | Audit Log | Gold Kidney Admin Portal
+ACTIVE NAV: Audit Log
+USER: SA Sandra Adams Carrier Admin
+HEADER: Unified Audit Log | BC: Dashboard Audit Log
+KPIs: Total Entries (7 yrs)=1,482,304 ; Success (Today)=2,841 ; Failures (Today)=12 ; Retention Policy=7 Years
+CARDS/SECTIONS: Audit Entries
+TABLE1 (10 rows) cols: Entry ID | Timestamp (UTC) | Module | Event Type | Entity Type | Entity ID | Entity Name | Action | Performed By | Role | IP Address | Result | Old Value | New Value | Notes
+   row1: AUD-20260530-08412 2026-05-30 14:02:11 Overrides APPROVE Override OVR-2026-041 J. Martinez Commission Rate Override approved k.white@goldkidney.com Platform Admin 10.0.1.5 Success Pending Active — Exp: 08 23,2026 Urgent 
+FORM LABELS: Date Range — From | Date Range — To | Module | Event Type | Entity Type | Entity ID | Performed By (User) | IP Address | Result | Notes Full-Text Search
+SELECTS: [All Modules, Users & Access, Commission, Enrollment, Onboarding, Compliance, Integrations, Templates, Training, Overrides, System] [All Event Types, CREATE, UPDATE, DELETE, LOGIN, LOGOUT, APPROVE, DENY, EXPORT, CONFIG_CHANGE, ACCESS_DENIED, SYSTEM] [All Entity Types, Agent, Agency, Member, Enrollment, Commission, Role, User, Template, Integration, Override] [All Results, Success, Failed]
+PLACEHOLDERS: e.g. NPN 8823441, ENR-001234 | Email or name | e.g. 192.168.1.10 | Search notes field...
+BUTTONS: Search | Clear | 1 | 2 | 3 | 29
+BADGES: APPROVE | UPDATE | CONFIG_CHANGE | CREATE | SYSTEM | ACCESS_DENIED | LOGIN
+
+=== /admin/auth-config.html | Authentication & Session Config | Gold Kidney Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Authentication, SSO & Session Management | BC: Dashboard Auth & SSO Config
+CARDS/SECTIONS: Authentication Event Log
+TABLE1 (6 rows) cols: Timestamp | User | Event | Method | IP Address | Device | Result
+   row1: May 25, 09:45 AM Sandra Adams Login SSO (Azure AD) 10.0.1.52 Chrome / Windows Success
+SELECTS: [All Users, Admin Users Only, Non-SSO Users Only] [All Events, Login Success, Login Failed, Account Locked, Password Reset, SSO Auth]
+PLACEHOLDERS: e.g., 10.0.0.0/8, 192.168.1.0/24 | Search user
+BUTTONS: Configure | Setup | Add SSO Provider | Export | Export to Excel | Discard Changes | Save Configuration
+MODALS/DRAWERS: editSSOModal:Configure SSO Provider ; addSSOModal:Add SSO Provider
+BADGES: Active | Disabled | Success | Failed (3/5) | Suspended Account | 5 failed attempts | Success (sensitive action)
+
+=== /admin/campaigns.html | Campaign Management | Gold Kidney Admin Portal
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Campaign Configuration & Management | BC: Admin Portal Campaigns
+KPIs: Active Campaigns=6 ; Total Leads (MTD)=265 ; Conversions (MTD)=68 ; Commission Revenue (MTD)=$47,192
+CARDS/SECTIONS: Campaigns || Campaign Performance Summary || Campaign Configuration Audit Log
+TABLE1 (0 rows) cols: Campaign Name | Code | Type | Dates | States | Lead Source | TFN | Budget | Leads | Conv% | Status | Actions
+TABLE2 (0 rows) cols: Campaign | Type | Leads | Contacted | Converted | Conversion Rate | Commission Revenue | Cost/Enrollment
+TABLE3 (0 rows) cols: Timestamp | Campaign | Action | Changed By | Field | Old Value | New Value
+TABS: All Campaigns | Performance | Audit Log
+FORM LABELS: Type: | Status: | State:
+SELECTS: [All Types, AEP, OEP, SEP, Year-Round] [All, Draft, Active, Paused, Closed, Archived] [All States, FL, AZ, TX, GA]
+PLACEHOLDERS: Search name or code…
+BUTTONS: All Campaigns | Performance | Audit Log | Reset | Create Campaign | Export CSV | Export to Excel
+MODALS/DRAWERS: campaignModal:Create Campaign ; campaignModalTitle: ; campaignModalErr: ; archiveModal:Archive Campaign ; perfModal: ; perfModalTitle: ; perfModalBody:
+
+=== /admin/carrier-setup.html | Carrier Profile Management | Gold Kidney Admin
+ACTIVE NAV: Carrier Profile Management
+USER: SA Sandra Adams Carrier Admin
+HEADER: Carrier Profile Management | BC: Dashboard Carrier Profile Management
+CARDS/SECTIONS: Carrier Summary || Products & Plans by Contract & Year || Carrier Profile — Gold Kidney Health Plan
+TABLE1 (1 rows) cols: Carrier Name | Carrier ID | Products/Plans | States | Status | Carrier Admin | Actions
+   row1: Gold Kidney Health Plan EAHP-001 12 FL, TX, CA, NY Active Sandra Adams Configure
+TABLE2 (12 rows) cols: CMS Contract | PBP ID | Plan Name | Plan Type | Plan Year | Service Area | Effective Date | Term Date | Enrollment | Status | Actions
+   row1: H1234 001 Gold Kidney Premier (HMO) HMO 2026 FL, TX, CA, NY 01 01,2026 12 31,2026 1,842 Active
+FORM LABELS: Contract: | Plan Year: | Status: | Legal Name | Carrier ID | CMS Contract Number(s) | Contact Email | Contact Phone | Operational States | Active Plan Year(s)
+SELECTS: [All Contracts, H1234 — MA-PD, H1235 — D-SNP] [All Years, 2026, 2025, 2027] [All, Active, Pending CMS, Expired] [2026, 2025]
+BUTTONS: Export to Excel | Configure | Reset | Save
+MODALS/DRAWERS: onboardModal:Onboard New Carrier ; configModal:Configure Carrier ; setupModal:Onboarding Setup
+BADGES: Active | HMO | HMO-POS | PPO | D-SNP | Expired | Pending CMS
+
+=== /admin/commission-approval.html | Commission Approval | NFP Admin
+ACTIVE NAV: Commission Approval
+USER: SA Sandra Adams Carrier Admin
+HEADER: Commission Approval | BC: Agent-wise Commission Review & Approval — CY2026
+CARDS/SECTIONS: Agent Commission Review
+TABLE1 (0 rows) cols:  | Agent | NPN | Upline Agency | Period | Commission Type | Enrollments | Rate (PMPM) | Amount | Status | Actions
+FORM LABELS: Period: | Status: | Type: | Search:
+SELECTS: [All Periods, Jun 2026, May 2026, Apr 2026] [All Statuses, Pending, Approved, Rejected, On Hold] [All Types, Initial, Renewal, Override]
+PLACEHOLDERS: Agent name or NPN...
+BUTTONS: Clear | Approve All Pending | Reject All Pending | Export to Excel
+MODALS/DRAWERS: commDetailModal:Commission Detail ; commActionModal:Commission Action
+
+=== /admin/commission-config.html | Commission Configuration | NFP Carrier Admin
+ACTIVE NAV: Commission Rules
+USER: SA Sandra Adams Carrier Admin
+HEADER:  | BC: 
+ALERT: Archived Plan Year — Read Only. This configuration is locked. No changes are permitted. All fields are disabled.
+ALERT: Roll-up Logic: When an intermediate level is absent in an enrollment's hierarchy chain (e.g., no GA beneath an MGA), the absent level's Max override amount is added to the next pre
+ALERT: Routing affects onboarding: Direct to Agent requires ACH banking details on onboarding. Assign to Upline hides ACH fields and shows a confirmation message. Changing routing for an 
+KPIs: Plan Year=2026 ; Approval Status=None ; Active Enrollments=4,218 ; Est. Monthly Override=$84,360
+CARDS/SECTIONS: Override Commission Tier Configuration || Override Tier Table All amounts in USD • Per enrollment per month || Roll-up Scenario Calculator Simulate absent levels to calculate roll-up amounts || Payment Routing Configuration || Payment Routing per Level Plan Year: 2026 || ACH Onboarding Impact Summary || Commission Configuration Audit Log || Audit Log
+TABLE1 (0 rows) cols: Hierarchy Level | Initial Override | Renewal Override | Lifetime Override | Roll-up Eligible |  | Min ($) | Max ($) | Min ($) | Max ($) | Min ($) | Max ($) | 
+TABLE2 (0 rows) cols: Hierarchy Level | Payment Routing | Agent Split % (Split only) | Upline Split % (Auto: 100 — Agent) | Effective Date | Onboarding ACH | Status
+TABLE3 (4 rows) cols: Timestamp | Change Type | Level | Field | Old Value | New Value | Changed By | Approved By | Effective Date | 
+   row1: 2026-04-15 14:32 UTC Override Tier Change MGA Initial Override Max $4.20 $4.80 Sandra Adams James Rollins (Finance) 05 01,2026
+FORM LABELS: SGA absent | GA absent | MGA absent
+SELECTS: [All Change Types, Override Tier Change, Payment Routing Change, Approval, Draft Saved] [All Levels, SFMO, NFMO, FMO, SGA, MGA, GA, Agent]
+BUTTONS: Override Tiers | Payment Routing | Audit Log | Review & Approve | Preview Impact | Save Draft | Submit for Approval | Recalculate | Save & Activate | Export CSV | Apply | Reset | Export to Excel
+MODALS/DRAWERS: approvalRequestModal:Submit Override Changes for Dual Approval ; approvalReviewModal:Review Override Tier Changes — Dual Approval ; previewImpactModal:Preview Commission Impact — Proposed Rate Change ; auditDetailModal:Audit Log Detail
+BADGES: Override Tier Change | Routing Change | Approval
+
+=== /admin/commission-rules.html | Commission Rules & Rate Configuration | Carrier Admin
+ACTIVE NAV: Commission Rules
+USER: SA Sandra Adams Carrier Admin
+HEADER: Commission Rules & Rate Configuration | BC: 
+ALERT: CMS Compliance: All rates must remain within CMS maximum allowable compensation limits. Changes require dual-approval and take effect based on configured effective date. Config ver
+ALERT: Override cascade: each present hierarchy level receives up to its configured max. If a level is absent, the next upline receives roll-up (own max + absent level's max, subject to c
+ALERT: If no state override exists, carrier-level default applies. Activation blocked if rate exceeds CMS compensation limit for that state.
+ALERT: Triggers cause the calculation engine to run. Changes take effect on NEXT cycle. Cannot disable Annual Renewal on Jan 1.
+ALERT: Critical Business Rules:
+ALERT: The BoB is the agent's complete enrollment transaction ledger . Monthly commission calculations use the active BoB as the primary input source rather than re-deriving from raw enro
+CARDS/SECTIONS: Active Rate Configuration — CY2026 (Gold Kidney Health Plan) || Override Max Rates — Per Hierarchy Level (CY2026) || State-Specific Rate Overrides || Override Cascade — Sample Calculation || Initial vs. Renewal Classification & Proration || Commission Trigger Configuration || Duplicate Prevention Rules || Commission Eligibility Pipeline || Rate Configuration Change History
+TABLE1 (6 rows) cols: Hierarchy Level | Initial Override Max | Renewal Override Max | Roll-Up Eligible | Status | Actions
+   row1: GA General Agent $100.00 $45.00 Yes Active
+TABLE2 (2 rows) cols: State | Initial Rate Override | Renewal Rate Override | CMS Max | Status | 
+   row1: California (CA) $710.00 $29.58/mo $740.00 Active
+TABLE3 (5 rows) cols: Level | Organization | NPN | Override Amount | Max Allowed | Roll-Up | Status
+   row1: Agent James Martinez 8823441 $694.00 (base) Calculated
+TABLE4 (2 rows) cols: Classification | Criteria | Rate | Proration
+   row1: Initial New enrollment; no prior Active enrollment for same MBI+plan in prior plan year $694.00 annual $694 (months remaining / 12); effective month = full month
+TABLE5 (4 rows) cols: Trigger Name | Description | Enabled | Last Modified | 
+   row1: CMS Enrollment Confirmation New enrollment confirmed via ATN Enabled 01 01,2026 — Sandra Adams
+TABLE6 (2 rows) cols: Rule Type | Max Count | Action on Duplicate
+   row1: HRA Incentive per Member per Plan Year 1 Block "HRA already submitted for plan year [Y]"
+TABLE7 (4 rows) cols: Rule | Description | Behavior
+   row1: Eligibility Reference Date Commission eligibility is determined by the agent's active status on the application date (date enrollment form was signed/submitted) The member's actual effective date (always 1st of a future 
+TABLE8 (3 rows) cols: BoB Entry State | Description | Commission Impact
+   row1: Active Enrolled member with active plan coverage Generates ongoing initial or renewal commission
+TABLE9 (3 rows) cols: Capability | Description | Config
+   row1: Batch Calculation Window Process all calculations by the 15th of each month to enable payment by the 17th Cutoff day & processing day configurable in Base Rate Config tab
+TABLE10 (18 rows) cols: Field | Type | Description
+   row1: Ledger Entry ID UUID Unique identifier
+TABLE11 (3 rows) cols: Version | Plan Year | Status | Created By | Approved By | Effective | 
+   row1: v2026.3 2026 Active Sandra Adams — Dec 15 Michael Chen — Dec 16 01 01,2026
+FORM LABELS: Base Initial Enrollment Rate (Annual) | Base Renewal PMPM Rate | HRA Completion Incentive | Healthy Visit — ESRD | Healthy Visit — CKD/Heart & Diabetes | Rapid Disenrollment Chargeback Window | Payment Cycle Cutoff Day | Payment Processing Day | Finance Approval SLA | Commission Dispute Window | Dispute Acknowledgment SLA | Dispute Resolution SLA
+BUTTONS: Base Rate Config | Override Hierarchy | Commission Triggers | Eligibility Pipeline | Change History | Add New Year Configuration | Preview Impact | Edit Configuration | Edit Override Tiers | Add State Override | Export to Excel | Rollback (Dual-Approval) | Review
+MODALS/DRAWERS: addYearConfigModal:Add Commission Rules & Rate Configuration ; stateOverrideModal:Add State Override ; versionDetailModal:Version Details ; rollbackModal:Rollback Configuration ; reviewVersionModal:Review & Approve: v2027.1 ; previewImpactModal:Preview Impact — Proposed Rate Change ; editConfigModal:Edit Rate Configuration ; editOverridesModal:Edit Override Max Rates — All Hierarchy Levels ; editSingleOverrideModal:Edit Override —
+BADGES: Active | Config v2026.3 — Effective 01 01,2026 | GA | MGA | SGA | FMO | NFMO | SFMO | Agent | Calculated | Roll-Up | Calculated (w/ rollup) | Capped at Maximum | Initial | Renewal | Enabled | Disenrolled / Termed | Cancelled / CMS-Rejected | Pending Approval | Archived
+
+=== /admin/compliance-rules.html | Compliance Rules Engine | Gold Kidney Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Auto-Termination & Compliance Rules | BC: Dashboard Compliance Rules Engine
+KPIs: Active Rules=5 ; Simulation Mode=1 ; Auto-Actions Today=3 ; Warnings Sent Today=12
+CARDS/SECTIONS: Compliance Rules || Rule Execution Engine Status || Today's Execution Summary (05 25,2026) || Execution Log
+TABLE1 (5 rows) cols: Rule | Agents Evaluated | Matched | Actions Taken | Warnings Sent | No Action | Duration | Status
+   row1: AHIP Non-Renewal Hold 487 11 3 (Compliance Hold) 8 476 1.2s Complete
+TABS: Rule Configuration | Execution Engine
+SELECTS: [All Status, Active, Draft, Disabled] [All Rules, AHIP Non-Renewal, License Expiry, Inactivity, BGC Re-Screen] [All Results, Action Taken, Warning Sent, No Action]
+BUTTONS: Activate | Run Now (Manual) | Edit Schedule | Export to Excel | Export
+MODALS/DRAWERS: addRuleModal:Create Compliance Rule ; editRuleModal:Edit Compliance Rule ; simulateModal:Rule Simulation
+BADGES: Complete
+
+=== /admin/compliance-tracker.html | 7-Day CMS Compliance Tracker | Enrollment Ops
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: OEC Submission & 7-Day CMS Compliance Tracker | BC: 
+ALERT: CMS Requirement: Enrollment applications must be submitted within 7 calendar days of application signature date. At-Risk alerts at Day 5 (configurable). Compliance Breach escalatio
+ALERT: Effective Date Lifecycle: Agent enters a Requested Effective Date (always 1st of month). On CMS acceptance, a Confirmed Effective Date is returned and used for all downstream commi
+ALERT: Manual resubmit blocked if >14 days since signature date. CMS rejection details visible in View Rejection panel.
+ALERT: Reconciliation: Every CMS submission and response is logged as a reconciliation record. Submission log is accessible to both Enrollment Ops and Compliance. Commission classificatio
+KPIs: Safe (0-4 days)=32 ; At Risk (5-6 days)=8 ; Breached (7+ days)=2 ; Submitted (ATN Received)=156
+CARDS/SECTIONS: 7-Day Compliance Tracker || CMS Submission Configuration
+TABLE1 (6 rows) cols: Application ID | Member Name | Agent NPN | App Signature Date | Days Elapsed | CMS Submission | ATN | Status | Risk Level | Actions
+   row1: APP-2026-1247 Linda Park 8823441 05 20,2026 5 Pending Submission At Risk Manual Resubmit
+FORM LABELS: Risk Level: | Status: | Agent: | Days: | App Date:
+SELECTS: [All, Safe, At Risk, Breached] [All, Pending Submission, Submitted - Pending ATN, CMS Rejected, CMS Accepted] [All Agents, James Martinez (8823441), Sarah Chen (7714200)]
+PLACEHOLDERS: Min | Max
+BUTTONS: Filter | Reset | Export Report | Export to Excel | Manual Resubmit | View Rejection | Resubmit | View
+MODALS/DRAWERS: viewDetailModal:Application Detail ; resubmitModal:Manual CMS Resubmission ; rejModal:CMS Rejection Detail
+BADGES: Pending Submission | CMS Rejected | Submitted - Pending CMS | CMS Accepted | Submitted - Pending ATN
+
+=== /admin/dashboard.html | Carrier Admin Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Carrier Admin Dashboard | BC: 
+ALERT: 3 enrollments in 7-day compliance monitoring window
+ALERT: 2 agent licenses expiring within 90 days
+ALERT: AEP 2027 plan configuration window opens July 1
+KPIs: Total Active Members=1,847 ; Active Agents=143 ; Active Agencies=24 ; Enrollments (MTD)=28 ; 7-Day Compliance Flags=3 ; In-Flight Onboarding=10 ; System Health Score=98% ; Active Sessions=47 ; Integration Status=3 / 4 OK ; Failed Batch Jobs=0 ; Today's Leads=14 ; SOA Pending=9 ; Follow-up Due=18 ; Overdue=5 ; Enrollment Rate=32% ; Audit Log= ; Integration Hub= ; Feature Toggles=
+CARDS/SECTIONS: Pending Actions || Active Agencies || Onboarding Cases Status || Pending Payer Approval || License Expiring Soon || Certifications Expiring || Recent Enrollments || Commission Batch Status — CY2026 || System Alerts || Plan Year Overview || Monthly Enrollment Trend || Plan Distribution || Commission Payouts (6 Months) || Agent Growth
+TABLE1 (6 rows) cols: Agency Name | Tier / Level | State(s) | Active Agents | Enrollments MTD | Commission MTD | Status | Action
+   row1: HealthFirst Distribution GA FL, TX, GA 48 11 $28,400 Active View
+TABLE2 (0 rows) cols: Case ID | Agent Name | NPN | Level | Upline Org | Plan Year | Status | Created | Action
+TABLE3 (4 rows) cols: Enrollment Ref | Member | Plan | Agent | Submit Date | Effective | CMS Status | 7-Day
+   row1: ENR-2026-00541 Frank Johnson ESRD SNP James Martinez May 23 Jun 1 Processing Day 1
+TABLE4 (3 rows) cols: Batch Ref | Period | Agents | Total Paid | Status
+   row1: BATCH-2026-05 May 2026 143 $87,432 Paid May 17
+SELECTS: [All Statuses, Pending, Pending Admin Approval, In Review, On Hold, Completed, Rejected]
+BUTTONS: Refresh Now | Export to Excel
+BADGES: 5 items | ONBOARDING | CONFIG CHANGE | INTEGRATION ALERT | EXCEPTIONS | FEATURE TOGGLE | GA | Active | MGA | SGA | On Hold | FMO | ESRD SNP | Processing | Day 1 | CKD SNP | Day 2 | HMO | Accepted | Safe | H&D SNP | Paid May 17 | Paid Apr 17 | DM SNP
+LINKS: leads.html onboarding-cases.html commission-rules.html commission-approval.html integrations.html exceptions.html feature-toggles.html agency-details.html agent-lifecycle.html ahip-renewals.html agent-training-progress.html ../finance/batches.html
+JS NAV: member-management.html agents.html agency-details.html enrollment-reports.html compliance-tracker.html onboarding-cases.html monitoring.html audit-log.html integrations.html leads.html ../compliance/audit-trail.html feature-toggles.html
+CHARTS: 4 canvas line,doughnut,bar
+
+=== /admin/document-lifecycle.html | Document Lifecycle Management | Gold Kidney Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Document Lifecycle Management | BC: Dashboard Document Lifecycle
+KPIs: Total Documents=47 ; Published (Active)=38 ; Expiring (30 days)=4 ; Archived=9
+CARDS/SECTIONS: Document Repository || Document Activity Log
+TABLE1 (7 rows) cols:  | Document Name | Category | Version | Status | Visibility | Expiry | Last Updated | Actions
+   row1: Agent Contracting Agreement Standard agent contract template CY2026 Contracts v3.2 Published Agent, Agency Admin 12 31,2026 05 15,2026
+SELECTS: [All Categories, Contracts, Benefit Summaries, SOA Forms, HRA Forms, Compliance, Marketing, Training] [All Status, Published, Draft, Archived, Expired] [All Visibility, All Roles, Admin Only, Agent, Agency Admin]
+PLACEHOLDERS: Search documents
+BUTTONS: Export to Excel | New Ver. | Publish | Export
+MODALS/DRAWERS: uploadModal:Upload Document ; editDocModal:Edit Document Metadata ; versionModal:Version History
+BADGES: Published | Expiring Soon | Draft | Archived
+
+=== /admin/exceptions.html | Override & Exceptions | Gold Kidney Admin Portal
+ACTIVE NAV: Exceptions & Disputes
+USER: SA Sandra Adams Carrier Admin
+HEADER: Overrides & Exceptions Management | BC: Override Request Form, Pending Queue & Auto-Expiry
+ALERT: Auto-Expiry Policy: All overrides auto-expire at the configured date. Expired overrides revert to standard rules immediately. 7-day and 3-day warnings are sent to both the requesto
+KPIs: Pending Approval=4 ; Active Overrides=12 ; Expiring This Week=2 ; Expired (Last 30d)=5
+CARDS/SECTIONS: New Override Request || Pending Approval Queue (4) || Active Overrides (12) || Auto-Expiry Configuration
+TABLE1 (4 rows) cols: Request ID | Type | Target | Requested By | Date | Expiry | Status | Actions
+   row1: #OVR-2026-041 Commission Rate NPN 8823441 (J. Martinez) Agency Admin (Acme Ins.) 05 23,2026 08 23,2026 Pending Approve Deny Details
+TABLE2 (4 rows) cols: ID | Type | Target | Value | Approved By | Expires | Days Left | Actions
+   row1: #OVR-2026-032 Commission Rate Agency: Acme Insurance $700/initial (vs $578) K. White 05 30,2026 5 days Extend Revoke
+TABLE3 (5 rows) cols: Override Type | Max Duration | Approval Required | Renewal Allowed
+   row1: Commission Rate Override 90 days Platform Admin + Finance Yes (new request)
+FORM LABELS: Override Type * | Target Agent / Agency * | Justification * | Override Value | Expiry Date * | Priority | Supporting Documentation
+SELECTS: [Select override type..., 1. Commission Rate Override - Custom rate for specific agent/agency, 2. Onboarding Gate Bypass - Skip or force-pass a gate, 3. Enrollment Window Extension - Allow enrollment outside OEC/AEP, 4. HRA Window Extension - Extend 14-day HRA submission deadline, 5. Role Permission Override - Temporary elevated access] [Normal, Urgent (same-day review)]
+PLACEHOLDERS: Search by NPN, name, or agency... | Business reason for this override (required for audit trail) | e.g., $700/initial, Gate 3 bypass, +7 days
+BUTTONS: Prefill Data | Submit Override Request | Export to Excel | Approve | Deny | Details | Export | Extend | Revoke
+MODALS/DRAWERS: overrideDetailsModal:Override Request Details ; detailModalTitle: ; detailModalBody:
+BADGES: Commission Rate | Pending | Onboarding Bypass | HRA Window Ext. | Role Permission
+
+=== /admin/feature-toggles.html | Feature Toggles | Gold Kidney Admin
+ACTIVE NAV: Feature Toggles
+USER: SA Sandra Adams Carrier Admin
+HEADER: Feature Toggles | BC: Dashboard Feature Toggles
+CARDS/SECTIONS: Active Feature Toggles || Toggle Change Log
+TABLE1 (7 rows) cols: Feature | State | Scope | Users Affected | Last Changed | Changed By | 
+   row1: New Enrollment v2 Wizard Enhanced multi-step enrollment flow Enabled Pilot Group (5 agents) 5 05 15,2026 Sandra Adams Edit
+TABLE2 (3 rows) cols: Timestamp | Feature | Action | Changed By | Reason
+   row1: 05 20,2026 11:30 AM DTC Self-Enrollment Disabled globally Sandra Adams Production issue — CAPTCHA bypass detected
+PLACEHOLDERS: Search features
+BUTTONS: Export to Excel | Edit | Export
+MODALS/DRAWERS: createToggleModal:Create Feature Toggle ; toggleModalAlertZone:
+BADGES: Enabled | Disabled
+
+=== /admin/hierarchy.html | Producer Hierarchy | Carrier Admin
+ACTIVE NAV: Producer Hierarchy
+USER: SA Sandra Adams Carrier Admin
+HEADER: Producer Hierarchy | BC: Home / Hierarchy
+ALERT: Multi-Level Hierarchy Management: Configure the 7-level producer hierarchy (SFMO → NFMO → FMO → SGA → MGA → GA → Agent/Broker), manage plan year configurations with version control
+ALERT: This user can view their own records and all direct/indirect downline records only. Upline data is filtered at query layer.
+ALERT: This matrix shows which levels can be a parent of which child levels. A checkmark means the parent-child combination is valid. The system enforces this at org creation and transfer
+ALERT: Active Config: Commission calculations for any enrollment reference the hierarchy config active at the time of that enrollment's application date. Archived configs are permanently 
+ALERT: Dual-Approval Policy: All hierarchy transfers are subject to dual-approval. The admin who initiated the transfer cannot approve it. A second authorized admin must review and approv
+ALERT: Required CSV columns: FirstName, LastName, NPN, Email, LicensedStates, ParentOrgID, PlanYear. Maximum 500 rows per upload. Duplicate NPN and circular hierarchy checks run automatic
+KPIs: Total Entities=48 ; Active Agents=143 ; Pending Transfers=3 ; Hierarchy Depth=7 Levels ; Total Levels=7 ; Active Levels=7 ; With Downline=6 ; Leaf Nodes=1
+CARDS/SECTIONS: Hierarchy Level Definitions || Hierarchy Levels Rank 1 = Top • Rank 7 = Bottom • Agent/Broker is always a leaf node (no downline) || Parent-Child Pairing Rules Matrix || Plan Year Configurations || Plan Year Configuration List || Hierarchy Change History & Snapshots || Version History Log Showing all changes — immutable records || Hierarchy Transfer ? Dual-Approval Queue || Pending Transfer Approvals || Bulk Agent Import || Upload Agent CSV || Import Error Report
+TABLE1 (0 rows) cols: Rank | Level Name | Code | Can Have Downline | Valid Parents | BoB Access Scope | Active Orgs | Status | Actions
+TABLE2 (6 rows) cols: Child ↓ / Parent → | SFMO | NFMO | FMO | SGA | MGA | GA | Agent
+   row1: NFMO ✓ — — — — — —
+TABLE3 (4 rows) cols: Plan Year | Effective Period | Status | Cloned From | Notes | Last Modified | Actions
+   row1: 2026 01 01,2026 — 12 31,2026 Active 2025 Standard config for plan year 2026. Updated override tiers Q1. 04 15,2026 — Sandra Adams Preview Edit
+TABLE4 (8 rows) cols: Ver# | Organization | Change Type | Effective Date | Changed By | Old Parent / Level | New Parent / Level | Reason | 
+   row1: 8 James Martinez NPN 8823441 Transfer 06 01,2026 Sandra Adams 2026-05-15 14:32 UTC HealthFirst Distribution (GA-2201) Coastal Medicare Partners (GA-2288) Agent requested transfer — performance improvement plan
+TABLE5 (2 rows) cols: Ref # | Agent / Entity | From | To | Effective Date | Initiated By | Reason | Status | Actions
+   row1: TFR-2026-0041 James Martinez NPN 8823441 • Agent HealthFirst Distribution (GA-2201) Coastal Medicare Partners (GA-2288) 06 01,2026 Sandra Adams 2026-05-15 14:32 Agent requested transfer ? performance improvement plan Pen
+TABLE6 (0 rows) cols: Row # | NPN | Agent Name | Error
+SELECTS: [2026 — Active, 2027 — Draft, 2025 — Archived (Read-Only), 2024 — Archived (Read-Only)] [All Status, Active, Pending, Suspended, Terminated] [All States, Florida (FL), Texas (TX), California (CA), Arizona (AZ), Nevada (NV)] [All Levels, SFMO, NFMO, FMO, SGA, MGA, GA, Agent/Broker] [All Organizations, James Martinez, Medicare Solutions Group, Florida Health Distributors, Michael Torres, Coastal Medicare Partners, Premier Medicare Advisors, Sarah Williams] [All Change Types, Transfer, Level Change, Override Update, Status Change, Org Created, Org Deactivated]
+PLACEHOLDERS: From | To
+BUTTONS: Organization Tree 48 | Hierarchy Levels 7 | Plan Year Config 4 | Change History 24 | Transfer Approvals 2 | Bulk Import | Clone to 2027 | Clear | Export Hierarchy with Upline | Expand All | Collapse | Create Level | New Plan Year Config | Export to Excel | Preview | Edit | Activate | View | Locked | Export History | View Snapshot | Reset to Current | Apply | Reset | Approve Transfer | Reject Transfer | Process Import | Export Errors
+MODALS/DRAWERS: orgDetailPanel:Node Details ; bobSummaryPanel:BoB Access Scope — Downline Roll-up ; addNodeModal:Add Agent / Broker to Hierarchy ; addAgencyModal:Add Agency to Hierarchy ; transferModal:Hierarchy Transfer — Controlled Move ; preValidationPanel: ; levelModal:Create Hierarchy Level ; levelModalTitle: ; lvlModalAlertZone: ; newPlanYearModal:New Plan Year Configuration ; pyModalAlertZone: ; planYearPreviewModal:Plan Year Configuration Preview ; snapshotModal:Snapshot Detail — Version # ; orgDetailModal:Full Profile ; orgModalTitle: ; orgModalContent: ; nodeEditModal:Edit Node ; transferImpactModal:Hierarchy Transfer Impact ? Broker Support Notification ; transferReviewModal:Transfer Review — Pre-Approval Checklist
+BADGES: Transfer | Override Update | Status Change | Org Created | Level Change
+
+=== /admin/integrations.html | Integration Hub | Gold Kidney Admin
+ACTIVE NAV: Integration Hub
+USER: SA Sandra Adams Carrier Admin
+HEADER: Integration Hub | BC: Dashboard Integration Hub
+KPIs: Active=5 ; Degraded=1 ; Down=0 ; Disabled=1
+CARDS/SECTIONS: All Integrations
+TABLE1 (7 rows) cols: Integration | Type | Endpoint | Status | Avg Response | Error Rate | Last Success | Fallback | 
+   row1: NIPR License Verification REST API (Sync) api.nipr.com/v2/license Degraded 1,240ms 2.3% 2 min ago Manual Upload Configure
+BUTTONS: Export to Excel | Configure | Enable
+MODALS/DRAWERS: cfgModal:Configure Integration ; cfgModalTitle: ; cfgModalBody: ; addIntegrationModal:Add New Integration ; intModalAlertZone:
+BADGES: Degraded | Manual Upload | Active | None | Alternate Channel | Manual Review | Disabled | N/A
+
+=== /admin/leads.html | Leads & Assignment | Gold Kidney Payer Admin
+ACTIVE NAV: Leads & Assignment
+USER: SA Sandra Adams Carrier Admin
+HEADER: Leads & Assignment | BC: Lead Management & Assignments
+KPIs: Today's Leads=14 ; SOA Pending=9 ; Follow-up Due=18 ; Overdue=5 ; Enrollment Rate=32%
+CARDS/SECTIONS: My Leads || Add New Lead
+TABLE1 (0 rows) cols:  | Lead Name | DOB | Gender | Medicare ID | Phone | State | Source | Status | Priority | Assigned To | Assigned Date | Next Follow-up | Last Contact Outcome | Actions
+FORM LABELS: First Name * | Last Name * | Date of Birth * | Gender | Phone * | Email | Medicare ID | Preferred Language | Preferred Contact Method | Address 1 * | Address 2 | ZIP Code * | City * | State * | County | Source | Priority | Assign To | Notes
+SELECTS: [All Status, New, Contacted, Interested, Enrolled, Lost] [All Sources, Web Form, TV Campaign, Mailer, Broker Referral, Phone] [All States, FL, TX, GA, NY] [All Priority, High, Medium, Low] [Select..., M, F, Other] [English, Spanish, Creole, Chinese, Vietnamese, Other] [Phone, Email, Text/SMS, Mail] [Select..., Web Form, TV Campaign, Mailer, Broker Referral, Phone] [Medium, High, Low] [Select Agent to Assign, J. Martinez, S. Chen, M. Torres]
+PLACEHOLDERS: Search name, phone, email... | John | Smith | (305) 555-1234 | email@example.com | 1EG4-TE5-MK72 | Street address | Apt, Suite, Unit | 33101 | Auto-filled from ZIP | Additional notes...
+BUTTONS: Add Lead | Export | Export to Excel | Apply Filters | Reset | Previous | Next | Prefill Data | Cancel | Save Lead
+MODALS/DRAWERS: leadDetailModal:Lead Detail
+
+=== /admin/master-data.html | Master Data Management | Gold Kidney Admin
+ACTIVE NAV: Master Data
+USER: SA Sandra Adams Carrier Admin
+HEADER: Master Data Management | BC: Dashboard Master Data
+CARDS/SECTIONS: County-to-ZIP Mapping — Plan Year 2026 || Enrollment Period Calendar — 2026 || SEP Reason Codes || CMS Rejection / Return Codes || Compliance Rules
+TABLE1 (4 rows) cols: State | County | ZIP Codes | Plans Available | Effective | Status | 
+   row1: FL Miami-Dade 33101, 33102, 33109, 33125, 33126, 33127 HMO, PPO, C-SNP, D-SNP 01 01,2026 Active Edit
+TABLE2 (4 rows) cols: Period | Type | Start Date | End Date | Effective Coverage | Status
+   row1: Annual Enrollment Period (AEP) AEP 10 15,2025 12 07,2025 01 01,2026 Closed
+TABLE3 (5 rows) cols: Code | Reason | Documentation Required | Window (days) | Status | 
+   row1: SEP-01 Moved out of service area Proof of new address 63 Active Edit
+TABLE4 (5 rows) cols: Code | Description | Resolution Action | Auto-Retry | 
+   row1: RC-001 Invalid Medicare number Verify MBI with member; resubmit No Edit
+TABLE5 (4 rows) cols: Rule Name | Category | Trigger Condition | Action | Status | 
+   row1: AHIP Certification Expiry Training 30 days before AHIP expiry Alert Active Edit
+SELECTS: [Florida, Texas, California]
+PLACEHOLDERS: Search ZIP/County
+BUTTONS: County-ZIP Mapping | SEP Reason Codes | Enrollment Periods | CMS Rejection Codes | Compliance Rules | Export to Excel | Edit | Edit Dates | Import Codes
+MODALS/DRAWERS: mdModal:Add Record ; mdModalTitle:
+BADGES: Active | Closed | Active (per event) | Inactive
+
+=== /admin/module-summaries.html | Module Summaries | Gold Kidney Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Module Analytics Summaries | BC: Dashboard Module Summaries
+KPIs: =12 ; =8 ; =15% ; =156 ; =94% ; =8% ; =$284K ; =3 ; =2% ; =892 ; =12% ; =3% ; =96% ; =14 ; =2.3d ; =4 ; =566 ; =99.8%
+CARDS/SECTIONS: Global Filters || Onboarding Summary || Enrollment Summary || Commission Summary || Leads & Campaign Summary || Training Summary || Compliance Summary || Administration Summary || Finance Admin Module Dashboard || System Admin Module Dashboard || Sales Leadership Module Dashboard
+TABLE1 (3 rows) cols: # | Agent | NPN | YTD Commission
+   row1: 1 James Martinez 8823441 $11,284
+TABLE2 (4 rows) cols: Vendor | Status | Last OK
+   row1: OEC Prime Healthy 2026-05-28 02:05 UTC
+TABLE3 (3 rows) cols: Agent | Enrollments | YTD Comm.
+   row1: James Martinez 14 $11,284
+FORM LABELS: Plan Year | Date From | Date To | Status | State | Agent / Agency
+SELECTS: [2026, 2025, 2024] [All Statuses, Active, Pending, Inactive] [All States, FL, GA, TX, NC]
+PLACEHOLDERS: Search agent or agency...
+BUTTONS: Clear All | Export to Excel
+BADGES: Healthy | Inactive | Warning ? Latency
+LINKS: ../agency-admin/onboarding-cases.html ../enrollment-ops/dashboard.html ../finance/dashboard.html campaigns.html training-admin.html ../compliance/compliance-hold.html monitoring.html
+
+=== /admin/monitoring.html | System Monitoring | Gold Kidney Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: System Monitoring & Alerts | BC: Dashboard Monitoring
+KPIs: Avg API Response=142ms ; Error Rate=0.3% ; Active Sessions=87 ; Uptime=99.97%
+CARDS/SECTIONS: Batch Job Status || Alert Thresholds || Integration Health (Real-Time) || Recent Alerts
+TABLE1 (5 rows) cols: Job | Schedule | Last Run | Duration | Records | Status
+   row1: Daily Commission Calc Daily 2:00 AM Today 2:00 AM 47 min 1,847 Completed
+TABLE2 (6 rows) cols: Integration | Status | Avg Response | Error Rate (24h) | Last Call
+   row1: NIPR Degraded 1,240ms 2.3% 2 min ago
+TABLE3 (3 rows) cols: Time | Severity | Source | Message | Notified | Status
+   row1: May 24, 10:15 AM Warning NIPR API Response time exceeded 1000ms threshold (5001ms) IT Team (email) Active
+FORM LABELS: API Response > (ms) | Error Rate > (%) | Alert Channels
+BUTTONS: Export to Excel | Save Thresholds
+BADGES: Completed | Degraded | Healthy | Warning | Info | Critical
+
+=== /admin/nipr-alerts.html | NIPR Alert Management - Admin Portal
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: NIPR Alert Management | BC: 
+KPIs: 47 Alerts Today ; 42 Processed (< 5 min) ; 3 In Queue ; 2 Quarantined
+TABLE1 (5 rows) cols: Received | NPN | Agent | Type | State | Action Taken | Processing Time | Downstream
+   row1: 10:42 AM 17283945 Sarah Mitchell Suspension FL Compliance Hold Applied 48s
+TABLE2 (2 rows) cols:  | Received | Source IP | Failure Reason | Payload Preview | Actions
+   row1: 9:45 AM 52.14.221.73 Unknown NPN NPN 99999999 not found in system {"npn":"99999999","alert_type":"suspension","state":"FL"...}
+TABLE3 (5 rows) cols: Priority | Alert Type | Condition | Action | Downstream Triggers | Status | Actions
+   row1: 1 Revocation Any state Auto Compliance Hold + Initiate Termination OEC Feed Update, Agent Notify, Compliance Notify, Upline Notify Active
+TABS: Incoming Queue (3) | Processed (42) | Quarantined (2) | Alert Rules Config
+SELECTS: [All Alert Types, Suspension, Revocation, Reinstatement, Expiration, New License] [All States, FL, TX, CA, NY] [All Actions Taken, Compliance Hold Applied, Routed to Review, Agent Notified, OEC Feed Updated]
+PLACEHOLDERS: Search NPN or Agent Name... | Search...
+BUTTONS: Process All | Export Queue | Process | Route to Review | Export | Delete Selected | Retry Selected | Add Rule
+MODALS/DRAWERS: webhookConfigModal:Webhook Receiver Configuration ; alertDetailModal:Alert Detail — NPN: 18294756 ; addRuleModal:Add Alert Processing Rule
+BADGES: 98.2% Compliance Today | Suspension | Within SLA | Reinstatement | Expiration | 4 min | Revocation | New License | Unknown NPN | Invalid Format | Active
+
+=== /admin/notification-templates.html | Notification Templates | NFP Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Onboarding Notification Templates | BC: Template Editor | Variable System | Preview | Test Send | Version History
+CARDS/SECTIONS: Notification Templates || Template Change Audit Log
+TABLE1 (0 rows) cols: Template Name | Trigger Event | Channels | Status | Version | Last Modified | Actions
+TABLE2 (3 rows) cols: Timestamp | Template | Action | Changed By | Details
+   row1: 2026-05-20 10:14:22 Agent Activated Updated Sandra Adams Email body updated. Version bumped v1 ? v2.
+SELECTS: [All Statuses, Active, Inactive] [All Trigger Events, Invitation, Registration, NIPR, AHIP, Background Check, Training, Activation, Compliance, Sales, Security]
+PLACEHOLDERS: Search template name...
+BUTTONS: Clear | Export to Excel
+MODALS/DRAWERS: testSendModal:Send Test Notification ; historyModal:Version History ; mandatoryModal:Deactivate Mandatory Template?
+
+=== /admin/notifications-config.html | Notifications Config | Gold Kidney Admin Portal
+ACTIVE NAV: Notifications Config
+USER: SA Sandra Adams Carrier Admin
+HEADER: Notification Configuration | BC: Template Management & Delivery Rules
+CARDS/SECTIONS: Notification Templates (18) || Delivery Rules
+TABLE1 (18 rows) cols: Template Name | Category | Audience | Channels | Mandatory | Created By | Updated By | Last Updated | Status | Actions
+   row1: Lead Assigned Lead Portal, Email No 05 01,2026 Active Edit Preview
+TABLE2 (6 rows) cols: Rule | Trigger | Channel | Delay | Repeat | Status | Active
+   row1: Lead Assignment — Immediate Lead assigned to agent Portal + Email 0 min No Active
+BUTTONS: Create Template | Export to Excel | Edit | Preview | Previous | Next
+MODALS/DRAWERS: templateModal:Create Template ; tplModalTitle: ; previewModal:Preview
+BADGES: Lead | Active | Enrollment | Commission | Action Item | Compliance | Security | Onboarding | Inactive | System
+
+=== /admin/onboarding-cases.html | Onboarding Cases | NFP Admin
+ACTIVE NAV: Onboarding Cases
+USER: SA Sandra Adams Carrier Admin
+HEADER: Onboarding Cases | BC: Hierarchy Readiness | Transfer Impact
+CARDS/SECTIONS: Onboarding Cases
+TABLE1 (0 rows) cols: Case ID | Agent Name | NPN | Level | Upline Org | Plan Year | Status | Hierarchy Updated | Created | Actions
+FORM LABELS: Status: | Plan Year: | Search:
+SELECTS: [All Statuses, Pending, Pending Admin Approval, In Review, On Hold - Hierarchy Issue, On Hold - Compliance, Corrections Required, Completed, Rejected] [All, 2026, 2027]
+PLACEHOLDERS: Agent name, NPN, case ID...
+BUTTONS: × | Clear | New Case | Export to Excel
+MODALS/DRAWERS: caseDetailModal:Case Detail ; releaseHoldModal:Release Hierarchy Hold ; correctionsModal:Request Corrections — ; approvalModal:Admin Approval Decision ; approvalModalTitle: ; newCaseModal:Create New Onboarding Case
+
+=== /admin/onboarding-docs-config.html | Onboarding Document Requirements & Validation Rules - Admin
+ACTIVE NAV: Dashboard
+USER: SA Sandra Adams Carrier Admin
+HEADER: Onboarding Document Requirements | BC: 
+HEADINGS: Onboarding Document Requirements
+TABLE1 (8 rows) cols: Document Name | Category | Requirement | File Types | Max Size | Expiry Required | Validation Rules | Status | Actions
+   row1: Government-Issued Photo ID Driver's license, passport, or state ID Identity Required PDF, JPG, PNG 10 MB Must not be expired 3 rules Active
+SELECTS: [All Categories, Identity, Licensing, Certification, Tax & Financial, Compliance] [All Statuses, Active, Inactive] [All Requirement Types, Required, Optional, Conditional] [Plan Year 2026, Plan Year 2027 (Draft)]
+PLACEHOLDERS: Search documents...
+BUTTONS: Add Requirement
+MODALS/DRAWERS: addDocReqModal:Add Document Requirement ; editDocReqModal:Edit Document Requirement — Government-Issued Photo ID
+BADGES: Identity | Required | 3 rules | Active | Tax & Financial | 4 rules | Certification | Conditional | 2 rules | Compliance | Licensing | Optional | 1 rule | Inactive
+LINKS: ../auth-carrier/login.html
+
+=== /admin/plan-catalog.html | Plan Catalog | Carrier Admin
+ACTIVE NAV: Plan Catalog
+USER: SA Sandra Adams Carrier Admin
+HEADER: Plan Catalog Management | BC: 
+CARDS/SECTIONS: Active Plans Gold Kidney Health Plan CY2026
+TABLE1 (6 rows) cols: Plan Name | Plan ID | Plan Year | Effective Date | Term Date | Type | SNP Type | Premium | States | Members | Status | 
+   row1: StarPlus ESRD SNP 2026 GK-ESRD-2026 2026 2026-01-01 2026-12-31 HMO C-SNP (ESRD) $0.00 FL, GA 412 Active Edit
+FORM LABELS: Plan Name: | Plan Type: | Plan Year:
+SELECTS: [All Types, HMO, PPO, PFFS] [All Years, 2026, 2027, 2025]
+PLACEHOLDERS: Search plan name...
+BUTTONS: Reset | Export to Excel | Edit | Configure
+MODALS/DRAWERS: planDetailModal:StarPlus ESRD SNP 2026 ? Plan Details ; planModal:Add Plan ; planModalTitle: ; planModalErr:
+BADGES: Active | Draft | Terminated | C-SNP (ESRD) | C-SNP (CKD) | C-SNP (CHF/DM) | HMO | C-SNP (CHF/CVD) | C-SNP (DM) | DRAFT
+
+=== /admin/recredentialing.html | Annual Re-Credentialing | NFP Admin
+ACTIVE NAV: Annual Re-Credentialing 5
+USER: SA Sandra Adams Carrier Admin
+HEADER: Annual Re-Credentialing | BC: Calendar-Year Agent Credentialing Renewal Management
+CARDS/SECTIONS: Re-Credentialing Queue — CY2026
+TABLE1 (0 rows) cols: Agent | NPN | Level | Last Credentialed | Due Date | Status | Items to Renew | Notification Sent | Actions
+FORM LABELS: Status: | Cycle Year: | Search:
+SELECTS: [All Statuses, Overdue, Due, Notified — Awaiting, In Progress, Completed] [CY2026, CY2027]
+PLACEHOLDERS: Agent name or NPN...
+BUTTONS: Clear | Send Reminders to All Due/Overdue | Export to Excel
+MODALS/DRAWERS: rcDetailModal:Re-Credentialing Detail ; rcNotifyModal:Send Re-Credentialing Notification
+
+=== /admin/reports.html | Reports | Gold Kidney Admin
+ACTIVE NAV: Reports
+USER: SA Sandra Adams Carrier Admin
+HEADER: Report Management | BC: Dashboard Reports
+KPIs: Enrollment Reports=8 ; Commission Reports=6 ; Compliance Reports=5 ; Performance Reports=4
+CARDS/SECTIONS: Standard Reports || Scheduled Deliveries || Custom Report Builder
+TABLE1 (10 rows) cols: Report Name | Category | Schedule | Last Run | Format | Access | 
+   row1: Monthly Enrollment Summary Enrollment Monthly (1st) 05 01,2026 Excel, PDF Admin, Sales Leadership Run Schedule
+TABLE2 (3 rows) cols: Report | Frequency | Next Run | Recipients | Format | 
+   row1: Monthly Enrollment Summary Monthly (1st, 7:00 AM) 06 01,2026 admin@enrollaxis.com, leadership@enrollaxis.com Excel Edit
+FORM LABELS: Report Name | Data Source | Date Range | Columns | Export Format
+SELECTS: [All Categories, Enrollment, Commission, Compliance, Performance] [-- Select a Standard Report --, Monthly Enrollment Summary, CMS Submission Status, Commission Batch Summary, Agent Compliance Status, Lead Conversion by Source, HRA Completion Rates, Agent Production Ranking, Active Agent Summary (Ready to Sell), Training Summary Report, ACH Payment Reconciliation] [Enrollments, Commissions, Agents, Leads, HRA Completions] [Excel (.xlsx), PDF, CSV]
+BUTTONS: Export to Excel | Run | Schedule | Edit | Generate Report
+MODALS/DRAWERS: createReportModal:Create Custom Report ; rptModalAlertZone: ; scheduleModal:Schedule Report Delivery
+
+=== /admin/roles.html | Roles & Permissions | Gold Kidney Admin Portal
+ACTIVE NAV: Roles & Permissions
+USER: SA Sandra Adams Carrier Admin
+HEADER: Roles & Permissions (RBAC) | BC: RBAC Configuration, Sandbox Mode & Role Simulation
+CARDS/SECTIONS: System Roles (8) || Permission Matrix
+TABLE1 (8 rows) cols: Role | Description | Users | Type | Actions
+   row1: Agent Field agents selling MA plans. Access to leads, enrollment, commissions. 98 System View Permissions
+BUTTONS: Create Custom Role | Export to Excel | View Permissions
+MODALS/DRAWERS: roleConfigModal:Role Configuration ; roleModalTitle: ; deactivateModal:Deactivate Role?
+BADGES: Agent | Agency Admin | Enrollment Ops | Finance | Compliance | Broker Support | Sales Leadership | Platform Admin
+
+=== /admin/templates.html | Document Templates | Gold Kidney Admin
+ACTIVE NAV: Document Templates
+USER: SA Sandra Adams Carrier Admin
+HEADER: Document & Template Administration | BC: Dashboard Document Templates
+CARDS/SECTIONS: Managed Templates
+TABLE1 (7 rows) cols: Template Name | Category | Version | Effective Date | Expiry Date | Status | Approval | Dynamic Fields | Retention | Actions
+   row1: Scope of Appointment (SOA) SOA v3.2 01 01,2026 12 31,2026 Active Approved agent_name, member_name, date, plan_types 10 years
+FORM LABELS: Document Name: | Category: | From: | To: | Approval:
+SELECTS: [All Categories, SOA, Contracts, HRA, W-9, Enrollment, Marketing, Finance] [All, Approved, Pending Approval]
+PLACEHOLDERS: Search name...
+BUTTONS: Export to Excel | Reset
+MODALS/DRAWERS: addModal:Add New Document Template ; editModal:Edit Template ; historyModal:Version History
+BADGES: Active | Approved | Inactive | Pending Approval
+
+=== /admin/training-admin.html | Training Management | Gold Kidney Admin Portal
+ACTIVE NAV: Training Package
+USER: SA Sandra Adams Carrier Admin
+HEADER: Training Package Management | BC: Publish, Clone & Manage Training Packages
+KPIs: Active Packages=4 ; Total Completions=312 ; In Progress=28 ; Overdue=5
+CARDS/SECTIONS: Training Packages
+TABLE1 (4 rows) cols: Package Name | Status | Modules | Required For | Deadline | Completion Rate | Actions
+   row1: AEP 2027 Certification AHIP + Gold Kidney Product Training Published 5 modules + exam All Agents 09 30,2026 15% Deactivate Clone Edit
+BUTTONS: Export to Excel | Deactivate | Clone | Edit | Activate
+MODALS/DRAWERS: cloneModal:Clone Training Package ; pkgModal:Create Training Package ; pkgModalTitle:
+BADGES: Published | Inactive
+
+=== /admin/training-package-create.html | Create Training Package | Gold Kidney Admin
+ACTIVE NAV: Create Training Package
+USER: SA Sandra Adams Carrier Admin
+HEADER: Create Training Package | BC: Dashboard Training Create Package
+CARDS/SECTIONS: Package Details || Modules & Questions
+FORM LABELS: Package Name * | Training Type * | Status | Description | Required For * | Deadline * | Plan Year | Effective Date * | Expiration Date * | Validity Period | Pass Score % * | Number of Attempts * | Includes Exam | Learning Material Upload | Certificate of Completion Template | Number of Modules *
+SELECTS: [-- Select Type --, AHIP, Product Training, Carrier Certification, Compliance, Onboarding, Continuing Education] [Draft, Published] [Select audience, All Agents, New Agents Only, FMO/SGA Agents, Specific Agencies] [Yes, No]
+PLACEHOLDERS: e.g. AEP 2027 Certification | Brief description of training content... | e.g. 2027 | e.g. Valid Until 07 31,2027 | 80 | 3 | e.g. 5
+BUTTONS: Prefill Data | Generate Sections | Save as Draft | Save Changes
+LINKS: training-admin.html
+JS NAV: training-admin.html
+
+=== /admin/users.html | User Management | Gold Kidney Admin Portal
+ACTIVE NAV: User Details
+USER: SA Sandra Adams Carrier Admin
+HEADER: User Management | BC: Create, Deactivate, Reset, Bulk Actions & Auto-Provisioning
+ALERT: Auto-Provisioning: When an agent completes all onboarding gates, the system automatically creates their portal account, assigns the Agent role, links their NPN, and sends welcome c
+KPIs: Active Users=142 ; Deactivated=18 ; Pending Provisioning=3 ; Password Resets (7d)=7
+CARDS/SECTIONS: All Users (142) || Create New User || Edit User || Auto-Provisioning Rules only for DEVELOPERS
+TABLE1 (5 rows) cols:  | Name | Email | Role | NPN | Status | Last Login | Created | Actions
+   row1: James Martinez j.martinez@acme.com Agent 8823441 Active 05 25,2026 9:15 AM 01 15,2026 Edit
+TABLE2 (3 rows) cols: Trigger | Auto-Action | Role Assigned | Notification
+   row1: Onboarding Gate 7 Complete Create Agent account Agent Welcome email + temp password
+FORM LABELS: Role: | Status: | First Name * | Last Name * | Email * | Role * | NPN (if Agent) | Agency Assignment | Provisioning Method | Role | NPN | Status | Agency | Last Login | Created
+SELECTS: [All Roles, Agent, Agency Admin, Enrollment Ops, Finance, Compliance, Platform Admin] [All Status, Active, Deactivated] [Select role..., Agent, Agency Admin, Enrollment Ops, Finance, Compliance, Platform Admin] [No Agency (Direct), Acme Insurance Group, Florida Health Partners, Southeast Benefits] [Manual — Send welcome email with temp password, Auto-Provision from onboarding pipeline, SSO — Link to existing identity provider] [Agent, Agency Admin, Enrollment Ops, Finance, Compliance, Platform Admin] [Active, Deactivated]
+PLACEHOLDERS: Search name, email, NPN... | John | Smith | user@example.com | 10-digit NPN
+BUTTONS: Create User | Bulk Import (CSV) | Export Users | Bulk Deactivate | Export to Excel | Edit | Reactivate | Prefill Data | Cancel | Save Changes
+MODALS/DRAWERS: create-modal:Create New User ; edit-modal:Edit User
+BADGES: Agent | Active | Enrollment Ops | Finance | Deactivated

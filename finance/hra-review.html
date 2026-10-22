@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HRA Finance Review | Gold Kidney Finance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#2e7d32}.window-ok{color:#1b5e20;font-weight:600}.window-fail{color:#c62828;font-weight:600}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:500px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html" class="active"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>HRA Finance Review Queue</h4><ol class="breadcrumb-bar"><li>HRA Incentive Review & 14-Day Window Check</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-inbox"></i></div><div><div class="stat-label">Needs Manual Review</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Auto-Approved (In-Window)</div><div class="stat-val">5</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-clock"></i></div><div><div class="stat-label">Out-of-Window (&gt;14 days)</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Incentive Value</div><div class="stat-val">$300.00</div></div></div></div>
+    </div>
+
+    <!-- Window Rules -->
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>14-Day Window Rule:</strong> HRAs submitted within 14 calendar days of enrollment are <strong>auto-approved</strong> ($25.00 incentive). Finance only reviews out-of-window submissions requiring override or rejection. Auto-rejection if &gt;30 days.</span></div>
+
+    <!-- Queue Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>HRA Submissions Awaiting Review</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','hra-review_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Member</th><th>Agent NPN</th><th>Enrollment Date</th><th>HRA Date</th><th>Days</th><th>HRA Status</th><th>Incentive</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td>Susan Walsh</td><td>8823441 (J. Martinez)</td><td>05 14,2026</td><td>05 20,2026</td><td>6 days</td><td><span class="window-ok"><i class="fas fa-check-circle"></i> Auto-Approved</span></td><td>$25.00</td><td><span style="font-size:11px;color:#2e7d32;font-weight:600"><i class="fas fa-check-double" style="margin-right:4px"></i>Auto-approved (in-window)</span></td></tr>
+            <tr><td>Earl Thompson</td><td>8823441 (J. Martinez)</td><td>05 12,2026</td><td>05 22,2026</td><td>10 days</td><td><span class="window-ok"><i class="fas fa-check-circle"></i> Auto-Approved</span></td><td>$25.00</td><td><span style="font-size:11px;color:#2e7d32;font-weight:600"><i class="fas fa-check-double" style="margin-right:4px"></i>Auto-approved (in-window)</span></td></tr>
+            <tr><td>Frank Johnson</td><td>7719022 (S. Chen)</td><td>05 10,2026</td><td>05 18,2026</td><td>8 days</td><td><span class="window-ok"><i class="fas fa-check-circle"></i> Auto-Approved</span></td><td>$25.00</td><td><span style="font-size:11px;color:#2e7d32;font-weight:600"><i class="fas fa-check-double" style="margin-right:4px"></i>Auto-approved (in-window)</span></td></tr>
+            <tr><td>Grace Kim</td><td>7719022 (S. Chen)</td><td>05 08,2026</td><td>05 14,2026</td><td>6 days</td><td><span class="window-ok"><i class="fas fa-check-circle"></i> Auto-Approved</span></td><td>$25.00</td><td><span style="font-size:11px;color:#2e7d32;font-weight:600"><i class="fas fa-check-double" style="margin-right:4px"></i>Auto-approved (in-window)</span></td></tr>
+            <tr><td>Maria Santos</td><td>6643091 (D. Wright)</td><td>05 02,2026</td><td>05 10,2026</td><td>8 days</td><td><span class="window-ok"><i class="fas fa-check-circle"></i> Auto-Approved</span></td><td>$25.00</td><td><span style="font-size:11px;color:#2e7d32;font-weight:600"><i class="fas fa-check-double" style="margin-right:4px"></i>Auto-approved (in-window)</span></td></tr>
+            <!-- Out of window — requires manual review -->
+            <tr style="background:#fff5f5"><td>Dorothy Henderson</td><td>8823441 (J. Martinez)</td><td>04 28,2026</td><td>05 20,2026</td><td class="window-fail">22 days</td><td><span class="window-fail"><i class="fas fa-exclamation-triangle"></i> Out-of-Window</span></td><td><s>$25.00</s></td><td><button class="btn-ol btn-sm" style="color:#e65100" onclick="openOverrideHRA('Dorothy Henderson','J. Martinez')">Override</button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="openRejectHRA('Dorothy Henderson','J. Martinez')">Reject</button></td></tr>
+            <tr style="background:#fff5f5"><td>Robert Lin</td><td>5521833 (M. Brown)</td><td>04 20,2026</td><td>05 18,2026</td><td class="window-fail">28 days</td><td><span class="window-fail"><i class="fas fa-exclamation-triangle"></i> Out-of-Window</span></td><td><s>$25.00</s></td><td><button class="btn-ol btn-sm" style="color:#e65100" onclick="openOverrideHRA('Robert Lin','M. Brown')">Override</button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="openRejectHRA('Robert Lin','M. Brown')">Reject</button></td></tr>
+            <tr style="background:#fff5f5"><td>James Cook</td><td>5521833 (M. Brown)</td><td>04 15,2026</td><td>05 20,2026</td><td class="window-fail">35 days</td><td><span class="window-fail"><i class="fas fa-ban"></i> Auto-Rejected (&gt;30d)</span></td><td>$0.00</td><td><span style="font-size:11px;color:#9e9e9e">Auto-rejected</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Rejection Modal Trigger -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-exclamation-circle" style="margin-right:8px;color:#c62828"></i>Rejection / Override Workflow</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Rejection Reason</label><select><option>Select reason...</option><option>HRA submitted after 14-day window</option><option>Incomplete HRA form</option><option>Duplicate submission</option><option>Member not enrolled</option><option>Agent not eligible for incentive</option></select></div>
+          <div class="fg"><label>Override Justification (for out-of-window approvals)</label><input type="text" class="form-control form-control-sm" placeholder="e.g., Agent was on medical leave; extension approved by manager"></div>
+        </div>
+        <div class="al-warn" style="margin-top:8px"><i class="fas fa-shield-alt" style="flex-shrink:0"></i><span>Out-of-window overrides require Finance Manager approval and are logged in the compliance audit trail.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPROVE MODAL -->
+<div id="approveModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:8px"></i>Approve HRA Incentive</h6><button onclick="document.getElementById('approveModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px">Approve HRA incentive for <strong id="appMember"></strong> (Agent: <strong id="appAgent"></strong>)?</p>
+      <p style="font-size:13px;color:#1b5e20"><strong>Incentive Amount: <span id="appAmount"></span></strong></p>
+      <div class="fg"><label>Reviewer Notes (optional)</label><textarea id="appNotes" rows="2" placeholder="Optional notes..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('approveModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="confirmApproveHRA()"><i class="fas fa-check"></i>Approve Incentive</button>
+    </div>
+  </div>
+</div>
+
+<!-- REJECT MODAL -->
+<div id="rejectModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-times-circle" style="margin-right:8px"></i>Reject HRA Incentive</h6><button onclick="document.getElementById('rejectModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px">Reject HRA incentive for <strong id="rejMember"></strong> (Agent: <strong id="rejAgent"></strong>)?</p>
+      <div class="fg" style="margin-bottom:10px"><label>Rejection Reason <span class="req">*</span></label>
+        <select id="rejReason">
+          <option value="">— Select reason —</option>
+          <option>HRA submitted outside 14-day window</option>
+          <option>Incomplete or invalid HRA form</option>
+          <option>Duplicate HRA submission for this member/plan year</option>
+          <option>Member not enrolled or enrollment cancelled</option>
+          <option>Agent not eligible for incentive under current contract</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Detailed Notes <span class="req">*</span> (min 30 characters)</label>
+        <textarea id="rejNotes" rows="3" oninput="document.getElementById('rejCharCount').textContent=this.value.length" placeholder="Provide detailed rejection notes (min 30 chars)..."></textarea>
+        <div style="font-size:11px;color:#5f6368;text-align:right"><span id="rejCharCount">0</span>/30 chars minimum</div>
+      </div>
+      <div id="rejErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillReject()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('rejectModal').classList.remove('open')">Cancel</button>
+        <button class="btn-danger" onclick="confirmRejectHRA()"><i class="fas fa-times"></i>Reject Incentive</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERRIDE MODAL -->
+<div id="overrideModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#e65100"><i class="fas fa-unlock-alt" style="margin-right:8px"></i>Override Out-of-Window HRA</h6><button onclick="document.getElementById('overrideModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px">Override 14-day window rule for <strong id="ovMember"></strong> (Agent: <strong id="ovAgent"></strong>)?</p>
+      <div class="al-warn" style="margin-bottom:12px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>This override requires Finance Manager approval and will be logged in the compliance audit trail. Use only when there is documented extenuating circumstances.</span></div>
+      <div class="fg">
+        <label>Override Justification <span class="req">*</span> (min 20 characters)</label>
+        <textarea id="ovJustification" rows="3" oninput="document.getElementById('ovCharCount').textContent=this.value.length" placeholder="e.g., Agent was on approved medical leave; extension approved by compliance team..."></textarea>
+        <div style="font-size:11px;color:#5f6368;text-align:right"><span id="ovCharCount">0</span>/20 chars minimum</div>
+      </div>
+      <div id="ovErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillOverride()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('overrideModal').classList.remove('open')">Cancel</button>
+        <button style="background:#e65100;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="confirmOverrideHRA()"><i class="fas fa-unlock-alt"></i>Approve Override</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BATCH APPROVE CONFIRM MODAL -->
+<div id="batchModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#1b5e20"><i class="fas fa-check-double" style="margin-right:8px"></i>Batch Approve In-Window HRAs</h6><button onclick="document.getElementById('batchModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px">This will approve all <strong>5 in-window HRA submissions</strong> and queue incentive payments totaling <strong>$125.00</strong>. Continue?</p>
+      <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Out-of-window items will not be affected. Each approval will be logged individually in the audit trail.</span></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('batchModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="confirmBatch()"><i class="fas fa-check-double"></i>Approve All 5</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var hraTarget={member:'',agent:''};
+function openApproveHRA(member,agent,amount){
+  hraTarget={member:member,agent:agent};
+  document.getElementById('appMember').textContent=member;
+  document.getElementById('appAgent').textContent=agent;
+  document.getElementById('appAmount').textContent=amount;
+  document.getElementById('appNotes').value='';
+  document.getElementById('approveModal').classList.add('open');
+}
+function confirmApproveHRA(){
+  document.getElementById('approveModal').classList.remove('open');
+  showHraToast('HRA incentive approved for '+hraTarget.member+'. $25.00 queued for payment to agent '+hraTarget.agent+'. Audit log updated.','success');
+}
+function openRejectHRA(member,agent){
+  hraTarget={member:member,agent:agent};
+  document.getElementById('rejMember').textContent=member;
+  document.getElementById('rejAgent').textContent=agent;
+  document.getElementById('rejReason').value='';
+  document.getElementById('rejNotes').value='';
+  document.getElementById('rejCharCount').textContent='0';
+  document.getElementById('rejErr').style.display='none';
+  document.getElementById('rejectModal').classList.add('open');
+}
+function prefillReject(){
+  document.getElementById('rejReason').value='HRA submitted outside 14-day window';
+  document.getElementById('rejNotes').value='HRA was submitted 22 days after enrollment effective date. No approved extension on file for this agent.';
+  document.getElementById('rejCharCount').textContent='95';
+  document.getElementById('rejErr').style.display='none';
+  showToast('Reject form prefilled with sample data','info');
+}
+function prefillOverride(){
+  document.getElementById('ovJustification').value='Agent was on approved medical leave from 05/01 to 05/18. Extension granted by compliance team per policy exception CMP-2026-041.';
+  document.getElementById('ovCharCount').textContent='128';
+  document.getElementById('ovErr').style.display='none';
+  showToast('Override form prefilled with sample data','info');
+}
+function confirmRejectHRA(){
+  var reason=document.getElementById('rejReason').value;
+  var notes=document.getElementById('rejNotes').value.trim();
+  var err=document.getElementById('rejErr');
+  var errs=[];
+  if(!reason) errs.push('Please select a rejection reason.');
+  if(notes.length<30) errs.push('Notes must be at least 30 characters (currently '+notes.length+').');
+  if(errs.length){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>'+errs.join('<br>')+'</div>';err.style.display='flex';return;}
+  document.getElementById('rejectModal').classList.remove('open');
+  showHraToast('HRA incentive rejected for '+hraTarget.member+'. Reason: '+reason+'. Agent notified.','warn');
+}
+function openOverrideHRA(member,agent){
+  hraTarget={member:member,agent:agent};
+  document.getElementById('ovMember').textContent=member;
+  document.getElementById('ovAgent').textContent=agent;
+  document.getElementById('ovJustification').value='';
+  document.getElementById('ovCharCount').textContent='0';
+  document.getElementById('ovErr').style.display='none';
+  document.getElementById('overrideModal').classList.add('open');
+}
+function confirmOverrideHRA(){
+  var just=document.getElementById('ovJustification').value.trim();
+  var err=document.getElementById('ovErr');
+  if(just.length<20){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>Justification must be at least 20 characters (currently '+just.length+').</div>';err.style.display='flex';return;}
+  document.getElementById('overrideModal').classList.remove('open');
+  showHraToast('Override approved for '+hraTarget.member+'. Incentive queued. Finance Manager audit event created.','info');
+}
+function batchApproveInWindow(){
+  document.getElementById('batchModal').classList.add('open');
+}
+function confirmBatch(){
+  document.getElementById('batchModal').classList.remove('open');
+  showHraToast('5 in-window HRA submissions approved. $125.00 incentives queued for payment. Audit entries created for each.','success');
+}
+function showHraToast(msg,type){
+  showToast(msg,type==='warn'?'warning':type);
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

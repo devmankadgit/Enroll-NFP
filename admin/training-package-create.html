@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Create Training Package | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub sb-sub-open">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html" class="active"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4 id="pageTitle">Create Training Package</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="training-admin.html">Training</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Create Package</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="prefillPackage()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <a href="training-admin.html" class="btn-ol btn-sm"><i class="fas fa-arrow-left"></i> Back to Training</a>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Error Banner -->
+    <div id="pkgErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
+
+    <!-- Package Details Card -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between"><h5><i class="fas fa-info-circle" style="margin-right:8px;color:#1a237e"></i>Package Details</h5><button class="btn-ol btn-sm" onclick="prefillPackageDetails()" style="color:#1a237e"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
+      <div class="card-body" style="padding:20px">
+        <div class="form-row"><div class="fg" style="flex:2"><label>Package Name <span style="color:#c62828">*</span></label><input id="pkgName" placeholder="e.g. AEP 2027 Certification"></div><div class="fg"><label>Training Type <span style="color:#c62828">*</span></label><select id="pkgType"><option value="">-- Select Type --</option><option>AHIP</option><option>Product Training</option><option>Carrier Certification</option><option>Compliance</option><option>Onboarding</option><option>Continuing Education</option></select></div><div class="fg"><label>Status</label><select id="pkgStatus"><option>Draft</option><option>Published</option></select></div></div>
+        <div class="form-row"><div class="fg" style="flex:2"><label>Description</label><textarea id="pkgDesc" rows="2" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px" placeholder="Brief description of training content..."></textarea></div></div>
+        <div class="form-row"><div class="fg"><label>Required For <span style="color:#c62828">*</span></label><select id="pkgRequired"><option value="">Select audience</option><option>All Agents</option><option>New Agents Only</option><option>FMO/SGA Agents</option><option>Specific Agencies</option></select></div><div class="fg"><label>Deadline <span style="color:#c62828">*</span></label><input id="pkgDeadline" type="date"></div><div class="fg"><label>Plan Year</label><input id="pkgYear" placeholder="e.g. 2027"></div></div>
+        <div class="form-row"><div class="fg"><label>Effective Date <span style="color:#c62828">*</span></label><input id="pkgEffDate" type="date"></div><div class="fg"><label>Expiration Date <span style="color:#c62828">*</span></label><input id="pkgExpDate" type="date"></div><div class="fg"><label>Validity Period</label><input id="pkgValidity" placeholder="e.g. Valid Until 07 31,2027" readonly style="background:#f8f9fa"></div></div>
+        <div class="form-row"><div class="fg"><label>Pass Score % <span style="color:#c62828">*</span></label><input id="pkgPassScore" type="number" min="50" max="100" placeholder="80"></div><div class="fg"><label>Number of Attempts <span style="color:#c62828">*</span></label><input id="pkgAttempts" type="number" min="1" max="10" placeholder="3"></div><div class="fg"><label>Includes Exam</label><select id="pkgExam"><option>Yes</option><option>No</option></select></div></div>
+        <div class="form-row">
+          <div class="fg"><label>Learning Material Upload</label>
+            <div style="border:2px dashed #c5cae9;border-radius:8px;padding:16px;text-align:center;background:#f8f9ff;cursor:pointer" onclick="uploadLearningMaterial()">
+              <i class="fas fa-cloud-upload-alt" style="font-size:22px;color:#1a237e;margin-bottom:4px"></i>
+              <div style="font-size:12px;color:#1a237e;font-weight:600">Click to upload learning materials or videos</div>
+              <div style="font-size:11px;color:#5f6368;margin-top:2px">PDF, PPTX, MP4, MOV, AVI, WEBM, SCORM — up to 200MB</div>
+            </div>
+            <div id="pkgMaterialFile" style="display:none;margin-top:8px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:8px 12px;font-size:12px;display:none;align-items:center;gap:8px"><i class="fas fa-file-alt" style="color:#1b5e20"></i><span id="pkgMaterialFileName"></span><button class="btn-ol btn-sm" style="margin-left:auto;font-size:10px;color:#c62828" onclick="removeLearningMaterial()"><i class="fas fa-times"></i></button></div>
+          </div>
+          <div class="fg"><label>Certificate of Completion Template</label>
+            <div style="border:2px dashed #c8e6c9;border-radius:8px;padding:16px;text-align:center;background:#f1f8e9;cursor:pointer" onclick="uploadCertificate()">
+              <i class="fas fa-certificate" style="font-size:22px;color:#2e7d32;margin-bottom:4px"></i>
+              <div style="font-size:12px;color:#2e7d32;font-weight:600">Click to upload certificate template</div>
+              <div style="font-size:11px;color:#5f6368;margin-top:2px">PDF, PNG, DOCX — up to 10MB</div>
+            </div>
+            <div id="pkgCertFile" style="display:none;margin-top:8px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:8px 12px;font-size:12px;align-items:center;gap:8px"><i class="fas fa-certificate" style="color:#2e7d32"></i><span id="pkgCertFileName"></span><button class="btn-ol btn-sm" style="margin-left:auto;font-size:10px;color:#c62828" onclick="removeCertificate()"><i class="fas fa-times"></i></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modules & Questions Card -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#1a237e"></i>Modules &amp; Questions</h5></div>
+      <div class="card-body" style="padding:20px">
+        <div class="form-row" style="align-items:flex-end;margin-bottom:12px">
+          <div class="fg"><label>Number of Modules <span style="color:#c62828">*</span></label><input id="pkgModules" type="number" min="1" max="20" placeholder="e.g. 5" value=""></div>
+          <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-pr btn-sm" onclick="generateModuleSections()"><i class="fas fa-cogs" style="margin-right:4px"></i>Generate Sections</button></div>
+          <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-ol btn-sm" onclick="prefillModules()" style="color:#1a237e"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
+        </div>
+        <div style="font-size:11px;color:#5f6368;margin-bottom:16px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Enter number of modules and click "Generate Sections" to create module panels. You can edit module names and add MCQ questions under each.</div>
+
+        <!-- Dynamic Module Sections -->
+        <div id="pkgModuleSections"></div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-body" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:12px;color:#5f6368"><i class="fas fa-info-circle" style="margin-right:4px"></i>Save as Draft to continue later, or Save Changes to finalize the package.</div>
+        <div class="dflex g8">
+          <a href="training-admin.html" class="btn-ol">Cancel</a>
+          <button class="btn-ol" onclick="saveAsDraft()" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-file-alt"></i> Save as Draft</button>
+          <button class="btn-pr" onclick="savePackage()"><i class="fas fa-save"></i> Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 10,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+
+<script>
+/* --- Dynamic Module Sections --- */
+var pkgModuleData=[];
+
+function generateModuleSections(){
+  var count=parseInt(document.getElementById('pkgModules').value);
+  if(!count||count<1||count>20){showToast('Enter a valid number of modules (1\u201320).','error');return;}
+  while(pkgModuleData.length<count){
+    pkgModuleData.push({name:'Module '+(pkgModuleData.length+1),questions:[],file:null});
+  }
+  if(pkgModuleData.length>count) pkgModuleData.length=count;
+  renderModuleSections();
+  showToast(count+' module section(s) generated. Add questions under each module.','info');
+}
+
+function renderModuleSections(){
+  var container=document.getElementById('pkgModuleSections');
+  var html='';
+  pkgModuleData.forEach(function(mod,idx){
+    var qCount=mod.questions.length;
+    html+='<div style="border:1px solid #e0e0e0;border-radius:10px;margin-bottom:14px;overflow:hidden">';
+    html+='<div onclick="toggleModSection('+idx+')" style="background:#f5f7ff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8eaed">';
+    html+='<div style="display:flex;align-items:center;gap:10px"><i class="fas fa-chevron-down" id="modChev'+idx+'" style="font-size:10px;color:#1a237e;transition:transform .2s"></i><span style="font-weight:600;color:#1a237e;font-size:13px">Module '+(idx+1)+'</span><span style="color:#5f6368;font-size:12px" id="modNameDisp'+idx+'">'+mod.name+'</span></div>';
+    html+='<span class="bdg '+(qCount>0?'b-green':'b-amber')+'" style="font-size:10px">'+qCount+' question'+(qCount!==1?'s':'')+'</span>';
+    html+='</div>';
+    html+='<div id="modBody'+idx+'" style="padding:14px 16px;display:none">';
+    // Module name input
+    html+='<div class="form-row" style="margin-bottom:12px"><div class="fg" style="flex:2"><label>Module Name <span style="color:#c62828">*</span></label><input id="modName'+idx+'" value="'+mod.name.replace(/"/g,'&quot;')+'" onchange="updateModName('+idx+')" placeholder="e.g. CKD/ESRD Plan Details & C-SNP Requirements"></div></div>';
+    // Module material upload
+    html+='<div style="margin-bottom:14px"><label style="font-size:12px;font-weight:600;color:#37474f;margin-bottom:4px;display:block">Module Material / Content</label>';
+    html+='<div style="border:2px dashed #c5cae9;border-radius:8px;padding:12px;text-align:center;background:#f8f9ff;cursor:pointer" onclick="uploadModuleMaterial('+idx+')">';
+    html+='<i class="fas fa-cloud-upload-alt" style="font-size:18px;color:#1a237e;margin-bottom:2px"></i>';
+    html+='<div style="font-size:11px;color:#1a237e;font-weight:600">Upload module material or video</div>';
+    html+='<div style="font-size:10px;color:#5f6368;margin-top:2px">PDF, PPTX, MP4, MOV, AVI, WEBM, SCORM — up to 200MB</div>';
+    html+='</div>';
+    // Uploaded file display
+    var hasFile=mod.file&&mod.file.name;
+    html+='<div id="modFile'+idx+'" style="'+(hasFile?'display:flex':'display:none')+';margin-top:6px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:6px 10px;font-size:11px;align-items:center;gap:8px">';
+    html+='<i class="fas '+(hasFile&&mod.file.name.match(/\.(mp4|mov|avi|webm)$/i)?'fa-video':'fa-file-alt')+'" style="color:#1b5e20"></i>';
+    html+='<span id="modFileName'+idx+'">'+(hasFile?mod.file.name:'')+'</span>';
+    html+='<button class="btn-ol btn-sm" style="margin-left:auto;font-size:10px;color:#c62828" onclick="removeModuleMaterial('+idx+')"><i class="fas fa-times"></i></button>';
+    html+='</div></div>';
+    // Questions list
+    html+='<div id="modQList'+idx+'">';
+    if(qCount>0){
+      html+='<div style="font-size:11px;font-weight:600;color:#5f6368;margin-bottom:6px;text-transform:uppercase">Questions ('+qCount+')</div>';
+      mod.questions.forEach(function(q,qi){
+        html+='<div style="background:#f9f9f9;border:1px solid #eee;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:12px">';
+        html+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
+        html+='<div><strong style="color:#0d47a1">Q'+(qi+1)+'.</strong> '+q.q+'</div>';
+        html+='<button class="btn-ol btn-sm" style="font-size:10px;color:#c62828;flex-shrink:0;margin-left:8px" onclick="removeModQuestion('+idx+','+qi+')"><i class="fas fa-trash"></i></button>';
+        html+='</div>';
+        html+='<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:8px">';
+        q.opts.forEach(function(o,oi){
+          var letter=['A','B','C','D'][oi];
+          if(oi===q.correct){
+            html+='<span style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:4px;padding:2px 8px;font-size:11px"><strong>'+letter+'.</strong> '+o+' <i class="fas fa-check" style="color:#2e7d32;font-size:9px"></i></span>';
+          } else {
+            html+='<span style="background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:2px 8px;font-size:11px">'+letter+'. '+o+'</span>';
+          }
+        });
+        html+='</div>';
+        html+='<div style="margin-top:4px;font-size:10px;color:#2e7d32"><i class="fas fa-key" style="margin-right:4px"></i>Correct: '+['A','B','C','D'][q.correct]+' (hidden from agents during exam)</div>';
+        html+='</div>';
+      });
+    } else {
+      html+='<div style="text-align:center;padding:12px;color:#9aa0a6;font-size:12px"><i class="fas fa-question-circle" style="margin-right:4px"></i>No questions added yet</div>';
+    }
+    html+='</div>';
+    // Add question form
+    html+='<div style="background:#f8f9ff;border:1px solid #e8eaed;border-radius:8px;padding:12px 14px;margin-top:10px">';
+    html+='<div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:8px"><i class="fas fa-plus-circle" style="margin-right:4px"></i>Add Question to Module '+(idx+1)+'</div>';
+    html+='<div class="fg" style="margin-bottom:8px"><input id="mq'+idx+'_text" placeholder="Enter question text..." style="width:100%;border:1px solid #ddd;border-radius:5px;padding:7px 10px;font-size:12px"></div>';
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">';
+    html+='<input id="mq'+idx+'_a" placeholder="Option A *" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
+    html+='<input id="mq'+idx+'_b" placeholder="Option B *" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
+    html+='<input id="mq'+idx+'_c" placeholder="Option C (optional)" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
+    html+='<input id="mq'+idx+'_d" placeholder="Option D (optional)" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
+    html+='</div>';
+    html+='<div style="display:flex;align-items:center;gap:10px">';
+    html+='<select id="mq'+idx+'_correct" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px;flex:1"><option value="">-- Correct Answer --</option><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>';
+    html+='<button class="btn-pr btn-sm" onclick="addModQuestion('+idx+')"><i class="fas fa-plus" style="margin-right:4px"></i>Add</button>';
+    html+='</div>';
+    html+='</div>';
+    html+='</div></div>';
+  });
+  container.innerHTML=html;
+  if(pkgModuleData.length>0) toggleModSection(0);
+}
+
+function toggleModSection(idx){
+  var body=document.getElementById('modBody'+idx);
+  var chev=document.getElementById('modChev'+idx);
+  if(body.style.display==='none'){
+    body.style.display='block';
+    chev.style.transform='rotate(0deg)';
+  } else {
+    body.style.display='none';
+    chev.style.transform='rotate(-90deg)';
+  }
+}
+
+function updateModName(idx){
+  var val=document.getElementById('modName'+idx).value.trim();
+  pkgModuleData[idx].name=val||'Module '+(idx+1);
+  document.getElementById('modNameDisp'+idx).textContent=pkgModuleData[idx].name;
+}
+
+function uploadModuleMaterial(idx){
+  var ext=['pdf','pptx','mp4','mov','avi','webm'][Math.floor(Math.random()*6)];
+  var fileName=pkgModuleData[idx].name.replace(/[^a-zA-Z0-9]/g,'_')+'_Material.'+ext;
+  pkgModuleData[idx].file={name:fileName};
+  var el=document.getElementById('modFile'+idx);
+  document.getElementById('modFileName'+idx).textContent=fileName;
+  el.style.display='flex';
+  // Update icon based on file type
+  var icon=el.querySelector('i.fas');
+  if(icon) icon.className='fas '+(ext.match(/mp4|mov|avi|webm/)?'fa-video':'fa-file-alt');
+  showToast('Module '+(idx+1)+' material uploaded: '+fileName,'success');
+}
+
+function removeModuleMaterial(idx){
+  pkgModuleData[idx].file=null;
+  document.getElementById('modFile'+idx).style.display='none';
+}
+
+function addModQuestion(idx){
+  var qText=document.getElementById('mq'+idx+'_text').value.trim();
+  var optA=document.getElementById('mq'+idx+'_a').value.trim();
+  var optB=document.getElementById('mq'+idx+'_b').value.trim();
+  var optC=document.getElementById('mq'+idx+'_c').value.trim();
+  var optD=document.getElementById('mq'+idx+'_d').value.trim();
+  var correct=document.getElementById('mq'+idx+'_correct').value;
+  if(!qText){showToast('Question text is required.','error');return;}
+  if(!optA||!optB){showToast('Options A and B are required.','error');return;}
+  if(correct===''){showToast('Select the correct answer.','error');return;}
+  var opts=[optA,optB];
+  if(optC) opts.push(optC);
+  if(optD) opts.push(optD);
+  var correctIdx=parseInt(correct);
+  if(correctIdx>=opts.length){showToast('Correct answer refers to an empty option.','error');return;}
+  pkgModuleData[idx].questions.push({q:qText,opts:opts,correct:correctIdx});
+  // Re-render but keep this module open
+  renderModuleSections();
+  toggleModSection(idx);
+  // Clear inputs for next question
+  document.getElementById('mq'+idx+'_text').value='';
+  document.getElementById('mq'+idx+'_a').value='';
+  document.getElementById('mq'+idx+'_b').value='';
+  document.getElementById('mq'+idx+'_c').value='';
+  document.getElementById('mq'+idx+'_d').value='';
+  document.getElementById('mq'+idx+'_correct').value='';
+  // Focus question text for rapid entry
+  document.getElementById('mq'+idx+'_text').focus();
+  showToast('Question '+(pkgModuleData[idx].questions.length)+' added to Module '+(idx+1)+'. Add another or continue.','success');
+}
+
+function removeModQuestion(modIdx,qIdx){
+  pkgModuleData[modIdx].questions.splice(qIdx,1);
+  renderModuleSections();
+  toggleModSection(modIdx);
+}
+
+function prefillModules(){
+  document.getElementById('pkgModules').value='3';
+  pkgModuleData=[
+    {name:'Module 1 \u2014 CKD/ESRD Plan Details & C-SNP Requirements (12 min)',file:{name:'Module1_CKD_ESRD_Overview.mp4'},questions:[
+      {q:'What is the primary eligibility requirement for Gold Kidney\'s C-SNP plan?',opts:['Medicare Part A only','ESRD/CKD Stage 4\u20135 or kidney transplant','Under age 65','Skilled nursing facility'],correct:1},
+      {q:'What is the maximum out-of-pocket limit for Gold Kidney C-SNP?',opts:['$3,400','$5,200','$7,550','$10,000'],correct:0}
+    ]},
+    {name:'Module 2 \u2014 Compliance & CMS Marketing Guidelines (8 min)',file:{name:'Module2_Compliance_Guidelines.pdf'},questions:[
+      {q:'Which marketing activity is prohibited under CMS guidelines?',opts:['Educational events at community centers','Mailing requested materials','Cold-calling without prior consent','Scheduled sales appointments'],correct:2},
+      {q:'How many business days must elapse between an educational event and a sales appointment?',opts:['1 day','3 days','5 days','No waiting period'],correct:0}
+    ]},
+    {name:'Module 3 \u2014 Enrollment Process & SOA Requirements (10 min)',file:{name:'Module3_Enrollment_SOA.pptx'},questions:[
+      {q:'Which document must be obtained BEFORE discussing specific plan details?',opts:['HIPAA Form','Enrollment Application','SOA Form','MOC Attestation'],correct:2},
+      {q:'What is the enrollment application submission deadline after beneficiary signature?',opts:['24 hours','48 hours','72 hours','5 business days'],correct:1}
+    ]}
+  ];
+  renderModuleSections();
+  showToast('3 modules with questions and materials prefilled.','info');
+}
+
+function prefillPackageDetails(){
+  document.getElementById('pkgName').value='AEP 2028 Certification';
+  document.getElementById('pkgType').value='AHIP';
+  document.getElementById('pkgDesc').value='AHIP + Gold Kidney Product Training for AEP 2028 selling season. Covers CKD/ESRD plan details, compliance guidelines, and enrollment process.';
+  document.getElementById('pkgExam').value='Yes';
+  document.getElementById('pkgRequired').value='All Agents';
+  document.getElementById('pkgDeadline').value='2027-09-30';
+  document.getElementById('pkgEffDate').value='2027-07-01';
+  document.getElementById('pkgExpDate').value='2028-06-30';
+  document.getElementById('pkgPassScore').value='80';
+  document.getElementById('pkgAttempts').value='3';
+  document.getElementById('pkgYear').value='2028';
+  document.getElementById('pkgStatus').value='Draft';
+  updateValidityPeriod();
+  simulateUpload('material','AEP_2028_Training_Guide.pdf');
+  simulateUpload('cert','Certificate_Template_2028.pdf');
+  showToast('Package Details prefilled with sample data.','info');
+}
+
+function prefillPackage(){
+  document.getElementById('pkgName').value='AEP 2028 Certification';
+  document.getElementById('pkgType').value='AHIP';
+  document.getElementById('pkgDesc').value='AHIP + Gold Kidney Product Training for AEP 2028 selling season. Covers CKD/ESRD plan details, compliance guidelines, and enrollment process.';
+  document.getElementById('pkgModules').value='3';
+  document.getElementById('pkgExam').value='Yes';
+  document.getElementById('pkgRequired').value='All Agents';
+  document.getElementById('pkgDeadline').value='2027-09-30';
+  document.getElementById('pkgEffDate').value='2027-07-01';
+  document.getElementById('pkgExpDate').value='2028-06-30';
+  document.getElementById('pkgPassScore').value='80';
+  document.getElementById('pkgAttempts').value='3';
+  document.getElementById('pkgYear').value='2028';
+  document.getElementById('pkgStatus').value='Draft';
+  updateValidityPeriod();
+  simulateUpload('material','AEP_2028_Training_Guide.pdf');
+  simulateUpload('cert','Certificate_Template_2028.pdf');
+  pkgModuleData=[
+    {name:'Module 1 \u2014 CKD/ESRD Plan Details & C-SNP Requirements (12 min)',file:{name:'Module1_CKD_ESRD_Overview.mp4'},questions:[
+      {q:'What is the primary eligibility requirement for Gold Kidney\'s C-SNP plan?',opts:['Medicare Part A only','ESRD/CKD Stage 4\u20135 or kidney transplant','Under age 65','Skilled nursing facility'],correct:1},
+      {q:'What is the maximum out-of-pocket limit for Gold Kidney C-SNP?',opts:['$3,400','$5,200','$7,550','$10,000'],correct:0}
+    ]},
+    {name:'Module 2 \u2014 Compliance & CMS Marketing Guidelines (8 min)',file:{name:'Module2_Compliance_Guidelines.pdf'},questions:[
+      {q:'Which marketing activity is prohibited under CMS guidelines?',opts:['Educational events at community centers','Mailing requested materials','Cold-calling without prior consent','Scheduled sales appointments'],correct:2}
+    ]},
+    {name:'Module 3 \u2014 Enrollment Process & SOA Requirements (10 min)',file:{name:'Module3_Enrollment_SOA.pptx'},questions:[
+      {q:'Which document must be obtained BEFORE discussing specific plan details?',opts:['HIPAA Form','Enrollment Application','SOA Form','MOC Attestation'],correct:2}
+    ]}
+  ];
+  renderModuleSections();
+  showToast('Form prefilled with sample data including 3 modules and questions.','info');
+}
+
+function savePackage(){
+  var errors=[];
+  if(!document.getElementById('pkgName').value.trim()) errors.push('Package Name');
+  if(!document.getElementById('pkgType').value) errors.push('Training Type');
+  if(!document.getElementById('pkgModules').value) errors.push('Number of Modules');
+  if(!document.getElementById('pkgRequired').value) errors.push('Required For');
+  if(!document.getElementById('pkgDeadline').value) errors.push('Deadline');
+  if(!document.getElementById('pkgEffDate').value) errors.push('Effective Date');
+  if(!document.getElementById('pkgExpDate').value) errors.push('Expiration Date');
+  if(!document.getElementById('pkgPassScore').value.trim()) errors.push('Pass Score %');
+  var effDate=document.getElementById('pkgEffDate').value;
+  var expDate=document.getElementById('pkgExpDate').value;
+  if(effDate&&expDate&&expDate<=effDate) errors.push('Expiration Date must be after Effective Date');
+  var err=document.getElementById('pkgErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+' is required.</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';window.scrollTo(0,0);return;
+  }
+  if(pkgModuleData.length===0){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>Click "Generate Sections" to create module sections before saving.</div>';
+    err.style.display='flex';window.scrollTo(0,0);return;
+  }
+  err.style.display='none';
+  var totalQ=0;pkgModuleData.forEach(function(m){totalQ+=m.questions.length;});
+  showToast('Training package "'+document.getElementById('pkgName').value+'" created and published with '+pkgModuleData.length+' modules and '+totalQ+' questions.','success');
+  setTimeout(function(){window.location.href='training-admin.html';},2000);
+}
+
+function saveAsDraft(){
+  var name=document.getElementById('pkgName').value.trim();
+  if(!name){showToast('Package Name is required to save as draft.','error');return;}
+  document.getElementById('pkgStatus').value='Draft';
+  document.getElementById('pkgErr').style.display='none';
+  var totalQ=0;pkgModuleData.forEach(function(m){totalQ+=m.questions.length;});
+  var modInfo=pkgModuleData.length>0?' with '+pkgModuleData.length+' module(s) and '+totalQ+' question(s)':'';
+  showToast('"'+name+'" saved as Draft'+modInfo+'. You can continue editing later.','info');
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+/* --- Validity Period Auto-Calc --- */
+function updateValidityPeriod(){
+  var expDate=document.getElementById('pkgExpDate').value;
+  var validityEl=document.getElementById('pkgValidity');
+  if(!expDate){validityEl.value='';return;}
+  var d=new Date(expDate+'T00:00:00');
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  validityEl.value='Valid Until '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var expInput=document.getElementById('pkgExpDate');
+  if(expInput) expInput.addEventListener('change',updateValidityPeriod);
+});
+
+/* --- Learning Material Upload --- */
+function uploadLearningMaterial(){
+  simulateUpload('material','Training_Material_'+Date.now()+'.pdf');
+  showToast('Learning material uploaded successfully.','success');
+}
+function removeLearningMaterial(){
+  var el=document.getElementById('pkgMaterialFile');
+  el.style.display='none';
+}
+function uploadCertificate(){
+  simulateUpload('cert','Certificate_Template_'+Date.now()+'.pdf');
+  showToast('Certificate template uploaded successfully.','success');
+}
+function removeCertificate(){
+  var el=document.getElementById('pkgCertFile');
+  el.style.display='none';
+}
+function simulateUpload(type,fileName){
+  if(type==='material'){
+    var el=document.getElementById('pkgMaterialFile');
+    document.getElementById('pkgMaterialFileName').textContent=fileName;
+    el.style.display='flex';
+  } else {
+    var el2=document.getElementById('pkgCertFile');
+    document.getElementById('pkgCertFileName').textContent=fileName;
+    el2.style.display='flex';
+  }
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

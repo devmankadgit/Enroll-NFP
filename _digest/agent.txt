@@ -1,0 +1,424 @@
+##### SIDEBAR variant used by 27 pages: action-items.html, appointments.html, bob.html, campaigns.html, commission-detail.html, commission-disputes.html, commissions.html, dashboard.html, documents.html, enrollment-status.html, enrollment.html, hra-management.html, lead-detail.html, leads.html, member-profile.html, my-hierarchy.html, notifications.html, onboarding-form.html, payments.html, plan-recommendation.html, pqat.html, profile.html, recredentialing.html, soa-form.html, support.html, training-exam.html, training.html
+- Dashboard [dashboard.html]
+## Members & Enrollment
+- Book of Business [bob.html]
+- New Enrollment [enrollment.html]
+- Enrollment Status [enrollment-status.html]
+- SOA Management [soa-form.html]
+- HRA Management [hra-management.html]
+## Sales & Leads
+- My Leads 12 [leads.html]
+- Campaigns [campaigns.html]
+- Action Items 4 [action-items.html]
+## Commissions & Payments
+- Commissions Management [commissions.html]
+  - My Commissions [commission-detail.html]
+  - Dispute Management [commission-disputes.html]
+- Payment History [payments.html]
+## Compliance & Training
+- Training & Certification [training.html]
+- Annual Re-Credentialing 1 [recredentialing.html]
+## Resources
+- Documents [documents.html]
+- Notifications 3 [notifications.html]
+- My Upline [my-hierarchy.html]
+- Help & Support [support.html]
+
+##### SIDEBAR variant used by 1 pages: onboarding.html
+- Save & Exit [../auth/login.html]
+
+=== /agent/action-items.html | Action Items Dashboard | Gold Kidney Agent Portal
+ACTIVE NAV: Action Items 4
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Proactive Action Items Dashboard | BC: Aggregated Tasks Across BoB
+CARDS/SECTIONS: All Action Items (8) Sorted by Urgency || Daily Email Digest Configuration
+TABLE1 (8 rows) cols: Type | Member / Lead | Due Date | Days Overdue | Priority | Status | Actions
+   row1: Lead Follow-up Linda Park 05 24,2026 1 day overdue High Overdue Complete View
+FORM LABELS: Item Type: | Priority: | Due Date: | Daily Digest | Delivery Time
+SELECTS: [All Types, HRA Due, PQAT Due, Healthy Visit, C-SNP Re-Verification, Lead Follow-up] [All, High, Medium, Low] [Enabled — Send Top 10 action items daily at 8:00 AM, Disabled] [7:00 AM, 8:00 AM, 9:00 AM]
+BUTTONS: Filter | Daily Digest: ON | Export to Excel | Complete | View Record
+BADGES: Lead Follow-up | High | Overdue | HRA Due | Not Started | Medium | Pending | In Progress | PQAT Due | Healthy Visit | Low | C-SNP Re-Verify | Due Today
+LINKS: lead-detail.html hra-management.html recredentialing.html bob.html pqat.html
+
+=== /agent/appointments.html | Appointments Due | Gold Kidney
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Appointments Due | BC: Dashboard Appointments Due
+KPIs: Due This Week=4 ; Overdue=1 ; Completed This Month=8 ; Upcoming (Next 14 Days)=6
+CARDS/SECTIONS: Member Appointments (Post-SOA)
+TABLE1 (5 rows) cols: Member | SOA Signed | Appointment Date | Time | Type | Plan Interest | Status | Actions
+   row1: MJ Maria Johnson ID: MEM-20261 07 20,2026 07 27,2026 10:00 AM In-Person Gold Kidney MAPD Due Today
+SELECTS: [All Statuses, Scheduled, Overdue, Completed, Cancelled] [This Week, Next 7 Days, Next 14 Days, This Month, All] [All Plans, Gold Kidney MAPD, Gold Kidney DSNP, Gold Kidney CSNP]
+BUTTONS: Export
+BADGES: In-Person | Due Today | Phone | Scheduled | Overdue
+
+=== /agent/bob.html | Book of Business | Gold Kidney Agent Portal
+ACTIVE NAV: Book of Business
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: My Book of Business | BC: Members Enrolled Through Agent James Martinez (NPN 8823441)
+KPIs: Total Members=7 ; Active=7 ; Terminated=0 ; Chronic Verified=4
+CARDS/SECTIONS: My Enrolled Members (7)
+TABLE1 (7 rows) cols: Member ID | MBI | First Name | Last Name | DOB | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified
+   row1: MEM-200301 1EG4-TE5-MK72 Dorothy Henderson 03/15/1959 (305) 555-0172 01 01,2026 — H1234 H1234-001 2026 Yes
+FORM LABELS: Plan: | Year: | Chronic:
+SELECTS: [All Plans, H1234-001, H1234-002, H1234-003] [All Years, 2026, 2025] [All, Yes, Pending, No]
+PLACEHOLDERS: Search member...
+BUTTONS: Reset | Export | Export to Excel
+BADGES: Yes | Pending
+LINKS: member-profile.html
+
+=== /agent/campaigns.html | Campaigns | Gold Kidney Agent Portal
+ACTIVE NAV: Campaigns
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Campaigns | BC: Dashboard Campaigns
+KPIs: Active Campaigns=2 ; Leads (All Campaigns)=28 ; Unique TFN Calls=63 ; Avg. Lead-to-Enroll=43%
+CARDS/SECTIONS: My Campaigns
+TABLE1 (3 rows) cols: Campaign Name | Code | Type | TFN | States | Plans | Leads | Enrolled | Conv. Rate | Status | Period | 
+   row1: AEP 2026 Florida Drive AEP-FL-2026 AEP 1-800-555-0101 FL, GA ESRD SNP CKD SNP HMO 21 9 43% Active Oct 15 ? 12 07,2025 Details
+BUTTONS: Export to Excel | Details
+MODALS/DRAWERS: newCampaignModal:Request New Campaign ; campaignDetailModal:AEP 2026 Florida Drive ? Details
+BADGES: AEP | Active | Year-Round | SEP | Scheduled
+LINKS: campaigns.html leads.html
+
+=== /agent/commission-detail.html | Commission Detailed View | Gold Kidney Agent Portal
+ACTIVE NAV: My Commissions
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Commission Detailed View | BC: Member-Level Commission Breakdown by Month
+KPIs: YTD Earned=$3,474.96 ; Members Earning=7 ; Months Active=6 ; Avg/Month=$579.16
+CARDS/SECTIONS: Commission Earnings by Member & Month
+TABLE1 (18 rows) cols: Member | Member ID | Plan | Month | Commission Type | Amount | Status
+   row1: Dorothy Henderson MEM-200301 H1234-001 Jan 2026 Initial Enrollment $573.00 Paid
+FORM LABELS: Search: | Month: | From: | To:
+SELECTS: [All Months, Jan 2026, Feb 2026, Mar 2026, Apr 2026, May 2026, Jun 2026]
+PLACEHOLDERS: Search member name...
+BUTTONS: Reset | Export | Dispute a Payment | Export to Excel
+MODALS/DRAWERS: disputeModal:Dispute a Commission Payment
+BADGES: Paid | Pending
+
+=== /agent/commission-disputes.html | Dispute Management | Gold Kidney Agent Portal
+ACTIVE NAV: Dispute Management
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Dispute Management | BC: Commission Payment Disputes & Resolution Tracking
+ALERT: Dispute Policy: Disputes are reviewed within 5 business days. If resolved in your favor, the corrected commission will be included in the next payment batch. You will receive a not
+KPIs: Total Disputes=4 ; Pending Review=2 ; Resolved=1 ; Denied=1
+CARDS/SECTIONS: My Disputes
+TABLE1 (4 rows) cols: Dispute ID | Enrollment Reference ID | Payment Date | Disputed Amount | Description | Status | Filed On | Actions
+   row1: DSP-2026-004 ENR-2026-00541 04 17,2026 $573.00 Initial enrollment commission not received for Frank Johnson despite confirmed submission Pending 05 28,2026 View
+FORM LABELS: Status: | Search:
+SELECTS: [All Statuses, Pending, Under Review, Resolved, Denied]
+PLACEHOLDERS: Reference ID or description...
+BUTTONS: Export to Excel | View
+MODALS/DRAWERS: newDisputeModal:File New Dispute ; viewDisputeModal:Dispute Details
+BADGES: Pending | Under Review | Resolved | Denied
+
+=== /agent/commissions.html | Commission Dashboard | Gold Kidney Agent Portal
+ACTIVE NAV: Commissions Management
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Commissions Management | BC: Producer Commission Visibility & Statements
+ALERT: Commission Attribution: Commission is determined by the NPN on the submitted enrollment application. Commission data is read-only. To dispute, use the Dispute module. Statement PDF
+KPIs: YTD Paid=$8,247.00 ; Current Pending Batch=$601.00 ; Last Payment=$1,203.00 ; Pending Chargebacks=$0.00
+CARDS/SECTIONS: Book of Business Commission Summary || Monthly Commission Trend (2026) || Payment History
+TABLE1 (4 rows) cols: Batch Month | Payment Date | Method | Gross Amount | Chargebacks | Net Paid | Statement
+   row1: April 2026 04 17,2026 ACH (PPD) $1,203.00 $0.00 $1,203.00 PDF
+BUTTONS: Export to Excel | PDF
+MODALS/DRAWERS: stmtModal:Commission Statement
+CHARTS: 1 canvas bar,Renewal
+
+=== /agent/dashboard.html | Agent Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Dashboard | BC: Home
+ALERT: AEP 2026 is active. Open enrollment ends 12 07,2026. You have 3 pending enrollments awaiting CMS submission and 2 HRAs due this week.
+KPIs: Active Members=24 ; Action Items=4 ; Commission YTD=$8,247 ; Active Leads=12 ; Due Renewal=6 ; Pending Enrollment=3 ; Pending HRA=5 ; Appointments Due=4
+CARDS/SECTIONS: Book of Business — Recent Members || Action Items || Commission Summary — May 2026 || Recent Leads || My Commission Trend || Lead Status Breakdown || Enrollments by Month || Book of Business Growth
+TABLE1 (4 rows) cols: Member | Plan | HRA | Healthy Visit | C-SNP | Risk
+   row1: DH Dorothy Henderson Eff. 01 01,2026 ESRD SNP Submitted Completed Verified
+TABLE2 (5 rows) cols: Commission Type | Members | Amount | Status
+   row1: Initial Commission (New) 3 $1,803.00 Paid Apr 17
+BUTTONS: Export to Excel
+BADGES: ESRD SNP | Submitted | Completed | Verified | CKD SNP | Overdue | Scheduled | ? Risk | Heart & Diabetes | Approved | Not Scheduled | BrightChoice HMO | OVERDUE | HRA | DUE SOON | C-SNP | VISIT | FOLLOW-UP | LEAD | Paid Apr 17 | Pending May 17 | Visit Not Confirmed | New | Contacted | Appt. Set | SOA Obtained
+LINKS: bob.html action-items.html commissions.html leads.html bob.html?filter=renewal-due enrollment.html?filter=pending hra-management.html?filter=pending appointments.html member-profile.html
+CHARTS: 4 canvas line,doughnut,bar
+
+=== /agent/documents.html | Document Vault | Gold Kidney Agent Portal
+ACTIVE NAV: Documents
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Document Vault | BC: 
+CARDS/SECTIONS: My Documents || Carrier Document Library
+TABLE1 (8 rows) cols:  | Document Name | Category | Member / Reference | Date | Size | Actions
+   row1: SOA ? Frank Johnson ? 05 19,2026 SOA Frank Johnson ? SOA-0853 05 19,2026 142 KB View
+TABLE2 (5 rows) cols:  | Document | Category | Version | Published | Status | Actions
+   row1: Agent Contracting Agreement Updated Standard agent contract CY2026 — updated commission tables Contract v3.2 05 15,2026 Needs Acknowledgment View Acknowledge
+FORM LABELS: Category: | Member: | Date From:
+SELECTS: [All Categories, SOA, Enrollment Application, C-SNP Verification, Commission Remittance, CMS Acknowledgment, Training, Leads, Carrier Materials]
+PLACEHOLDERS: Member name?
+BUTTONS: Export to Excel | View | Download | ← Prev | Next → | Acknowledge
+MODALS/DRAWERS: docViewModal:Document Preview
+
+=== /agent/enrollment-status.html | Enrollment Status | Gold Kidney Agent Portal
+ACTIVE NAV: Enrollment Status
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Enrollment Status Tracker | BC: Enrollment Lifecycle Statuses & History
+KPIs: Submitted=2 ; Pending CMS=1 ; Accepted=18 ; Rejected=1 ; Disenrolled=2
+CARDS/SECTIONS: My Enrollments || Status History: APP-2026-1249 (Frank Johnson)
+TABLE1 (5 rows) cols: App ID | Member | Plan | Submitted | Status | CMS Response | Effective Date | Actions
+   row1: APP-2026-1249 Frank Johnson CKD SNP Silver 05 19,2026 Submitted to CMS Awaiting ATN Timeline
+FORM LABELS: Status: | Date Range:
+SELECTS: [All, Submitted, Pending CMS, Accepted, Active, Rejected, Disenrolled]
+PLACEHOLDERS: Search member...
+BUTTONS: Export to Excel | Timeline | Re-Submit | ×
+MODALS/DRAWERS: detail-panel:Status History: APP-2026-1249 (Frank Johnson) ; resubmitModal:Re-Submit Enrollment
+BADGES: Submitted to CMS | CMS Accepted | Active | Rejected | Draft | Submitted | Pending ATN | Accepted | Disenrolled | Voided
+
+=== /agent/enrollment.html | Broker-Assisted Enrollment | Gold Kidney Agent Portal
+ACTIVE NAV: New Enrollment
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Broker-Assisted Enrollment | BC: Dashboard New Enrollment
+ALERT: SOA Verified: SOA-2026-0847 signed 05 20,2026 (14 days ago). Plan types: Medicare Advantage, C-SNP. Valid for enrollment.
+CARDS/SECTIONS: Step 1 — Member Personal Details & Address || Step 2 — Eligibility Verification (BEQ) || Step 3 — PQAT Health Questionnaire || Step 4 — Plan Recommendation || Step 5 — Agent Attestation & Enrollment Submission
+TABLE1 (11 rows) cols: Benefit | Gold Kidney ESRD C-SNP Gold ⭐ #1 Match (96%) | Gold Kidney ESRD C-SNP Platinum #2 Match (91%) | Gold Kidney CKD SNP Gold #3 Match (68%)
+   row1: Contract ID H1234-001 H1234-002 H1234-003
+FORM LABELS: First Name | Middle Initial | Last Name | Date of Birth | Sex | Phone | Email | SSN (Last 4) | Preferred Language | Address 1 * | Address 2 | ZIP Code * | City * | State * | County | Residence Duration | Medicare Beneficiary Identifier (MBI) | Part A Effective Date | Part B Effective Date | ESRD Status | Medicaid Number (if applicable) | Preferred Contact Method | Primary Condition | Currently Receiving Dialysis? | Nephrologist on Record? | Nephrologist / Practice Name | NPI (if known) | eGFR (most recent) | Lab Test Date | Lab Provider | Serum Creatinine (mg/dL) | BUN (mg/dL) | Rx Medication for Kidney Disease | Chronic Kidney Disease — Stage 3a (eGFR 45–59) | Chronic Kidney Disease — Stage 3b (eGFR 30–44) | Chronic Kidney Disease — Stage 4 (eGFR 15–29) | End-Stage Renal Disease — ESRD / Dialysis (eGFR < 15) | Kidney Transplant Recipient (within 36 months) | On kidney transplant evaluation list | Under active nephrologist care | Type 2 Diabetes | Hypertension | Heart Failure (CHF) | Cardiovascular Disease | COPD | Currently Under Hospice Care? | Long-Term Care Facility? | Receiving Home Dialysis? | Treating Physician Name | Physician NPI | Provider Name | Specialty | Fax | City | C-SNP Verification Document | Document Type | Document Date | I herewith authorize and direct Gold Kidney Health Plan to confirm my chronic conditions and obtain my medical records until I am no longer enrolled in the Gold Kidney Health Plan. (Box must be checked for C-SNP applications) | Signature | Date | Enrollment Period | SEP Reason Code | Effective Date (calculated) | Payment Method | Bank Routing Number | Account Number | PCP Name | PCP NPI | Practice Name | Include Part D Coverage? | IRMAA Acknowledgment | I understand high-income premium adjustment may apply | Member Signature (type full name) | Application Signature Date | Agent NPN
+SELECTS: [Select..., Female, Male] [English, Spanish, Creole] [6+ months, Less than 6 months] [Select..., Yes — Currently on Dialysis, Yes — Transplant Recipient, No] [Phone, Email, Mail] [Select..., End-Stage Renal Disease (ESRD), Chronic Kidney Disease (CKD), Cardiovascular Disease, Diabetes, None of the above] [Select..., Yes — Hemodialysis, Yes — Peritoneal, No] [Select..., Yes, No] [Select..., No, Yes] [Select..., No, Yes — In-Center Hemodialysis, Yes — Peritoneal Dialysis] [Select..., Physician Statement, Lab Results, Diagnosis Letter, Dialysis Records] [Select..., SEP — Special Election (C-SNP), AEP (Oct 15 – Dec 7), OEP (Jan 1 – Mar 31), ICEP — Initial Coverage] [A01 — Chronic Condition C-SNP, B01 — Moved out of area, Other] [Social Security Deduction, Bank Draft (ACH), Coupon Book (Mail)] [Yes — Include Part D coverage, No — Decline Part D]
+PLACEHOLDERS: Enter first name | M.I. | Enter last name | (000) 000-0000 | email@example.com | 0000 | Street address | Apt, Suite, Unit | 00000 | Auto-filled from ZIP | 1XXX-XX0-XX00 | Optional | e.g. Dr. Maria Sanchez — South FL Renal Care | e.g. 12 | e.g. Quest Diagnostics | e.g. 6.1 | e.g. 52 | Physician managing kidney condition | Enter 10-digit NPI | Full provider name
+BUTTONS: Prefill Data | Validate Address | Continue to Eligibility Check | Run Eligibility Check | Back | Continue to PQAT | Lookup | Submit for Clinical Validation | Continue to Plan Recommendations | Continue to Enrollment | Save Draft | Submit Enrollment to OEC Hub | Start New Enrollment
+LINKS: enrollment-status.html
+
+=== /agent/hra-management.html | HRA Management | Gold Kidney Agent Portal
+ACTIVE NAV: HRA Management
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Health Risk Assessment (HRA) | BC: HRA Form, Status Tracking & 14-Day Window
+CARDS/SECTIONS: My HRA Queue || HRA Questionnaire: Susan Walsh || HRA Submitted Successfully!
+TABLE1 (4 rows) cols: Member | App Signature Date | 14-Day Deadline | Days Remaining | Status | Incentive | Actions
+   row1: Susan Walsh 05 14,2026 05 28,2026 3 days Not Started $25.00 Start Now
+FORM LABELS: First Name * | Last Name * | Phone Number | Date of Birth * | Gold Kidney ID Number | Type of Assessment | 1. Do you have a language preference other than English? * | If yes, which language? | 2. Are there any specific cultural or religious beliefs that may affect your health care? * | If yes, which? | 3. What is your race? | 4. What is your ethnicity? | 5. What is the highest level of education you have completed? | 6. In general, how would you rate your current health? * | Are there specific reasons that made you answer the question the way you did? | 7. How is your current activity level? * | 8. Do you use any of the following assistive devices in your home? | Cane | Walker | Crutches | Manual Wheelchair | Scooter | Powered Wheelchair | None | 9. How often do you use alcohol? * | 10. Do you use illegal substances or medications not prescribed to you? * | If yes, do you want to quit? | 11. Do you use tobacco / nicotine products (e-cigarettes, vape, dip/chew)? * | 12. Over the past 2 weeks, how often have you had little interest or pleasure in doing things? * | 13. Over the past 2 weeks, how often have you been feeling down, depressed, or hopeless? * | 14. Have you had a flu shot / vaccine? * | If so, when was your last flu shot? | 15. Have you had a Td/Tdap shot in the last 9 years? | 16. If over 50, have you had a shingles shot after turning 50? | 17. Have you had a pneumococcal shot / vaccine? | If yes, how many? | 18. Have you had a Hepatitis immunization shot? | If yes, how many doses? | 19. Has a doctor ever told you that you have the following? * | Diabetes or Prediabetes | High blood pressure | Kidney disease | Heart disease | Asthma | COPD | HIV / AIDS | Stroke | Cancer | Bipolar disorder | Depression | Schizophrenia | Dementia | Hearing problems | Vision problems | 20. Do you have a primary care doctor you can easily see on a routine basis? * | If yes, name and contact info of your PCP: | 21. Do you have other doctors / specialists that you see? | If yes, specialist name, type, and contact: | 22. In the past 3 months, have you visited the ER or stayed overnight in the hospital? * | If yes, how many times and for what reasons? | 23. Do you use any medical devices in your home? | Oxygen | CPAP/BiPAP | Wound vac | Insulin pump | Hospital bed | 24. Do you need help from others to perform everyday activities (eating, dressing, grooming, bathing, walking, toileting)? * | If yes, do you get the help you need? | 25. Do you need help with laundry, housekeeping, shopping, telephone, cooking, transportation, home repair, or taking medications? * | 26. Have you fallen more than once in the past 6 months? * | 27. What is your living situation today? * | 28. Do you have problems with any of the following at home? (Check all that apply) | Pests (bugs, ants, mice) | Mold | Lead paint or pipes | Lack of heat | Oven/stove not working | Smoke detectors missing | Water leaks | None of the above
+SELECTS: [Select..., Initial, Annual, TOC (Transition of Care)] [Select..., Yes, No, Unable to assess, Declined to answer] [Select..., Arabic, Chinese, French, German, Hindi, Korean, Navajo, Spanish, Tagalog, Vietnamese, Other] [Select..., Amish, Baha'i, Buddhism, Christianity, Hindu, Jehovah's Witness, Judaism, Muslim, Seventh-day Adventist, Sikh, Other] [Select..., American Indian or Alaska Native, Asian Indian, Black or African American, Chinese, Filipino, Guamanian or Chamorro, Japanese, Korean, Native Hawaiian, Samoan, Vietnamese,...] [Select..., Not of Hispanic, Latino/a or Spanish origin, Puerto Rican, Mexican, Mexican American, Chicano/a, Cuban, Another Hispanic, Latino or Spanish origin, Prefer not to answer] [Select..., 8th grade or less, High School Graduate or GED, Some College, College Degree, Advanced Degree] [Select..., Excellent, Very good, Good, Fair, Poor, Unable to assess, Declined to answer] [Select..., Same as 3 months ago, Better than 3 months ago, Worse than 3 months ago, Unable to assess, Declined to answer] [Select..., Never, Sometimes, Often, Very often, Unable to assess, Declined to answer] [Select..., Not at all (0), Several days (1), More than half the days (2), Nearly every day (3)] [Select..., 1st dose, 2nd dose, Booster, Unable to assess, Declined to answer] [Select..., One dose, Two doses, Three doses, Unable to assess, Declined to answer] [Select..., Yes, No] [Select..., I have a steady place to live, I have a place to live today, but I am worried about losing it in the future, I do not have a steady place to live, Other] [Select..., Often True, Sometimes True, Never True] [Select..., None, Some, A lot] [Select..., Completed, Pending, Refused] [Select..., Member, Spouse, Family Member or Friend]
+PLACEHOLDERS: (555) 555-5555 | GK-XXXX-XXXXXX | Optional... | e.g., Dr. Smith, (555) 123-4567 | e.g., Dr. Patel (Nephrologist) | e.g., 1 time, chest pain | e.g., cost, pharmacy distance | e.g., dosage timing, side effects | e.g., lower back, arthritis
+BUTTONS: Export to Excel | Start Now | Continue | Start Over | View | Prefill Data | Clear Form | Submit HRA | Save Draft | Start New HRA | Print Confirmation
+MODALS/DRAWERS: hraViewModal:HRA Form
+BADGES: Not Started | In Progress (60%) | Submitted Apr 2 | Submitted Mar 8 | New
+
+=== /agent/lead-detail.html | Lead Detail ? Linda Park | Gold Kidney
+ACTIVE NAV: My Leads 12
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Lead Detail ? Linda Park | BC: Dashboard Leads Linda Park
+ALERT: No duplicate detected. No existing lead or enrolled member with this phone + DOB combination.
+CARDS/SECTIONS: Quick Actions || Lead Summary || Activity Log
+FORM LABELS: First Name | Last Name | Date of Birth | Phone | Email | ZIP Code | County / State | Lead Source | Campaign | Health Conditions | Current Status | Priority | Follow-up Date | Notes
+SELECTS: [New, Contacted, Appointment Set, SOA Obtained, Enrolled, Not Interested, Unreachable, Duplicate] [High, Medium, Low]
+BUTTONS: Save Changes | Log Call | Schedule Appointment | Log Phone Call | Send Email
+LINKS: soa-form.html enrollment.html
+
+=== /agent/leads.html | My Leads | Gold Kidney Agent Portal
+ACTIVE NAV: My Leads 12
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: My Leads | BC: Dashboard Leads
+KPIs: Total Leads=28 ; To Contact=7 ; Appt. Set=4 ; Enrolled YTD=12
+CARDS/SECTIONS: All Leads (28)
+TABLE1 (7 rows) cols:  | Name | DOB | Gender | Phone | Medicare ID | ZIP / State / County | Health Conditions | Source | Campaign | Status | Priority | Assigned Date | Next Follow-up Date | Last Contact Outcome | Actions
+   row1: Linda Park 09/22/1948 F (305) 555-0142 1EG4-TE5-MK72 33101 / FL / Miami-Dade ESRD Digital Form AEP FL 2026 New High May 20 Overdue — View
+FORM LABELS: Status: | Source: | Campaign: | State: | Priority:
+SELECTS: [All Statuses, New, Contacted, Appt. Set, SOA Obtained, Enrolled, Not Interested, Unreachable, Duplicate] [All Sources, Digital Form, TFN Inbound, Manual Entry, Bulk Import] [All Campaigns, AEP FL 2026, ESRD Outreach] [All States, FL, GA, TX] [All Priorities, High, Medium, Low]
+PLACEHOLDERS: Name or phone?
+BUTTONS: Filter | Reset | Bulk Import CSV | Export | New Lead | Export to Excel | ← Prev | Next →
+MODALS/DRAWERS: newLeadModal:Create New Lead ; leadModalErr:
+BADGES: New | High | Contacted | Medium | Appt. Set | SOA Obtained | Enrolled | — | Not Interested
+LINKS: lead-detail.html enrollment.html bob.html
+
+=== /agent/member-profile.html | Member Profile ? Dorothy Henderson | Gold Kidney
+ACTIVE NAV: Book of Business
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Member Profile ? Dorothy Henderson | BC: Dashboard Book of Business Dorothy Henderson
+HEADINGS: Dorothy Henderson
+ALERT: C-SNP Re-Verification Due: 06 01,2026 (10 days away). Action required to maintain enrollment.
+ALERT: Member enrolled 143 days ago. Past 90-day chargeback window.
+TABLE1 (10 rows) cols: Date | Type | Direction | Subject | Status
+   row1: 07 15,2026 Phone Outbound C-SNP re-verification follow-up call Completed
+TABLE2 (4 rows) cols: Plan Year | Plan Name | Plan ID | Enrollment Type | Effective Date | End Date | PCP | Agent | Status
+   row1: 2026 StarPlus ESRD SNP 2026 GK-ESRD-2026 Broker-Assisted (AEP) 01 01,2026 12 31,2026 Dr. Elena Vasquez James Martinez Active
+BADGES: Active Member | StarPlus ESRD SNP 2026 | CMS Accepted | Signed | Yes | In-Network | ESRD (End-Stage Renal Disease) | Verified | Submitted | Paid Feb 17 | Completed | DUE SOON | C-SNP | Delivered | Auto | Active | Renewed
+LINKS: recredentialing.html
+
+=== /agent/my-hierarchy.html | My Upline Hierarchy | Gold Kidney Agent Portal
+ACTIVE NAV: My Upline
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: My Upline Hierarchy | BC: Dashboard My Upline
+CARDS/SECTIONS: My Hierarchy Position || Upline Details || Commission Flow || Contact My Upline
+FORM LABELS: Subject | Message | Send To | Rachel Vargas — GA Admin (rachel@healthfirstdist.com) | National Medicare Partners — FMO (operations@natlmedicare.com)
+SELECTS: [Commission Inquiry, Contracting Question, Lead Request, Marketing Materials, Training Support, Other]
+PLACEHOLDERS: Type your message to your agency admin...
+BUTTONS: Send Message
+BADGES: Carrier | FMO | GA | Active
+JS NAV: profile.html
+
+=== /agent/notifications.html | Notifications | Gold Kidney Agent Portal
+ACTIVE NAV: Notifications 3
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Notification Center | BC: In-App Notifications
+ALERT: Mandatory notifications (Compliance, Account Security) cannot be opted out. Preferences saved per category.
+KPIs: Unread=7 ; Lead Notifications=3 ; Enrollment=2 ; Commission=1 ; Compliance=1
+CARDS/SECTIONS: Recent Notifications || Notification Preferences
+TABLE1 (7 rows) cols: Category | In-Portal | Email | SMS | Opt-Out
+   row1: Lead Assignments & Updates
+BUTTONS: All (7) | Lead | Enrollment | Commission | Compliance | Action Item | System | Load More Notifications | Export to Excel | Save Preferences
+JS NAV: leads.html enrollment-status.html commissions.html action-items.html
+
+=== /agent/onboarding-form.html | Agent Onboarding Form | Gold Kidney
+USER: My Profile AR Alex Rivera Pending Activation
+HEADER: Agent Onboarding Form | BC: Onboarding Digital Onboarding Form
+ALERT: Complete all 9 steps to activate your agent account. You can save progress and return at any time. Invited by: HealthFirst Distribution Agency (AGY-001) ? Invitation expires 05 25,
+ALERT: Invitation Accepted. You accepted the onboarding invitation from HealthFirst Distribution Agency on 04 28,2026.
+ALERT: Your NPN is validated for format (8?10 numeric digits), then verified against NIPR. If NIPR is unavailable, you may proceed and a manual review will be conducted.
+ALERT: Once licensing and background checks are confirmed, state appointment requests are submitted to NIPR for each verified state. Appointment formally authorizes you to sell Medicare A
+ALERT: Enrollment Blocking: Attempting to enroll a member in TX or GA will display a blocking error until appointment is Active. Lapsed appointment in one state does NOT affect other stat
+ALERT: Admin overrides are available for documented exceptional circumstances (e.g., NIPR API unavailability, data error in third-party system). Overrides for genuinely invalid/expired li
+TABLE1 (0 rows) cols: NPN | 8823441
+TABLE2 (0 rows) cols: State | License Type | Status | Details | Action
+TABLE3 (0 rows) cols: Attempt | Timestamp | States Checked | Outcome | Notes
+TABLE4 (3 rows) cols: State | License Status | Appointment Status | Effective Date | Expiry | Enrollment
+   row1: Florida (FL) Active Active 06 01,2026 12 31,2026 Allowed
+TABLE5 (0 rows) cols: Requested By: | Alex Rivera (Agent) ? 05 27,2026 11:30 AM
+TABLE6 (0 rows) cols: Step 1 ? Invitation & Registration | Complete
+TABLE7 (0 rows) cols: NIPR License Lookup (FL) | Verified
+TABLE8 (0 rows) cols: Step | Requirement | Status
+STEPS: 1 Invitation > Invitation > 2 Personal Info > Personal Info > 3 NPN & License > NPN & License > 4 State Selections > State Selections > 5 Lines of Business > Lines of Business > 6 AHIP Cert > AHIP Cert > 7 Tax / W-9 > Tax / W-9 > 8 Payment Prefs > Payment Prefs > 9 Review & Submit > Review & Submit
+FORM LABELS: Legal First Name * | Legal Last Name * | Date of Birth * | Business / Agency Name (if applicable) | Email Address * | Phone Number * | Business Address * | City | State | ZIP | SMS Opt-In | I consent to receive SMS notifications from Gold Kidney Health Plan regarding onboarding updates, renewals, and compliance reminders. Message & data rates may apply. | National Producer Number (NPN) * | Florida (FL) | Georgia (GA) | Texas (TX) | Describe the Issue * | Priority | Attach Evidence (optional) | Justification * (minimum 50 characters) | State(s) Requesting Override | Override Expiry Date * | Supporting Document (optional) | AHIP Certificate Year | Completion Date | Score (%) | Or Upload Certificate Manually | Entity Type * | TIN Type * | SSN / EIN * | Name on Tax Return * | Mailing Address (if different from business address) | Upload Signed W-9 Form | Payment Method * | ACH Direct Deposit | Physical Check | Payee Name * | Bank Name * | Account Holder Name * | Account Type | Routing Number * | Account Number * | Confirm Account Number * | Upload Voided Check or Bank Verification Letter * | I certify that all information provided is accurate and complete to the best of my knowledge. I understand that providing false information may result in immediate termination of this application and any resulting contract. I agree to comply with all CMS regulations, carrier policies, and applicable state laws governing the sale of Medicare Advantage products. | Attach Document
+SELECTS: [FL, GA, TX] [Normal, High ? Blocking Onboarding, Urgent ? Compliance Deadline] [CY2026, CY2025] [Individual / Sole Proprietor, LLC ? Single Member, LLC ? Multi-Member / Partnership, Corporation (C-Corp / S-Corp)] [SSN, EIN] [Checking, Savings]
+PLACEHOLDERS: Leave blank for individual agent | 8?10 digit NPN | Describe the license verification issue you're experiencing (e.g., license is active on GA DOI website but NIPR shows expired)... | Explain why an override is needed (e.g., NIPR shows error but license is valid per DOI website, or NIPR API returned timeout)... | e.g. ***-**-#### | Leave blank if same as business address | Leave blank to use business address on file | Enter account number | Re-enter account number | Type a response to the reviewer...
+BUTTONS: Previous Step | Next Step | Validate | Request Reactivation | Escalate to Admin | Contact Support | Proceed Without Verification | Verify State Licenses (NIPR) | Re-Verify Selected States | Request Admin Override | Raise Support Ticket | Submit Ticket | Cancel | Submit Override Request | Proceed (Manual Review) | Request Override | Auto-Fetch from AHIP | Save Draft | Submit Onboarding Application | Send Response | Request: Add Georgia (GA) | Request: Add Texas (TX)
+BADGES: Open | Active | Pending DOI | Failed | Not Submitted | Submitted | Lapsed | Terminated | APPROVED | PENDING | PENDING DUAL APPROVAL (1 of 2) | Under Review | Action Required: W-9 Re-Upload | W9_AlexRivera_Signed_v2.pdf attached | Query Resolved | Pending | Not Started
+LINKS: onboarding.html
+
+=== /agent/onboarding.html | Agent Onboarding | Gold Kidney Agent Portal
+USER: JM James Martinez NPN 8823441 — Onboarding
+HEADER: Agent Onboarding | BC: Producer Onboarding — Invitation through Ready to Sell
+ALERT: Each NPN can only be registered once.
+ALERT: Complete all 4 training segments. Each segment unlocks its own exam upon completion. Pass score: 85% overall average. Maximum 4 attempts per segment.
+ALERT: Your background check is completed through our trusted vendor portal. Gold Kidney does not collect or store your SSN or government ID — all sensitive verification is handled secure
+ALERT: Review and digitally sign your Agent Contracting Agreement. The contract is specific to your selected states and lines of business.
+CARDS/SECTIONS: Step 1: Invitation & Registration || Step 2: Personal & Business Information || Step 3: W-9 Tax Details & Payment Preferences || Step 4: AHIP Certification, State Selection & License Verification || Step 5: Training & Certification || Step 6: Background & Sanctions Check || Step 7: Contract Execution || Step 8: Submission Complete (Pending Admin Approval) || Onboarding Application Submitted!
+FORM LABELS: Invitation Type * | Invite Code / Token * | Invited By (Agency / FMO Name) | National Producer Number (NPN) * | First Name * | Middle Name | Last Name * | Date of Birth * | SSN / EIN * | Phone Number * | Business Street * | Business Suite | Business ZIP * | Business City * | Business State * | Communication Consent | I consent to receive SMS/text notifications regarding my application, licensing status, and commission updates. | I consent to receive email notifications regarding training, compliance updates, and enrollment activity. | Tax Entity Type * | Taxpayer ID (TIN/EIN) * | Tax Name (as on return) * | Upload W-9 Form (PDF) * | Click to upload W-9 PDF Max 5 MB | ACH Direct Deposit | Physical Check | Bank Name | Routing Number | Account Number | Account Type | Upload Voided Check / Bank Letter | Upload void check or bank letter | Check Mailing Address * | AHIP Certificate # * | Completion Date * | Valid Through | Upload AHIP Certificate (optional if auto-verified) | Upload certificate PDF | Florida | Texas | Georgia | California | New York | Arizona | North Carolina | Illinois | I authorize the health plan to initiate a background check through its designated vendor. I understand I will complete identity verification directly on the vendor's secure portal and that results will be shared with the health plan. This check is required for agent activation. | Result | Result Date | Upload Result Report (PDF) | Click to upload result PDF Max 5 MB | I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document. | Type Your Full Legal Name to Sign * | Date
+SELECTS: [Ã¢â‚¬â€ Select Ã¢â‚¬â€, Agency-Driven (FMO Invitation), Carrier / Payer Initiated, Self-Registration (Public Link)] [Select Entity Type, Individual / Sole Proprietor, LLC (Single Member), Corporation, Partnership] [Select Account Type, Checking, Savings] [Select outcome, Clear — Approved, Requires Manual Review, Adverse — Not Approved]
+PLACEHOLDERS: e.g. GK-INV-2026-XXXX | e.g. Sunshine Insurance Group | Please enter your NPN number | First name | Middle name | Last name | XXX-XX-XXXX | (555) 000-0000 | Street address | Suite / Apt / Unit | ZIP Code | Auto-filled from ZIP | Full legal name | e.g. Chase Bank | 9-digit ABA number | Account number | Street, City, State, ZIP | e.g. AH2026-XXXXX | Auto-calculated (1 year)
+BUTTONS: Prefill Data | Validate NPN | Save Draft & Continue | Next: Personal Details | Back | Next: W-9 & Payment | Save & Continue | Validate AHIP | Validate License & State Appointment | Next: Training | Back to Step 5 | Next Segment | Go Back & Review | Submit Anyway | Next: Background Check | Send Background Check Invitation | Resend | Manual Result Upload (Ops Fallback — use only if API result is not received) | Next: Contract | Submit & Finalize
+MODALS/DRAWERS: bgInvitePanel:Send to Background Check Vendor ; bgStatusPanel:Verification Status ; bgFallbackPanel:
+LINKS: mailto:brokersupport@goldkidney.com dashboard.html
+
+=== /agent/payments.html | Payment History | Gold Kidney Agent Portal
+ACTIVE NAV: Payment History
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Payment History | BC: 
+KPIs: Total Paid (CY2026)=$6,844 ; Last Payment=$1,403 ; Pending=$1,403 ; Chargebacks YTD=$0
+CARDS/SECTIONS: Payment History ? CY2026 || Banking Information on File
+TABLE1 (6 rows) cols: Payment Date | Batch Ref | Period | Monthly Commissions | HRA Incentives | Visit Incentives | Chargebacks | Net Amount | Status | 
+   row1: Est. 06 17,2026 Pending Jun 2026 $200.32 $25.00 $0 $0 $1,403.32 Processing Remittance
+BUTTONS: Export to Excel | Remittance
+BADGES: Processing | Paid ? ACH
+LINKS: payment-preferences.html
+
+=== /agent/plan-recommendation.html | Plan Recommendation | Gold Kidney Agent Portal
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Plan Recommendation ? Frank Johnson | BC: Dashboard PQAT Plan Recommendation
+ALERT: AI-Assisted Recommendation. Based on PQAT responses: ESRD diagnosis, dialysis confirmed, ZIP 33127 (FL), Medicare Parts A+B+D, LIS Level 4, Medicaid dual eligible. Sorted by fit sc
+BUTTONS: Select This Plan
+BADGES: ESRD C-SNP | Standard HMO
+LINKS: enrollment.html
+
+=== /agent/pqat.html | PQAT Health Questionnaire | Gold Kidney Agent Portal
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Plan Qualification Assessment Tool (PQAT) | BC: Health Questionnaire & Plan Recommendation (No Agent Override)
+ALERT: PQAT Completion Deadline: 07 28,2026 (60 days from enrollment effective date 06 01,2026).
+CARDS/SECTIONS: Beneficiary Information || Health Condition Questionnaire || Additional Clinical Information || Plan Recommendation Results
+FORM LABELS: Beneficiary Name | MBI | DOB | County | Chronic Kidney Disease (CKD) Stage 3a (eGFR 4559) | Chronic Kidney Disease (CKD) Stage 3b (eGFR 3044) | Chronic Kidney Disease (CKD) Stage 4 (eGFR 1529) | End-Stage Renal Disease (ESRD) Dialysis (eGFR < 15) | Kidney Transplant Recipient | No kidney condition (standard MA only) | Type 2 Diabetes | Hypertension | Cardiovascular Disease | Heart Failure | COPD | None of the above | Under nephrologist care | On dialysis (hemodialysis / peritoneal) | Transplant evaluation list | Prescription medication for kidney disease | eGFR | Test Date | Lab Provider | Current Medications (list all, or type brand/generic name) | Health Status Self-Assessment * | Specialist Name | Specialty | Preferred Hospital | Preferred Pharmacy | Override Reason *
+SELECTS: [— Select —, Excellent — Active, minimal symptoms, Good — Managing condition well, Fair — Some daily limitations, Poor — Significant daily limitations]
+PLACEHOLDERS: e.g., Lisinopril 10mg, Furosemide 40mg, Erythropoietin injections, Phosphate binders... | e.g., Dr. Angela Reyes | e.g., Nephrology | e.g., Jackson Memorial Hospital | e.g., CVS #1482, 8400 NW 27th Ave | Clinical justification for selecting this plan over the PQAT recommendations (min 20 chars)...
+BUTTONS: Resume | Discard | Generate Plan Recommendation | Save Progress | Add Specialist | Select This Plan | Confirm Override & Proceed | Cancel | Save PQAT Report | Request Clinical Review
+MODALS/DRAWERS: overridePanel:
+BADGES: Based on PQAT Responses
+
+=== /agent/profile.html | Profile & Settings | Gold Kidney Agent Portal
+USER: My Profile JM James Martinez Agent ? NPN 8823441
+HEADER: Profile & Settings | BC: 
+ALERT: ABA Validation: Routing number is validated against the Federal Reserve's E-Payments directory in real-time. Must be 9 digits and pass checksum algorithm. Bank name displays upon v
+ALERT: Pre-Note Process: A $0.00 test transaction is sent to verify the bank account before any real payment. This takes 3-5 business days. During pre-note, payments will be held. If pre-
+ALERT: A voided check image or official bank verification letter is required for new ACH setup or account changes. This document is used to verify account ownership.
+ALERT: Commission checks are mailed to your registered address. Delivery takes 5–7 business days after the payment processing date. A $5.00 processing fee is deducted per check issued.
+ALERT: If your mailing address is incorrect, update it above in Profile before saving. Address changes require re-verification.
+CARDS/SECTIONS: Notification Preferences || Security || Payment Preferences || Current Payment Method || Select Payment Method || ACH Bank Account Details || Pre-Note Verification || Voided Check / Bank Letter Upload || Paper Check Mailing Details
+FORM LABELS: First Name | Last Name | Email | Phone | Business Address | NPN | AHIP Certification Year | Licensed States | Carrier Appointments (Gold Kidney) | Email for Notifications | ABA Routing Number * | Account Number * | Confirm Account Number * | Account Type * | Account Holder Name * | Street Address on File | City, State ZIP | Country | I acknowledge the $5.00 per-check processing fee will be deducted from each commission payment issued by paper check, and I understand delivery may take 5–7 business days after the payment date.
+SELECTS: [Checking, Savings]
+PLACEHOLDERS: Re-enter account number
+BUTTONS: Prefill Data | Change Photo | Add State | Change Password | Manage MFA
+BADGES: Active | Enabled (App-based) | Verified
+
+=== /agent/recredentialing.html | Annual Re-Credentialing | Agent Portal
+ACTIVE NAV: Annual Re-Credentialing 1
+USER: JM James Martinez Agent — NPN 8823441
+HEADER: Annual Re-Credentialing | BC: CY2026 Renewal — Due 03 15,2026
+CARDS/SECTIONS: Step 1: Confirm Identity & Contact Details || Step 2: AHIP Certification Renewal || Step 3: State License Refresh || Step 4: Background Check Re-Authorization || Step 5: Review & Submit Re-Credentialing || Re-Credentialing Submitted!
+STEPS: Confirm Identity > AHIP Renewal > License Refresh > Background Re-Auth > Review & Submit
+FORM LABELS: First Name | Middle Initial | Last Name | NPN | Date of Birth | SSN / EIN | Email Address | Phone Number | Street | Suite | ZIP | City | State | Prior Certificate # | Prior Completion Date | Prior Valid Through | New Certificate # * | New Completion Date * | Valid Through | Upload CY2026 AHIP Certificate (PDF) * | Click to upload AHIP Certificate PDF Max 5 MB | License Number | Effective Date | Expiry Date | Upload Updated License Document (optional) | Upload if renewed (optional) PDF, JPG, PNG — Max 5 MB | I authorize the health plan to initiate an annual repeat background screening through its designated vendor (Sterling Talent Solutions). I understand I will complete identity verification directly on the vendor's secure portal and that results will be shared with the health plan. | I confirm that all information submitted in this annual re-credentialing is accurate and complete to the best of my knowledge. I understand that false or incomplete information may result in termination of my agent appointment.
+PLACEHOLDERS: e.g. AHIP-2026-JM-XXXXX
+BUTTONS: Prefill All Steps | Prefill Data | Next: AHIP Renewal | Back | Next: License Refresh | Next: Background Re-Auth | Send Background Re-Check Invitation | Next: Review & Submit | Submit Re-Credentialing
+MODALS/DRAWERS: rcBgVendorPanel:Send to Background Screening Vendor ; rcBgStatusPanel:Re-Check Status
+LINKS: dashboard.html
+
+=== /agent/soa-form.html | SOA Management | Gold Kidney Agent Portal
+ACTIVE NAV: SOA Management
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Scope of Appointment (SOA) | BC: 48-Hour Rule, Digital Signature, Plan Types & Expiry
+ALERT: CMS 48-Hour Rule: The SOA must be signed by the beneficiary at least 48 hours before the scheduled appointment, unless the beneficiary initiates contact. Walk-in/inbound exceptions
+ALERT: SOA Expiry Logic: SOAs are valid for 12 months from signature date. Expired SOAs cannot be used for enrollment — a new SOA must be created. System auto-flags SOAs expiring within 3
+CARDS/SECTIONS: Create SOA || My SOA Records
+TABLE1 (4 rows) cols: Beneficiary | Appointment Date | Signed Date | Plans Discussed | Initiated By | 48-hr Compliant | Expires | Status | Actions
+   row1: Dorothy Henderson 05 24,2026 2:00 PM 05 22,2026 10:15 AM MA, C-SNP Beneficiary Waiver 05 22,2027 Valid
+FORM LABELS: Beneficiary First Name * | Beneficiary Last Name * | Beneficiary Phone | Appointment Date & Time * | Appointment Type * | Contact Initiated By * | Medicare Advantage (MA) | Medicare Advantage Prescription Drug (MAPD) | Chronic Special Needs Plan (C-SNP) | Dual Special Needs Plan (D-SNP) | Prescription Drug Plan (PDP) | Medicare Supplement (Medigap) | Hospital Indemnity | Dental / Vision / Hearing | Typed Name (if unable to draw) | Signature Method | I, James Martinez (NPN 8823441) , attest that this SOA was obtained in compliance with CMS marketing guidelines. I confirm the beneficiary was informed of the plan types to be discussed and provided consent prior to the appointment.
+SELECTS: [Select..., In-Person (Agent-Initiated), Telephonic (Agent-Initiated), In-Person (Beneficiary-Initiated / Walk-in), Telephonic (Beneficiary-Initiated / Inbound)] [Agent (48-hour rule applies), Beneficiary (48-hour waiver eligible)] [Draw on screen, Typed name attestation, Paper scan upload]
+PLACEHOLDERS: e.g., Dorothy | e.g., Henderson | (305) 555-0123 | Full legal name
+BUTTONS: Create SOA | Prefill Data | Save & Send to Beneficiary | Generate PDF | Export to Excel | Resend | Renew
+MODALS/DRAWERS: soaFormPanel:Create SOA
+BADGES: Waiver | 48+ hrs | Awaiting
+
+=== /agent/support.html | Help & Support | Gold Kidney Agent Portal
+ACTIVE NAV: Help & Support
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Help & Support | BC: Resources Help & Support
+KPIs: Open Tickets=2 ; In Progress=1 ; Resolved (YTD)=7 ; Satisfaction=4.8 / 5
+CARDS/SECTIONS: Create Support Ticket || My Support Tickets || Frequently Asked Questions || Quick Links || Response Times (SLA)
+TABLE1 (5 rows) cols: Ticket # | Subject | Category | Priority | Submitted | Last Updated | Status | Action
+   row1: TKT-2026-0089 Commission amount discrepancy for member Dorothy Henderson Expected $601, received $501 for initial enrollment Commission High 07 25,2026 07 26,2026 Open View
+FORM LABELS: Issue Category * | Priority * | Subject * | Description * | Member ID (if applicable) | Browser / Device | Attachments (screenshots, error logs, audio)
+SELECTS: [— Select Category —, Portal Access / Login Issues, Enrollment Processing, Commission / Payment Issues, HRA / Healthy Visit, Compliance / Certification, Member Data / BoB Issues, Lead Management, Document Upload / Access, Technical / System Error, Training / Exam Issues, Other] [— Select Priority —, Critical — Cannot work / System down, High — Major feature not working, Medium — Issue with workaround, Low — Minor issue / Question] [All Tickets, Open, In Progress, Resolved, Closed]
+PLACEHOLDERS: Brief description of the issue | Please describe the issue in detail. Include:
+• What were you trying to do?
+• What happened instead?
+• Any error messages you saw
+• Steps to reproduce the issue | e.g. MEM-20260001 | e.g. Chrome 126, Windows 11
+BUTTONS: Submit Ticket | Clear Form | View
+MODALS/DRAWERS: ticketModal:TKT-2026-0089 ; modalTicketId: ; modalStatus: ; modalPriority: ; modalCategory: ; modalSubject: ; modalThread: ; modalReply:
+LINKS: documents.html training.html commissions.html enrollment.html recredentialing.html
+
+=== /agent/training-exam.html | Training & Exam | Gold Kidney Agent Portal
+ACTIVE NAV: Training & Certification
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Training & Exam | BC: Producer Onboarding — Invitation through Ready to Sell
+ALERT: Enter the details from your invitation email. New agents can also self-register using a public link. Each NPN can only be registered once.
+ALERT: Complete all 4 training segments. Each segment unlocks its own exam upon completion. Pass score: 85% overall average. Maximum 4 attempts per segment.
+CARDS/SECTIONS: Step 1: Invitation & Registration || Step 2: Personal & Business Information || Step 3: W-9 Tax Details & Payment Preferences || Step 4: AHIP Certification, State Selection & License Verification || Step 5: Training & Certification
+STEPS: Invitation & Registration > Personal & Business Info > W-9 & Tax / Payment > AHIP & License Verification > Training & Certification > Background Check > Contract Execution > Ready to Sell
+FORM LABELS: Invitation Type * | Invite Code / Token * | Invited By (Agency / FMO Name) | National Producer Number (NPN) * | Legal First Name * | Middle Initial | Legal Last Name * | Date of Birth * | SSN / EIN * | Phone Number * | Business / Agency Name | SMS Opt-In | Business Address * | Tax Entity Type * | Taxpayer ID (TIN/EIN) * | Tax Name (as on return) * | Upload W-9 Form (PDF) * | Click to upload W-9 PDF Max 5 MB | ACH Direct Deposit | Physical Check | Bank Name | Routing Number | Account Number | Account Type | Upload Voided Check / Bank Letter | Upload void check or bank letter | Check Mailing Address * | AHIP Certificate # * | Completion Date * | Valid Through | Upload AHIP Certificate (optional if auto-verified) | Upload certificate PDF | Florida | Texas | Georgia | California | New York | Arizona | North Carolina | Illinois | Medicare Advantage (MA) | C-SNP (ESRD) | C-SNP (CKD) | MAPD | Part D (PDP)
+SELECTS: [— Select —, Agency-Driven (FMO Invitation), Carrier / Payer Initiated, Self-Registration (Public Link)] [— Select —, Yes — Consent for SMS notifications, No] [— Select —, Individual / Sole Proprietor, LLC (Single Member), Corporation, Partnership] [— Select —, Checking, Savings]
+PLACEHOLDERS: e.g. GK-INV-2026-XXXX | e.g. Sunshine Insurance Group | 8–10 digit NPN | First name | M | Last name | XXX-XX-XXXX | (555) 000-0000 | Agency or DBA name | Street, Suite, City, State, ZIP | Full legal name | e.g. Chase Bank | 9-digit ABA number | Account number | Street, City, State, ZIP | e.g. AH2026-XXXXX | Auto-calculated (1 year)
+BUTTONS: Prefill Data | Validate NPN | Save Draft & Continue | Next: Personal Details | Back | Next: W-9 & Payment | Save & Continue | Validate AHIP | Validate License & State Appointment | Next: Training | Start | Go Back & Review | Submit Anyway | Next: Background Check
+
+=== /agent/training.html | Training & Certification | Gold Kidney
+ACTIVE NAV: Training & Certification
+USER: My Profile JM James Martinez Agent — NPN 8823441
+HEADER: Training & Certification Tracker | BC: Resources Training & Certification
+KPIs: Assigned Training=12 ; Completed=8 ; In Progress=2 ; Expired Certifications=2
+CARDS/SECTIONS: My Training List || My Certifications & Licenses || Renewal Calendar || CE Credits (YTD) || Training Content Library
+TABLE1 (25 rows) cols: Assigned Training | Plan Year | Category | Progress | Score | Completed | Expires | Status | Action
+   row1: AHIP Medicare Certification Expired — Must recertify for PY2026 or later PY 2025 Industry 100% (expired) 91% 10 05,2024 12 31,2025 Expired Superseded
+TABLE2 (6 rows) cols: Certification / License | ID / Number | Issued | Expires | Renewal | Status | Action
+   row1: AHIP — PY 2026 Medicare Advantage & Part D AHIP-2026-44821 10 12,2025 12 31,2026 156d Active
+BUTTONS: Export | Superseded | Continue Training | Close | Resume | Exam Locked | Start | Start Training | Not Yet Open | View / Retake | Review | View Results | Retake Exam | Recertify | Download | Watch
+BADGES: All (12) | Assigned (2) | Completed (8) | In Progress (2) | Expired (2)

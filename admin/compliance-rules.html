@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Rules Engine | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.rule-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;margin-bottom:12px;position:relative}
+.rule-card.active-rule{border-left:4px solid #2e7d32}
+.rule-card.draft-rule{border-left:4px solid #ff9800}
+.rule-card.disabled-rule{border-left:4px solid #9e9e9e;opacity:.7}
+.rule-badge{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+.rb-active{background:#e8f5e9;color:#2e7d32}
+.rb-draft{background:#fff3e0;color:#e65100}
+.rb-disabled{background:#f5f5f5;color:#757575}
+.sim-result{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px;font-size:13px;margin-top:12px}
+.exec-log{font-size:12px;padding:6px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:8px}
+.exec-log .timestamp{color:#757575;min-width:140px}
+.exec-log .action{font-weight:500}
+.tab-nav{display:flex;border-bottom:2px solid #e0e0e0;margin-bottom:16px}
+.tab-btn{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;color:#757575}
+.tab-btn.active{color:#1a237e;border-bottom-color:#1a237e}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Auto-Termination &amp; Compliance Rules</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Compliance Rules Engine</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('execHistorySection').scrollIntoView({behavior:'smooth'})"><i class="fas fa-history"></i> Execution Log</button>
+      <button class="btn-pr btn-sm" onclick="document.getElementById('addRuleModal').style.display='flex'"><i class="fas fa-plus"></i> Create Rule</button>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+      <div class="tab-btn active" onclick="document.getElementById('rulesTab').style.display='block';document.getElementById('engineTab').style.display='none';this.classList.add('active');this.nextElementSibling.classList.remove('active')">Rule Configuration</div>
+      <div class="tab-btn" onclick="document.getElementById('engineTab').style.display='block';document.getElementById('rulesTab').style.display='none';this.classList.add('active');this.previousElementSibling.classList.remove('active')">Execution Engine</div>
+    </div>
+
+    <!-- --- TAB 1: RULE CONFIGURATION --- -->
+    <div id="rulesTab">
+      <!-- Stats -->
+      <div class="row-grid" style="margin-bottom:16px">
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active Rules</div><div class="stat-val">5</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-flask"></i></div><div><div class="stat-label">Simulation Mode</div><div class="stat-val">1</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-robot"></i></div><div><div class="stat-label">Auto-Actions Today</div><div class="stat-val">3</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-bell"></i></div><div><div class="stat-label">Warnings Sent Today</div><div class="stat-val">12</div></div></div></div>
+      </div>
+
+      <!-- Rule Cards -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5>Compliance Rules</h5><div class="dflex g8"><select class="form-control" style="width:120px"><option>All Status</option><option>Active</option><option>Draft</option><option>Disabled</option></select></div></div>
+        <div style="padding:16px">
+
+          <!-- Rule 1: AHIP Non-Renewal -->
+          <div class="rule-card active-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">AHIP Non-Renewal — Compliance Hold</h6>
+                  <span class="rule-badge rb-active">Active</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Automatically places agent on Compliance Hold when AHIP certification expires without renewal</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol btn-sm" onclick="document.getElementById('simulateModal').style.display='flex'" title="Simulate"><i class="fas fa-flask"></i></button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>0 days past AHIP expiry</div>
+              <div><strong>Grace Period:</strong><br>14 days</div>
+              <div><strong>Warning Reminders:</strong><br>30d, 14d, 7d, 1d before</div>
+              <div><strong>Action:</strong><br>Apply Compliance Hold</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:#757575"><i class="fas fa-clock"></i> Last evaluated: Today 02:00 AM | <i class="fas fa-users"></i> Affected: 3 agents | <i class="fas fa-bell"></i> Warnings pending: 8</div>
+          </div>
+
+          <!-- Rule 2: Extended License Expiry Auto-Termination -->
+          <div class="rule-card active-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">Extended License Expiry — Auto-Termination</h6>
+                  <span class="rule-badge rb-active">Active</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Auto-terminates agent if license remains expired for 90+ days with no reinstatement action</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol btn-sm" onclick="document.getElementById('simulateModal').style.display='flex'" title="Simulate"><i class="fas fa-flask"></i></button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>90 days expired</div>
+              <div><strong>Grace Period:</strong><br>30 days after warning</div>
+              <div><strong>Warning Reminders:</strong><br>60d, 75d, 85d after expiry</div>
+              <div><strong>Action:</strong><br>Terminate Agent</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:#757575"><i class="fas fa-clock"></i> Last evaluated: Today 02:00 AM | <i class="fas fa-users"></i> Affected: 1 agent | <i class="fas fa-bell"></i> Warnings pending: 2</div>
+          </div>
+
+          <!-- Rule 3: Inactivity-Based Deactivation -->
+          <div class="rule-card active-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">Inactivity — Auto-Deactivation</h6>
+                  <span class="rule-badge rb-active">Active</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Moves agent to Inactive status after 12 months of no enrollment activity</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol btn-sm" onclick="document.getElementById('simulateModal').style.display='flex'" title="Simulate"><i class="fas fa-flask"></i></button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>12 months (configurable)</div>
+              <div><strong>Grace Period:</strong><br>30 days after final warning</div>
+              <div><strong>Warning Reminders:</strong><br>9mo, 11mo, 11.5mo</div>
+              <div><strong>Action:</strong><br>Set Inactive</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:#757575"><i class="fas fa-clock"></i> Last evaluated: Today 02:00 AM | <i class="fas fa-users"></i> Affected: 2 agents | <i class="fas fa-bell"></i> Warnings pending: 5</div>
+          </div>
+
+          <!-- Rule 4: Background Check Re-Screen -->
+          <div class="rule-card active-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">Background Check Re-Screen</h6>
+                  <span class="rule-badge rb-active">Active</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Triggers background check re-screening every 24 months for all active agents</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol btn-sm" onclick="document.getElementById('simulateModal').style.display='flex'" title="Simulate"><i class="fas fa-flask"></i></button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>24 months since last BGC</div>
+              <div><strong>Grace Period:</strong><br>14 days to complete</div>
+              <div><strong>Warning Reminders:</strong><br>30d, 14d, 7d before due</div>
+              <div><strong>Action:</strong><br>Submit BGC + Hold if failed</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:#757575"><i class="fas fa-clock"></i> Last evaluated: Today 02:00 AM | <i class="fas fa-users"></i> Due for re-screen: 14 agents | <i class="fas fa-bell"></i> Reminders sent: 6</div>
+          </div>
+
+          <!-- Rule 5: Inactivity Auto-Termination -->
+          <div class="rule-card active-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">Extended Inactivity — Auto-Termination</h6>
+                  <span class="rule-badge rb-active">Active</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Auto-terminates agents who remain Inactive for 6+ months without reactivation</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol btn-sm" onclick="document.getElementById('simulateModal').style.display='flex'" title="Simulate"><i class="fas fa-flask"></i></button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>6 months in Inactive status</div>
+              <div><strong>Grace Period:</strong><br>30 days after final notice</div>
+              <div><strong>Warning Reminders:</strong><br>4mo, 5mo, 5.5mo</div>
+              <div><strong>Action:</strong><br>Terminate Agent</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:#757575"><i class="fas fa-clock"></i> Last evaluated: Today 02:00 AM | <i class="fas fa-users"></i> Approaching threshold: 4 agents</div>
+          </div>
+
+          <!-- Rule 6: Simulation Mode -->
+          <div class="rule-card draft-rule">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                  <h6 style="margin:0;font-size:14px">E&O Insurance Lapse — Compliance Hold</h6>
+                  <span class="rule-badge rb-draft">Simulation Mode</span>
+                </div>
+                <p style="margin:0;font-size:12px;color:#616161">Places agent on hold if E&O insurance lapses (testing before activation)</p>
+              </div>
+              <div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="document.getElementById('editRuleModal').style.display='flex'"><i class="fas fa-edit"></i></button>
+                <button class="btn-pr btn-sm" onclick="if(confirm('Activate this rule? It will affect 7 agents currently matching the criteria.'))alert('Rule activated.')"><i class="fas fa-play"></i> Activate</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;font-size:12px;background:#f8f9fa;padding:10px;border-radius:6px">
+              <div><strong>Threshold:</strong><br>0 days past E&O expiry</div>
+              <div><strong>Grace Period:</strong><br>30 days</div>
+              <div><strong>Warning Reminders:</strong><br>60d, 30d, 14d before</div>
+              <div><strong>Action:</strong><br>Apply Compliance Hold</div>
+            </div>
+            <div class="sim-result">
+              <strong><i class="fas fa-flask"></i> Simulation Results (last run: 05 24,2026):</strong><br>
+              <span style="margin-top:4px;display:inline-block">? <strong>7 agents</strong> currently match this rule's criteria<br>? 3 would receive 60-day warning today<br>? 2 would receive 30-day warning<br>? 2 would be placed on Compliance Hold immediately</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- TAB 2: EXECUTION ENGINE --- -->
+    <div id="engineTab" style="display:none">
+      <!-- Engine Status -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-cog fa-spin" style="margin-right:6px;color:#2e7d32"></i>Rule Execution Engine Status</h5></div>
+        <div style="padding:16px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+            <div style="text-align:center;padding:12px;background:#e8f5e9;border-radius:8px">
+              <div style="font-size:24px;font-weight:700;color:#2e7d32">Running</div>
+              <div style="font-size:11px;color:#616161">Engine Status</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:24px;font-weight:700">02:00 AM</div>
+              <div style="font-size:11px;color:#616161">Daily Schedule (ET)</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:24px;font-weight:700">487</div>
+              <div style="font-size:11px;color:#616161">Agents Evaluated Today</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:24px;font-weight:700">5 / 5</div>
+              <div style="font-size:11px;color:#616161">Rules Executed</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-ol btn-sm" onclick="nfpSubmit('Manual rule evaluation triggered. Processing 487 active agents against 5 rules...\n\nResult: 3 actions taken, 12 warnings sent, 0 errors.')"><i class="fas fa-play"></i> Run Now (Manual)</button>
+            <button class="btn-ol btn-sm" onclick="nfpSave('Schedule updated.')"><i class="fas fa-clock"></i> Edit Schedule</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Execution Summary -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5>Today's Execution Summary (05 25,2026)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','compliance-rules_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table class="tbl" id="tblExport1">
+            <thead><tr><th>Rule</th><th>Agents Evaluated</th><th>Matched</th><th>Actions Taken</th><th>Warnings Sent</th><th>No Action</th><th>Duration</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>AHIP Non-Renewal Hold</td><td>487</td><td>11</td><td>3 (Compliance Hold)</td><td>8</td><td>476</td><td>1.2s</td><td><span class="badge bg-success">Complete</span></td></tr>
+              <tr><td>Extended License Expiry Termination</td><td>8</td><td>3</td><td>1 (Terminated)</td><td>2</td><td>5</td><td>0.4s</td><td><span class="badge bg-success">Complete</span></td></tr>
+              <tr><td>Inactivity Auto-Deactivation</td><td>487</td><td>7</td><td>2 (Set Inactive)</td><td>5</td><td>480</td><td>1.8s</td><td><span class="badge bg-success">Complete</span></td></tr>
+              <tr><td>Background Check Re-Screen</td><td>487</td><td>20</td><td>6 (BGC Submitted)</td><td>14</td><td>467</td><td>2.1s</td><td><span class="badge bg-success">Complete</span></td></tr>
+              <tr><td>Extended Inactivity Termination</td><td>34</td><td>4</td><td>0</td><td>4</td><td>30</td><td>0.3s</td><td><span class="badge bg-success">Complete</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Execution History -->
+      <div class="card mb16" id="execHistorySection">
+        <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:6px"></i>Execution Log</h5><div class="dflex g8"><select class="form-control" style="width:130px"><option>All Rules</option><option>AHIP Non-Renewal</option><option>License Expiry</option><option>Inactivity</option><option>BGC Re-Screen</option></select><select class="form-control" style="width:130px"><option>All Results</option><option>Action Taken</option><option>Warning Sent</option><option>No Action</option></select><button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-download"></i> Export</button></div></div>
+        <div style="padding:12px;max-height:300px;overflow-y:auto">
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:33</span><span class="action" style="color:#c62828">TERMINATE</span><span>David Martinez (NPN 5509871)  Rule: Extended License Expiry. License expired 92 days. Notifications: agent, upline, OEC feed.</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:28</span><span class="action" style="color:#e65100">HOLD</span><span>Kevin Park (NPN 4478923)  Rule: AHIP Non-Renewal. AHIP expired May 20. Grace period started.</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:25</span><span class="action" style="color:#e65100">HOLD</span><span>Amy Chen (NPN 3312876)  Rule: AHIP Non-Renewal. AHIP expired May 18.</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:22</span><span class="action" style="color:#e65100">HOLD</span><span>Tom Lee (NPN 7789012)  Rule: AHIP Non-Renewal. AHIP expired May 19.</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:18</span><span class="action" style="color:#616161">INACTIVE</span><span>Lisa Wang (NPN 2234561)  Rule: Inactivity. Last enrollment: 05 24,2025 (366 days ago).</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:15</span><span class="action" style="color:#616161">INACTIVE</span><span>Robert Jones (NPN 8890123)  Rule: Inactivity. Last enrollment: 05 20,2025 (370 days ago).</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:12</span><span class="action" style="color:#1565c0">WARNING</span><span>14 agents — Rule: Various. Reminder emails dispatched (30-day, 14-day, 7-day notices).</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:08</span><span class="action" style="color:#2e7d32">BGC SUBMIT</span><span>6 agents — Rule: BGC Re-Screen. Background check files submitted to IBR via SFTP.</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:01</span><span class="action" style="color:#757575">EVALUATE</span><span>Engine started. Evaluating 487 active agents against 5 active rules.</span></div>
+          <div class="exec-log"><span class="timestamp">May 24, 02:00:45</span><span class="action" style="color:#757575">NO ACTION</span><span>All 5 rules evaluated. No thresholds reached. 10 warning emails sent.</span></div>
+          <div class="exec-log"><span class="timestamp">May 23, 02:00:38</span><span class="action" style="color:#e65100">HOLD</span><span>James Chen (NPN 8823441)  Rule: NIPR Alert. FL license expired via NIPR webhook.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Rule Modal -->
+<div class="modal-overlay" id="addRuleModal" style="display:none">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h5>Create Compliance Rule</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Rule Name <span class="text-danger">*</span></label><input type="text" class="form-control" placeholder="e.g., E&O Insurance Lapse — Compliance Hold"></div>
+      <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="2" placeholder="Describe what this rule does"></textarea></div>
+      <div class="mb-3"><label class="form-label">Trigger Condition <span class="text-danger">*</span></label>
+        <select class="form-control">
+          <option>AHIP Certification Expired</option>
+          <option>NIPR License Expired (any state)</option>
+          <option>No Enrollment Activity (days)</option>
+          <option>Background Check Due (months)</option>
+          <option>E&O Insurance Expired</option>
+          <option>Custom Condition</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Threshold Value <span class="text-danger">*</span></label><div class="dflex g8"><input type="number" class="form-control" style="width:100px" placeholder="0" value="0"><select class="form-control" style="width:120px"><option>Days</option><option selected>Months</option></select><span style="font-size:12px;color:#757575;align-self:center">after condition is met</span></div></div>
+      <div class="mb-3"><label class="form-label">Grace Period</label><div class="dflex g8"><input type="number" class="form-control" style="width:100px" value="14"><select class="form-control" style="width:100px"><option selected>Days</option><option>Months</option></select></div></div>
+      <div class="mb-3"><label class="form-label">Warning Reminder Schedule</label><input type="text" class="form-control" placeholder="e.g., 30d, 14d, 7d, 1d before threshold" value="60d, 30d, 14d"></div>
+      <div class="mb-3"><label class="form-label">Action on Threshold <span class="text-danger">*</span></label>
+        <select class="form-control">
+          <option>Apply Compliance Hold</option>
+          <option>Set Inactive</option>
+          <option>Terminate Agent</option>
+          <option>Submit Background Check</option>
+          <option>Send Final Warning Only</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Notification Template</label><select class="form-control"><option>Standard Compliance Warning</option><option>AHIP Renewal Reminder</option><option>Termination Notice</option><option>Custom</option></select></div>
+      <div class="mb-3"><label class="form-label">Initial Status</label><select class="form-control"><option>Simulation Mode (test before activating)</option><option selected>Active (apply immediately)</option><option>Disabled</option></select></div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button><button class="btn-pr" onclick="nfpSubmit('Compliance rule created successfully.')"><i class="fas fa-plus"></i> Create Rule</button></div>
+  </div>
+</div>
+
+<!-- Edit Rule Modal -->
+<div class="modal-overlay" id="editRuleModal" style="display:none">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h5>Edit Compliance Rule</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Rule Name</label><input type="text" class="form-control" value="AHIP Non-Renewal — Compliance Hold"></div>
+      <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="2">Automatically places agent on Compliance Hold when AHIP certification expires without renewal</textarea></div>
+      <div class="mb-3"><label class="form-label">Trigger Condition</label><select class="form-control"><option selected>AHIP Certification Expired</option><option>NIPR License Expired</option><option>No Enrollment Activity (days)</option><option>Background Check Due</option></select></div>
+      <div class="mb-3"><label class="form-label">Threshold Value</label><div class="dflex g8"><input type="number" class="form-control" style="width:100px" value="0"><select class="form-control" style="width:120px"><option selected>Days</option><option>Months</option></select></div></div>
+      <div class="mb-3"><label class="form-label">Grace Period</label><div class="dflex g8"><input type="number" class="form-control" style="width:100px" value="14"><select class="form-control" style="width:100px"><option selected>Days</option></select></div></div>
+      <div class="mb-3"><label class="form-label">Warning Reminder Schedule</label><input type="text" class="form-control" value="30d, 14d, 7d, 1d"></div>
+      <div class="mb-3"><label class="form-label">Action on Threshold</label><select class="form-control"><option selected>Apply Compliance Hold</option><option>Set Inactive</option><option>Terminate Agent</option></select></div>
+      <div class="mb-3"><label class="form-label">Status</label><select class="form-control"><option selected>Active</option><option>Simulation Mode</option><option>Disabled</option></select></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#c62828;border-color:#c62828" onclick="if(confirm('Delete this rule?'))this.closest('.modal-overlay').style.display='none'"><i class="fas fa-trash"></i> Delete</button>
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="nfpSave('Rule updated successfully.')"><i class="fas fa-save"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Simulation Modal -->
+<div class="modal-overlay" id="simulateModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-flask" style="margin-right:6px;color:#e65100"></i>Rule Simulation</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#fff3e0;border-radius:6px;padding:12px;margin-bottom:12px;font-size:12px"><i class="fas fa-info-circle" style="color:#e65100"></i> Simulation runs the rule against all current agents without applying any actions. Use this to preview impact before activating a rule.</div>
+      <div class="mb-3"><label class="form-label">Rule</label><input type="text" class="form-control" value="AHIP Non-Renewal — Compliance Hold" readonly></div>
+      <div style="background:#f8f9fa;padding:12px;border-radius:6px;font-size:13px">
+        <strong>Simulation Results:</strong>
+        <div style="margin-top:8px">
+          <div style="padding:4px 0"><i class="fas fa-users" style="color:#1565c0;width:20px"></i> <strong>487</strong> total active agents evaluated</div>
+          <div style="padding:4px 0"><i class="fas fa-exclamation-circle" style="color:#e65100;width:20px"></i> <strong>11</strong> agents currently match this rule</div>
+          <div style="padding:4px 0"><i class="fas fa-hand-paper" style="color:#c62828;width:20px"></i> <strong>3</strong> would receive Compliance Hold action today</div>
+          <div style="padding:4px 0"><i class="fas fa-bell" style="color:#f57f17;width:20px"></i> <strong>8</strong> would receive warning reminders</div>
+        </div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #e0e0e0;font-size:11px;color:#757575">
+          Agents who would be placed on hold: Kevin Park, Amy Chen, Tom Lee
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button><button class="btn-ol" onclick="nfpApprove('Simulation re-run complete. Same results.')"><i class="fas fa-redo"></i> Re-Run</button></div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

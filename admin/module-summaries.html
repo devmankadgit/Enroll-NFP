@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module Summaries | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.module-card{border:1px solid #e0e0e0;border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .2s}
+.module-card:hover{border-color:#1a237e;box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+.module-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:20px}
+.module-card h6{margin:0 0 4px;font-size:14px}
+.module-card .metrics{display:flex;justify-content:center;gap:12px;margin-top:10px;font-size:11px}
+.module-card .metric{text-align:center}
+.module-card .metric .val{font-size:16px;font-weight:700;color:#1a237e}
+.trend-up{color:#2e7d32}
+.trend-down{color:#c62828}
+.summary-chart{background:#f8f9fa;border-radius:8px;padding:16px;height:140px;display:flex;align-items:flex-end;gap:6px;justify-content:center}
+.chart-bar{width:24px;border-radius:4px 4px 0 0;background:#1a237e;position:relative}
+.chart-bar::after{content:attr(data-label);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#757575;white-space:nowrap}
+.pipeline-bar{display:flex;height:28px;border-radius:6px;overflow:hidden;font-size:10px;font-weight:600}
+.pipeline-bar div{display:flex;align-items:center;justify-content:center;color:white}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Module Analytics Summaries</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Module Summaries</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="exportSummaries('excel')"><i class="fas fa-file-excel" style="color:#2e7d32"></i>Excel</button>
+      <button class="btn-ol btn-sm" onclick="exportSummaries('pdf')"><i class="fas fa-file-pdf" style="color:#c62828"></i>PDF</button>
+      <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-sync"></i> Refresh</button>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Global Filter Panel -->
+    <div class="card mb16" style="border-left:3px solid #1a237e">
+      <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:6px;color:#1a237e"></i>Global Filters</h5><button class="btn-ol btn-sm" onclick="clearGlobalFilters()"><i class="fas fa-times"></i> Clear All</button></div>
+      <div class="card-body" style="padding:12px 16px">
+        <div class="filter-bar" style="flex-wrap:wrap;gap:10px">
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">Plan Year</label>
+            <select class="form-control" id="gfPlanYear" style="width:120px" onchange="applyGlobalFilters()"><option>2026</option><option>2025</option><option>2024</option></select></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">Date From</label>
+            <input type="date" class="form-control" id="gfDateFrom" style="width:145px" onchange="validateDateRange()"></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">Date To</label>
+            <input type="date" class="form-control" id="gfDateTo" style="width:145px" onchange="validateDateRange()">
+            <span id="gfDateErr" style="font-size:11px;color:#c62828;display:none"><i class="fas fa-exclamation-circle"></i> End date must be after start date.</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">Status</label>
+            <select class="form-control" id="gfStatus" style="width:130px" onchange="applyGlobalFilters()"><option value="">All Statuses</option><option>Active</option><option>Pending</option><option>Inactive</option></select></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">State</label>
+            <select class="form-control" id="gfState" style="width:100px" onchange="applyGlobalFilters()"><option value="">All States</option><option>FL</option><option>GA</option><option>TX</option><option>NC</option></select></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;font-weight:600;color:#5f6368">Agent / Agency</label>
+            <input type="text" class="form-control" id="gfAgent" placeholder="Search agent or agency..." style="width:180px" onchange="applyGlobalFilters()"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Onboarding details');document.getElementById('onboardingDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-id-card-alt"></i></div>
+        <h6>Onboarding</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">12</div>In Progress</div>
+          <div class="metric"><div class="val">8</div>Completed MTD</div>
+          <div class="metric"><div class="val trend-up"><i class="fas fa-arrow-up" style="font-size:10px"></i> 15%</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Enrollment details');document.getElementById('enrollmentDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-medical"></i></div>
+        <h6>Enrollment</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">156</div>This Month</div>
+          <div class="metric"><div class="val">94%</div>Approval Rate</div>
+          <div class="metric"><div class="val trend-up"><i class="fas fa-arrow-up" style="font-size:10px"></i> 8%</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Commission details');document.getElementById('commissionDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-dollar-sign"></i></div>
+        <h6>Commission</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">$284K</div>This Month</div>
+          <div class="metric"><div class="val">3</div>Pending Batches</div>
+          <div class="metric"><div class="val trend-down"><i class="fas fa-arrow-down" style="font-size:10px"></i> 2%</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Leads/Campaigns details');document.getElementById('leadsDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-users"></i></div>
+        <h6>Leads / Campaigns</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">892</div>Active Leads</div>
+          <div class="metric"><div class="val">12%</div>Conversion</div>
+          <div class="metric"><div class="val trend-up"><i class="fas fa-arrow-up" style="font-size:10px"></i> 3%</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Training details');document.getElementById('trainingDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#ede7f6;color:#7b1fa2"><i class="fas fa-graduation-cap"></i></div>
+        <h6>Training</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">96%</div>AHIP Compliance</div>
+          <div class="metric"><div class="val">14</div>Expiring (30d)</div>
+          <div class="metric"><div class="val trend-up"><i class="fas fa-arrow-up" style="font-size:10px"></i> 2%</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Compliance details');document.getElementById('complianceDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#fff8e1;color:#f57f17"><i class="fas fa-gavel"></i></div>
+        <h6>Compliance</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">8</div>Active Holds</div>
+          <div class="metric"><div class="val">2.3d</div>Avg Resolution</div>
+          <div class="metric"><div class="val trend-down"><i class="fas fa-arrow-down" style="font-size:10px"></i> 4</div>vs Last Month</div>
+        </div>
+      </div>
+      <div class="module-card" onclick="showToast('Drill-down: Navigating to Administration details');document.getElementById('adminDetail').scrollIntoView({behavior:'smooth'})">
+        <div class="icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-cogs"></i></div>
+        <h6>Administration</h6>
+        <div class="metrics">
+          <div class="metric"><div class="val">566</div>Total Agents</div>
+          <div class="metric"><div class="val">4</div>Vendors Active</div>
+          <div class="metric"><div class="val">99.8%</div>Uptime</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- ONBOARDING MODULE SUMMARY --- -->
+    <div class="card mb16" id="onboardingDetail">
+      <div class="card-hdr"><h5><i class="fas fa-id-card-alt" style="margin-right:6px;color:#1565c0"></i>Onboarding Summary</h5><a href="../agency-admin/onboarding-cases.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> View All Cases</a></div>
+      <div style="padding:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Pipeline Status</h6>
+            <div class="pipeline-bar">
+              <div style="width:25%;background:#fff3e0;color:#e65100">3 Pending Docs</div>
+              <div style="width:33%;background:#e3f2fd;color:#1565c0">4 In Verification</div>
+              <div style="width:17%;background:#fff8e1;color:#f57f17">2 Compliance Review</div>
+              <div style="width:25%;background:#e8f5e9;color:#2e7d32">3 Ready to Activate</div>
+            </div>
+            <div style="margin-top:12px;font-size:12px">
+              <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Avg. Onboarding Time:</span><strong>4.2 days</strong></div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Completion Rate:</span><strong>89%</strong></div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Drop-off Rate:</span><strong>11% (mostly at doc upload)</strong></div>
+            </div>
+          </div>
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Monthly Trend (Completed Onboardings)</h6>
+            <div class="summary-chart">
+              <div class="chart-bar" style="height:40%" data-label="Jan"></div>
+              <div class="chart-bar" style="height:55%" data-label="Feb"></div>
+              <div class="chart-bar" style="height:45%" data-label="Mar"></div>
+              <div class="chart-bar" style="height:70%" data-label="Apr"></div>
+              <div class="chart-bar" style="height:85%" data-label="May"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- ENROLLMENT MODULE SUMMARY --- -->
+    <div class="card mb16" id="enrollmentDetail">
+      <div class="card-hdr"><h5><i class="fas fa-file-medical" style="margin-right:6px;color:#2e7d32"></i>Enrollment Summary</h5><a href="../enrollment-ops/dashboard.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> View All</a></div>
+      <div style="padding:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Enrollment Pipeline</h6>
+            <div class="pipeline-bar">
+              <div style="width:20%;background:#e3f2fd;color:#1565c0">31 Submitted</div>
+              <div style="width:15%;background:#fff8e1;color:#f57f17">24 Processing</div>
+              <div style="width:50%;background:#e8f5e9;color:#2e7d32">78 Approved</div>
+              <div style="width:15%;background:#ffebee;color:#c62828">23 Rejected</div>
+            </div>
+            <div style="margin-top:12px;font-size:12px">
+              <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Avg. Processing Time:</span><strong>1.8 days</strong></div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Top Plan:</span><strong>Gold PPO (42%)</strong></div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0"><span>SOA Compliance Rate:</span><strong>98.5%</strong></div>
+            </div>
+          </div>
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Monthly Enrollments</h6>
+            <div class="summary-chart">
+              <div class="chart-bar" style="height:50%;background:#2e7d32" data-label="Jan"></div>
+              <div class="chart-bar" style="height:60%;background:#2e7d32" data-label="Feb"></div>
+              <div class="chart-bar" style="height:55%;background:#2e7d32" data-label="Mar"></div>
+              <div class="chart-bar" style="height:75%;background:#2e7d32" data-label="Apr"></div>
+              <div class="chart-bar" style="height:90%;background:#2e7d32" data-label="May"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- COMMISSION MODULE SUMMARY --- -->
+    <div class="card mb16" id="commissionDetail">
+      <div class="card-hdr"><h5><i class="fas fa-dollar-sign" style="margin-right:6px;color:#e65100"></i>Commission Summary</h5><a href="../finance/dashboard.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> View All</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px">
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#e65100">$284,320</div><div>Total Paid MTD</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">3</div><div>Pending Batches</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">12</div><div>Exceptions</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">$1,240</div><div>Avg per Agent</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- LEADS/CAMPAIGNS MODULE SUMMARY --- -->
+    <div class="card mb16" id="leadsDetail">
+      <div class="card-hdr"><h5><i class="fas fa-users" style="margin-right:6px;color:#c62828"></i>Leads & Campaign Summary</h5><a href="campaigns.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> Campaigns</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Lead Funnel</h6>
+            <div style="font-size:13px">
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0"><div style="width:100%;background:#e3f2fd;height:20px;border-radius:4px;position:relative"><div style="position:absolute;left:8px;top:2px;font-size:11px;font-weight:600;color:#1565c0">892 Total Leads</div></div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0"><div style="width:75%;background:#fff3e0;height:20px;border-radius:4px;position:relative"><div style="position:absolute;left:8px;top:2px;font-size:11px;font-weight:600;color:#e65100">669 Contacted</div></div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0"><div style="width:40%;background:#fff8e1;height:20px;border-radius:4px;position:relative"><div style="position:absolute;left:8px;top:2px;font-size:11px;font-weight:600;color:#f57f17">357 Appt Set</div></div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0"><div style="width:18%;background:#e8f5e9;height:20px;border-radius:4px;position:relative"><div style="position:absolute;left:8px;top:2px;font-size:11px;font-weight:600;color:#2e7d32">107 Enrolled</div></div></div>
+            </div>
+          </div>
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Top Campaigns (Conversion Rate)</h6>
+            <div style="padding:4px 0;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between"><span>AEP Direct Mail  FL</span><strong>18%</strong></div>
+            <div style="padding:4px 0;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between"><span>Digital  Google Ads</span><strong>14%</strong></div>
+            <div style="padding:4px 0;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between"><span>Community Events  TX</span><strong>22%</strong></div>
+            <div style="padding:4px 0;display:flex;justify-content:space-between"><span>Referral Program</span><strong>31%</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- TRAINING MODULE SUMMARY --- -->
+    <div class="card mb16" id="trainingDetail">
+      <div class="card-hdr"><h5><i class="fas fa-graduation-cap" style="margin-right:6px;color:#7b1fa2"></i>Training Summary</h5><a href="training-admin.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> View All</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#2e7d32">96%</div><div>AHIP Current</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#e65100">14</div><div>Expiring in 30d</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">87%</div><div>Avg Exam Score</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">3</div><div>Courses Available</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- COMPLIANCE MODULE SUMMARY --- -->
+    <div class="card mb16" id="complianceDetail">
+      <div class="card-hdr"><h5><i class="fas fa-gavel" style="margin-right:6px;color:#f57f17"></i>Compliance Summary</h5><a href="../compliance/compliance-hold.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> Hold Queue</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div style="background:#fff8e1;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#f57f17">8</div><div>Active Holds</div></div>
+          <div style="background:#e8f5e9;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#2e7d32">6</div><div>Resolved MTD</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700">2.3d</div><div>Avg Resolution</div></div>
+          <div style="background:#ffebee;padding:10px;border-radius:6px;text-align:center"><div style="font-size:18px;font-weight:700;color:#c62828">1</div><div>Auto-Terminations</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- ADMIN MODULE SUMMARY --- -->
+    <div class="card mb16" id="adminDetail">
+      <div class="card-hdr"><h5><i class="fas fa-cogs" style="margin-right:6px;color:#1a237e"></i>Administration Summary</h5></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Administration details')"><div style="font-size:18px;font-weight:700">566</div><div>Total Agents</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Administration details')"><div style="font-size:18px;font-weight:700">4</div><div>OEC Vendors</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Administration details')"><div style="font-size:18px;font-weight:700">47</div><div>Published Docs</div></div>
+          <div style="background:#e8f5e9;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Administration details')"><div style="font-size:18px;font-weight:700;color:#2e7d32">99.8%</div><div>System Uptime</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- FINANCE ADMIN MODULE DASHBOARD --- -->
+    <div class="card mb16" id="financeAdminDetail">
+      <div class="card-hdr"><h5><i class="fas fa-dollar-sign" style="margin-right:6px;color:#2e7d32"></i>Finance Admin Module Dashboard</h5><a href="../finance/dashboard.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> Finance Portal</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Monthly Commission Liability Trend</h6>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:80px">
+              <div style="flex:1;background:#a5d6a7;border-radius:3px 3px 0 0;height:52%;" title="Jan: $72K"></div>
+              <div style="flex:1;background:#66bb6a;border-radius:3px 3px 0 0;height:62%;" title="Feb: $78K"></div>
+              <div style="flex:1;background:#43a047;border-radius:3px 3px 0 0;height:58%;" title="Mar: $75K"></div>
+              <div style="flex:1;background:#2e7d32;border-radius:3px 3px 0 0;height:74%;" title="Apr: $82K"></div>
+              <div style="flex:1;background:#1b5e20;border-radius:3px 3px 0 0;height:87%;" title="May: $87K"></div>
+              <div style="flex:1;background:#004d40;border-radius:3px 3px 0 0;height:100%;" title="Jun: $91K (est)"></div>
+            </div>
+            <div style="display:flex;gap:4px;margin-top:4px;font-size:9px;color:#9e9e9e"><span style="flex:1;text-align:center">Jan</span><span style="flex:1;text-align:center">Feb</span><span style="flex:1;text-align:center">Mar</span><span style="flex:1;text-align:center">Apr</span><span style="flex:1;text-align:center">May</span><span style="flex:1;text-align:center">Jun</span></div>
+          </div>
+          <div>
+            <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Chargeback Rate</span><strong style="color:#c62828">0.0%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Dispute Rate</span><strong style="color:#e65100">0.8%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Avg Dispute Resolution</span><strong>4.2 days</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>ACH Payments</span><strong>84%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Check Payments</span><strong>16%</strong></div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px">
+          <h6 style="font-size:12px;color:#757575;margin-bottom:6px">Top 10 Agents by Commission Earned (YTD)</h6>
+          <table class="tbl" id="tblExport1" style="font-size:11px"><thead><tr><th>#</th><th>Agent</th><th>NPN</th><th>YTD Commission</th></tr></thead><tbody>
+            <tr><td>1</td><td>James Martinez</td><td>8823441</td><td class="text-bold">$11,284</td></tr>
+            <tr><td>2</td><td>Sarah Chen</td><td>7712309</td><td class="text-bold">$9,327</td></tr>
+            <tr><td>3</td><td>Michael Torres</td><td>9934221</td><td class="text-bold">$7,230</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- SYSTEM ADMIN MODULE DASHBOARD --- -->
+    <div class="card mb16" id="systemAdminDetail">
+      <div class="card-hdr"><h5><i class="fas fa-server" style="margin-right:6px;color:#1a237e"></i>System Admin Module Dashboard</h5><a href="monitoring.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i> Monitoring</a></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px">
+          <div style="background:#e8f5e9;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to System Admin details')"><div style="font-size:18px;font-weight:700;color:#2e7d32">Active</div><div>Config Status</div></div>
+          <div style="background:#f8f9fa;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to User Management details')"><div style="font-size:18px;font-weight:700">566</div><div>Total Users</div></div>
+          <div style="background:#fff8e1;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Integration Status details')"><div style="font-size:18px;font-weight:700;color:#e65100">3/4 OK</div><div>Integrations Healthy</div></div>
+          <div style="background:#e3f2fd;padding:10px;border-radius:6px;text-align:center;cursor:pointer" onclick="showToast('Drill-down: Navigating to Master Data details')"><div style="font-size:18px;font-weight:700;color:#0d47a1">98%</div><div>Master Data Completeness</div></div>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','module-summaries_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div>
+          <h6 style="font-size:12px;color:#757575;margin-bottom:6px">Integration Status per Vendor</h6>
+          <table class="tbl" id="tblExport2" style="font-size:11px"><thead><tr><th>Vendor</th><th>Status</th><th>Last OK</th></tr></thead><tbody>
+            <tr><td>OEC Prime</td><td><span class="bdg b-green">Healthy</span></td><td>2026-05-28 02:05 UTC</td></tr>
+            <tr><td>Apex Enrollment Exchange</td><td><span class="bdg b-green">Healthy</span></td><td>2026-05-28 02:06 UTC</td></tr>
+            <tr><td>Nexus OEC</td><td><span class="bdg b-grey">Inactive</span></td><td>2026-05-25 02:04 UTC</td></tr>
+            <tr><td>CareLink Exchange</td><td><span class="bdg b-amber">Warning ? Latency</span></td><td>2026-05-28 03:02 UTC</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- SALES LEADERSHIP MODULE DASHBOARD --- -->
+    <div class="card mb16" id="salesLeaderDetail">
+      <div class="card-hdr"><h5><i class="fas fa-chart-line" style="margin-right:6px;color:#c62828"></i>Sales Leadership Module Dashboard</h5></div>
+      <div style="padding:16px;font-size:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:8px">Enterprise Enrollment Trends</h6>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:80px">
+              <div style="flex:1;background:#ef9a9a;border-radius:3px 3px 0 0;height:45%;" title="Jan: 18"></div>
+              <div style="flex:1;background:#e57373;border-radius:3px 3px 0 0;height:55%;" title="Feb: 22"></div>
+              <div style="flex:1;background:#ef5350;border-radius:3px 3px 0 0;height:48%;" title="Mar: 19"></div>
+              <div style="flex:1;background:#e53935;border-radius:3px 3px 0 0;height:63%;" title="Apr: 25"></div>
+              <div style="flex:1;background:#c62828;border-radius:3px 3px 0 0;height:70%;" title="May: 28"></div>
+              <div style="flex:1;background:#b71c1c;border-radius:3px 3px 0 0;height:80%;" title="Jun: 31 (est)"></div>
+            </div>
+            <div style="display:flex;gap:4px;margin-top:4px;font-size:9px;color:#9e9e9e"><span style="flex:1;text-align:center">Jan</span><span style="flex:1;text-align:center">Feb</span><span style="flex:1;text-align:center">Mar</span><span style="flex:1;text-align:center">Apr</span><span style="flex:1;text-align:center">May</span><span style="flex:1;text-align:center">Jun</span></div>
+            <div style="margin-top:12px"><div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Agent Network Health</span><strong style="color:#2e7d32">94%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f5f5f5"><span>Conversion Funnel Rate</span><strong>12%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Campaign ROI (avg)</span><strong style="color:#1565c0">3.8x</strong></div></div>
+          </div>
+          <div>
+            <h6 style="font-size:12px;color:#757575;margin-bottom:6px">Top Producers (YTD)</h6>
+            <table class="tbl" id="tblExport3" style="font-size:11px"><thead><tr><th>Agent</th><th>Enrollments</th><th>YTD Comm.</th></tr></thead><tbody>
+              <tr><td class="text-bold">James Martinez</td><td>14</td><td>$11,284</td></tr>
+              <tr><td class="text-bold">Sarah Chen</td><td>11</td><td>$9,327</td></tr>
+              <tr><td class="text-bold">Michael Torres</td><td>8</td><td>$7,230</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function validateDateRange() {
+  var from = document.getElementById('gfDateFrom').value;
+  var to = document.getElementById('gfDateTo').value;
+  var err = document.getElementById('gfDateErr');
+  if (from && to && to <= from) {
+    err.style.display = 'inline';
+  } else {
+    err.style.display = 'none';
+  }
+}
+function applyGlobalFilters() {
+  showToast('Global filters applied. Data updated.', 'success');
+}
+function clearGlobalFilters() {
+  document.getElementById('gfPlanYear').value = '2026';
+  document.getElementById('gfDateFrom').value = '';
+  document.getElementById('gfDateTo').value = '';
+  document.getElementById('gfStatus').value = '';
+  document.getElementById('gfState').value = '';
+  document.getElementById('gfAgent').value = '';
+  document.getElementById('gfDateErr').style.display = 'none';
+  showToast('Filters cleared.', 'success');
+}
+function exportSummaries(fmt) {
+  showToast('Exporting module summaries as ' + fmt.toUpperCase() + '...', 'success');
+}
+</script>
+</body>
+</html>

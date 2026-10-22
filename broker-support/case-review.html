@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support Case Review (US-2.15) -->
+<title>Case Review | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}
+.gate-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f1f3f4}
+.gate-row:last-child{border-bottom:none}
+.gate-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.gate-pass{background:#e8f5e9;color:#2e7d32}
+.gate-fail{background:#ffcdd2;color:#c62828}
+.gate-pending{background:#fff3e0;color:#e65100}
+.gate-info{flex:1}
+.gate-name{font-weight:600;font-size:13px}
+.gate-detail{font-size:12px;color:#5f6368}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <ol class="breadcrumb-bar"><li><a href="onboarding-queue.html">Onboarding Queue</a></li><li>CASE-2026-0891</li></ol>
+      <h4>Case Review — James Lee</h4>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpAction('Re-trigger NIPR Check')"><i class="fas fa-sync"></i>Re-trigger NIPR</button>
+      <button class="btn-ol btn-sm" onclick="openNotifyModal()"><i class="fas fa-envelope"></i>Notify Agent</button>
+      <button class="btn-pr btn-sm" onclick="openOverrideModal()"><i class="fas fa-unlock-alt"></i>Manual Override</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Case Summary -->
+    <div class="card">
+      <div class="card-body" style="padding:16px 20px">
+        <div class="row">
+          <div class="col-md-3"><div style="font-size:12px;color:#5f6368">Case ID</div><div style="font-weight:700;font-size:14px">CASE-2026-0891</div></div>
+          <div class="col-md-3"><div style="font-size:12px;color:#5f6368">Agent Name</div><div style="font-weight:700;font-size:14px">James Lee</div></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">NPN</div><div style="font-weight:700;font-size:14px">8834521</div></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">Invited By</div><div style="font-size:13px">Premier Insurance (FMO)</div></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">Started</div><div style="font-size:13px">05 28,2026</div></div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <div class="col-md-3"><div style="font-size:12px;color:#5f6368">Status</div><span class="badge" style="background:#fff3e0;color:#e65100">Pending Review</span></div>
+          <div class="col-md-3"><div style="font-size:12px;color:#5f6368">Current Gate</div><span class="badge" style="background:#fff3e0;color:#e65100">Document Upload (W-9)</span></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">Attempts</div><div style="font-weight:700;color:#c62828">3 (threshold reached)</div></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">SLA Due</div><div style="font-weight:700;color:#c62828">OVERDUE</div></div>
+          <div class="col-md-2"><div style="font-size:12px;color:#5f6368">Assigned To</div><div style="font-size:13px">Maria Johnson</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gate Status Panel -->
+    <div class="row g-3" style="margin-top:12px">
+      <div class="col-lg-7">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-tasks" style="color:#0277bd;margin-right:8px"></i>Onboarding Gates</h6></div>
+          <div class="card-body" style="padding:0">
+            <div class="gate-row">
+              <div class="gate-icon gate-pass"><i class="fas fa-check"></i></div>
+              <div class="gate-info"><div class="gate-name">1. Registration</div><div class="gate-detail">Completed 05 28,2026 — Self-registered via invitation link</div></div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pass"><i class="fas fa-check"></i></div>
+              <div class="gate-info"><div class="gate-name">2. Personal &amp; Business Info</div><div class="gate-detail">Completed 05 28,2026 — All fields validated</div></div>
+            </div>
+            <div class="gate-row" style="background:#fff8e1">
+              <div class="gate-icon gate-fail"><i class="fas fa-times"></i></div>
+              <div class="gate-info">
+                <div class="gate-name">3. W-9 / Tax Documentation <span class="badge" style="background:#ffcdd2;color:#c62828;font-size:10px;margin-left:6px">3 attempts</span></div>
+                <div class="gate-detail" style="color:#c62828">Failed — Entity type mismatch: W-9 shows "LLC", business reg shows "Sole Proprietor"</div>
+                <div style="margin-top:6px"><button class="btn-ol btn-sm" onclick="nfpAction('View Upload History')"><i class="fas fa-history"></i> View History</button> <button class="btn-ol btn-sm" style="color:#e65100;border-color:#e65100" onclick="nfpAction('Add Reviewer Comment')"><i class="fas fa-comment"></i> Add Comment</button></div>
+              </div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pass"><i class="fas fa-check"></i></div>
+              <div class="gate-info"><div class="gate-name">4. AHIP Certification</div><div class="gate-detail">Completed 06 02,2026 — Score: 92% (pass threshold: 85%)</div></div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pass"><i class="fas fa-check"></i></div>
+              <div class="gate-info"><div class="gate-name">5. NIPR License Verification</div><div class="gate-detail">Passed — Active licenses: FL, GA, TX | Last synced: 06 08,2026</div></div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pass"><i class="fas fa-check"></i></div>
+              <div class="gate-info"><div class="gate-name">6. Plan-Specific Training</div><div class="gate-detail">Completed 06 03,2026 — Gold Kidney MAPD Module</div></div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pending"><i class="fas fa-clock"></i></div>
+              <div class="gate-info"><div class="gate-name">7. Background Check</div><div class="gate-detail">Not yet triggered — waiting for Gate 3 (W-9) clearance</div></div>
+            </div>
+            <div class="gate-row">
+              <div class="gate-icon gate-pending"><i class="fas fa-clock"></i></div>
+              <div class="gate-info"><div class="gate-name">8. Contract Execution</div><div class="gate-detail">Pending — sequential dependency on prior gates</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Documents + Actions -->
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-file-alt" style="color:#e65100;margin-right:8px"></i>Uploaded Documents</h6></div>
+          <div class="card-body" style="padding:12px 16px;font-size:13px">
+            <div style="padding:8px 0;border-bottom:1px solid #f1f3f4;display:flex;justify-content:space-between;align-items:center">
+              <div><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>W-9_JamesLee_v3.pdf <span class="badge" style="background:#ffcdd2;color:#c62828;font-size:10px">Rejected</span></div>
+              <button class="btn-ol btn-sm" onclick="viewDoc('W-9_JamesLee_v3.pdf','Rejected','06 08,2026 11:42 AM','Entity type mismatch — W-9 lists LLC, business registration shows Sole Proprietor. Section 3 does not match IRS records.')">View</button>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid #f1f3f4;display:flex;justify-content:space-between;align-items:center">
+              <div><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>W-9_JamesLee_v2.pdf <span class="badge" style="background:#ffcdd2;color:#c62828;font-size:10px">Rejected</span></div>
+              <button class="btn-ol btn-sm" onclick="viewDoc('W-9_JamesLee_v2.pdf','Rejected','06 05,2026 09:10 AM','Entity type still shows LLC. Agent was notified via email to correct Section 3.')">View</button>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid #f1f3f4;display:flex;justify-content:space-between;align-items:center">
+              <div><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>W-9_JamesLee_v1.pdf <span class="badge" style="background:#ffcdd2;color:#c62828;font-size:10px">Rejected</span></div>
+              <button class="btn-ol btn-sm" onclick="viewDoc('W-9_JamesLee_v1.pdf','Rejected','05 30,2026 02:18 PM','Missing TIN. Entity type field left blank. Agent asked to resubmit complete form.')">View</button>
+            </div>
+            <div style="padding:8px 0;display:flex;justify-content:space-between;align-items:center">
+              <div><i class="fas fa-file-pdf" style="color:#2e7d32;margin-right:6px"></i>AHIP_Cert_2026.pdf <span class="badge" style="background:#e8f5e9;color:#2e7d32;font-size:10px">Accepted</span></div>
+              <button class="btn-ol btn-sm" onclick="viewDoc('AHIP_Cert_2026.pdf','Accepted','06 02,2026 10:05 AM','AHIP FWA certification for plan year 2026. Score: 92%. Validated via AHIP API integration. Certificate year matches current selling year.')">View</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviewer Comments -->
+        <div class="card" style="margin-top:12px">
+          <div class="card-hdr"><h6><i class="fas fa-comments" style="color:#0277bd;margin-right:8px"></i>Reviewer Comments</h6></div>
+          <div class="card-body" style="padding:12px 16px;font-size:13px">
+            <div style="background:#f8f9fa;border-radius:8px;padding:10px 12px;margin-bottom:8px">
+              <div style="font-weight:600;font-size:12px;color:#0277bd">Maria Johnson <span style="font-weight:400;color:#80868b">— 06 08,2026 14:30</span></div>
+              <div style="margin-top:4px">Section 3 — Your W-9 submission has an entity type mismatch. W-9 lists "LLC" but business registration shows "Sole Proprietor." Please re-upload a corrected W-9 or confirm your entity type.</div>
+            </div>
+            <div style="background:#f8f9fa;border-radius:8px;padding:10px 12px">
+              <div style="font-weight:600;font-size:12px;color:#0277bd">Maria Johnson <span style="font-weight:400;color:#80868b">— 06 05,2026 09:15</span></div>
+              <div style="margin-top:4px">W-9 v2 still shows incorrect entity. Agent contacted via email. Awaiting corrected submission.</div>
+            </div>
+            <div style="margin-top:12px">
+              <textarea id="commentText" rows="2" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px" placeholder="Add a reviewer comment... (min 10 characters)"></textarea>
+              <div id="commentErr" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Comment must be at least 10 characters</div>
+              <div style="display:flex;gap:8px;margin-top:6px">
+                <button class="btn-ol btn-sm" style="color:#1565c0;border-color:#1565c0" onclick="prefillComment()"><i class="fas fa-fill-drip"></i> Prefill</button>
+                <button class="btn-pr btn-sm" onclick="submitComment()"><i class="fas fa-paper-plane"></i>Add Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Actions -->
+        <div class="card" style="margin-top:12px">
+          <div class="card-hdr"><h6><i class="fas fa-tools" style="color:#1a237e;margin-right:8px"></i>Admin Actions</h6></div>
+          <div class="card-body" style="padding:12px 16px">
+            <div style="display:grid;gap:8px">
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Manual Override: Mark W-9 Gate as Passed')"><i class="fas fa-unlock-alt" style="margin-right:8px;color:#e65100"></i>Override: Mark Gate as Passed</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Re-trigger NIPR Check')"><i class="fas fa-sync" style="margin-right:8px;color:#0277bd"></i>Re-trigger NIPR License Check</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Re-run Background Check')"><i class="fas fa-user-shield" style="margin-right:8px;color:#5f6368"></i>Re-run Background Check</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Send Agent Reminder')"><i class="fas fa-envelope" style="margin-right:8px;color:#2e7d32"></i>Send Agent Reminder Email</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left;color:#c62828;border-color:#c62828" onclick="nfpAction('Withdraw Case')"><i class="fas fa-times-circle" style="margin-right:8px"></i>Withdraw Case</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notify Agent Modal -->
+<div id="notifyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-envelope" style="color:#0277bd;margin-right:8px"></i>Notify Agent</h6>
+      <button onclick="closeNotifyModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">To (Agent Email) <span style="color:#c62828">*</span></label>
+        <input type="email" id="notifyEmail" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px" placeholder="agent@email.com">
+        <div id="errNotifyEmail" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Email is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Subject <span style="color:#c62828">*</span></label>
+        <input type="text" id="notifySubject" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px" placeholder="Notification subject">
+        <div id="errNotifySubject" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Subject is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Notification Type <span style="color:#c62828">*</span></label>
+        <select id="notifyType" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+          <option value="">Select type...</option>
+          <option value="Document Resubmission Required">Document Resubmission Required</option>
+          <option value="Compliance Action Needed">Compliance Action Needed</option>
+          <option value="Case Status Update">Case Status Update</option>
+          <option value="Deadline Reminder">Deadline Reminder</option>
+          <option value="General Information">General Information</option>
+        </select>
+        <div id="errNotifyType" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Notification type is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Message Body <span style="color:#c62828">*</span></label>
+        <textarea id="notifyBody" rows="4" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px;resize:vertical" placeholder="Enter notification message (min 20 characters)..."></textarea>
+        <div id="errNotifyBody" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Message is required (min 20 characters)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <input type="checkbox" id="notifyCopy" style="width:16px;height:16px">
+        <label for="notifyCopy" style="font-size:12px;color:#5f6368">Send copy to my email (maria.johnson@goldkidney.com)</label>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillNotify()"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ol btn-sm" onclick="closeNotifyModal()">Cancel</button>
+        <button class="btn-pr btn-sm" onclick="submitNotify()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Notification</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Manual Override Modal -->
+<div id="overrideModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:500px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-unlock-alt" style="color:#e65100;margin-right:8px"></i>Manual Override — Gate Bypass</h6>
+      <button onclick="closeOverrideModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px">
+        <i class="fas fa-exclamation-triangle" style="color:#e65100;margin-right:6px"></i>
+        <strong>Warning:</strong> This will bypass the W-9 Document Upload gate for this case. This action is logged in the audit trail and requires justification.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;font-size:13px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Case</div><div style="font-weight:600;margin-top:2px">CASE-2026-0891</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div style="font-weight:600;margin-top:2px">James Lee (NPN: 8834521)</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Gate Being Overridden</div><div style="font-weight:600;margin-top:2px;color:#e65100">3. W-9 / Tax Documentation</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Override By</div><div style="font-weight:600;margin-top:2px">Maria Johnson</div></div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Override Reason <span style="color:#c62828">*</span></label>
+        <select id="overrideReason" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+          <option value="">Select reason...</option>
+          <option value="Agent provided verbal confirmation of entity type">Agent provided verbal confirmation of entity type</option>
+          <option value="Document received via alternate channel (fax/mail)">Document received via alternate channel (fax/mail)</option>
+          <option value="Supervisor-approved exception">Supervisor-approved exception</option>
+          <option value="Temporary bypass pending corrected resubmission">Temporary bypass pending corrected resubmission</option>
+          <option value="Other (see justification)">Other (see justification)</option>
+        </select>
+        <div id="errOverrideReason" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Reason is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Justification Notes <span style="color:#c62828">*</span></label>
+        <textarea id="overrideNotes" rows="3" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px;resize:vertical" placeholder="Provide detailed justification for this override (min 20 chars)..."></textarea>
+        <div id="errOverrideNotes" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Justification is required (min 20 characters)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="overrideConfirm" style="width:16px;height:16px">
+        <label for="overrideConfirm" style="font-size:12px;color:#5f6368">I confirm this override is authorized and understand it will be audit-logged</label>
+      </div>
+      <div id="errOverrideConfirm" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Confirmation is required</div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillOverride()"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ol btn-sm" onclick="closeOverrideModal()">Cancel</button>
+        <button class="btn-pr btn-sm" style="background:#e65100" onclick="submitOverride()"><i class="fas fa-unlock-alt" style="margin-right:4px"></i>Confirm Override</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Document Preview Modal -->
+<div id="docModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-file-pdf" style="color:#c62828;margin-right:8px"></i><span id="docModalTitle">Document</span></h6>
+      <button onclick="closeDocModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368;padding:4px 8px"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="docModalStatus" style="font-weight:700;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Uploaded</div><div id="docModalDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div style="font-size:13px;margin-top:2px">James Lee (NPN: 8834521)</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Case</div><div style="font-size:13px;margin-top:2px">CASE-2026-0891</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Review Notes</div>
+        <div id="docModalNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div style="background:#f1f3f4;border-radius:8px;padding:32px;text-align:center;border:1px dashed #dadce0">
+        <i class="fas fa-file-pdf" style="font-size:40px;color:#c62828;margin-bottom:8px"></i>
+        <div style="font-size:13px;color:#5f6368">PDF Document Preview</div>
+        <div id="docModalFilename" style="font-size:12px;color:#80868b;margin-top:4px">filename.pdf</div>
+        <button class="btn-ol btn-sm" style="margin-top:12px" onclick="showToast('Download started','info')"><i class="fas fa-download" style="margin-right:4px"></i>Download</button>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeDocModal()">Close</button>
+      <button class="btn-pr btn-sm" onclick="showToast('Document flagged for re-review','info');closeDocModal()"><i class="fas fa-flag" style="margin-right:4px"></i>Flag for Re-review</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function viewDoc(filename, status, date, notes){
+  document.getElementById('docModalTitle').textContent=filename;
+  document.getElementById('docModalFilename').textContent=filename;
+  document.getElementById('docModalDate').textContent=date;
+  document.getElementById('docModalNotes').textContent=notes;
+  var statusEl=document.getElementById('docModalStatus');
+  if(status==='Accepted'){
+    statusEl.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Accepted</span>';
+  } else {
+    statusEl.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>Rejected</span>';
+  }
+  var modal=document.getElementById('docModal');
+  modal.style.display='flex';
+}
+function closeDocModal(){
+  document.getElementById('docModal').style.display='none';
+}
+document.getElementById('docModal').addEventListener('click',function(e){
+  if(e.target===this) closeDocModal();
+});
+
+function prefillComment(){
+  document.getElementById('commentText').value='W-9 entity type still does not match business registration. Agent notified via email on Jun 8. If not corrected by Jun 12, case will be escalated to supervisor for manual override decision.';
+  document.getElementById('commentErr').style.display='none';
+  showToast('Comment prefilled with sample data','info');
+}
+function submitComment(){
+  var text=document.getElementById('commentText').value.trim();
+  var err=document.getElementById('commentErr');
+  if(text.length<10){err.style.display='block';return;}
+  err.style.display='none';
+  showToast('Reviewer comment added successfully','success');
+  document.getElementById('commentText').value='';
+}
+
+// Notify Agent Modal
+function openNotifyModal(){document.getElementById('notifyModal').style.display='flex';clearNotifyErrors();}
+function closeNotifyModal(){document.getElementById('notifyModal').style.display='none';}
+function clearNotifyErrors(){
+  ['errNotifyEmail','errNotifySubject','errNotifyType','errNotifyBody'].forEach(function(id){document.getElementById(id).style.display='none';});
+}
+function prefillNotify(){
+  document.getElementById('notifyEmail').value='james.lee@email.com';
+  document.getElementById('notifySubject').value='Action Required: W-9 Document Correction — CASE-2026-0891';
+  document.getElementById('notifyType').value='Document Resubmission Required';
+  document.getElementById('notifyBody').value='Dear James Lee,\n\nYour W-9 submission (v3) for case CASE-2026-0891 has been rejected due to an entity type mismatch. Your W-9 indicates \"LLC\" but your business registration shows \"Sole Proprietor.\"\n\nPlease submit a corrected W-9 with the correct entity type in Section 3 by 06 12,2026. If not corrected by the deadline, your case may be escalated for manual override review.\n\nThank you,\nMaria Johnson\nBroker Support Team';
+  document.getElementById('notifyCopy').checked=true;
+  clearNotifyErrors();
+  showToast('Notification form prefilled','info');
+}
+function submitNotify(){
+  clearNotifyErrors();
+  var valid=true;
+  if(!document.getElementById('notifyEmail').value.trim()){document.getElementById('errNotifyEmail').style.display='block';valid=false;}
+  if(!document.getElementById('notifySubject').value.trim()){document.getElementById('errNotifySubject').style.display='block';valid=false;}
+  if(!document.getElementById('notifyType').value){document.getElementById('errNotifyType').style.display='block';valid=false;}
+  var body=document.getElementById('notifyBody').value.trim();
+  if(body.length<20){document.getElementById('errNotifyBody').style.display='block';valid=false;}
+  if(!valid){showToast('Please fill all mandatory fields','error');return;}
+  showToast('Notification sent to '+document.getElementById('notifyEmail').value,'success');
+  closeNotifyModal();
+}
+document.getElementById('notifyModal').addEventListener('click',function(e){if(e.target===this)closeNotifyModal();});
+
+// Manual Override Modal
+function openOverrideModal(){document.getElementById('overrideModal').style.display='flex';clearOverrideErrors();}
+function closeOverrideModal(){document.getElementById('overrideModal').style.display='none';}
+function clearOverrideErrors(){
+  ['errOverrideReason','errOverrideNotes','errOverrideConfirm'].forEach(function(id){document.getElementById(id).style.display='none';});
+}
+function prefillOverride(){
+  document.getElementById('overrideReason').value='Supervisor-approved exception';
+  document.getElementById('overrideNotes').value='Agent James Lee (NPN: 8834521) has confirmed entity type is Sole Proprietor. IRS CP-575 confirmation letter received via fax on 06 09,2026. Supervisor Carlos Rivera approved gate bypass per policy GK-OB-014. Corrected W-9 expected within 5 business days as follow-up.';
+  document.getElementById('overrideConfirm').checked=true;
+  clearOverrideErrors();
+  showToast('Override form prefilled with sample data','info');
+}
+function submitOverride(){
+  clearOverrideErrors();
+  var valid=true;
+  if(!document.getElementById('overrideReason').value){document.getElementById('errOverrideReason').style.display='block';valid=false;}
+  var notes=document.getElementById('overrideNotes').value.trim();
+  if(notes.length<20){document.getElementById('errOverrideNotes').style.display='block';valid=false;}
+  if(!document.getElementById('overrideConfirm').checked){document.getElementById('errOverrideConfirm').style.display='block';valid=false;}
+  if(!valid){showToast('Please complete all required fields','error');return;}
+  showToast('Override applied — Gate 3 (W-9) marked as PASSED. Audit log updated.','success');
+  closeOverrideModal();
+}
+document.getElementById('overrideModal').addEventListener('click',function(e){if(e.target===this)closeOverrideModal();});
+</script>
+</body>
+</html>

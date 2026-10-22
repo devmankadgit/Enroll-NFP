@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Screened Agents | Exclusion Monitoring | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.result-clear{color:#2e7d32;font-weight:600}
+.result-match{color:#c62828;font-weight:600}
+.agent-count-badge{background:#e8f5e9;color:#2e7d32;font-weight:700;padding:4px 12px;border-radius:20px;font-size:13px;display:inline-block}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html" class="active"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#004d40;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4 id="pageTitle">Agents Screened</h4>
+      <ol class="breadcrumb-bar"><li><a href="exclusion-monitoring.html">OIG/SAM Exclusion Monitoring</a></li><li id="breadcrumbPeriod">Screened Agents</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Screened Agents')"><i class="fas fa-download"></i> Export</button>
+      <a href="exclusion-monitoring.html" class="btn-ol btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Summary Banner -->
+    <div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:10px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#1b5e20" id="bannerTitle">Monthly Exclusion Screening</div>
+        <div style="font-size:11px;color:#2e7d32;margin-top:2px" id="bannerSub">All agents screened against OIG-LEIE and SAM databases</div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div style="text-align:center"><div style="font-size:10px;color:#5f6368">Total Screened</div><div class="agent-count-badge" id="totalBadge">0</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#5f6368">Clear</div><div style="font-weight:700;color:#2e7d32;font-size:14px" id="clearCount">0</div></div>
+        <div style="text-align:center"><div style="font-size:10px;color:#5f6368">Matches</div><div style="font-weight:700;color:#c62828;font-size:14px" id="matchCount">0</div></div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:16px">
+      <input type="text" id="agentSearch" placeholder="Search by name, NPN, or agency..." oninput="filterAgents()" style="flex:1;min-width:200px;padding:6px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+      <select id="resultFilter" onchange="filterAgents()" style="padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+        <option value="">All Results</option>
+        <option value="Clear">Clear</option>
+        <option value="Match">Match Found</option>
+      </select>
+      <select id="stateFilter" onchange="filterAgents()" style="padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+        <option value="">All States</option>
+        <option value="FL">Florida</option>
+        <option value="CA">California</option>
+        <option value="TX">Texas</option>
+        <option value="NY">New York</option>
+        <option value="IL">Illinois</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="OH">Ohio</option>
+        <option value="GA">Georgia</option>
+        <option value="NC">North Carolina</option>
+        <option value="MI">Michigan</option>
+      </select>
+      <select id="levelFilter" onchange="filterAgents()" style="padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+        <option value="">All Levels</option>
+        <option value="Agent">Agent</option>
+        <option value="Broker">Broker</option>
+        <option value="GA">GA</option>
+        <option value="MGA">MGA</option>
+        <option value="SGA">SGA</option>
+      </select>
+      <span style="font-size:11px;color:#5f6368" id="filterCount">Showing all</span>
+    </div>
+
+    <!-- Agent Table -->
+    <div class="card mb16">
+      <div class="table-wrap">
+        <table class="tbl" id="agentTable">
+          <thead><tr><th>#</th><th>Agent Name</th><th>NPN</th><th>Level</th><th>Agency</th><th>State</th><th>OIG-LEIE</th><th>SAM</th><th>Overall</th><th>Screened On</th></tr></thead>
+          <tbody id="agentTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Agent pool — realistic names and data
+var AGENTS=[
+  {name:'James Martinez',npn:'8823441',level:'Agent',agency:'Premier Health Brokers',state:'FL'},
+  {name:'Sarah Chen',npn:'7719022',level:'Agent',agency:'Pacific Coast Insurance',state:'CA'},
+  {name:'Kevin Nguyen',npn:'9912345',level:'Broker',agency:'Nguyen & Associates',state:'TX'},
+  {name:'Mark Brown',npn:'5521833',level:'Agent',agency:'SunState Benefits',state:'FL'},
+  {name:'Angela Torres',npn:'6643201',level:'Agent',agency:'Southwest Health Group',state:'TX'},
+  {name:'Robert Williams',npn:'5567234',level:'Agent',agency:'Williams Health Services',state:'FL'},
+  {name:'Michael Thompson',npn:'4412876',level:'Broker',agency:'Thompson Insurance Group',state:'NY'},
+  {name:'Lisa Johnson',npn:'7834521',level:'Agent',agency:'Heartland Medicare',state:'OH'},
+  {name:'David Chen',npn:'3345678',level:'Agent',agency:'Pacific Coast Insurance',state:'CA'},
+  {name:'Jennifer Adams',npn:'8890123',level:'Broker',agency:'Adams Senior Benefits',state:'GA'},
+  {name:'Richard Patel',npn:'4456789',level:'Agent',agency:'Patel & Partners',state:'IL'},
+  {name:'Sandra Nguyen',npn:'6678901',level:'Agent',agency:'Golden State Medicare',state:'CA'},
+  {name:'Mark Sullivan',npn:'7789012',level:'GA',agency:'Sullivan Agency Group',state:'PA'},
+  {name:'Karen Mitchell',npn:'2234567',level:'Agent',agency:'Mitchell Health Advisors',state:'NC'},
+  {name:'Thomas Garcia',npn:'3312456',level:'Agent',agency:'Garcia Medicare Solutions',state:'TX'},
+  {name:'Patricia Williams',npn:'4423567',level:'Broker',agency:'Williams & Co',state:'FL'},
+  {name:'Brian Anderson',npn:'5534678',level:'Agent',agency:'Midwest Benefits LLC',state:'IL'},
+  {name:'Nancy Davis',npn:'6645789',level:'Agent',agency:'Davis Health Partners',state:'GA'},
+  {name:'Christopher Lee',npn:'7756890',level:'Agent',agency:'Pacific Coast Insurance',state:'CA'},
+  {name:'Margaret Wilson',npn:'8867901',level:'MGA',agency:'Wilson Medicare Network',state:'NY'},
+  {name:'Daniel Harris',npn:'9978012',level:'Agent',agency:'Harris Benefits Group',state:'TX'},
+  {name:'Jessica Taylor',npn:'1189123',level:'Agent',agency:'Taylor Senior Care',state:'FL'},
+  {name:'Steven Moore',npn:'2290234',level:'Broker',agency:'Moore Insurance Agency',state:'OH'},
+  {name:'Ashley Jackson',npn:'3301345',level:'Agent',agency:'Jackson Health Plans',state:'MI'},
+  {name:'Matthew White',npn:'4412456',level:'Agent',agency:'White Eagle Benefits',state:'PA'},
+  {name:'Amanda Robinson',npn:'5523567',level:'Agent',agency:'Premier Health Brokers',state:'FL'},
+  {name:'Joshua Clark',npn:'6634678',level:'SGA',agency:'Clark Distribution Group',state:'TX'},
+  {name:'Stephanie Lewis',npn:'7745789',level:'Agent',agency:'Lewis Medicare Advisors',state:'NC'},
+  {name:'Andrew Walker',npn:'8856890',level:'Agent',agency:'Walker & Associates',state:'CA'},
+  {name:'Nicole Hall',npn:'9967901',level:'Agent',agency:'Hall Benefits Solutions',state:'GA'},
+  {name:'Ryan Allen',npn:'1078012',level:'Agent',agency:'Allen Insurance Group',state:'FL'},
+  {name:'Melissa Young',npn:'2189123',level:'Broker',agency:'Young Senior Services',state:'NY'},
+  {name:'Justin King',npn:'3290234',level:'Agent',agency:'King Health Brokers',state:'IL'},
+  {name:'Heather Wright',npn:'4301345',level:'Agent',agency:'Wright Medicare Agency',state:'TX'},
+  {name:'Brandon Lopez',npn:'5412456',level:'Agent',agency:'Lopez Health Group',state:'FL'},
+  {name:'Rachel Hill',npn:'6523567',level:'Agent',agency:'Hilltop Benefits',state:'OH'},
+  {name:'Tyler Scott',npn:'7634678',level:'GA',agency:'Scott Agency Network',state:'MI'},
+  {name:'Lauren Green',npn:'8745789',level:'Agent',agency:'Green Leaf Insurance',state:'PA'},
+  {name:'Zachary Adams',npn:'9856890',level:'Agent',agency:'Adams Senior Benefits',state:'GA'},
+  {name:'Samantha Baker',npn:'1067901',level:'Agent',agency:'Baker Health Partners',state:'NC'},
+  {name:'Nathan Gonzalez',npn:'2178012',level:'Agent',agency:'Gonzalez Insurance',state:'TX'},
+  {name:'Kayla Nelson',npn:'3289123',level:'Broker',agency:'Nelson Medicare Solutions',state:'CA'},
+  {name:'Austin Carter',npn:'4390234',level:'Agent',agency:'Carter Benefits LLC',state:'FL'},
+  {name:'Victoria Mitchell',npn:'5401345',level:'Agent',agency:'Mitchell Health Advisors',state:'NC'},
+  {name:'Evan Perez',npn:'6512456',level:'Agent',agency:'Perez & Partners Insurance',state:'TX'},
+  {name:'Courtney Roberts',npn:'7623567',level:'Agent',agency:'Roberts Senior Care',state:'FL'},
+  {name:'Derek Turner',npn:'8734678',level:'MGA',agency:'Turner Distribution',state:'NY'},
+  {name:'Morgan Phillips',npn:'9845789',level:'Agent',agency:'Phillips Health Group',state:'IL'},
+  {name:'Travis Campbell',npn:'1056890',level:'Agent',agency:'Campbell Medicare',state:'OH'},
+  {name:'Brooke Parker',npn:'2167901',level:'Agent',agency:'Parker Benefits Agency',state:'GA'},
+  {name:'Kyle Evans',npn:'3278012',level:'Agent',agency:'Evans Health Brokers',state:'MI'},
+  {name:'Megan Edwards',npn:'4389123',level:'Broker',agency:'Edwards Insurance Group',state:'PA'},
+  {name:'Cody Collins',npn:'5490234',level:'Agent',agency:'Collins Senior Solutions',state:'FL'},
+  {name:'Brittany Stewart',npn:'6501345',level:'Agent',agency:'Stewart Health Plans',state:'CA'},
+  {name:'Sean Sanchez',npn:'7612456',level:'Agent',agency:'Sanchez Medicare Advisors',state:'TX'},
+  {name:'Lindsey Morris',npn:'8723567',level:'Agent',agency:'Morris Benefits Group',state:'NC'},
+  {name:'Jake Rogers',npn:'9834678',level:'Agent',agency:'Rogers Insurance LLC',state:'FL'},
+  {name:'Amber Reed',npn:'1045789',level:'Agent',agency:'Reed Health Partners',state:'GA'},
+  {name:'Cole Cook',npn:'2156890',level:'GA',agency:'Cook Agency Network',state:'OH'},
+  {name:'Tiffany Morgan',npn:'3267901',level:'Agent',agency:'Morgan Senior Care',state:'NY'},
+  {name:'Dylan Bell',npn:'4378012',level:'Agent',agency:'Bell Medicare Services',state:'IL'},
+  {name:'Alyssa Murphy',npn:'5489123',level:'Agent',agency:'Murphy Health Advisors',state:'MI'},
+  {name:'Chase Bailey',npn:'6590234',level:'Agent',agency:'Bailey Benefits LLC',state:'PA'},
+  {name:'Danielle Rivera',npn:'7601345',level:'Broker',agency:'Rivera Insurance Group',state:'TX'},
+  {name:'Blake Cooper',npn:'8712456',level:'Agent',agency:'Cooper Health Brokers',state:'FL'},
+  {name:'Erica Richardson',npn:'9823567',level:'Agent',agency:'Richardson Medicare',state:'CA'},
+  {name:'Garrett Cox',npn:'1034678',level:'Agent',agency:'Cox Senior Solutions',state:'GA'},
+  {name:'Paige Howard',npn:'2145789',level:'Agent',agency:'Howard Health Group',state:'NC'},
+  {name:'Mason Ward',npn:'3256890',level:'SGA',agency:'Ward Distribution',state:'TX'},
+  {name:'Sierra Torres',npn:'4367901',level:'Agent',agency:'Torres Health Plans',state:'FL'},
+  {name:'Caleb Peterson',npn:'5478012',level:'Agent',agency:'Peterson Benefits',state:'OH'},
+  {name:'Hannah Gray',npn:'6589123',level:'Agent',agency:'Gray Medicare Agency',state:'NY'},
+  {name:'Luke Ramirez',npn:'7690234',level:'Agent',agency:'Ramirez Insurance',state:'IL'},
+  {name:'Olivia James',npn:'8701345',level:'Agent',agency:'James Senior Services',state:'MI'},
+  {name:'Ian Watson',npn:'9812456',level:'Agent',agency:'Watson Health Partners',state:'PA'},
+  {name:'Alexis Brooks',npn:'1023567',level:'Broker',agency:'Brooks Benefits Group',state:'GA'},
+  {name:'Dustin Kelly',npn:'2134678',level:'Agent',agency:'Kelly Medicare Solutions',state:'FL'},
+  {name:'Faith Sanders',npn:'3245789',level:'Agent',agency:'Sanders Health Advisors',state:'CA'},
+  {name:'Marcus Price',npn:'4356890',level:'Agent',agency:'Price Insurance LLC',state:'TX'},
+  {name:'Julia Bennett',npn:'5467901',level:'Agent',agency:'Bennett Senior Care',state:'NC'},
+  {name:'Wesley Wood',npn:'6578012',level:'Agent',agency:'Wood Health Brokers',state:'OH'},
+  {name:'Natalie Barnes',npn:'7689123',level:'Agent',agency:'Barnes Benefits Agency',state:'FL'},
+  {name:'Trevor Ross',npn:'8790234',level:'GA',agency:'Ross Agency Group',state:'NY'},
+  {name:'Vanessa Henderson',npn:'9801345',level:'Agent',agency:'Henderson Medicare',state:'IL'},
+  {name:'Grant Coleman',npn:'1012456',level:'Agent',agency:'Coleman Health Plans',state:'MI'},
+  {name:'Kendra Jenkins',npn:'2123567',level:'Agent',agency:'Jenkins Insurance',state:'PA'},
+  {name:'Corey Perry',npn:'3234678',level:'Broker',agency:'Perry Benefits Group',state:'GA'},
+  {name:'Carmen Powell',npn:'4345789',level:'Agent',agency:'Powell Senior Solutions',state:'TX'},
+  {name:'Spencer Long',npn:'5456890',level:'Agent',agency:'Long Health Services',state:'FL'},
+  {name:'Jenna Patterson',npn:'6567901',level:'Agent',agency:'Patterson Medicare',state:'CA'},
+  {name:'Dominic Hughes',npn:'7678012',level:'Agent',agency:'Hughes Health Advisors',state:'NC'},
+  {name:'Shelby Flores',npn:'8789123',level:'Agent',agency:'Flores Benefits LLC',state:'TX'},
+  {name:'Trent Washington',npn:'9890234',level:'MGA',agency:'Washington Distribution',state:'OH'},
+  {name:'Kristen Butler',npn:'1001345',level:'Agent',agency:'Butler Insurance Group',state:'FL'},
+  {name:'Logan Simmons',npn:'2112456',level:'Agent',agency:'Simmons Senior Care',state:'NY'},
+  {name:'Adriana Foster',npn:'3223567',level:'Agent',agency:'Foster Health Partners',state:'GA'},
+  {name:'Derek Gonzales',npn:'4334678',level:'Agent',agency:'Gonzales Medicare',state:'IL'},
+  {name:'Cassie Bryant',npn:'5445789',level:'Broker',agency:'Bryant Benefits Agency',state:'MI'},
+  {name:'Roman Alexander',npn:'6556890',level:'Agent',agency:'Alexander Health Group',state:'PA'},
+  {name:'Chelsea Russell',npn:'7667901',level:'Agent',agency:'Russell Insurance LLC',state:'TX'},
+  {name:'Nolan Griffin',npn:'8778012',level:'Agent',agency:'Griffin Senior Solutions',state:'FL'},
+  {name:'Maya Diaz',npn:'9889123',level:'Agent',agency:'Diaz Health Advisors',state:'CA'},
+  {name:'Brent Hayes',npn:'1090234',level:'GA',agency:'Hayes Agency Network',state:'NC'},
+  {name:'Jasmine Myers',npn:'2101345',level:'Agent',agency:'Myers Medicare Services',state:'GA'},
+  {name:'Derrick Ford',npn:'3212456',level:'Agent',agency:'Ford Health Brokers',state:'OH'},
+  {name:'Kelly Hamilton',npn:'4323567',level:'Agent',agency:'Hamilton Benefits',state:'NY'},
+  {name:'Shane Graham',npn:'5434678',level:'Agent',agency:'Graham Insurance Group',state:'IL'},
+  {name:'Monique Sullivan',npn:'6545789',level:'Agent',agency:'Sullivan Senior Care',state:'MI'},
+  {name:'Drew Porter',npn:'7656890',level:'Broker',agency:'Porter Health Plans',state:'PA'},
+  {name:'Candice Howard',npn:'8767901',level:'Agent',agency:'Howard Medicare LLC',state:'TX'},
+  {name:'Wayne Wallace',npn:'9878012',level:'Agent',agency:'Wallace Benefits Group',state:'FL'},
+  {name:'Terri West',npn:'1089123',level:'Agent',agency:'West Health Partners',state:'CA'},
+  {name:'Jamal Cole',npn:'2190234',level:'Agent',agency:'Cole Insurance Agency',state:'GA'},
+  {name:'Beth Hunt',npn:'3201345',level:'Agent',agency:'Hunt Senior Solutions',state:'NC'},
+  {name:'Earl Dixon',npn:'4312456',level:'SGA',agency:'Dixon Distribution',state:'TX'},
+  {name:'Dana Murphy',npn:'5423567',level:'Agent',agency:'Murphy Benefits LLC',state:'OH'},
+  {name:'Franklin Webb',npn:'6534678',level:'Agent',agency:'Webb Health Advisors',state:'FL'},
+  {name:'Gina Dunn',npn:'7645789',level:'Agent',agency:'Dunn Medicare Agency',state:'NY'},
+  {name:'Howard Burns',npn:'8756890',level:'Agent',agency:'Burns Insurance Group',state:'IL'},
+  {name:'Irene Fox',npn:'9867901',level:'Agent',agency:'Fox Senior Services',state:'MI'},
+  {name:'Jerome Ray',npn:'1078012',level:'Broker',agency:'Ray Health Brokers',state:'PA'},
+  {name:'Katherine Stone',npn:'2189124',level:'Agent',agency:'Stone Benefits Agency',state:'GA'},
+  {name:'Lance Meyer',npn:'3290235',level:'Agent',agency:'Meyer Medicare Solutions',state:'TX'},
+  {name:'Martha Boyd',npn:'4301346',level:'Agent',agency:'Boyd Health Group',state:'FL'},
+  {name:'Nelson Rice',npn:'5412457',level:'Agent',agency:'Rice Insurance LLC',state:'CA'},
+  {name:'Opal Brooks',npn:'6523568',level:'Agent',agency:'Brooks Senior Care',state:'NC'},
+  {name:'Pete Watson',npn:'7634679',level:'GA',agency:'Watson Agency Group',state:'OH'},
+  {name:'Quinn Hart',npn:'8745790',level:'Agent',agency:'Hart Health Partners',state:'NY'},
+  {name:'Rosa Cruz',npn:'9856891',level:'Agent',agency:'Cruz Medicare Advisors',state:'TX'},
+  {name:'Stanley Olson',npn:'1067902',level:'Agent',agency:'Olson Benefits LLC',state:'FL'},
+  {name:'Tina Reeves',npn:'2178013',level:'Agent',agency:'Reeves Health Plans',state:'IL'},
+  {name:'Victor Marsh',npn:'3289124',level:'Broker',agency:'Marsh Insurance Group',state:'MI'},
+  {name:'Wendy Knight',npn:'4390235',level:'Agent',agency:'Knight Senior Solutions',state:'PA'},
+  {name:'Xavier Holt',npn:'5401346',level:'Agent',agency:'Holt Health Services',state:'GA'},
+  {name:'Yolanda Chen',npn:'6512457',level:'Agent',agency:'Chen Medicare Agency',state:'CA'},
+  {name:'Zach Fields',npn:'7623568',level:'Agent',agency:'Fields Benefits Group',state:'TX'},
+  {name:'April Mann',npn:'8734679',level:'Agent',agency:'Mann Health Advisors',state:'FL'},
+  {name:'Boris Silva',npn:'9845790',level:'Agent',agency:'Silva Insurance LLC',state:'NC'},
+  {name:'Clara Dean',npn:'1056891',level:'MGA',agency:'Dean Distribution',state:'OH'},
+  {name:'Darius Floyd',npn:'2167902',level:'Agent',agency:'Floyd Senior Care',state:'NY'},
+  {name:'Ellen Stone',npn:'3278013',level:'Agent',agency:'Stone Health Brokers',state:'IL'},
+  {name:'Frank Miles',npn:'4389124',level:'Agent',agency:'Miles Benefits Agency',state:'MI'},
+  {name:'Gloria Watts',npn:'5490235',level:'Agent',agency:'Watts Medicare Group',state:'PA'},
+  {name:'Henry Cross',npn:'6501346',level:'Agent',agency:'Cross Health Partners',state:'GA'},
+  {name:'Iris Pena',npn:'7612457',level:'Broker',agency:'Pena Insurance LLC',state:'TX'},
+  {name:'Jack Vargas',npn:'8723568',level:'Agent',agency:'Vargas Senior Solutions',state:'FL'},
+  {name:'Kira Rhodes',npn:'9834679',level:'Agent',agency:'Rhodes Health Plans',state:'CA'},
+  {name:'Leon Beck',npn:'1045790',level:'Agent',agency:'Beck Medicare Advisors',state:'NC'},
+  {name:'Mia Page',npn:'2156891',level:'Agent',agency:'Page Benefits LLC',state:'OH'},
+  {name:'Nate Hicks',npn:'3267902',level:'Agent',agency:'Hicks Insurance Group',state:'FL'},
+  {name:'Olive Nash',npn:'4378013',level:'GA',agency:'Nash Agency Network',state:'NY'},
+  {name:'Paul Duran',npn:'5489124',level:'Agent',agency:'Duran Health Services',state:'TX'},
+  {name:'Rita Steele',npn:'6590235',level:'Agent',agency:'Steele Senior Care',state:'IL'},
+  {name:'Sam Bates',npn:'7601346',level:'Agent',agency:'Bates Benefits Group',state:'MI'},
+  {name:'Tara Hale',npn:'8712457',level:'Agent',agency:'Hale Health Advisors',state:'PA'},
+  {name:'Uma Shah',npn:'9823568',level:'Broker',agency:'Shah Medicare Agency',state:'GA'},
+  {name:'Vince Wolf',npn:'1034679',level:'Agent',agency:'Wolf Insurance LLC',state:'FL'},
+  {name:'Wanda Curry',npn:'2145790',level:'Agent',agency:'Curry Senior Solutions',state:'CA'},
+  {name:'Xander Barr',npn:'3256891',level:'Agent',agency:'Barr Health Partners',state:'TX'},
+  {name:'Yara Gill',npn:'4367902',level:'Agent',agency:'Gill Benefits Agency',state:'NC'},
+  {name:'Zeke Lowe',npn:'5478013',level:'Agent',agency:'Lowe Medicare Group',state:'OH'},
+  {name:'Anna Frost',npn:'6589124',level:'Agent',agency:'Frost Insurance',state:'FL'},
+  {name:'Bryce Lamb',npn:'7690235',level:'SGA',agency:'Lamb Distribution',state:'NY'},
+  {name:'Cora Drake',npn:'8701346',level:'Agent',agency:'Drake Health Brokers',state:'IL'},
+  {name:'Dante Hoover',npn:'9812457',level:'Agent',agency:'Hoover Senior Services',state:'MI'},
+  {name:'Eve Soto',npn:'1023568',level:'Agent',agency:'Soto Benefits LLC',state:'PA'},
+  {name:'Finn Barker',npn:'2134679',level:'Agent',agency:'Barker Health Group',state:'GA'},
+  {name:'Grace Summers',npn:'3245790',level:'Agent',agency:'Summers Medicare',state:'TX'},
+  {name:'Hugo Delgado',npn:'4356891',level:'Broker',agency:'Delgado Insurance',state:'FL'},
+  {name:'Isla Newton',npn:'5467902',level:'Agent',agency:'Newton Senior Care',state:'CA'},
+  {name:'Joel Conrad',npn:'6578013',level:'Agent',agency:'Conrad Health Plans',state:'NC'},
+  {name:'Kim Walters',npn:'7689124',level:'Agent',agency:'Walters Benefits',state:'OH'},
+  {name:'Leo Park',npn:'8790235',level:'Agent',agency:'Park Medicare Advisors',state:'NY'},
+  {name:'Mia Garner',npn:'9801346',level:'Agent',agency:'Garner Insurance LLC',state:'FL'},
+  {name:'Ned Sharp',npn:'1012457',level:'GA',agency:'Sharp Agency Group',state:'IL'},
+  {name:'Opal Franco',npn:'2123568',level:'Agent',agency:'Franco Health Services',state:'TX'},
+  {name:'Pam Gibbs',npn:'3234679',level:'Agent',agency:'Gibbs Senior Solutions',state:'MI'},
+  {name:'Rex Vega',npn:'4345790',level:'Agent',agency:'Vega Benefits Group',state:'PA'},
+  {name:'Sue Kerr',npn:'5456891',level:'Broker',agency:'Kerr Health Partners',state:'GA'},
+  {name:'Tom Erickson',npn:'6567902',level:'Agent',agency:'Erickson Medicare',state:'FL'},
+  {name:'Una Colon',npn:'7678013',level:'Agent',agency:'Colon Insurance Agency',state:'CA'},
+  {name:'Val Sparks',npn:'8789124',level:'Agent',agency:'Sparks Benefits LLC',state:'NC'},
+  {name:'Wes Pruitt',npn:'9890235',level:'Agent',agency:'Pruitt Health Advisors',state:'TX'},
+  {name:'Xia Morton',npn:'1001346',level:'Agent',agency:'Morton Senior Care',state:'OH'},
+  {name:'Yuri Mack',npn:'2112457',level:'Agent',agency:'Mack Medicare Group',state:'NY'},
+  {name:'Zara Huff',npn:'3223568',level:'MGA',agency:'Huff Distribution',state:'FL'},
+  {name:'Aaron Brock',npn:'4334679',level:'Agent',agency:'Brock Insurance LLC',state:'IL'},
+  {name:'Betty Moran',npn:'5445790',level:'Agent',agency:'Moran Health Brokers',state:'MI'},
+  {name:'Carl Nolan',npn:'6556891',level:'Agent',agency:'Nolan Benefits Agency',state:'PA'},
+  {name:'Diana Quinn',npn:'7667902',level:'Agent',agency:'Quinn Senior Solutions',state:'GA'},
+  {name:'Edgar Roth',npn:'8778013',level:'Broker',agency:'Roth Health Plans',state:'TX'},
+  {name:'Faye Sweeney',npn:'9889124',level:'Agent',agency:'Sweeney Medicare',state:'FL'},
+  {name:'Gene Avery',npn:'1090235',level:'Agent',agency:'Avery Insurance Group',state:'CA'},
+  {name:'Holly Benson',npn:'2101346',level:'Agent',agency:'Benson Health Partners',state:'NC'},
+  {name:'Ivan Carr',npn:'3212457',level:'Agent',agency:'Carr Senior Services',state:'OH'},
+  {name:'Joy Emerson',npn:'4323568',level:'Agent',agency:'Emerson Benefits LLC',state:'NY'},
+  {name:'Kent Lawson',npn:'5434679',level:'GA',agency:'Lawson Agency Network',state:'FL'},
+  {name:'Lily Mercer',npn:'6545790',level:'Agent',agency:'Mercer Health Advisors',state:'TX'},
+  {name:'Mo Valencia',npn:'7656891',level:'Agent',agency:'Valencia Medicare Agency',state:'IL'},
+  {name:'Nell Yates',npn:'8767902',level:'Agent',agency:'Yates Insurance',state:'MI'},
+  {name:'Otto Zane',npn:'9878013',level:'Agent',agency:'Zane Benefits Group',state:'PA'},
+  {name:'Pearl Abbott',npn:'1089124',level:'Agent',agency:'Abbott Senior Care',state:'GA'},
+  {name:'Ray Briggs',npn:'2190235',level:'Broker',agency:'Briggs Health Brokers',state:'FL'},
+  {name:'Sara Conway',npn:'3201346',level:'Agent',agency:'Conway Medicare LLC',state:'CA'},
+  {name:'Troy Doyle',npn:'4312457',level:'Agent',agency:'Doyle Health Plans',state:'TX'},
+  {name:'Ursula Finch',npn:'5423568',level:'Agent',agency:'Finch Benefits Agency',state:'NC'},
+  {name:'Vern Gould',npn:'6534679',level:'Agent',agency:'Gould Insurance Group',state:'OH'},
+  {name:'Willa Harmon',npn:'7645790',level:'Agent',agency:'Harmon Senior Solutions',state:'NY'},
+  {name:'Xena Irving',npn:'8756891',level:'SGA',agency:'Irving Distribution',state:'FL'},
+  {name:'York Jensen',npn:'9867902',level:'Agent',agency:'Jensen Health Partners',state:'IL'},
+  {name:'Zola Kent',npn:'1078013',level:'Agent',agency:'Kent Medicare Advisors',state:'MI'}
+];
+
+// Matches data per month key (month-year) - agents who had matches
+var MATCHES={
+  'Jun-2026':['Robert Williams','Michael Thompson','Lisa Johnson'],
+  'Apr-2026':['Evan Perez'],
+  'Jan-2026':['Sandra Nguyen'],
+  'Nov-2025':['David Chen','Jennifer Adams'],
+  'Aug-2025':['Jennifer Adams'],
+  'Apr-2025':['Richard Patel'],
+  'Nov-2024':['Mark Sullivan'],
+  'Apr-2024':['Karen Mitchell']
+};
+
+// Month counts from the history table
+var MONTH_COUNTS={
+  'Jun-2026':245,'May-2026':238,'Apr-2026':234,'Mar-2026':229,'Feb-2026':221,'Jan-2026':215,
+  'Dec-2025':210,'Nov-2025':205,'Oct-2025':198,'Sep-2025':192,'Aug-2025':188,'Jul-2025':183,
+  'Jun-2025':178,'May-2025':172,'Apr-2025':165,'Mar-2025':160,'Feb-2025':155,'Jan-2025':150,
+  'Dec-2024':145,'Nov-2024':140,'Oct-2024':135,'Sep-2024':130,'Aug-2024':125,'Jul-2024':120,
+  'Jun-2024':112,'May-2024':105,'Apr-2024':98,'Mar-2024':90,'Feb-2024':85,'Jan-2024':80
+};
+
+var params=new URLSearchParams(window.location.search);
+var month=params.get('month')||'Jun';
+var year=params.get('year')||'2026';
+var count=parseInt(params.get('count'))||245;
+var key=month+'-'+year;
+
+// Set page context
+document.getElementById('pageTitle').textContent='Agents Screened — '+month+' '+year;
+document.getElementById('breadcrumbPeriod').textContent=month+' '+year+' Screening';
+document.getElementById('bannerTitle').textContent='Monthly Exclusion Screening — '+month+' 1, '+year;
+
+// Generate agent list for this month (use first N agents from pool)
+var actualCount=MONTH_COUNTS[key]||count;
+var displayAgents=AGENTS.slice(0,Math.min(actualCount,AGENTS.length));
+var monthMatches=MATCHES[key]||[];
+var matchNames=monthMatches.map(function(n){return n.toLowerCase();});
+
+// Set summary counts
+var matchTotal=monthMatches.length;
+var clearTotal=actualCount-matchTotal;
+document.getElementById('totalBadge').textContent=actualCount;
+document.getElementById('clearCount').textContent=clearTotal;
+document.getElementById('matchCount').textContent=matchTotal;
+document.getElementById('bannerSub').textContent=actualCount+' agents screened against OIG-LEIE and SAM databases on '+month+' 1, '+year;
+
+// Render table
+function renderTable(){
+  var tbody=document.getElementById('agentTbody');
+  var html='';
+  var runDate=month+' 1, '+year;
+  displayAgents.forEach(function(a,i){
+    var isMatch=matchNames.indexOf(a.name.toLowerCase())>-1;
+    var oigResult=isMatch?'<span class="result-match"><i class="fas fa-exclamation-triangle"></i> Match</span>':'<span class="result-clear"><i class="fas fa-check-circle"></i> Clear</span>';
+    var samResult=isMatch&&Math.random()>0.5?'<span class="result-match"><i class="fas fa-exclamation-triangle"></i> Match</span>':'<span class="result-clear"><i class="fas fa-check-circle"></i> Clear</span>';
+    var overall=isMatch?'<span class="bdg b-red">Match Found</span>':'<span class="bdg b-green">Clear</span>';
+    html+='<tr data-name="'+a.name.toLowerCase()+'" data-npn="'+a.npn+'" data-agency="'+a.agency.toLowerCase()+'" data-state="'+a.state+'" data-level="'+a.level+'" data-result="'+(isMatch?'Match':'Clear')+'">';
+    html+='<td>'+(i+1)+'</td>';
+    html+='<td><strong>'+a.name+'</strong></td>';
+    html+='<td><code>'+a.npn+'</code></td>';
+    html+='<td><span class="bdg" style="background:#f5f5f5;color:#3c4043">'+a.level+'</span></td>';
+    html+='<td>'+a.agency+'</td>';
+    html+='<td>'+a.state+'</td>';
+    html+='<td>'+oigResult+'</td>';
+    html+='<td>'+samResult+'</td>';
+    html+='<td>'+overall+'</td>';
+    html+='<td style="font-size:11px;color:#5f6368">'+runDate+'</td>';
+    html+='</tr>';
+  });
+  // If actualCount > displayed, show note
+  if(actualCount>displayAgents.length){
+    html+='<tr><td colspan="10" style="text-align:center;color:#5f6368;font-style:italic;padding:12px">Showing '+displayAgents.length+' of '+actualCount+' agents. Export full list for complete data.</td></tr>';
+  }
+  tbody.innerHTML=html;
+  updateFilterCount();
+}
+
+function filterAgents(){
+  var search=document.getElementById('agentSearch').value.toLowerCase();
+  var result=document.getElementById('resultFilter').value;
+  var state=document.getElementById('stateFilter').value;
+  var level=document.getElementById('levelFilter').value;
+  var rows=document.querySelectorAll('#agentTbody tr[data-name]');
+  var shown=0;
+  rows.forEach(function(r){
+    var show=true;
+    if(search&&r.getAttribute('data-name').indexOf(search)===-1&&r.getAttribute('data-npn').indexOf(search)===-1&&r.getAttribute('data-agency').indexOf(search)===-1) show=false;
+    if(result&&r.getAttribute('data-result')!==result) show=false;
+    if(state&&r.getAttribute('data-state')!==state) show=false;
+    if(level&&r.getAttribute('data-level')!==level) show=false;
+    r.style.display=show?'':'none';
+    if(show) shown++;
+  });
+  document.getElementById('filterCount').textContent='Showing '+shown+' of '+displayAgents.length;
+}
+function updateFilterCount(){
+  document.getElementById('filterCount').textContent='Showing '+displayAgents.length+' of '+actualCount+' agents';
+}
+
+function nfpExport(l){
+  var t=document.getElementById('toast');
+  t.innerHTML='<div style="background:#fff;border-left:4px solid #0d47a1;border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+l+' export started for '+month+' '+year+'.</div>';
+  t.style.display='block';setTimeout(function(){t.style.display='none';},4000);
+}
+
+renderTable();
+</script>
+</body>
+</html>

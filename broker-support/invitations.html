@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — Invitation Management -->
+<title>Invitation Management | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html" class="active"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Invitation Management</h4><p style="font-size:12px;color:#5f6368;margin:0">Payer-initiated invitations and recertification emails for agents</p></div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="openNewInvModal()"><i class="fas fa-plus"></i>New Invitation</button>
+      <button class="btn-ol btn-sm" onclick="nfpAction('Bulk Recertification Send')"><i class="fas fa-paper-plane"></i>Bulk Recertify</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Invitations Report')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-envelope"></i></div>
+        <div><div class="stat-label">Sent This Month</div><div class="stat-val">34</div><div class="stat-sub">22 new + 12 recertification</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-envelope-open"></i></div>
+        <div><div class="stat-label">Pending Response</div><div class="stat-val">8</div><div class="stat-sub">Not yet registered</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div>
+        <div><div class="stat-label">Accepted</div><div class="stat-val">24</div><div class="stat-sub">70.6% acceptance rate</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div>
+        <div><div class="stat-label">Expired / Declined</div><div class="stat-val">2</div><div class="stat-sub">Link expired after 14 days</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fType"><option>All Types</option><option>New Onboarding</option><option>Recertification</option></select>
+      <select id="fStatus"><option>All Statuses</option><option>Pending</option><option>Accepted</option><option>Expired</option><option>Declined</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent name, email, or NPN..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:200px">
+    </div>
+
+    <!-- Invitations Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-envelope-open-text" style="color:#0277bd;margin-right:8px"></i>Recent Invitations</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" id="invTable" style="font-size:13px">
+          <thead><tr><th>Sent Date</th><th>Agent / Email</th><th>Type</th><th>Agency</th><th>Status</th><th>Expires</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Jun 9</td><td style="font-weight:600">thomas.wright@email.com<br><span style="font-size:11px;color:#5f6368">NPN: 8890123</span></td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">New Onboarding</span></td><td>Premier Insurance (FMO)</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Accepted</span></td><td>—</td><td><button class="btn-ol btn-sm" onclick="viewCase('thomas.wright@email.com','8890123','New Onboarding','Premier Insurance (FMO)','Accepted','06 09,2026','—','Agent registered on Jun 9. Onboarding case CASE-2026-0912 created. Currently at Gate 2 — NIPR license verification.')">View Case</button></td></tr>
+            <tr><td>Jun 8</td><td style="font-weight:600">jennifer.adams@email.com<br><span style="font-size:11px;color:#5f6368">NPN: 7756321</span></td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">New Onboarding</span></td><td>National Benefits (SGA)</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Accepted</span></td><td>—</td><td><button class="btn-ol btn-sm" onclick="viewCase('jennifer.adams@email.com','7756321','New Onboarding','National Benefits (SGA)','Accepted','06 08,2026','—','Agent accepted invitation and completed registration. CASE-2026-0905 — Gate 4 (W-9) in progress.')">View Case</button></td></tr>
+            <tr><td>Jun 7</td><td style="font-weight:600">marcus.green@email.com<br><span style="font-size:11px;color:#5f6368">NPN: pending</span></td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">New Onboarding</span></td><td>Direct (Individual)</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td><td>Jun 21</td><td><button class="btn-ol btn-sm" onclick="viewCase('marcus.green@email.com','pending','New Onboarding','Direct (Individual)','Pending','06 07,2026','06 21,2026','Invitation sent. No response yet. Link active — expires in 12 days. Reminder email sent Jun 9.')">View Case</button></td></tr>
+            <tr><td>Jun 6</td><td style="font-weight:600">sarah.chen@email.com<br><span style="font-size:11px;color:#5f6368">NPN: 7719022</span></td><td><span class="badge" style="background:#ede7f6;color:#4a148c">Recertification</span></td><td>National Benefits (SGA)</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Accepted</span></td><td>—</td><td><button class="btn-ol btn-sm" onclick="viewCase('sarah.chen@email.com','7719022','Recertification','National Benefits (SGA)','Accepted','06 06,2026','—','AHIP recertification completed. Score: 88%. Certificate verified via API. Status updated to Ready for AEP 2027.')">View Case</button></td></tr>
+            <tr><td>Jun 5</td><td style="font-weight:600">kevin.nguyen@email.com<br><span style="font-size:11px;color:#5f6368">NPN: 9912345</span></td><td><span class="badge" style="background:#ede7f6;color:#4a148c">Recertification</span></td><td>Alliance Health (MGA)</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Accepted</span></td><td>—</td><td><button class="btn-ol btn-sm" onclick="viewCase('kevin.nguyen@email.com','9912345','Recertification','Alliance Health (MGA)','Accepted','06 05,2026','—','Recertification completed. AHIP score 95%. Annual compliance training module also submitted.')">View Case</button></td></tr>
+            <tr><td>May 28</td><td style="font-weight:600">unknown.agent@email.com</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">New Onboarding</span></td><td>Southwest Medicare (GA)</td><td><span class="badge" style="background:#f1f3f4;color:#5f6368">Expired</span></td><td>Jun 11</td><td><button class="btn-ol btn-sm" onclick="viewCase('unknown.agent@email.com','—','New Onboarding','Southwest Medicare (GA)','Expired','05 28,2026','06 11,2026','Invitation expired after 14 days with no response. No email open detected. Recommend follow-up with agency admin.')">View Case</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Invitation Modal -->
+<div id="newInvModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-plus-circle" style="color:#0277bd;margin-right:8px"></i>Send New Invitation</h6>
+      <button onclick="closeNewInvModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Agent Email <span style="color:#c62828">*</span></label>
+        <input type="email" id="invEmail" placeholder="agent@email.com" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+        <div id="errEmail" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Email is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Agent Full Name <span style="color:#c62828">*</span></label>
+        <input type="text" id="invName" placeholder="First Last" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+        <div id="errName" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Name is required</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div>
+          <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">NPN</label>
+          <input type="text" id="invNPN" placeholder="Optional" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Invitation Type <span style="color:#c62828">*</span></label>
+          <select id="invType" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+            <option value="">Select...</option>
+            <option value="New Onboarding">New Onboarding</option>
+            <option value="Recertification">Recertification</option>
+          </select>
+          <div id="errType" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Type is required</div>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Agency <span style="color:#c62828">*</span></label>
+        <select id="invAgency" style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px">
+          <option value="">Select Agency...</option>
+          <option>Premier Insurance (FMO)</option>
+          <option>National Benefits (SGA)</option>
+          <option>Alliance Health (MGA)</option>
+          <option>Southwest Medicare (GA)</option>
+          <option>Direct (Individual)</option>
+        </select>
+        <div id="errAgency" style="display:none;color:#c62828;font-size:11px;margin-top:4px"><i class="fas fa-exclamation-circle"></i> Agency is required</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Notes (optional)</label>
+        <textarea id="invNotes" rows="2" placeholder="Any additional context..." style="width:100%;padding:8px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillInvitation()"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ol btn-sm" onclick="closeNewInvModal()">Cancel</button>
+        <button class="btn-pr btn-sm" onclick="submitInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Invitation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Case Modal -->
+<div id="viewCaseModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-folder-open" style="color:#0277bd;margin-right:8px"></i>Invitation Case Detail</h6>
+      <button onclick="closeCaseModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Email</div><div id="caseEmail" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="caseNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Type</div><div id="caseType" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agency</div><div id="caseAgency" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="caseStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Sent Date</div><div id="caseSent" style="font-size:13px;margin-top:2px">—</div></div>
+        <div style="grid-column:span 2"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Expires</div><div id="caseExpires" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Case Notes</div>
+        <div id="caseNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ol btn-sm" onclick="showToast('Reminder email sent','success')"><i class="fas fa-envelope" style="margin-right:4px"></i>Send Reminder</button>
+        <button class="btn-ol btn-sm" onclick="showToast('Invitation link copied','info')"><i class="fas fa-copy" style="margin-right:4px"></i>Copy Link</button>
+        <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showToast('Invitation revoked','warning');closeCaseModal()"><i class="fas fa-times-circle" style="margin-right:4px"></i>Revoke</button>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeCaseModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var rows=document.querySelectorAll('#invTable tbody tr');
+var fType=document.getElementById('fType');
+var fStatus=document.getElementById('fStatus');
+var fSearch=document.getElementById('fSearch');
+
+function applyFilters(){
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var typeText=cells[2]?cells[2].textContent.trim():'';
+    var statusText=cells[4]?cells[4].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var search=fSearch.value.trim().toLowerCase();
+    var show=true;
+    if(fType.value!=='All Types'&&typeText.indexOf(fType.value)<0) show=false;
+    if(fStatus.value!=='All Statuses'&&statusText.indexOf(fStatus.value)<0) show=false;
+    if(search&&rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+  });
+  showToast('Filters applied','info');
+}
+fType.addEventListener('change',applyFilters);
+fStatus.addEventListener('change',applyFilters);
+fSearch.addEventListener('input',applyFilters);
+
+// New Invitation Modal
+function openNewInvModal(){
+  document.getElementById('newInvModal').style.display='flex';
+  clearInvErrors();
+}
+function closeNewInvModal(){
+  document.getElementById('newInvModal').style.display='none';
+}
+function clearInvErrors(){
+  ['errEmail','errName','errType','errAgency'].forEach(function(id){document.getElementById(id).style.display='none';});
+}
+function prefillInvitation(){
+  document.getElementById('invEmail').value='rachel.martinez@email.com';
+  document.getElementById('invName').value='Rachel Martinez';
+  document.getElementById('invNPN').value='9945612';
+  document.getElementById('invType').value='New Onboarding';
+  document.getElementById('invAgency').value='Alliance Health (MGA)';
+  document.getElementById('invNotes').value='Referred by agency admin Mark Taylor. Priority onboarding for Q3 AEP readiness.';
+  clearInvErrors();
+  showToast('Form prefilled with sample data','info');
+}
+function submitInvitation(){
+  clearInvErrors();
+  var valid=true;
+  if(!document.getElementById('invEmail').value.trim()){document.getElementById('errEmail').style.display='block';valid=false;}
+  if(!document.getElementById('invName').value.trim()){document.getElementById('errName').style.display='block';valid=false;}
+  if(!document.getElementById('invType').value){document.getElementById('errType').style.display='block';valid=false;}
+  if(!document.getElementById('invAgency').value){document.getElementById('errAgency').style.display='block';valid=false;}
+  if(!valid){showToast('Please fill all mandatory fields','error');return;}
+  showToast('Invitation sent to '+document.getElementById('invEmail').value,'success');
+  closeNewInvModal();
+  document.getElementById('invEmail').value='';
+  document.getElementById('invName').value='';
+  document.getElementById('invNPN').value='';
+  document.getElementById('invType').value='';
+  document.getElementById('invAgency').value='';
+  document.getElementById('invNotes').value='';
+}
+document.getElementById('newInvModal').addEventListener('click',function(e){if(e.target===this)closeNewInvModal();});
+
+// View Case Modal
+function viewCase(email,npn,type,agency,status,sent,expires,notes){
+  document.getElementById('caseEmail').textContent=email;
+  document.getElementById('caseNPN').textContent=npn;
+  document.getElementById('caseType').textContent=type;
+  document.getElementById('caseAgency').textContent=agency;
+  document.getElementById('caseSent').textContent=sent;
+  document.getElementById('caseExpires').textContent=expires||'N/A';
+  document.getElementById('caseNotes').textContent=notes;
+  var statusEl=document.getElementById('caseStatus');
+  if(status==='Accepted') statusEl.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Accepted</span>';
+  else if(status==='Pending') statusEl.innerHTML='<span style="color:#e65100"><i class="fas fa-clock" style="margin-right:4px"></i>Pending Response</span>';
+  else statusEl.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>Expired</span>';
+  document.getElementById('viewCaseModal').style.display='flex';
+}
+function closeCaseModal(){
+  document.getElementById('viewCaseModal').style.display='none';
+}
+document.getElementById('viewCaseModal').addEventListener('click',function(e){if(e.target===this)closeCaseModal();});
+</script>
+</body>
+</html>

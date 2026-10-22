@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notification Templates | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.ts-active{background:#e8f5e9;color:#1b5e20;border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.ts-inactive{background:#f1f3f4;color:#9e9e9e;border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.ch-pill{display:inline-flex;align-items:center;gap:3px;background:#f1f3f4;border-radius:8px;padding:2px 8px;font-size:10px;color:#5f6368;margin:2px}
+.slide-over{position:fixed;top:0;right:0;width:840px;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(0,0,0,.18);z-index:1050;overflow-y:auto;display:none}
+.slide-over.open{display:block}
+.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1040}
+.overlay-bg.open{display:block}
+.so-hdr{position:sticky;top:0;background:#fff;border-bottom:2px solid #e8eaed;padding:14px 20px;z-index:10;display:flex;align-items:center;justify-content:space-between}
+.so-body{padding:18px 20px}
+.so-section{border:1px solid #e8eaed;border-radius:10px;margin-bottom:14px;overflow:hidden}
+.so-sec-hdr{background:#f8f9ff;padding:10px 14px;border-bottom:1px solid #e8eaed;font-size:13px;font-weight:700;color:#1a237e;display:flex;align-items:center;gap:8px}
+.so-sec-body{padding:14px}
+.var-panel{background:#f0f4ff;border:1px solid #c5cae9;border-radius:8px;padding:10px 12px;margin-top:10px}
+.var-chip{display:inline-flex;align-items:center;background:#e3f2fd;color:#0d47a1;border:1px solid #90caf9;border-radius:8px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:monospace;font-weight:600;margin:3px;transition:.15s}
+.var-chip:hover{background:#1a237e;color:#fff;border-color:#1a237e}
+.sms-counter{font-size:11px;margin-top:4px;font-weight:600;transition:color .2s}
+.preview-sl{position:fixed;top:0;right:0;width:660px;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.15);z-index:1060;overflow-y:auto;display:none}
+.preview-sl.open{display:block}
+.preview-var{background:#e8f5e9;color:#1b5e20;border-radius:3px;padding:0 3px;font-weight:700}
+.preview-missing{background:#fce4ec;color:#b71c1c;border-radius:3px;padding:0 3px;font-weight:700}
+.validate-err{font-size:11px;color:#b71c1c;margin-top:3px;display:none}
+.warn-bar{background:#fff3e0;border:1px solid #ffe082;border-radius:8px;padding:8px 12px;font-size:12px;color:#e65100;margin-bottom:10px;display:none}
+.switch-lbl{display:flex;align-items:center;gap:10px;cursor:pointer}
+.switch-inp{width:36px;height:20px;appearance:none;background:#ccc;border-radius:10px;cursor:pointer;transition:.2s;position:relative}
+.switch-inp:checked{background:#1b5e20}
+.switch-inp:after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:.2s}
+.switch-inp:checked:after{left:18px}
+.version-row{padding:8px 0;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px;font-size:12px}
+.tbl tbody tr:hover td{background:#f8f9ff}
+.mandatory-tag{background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 7px;font-size:9px;font-weight:700;margin-left:5px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Onboarding Notification Templates</h4>
+      <ol class="breadcrumb-bar"><li>Template Editor &nbsp;|&nbsp; Variable System &nbsp;|&nbsp; Preview &nbsp;|&nbsp; Test Send &nbsp;|&nbsp; Version History</li></ol>
+    </div>
+    <div class="dflex g8">
+      <span style="font-size:11px;color:#5f6368;background:#f1f3f4;padding:6px 12px;border-radius:8px"><i class="fas fa-info-circle" style="margin-right:5px;color:#1a237e"></i>21 templates across 16 trigger events</span>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select class="form-control" id="fStatus" style="width:150px" onchange="renderList()">
+        <option value="">All Statuses</option><option>Active</option><option>Inactive</option>
+      </select>
+      <select class="form-control" id="fCategory" style="width:190px" onchange="renderList()">
+        <option value="">All Trigger Events</option>
+        <option>Invitation</option><option>Registration</option><option>NIPR</option>
+        <option>AHIP</option><option>Background Check</option><option>Training</option>
+        <option>Activation</option><option>Compliance</option>
+        <option>Sales</option><option>Security</option>
+      </select>
+      <input class="form-control" id="fSearch" type="text" placeholder="Search template name..." style="width:220px" oninput="renderList()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- Templates Table -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-bell" style="margin-right:6px;color:#1a237e"></i>Notification Templates</h5>
+        <span id="tplCount" style="font-size:12px;color:#5f6368"></span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','notification-templates_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Template Name</th><th>Trigger Event</th><th>Channels</th><th>Status</th><th>Version</th><th>Last Modified</th><th>Actions</th></tr></thead>
+          <tbody id="tplTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr">
+        <h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Template Change Audit Log</h5>
+        <span style="font-size:11px;color:#9e9e9e">All template saves, rollbacks, and status changes</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','notification-templates_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2"><thead><tr><th>Timestamp</th><th>Template</th><th>Action</th><th>Changed By</th><th>Details</th></tr></thead>
+          <tbody id="auditTbody">
+            <tr><td>2026-05-20 10:14:22</td><td>Agent Activated</td><td><span style="background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 8px;font-size:10px;font-weight:700">Updated</span></td><td>Sandra Adams</td><td>Email body updated. Version bumped v1 ? v2.</td></tr>
+            <tr><td>2026-04-15 09:02:10</td><td>Agent Invitation</td><td><span style="background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 8px;font-size:10px;font-weight:700">Updated</span></td><td>Sandra Adams</td><td>SMS body revised. Version bumped v1 ? v2.</td></tr>
+            <tr><td>2026-03-01 14:30:00</td><td>All Templates</td><td><span style="background:#e8f5e9;color:#1b5e20;border-radius:6px;padding:1px 8px;font-size:10px;font-weight:700">Initialized</span></td><td>SYSTEM</td><td>18 default templates loaded for PY2026 onboarding workflow.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay-bg" id="overBg" onclick="closeEdit()"></div>
+
+<!-- Edit Slide-Over -->
+<div class="slide-over" id="editSlide">
+  <div class="so-hdr">
+    <div>
+      <div style="font-size:15px;font-weight:700;color:#1a237e" id="slideTitle">Edit Template</div>
+      <div style="font-size:11px;color:#9e9e9e;margin-top:2px" id="slideSubtitle">Trigger Event</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn-ol btn-sm" onclick="openPreview()"><i class="fas fa-eye"></i> Preview</button>
+      <button class="btn-ol btn-sm" onclick="openTestSend()"><i class="fas fa-paper-plane"></i> Test Send</button>
+      <button class="btn-ol btn-sm" onclick="openHistory()"><i class="fas fa-history"></i> History</button>
+      <button class="btn-ol btn-sm" onclick="closeEdit()">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="saveTemplate()"><i class="fas fa-save"></i> Save</button>
+    </div>
+  </div>
+  <div class="so-body">
+
+    <!-- Status + Channels -->
+    <div style="display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;margin-bottom:14px;padding:12px;background:#f8f9ff;border-radius:10px;border:1px solid #e8eaed">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px">Status</div>
+        <label class="switch-lbl">
+          <input type="checkbox" class="switch-inp" id="tplStatusToggle" onchange="onStatusToggleChange()">
+          <span id="tplStatusLabel" style="font-size:12px;font-weight:700">Active</span>
+        </label>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px">Delivery Channels</div>
+        <div class="channel-checks" style="display:flex;gap:20px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="chEmail" style="accent-color:#1a237e"> <i class="fas fa-envelope" style="color:#1a237e"></i> Email</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="chSms" style="accent-color:#1a237e"> <i class="fas fa-sms" style="color:#1a237e"></i> SMS</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="chPortal" style="accent-color:#1a237e"> <i class="fas fa-bell" style="color:#1a237e"></i> In-Portal</label>
+        </div>
+        <div class="validate-err" id="chErr">At least one delivery channel must be selected.</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px">Opt-Out</div>
+        <label class="switch-lbl">
+          <input type="checkbox" class="switch-inp" id="tplOptOut">
+          <span style="font-size:12px;font-weight:700;color:#5f6368">Allow Agent Opt-Out</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Delivery Rules -->
+    <div class="so-section" style="margin-bottom:14px">
+      <div class="so-sec-hdr"><i class="fas fa-clock"></i>Delivery Rules</div>
+      <div class="so-sec-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Delay (after trigger)</label>
+            <select class="form-control" id="tplDelay" style="margin-top:4px">
+              <option>Immediate</option><option>5 Minutes</option><option>30 Minutes</option><option>1 Hour</option><option>24 Hours</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Repeat</label>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+              <label class="switch-lbl"><input type="checkbox" class="switch-inp" id="tplRepeatToggle" onchange="document.getElementById('tplRepeatInterval').style.display=this.checked?'block':'none'"><span style="font-size:12px">Enabled</span></label>
+              <select class="form-control" id="tplRepeatInterval" style="display:none;margin-top:4px">
+                <option>Daily</option><option>Weekly</option><option>Monthly</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Send Time</label>
+            <input type="time" class="form-control" id="tplSendTime" value="09:00" style="margin-top:4px">
+            <div style="font-size:10px;color:#9e9e9e;margin-top:3px">Time zone: America/New_York</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variable Panel -->
+    <div class="var-panel" style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:6px"><i class="fas fa-code" style="margin-right:5px"></i>Available Variables ? click to insert at cursor</div>
+      <div id="varChipsContainer"></div>
+    </div>
+
+    <!-- Warn Bar (invalid variables) -->
+    <div class="warn-bar" id="warnBar"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i><span id="warnBarText"></span></div>
+
+    <!-- Email Section -->
+    <div class="so-section">
+      <div class="so-sec-hdr"><i class="fas fa-envelope"></i>Email</div>
+      <div class="so-sec-body">
+        <div style="margin-bottom:10px">
+          <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Subject <span class="req">*</span></label>
+          <input class="form-control" id="emailSubjectEdit" type="text" placeholder="Email subject line..." onfocus="setActiveField('emailSubjectEdit')" oninput="clearFieldErr('emailSubjectErr')">
+          <div class="validate-err" id="emailSubjectErr">Email subject is required.</div>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Body <span class="req">*</span></label>
+          <div style="border:1px solid #dee2e6;border-radius:8px;overflow:hidden;margin-top:4px">
+            <div style="background:#f8f9fa;padding:6px 10px;border-bottom:1px solid #dee2e6;display:flex;gap:6px">
+              <button type="button" title="Bold" onclick="fmtCmd('bold')" style="background:none;border:1px solid #dee2e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-weight:700;font-size:12px">B</button>
+              <button type="button" title="Italic" onclick="fmtCmd('italic')" style="background:none;border:1px solid #dee2e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-style:italic;font-size:12px">I</button>
+              <button type="button" title="Underline" onclick="fmtCmd('underline')" style="background:none;border:1px solid #dee2e6;border-radius:4px;padding:2px 8px;cursor:pointer;text-decoration:underline;font-size:12px">U</button>
+              <span style="width:1px;background:#dee2e6;margin:2px 4px"></span>
+              <button type="button" title="Bullet list" onclick="fmtCmd('insertUnorderedList')" style="background:none;border:1px solid #dee2e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:12px"><i class="fas fa-list-ul"></i></button>
+              <button type="button" title="Clear formatting" onclick="fmtCmd('removeFormat')" style="background:none;border:1px solid #dee2e6;border-radius:4px;padding:2px 8px;cursor:pointer;font-size:12px"><i class="fas fa-remove-format"></i></button>
+            </div>
+            <div id="emailBodyEdit" contenteditable="true" style="min-height:140px;padding:10px 12px;font-size:13px;line-height:1.6;outline:none" onfocus="setActiveField('emailBodyEdit')" oninput="clearFieldErr('emailBodyErr')"></div>
+          </div>
+          <div class="validate-err" id="emailBodyErr">Email body is required.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMS Section -->
+    <div class="so-section">
+      <div class="so-sec-hdr"><i class="fas fa-sms"></i>SMS</div>
+      <div class="so-sec-body">
+        <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">SMS Body <span style="font-weight:400;color:#9e9e9e">(plain text, max 160 characters)</span></label>
+        <textarea class="form-control" id="smsBodyEdit" rows="3" maxlength="180" placeholder="SMS message body..." style="margin-top:4px;resize:vertical" onfocus="setActiveField('smsBodyEdit')" oninput="updateSmsCounter()"></textarea>
+        <div class="sms-counter" id="smsCounter">160 characters remaining</div>
+        <div class="validate-err" id="smsBodyErr">SMS body exceeds 160 characters.</div>
+      </div>
+    </div>
+
+    <!-- In-Portal Section -->
+    <div class="so-section">
+      <div class="so-sec-hdr"><i class="fas fa-bell"></i>In-Portal Message</div>
+      <div class="so-sec-body">
+        <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Portal Message Body</label>
+        <textarea class="form-control" id="portalMsgEdit" rows="3" placeholder="In-portal notification text..." style="margin-top:4px;resize:vertical" onfocus="setActiveField('portalMsgEdit')" oninput=""></textarea>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Preview Slide-Over -->
+<div class="preview-sl" id="previewSlide">
+  <div style="position:sticky;top:0;background:#1a237e;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;z-index:10">
+    <div>
+      <div style="font-size:15px;font-weight:700;color:#fff"><i class="fas fa-eye" style="margin-right:7px"></i>Template Preview</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.7);margin-top:2px">Variables replaced with sample data</div>
+    </div>
+    <button onclick="closePreview()" style="background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:6px;padding:6px 14px;cursor:pointer">Close</button>
+  </div>
+  <div style="padding:20px" id="previewContent"></div>
+</div>
+
+<!-- Test Send Modal -->
+<div class="modal-overlay" id="testSendModal" style="display:none">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-paper-plane" style="margin-right:6px;color:#1a237e"></i>Send Test Notification</h5>
+      <button onclick="document.getElementById('testSendModal').style.display='none'" class="modal-close">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <p style="font-size:13px;margin-bottom:12px">Send a test notification to your admin account using the current template content and sample data.</p>
+      <div style="background:#f8f9ff;border-radius:8px;padding:12px;font-size:12px;margin-bottom:12px">
+        <div><i class="fas fa-envelope" style="color:#1a237e;width:20px"></i> <strong>Email:</strong> sandra.adams@goldkidney.com</div>
+        <div style="margin-top:6px"><i class="fas fa-sms" style="color:#1a237e;width:20px"></i> <strong>SMS:</strong> +1 (555) 000-0001</div>
+        <div style="margin-top:6px"><i class="fas fa-bell" style="color:#1a237e;width:20px"></i> <strong>Portal:</strong> In-portal notification (current session)</div>
+      </div>
+      <div id="testSendChannels" style="display:flex;gap:10px;margin-bottom:8px"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('testSendModal').style.display='none'">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="confirmTestSend()"><i class="fas fa-paper-plane"></i> Send Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Version History Modal -->
+<div class="modal-overlay" id="historyModal" style="display:none">
+  <div class="modal-box" style="max-width:600px;max-height:80vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Version History</h5>
+      <button onclick="document.getElementById('historyModal').style.display='none'" class="modal-close">&times;</button>
+    </div>
+    <div style="padding:20px" id="historyContent"></div>
+  </div>
+</div>
+
+<!-- Mandatory Deactivate Confirm Modal -->
+<div class="modal-overlay" id="mandatoryModal" style="display:none">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-exclamation-triangle" style="margin-right:6px;color:#e65100"></i>Deactivate Mandatory Template?</h5>
+      <button onclick="cancelDeactivate()" class="modal-close">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <p style="font-size:13px;margin-bottom:12px">You are attempting to deactivate a <strong>mandatory template</strong>. Deactivating this template will stop critical notifications from being sent during agent onboarding.</p>
+      <div style="background:#fff3e0;border:1px solid #ffe082;border-radius:8px;padding:10px 12px;font-size:12px;color:#e65100">
+        <i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>This action is not recommended. Deactivating <strong id="mandatoryTplName"></strong> may cause compliance issues.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol btn-sm" onclick="cancelDeactivate()">Cancel ? Keep Active</button>
+      <button class="btn-pr btn-sm" style="background:#e65100" onclick="confirmDeactivate()"><i class="fas fa-power-off"></i> Deactivate Anyway</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px"></div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* ============================================================
+   US-2.8: Onboarding Notification Templates
+   Variable system | Rich text | SMS counter | Preview
+   Test Send | Version History | Rollback | Audit
+   ============================================================ */
+
+/* ---- DATA ---- */
+var VARIABLE_REGISTRY = {
+  inv_sent:      ['agent_name','agent_email','invitation_link','expiry_date','upline_org','role_type','plan_year','sent_by'],
+  inv_expired:   ['agent_name','invitation_date','resend_link','admin_name','expiry_date'],
+  reg_complete:  ['agent_name','registration_date','next_steps_link','portal_url'],
+  nipr_pass:     ['agent_name','npn','check_date','valid_states','result'],
+  nipr_fail:     ['agent_name','npn','check_date','fail_reason','support_link'],
+  ahip_pending:  ['agent_name','cert_upload_date','reviewer_name','review_deadline'],
+  ahip_approved: ['agent_name','approved_date','approver','next_step'],
+  ahip_rejected: ['agent_name','rejection_reason','resubmit_link','deadline'],
+  bgchk_submit:  ['agent_name','submitted_date','provider','expected_result_date'],
+  bgchk_pass:    ['agent_name','result_date','next_step','result'],
+  bgchk_fail:    ['agent_name','result_date','fail_reason','appeal_link'],
+  train_assign:  ['agent_name','package_name','due_date','training_link','pass_pct'],
+  exam_passed:   ['agent_name','exam_name','score','pass_date','next_step'],
+  exam_failed:   ['agent_name','exam_name','score','attempts_remaining','retry_link'],
+  activated:     ['agent_name','activation_date','ready_to_sell_date','portal_url','plan_year'],
+  on_hold:       ['agent_name','hold_reason','hold_date','contact_name','support_phone'],
+  override:      ['agent_name','override_step','override_reason','override_by','override_date'],
+  recert:        ['agent_name','cert_expiry_date','days_remaining','recert_link','cert_type'],
+  lead_assigned: ['agent_name','lead_name','lead_source','assigned_date','lead_link'],
+  hra_due:       ['agent_name','member_name','hra_due_date','days_remaining','hra_link'],
+  acct_security: ['agent_name','event_type','event_time','ip_address','support_link']
+};
+
+var SAMPLE_DATA = {
+  agent_name:'Robert Chen', agent_email:'robert.chen@example.com',
+  invitation_link:'https://portal.goldkidney.com/register?token=abc123xyz',
+  expiry_date:'06 15,2026', upline_org:'Southeast Medicare Partners GA',
+  role_type:'Independent Agent', plan_year:'2026', sent_by:'Sandra Adams',
+  invitation_date:'04 01,2026', resend_link:'https://portal.goldkidney.com/resend',
+  admin_name:'Sandra Adams', registration_date:'04 05,2026',
+  next_steps_link:'https://portal.goldkidney.com/onboarding', portal_url:'https://portal.goldkidney.com',
+  npn:'12345678', check_date:'04 10,2026', result:'Pass', valid_states:'GA, FL, TX, NC',
+  fail_reason:'License not found in NIPR for state GA', support_link:'https://portal.goldkidney.com/support',
+  cert_upload_date:'04 12,2026', reviewer_name:'Compliance Team', review_deadline:'04 19,2026',
+  approved_date:'04 14,2026', approver:'Sandra Adams', next_step:'Complete background check consent',
+  rejection_reason:'Certificate does not match PY2026', resubmit_link:'https://portal.goldkidney.com/upload',
+  deadline:'04 21,2026', submitted_date:'04 15,2026', provider:'IBR Background Check Services',
+  expected_result_date:'04 22,2026', result_date:'04 22,2026',
+  package_name:'2026 Medicare Advantage Training', due_date:'05 01,2026',
+  training_link:'https://portal.goldkidney.com/training', pass_pct:'85%',
+  exam_name:'2026 MA Assessment ? Product Overview', score:'92%', pass_date:'04 28,2026',
+  attempts_remaining:'2', retry_link:'https://portal.goldkidney.com/exam/retry',
+  activation_date:'05 05,2026', ready_to_sell_date:'05 05,2026',
+  hold_reason:'Missing upline hierarchy assignment', hold_date:'04 20,2026',
+  contact_name:'Broker Support Team', support_phone:'1-800-555-0100',
+  override_step:'AHIP Certificate Review', override_reason:'Pre-approved by Compliance Officer',
+  override_by:'Sandra Adams', override_date:'04 18,2026',
+  cert_expiry_date:'12 31,2026', days_remaining:'218',
+  recert_link:'https://portal.goldkidney.com/recertification', cert_type:'AHIP Medicare Certification',
+  lead_name:'Susan Walker', lead_source:'AEP Campaign ? FL Drive', assigned_date:'05 28,2026',
+  lead_link:'https://portal.goldkidney.com/leads/12398',
+  member_name:'Dorothy Henderson', hra_due_date:'06 10,2026',
+  hra_link:'https://portal.goldkidney.com/hra/8847',
+  event_type:'New Login from Unrecognized Device', event_time:'2026-05-28 14:33 UTC',
+  ip_address:'192.168.1.205'
+};
+
+var TEMPLATES = [
+  {id:1,  key:'inv_sent',     cat:'Invitation', label:'Invitation Sent',                  mandatory:false, status:'Active',   ver:2, ch:{email:true,sms:true,portal:true},  subj:'You have been invited to join {upline_org} ? Plan Year {plan_year}', body:'Dear {agent_name},\n\nYou have been invited to join {upline_org} as a {role_type} for plan year {plan_year}.\n\nBegin your onboarding: {invitation_link}\n\nThis invitation expires: {expiry_date}\nInvited by: {sent_by}\n\nGold Kidney Health Plan', sms:'Invitation from {upline_org}: Start onboarding at {invitation_link}. Expires {expiry_date}.', portal:'Welcome! You\'ve been invited to join {upline_org} for PY {plan_year}. Click to begin onboarding.', lastMod:'2026-04-15', modBy:'Sandra Adams', history:[{v:1,date:'2026-01-10',modBy:'Sandra Adams',note:'Initial version'}]},
+  {id:2,  key:'inv_expired',  cat:'Invitation', label:'Invitation Expired (Admin Alert)',  mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Agent Invitation Expired ? {agent_name}', body:'Hi {admin_name},\n\nThe invitation sent to {agent_name} ({agent_email}) on {invitation_date} has expired.\n\nPlease resend if appropriate: {resend_link}', sms:'', portal:'Invitation to {agent_name} has expired. Resend from Invitation Management.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:3,  key:'reg_complete', cat:'Registration',label:'Registration Completed',           mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Welcome to Gold Kidney ? Onboarding Started', body:'Dear {agent_name},\n\nYour registration is complete. Your onboarding has started.\n\nLogin here: {portal_url}\nNext steps: {next_steps_link}\n\nRegistered: {registration_date}', sms:'Gold Kidney: Registration complete! Login at {portal_url} to continue onboarding.', portal:'Registration confirmed! Your onboarding has begun. Click to view your next steps.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:4,  key:'nipr_pass',    cat:'NIPR',       label:'NIPR Check ? Pass',                 mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'NIPR License Check Passed ? {agent_name}', body:'Dear {agent_name},\n\nYour NIPR license check has passed.\n\nNPN: {npn}\nCheck Date: {check_date}\nValid States: {valid_states}\n\nYou may proceed to the next onboarding step.', sms:'', portal:'NIPR check passed for NPN {npn}. States: {valid_states}. Proceed to next step.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:5,  key:'nipr_fail',    cat:'NIPR',       label:'NIPR Check ? Fail',                 mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: NIPR License Check Failed ? {agent_name}', body:'Dear {agent_name},\n\nYour NIPR license check did not pass.\n\nNPN: {npn}\nReason: {fail_reason}\nCheck Date: {check_date}\n\nPlease contact support: {support_link}', sms:'Gold Kidney: NIPR check failed for NPN {npn}. Reason: {fail_reason}. Visit {support_link}.', portal:'NIPR check failed. Reason: {fail_reason}. Contact support to resolve.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:6,  key:'ahip_pending', cat:'AHIP',       label:'AHIP Certificate Pending Review',   mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'AHIP Certificate Received ? Under Review', body:'Dear {agent_name},\n\nYour AHIP certificate has been received and is under review.\n\nUploaded: {cert_upload_date}\nReviewer: {reviewer_name}\nExpected by: {review_deadline}', sms:'', portal:'Your AHIP certificate is under review. Expected decision by {review_deadline}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:7,  key:'ahip_approved',cat:'AHIP',       label:'AHIP Review ? Approved',            mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'AHIP Certificate Approved ? {agent_name}', body:'Dear {agent_name},\n\nYour AHIP certificate has been approved.\n\nApproved: {approved_date}\nApproved By: {approver}\nNext Step: {next_step}', sms:'Gold Kidney: AHIP cert approved. Next step: {next_step}. Login at {portal_url}.', portal:'AHIP certificate approved! Your next step: {next_step}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:8,  key:'ahip_rejected',cat:'AHIP',       label:'AHIP Review ? Rejected',            mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: AHIP Certificate Rejected', body:'Dear {agent_name},\n\nYour AHIP certificate submission was rejected.\n\nReason: {rejection_reason}\nDeadline to resubmit: {deadline}\nResubmit here: {resubmit_link}', sms:'Gold Kidney: AHIP cert rejected. Reason: {rejection_reason}. Resubmit at {resubmit_link}.', portal:'AHIP certificate rejected. Reason: {rejection_reason}. Resubmit by {deadline}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:9,  key:'bgchk_submit', cat:'Background Check',label:'Background Check Submitted',   mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Background Check Submitted ? {agent_name}', body:'Dear {agent_name},\n\nYour background check has been submitted to {provider}.\n\nSubmitted: {submitted_date}\nExpected Result: {expected_result_date}', sms:'', portal:'Background check submitted to {provider}. Expected result by {expected_result_date}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:10, key:'bgchk_pass',   cat:'Background Check',label:'Background Check ? Pass',      mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Background Check Passed ? {agent_name}', body:'Dear {agent_name},\n\nYour background check has passed.\n\nResult Date: {result_date}\nNext Step: {next_step}', sms:'', portal:'Background check passed. Next step: {next_step}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:11, key:'bgchk_fail',   cat:'Background Check',label:'Background Check ? Fail / Pending Review', mandatory:true, status:'Active', ver:1, ch:{email:true,sms:true,portal:true}, subj:'Action Required: Background Check Result ? {agent_name}', body:'Dear {agent_name},\n\nYour background check has returned with issues.\n\nReason: {fail_reason}\nResult Date: {result_date}\nAppeal/Review: {appeal_link}', sms:'Gold Kidney: Background check requires review. See {appeal_link}.', portal:'Background check requires review. Reason: {fail_reason}. Click to see details.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:12, key:'train_assign', cat:'Training',   label:'Training Package Assigned',          mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Training Package Assigned ? Action Required', body:'Dear {agent_name},\n\nA training package has been assigned to you.\n\nPackage: {package_name}\nDue Date: {due_date}\nPassing Score: {pass_pct}\nStart here: {training_link}', sms:'Gold Kidney: Training "{package_name}" assigned. Due {due_date}. Start: {training_link}.', portal:'Training assigned: {package_name}. Due {due_date}. Click to begin.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:13, key:'exam_passed',  cat:'Training',   label:'Exam Passed',                        mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Congratulations ? Exam Passed!', body:'Dear {agent_name},\n\nCongratulations! You passed {exam_name}.\n\nScore: {score}\nPassed: {pass_date}\nNext Step: {next_step}', sms:'', portal:'Exam passed: {exam_name}. Score: {score}. Next step: {next_step}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:14, key:'exam_failed',  cat:'Training',   label:'Exam Failed / Max Attempts Reached', mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Exam Result ? Action Required', body:'Dear {agent_name},\n\nYou did not pass {exam_name}.\n\nScore: {score}\nAttempts Remaining: {attempts_remaining}\nRetry: {retry_link}', sms:'', portal:'Exam {exam_name} not passed. Score: {score}. Attempts remaining: {attempts_remaining}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:15, key:'activated',    cat:'Activation', label:'Agent Activated ? Ready to Sell',   mandatory:true,  status:'Active',   ver:2, ch:{email:true,sms:true,portal:true},  subj:'Congratulations ? You are now Active and Ready to Sell!', body:'Dear {agent_name},\n\nYou have successfully completed onboarding and are now an active agent.\n\nActivation Date: {activation_date}\nReady to Sell: {ready_to_sell_date}\nPlan Year: {plan_year}\nPortal: {portal_url}\n\nThank you for joining Gold Kidney Health Plan.', sms:'Gold Kidney: You are now Active! Ready to Sell as of {ready_to_sell_date}. Login: {portal_url}.', portal:'You are now ACTIVE and Ready to Sell for PY {plan_year}. Welcome to Gold Kidney Health Plan!', lastMod:'2026-05-20', modBy:'Sandra Adams', history:[{v:1,date:'2026-03-01',modBy:'SYSTEM',note:'Initial version'}]},
+  {id:16, key:'on_hold',      cat:'Compliance', label:'Onboarding On Hold',                 mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: Onboarding Placed On Hold', body:'Dear {agent_name},\n\nYour onboarding has been placed on hold.\n\nReason: {hold_reason}\nDate: {hold_date}\n\nContact {contact_name} to resolve: {support_phone}', sms:'Gold Kidney: Onboarding on hold. Reason: {hold_reason}. Contact {contact_name} at {support_phone}.', portal:'Onboarding on hold. Reason: {hold_reason}. Contact {contact_name} to resolve.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:17, key:'override',     cat:'Compliance', label:'Override Applied to Onboarding Step',mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Onboarding Step Override Applied ? {override_step}', body:'Dear {agent_name},\n\nAn override has been applied to your onboarding.\n\nStep: {override_step}\nReason: {override_reason}\nApplied By: {override_by}\nDate: {override_date}', sms:'', portal:'Override applied to step: {override_step}. Reason: {override_reason}. Your onboarding continues.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:18, key:'recert',       cat:'Compliance', label:'Annual Recertification Reminder',    mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: {cert_type} Expires in {days_remaining} Days', body:'Dear {agent_name},\n\nYour {cert_type} expires on {cert_expiry_date}.\n\nDays Remaining: {days_remaining}\nRenew now: {recert_link}\n\nFailure to renew may result in a Compliance Hold.', sms:'Gold Kidney: {cert_type} expires {cert_expiry_date} ({days_remaining} days). Renew at {recert_link}.', portal:'{cert_type} expires in {days_remaining} days ({cert_expiry_date}). Click to renew now.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
+  {id:19, key:'lead_assigned',cat:'Sales',      label:'Lead Assigned',                       mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'New Lead Assigned to You ? {lead_name}', body:'Dear {agent_name},\n\nA new lead has been assigned to you.\n\nLead Name: {lead_name}\nLead Source: {lead_source}\nAssigned Date: {assigned_date}\n\nView lead details: {lead_link}', sms:'Gold Kidney: New lead assigned ? {lead_name} (source: {lead_source}). View: {lead_link}.', portal:'New lead assigned: {lead_name} ({lead_source}). Click to view and action.', lastMod:'2026-05-28', modBy:'Sandra Adams', history:[]},
+  {id:20, key:'hra_due',      cat:'Compliance', label:'HRA Due Reminder',                    mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: HRA Due in {days_remaining} Days ? {member_name}', body:'Dear {agent_name},\n\nThe Health Risk Assessment (HRA) for {member_name} is due soon.\n\nHRA Due Date: {hra_due_date}\nDays Remaining: {days_remaining}\n\nComplete the HRA here: {hra_link}', sms:'Gold Kidney: HRA for {member_name} due {hra_due_date} ({days_remaining} days). Complete: {hra_link}.', portal:'HRA due for {member_name} in {days_remaining} days ({hra_due_date}). Click to complete.', lastMod:'2026-05-28', modBy:'Sandra Adams', history:[]},
+  {id:21, key:'acct_security',cat:'Security',   label:'Account Security Alert',              mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Security Alert: {event_type} Detected on Your Account', body:'Dear {agent_name},\n\nA security event was detected on your account.\n\nEvent: {event_type}\nTime: {event_time}\nIP Address: {ip_address}\n\nIf this was not you, contact support immediately: {support_link}', sms:'Gold Kidney SECURITY: {event_type} at {event_time} from {ip_address}. Not you? Call support.', portal:'Security alert: {event_type} detected on your account at {event_time}. Review now.', lastMod:'2026-05-28', modBy:'Sandra Adams', history:[]}
+];
+
+var editingId = null;
+var activeField = null;
+var pendingDeactivateId = null;
+
+/* ---- RENDER LIST ---- */
+function renderList(){
+  var sf = document.getElementById('fStatus').value;
+  var cf = document.getElementById('fCategory').value;
+  var qf = document.getElementById('fSearch').value.toLowerCase();
+  var tbody = document.getElementById('tplTbody');
+  tbody.innerHTML = '';
+  var filtered = TEMPLATES.filter(function(t){
+    return (!sf || t.status===sf)
+        && (!cf || t.cat===cf)
+        && (!qf || t.label.toLowerCase().indexOf(qf)>=0 || t.key.toLowerCase().indexOf(qf)>=0);
+  });
+  document.getElementById('tplCount').textContent = filtered.length + ' templates';
+
+  filtered.forEach(function(t){
+    var sCls = t.status==='Active' ? 'ts-active' : 'ts-inactive';
+    var chPills = (t.ch.email?'<span class="ch-pill"><i class="fas fa-envelope" style="font-size:9px"></i>Email</span>':'')
+               + (t.ch.sms?'<span class="ch-pill"><i class="fas fa-sms" style="font-size:9px"></i>SMS</span>':'')
+               + (t.ch.portal?'<span class="ch-pill"><i class="fas fa-bell" style="font-size:9px"></i>Portal</span>':'');
+    var mandTag = t.mandatory ? '<span class="mandatory-tag">MANDATORY</span>' : '';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><strong>'+t.label+'</strong>'+mandTag+'</td>'
+      + '<td style="font-size:12px;color:#5f6368">'+t.cat+'</td>'
+      + '<td>'+chPills+'</td>'
+      + '<td><span class="'+sCls+'"><i class="fas fa-circle" style="font-size:7px"></i>'+t.status+'</span></td>'
+      + '<td><code style="font-size:11px">v'+t.ver+'</code></td>'
+      + '<td style="font-size:12px">'+t.lastMod+'<br><span style="color:#9e9e9e;font-size:10px">'+t.modBy+'</span></td>'
+      + '<td><button class="btn-ol btn-sm" style="font-size:11px" onclick="openEdit('+t.id+')"><i class="fas fa-edit"></i> Edit</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function clearFilters(){ document.getElementById('fStatus').value=''; document.getElementById('fCategory').value=''; document.getElementById('fSearch').value=''; renderList(); }
+
+/* ---- OPEN EDIT ---- */
+function openEdit(id){
+  var t = TEMPLATES.find(function(x){return x.id===id;});
+  if(!t) return;
+  editingId = id;
+  document.getElementById('slideTitle').textContent = t.label;
+  document.getElementById('slideSubtitle').textContent = 'Trigger Event: '+t.cat+' ? '+t.label;
+  document.getElementById('tplStatusToggle').checked = (t.status==='Active');
+  document.getElementById('tplStatusLabel').textContent = t.status;
+  document.getElementById('chEmail').checked = t.ch.email;
+  document.getElementById('chSms').checked = t.ch.sms;
+  document.getElementById('chPortal').checked = t.ch.portal;
+  document.getElementById('emailSubjectEdit').value = t.subj;
+  // Set contenteditable email body
+  var bodyEl = document.getElementById('emailBodyEdit');
+  bodyEl.innerHTML = t.body.replace(/\n/g,'<br>');
+  document.getElementById('smsBodyEdit').value = t.sms;
+  document.getElementById('portalMsgEdit').value = t.portal;
+  updateSmsCounter();
+  renderVarChips(t.key);
+  clearAllErrors();
+  document.getElementById('editSlide').classList.add('open');
+  document.getElementById('overBg').classList.add('open');
+}
+
+function closeEdit(){
+  document.getElementById('editSlide').classList.remove('open');
+  document.getElementById('overBg').classList.remove('open');
+  closePreview();
+  document.getElementById('warnBar').style.display='none';
+}
+
+/* ---- VARIABLE CHIPS ---- */
+function renderVarChips(triggerKey){
+  var vars = VARIABLE_REGISTRY[triggerKey] || [];
+  var container = document.getElementById('varChipsContainer');
+  container.innerHTML = '';
+  vars.forEach(function(v){
+    var chip = document.createElement('span');
+    chip.className = 'var-chip';
+    chip.textContent = '{'+v+'}';
+    chip.title = 'Click to insert at cursor ? Sample: "'+SAMPLE_DATA[v]+'"';
+    chip.onclick = function(){ insertVariable(v); };
+    container.appendChild(chip);
+  });
+}
+
+function setActiveField(fieldId){ activeField = fieldId; }
+
+function insertVariable(varName){
+  if(!activeField){ showToast('Click inside a text field first, then click a variable.','#e65100'); return; }
+  var ins = '{'+varName+'}';
+  if(activeField === 'emailBodyEdit'){
+    var el = document.getElementById('emailBodyEdit');
+    el.focus();
+    document.execCommand('insertText', false, ins);
+  } else {
+    var el = document.getElementById(activeField);
+    if(!el) return;
+    var s = el.selectionStart||0, e = el.selectionEnd||0;
+    el.value = el.value.substring(0,s)+ins+el.value.substring(e);
+    el.selectionStart = el.selectionEnd = s+ins.length;
+    el.focus();
+    if(activeField==='smsBodyEdit') updateSmsCounter();
+  }
+}
+
+/* ---- SMS COUNTER ---- */
+function updateSmsCounter(){
+  var el = document.getElementById('smsBodyEdit');
+  var cnt = document.getElementById('smsCounter');
+  if(!el||!cnt) return;
+  var len = el.value.length;
+  var rem = 160 - len;
+  cnt.textContent = (rem>=0?(rem+' characters remaining'):(Math.abs(rem)+' characters over limit'));
+  cnt.style.color = rem<0?'#b71c1c':rem<20?'#e65100':'#5f6368';
+}
+
+/* ---- STATUS TOGGLE ---- */
+function onStatusToggleChange(){
+  var isChecked = document.getElementById('tplStatusToggle').checked;
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!isChecked && t && t.mandatory){
+    document.getElementById('tplStatusToggle').checked = true; // revert
+    document.getElementById('mandatoryTplName').textContent = t.label;
+    document.getElementById('mandatoryModal').style.display='flex';
+    return;
+  }
+  document.getElementById('tplStatusLabel').textContent = isChecked?'Active':'Inactive';
+}
+
+function cancelDeactivate(){
+  document.getElementById('mandatoryModal').style.display='none';
+  document.getElementById('tplStatusToggle').checked = true;
+  document.getElementById('tplStatusLabel').textContent = 'Active';
+}
+
+function confirmDeactivate(){
+  document.getElementById('mandatoryModal').style.display='none';
+  document.getElementById('tplStatusToggle').checked = false;
+  document.getElementById('tplStatusLabel').textContent = 'Inactive';
+  showToast('Template deactivated. Critical notification will NOT be sent.','#e65100');
+}
+
+/* ---- VALIDATE VARIABLES ---- */
+function validateVarsInText(text, triggerKey){
+  var valid = VARIABLE_REGISTRY[triggerKey] || [];
+  var matches = (text||'').match(/\{([a-z_]+)\}/g) || [];
+  var bad = [];
+  matches.forEach(function(m){
+    var n = m.slice(1,-1);
+    if(valid.indexOf(n)<0) bad.push(m);
+  });
+  return bad;
+}
+
+/* ---- SAVE ---- */
+function saveTemplate(){
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!t) return;
+  var subj = document.getElementById('emailSubjectEdit').value.trim();
+  var bodyEl = document.getElementById('emailBodyEdit');
+  var body = bodyEl.innerText || bodyEl.textContent || '';
+  var bodyHtml = bodyEl.innerHTML;
+  var sms = document.getElementById('smsBodyEdit').value;
+  var portal = document.getElementById('portalMsgEdit').value.trim();
+  var isActive = document.getElementById('tplStatusToggle').checked;
+  var chEmail = document.getElementById('chEmail').checked;
+  var chSms = document.getElementById('chSms').checked;
+  var chPortal = document.getElementById('chPortal').checked;
+
+  var valid = true;
+  if(!subj){ document.getElementById('emailSubjectErr').style.display='block'; valid=false; }
+  else document.getElementById('emailSubjectErr').style.display='none';
+  if(!body.trim()){ document.getElementById('emailBodyErr').style.display='block'; valid=false; }
+  else document.getElementById('emailBodyErr').style.display='none';
+  if(!chEmail && !chSms && !chPortal){ document.getElementById('chErr').style.display='block'; valid=false; }
+  else document.getElementById('chErr').style.display='none';
+  if(sms.length>160){ document.getElementById('smsBodyErr').style.display='block'; valid=false; }
+  else document.getElementById('smsBodyErr').style.display='none';
+  if(!valid){ showToast('Please fix validation errors.','#b71c1c'); return; }
+
+  // Variable validation
+  var allText = subj + ' ' + body + ' ' + sms + ' ' + portal;
+  var badVars = validateVarsInText(allText, t.key);
+  if(badVars.length>0){
+    var wb = document.getElementById('warnBar');
+    wb.style.display='block';
+    document.getElementById('warnBarText').innerHTML = 'Unknown variable(s) detected: '
+      + badVars.map(function(v){return '<strong>'+v+'</strong> is not available for this trigger event.';}).join('; ');
+    showToast('Warning: unknown variables detected. Saved with warnings.','#e65100');
+  } else {
+    document.getElementById('warnBar').style.display='none';
+  }
+
+  // Archive current version
+  t.history.unshift({v:t.ver, date:t.lastMod, modBy:t.modBy, note:'Auto-saved prior version'});
+  t.ver++;
+  t.subj = subj;
+  t.body = bodyHtml;
+  t.sms = sms;
+  t.portal = portal;
+  t.status = isActive ? 'Active' : 'Inactive';
+  t.ch = {email:chEmail, sms:chSms, portal:chPortal};
+  t.lastMod = new Date().toISOString().slice(0,10);
+  t.modBy = 'Sandra Adams';
+
+  addAuditRow(t.label,'Updated','Version bumped to v'+t.ver+'. '+((badVars.length>0)?'Warning: unknown vars detected.':'All variables valid.'));
+  closeEdit();
+  renderList();
+  showToast('Template saved. Version bumped to v'+t.ver+'.','#1b5e20');
+  console.log('[AUDIT] NotifTemplateSave | ID:'+t.id+' | Label:'+t.label+' | Version:v'+t.ver+' | User:Sandra Adams');
+}
+
+/* ---- PREVIEW ---- */
+function openPreview(){
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!t) return;
+  var subj = document.getElementById('emailSubjectEdit').value;
+  var bodyEl = document.getElementById('emailBodyEdit');
+  var body = bodyEl.innerHTML;
+  var sms = document.getElementById('smsBodyEdit').value;
+  var portal = document.getElementById('portalMsgEdit').value;
+
+  function sub(text){
+    return (text||'').replace(/\{([a-z_]+)\}/g, function(match, key){
+      var val = SAMPLE_DATA[key];
+      return val
+        ? '<span class="preview-var">'+val+'</span>'
+        : '<span class="preview-missing">'+match+'</span>';
+    });
+  }
+  function subPlain(text){
+    return (text||'').replace(/\{([a-z_]+)\}/g, function(match,key){
+      var val = SAMPLE_DATA[key];
+      return val ? '<span class="preview-var">'+val+'</span>' : '<span class="preview-missing">'+match+'</span>';
+    });
+  }
+
+  var html = '<div style="background:#f8f9ff;border-radius:10px;padding:14px;margin-bottom:16px">'
+    + '<div style="font-size:11px;font-weight:700;color:#9e9e9e;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Template</div>'
+    + '<div style="font-size:16px;font-weight:800;color:#1a237e">'+t.label+'</div>'
+    + '<div style="font-size:11px;color:#5f6368;margin-top:4px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Highlighted values are replaced from sample data. <span class="preview-var">green = substituted</span>, <span class="preview-missing">red = unknown</span></div>'
+    + '</div>';
+
+  if(document.getElementById('chEmail').checked){
+    html += '<div class="so-section" style="margin-bottom:12px">'
+      + '<div class="so-sec-hdr" style="background:#e3f2fd"><i class="fas fa-envelope"></i>Email Preview</div>'
+      + '<div class="so-sec-body">'
+      + '<div style="font-size:11px;font-weight:700;color:#9e9e9e;margin-bottom:4px">SUBJECT</div>'
+      + '<div style="font-size:14px;font-weight:700;color:#212121;background:#fff;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px;margin-bottom:10px">'+subPlain(subj)+'</div>'
+      + '<div style="font-size:11px;font-weight:700;color:#9e9e9e;margin-bottom:4px">BODY</div>'
+      + '<div style="font-size:13px;background:#fff;border:1px solid #e8eaed;border-radius:6px;padding:12px;line-height:1.7">'+sub(body).replace(/\n/g,'<br>')+'</div>'
+      + '</div></div>';
+  }
+  if(document.getElementById('chSms').checked){
+    html += '<div class="so-section" style="margin-bottom:12px">'
+      + '<div class="so-sec-hdr" style="background:#e8f5e9"><i class="fas fa-sms"></i>SMS Preview</div>'
+      + '<div class="so-sec-body">'
+      + '<div style="background:#e8f5e9;border-radius:12px 12px 12px 0;padding:10px 14px;font-size:13px;max-width:85%;line-height:1.5">'+subPlain(sms)+'</div>'
+      + '<div style="font-size:10px;color:#9e9e9e;margin-top:6px">'+sms.length+'/160 chars</div>'
+      + '</div></div>';
+  }
+  if(document.getElementById('chPortal').checked){
+    html += '<div class="so-section">'
+      + '<div class="so-sec-hdr" style="background:#f3e5f5"><i class="fas fa-bell"></i>In-Portal Preview</div>'
+      + '<div class="so-sec-body">'
+      + '<div style="background:#f3e5f5;border-left:4px solid #4a148c;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;line-height:1.5">'+subPlain(portal)+'</div>'
+      + '</div></div>';
+  }
+  document.getElementById('previewContent').innerHTML = html;
+  document.getElementById('previewSlide').classList.add('open');
+}
+function closePreview(){ document.getElementById('previewSlide').classList.remove('open'); }
+
+/* ---- TEST SEND ---- */
+function openTestSend(){
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!t) return;
+  var html = '';
+  if(document.getElementById('chEmail').checked) html+='<span class="ch-pill"><i class="fas fa-envelope" style="font-size:9px"></i> Email</span>';
+  if(document.getElementById('chSms').checked) html+='<span class="ch-pill"><i class="fas fa-sms" style="font-size:9px"></i> SMS</span>';
+  if(document.getElementById('chPortal').checked) html+='<span class="ch-pill"><i class="fas fa-bell" style="font-size:9px"></i> Portal</span>';
+  document.getElementById('testSendChannels').innerHTML = '<span style="font-size:11px;color:#5f6368;margin-right:6px">Sending via:</span>'+html;
+  document.getElementById('testSendModal').style.display='flex';
+}
+
+function confirmTestSend(){
+  document.getElementById('testSendModal').style.display='none';
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  addAuditRow(t?t.label:'?','Test Send','Test notification dispatched to Sandra Adams (sandra.adams@goldkidney.com).');
+  showToast('Test notification sent to sandra.adams@goldkidney.com','#1b5e20');
+  console.log('[AUDIT] NotifTemplateTestSend | ID:'+(t?t.id:'?')+' | User:Sandra Adams');
+}
+
+/* ---- VERSION HISTORY ---- */
+function openHistory(){
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!t) return;
+  var html = '<div style="font-size:14px;font-weight:700;color:#1a237e;margin-bottom:10px">'+t.label+' ? v'+t.ver+' (current)</div>';
+  if(!t.history || t.history.length===0){
+    html += '<div style="color:#9e9e9e;font-size:13px">No prior versions. This is the initial version.</div>';
+  } else {
+    t.history.forEach(function(h,i){
+      html += '<div class="version-row">'
+        + '<div style="background:#1a237e;color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;flex-shrink:0">v'+h.v+'</div>'
+        + '<div style="flex:1"><div style="font-size:12px;font-weight:600">'+h.note+'</div><div style="font-size:10px;color:#9e9e9e">'+h.date+' ? '+h.modBy+'</div></div>'
+        + (h.emailSubject?'<div style="font-size:10px;color:#5f6368;flex-shrink:0">Subject: '+h.emailSubject+'</div>':'')
+        + '<button class="btn-ol btn-sm" style="font-size:10px;flex-shrink:0" onclick="rollbackVersion('+i+')"><i class="fas fa-undo"></i> Rollback</button>'
+        + '</div>';
+    });
+  }
+  document.getElementById('historyContent').innerHTML = html;
+  document.getElementById('historyModal').style.display = 'flex';
+}
+
+function rollbackVersion(idx){
+  var t = TEMPLATES.find(function(x){return x.id===editingId;});
+  if(!t || !t.history[idx]) return;
+  var h = t.history[idx];
+  // Restore email subject from history if available
+  if(h.emailSubject) document.getElementById('emailSubjectEdit').value = h.emailSubject;
+  document.getElementById('historyModal').style.display='none';
+  addAuditRow(t.label,'Rollback','Rolled back to v'+h.v+' ('+h.date+'). Current form fields restored. Save to commit.');
+  showToast('Rolled back to v'+h.v+'. Review fields and click Save to commit.','#e65100');
+  console.log('[AUDIT] NotifTemplateRollback | ID:'+t.id+' | ToVersion:v'+h.v+' | User:Sandra Adams');
+}
+
+/* ---- AUDIT LOG ---- */
+function addAuditRow(tplName, action, details){
+  var tbody = document.getElementById('auditTbody');
+  var row = document.createElement('tr');
+  var ts = new Date().toISOString().replace('T',' ').substring(0,19);
+  var clr = action==='Updated'||action==='Rollback'?'#e3f2fd':action==='Test Send'?'#e8f5e9':'#f3e5f5';
+  var tc = action==='Updated'||action==='Rollback'?'#0d47a1':action==='Test Send'?'#1b5e20':'#4a148c';
+  row.innerHTML = '<td>'+ts+'</td><td>'+tplName+'</td>'
+    + '<td><span style="background:'+clr+';color:'+tc+';border-radius:6px;padding:1px 8px;font-size:10px;font-weight:700">'+action+'</span></td>'
+    + '<td>Sandra Adams</td><td>'+details+'</td>';
+  tbody.insertBefore(row, tbody.firstChild);
+}
+
+/* ---- HELPERS ---- */
+function clearAllErrors(){
+  ['emailSubjectErr','emailBodyErr','chErr','smsBodyErr'].forEach(function(id){
+    document.getElementById(id).style.display='none';
+  });
+  document.getElementById('warnBar').style.display='none';
+}
+function clearFieldErr(id){ document.getElementById(id).style.display='none'; }
+function fmtCmd(cmd){ document.execCommand(cmd, false, null); document.getElementById('emailBodyEdit').focus(); }
+function showToast(msg,color){ var el=document.getElementById('toastEl'); el.textContent=msg; el.style.background=color||'#1b5e20'; el.style.display='block'; setTimeout(function(){el.style.display='none';},3800); }
+
+/* ---- INIT ---- */
+renderList();
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding Cases Review | Gold Kidney Compliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.gate-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f1f3f4;font-size:13px}
+.gate-row:last-child{border-bottom:none}
+.gate-pass{color:#2e7d32;font-weight:700}.gate-fail{color:#c62828;font-weight:700}.gate-pending{color:#e65100;font-weight:700}
+.query-thread{border-left:3px solid #1565c0;padding:8px 12px;margin:8px 0;background:#f8f9fa;border-radius:0 6px 6px 0;font-size:12px}
+.query-thread .qt-from{font-weight:600;font-size:11px;margin-bottom:2px}
+.query-thread .qt-date{font-size:10px;color:#80868b}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html" class="active"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Onboarding Cases — Compliance Review</h4></div>
+    <button class="btn-ol btn-sm" onclick="nfpExport()"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Payer-Side Review:</strong> View all documents and attestations uploaded by agents during onboarding. Raise queries or request corrections for specific checks — agents are notified and can respond/re-upload without restarting. Make explicit approve/deny decisions per case or per individual compliance check.</span></div>
+
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Pending Review</div><div class="stat-val">7</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-comments"></i></div><div><div class="stat-label">Queries Open</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Approved (30d)</div><div class="stat-val">18</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Denied (30d)</div><div class="stat-val">2</div></div></div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar mb16">
+      <select id="fStatus"><option value="">All Statuses</option><option value="pending">Pending Review</option><option value="query">Query Raised</option><option value="resubmitted">Resubmitted</option><option value="approved">Approved</option><option value="denied">Denied</option></select>
+      <select id="fGate"><option value="">All Gates</option><option value="license">State License</option><option value="appointment">State Appointment</option><option value="ahip">AHIP</option><option value="training">Training</option><option value="background">Background Check</option></select>
+      <input type="text" id="fSearch" placeholder="Search NPN or agent name..." style="flex:1;min-width:160px">
+      <button class="btn-pr btn-sm" onclick="filterCases()"><i class="fas fa-search"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Cases Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>Onboarding Cases Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('casesTable','onboarding-review_casesTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="casesTable">
+          <thead><tr><th>Case ID</th><th>Agent</th><th>NPN</th><th>Submitted</th><th>License</th><th>Appt</th><th>AHIP</th><th>Training</th><th>Background</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr data-status="pending" data-gate="license">
+              <td><code>OB-2026-0401</code></td><td>Sarah Kim</td><td>7712099</td><td>06 05,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pending"><i class="fas fa-hourglass-half"></i></span></td>
+              <td><span class="bdg b-amber">Pending Review</span></td>
+              <td><button class="btn-pr btn-sm" onclick="openReview('OB-2026-0401')"><i class="fas fa-eye"></i>Review</button></td>
+            </tr>
+            <tr data-status="query" data-gate="ahip">
+              <td><code>OB-2026-0398</code></td><td>Tom Harris</td><td>6654321</td><td>06 03,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-fail"><i class="fas fa-times"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="bdg b-blue">Query Raised</span></td>
+              <td><button class="btn-pr btn-sm" onclick="openReview('OB-2026-0398')"><i class="fas fa-eye"></i>Review</button></td>
+            </tr>
+            <tr data-status="resubmitted" data-gate="license">
+              <td><code>OB-2026-0395</code></td><td>Kevin Park</td><td>4478923</td><td>06 01,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pending"><i class="fas fa-hourglass-half"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="bdg b-purple">Resubmitted</span></td>
+              <td><button class="btn-pr btn-sm" onclick="openReview('OB-2026-0395')"><i class="fas fa-eye"></i>Review</button></td>
+            </tr>
+            <tr data-status="pending" data-gate="background">
+              <td><code>OB-2026-0392</code></td><td>Lisa Wang</td><td>2234561</td><td>05 30,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pending"><i class="fas fa-hourglass-half"></i></span></td>
+              <td><span class="gate-fail"><i class="fas fa-times"></i></span></td>
+              <td><span class="bdg b-amber">Pending Review</span></td>
+              <td><button class="btn-pr btn-sm" onclick="openReview('OB-2026-0392')"><i class="fas fa-eye"></i>Review</button></td>
+            </tr>
+            <tr data-status="approved" data-gate="">
+              <td><code>OB-2026-0388</code></td><td>Angela Torres</td><td>5534211</td><td>05 28,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="bdg b-green">Approved</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openReview('OB-2026-0388')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="denied" data-gate="background">
+              <td><code>OB-2026-0385</code></td><td>Robert Chen</td><td>4421098</td><td>05 25,2026</td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-pass"><i class="fas fa-check"></i></span></td>
+              <td><span class="gate-fail"><i class="fas fa-times"></i></span></td>
+              <td><span class="bdg b-red">Denied</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openReview('OB-2026-0385')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Review Modal -->
+<div id="reviewModal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" style="background:#e0f2f1;border-bottom:1px solid #b2dfdb">
+        <h5 class="modal-title"><i class="fas fa-clipboard-check" style="margin-right:8px;color:#004d40"></i>Onboarding Case Review — <span id="rmCaseId">OB-2026-0401</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:0">
+        <div class="row g-0">
+          <!-- Left: Documents & Gates -->
+          <div class="col-md-5" style="border-right:1px solid #e0e0e0;padding:16px">
+            <h6 style="font-size:13px;font-weight:700;margin-bottom:12px"><i class="fas fa-user" style="margin-right:6px"></i>Agent: Sarah Kim (NPN: 7712099)</h6>
+            <div style="font-size:12px;color:#5f6368;margin-bottom:14px">Submitted: 06 05,2026 | State: FL | Upline: HealthFirst Distribution</div>
+
+            <h6 style="font-size:12px;font-weight:700;text-transform:uppercase;color:#424242;margin-bottom:8px">Compliance Gates</h6>
+            <div style="border:1px solid #e0e0e0;border-radius:8px;overflow:hidden">
+              <div class="gate-row"><span class="gate-pass"><i class="fas fa-check-circle"></i></span><span style="flex:1">State License (FL — Active, Exp: Dec 2027)</span><button class="btn-ol btn-sm" style="font-size:10px" onclick="nfpAction('License document opened','info')">View Doc</button></div>
+              <div class="gate-row"><span class="gate-pass"><i class="fas fa-check-circle"></i></span><span style="flex:1">State Appointment (FL — Confirmed)</span><button class="btn-ol btn-sm" style="font-size:10px" onclick="nfpAction('Appointment confirmation opened','info')">View Doc</button></div>
+              <div class="gate-row"><span class="gate-pass"><i class="fas fa-check-circle"></i></span><span style="flex:1">AHIP Certification (Completed 06 01,2026 — Score: 92%)</span><button class="btn-ol btn-sm" style="font-size:10px" onclick="nfpAction('AHIP certificate opened','info')">View Doc</button></div>
+              <div class="gate-row"><span class="gate-pass"><i class="fas fa-check-circle"></i></span><span style="flex:1">Training Package (General + ESRD Product — Complete)</span><button class="btn-ol btn-sm" style="font-size:10px" onclick="nfpAction('Training transcript opened','info')">View Doc</button></div>
+              <div class="gate-row"><span class="gate-pending"><i class="fas fa-hourglass-half"></i></span><span style="flex:1">Background Check (IBR — Result Pending)</span><button class="btn-ol btn-sm" style="font-size:10px" onclick="nfpAction('Background check status opened','info')">View Status</button></div>
+            </div>
+
+            <h6 style="font-size:12px;font-weight:700;text-transform:uppercase;color:#424242;margin:14px 0 8px">Uploaded Documents</h6>
+            <div style="border:1px solid #e0e0e0;border-radius:8px;padding:10px;font-size:12px">
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #f5f5f5"><i class="fas fa-file-pdf" style="color:#c62828"></i><span style="flex:1">FL_License_SarahKim.pdf</span><span style="color:#80868b;font-size:10px">Jun 5</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #f5f5f5"><i class="fas fa-file-pdf" style="color:#c62828"></i><span style="flex:1">AHIP_Certificate_2026.pdf</span><span style="color:#80868b;font-size:10px">Jun 5</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #f5f5f5"><i class="fas fa-file-pdf" style="color:#c62828"></i><span style="flex:1">E&O_Insurance_Policy.pdf</span><span style="color:#80868b;font-size:10px">Jun 5</span></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0"><i class="fas fa-file-pdf" style="color:#c62828"></i><span style="flex:1">Producer_Agreement_Signed.pdf</span><span style="color:#80868b;font-size:10px">Jun 5</span></div>
+            </div>
+          </div>
+
+          <!-- Right: Query Thread & Decision -->
+          <div class="col-md-7" style="padding:16px">
+            <h6 style="font-size:12px;font-weight:700;text-transform:uppercase;color:#424242;margin-bottom:8px">Query / Correspondence Thread</h6>
+            <div style="border:1px solid #e0e0e0;border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;margin-bottom:14px;background:#fafafa">
+              <div class="query-thread">
+                <div class="qt-from">Diana Murphy (Compliance) <span class="qt-date">— 06 06,2026 10:22 AM</span></div>
+                <div>Background check result from IBR is pending. Please confirm if you submitted the authorization form to IBR directly or if we should re-initiate.</div>
+              </div>
+              <div class="query-thread" style="border-left-color:#2e7d32">
+                <div class="qt-from">Sarah Kim (Agent) <span class="qt-date">— 06 06,2026 2:45 PM</span></div>
+                <div>I submitted the authorization form on Jun 4. IBR confirmed receipt. They said results expected within 3 business days.</div>
+              </div>
+              <div class="query-thread">
+                <div class="qt-from">Diana Murphy (Compliance) <span class="qt-date">— 06 07,2026 9:10 AM</span></div>
+                <div>Thank you. Holding case pending IBR result. Will review once received.</div>
+              </div>
+            </div>
+
+            <!-- New Query -->
+            <div style="margin-bottom:14px">
+              <label style="font-size:11px;font-weight:600;color:#424242">Raise New Query / Request Correction:</label>
+              <textarea id="newQuery" rows="2" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:8px;font-size:12px" placeholder="Type query or correction request... Agent will be notified and can respond/re-upload without restarting."></textarea>
+              <div style="display:flex;gap:8px;margin-top:6px">
+                <select id="queryGate" style="font-size:11px;padding:4px 8px;border:1px solid #e0e0e0;border-radius:4px">
+                  <option value="">General Query</option>
+                  <option value="license">Re: State License</option>
+                  <option value="appointment">Re: State Appointment</option>
+                  <option value="ahip">Re: AHIP Certificate</option>
+                  <option value="training">Re: Training</option>
+                  <option value="background">Re: Background Check</option>
+                </select>
+                <button class="btn-ol btn-sm" onclick="nfpAction('Query sent to agent. Agent notified via in-portal + email.','success')"><i class="fas fa-paper-plane"></i>Send Query</button>
+              </div>
+            </div>
+
+            <hr style="border-color:#e0e0e0">
+
+            <!-- Decision Section -->
+            <h6 style="font-size:12px;font-weight:700;text-transform:uppercase;color:#424242;margin-bottom:8px">Resolution Decision</h6>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+              <label style="font-size:12px"><input type="radio" name="decision" value="approve"> <strong style="color:#2e7d32">Approve Case</strong></label>
+              <label style="font-size:12px"><input type="radio" name="decision" value="deny"> <strong style="color:#c62828">Deny Case</strong></label>
+              <label style="font-size:12px"><input type="radio" name="decision" value="hold"> <strong style="color:#e65100">Hold — Pending Info</strong></label>
+            </div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;font-weight:600">Per-Gate Decisions (optional — override individual checks):</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;font-size:11px">
+                <label><input type="checkbox" checked disabled> State License — <span style="color:#2e7d32">Pass</span></label>
+                <label><input type="checkbox" checked disabled> State Appointment — <span style="color:#2e7d32">Pass</span></label>
+                <label><input type="checkbox" checked disabled> AHIP — <span style="color:#2e7d32">Pass</span></label>
+                <label><input type="checkbox" checked disabled> Training — <span style="color:#2e7d32">Pass</span></label>
+                <label><input type="checkbox"> Background Check — <span style="color:#e65100">Pending</span></label>
+              </div>
+            </div>
+            <textarea rows="2" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:8px;font-size:12px;margin-bottom:10px" placeholder="Justification / notes for decision..."></textarea>
+            <div style="display:flex;gap:8px">
+              <button class="btn-pr btn-sm" onclick="nfpSubmit('Onboarding case OB-2026-0401 decision submitted.\nAgent and upline agency notified.\nAudit record created.')"><i class="fas fa-gavel"></i>Submit Decision</button>
+              <button class="btn-ol btn-sm" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function filterCases(){
+  var s=document.getElementById('fStatus').value;
+  var g=document.getElementById('fGate').value;
+  var q=document.getElementById('fSearch').value.toLowerCase();
+  document.querySelectorAll('#casesTable tbody tr').forEach(function(r){
+    var ms=!s||r.dataset.status===s;
+    var mg=!g||r.dataset.gate===g;
+    var mq=!q||r.textContent.toLowerCase().indexOf(q)>-1;
+    r.style.display=(ms&&mg&&mq)?'':'none';
+  });
+}
+function resetFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fGate').value='';
+  document.getElementById('fSearch').value='';
+  filterCases();
+}
+function openReview(id){
+  document.getElementById('rmCaseId').textContent=id;
+  new bootstrap.Modal(document.getElementById('reviewModal')).show();
+}
+// Auto-filter if navigated with ?npn= param
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var npn = params.get('npn');
+  if(npn){
+    document.getElementById('fSearch').value = npn;
+    filterCases();
+  }
+})();
+</script>
+</body>
+</html>

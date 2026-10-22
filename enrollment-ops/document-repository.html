@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Document Repository | Enrollment Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#00695c}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:580px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+.slide-panel{position:fixed;top:0;right:-580px;width:540px;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(0,0,0,.18);z-index:9000;overflow-y:auto;transition:right .3s ease}
+.slide-panel.open{right:0}
+.slide-panel-hdr{padding:18px 20px;border-bottom:1px solid #e8eaed;background:#f8f9fa;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1}
+.meta-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5;font-size:12.5px}
+.meta-row:last-child{border-bottom:none}
+.meta-label{color:#80868b;font-weight:600;min-width:150px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-clipboard-check" style="margin-right:8px;opacity:.8"></i>Enrollment Ops</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Enrollment Processing</div>
+    <a href="processing-hub.html"><i class="fas fa-inbox"></i>Processing Hub</a>
+    <a href="oec-intake.html"><i class="fas fa-inbox"></i>OEC Intake Hub</a>
+    <a href="csnp-review.html"><i class="fas fa-heartbeat"></i>C-SNP Review</a>
+    <a href="compliance-tracker.html"><i class="fas fa-clock"></i>7-Day Compliance</a>
+    <div class="sb-section">Member Services</div>
+    <a href="document-repository.html" class="active"><i class="fas fa-folder-open"></i>Document Repository</a>
+    <a href="id-cards.html"><i class="fas fa-id-card"></i>ID Cards</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Wong</div><div class="sb-u-role">Enrollment Ops Manager</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Document Repository</h4></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+
+    </div>
+
+  <div class="page">
+    <!-- Stat Cards -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-folder-open"></i></div><div><div class="stat-label">Total Documents</div><div class="stat-val">42</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">SOA Documents</div><div class="stat-val">14</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Pending Auto-File</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-lock"></i></div><div><div class="stat-label">Retention Protected</div><div class="stat-val">42</div><div class="stat-sub">10-year retention</div></div></div></div>
+    </div>
+
+    <!-- Search / Filter Panel -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-search" style="margin-right:8px;color:#00695c"></i>Document Search</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-1"><div class="fg"><label>Member Name (partial)</label><input type="text" id="srchName" placeholder="e.g., Johnson"></div></div>
+          <div class="col-1"><div class="fg"><label>Member MBI (exact)</label><input type="text" id="srchMbi" placeholder="1AB2-CD3-EF45"></div></div>
+          <div class="col-1"><div class="fg"><label>Agent NPN</label><input type="text" id="srchNpn" placeholder="8823441"></div></div>
+        </div>
+        <div class="row-grid" style="margin-top:8px">
+          <div class="col-1"><div class="fg"><label>Document Type</label><select id="srchType"><option value="">All Types</option><option>SOA</option><option>Enrollment Application</option><option>C-SNP Verification</option><option>PQAT Record</option><option>CMS Acknowledgment</option></select></div></div>
+          <div class="col-1"><div class="fg"><label>Filed At — From</label><input type="date" id="srchFiledFrom"></div></div>
+          <div class="col-1"><div class="fg"><label>Filed At — To</label><input type="date" id="srchFiledTo"></div></div>
+          <div class="col-1"><div class="fg"><label>Enrollment Reference ID</label><input type="text" id="srchEnrRef" placeholder="ENR-2026-00541"></div></div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn-pr btn-sm" onclick="applyDocSearch()"><i class="fas fa-search"></i>Search Documents</button>
+          <button class="btn-ol btn-sm" onclick="resetDocSearch()"><i class="fas fa-times"></i>Clear Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><h5>All Documents</h5><span class="text-sm text-muted" id="docCount">42 records</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('docTable','document-repository_docTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="docTable">
+          <thead>
+            <tr><th>Doc ID</th><th>Document Type</th><th>Member Name</th><th>MBI</th><th>Agent NPN</th><th>Enrollment Ref</th><th>Filed At</th><th>Effective Date</th><th>Ver</th><th>Filing Trigger</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr onclick="openDocDetail('DOC-2026-0291','Enrollment Application','Frank Johnson','6TU4-IJ2-CD89','J. Martinez','8823441','ENR-2026-00541','05 23,2026','01 01,2027','OEC_SENT','1','Active')" style="cursor:pointer">
+              <td><code>DOC-2026-0291</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>Frank Johnson</td><td>***-**-CD89</td><td>8823441</td><td><code>ENR-2026-00541</code></td><td>05 23,2026</td><td>01 01,2027</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2026-0290','C-SNP Verification','Frank Johnson','6TU4-IJ2-CD89','J. Martinez','8823441','ENR-2026-00541','05 23,2026','01 01,2027','CSNP_VERIFIED','1','Under Review')" style="cursor:pointer">
+              <td><code>DOC-2026-0290</code></td><td><span class="bdg b-teal">C-SNP Verification</span></td><td>Frank Johnson</td><td>***-**-CD89</td><td>8823441</td><td><code>ENR-2026-00541</code></td><td>05 23,2026</td><td>01 01,2027</td><td>1</td><td><span style="font-size:11px;color:#5f6368">C-SNP Verified</span></td>
+              <td><span class="bdg b-amber">Under Review</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2026-0289','SOA','Frank Johnson','6TU4-IJ2-CD89','J. Martinez','8823441','SOA-2026-0389','05 21,2026','01 01,2027','SOA_EXECUTED','1','Active')" style="cursor:pointer">
+              <td><code>DOC-2026-0289</code></td><td><span class="bdg b-blue">SOA</span></td><td>Frank Johnson</td><td>***-**-CD89</td><td>8823441</td><td><code>SOA-2026-0389</code></td><td>05 21,2026</td><td>01 01,2027</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2026-0287','C-SNP Verification','Maria Gonzalez','4PL9-QR7-ST56','J. Martinez','8823441','ENR-2026-00502','05 21,2026','07 01,2026','CSNP_VERIFIED','1','Under Review')" style="cursor:pointer">
+              <td><code>DOC-2026-0287</code></td><td><span class="bdg b-teal">C-SNP Verification</span></td><td>Maria Gonzalez</td><td>***-**-ST56</td><td>8823441</td><td><code>ENR-2026-00502</code></td><td>05 21,2026</td><td>07 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">C-SNP Verified</span></td>
+              <td><span class="bdg b-amber">Under Review</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1188','Enrollment Application','Dorothy Henderson','1EG4-TE5-MK72','J. Martinez','8823441','ENR-2026-00530','12 15,2025','01 01,2026','OEC_SENT','1','Active')" style="cursor:pointer">
+              <td><code>DOC-2025-1188</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>Dorothy Henderson</td><td>***-**-MK72</td><td>8823441</td><td><code>ENR-2026-00530</code></td><td>12 15,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1187','SOA','Dorothy Henderson','1EG4-TE5-MK72','J. Martinez','8823441','SOA-2025-0821','12 12,2025','01 01,2026','SOA_EXECUTED','1','Active')" style="cursor:pointer">
+              <td><code>DOC-2025-1187</code></td><td><span class="bdg b-blue">SOA</span></td><td>Dorothy Henderson</td><td>***-**-MK72</td><td>8823441</td><td><code>SOA-2025-0821</code></td><td>12 12,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <!-- Page 2 rows -->
+            <tr onclick="openDocDetail('DOC-2025-1185','PQAT Record','Alice Cooper','3KP2-MN8-WX34','S. Chen','7714200','ENR-2026-00498','12 10,2025','01 01,2026','PQAT_SUBMITTED','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1185</code></td><td><span class="bdg b-grey">PQAT Record</span></td><td>Alice Cooper</td><td>***-**-WX34</td><td>7714200</td><td><code>ENR-2026-00498</code></td><td>12 10,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">PQAT Submitted</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1184','Enrollment Application','Alice Cooper','3KP2-MN8-WX34','S. Chen','7714200','ENR-2026-00498','12 09,2025','01 01,2026','OEC_SENT','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1184</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>Alice Cooper</td><td>***-**-WX34</td><td>7714200</td><td><code>ENR-2026-00498</code></td><td>12 09,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1183','SOA','Alice Cooper','3KP2-MN8-WX34','S. Chen','7714200','SOA-2025-0790','12 08,2025','01 01,2026','SOA_EXECUTED','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1183</code></td><td><span class="bdg b-blue">SOA</span></td><td>Alice Cooper</td><td>***-**-WX34</td><td>7714200</td><td><code>SOA-2025-0790</code></td><td>12 08,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1180','CMS Acknowledgment','George Harris','2RT8-JK4-LM67','M. Torres','6651209','ENR-2026-00487','12 05,2025','01 01,2026','CMS_ACK','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1180</code></td><td><span class="bdg b-green">CMS Acknowledgment</span></td><td>George Harris</td><td>***-**-LM67</td><td>6651209</td><td><code>ENR-2026-00487</code></td><td>12 05,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">CMS Ack Received</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1179','Enrollment Application','George Harris','2RT8-JK4-LM67','M. Torres','6651209','ENR-2026-00487','12 04,2025','01 01,2026','OEC_SENT','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1179</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>George Harris</td><td>***-**-LM67</td><td>6651209</td><td><code>ENR-2026-00487</code></td><td>12 04,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1178','SOA','George Harris','2RT8-JK4-LM67','M. Torres','6651209','SOA-2025-0785','12 03,2025','01 01,2026','SOA_EXECUTED','1','Active')" style="cursor:pointer;display:none" data-page="2">
+              <td><code>DOC-2025-1178</code></td><td><span class="bdg b-blue">SOA</span></td><td>George Harris</td><td>***-**-LM67</td><td>6651209</td><td><code>SOA-2025-0785</code></td><td>12 03,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <!-- Page 3 rows -->
+            <tr onclick="openDocDetail('DOC-2025-1175','C-SNP Verification','Betty Moore','7HW3-PQ9-RS12','J. Martinez','8823441','ENR-2026-00475','11 28,2025','01 01,2026','CSNP_VERIFIED','2','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1175</code></td><td><span class="bdg b-teal">C-SNP Verification</span></td><td>Betty Moore</td><td>***-**-RS12</td><td>8823441</td><td><code>ENR-2026-00475</code></td><td>11 28,2025</td><td>01 01,2026</td><td>2</td><td><span style="font-size:11px;color:#5f6368">C-SNP Verified</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1174','Enrollment Application','Betty Moore','7HW3-PQ9-RS12','J. Martinez','8823441','ENR-2026-00475','11 27,2025','01 01,2026','OEC_SENT','1','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1174</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>Betty Moore</td><td>***-**-RS12</td><td>8823441</td><td><code>ENR-2026-00475</code></td><td>11 27,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1173','SOA','Betty Moore','7HW3-PQ9-RS12','J. Martinez','8823441','SOA-2025-0770','11 26,2025','01 01,2026','SOA_EXECUTED','1','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1173</code></td><td><span class="bdg b-blue">SOA</span></td><td>Betty Moore</td><td>***-**-RS12</td><td>8823441</td><td><code>SOA-2025-0770</code></td><td>11 26,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1170','PQAT Record','Robert Harris','5YZ1-AB6-CD78','J. Martinez','8823441','ENR-2026-00462','11 20,2025','01 01,2026','PQAT_SUBMITTED','1','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1170</code></td><td><span class="bdg b-grey">PQAT Record</span></td><td>Robert Harris</td><td>***-**-CD78</td><td>8823441</td><td><code>ENR-2026-00462</code></td><td>11 20,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">PQAT Submitted</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1169','Enrollment Application','Robert Harris','5YZ1-AB6-CD78','J. Martinez','8823441','ENR-2026-00462','11 19,2025','01 01,2026','OEC_SENT','1','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1169</code></td><td><span class="bdg b-purple">Enrollment Application</span></td><td>Robert Harris</td><td>***-**-CD78</td><td>8823441</td><td><code>ENR-2026-00462</code></td><td>11 19,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">OEC Sent</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+            <tr onclick="openDocDetail('DOC-2025-1168','SOA','Robert Harris','5YZ1-AB6-CD78','J. Martinez','8823441','SOA-2025-0755','11 18,2025','01 01,2026','SOA_EXECUTED','1','Active')" style="cursor:pointer;display:none" data-page="3">
+              <td><code>DOC-2025-1168</code></td><td><span class="bdg b-blue">SOA</span></td><td>Robert Harris</td><td>***-**-CD78</td><td>8823441</td><td><code>SOA-2025-0755</code></td><td>11 18,2025</td><td>01 01,2026</td><td>1</td><td><span style="font-size:11px;color:#5f6368">SOA Executed</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:10px 16px;border-top:1px solid #f1f3f4;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:#5f6368" id="pageInfo">Showing 1–6 of 18 documents | Page 1 of 3</span>
+        <div class="dflex g8"><button class="btn-ol btn-sm" id="btnPrev" onclick="goPage(-1)" disabled>&#8592; Prev</button><button class="btn-ol btn-sm" id="btnNext" onclick="goPage(1)">Next &#8594;</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DOCUMENT DETAIL SLIDE PANEL -->
+<div id="docDetailPanel" class="slide-panel">
+  <div class="slide-panel-hdr">
+    <div><h6 style="margin:0;font-weight:700;font-size:14px"><i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>Document Details</h6>
+    <div style="font-size:11px;color:#5f6368" id="ddDocId"></div></div>
+    <button onclick="closeDocPanel()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#5f6368">&times;</button>
+  </div>
+  <div style="padding:20px">
+    <div style="margin-bottom:16px">
+      <div class="meta-row"><span class="meta-label">Document Type</span><span id="ddType"></span></div>
+      <div class="meta-row"><span class="meta-label">Member Name</span><span id="ddMember"></span></div>
+      <div class="meta-row"><span class="meta-label">Member MBI</span><span id="ddMbi" style="font-family:monospace"></span></div>
+      <div class="meta-row"><span class="meta-label">Agent Name</span><span id="ddAgent"></span></div>
+      <div class="meta-row"><span class="meta-label">Agent NPN</span><span id="ddNpn"></span></div>
+      <div class="meta-row"><span class="meta-label">Enrollment Ref ID</span><span id="ddEnrRef" style="font-family:monospace"></span></div>
+      <div class="meta-row"><span class="meta-label">Filed At (UTC)</span><span id="ddFiled"></span></div>
+      <div class="meta-row"><span class="meta-label">Effective Date</span><span id="ddEff"></span></div>
+      <div class="meta-row"><span class="meta-label">Filing Trigger</span><span id="ddTrigger"></span></div>
+      <div class="meta-row"><span class="meta-label">Document Version</span><span id="ddVersion"></span></div>
+      <div class="meta-row"><span class="meta-label">Deletion Protected</span><span style="color:#1b5e20;font-weight:600"><i class="fas fa-lock" style="margin-right:4px"></i>Yes — 10-Year Retention</span></div>
+      <div class="meta-row"><span class="meta-label">Retention Expires</span><span id="ddRetention"></span></div>
+      <div class="meta-row"><span class="meta-label">Filed By</span><span id="ddFiledBy"></span></div>
+      <div class="meta-row"><span class="meta-label">File Format</span><span>PDF</span></div>
+    </div>
+
+    <!-- Version History -->
+    <div id="ddVersionHistory" style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:#424242;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Version History</div>
+      <div id="ddVersionList"></div>
+    </div>
+
+    <div class="al-warn" style="margin-bottom:14px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>This document is within its mandatory 10-year retention period. Delete requests will return HTTP 403 "This document is within its mandatory retention period and cannot be deleted."</span></div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn-pr btn-sm" onclick="showToast('Downloading document...','info')"><i class="fas fa-download"></i> Download</button>
+      <button class="btn-ol btn-sm" onclick="showToast('Opening document in viewer...','info')"><i class="fas fa-file-pdf"></i> View PDF</button>
+      <button class="btn-ol btn-sm" onclick="showToast('Document marked as reviewed.','success')"><i class="fas fa-check-circle"></i> Mark Reviewed</button>
+      <button class="btn-ol btn-sm" onclick="closeDocPanel()">Close</button>
+    </div>
+  </div>
+</div>
+<div id="docPanelBg" onclick="closeDocPanel()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:8999"></div>
+
+<!-- UPLOAD PAPER SOA MODAL -->
+<div id="uploadModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-upload" style="margin-right:8px;color:#00695c"></i>Upload Paper SOA</h6><button onclick="document.getElementById('uploadModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-info" style="margin-bottom:14px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Manual SOA uploads are filed with <code>filed_by = agent user ID</code> (not SYSTEM). File type must be PDF. Maximum size: 20 MB.</span></div>
+      <div class="fg" style="margin-bottom:10px"><label>Member MBI <span class="req">*</span></label><input type="text" id="ulMbi" placeholder="1AB2-CD3-EF45"></div>
+      <div class="fg" style="margin-bottom:10px"><label>Coverage Effective Date <span class="req">*</span></label><input type="date" id="ulEffDate"></div>
+      <div class="fg" style="margin-bottom:10px"><label>SOA Document PDF <span class="req">*</span> (max 20 MB)</label>
+        <input type="file" id="ulFile" accept="application/pdf" onchange="validatePDFUpload(this)" style="padding:6px;border:1px solid #dadce0;border-radius:6px;font-size:12px">
+        <div id="ulFileErr" style="font-size:11px;color:#c62828;margin-top:2px;display:none"></div>
+      </div>
+      <div class="fg"><label>Notes (optional)</label><textarea id="ulNotes" rows="2" placeholder="e.g., Paper SOA received by mail on 05 28,2026..."></textarea></div>
+      <div id="ulErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillUpload()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div>
+        <button class="btn-ol" onclick="document.getElementById('uploadModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="confirmUpload()"><i class="fas fa-upload"></i>File Document</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function openDocDetail(docId,type,member,mbi,agent,npn,enrRef,filed,effDate,trigger,version,status){
+  document.getElementById('ddDocId').textContent=docId;
+  document.getElementById('ddType').textContent=type;
+  document.getElementById('ddMember').textContent=member;
+  document.getElementById('ddMbi').textContent=mbi;
+  document.getElementById('ddAgent').textContent=agent;
+  document.getElementById('ddNpn').textContent=npn;
+  document.getElementById('ddEnrRef').textContent=enrRef;
+  document.getElementById('ddFiled').textContent=filed+' UTC';
+  document.getElementById('ddEff').textContent=effDate;
+  var trigLabels={'OEC_SENT':'OEC Sent','SOA_EXECUTED':'SOA Executed','CSNP_VERIFIED':'C-SNP Eligibility Verified','PQAT_SUBMITTED':'PQAT Submitted','CMS_ACK':'CMS Acknowledgment Received'};
+  document.getElementById('ddTrigger').textContent=trigLabels[trigger]||trigger;
+  document.getElementById('ddVersion').textContent='v'+version;
+  // Retention: filed date + 10 years
+  var filedYear=parseInt((filed||'2026').split(',').pop())||2026;
+  document.getElementById('ddRetention').textContent=filed.replace(/\d{4}/,filedYear+10)+' (10 years from filing)';
+  document.getElementById('ddFiledBy').textContent=(trigger==='SOA_EXECUTED'&&npn)?agent+' (manual upload)':'SYSTEM (auto-filed)';
+  
+  // Version history
+  var vl=document.getElementById('ddVersionList');
+  vl.innerHTML='<div style="font-size:12px;padding:6px 8px;background:#f8f9fa;border-radius:4px;display:flex;justify-content:space-between">'+
+    '<span><strong>v'+version+'</strong> — '+filed+'</span>'+
+    '<span style="color:#80868b">'+document.getElementById('ddFiledBy').textContent+'</span>'+
+    '</div>';
+  if(parseInt(version)>1){
+    vl.innerHTML+='<div style="font-size:12px;padding:6px 8px;background:#f8f9fa;border-radius:4px;margin-top:4px;display:flex;justify-content:space-between;opacity:.7">'+
+      '<span><strong>v1</strong> — Prior version</span><span style="color:#80868b">SYSTEM</span>'+
+      '</div>';
+  }
+  document.getElementById('docDetailPanel').classList.add('open');
+  document.getElementById('docPanelBg').style.display='block';
+}
+function closeDocPanel(){
+  document.getElementById('docDetailPanel').classList.remove('open');
+  document.getElementById('docPanelBg').style.display='none';
+}
+function openUploadModal(){
+  document.getElementById('ulMbi').value='';document.getElementById('ulEffDate').value='';
+  document.getElementById('ulNotes').value='';document.getElementById('ulErr').style.display='none';
+  document.getElementById('uploadModal').classList.add('open');
+}
+function validatePDFUpload(input){
+  var err=document.getElementById('ulFileErr');
+  if(input.files.length&&input.files[0].type!=='application/pdf'){
+    err.textContent='Only PDF files are accepted.';err.style.display='block';input.value='';return;
+  }
+  if(input.files.length&&input.files[0].size>20*1024*1024){
+    err.textContent='File size exceeds 20 MB limit.';err.style.display='block';input.value='';return;
+  }
+  err.style.display='none';
+}
+function confirmUpload(){
+  var mbi=document.getElementById('ulMbi').value.trim();
+  var eff=document.getElementById('ulEffDate').value;
+  var file=document.getElementById('ulFile').value;
+  var err=document.getElementById('ulErr');
+  var errs=[];
+  if(!mbi) errs.push('Member MBI is required.');
+  if(mbi && !/^[A-Za-z0-9]{4}-?[A-Za-z0-9]{3}-?[A-Za-z0-9]{4}$/.test(mbi.replace(/\s/g,''))) errs.push('MBI format invalid. Expected format: 1AB2-CD3-EF45.');
+  if(!eff) errs.push('Coverage effective date is required.');
+  if(!file) errs.push('Please select a PDF document to upload.');
+  if(errs.length){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>'+errs.join('<br>')+'</div>';err.style.display='flex';return;}
+  err.style.display='none';
+  document.getElementById('uploadModal').classList.remove('open');
+  showToast('SOA document filed successfully. filed_by = James Martinez (NPN 8823441). deletion_protected = true. Audit log updated.','success');
+}
+
+function prefillUpload(){
+  document.getElementById('ulMbi').value='1AB2-CD3-EF45';
+  document.getElementById('ulEffDate').value='2026-07-01';
+  document.getElementById('ulNotes').value='Paper SOA received by mail on 05 28,2026. Original signed by member Dorothy Henderson. Filed by Enrollment Ops per standard procedure.';
+  var err=document.getElementById('ulErr');
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing. Note: PDF file must be selected manually.</div>';
+  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
+}
+
+function applyDocSearch(){
+  var name=(document.getElementById('srchName').value||'').toLowerCase();
+  var mbi=(document.getElementById('srchMbi').value||'').toLowerCase().replace(/[- ]/g,'');
+  var npn=(document.getElementById('srchNpn').value||'').trim();
+  var type=(document.getElementById('srchType').value||'').toLowerCase();
+  var enrRef=(document.getElementById('srchEnrRef').value||'').toLowerCase();
+  var dateFrom=document.getElementById('srchFiledFrom').value;
+  var dateTo=document.getElementById('srchFiledTo').value;
+  var rows=document.querySelectorAll('#docTable tbody tr');
+  var vis=0;
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var memberName=(cells[2]?cells[2].textContent:'').toLowerCase();
+    var rowMbi=(cells[3]?cells[3].textContent:'').toLowerCase().replace(/[- *]/g,'');
+    var rowNpn=(cells[4]?cells[4].textContent:'').trim();
+    var rowEnrRef=(cells[5]?cells[5].textContent:'').toLowerCase();
+    var rowType=(cells[1]?cells[1].textContent:'').toLowerCase();
+    var rowDateText=(cells[6]?cells[6].textContent:'').trim();
+    var show=true;
+    if(name&&memberName.indexOf(name)===-1) show=false;
+    if(mbi&&rowMbi.indexOf(mbi)===-1) show=false;
+    if(npn&&rowNpn.indexOf(npn)===-1) show=false;
+    if(type&&rowType.indexOf(type)===-1) show=false;
+    if(enrRef&&rowEnrRef.indexOf(enrRef)===-1) show=false;
+    if(dateFrom||dateTo){
+      var parsed=parseDocDate(rowDateText);
+      if(dateFrom&&parsed<dateFrom) show=false;
+      if(dateTo&&parsed>dateTo) show=false;
+    }
+    row.style.display=show?'':'none';
+    if(show) vis++;
+  });
+  document.getElementById('docCount').textContent=vis+' records';
+  showToast('Search applied \u2014 '+vis+' document'+(vis===1?'':'s')+' found.','info');
+}
+function parseDocDate(str){
+  var months={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+  var m=str.match(/([A-Za-z]+)\s+(\d+),?\s+(\d{4})/);
+  if(!m) return '';
+  var mon=months[m[1].toLowerCase().substring(0,3)]||'01';
+  var day=m[2].padStart(2,'0');
+  return m[3]+'-'+mon+'-'+day;
+}
+function resetDocSearch(){
+  ['srchName','srchMbi','srchNpn','srchEnrRef','srchFiledFrom','srchFiledTo'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('srchType').value='';
+  document.querySelectorAll('#docTable tbody tr').forEach(function(r){r.style.display='';});
+  var total=document.querySelectorAll('#docTable tbody tr').length;
+  document.getElementById('docCount').textContent=total+' records';
+  showToast('All filters cleared.','info');
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},5000);
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+
+// Pagination
+var currentPage=1;
+var totalPages=3;
+var perPage=6;
+function goPage(dir){
+  currentPage+=dir;
+  if(currentPage<1)currentPage=1;
+  if(currentPage>totalPages)currentPage=totalPages;
+  renderPage();
+}
+function renderPage(){
+  var rows=document.querySelectorAll('#docTable tbody tr');
+  rows.forEach(function(row){
+    var rowPage=parseInt(row.getAttribute('data-page'))||1;
+    row.style.display=(rowPage===currentPage)?'':'none';
+  });
+  document.getElementById('btnPrev').disabled=(currentPage===1);
+  document.getElementById('btnNext').disabled=(currentPage===totalPages);
+  var start=((currentPage-1)*perPage)+1;
+  var end=Math.min(currentPage*perPage,18);
+  document.getElementById('pageInfo').textContent='Showing '+start+'\u2013'+end+' of 18 documents | Page '+currentPage+' of '+totalPages;
+}
+// Tag page 1 rows on load
+(function(){
+  var rows=document.querySelectorAll('#docTable tbody tr');
+  rows.forEach(function(row){if(!row.getAttribute('data-page'))row.setAttribute('data-page','1');});
+  renderPage();
+})();
+</script>
+</body>
+</html>

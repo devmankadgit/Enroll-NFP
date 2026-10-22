@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOA Compliance Center | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html" class="active"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#004d40;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>SOA Compliance Center</h4>
+      <ol class="breadcrumb-bar"><li>Scope of Appointment Tracking &amp; Monitoring</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('SOA Report')"><i class="fas fa-download"></i> Export</button>
+      <a href="../auth-carrier/login.html" class="btn-ol btn-sm" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- SOA KPI Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">SOA Compliance Rate</div><div class="stat-val">98.5%</div><div class="stat-sub" style="color:#2e7d32">Above 98% target</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-file-excel"></i></div><div><div class="stat-label">Missing SOA</div><div class="stat-val">4</div><div class="stat-sub text-muted">Requires immediate action</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Late SOA</div><div class="stat-val">7</div><div class="stat-sub text-muted">Received after enrollment</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Invalid SOA</div><div class="stat-val">2</div><div class="stat-sub text-muted">Failed validation</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-calendar-times"></i></div><div><div class="stat-label">Expired SOA</div><div class="stat-val">3</div><div class="stat-sub text-muted">Past 12-month window</div></div></div></div>
+    </div>
+
+    <!-- SOA Type Breakdown -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:#0d47a1">312</div>
+        <div style="font-size:11px;font-weight:600;color:#0d47a1">Electronic SOA</div>
+        <div style="font-size:10px;color:#5f6368">Auto-validated</div>
+      </div>
+      <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:#e65100">45</div>
+        <div style="font-size:11px;font-weight:600;color:#e65100">Paper SOA</div>
+        <div style="font-size:10px;color:#5f6368">Manual review required</div>
+      </div>
+      <div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:#1b5e20">349</div>
+        <div style="font-size:11px;font-weight:600;color:#1b5e20">Compliant</div>
+        <div style="font-size:10px;color:#5f6368">Valid &amp; on file</div>
+      </div>
+      <div class="col-1" style="background:#ffebee;border-radius:8px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:#c62828">16</div>
+        <div style="font-size:11px;font-weight:600;color:#c62828">Non-Compliant</div>
+        <div style="font-size:10px;color:#5f6368">Action needed</div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select id="fSOAStatus" onchange="filterSOA()">
+        <option value="">All Status</option><option value="Missing">Missing</option><option value="Late">Late</option><option value="Invalid">Invalid</option><option value="Expired">Expired</option><option value="Valid">Valid</option>
+      </select>
+      <select id="fSOAType" onchange="filterSOA()">
+        <option value="">All Types</option><option value="Electronic">Electronic</option><option value="Paper">Paper</option>
+      </select>
+      <input type="text" id="fSOASearch" placeholder="Search agent or enrollment..." style="width:200px" oninput="filterSOA()">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('fSOAStatus').value='';document.getElementById('fSOAType').value='';document.getElementById('fSOASearch').value='';filterSOA()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- SOA Complete Dataset -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-file-signature" style="color:#004d40;margin-right:8px"></i>All SOA Records <span id="soaCount" class="text-muted text-sm" style="font-weight:400"></span></h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('soaTable','soa-compliance_FullExport')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export Full Dataset</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="soaTable">
+          <thead><tr><th>Enrollment</th><th>Agent</th><th>Member</th><th>SOA Status</th><th>SOA Type</th><th>Enrollment Date</th><th>SOA Date</th><th>Gap (Days)</th><th>Actions</th></tr></thead>
+          <tbody id="soaTbody">
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00612</code></td><td>James Martinez (8823441)</td><td>Robert Thompson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 15,2026</td><td>06 14,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00608</code></td><td>Sarah Chen (7719022)</td><td>Linda Williams</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 12,2026</td><td>06 11,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00601</code></td><td>Kevin Nguyen (9912345)</td><td>Charles Davis</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 10,2026</td><td>06 09,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00595</code></td><td>Angela Torres (6643201)</td><td>George Wilson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 08,2026</td><td>06 07,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Paper">
+              <td><code>ENR-2026-00589</code></td><td>Mark Brown (5521833)</td><td>Patricia Johnson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Paper</td><td>06 05,2026</td><td>06 04,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00582</code></td><td>James Martinez (8823441)</td><td>Mary Jackson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 03,2026</td><td>06 02,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00578</code></td><td>Sarah Chen (7719022)</td><td>Michael Taylor</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>06 01,2026</td><td>05 31,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00570</code></td><td>Kevin Nguyen (9912345)</td><td>Paul Phillips</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 28,2026</td><td>05 27,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Paper">
+              <td><code>ENR-2026-00565</code></td><td>Tom Harris (6654321)</td><td>Jennifer Moore</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Paper</td><td>05 26,2026</td><td>05 25,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00559</code></td><td>James Martinez (8823441)</td><td>Richard White</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 25,2026</td><td>05 24,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00553</code></td><td>Angela Torres (6643201)</td><td>Katherine Coleman</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 24,2026</td><td>05 23,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00548</code></td><td>Mark Brown (5521833)</td><td>Frances Cox</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 23,2026</td><td>05 22,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Missing" data-type="">
+              <td><code>ENR-2026-00541</code></td><td>James Martinez (8823441)</td><td>Frank Johnson</td>
+              <td><span class="bdg b-red">Missing</span></td><td>—</td><td>05 23,2026</td><td>—</td><td style="color:#c62828;font-weight:700">—</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('SOA request sent to agent James Martinez.','success')"><i class="fas fa-envelope"></i>Request</button><button class="btn-ol btn-sm" style="color:#c62828" onclick="showToast('Compliance hold placed on ENR-2026-00541 pending SOA.','warning')"><i class="fas fa-pause"></i>Hold</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00536</code></td><td>Sarah Chen (7719022)</td><td>David Anderson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 22,2026</td><td>05 21,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00530</code></td><td>Kevin Nguyen (9912345)</td><td>Sharon Turner</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 20,2026</td><td>05 19,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Missing" data-type="">
+              <td><code>ENR-2026-00523</code></td><td>Kevin Park (4478923)</td><td>Dorothy Lane</td>
+              <td><span class="bdg b-red">Missing</span></td><td>—</td><td>05 18,2026</td><td>—</td><td style="color:#c62828;font-weight:700">—</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('SOA request sent to agent Kevin Park.','success')"><i class="fas fa-envelope"></i>Request</button><button class="btn-ol btn-sm" style="color:#c62828" onclick="showToast('Compliance hold placed.','warning')"><i class="fas fa-pause"></i>Hold</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00517</code></td><td>James Martinez (8823441)</td><td>Barbara Martin</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 16,2026</td><td>05 15,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Paper">
+              <td><code>ENR-2026-00511</code></td><td>Tom Harris (6654321)</td><td>Susan Robinson</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Paper</td><td>05 14,2026</td><td>05 13,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Late" data-type="Electronic">
+              <td><code>ENR-2026-00498</code></td><td>Sarah Chen (7719022)</td><td>Alice Cooper</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Electronic</td><td>05 10,2026</td><td>05 15,2026</td><td style="color:#e65100;font-weight:600">5</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted (late filing noted in audit).','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(0)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00491</code></td><td>Mark Brown (5521833)</td><td>Albert Howard</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 08,2026</td><td>05 07,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00485</code></td><td>Angela Torres (6643201)</td><td>Billy Jenkins</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 06,2026</td><td>05 05,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Late" data-type="Paper">
+              <td><code>ENR-2026-00477</code></td><td>James Martinez (8823441)</td><td>George Harris</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Paper</td><td>05 05,2026</td><td>05 12,2026</td><td style="color:#e65100;font-weight:600">7</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted.','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(1)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00470</code></td><td>Sarah Chen (7719022)</td><td>Joseph Lewis</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 03,2026</td><td>05 02,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00463</code></td><td>Kevin Nguyen (9912345)</td><td>Timothy Parker</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>05 01,2026</td><td>04 30,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Invalid" data-type="Paper">
+              <td><code>ENR-2026-00456</code></td><td>Tom Harris (6654321)</td><td>Betty Moore</td>
+              <td><span class="bdg b-red">Invalid</span></td><td>Paper</td><td>04 28,2026</td><td>04 28,2026</td><td>0</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('Correction request sent. Agent must submit new SOA.','success')"><i class="fas fa-redo"></i>Resend</button><button class="btn-ol btn-sm" onclick="viewSOA(2)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00449</code></td><td>James Martinez (8823441)</td><td>Karen Lewis</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 25,2026</td><td>04 24,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00442</code></td><td>Angela Torres (6643201)</td><td>Ralph Powell</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 22,2026</td><td>04 21,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Paper">
+              <td><code>ENR-2026-00435</code></td><td>Mark Brown (5521833)</td><td>Gloria Ward</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Paper</td><td>04 20,2026</td><td>04 19,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00428</code></td><td>Sarah Chen (7719022)</td><td>Raymond Young</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 18,2026</td><td>04 17,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Missing" data-type="">
+              <td><code>ENR-2026-00421</code></td><td>Lisa Wang (2234561)</td><td>Harold Stewart</td>
+              <td><span class="bdg b-red">Missing</span></td><td>—</td><td>04 15,2026</td><td>—</td><td style="color:#c62828;font-weight:700">—</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('SOA request sent to agent Lisa Wang.','success')"><i class="fas fa-envelope"></i>Request</button><button class="btn-ol btn-sm" style="color:#c62828" onclick="showToast('Compliance hold placed.','warning')"><i class="fas fa-pause"></i>Hold</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00414</code></td><td>Kevin Nguyen (9912345)</td><td>Laura Evans</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 12,2026</td><td>04 11,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Missing" data-type="">
+              <td><code>ENR-2026-00407</code></td><td>Angela Torres (6643201)</td><td>Victor Flores</td>
+              <td><span class="bdg b-red">Missing</span></td><td>—</td><td>04 10,2026</td><td>—</td><td style="color:#c62828;font-weight:700">—</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('SOA request sent to agent Angela Torres.','success')"><i class="fas fa-envelope"></i>Request</button><button class="btn-ol btn-sm" style="color:#c62828" onclick="showToast('Compliance hold placed.','warning')"><i class="fas fa-pause"></i>Hold</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00400</code></td><td>James Martinez (8823441)</td><td>Nancy Hall</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 08,2026</td><td>04 07,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Late" data-type="Electronic">
+              <td><code>ENR-2026-00393</code></td><td>Kevin Park (4478923)</td><td>Deborah Campbell</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Electronic</td><td>04 05,2026</td><td>04 09,2026</td><td style="color:#e65100;font-weight:600">4</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted (late filing noted).','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(0)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Valid" data-type="Electronic">
+              <td><code>ENR-2026-00386</code></td><td>Tom Harris (6654321)</td><td>Arthur Edwards</td>
+              <td><span class="bdg b-green">Valid</span></td><td>Electronic</td><td>04 03,2026</td><td>04 02,2026</td><td style="color:#1b5e20">0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewSOA(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Invalid" data-type="Electronic">
+              <td><code>ENR-2026-00379</code></td><td>Mark Brown (5521833)</td><td>Janet Collins</td>
+              <td><span class="bdg b-red">Invalid</span></td><td>Electronic</td><td>04 01,2026</td><td>04 01,2026</td><td>0</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('Correction request sent. Agent must resubmit.','success')"><i class="fas fa-redo"></i>Resend</button><button class="btn-ol btn-sm" onclick="viewSOA(2)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Expired" data-type="Electronic">
+              <td><code>ENR-2025-00891</code></td><td>Angela Torres (6643201)</td><td>William Davis</td>
+              <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Expired</span></td><td>Electronic</td><td>07 15,2025</td><td>07 14,2025</td><td style="color:#6a1b9a;font-weight:600">383</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('Renewal SOA request sent to agent.','success')"><i class="fas fa-envelope"></i>Request</button></div></td>
+            </tr>
+            <tr data-status="Expired" data-type="Paper">
+              <td><code>ENR-2025-00845</code></td><td>Maria Rodriguez (2938475)</td><td>Nancy Collins</td>
+              <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Expired</span></td><td>Paper</td><td>06 20,2025</td><td>06 19,2025</td><td style="color:#6a1b9a;font-weight:600">408</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('Renewal SOA request sent to agent.','success')"><i class="fas fa-envelope"></i>Request</button></div></td>
+            </tr>
+            <tr data-status="Expired" data-type="Electronic">
+              <td><code>ENR-2025-00801</code></td><td>James Martinez (8823441)</td><td>Dorothy Miller</td>
+              <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Expired</span></td><td>Electronic</td><td>05 28,2025</td><td>05 27,2025</td><td style="color:#6a1b9a;font-weight:600">430</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" style="color:#e65100" onclick="showToast('Renewal SOA request sent to agent.','success')"><i class="fas fa-envelope"></i>Request</button></div></td>
+            </tr>
+            <tr data-status="Late" data-type="Paper">
+              <td><code>ENR-2026-00372</code></td><td>Sarah Chen (7719022)</td><td>Gerald King</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Paper</td><td>03 28,2026</td><td>04 02,2026</td><td style="color:#e65100;font-weight:600">5</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted.','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(1)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Late" data-type="Electronic">
+              <td><code>ENR-2026-00365</code></td><td>Mark Brown (5521833)</td><td>Evelyn Price</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Electronic</td><td>03 25,2026</td><td>03 29,2026</td><td style="color:#e65100;font-weight:600">4</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted.','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(0)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+            <tr data-status="Late" data-type="Electronic">
+              <td><code>ENR-2026-00358</code></td><td>Angela Torres (6643201)</td><td>Scott Diaz</td>
+              <td><span class="bdg b-amber">Late</span></td><td>Electronic</td><td>03 22,2026</td><td>03 26,2026</td><td style="color:#e65100;font-weight:600">4</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('SOA reviewed and accepted.','success')"><i class="fas fa-check"></i>Accept</button><button class="btn-ol btn-sm" onclick="viewSOA(0)"><i class="fas fa-eye"></i>View</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOA Detail Modal -->
+<div id="soaModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.45);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:580px;max-width:94vw;max-height:85vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-file-signature" style="color:#004d40;margin-right:8px"></i>SOA Document Detail</h5>
+      <button onclick="document.getElementById('soaModal').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div id="soaModalBody" style="padding:20px"></div>
+    <div style="padding:12px 20px;border-top:1px solid #e0e0e0;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('soaModal').style.display='none'">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var SOA_DATA = [
+  {enr:'ENR-2026-00498',agent:'Sarah Chen',npn:'7719022',member:'Alice Cooper',mbi:'1EG4-TE5-MK72',status:'Late',type:'Electronic',enrollDate:'05 10,2026',soaDate:'05 15,2026',gap:5,
+   topics:['Medicare Advantage Plans','Prescription Drug Coverage','Cost Sharing'],
+   validation:'SOA received 5 days after enrollment. CMS allows 48-hour grace period — this exceeds the window. Late filing noted in compliance audit.',
+   signedBy:'Alice Cooper (electronic signature)',signDate:'05 15,2026 at 2:14 PM'},
+  {enr:'ENR-2026-00477',agent:'James Martinez',npn:'8823441',member:'George Harris',mbi:'2KR7-WQ1-BN44',status:'Late',type:'Paper',enrollDate:'05 05,2026',soaDate:'05 12,2026',gap:7,
+   topics:['Medicare Advantage Plans','Special Needs Plans (CSNP)','Cost Sharing','Benefits Overview'],
+   validation:'Paper SOA scanned and uploaded 7 days after enrollment. Signature is valid but filing exceeds CMS 48-hour window.',
+   signedBy:'George Harris (wet signature)',signDate:'05 05,2026 (scanned May 12)'},
+  {enr:'ENR-2026-00456',agent:'Tom Harris',npn:'6654321',member:'Betty Moore',mbi:'3PL8-AX9-QR55',status:'Invalid',type:'Paper',enrollDate:'04 28,2026',soaDate:'04 28,2026',gap:0,
+   topics:['Medicare Advantage Plans'],
+   validation:'INVALID — SOA is missing beneficiary signature. Topics discussed section incomplete (only 1 topic checked, minimum 2 required per policy). Agent must resubmit.',
+   signedBy:'(Signature missing)',signDate:'—'},
+  {enr:'ENR-2026-00612',agent:'James Martinez',npn:'8823441',member:'Robert Thompson',mbi:'1EG4-TE5-MK72',status:'Valid',type:'Electronic',enrollDate:'06 15,2026',soaDate:'06 14,2026',gap:0,
+   topics:['Medicare Advantage Plans','Special Needs Plans (CSNP)','Prescription Drug Coverage','Cost Sharing'],
+   validation:'SOA received prior to enrollment. All required fields complete. Beneficiary signature verified electronically. Compliant.',
+   signedBy:'Robert Thompson (electronic signature)',signDate:'06 14,2026 at 10:30 AM'}
+];
+
+function viewSOA(idx){
+  var s=SOA_DATA[idx];
+  var statusColor=s.status==='Late'?'#e65100':'#c62828';
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:16px">'
+    +'<div><span style="color:#80868b">Enrollment:</span> <strong>'+s.enr+'</strong></div>'
+    +'<div><span style="color:#80868b">Status:</span> <span class="bdg" style="background:'+statusColor+'22;color:'+statusColor+'">'+s.status+'</span></div>'
+    +'<div><span style="color:#80868b">Agent:</span> <strong>'+s.agent+' ('+s.npn+')</strong></div>'
+    +'<div><span style="color:#80868b">SOA Type:</span> <strong>'+s.type+'</strong></div>'
+    +'<div><span style="color:#80868b">Member:</span> <strong>'+s.member+'</strong></div>'
+    +'<div><span style="color:#80868b">MBI:</span> <code>'+s.mbi+'</code></div>'
+    +'<div><span style="color:#80868b">Enrollment Date:</span> <strong>'+s.enrollDate+'</strong></div>'
+    +'<div><span style="color:#80868b">SOA Date:</span> <strong>'+s.soaDate+'</strong></div>'
+    +'</div>';
+  html+='<div style="font-size:12px;font-weight:700;color:#004d40;margin-bottom:6px"><i class="fas fa-list-check" style="margin-right:5px"></i>Topics Discussed</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">'+s.topics.map(function(t){return '<span style="background:#e0f2f1;color:#004d40;padding:3px 10px;border-radius:12px;font-size:11px">'+t+'</span>';}).join('')+'</div>';
+  html+='<div style="font-size:12px;font-weight:700;color:#004d40;margin-bottom:6px"><i class="fas fa-signature" style="margin-right:5px"></i>Signature</div>'
+    +'<div style="font-size:12px;background:#f8f9fa;padding:10px 14px;border-radius:6px;margin-bottom:14px">'
+    +'<div><span style="color:#80868b">Signed By:</span> '+s.signedBy+'</div>'
+    +'<div><span style="color:#80868b">Sign Date:</span> '+s.signDate+'</div></div>';
+  html+='<div style="font-size:12px;font-weight:700;color:#004d40;margin-bottom:6px"><i class="fas fa-clipboard-check" style="margin-right:5px"></i>Validation Notes</div>'
+    +'<div style="font-size:12px;padding:10px 14px;border-radius:6px;background:'+(s.status==='Invalid'?'#ffebee':'#fff8e1')+';color:#3c4043;line-height:1.6">'+s.validation+'</div>';
+  // Document preview placeholder
+  html+='<div style="margin-top:16px;border:1px dashed #bdbdbd;border-radius:8px;padding:20px;text-align:center;color:#9e9e9e">'
+    +'<i class="fas fa-file-pdf" style="font-size:28px;margin-bottom:6px;display:block"></i>'
+    +'<div style="font-size:11px">SOA Document Preview</div>'
+    +'<div style="font-size:10px;margin-top:2px">('+s.type+' — '+s.enr+')</div></div>';
+  document.getElementById('soaModalBody').innerHTML=html;
+  document.getElementById('soaModal').style.display='flex';
+}
+document.getElementById('soaModal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+
+function filterSOA(){
+  var status=document.getElementById('fSOAStatus').value;
+  var type=document.getElementById('fSOAType').value;
+  var search=document.getElementById('fSOASearch').value.toLowerCase();
+  var visible=0;
+  document.querySelectorAll('#soaTbody tr').forEach(function(r){
+    var rStatus=r.getAttribute('data-status')||'';
+    var rType=r.getAttribute('data-type')||'';
+    var text=r.textContent.toLowerCase();
+    var show=true;
+    if(status && rStatus!==status) show=false;
+    if(type && rType!==type) show=false;
+    if(search && text.indexOf(search)<0) show=false;
+    r.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  document.getElementById('soaCount').textContent='— '+visible+' records';
+}
+filterSOA();
+</script>
+</body>
+</html>

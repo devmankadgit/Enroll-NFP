@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Member Self-Service Portal | Gold Kidney Health Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f4f8;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#212121}
+.portal-header{background:linear-gradient(135deg,#006064 0%,#00838f 100%);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.portal-logo{font-size:18px;font-weight:800;letter-spacing:.5px}
+.portal-logo span{font-size:11px;display:block;font-weight:400;opacity:.85;margin-top:2px}
+.portal-session{font-size:11px;opacity:.8;text-align:right}
+.portal-wrap{max-width:960px;margin:0 auto;padding:24px 16px}
+.welcome-banner{background:linear-gradient(135deg,#006064,#004d40);color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.welcome-text h2{font-size:22px;font-weight:700;margin-bottom:4px}
+.welcome-text p{font-size:13px;opacity:.85}
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+.tile{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #e8eaed}
+.tile-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#5f6368;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.tile-title i{font-size:14px;color:#006064}
+.field-ro{background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:7px 10px;font-size:13px;color:#424242;width:100%;display:block}
+.field-label{font-size:11px;color:#5f6368;margin-bottom:3px;margin-top:10px}
+.field-label:first-child{margin-top:0}
+.id-card-mini{background:linear-gradient(135deg,#1a237e,#0d47a1);border-radius:10px;padding:16px;color:#fff;margin-bottom:12px}
+.id-card-mini .name{font-size:16px;font-weight:700}
+.id-card-mini .plan{font-size:11px;opacity:.8;margin-bottom:8px}
+.id-card-mini .row{display:flex;gap:16px;margin-top:6px}
+.id-card-mini .field .label{font-size:9px;opacity:.7;text-transform:uppercase}
+.id-card-mini .field .val{font-size:11px;font-weight:600}
+.action-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;background:#f8f9fa}
+.action-item .label{font-size:13px;font-weight:600}
+.action-item .desc{font-size:11px;color:#5f6368}
+.btn-teal{background:#006064;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-teal:hover{background:#004d40}
+.btn-outline-teal{background:none;color:#006064;border:1.5px solid #006064;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-outline-teal:hover{background:#e0f2f1}
+.form-input{border:1px solid #dadce0;border-radius:6px;padding:8px 10px;font-size:13px;width:100%;outline:none}
+.form-input:focus{border-color:#006064;box-shadow:0 0 0 2px rgba(0,96,100,.12)}
+.form-select{border:1px solid #dadce0;border-radius:6px;padding:8px 10px;font-size:13px;width:100%;background:#fff}
+.section-card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #e8eaed;margin-bottom:16px}
+.section-title{font-size:14px;font-weight:700;color:#006064;margin-bottom:14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #e0f2f1;padding-bottom:8px}
+.al-warn{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#e65100;display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.al-success{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#1b5e20;display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+</style>
+</head>
+<body>
+
+<div class="portal-header">
+  <div>
+    <div class="portal-logo"><i class="fas fa-heartbeat" style="margin-right:8px;color:#80deea"></i>Gold Kidney Health Plan
+      <span>Member Self-Service Portal</span>
+    </div>
+  </div>
+  <div class="portal-session">
+    <div><i class="fas fa-user-circle" style="margin-right:4px"></i>Dorothy Henderson</div>
+    <div style="margin-top:2px"><i class="fas fa-clock" style="margin-right:4px;font-size:10px"></i>Session timeout: 15 min &nbsp;|&nbsp; <a href="../auth/login.html" style="color:#80deea;font-size:11px">Sign Out</a></div>
+  </div>
+</div>
+
+<div class="portal-wrap">
+
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <h2><i class="fas fa-hand-wave" style="margin-right:8px;font-size:18px;opacity:.9"></i>Welcome, Dorothy Henderson</h2>
+      <p>Your coverage is active. View your plan details, download your ID card, and manage your preferences below.</p>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:12px;opacity:.8;margin-bottom:4px">Enrollment Status</div>
+      <div style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700"><i class="fas fa-check-circle" style="margin-right:6px;color:#a5d6a7"></i>Active — CMS Accepted</div>
+    </div>
+  </div>
+
+  <!-- Plan + ID Card tiles -->
+  <div class="tile-grid">
+
+    <!-- Plan Details -->
+    <div class="tile">
+      <div class="tile-title"><i class="fas fa-file-medical"></i>Plan Details</div>
+      <div class="field-label">Plan Name</div><div class="field-ro">StarPlus ESRD SNP 2026</div>
+      <div class="field-label">Plan ID</div><div class="field-ro">H1234-001</div>
+      <div class="field-label">Effective Date</div><div class="field-ro">01 01,2026</div>
+      <div class="field-label">Primary Care Physician (PCP)</div><div class="field-ro">Dr. Maria Rodriguez</div>
+      <div class="field-label">Member ID (Partially Masked)</div>
+      <div class="field-ro" style="font-family:monospace;letter-spacing:.5px">***-**-MK72</div>
+      <p style="font-size:10.5px;color:#80868b;margin-top:6px"><i class="fas fa-shield-alt" style="margin-right:4px"></i>Member ID is partially masked for security. For your full MBI, contact Member Services.</p>
+    </div>
+
+    <!-- ID Card -->
+    <div class="tile">
+      <div class="tile-title"><i class="fas fa-id-card"></i>My ID Card</div>
+      <div class="id-card-mini">
+        <div class="name">Dorothy Henderson</div>
+        <div class="plan">StarPlus ESRD SNP 2026 &bull; H1234-001</div>
+        <div class="row">
+          <div class="field"><div class="label">Member ID</div><div class="val">***-**-MK72</div></div>
+          <div class="field"><div class="label">Effective</div><div class="val">01 01,2026</div></div>
+        </div>
+        <div class="row">
+          <div class="field"><div class="label">PCP</div><div class="val">Dr. M. Rodriguez</div></div>
+          <div class="field"><div class="label">Group</div><div class="val">GK-2026-001</div></div>
+        </div>
+      </div>
+      <button class="btn-teal" style="width:100%;justify-content:center" onclick="downloadIDCard()"><i class="fas fa-download"></i>Download PDF ID Card</button>
+      <p style="font-size:11px;color:#5f6368;margin-top:8px;text-align:center">Need a replacement? <a href="#" onclick="openReplacement();return false;" style="color:#006064">Request Replacement Card</a></p>
+    </div>
+
+  </div>
+
+  <!-- Action Items -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-bell"></i>My Action Items</div>
+    <div class="action-item" style="border-left:3px solid #c62828">
+      <div><div class="label" style="color:#c62828"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Health Risk Assessment (HRA) Pending</div><div class="desc">Your HRA is due within your first 14 days of enrollment. Complete it to confirm your health status and unlock care coordination.</div></div>
+      <a href="../agent/hra-management.html" class="btn-teal" style="margin-left:12px;white-space:nowrap"><i class="fas fa-external-link-alt"></i>Start HRA</a>
+    </div>
+    <div class="action-item" style="border-left:3px solid #e65100">
+      <div><div class="label" style="color:#e65100"><i class="fas fa-heartbeat" style="margin-right:6px"></i>PQAT (Plan Quality Assessment Tool) Pending</div><div class="desc">Help us understand your quality of life and personalize your care plan.</div></div>
+      <a href="../agent/pqat.html" class="btn-outline-teal" style="margin-left:12px;white-space:nowrap"><i class="fas fa-external-link-alt"></i>Start PQAT</a>
+    </div>
+    <div class="action-item" style="border-left:3px solid #0d47a1">
+      <div><div class="label" style="color:#0d47a1"><i class="fas fa-stethoscope" style="margin-right:6px"></i>Healthy Visit — Schedule with your PCP</div><div class="desc">Schedule your first healthy visit within 90 days of enrollment to earn a care coordination benefit.</div></div>
+      <button class="btn-outline-teal" style="margin-left:12px;white-space:nowrap" onclick="showMemberToast('Your agent will schedule a Healthy Visit on your behalf. Contact James Martinez at 1-800-555-0001.','info')"><i class="fas fa-calendar-plus"></i>Learn More</button>
+    </div>
+  </div>
+
+  <!-- Contact Preferences -->
+  <div class="section-card">
+    <div class="section-title"><i class="fas fa-address-card"></i>Contact Preferences &amp; Address</div>
+    <div id="contactViewMode">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px">
+        <div>
+          <div class="field-label">Phone Number</div><div class="field-ro">305-555-8821</div>
+          <div class="field-label">Email Address</div><div class="field-ro">dorothy.henderson@email.com</div>
+        </div>
+        <div>
+          <div class="field-label">Preferred Contact Method</div><div class="field-ro">Phone Call</div>
+          <div class="field-label">Language Preference</div><div class="field-ro">English</div>
+        </div>
+      </div>
+      <div class="field-label">Mailing Address</div>
+      <div class="field-ro">1204 Palm Drive, Apt 3B, Miami, FL 33101 &nbsp;|&nbsp; County: Miami-Dade</div>
+      <button class="btn-outline-teal" style="margin-top:12px" onclick="openEditContact()"><i class="fas fa-edit"></i>Edit Contact Info</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- EDIT CONTACT MODAL -->
+<div id="editContactModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-edit" style="margin-right:8px;color:#006064"></i>Edit Contact Preferences</h6><button onclick="document.getElementById('editContactModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Phone Number</label><input type="tel" id="editPhone" class="form-input" value="305-555-8821"></div>
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Email Address</label><input type="email" id="editEmail" class="form-input" value="dorothy.henderson@email.com"></div>
+      </div>
+      <div style="margin-bottom:12px"><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Preferred Contact Method</label>
+        <select id="editPref" class="form-select"><option>Phone Call</option><option>Email</option><option>Text / SMS</option><option>Mail</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Address 1 <span style="color:#c62828">*</span></label><input type="text" id="editStreet" class="form-input" value="1204 Palm Drive"></div>
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Address 2</label><input type="text" id="editStreet2" class="form-input" value="Apt 3B"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">ZIP <span style="color:#c62828">*</span></label><input type="text" id="editZip" class="form-input" value="33101" maxlength="5" oninput="nfpZipLookup(this,'editCity','editState','editCounty')"></div>
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">City <span style="color:#c62828">*</span></label><input type="text" id="editCity" class="form-input" value="Miami"></div>
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">State <span style="color:#c62828">*</span></label><input type="text" id="editState" class="form-input" value="FL" maxlength="2"></div>
+        <div><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">County</label><input type="text" id="editCounty" class="form-input" value="Miami-Dade" readonly style="background:#f8f9fa" oninput="checkCountyChange(this.value)"></div>
+      </div>
+      <div id="countyWarn" style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:12px;color:#e65100;display:none;margin-top:6px"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>County change detected. Your plan coverage area may be affected. An Enrollment Ops representative will review and contact you within 5 business days.</div>
+      <div id="editErr" style="background:#fce4ec;border:1px solid #f48fb1;border-radius:6px;padding:8px 12px;font-size:12px;color:#c62828;display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot">
+      <button style="background:none;border:1px solid #dadce0;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer" onclick="document.getElementById('editContactModal').classList.remove('open')">Cancel</button>
+      <button class="btn-teal" onclick="saveContactPrefs()"><i class="fas fa-save"></i>Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- REPLACEMENT CARD MODAL -->
+<div id="replCardModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-sync-alt" style="margin-right:8px;color:#c62828"></i>Request Replacement ID Card</h6><button onclick="document.getElementById('replCardModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;margin-bottom:12px">A replacement card will be mailed to your address of record within 5 business days.</p>
+      <div style="margin-bottom:10px"><label style="font-size:12px;color:#5f6368;display:block;margin-bottom:3px">Reason for Replacement <span style="color:#c62828">*</span></label>
+        <select id="replReason" class="form-select">
+          <option value="">— Select reason —</option>
+          <option>Lost card</option>
+          <option>Damaged card</option>
+          <option>First card never received</option>
+          <option>Name change</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div id="replErr" style="color:#c62828;font-size:12px;display:none;margin-top:6px"></div>
+    </div>
+    <div class="modal-foot">
+      <button style="background:none;border:1px solid #dadce0;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer" onclick="document.getElementById('replCardModal').classList.remove('open')">Cancel</button>
+      <button class="btn-teal" onclick="confirmReplCard()"><i class="fas fa-paper-plane"></i>Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<div id="memberToast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:280px;display:none"></div>
+
+<footer style="background:#004d40;color:#fff;text-align:center;padding:14px 24px;font-size:11.5px;margin-top:24px">
+  <div style="font-weight:700;margin-bottom:3px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.8;margin-bottom:3px">Enrollment depends on contract renewal. Member Services: <strong>1-800-555-1234</strong> (TTY: 711)</div>
+  <div style="opacity:.65">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan &nbsp;|&nbsp; <a href="#" style="color:#80deea">Privacy Policy</a></div>
+</footer>
+<script>
+var originalCounty='Miami-Dade';
+function checkCountyChange(val){
+  var warn=document.getElementById('countyWarn');
+  warn.style.display=(val.trim().toLowerCase()!==originalCounty.toLowerCase()&&val.trim()!=='')?'block':'none';
+}
+function openEditContact(){
+  document.getElementById('countyWarn').style.display='none';
+  document.getElementById('editErr').style.display='none';
+  document.getElementById('editContactModal').classList.add('open');
+}
+function saveContactPrefs(){
+  var street=document.getElementById('editStreet').value.trim();
+  var county=document.getElementById('editCounty').value.trim();
+  var err=document.getElementById('editErr');
+  if(!street||!county){err.textContent='Street address and county are required.';err.style.display='block';return;}
+  var countyChanged=county.toLowerCase()!==originalCounty.toLowerCase();
+  document.getElementById('editContactModal').classList.remove('open');
+  if(countyChanged){
+    showMemberToast('Contact preferences updated. County change detected — your enrollment may be reviewed by Enrollment Ops within 5 business days.','warn');
+  } else {
+    showMemberToast('Contact preferences saved successfully.','success');
+  }
+}
+function downloadIDCard(){
+  showMemberToast('Your ID card PDF is being prepared. The download will begin shortly.','info');
+}
+function openReplacement(){
+  document.getElementById('replReason').value='';
+  document.getElementById('replErr').style.display='none';
+  document.getElementById('replCardModal').classList.add('open');
+}
+function confirmReplCard(){
+  var reason=document.getElementById('replReason').value;
+  var err=document.getElementById('replErr');
+  if(!reason){err.textContent='Please select a reason.';err.style.display='block';return;}
+  document.getElementById('replCardModal').classList.remove('open');
+  showMemberToast('Replacement card requested. You will receive it at your mailing address within 5 business days.','success');
+}
+function showMemberToast(msg,type){
+  var t=document.getElementById('memberToast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},6000);
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+// Session timeout mock
+var sessionTimer=15*60;
+setInterval(function(){
+  sessionTimer--;
+  if(sessionTimer===120){showMemberToast('Your session will expire in 2 minutes. Please save any changes.','warn');}
+  if(sessionTimer<=0){window.location.href='../auth/login.html';}
+},1000);
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

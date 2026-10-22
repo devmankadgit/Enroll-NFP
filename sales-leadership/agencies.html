@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>View Agencies | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html" class="active"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div><div style="font-size:9px;color:#ce93d8;margin-top:2px"><i class="fas fa-eye" style="margin-right:3px"></i>Org-Wide Read Access</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#4a148c;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>View Agencies</h4>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Agencies')"><i class="fas fa-download"></i> Export</button>
+      <a href="../auth-carrier/login.html" class="btn-ol btn-sm" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPI Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-building"></i></div><div><div class="stat-label">Total Agencies</div><div class="stat-val">18</div><div class="stat-sub text-muted">Active contracted agencies</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Total Agents</div><div class="stat-val">342</div><div class="stat-sub text-muted">Across all agencies</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-address-book"></i></div><div><div class="stat-label">Leads Assigned</div><div class="stat-val">4,218</div><div class="stat-sub text-muted">Last 30 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-users"></i></div><div><div class="stat-label">Members Enrolled</div><div class="stat-val">8,412</div><div class="stat-sub text-muted">YTD total</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select id="fLevel" onchange="filterAgencies()">
+        <option value="">All Levels</option><option value="FMO">FMO</option><option value="SGA">SGA</option><option value="MGA">MGA</option><option value="GA">GA</option>
+      </select>
+      <select id="fState" onchange="filterAgencies()">
+        <option value="">All States</option><option value="FL">Florida</option><option value="TX">Texas</option><option value="GA">Georgia</option><option value="CA">California</option><option value="AZ">Arizona</option>
+      </select>
+      <select id="fStatus" onchange="filterAgencies()">
+        <option value="">All Status</option><option value="Active">Active</option><option value="Pending">Pending</option><option value="Suspended">Suspended</option>
+      </select>
+      <input type="text" id="fSearch" placeholder="Search agency name..." style="width:180px" oninput="filterAgencies()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- Agencies Table -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-building" style="color:#4a148c;margin-right:8px"></i>Contracted Agencies</h5><span style="font-size:12px;color:#5f6368">Click any row to view details</span></div>
+      <div class="table-wrap">
+        <table class="tbl" id="agencyTable">
+          <thead><tr><th>Agency Name</th><th>Level</th><th>States</th><th>Agents</th><th>Leads (30d)</th><th>Enrolled (YTD)</th><th>Conv %</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="agencyTbody">
+            <tr data-level="FMO" data-state="FL,GA" data-status="Active" onclick="openAgencyDetail(0)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Premier+Insurance+Group" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Premier Insurance Group</a></td>
+              <td><span class="bdg" style="background:#ede7f6;color:#4a148c">FMO</span></td>
+              <td>FL, GA</td><td style="font-weight:600">78</td><td><a href="leads.html?agency=Premier" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">1,120</a></td><td style="font-weight:700;color:#4a148c">2,847</td>
+              <td><span style="color:#2e7d32;font-weight:600">25.0%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(0)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="SGA" data-state="CA,TX,AZ" data-status="Active" onclick="openAgencyDetail(1)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=National+Benefits+Group" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">National Benefits Group</a></td>
+              <td><span class="bdg" style="background:#e3f2fd;color:#0277bd">SGA</span></td>
+              <td>CA, TX, AZ</td><td style="font-weight:600">62</td><td><a href="leads.html?agency=National" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">980</a></td><td style="font-weight:700;color:#4a148c">2,134</td>
+              <td><span style="color:#2e7d32;font-weight:600">22.3%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(1)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="MGA" data-state="TX,OK" data-status="Active" onclick="openAgencyDetail(2)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Alliance+Health+Partners" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Alliance Health Partners</a></td>
+              <td><span class="bdg" style="background:#fff3e0;color:#e65100">MGA</span></td>
+              <td>TX, OK</td><td style="font-weight:600">45</td><td><a href="leads.html?agency=Alliance" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">720</a></td><td style="font-weight:700;color:#4a148c">1,568</td>
+              <td><span style="color:#2e7d32;font-weight:600">17.2%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(2)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="GA" data-state="FL,GA" data-status="Active" onclick="openAgencyDetail(3)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Southwest+Medicare+Solutions" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Southwest Medicare Solutions</a></td>
+              <td><span class="bdg" style="background:#e8f5e9;color:#2e7d32">GA</span></td>
+              <td>FL, GA</td><td style="font-weight:600">34</td><td><a href="leads.html?agency=Southwest" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">540</a></td><td style="font-weight:700;color:#4a148c">1,102</td>
+              <td><span style="color:#2e7d32;font-weight:600">15.2%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(3)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="FMO" data-state="TX,AZ,NV" data-status="Active" onclick="openAgencyDetail(4)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Pacific+Health+Network" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Pacific Health Network</a></td>
+              <td><span class="bdg" style="background:#ede7f6;color:#4a148c">FMO</span></td>
+              <td>TX, AZ, NV</td><td style="font-weight:600">52</td><td><a href="leads.html?agency=Pacific" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">680</a></td><td style="font-weight:700;color:#4a148c">1,412</td>
+              <td><span style="color:#2e7d32;font-weight:600">19.8%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(4)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="GA" data-state="CA" data-status="Active" onclick="openAgencyDetail(5)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Golden+State+Medicare" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Golden State Medicare</a></td>
+              <td><span class="bdg" style="background:#e8f5e9;color:#2e7d32">GA</span></td>
+              <td>CA</td><td style="font-weight:600">21</td><td><a href="leads.html?agency=Golden+State" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">310</a></td><td style="font-weight:700;color:#4a148c">612</td>
+              <td><span style="color:#e65100;font-weight:600">14.1%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(5)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="MGA" data-state="FL" data-status="Pending" onclick="openAgencyDetail(6)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Sunshine+Health+Brokers" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Sunshine Health Brokers</a></td>
+              <td><span class="bdg" style="background:#fff3e0;color:#e65100">MGA</span></td>
+              <td>FL</td><td style="font-weight:600">18</td><td><a href="leads.html?agency=Sunshine" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">190</a></td><td style="font-weight:700;color:#4a148c">287</td>
+              <td><span style="color:#e65100;font-weight:600">12.4%</span></td>
+              <td><span class="bdg b-amber">Pending</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(6)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr data-level="GA" data-state="GA,FL" data-status="Active" onclick="openAgencyDetail(7)" style="cursor:pointer">
+              <td style="font-weight:600"><a href="active-agents.html?agency=Southeast+Benefits+Alliance" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">Southeast Benefits Alliance</a></td>
+              <td><span class="bdg" style="background:#e8f5e9;color:#2e7d32">GA</span></td>
+              <td>GA, FL</td><td style="font-weight:600">32</td><td><a href="leads.html?agency=Southeast" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">420</a></td><td style="font-weight:700;color:#4a148c">890</td>
+              <td><span style="color:#2e7d32;font-weight:600">18.9%</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="event.stopPropagation();openAgencyDetail(7)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agency Detail Slide-Over -->
+<div id="agencySlide" style="display:none;position:fixed;top:0;right:0;bottom:0;width:560px;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.15);z-index:9000;overflow-y:auto;transition:transform .2s">
+  <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1">
+    <h5 style="margin:0;font-size:15px"><i class="fas fa-building" style="color:#4a148c;margin-right:8px"></i><span id="slideAgencyName">Agency Name</span></h5>
+    <button class="btn-ol btn-sm" onclick="closeAgencyDetail()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div style="padding:20px" id="slideBody">
+    <!-- Dynamic content injected by JS -->
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var AGENCIES = [
+  {name:'Premier Insurance Group',level:'FMO',states:'FL, GA',agents:78,leads:1120,enrolled:2847,conv:'25.0%',status:'Active',
+   topAgents:[{name:'James Martinez',npn:'8823441',enrollments:87,leads:142},{name:'Patricia Lee',npn:'6654321',enrollments:58,leads:98},{name:'David Kim',npn:'4421098',enrollments:45,leads:76}],
+   recentLeads:[{name:'Frank Johnson',source:'Digital',status:'Contacted',assigned:'James Martinez',date:'Jul 28'},{name:'Mary Davis',source:'TFN',status:'New',assigned:'Patricia Lee',date:'Jul 27'},{name:'Robert Wilson',source:'Referral',status:'Enrolled',assigned:'David Kim',date:'Jul 25'}],
+   members:{active:2847,pending:112,disenrolled:34}},
+  {name:'National Benefits Group',level:'SGA',states:'CA, TX, AZ',agents:62,leads:980,enrolled:2134,conv:'22.3%',status:'Active',
+   topAgents:[{name:'Sarah Chen',npn:'7719022',enrollments:72,leads:118},{name:'Kevin Park',npn:'4478923',enrollments:54,leads:89},{name:'Angela Torres',npn:'6643201',enrollments:41,leads:67}],
+   recentLeads:[{name:'Alice Cooper',source:'Digital',status:'App Started',assigned:'Sarah Chen',date:'Jul 29'},{name:'George Harris',source:'Event',status:'Contacted',assigned:'Kevin Park',date:'Jul 28'}],
+   members:{active:2134,pending:89,disenrolled:21}},
+  {name:'Alliance Health Partners',level:'MGA',states:'TX, OK',agents:45,leads:720,enrolled:1568,conv:'17.2%',status:'Active',
+   topAgents:[{name:'Kevin Nguyen',npn:'3398712',enrollments:65,leads:104},{name:'Lisa Park',npn:'5567234',enrollments:38,leads:62}],
+   recentLeads:[{name:'Dorothy Lane',source:'TFN',status:'New',assigned:'Unassigned',date:'Jul 30'},{name:'Betty Moore',source:'Digital',status:'Contacted',assigned:'Kevin Nguyen',date:'Jul 29'}],
+   members:{active:1568,pending:67,disenrolled:18}},
+  {name:'Southwest Medicare Solutions',level:'GA',states:'FL, GA',agents:34,leads:540,enrolled:1102,conv:'15.2%',status:'Active',
+   topAgents:[{name:'Mark Brown',npn:'2938475',enrollments:51,leads:88},{name:'Tom Harris',npn:'1123456',enrollments:34,leads:56}],
+   recentLeads:[{name:'Nancy Collins',source:'Referral',status:'Enrolled',assigned:'Mark Brown',date:'Jul 26'}],
+   members:{active:1102,pending:45,disenrolled:12}},
+  {name:'Pacific Health Network',level:'FMO',states:'TX, AZ, NV',agents:52,leads:680,enrolled:1412,conv:'19.8%',status:'Active',
+   topAgents:[{name:'Michael Thompson',npn:'4412876',enrollments:48,leads:82},{name:'Jennifer Wu',npn:'7834521',enrollments:42,leads:71}],
+   recentLeads:[{name:'William Davis',source:'Digital',status:'App Started',assigned:'Michael Thompson',date:'Jul 30'}],
+   members:{active:1412,pending:78,disenrolled:15}},
+  {name:'Golden State Medicare',level:'GA',states:'CA',agents:21,leads:310,enrolled:612,conv:'14.1%',status:'Active',
+   topAgents:[{name:'Maria Rodriguez',npn:'9945321',enrollments:29,leads:48}],
+   recentLeads:[{name:'James Lee',source:'TFN',status:'New',assigned:'Unassigned',date:'Jul 31'}],
+   members:{active:612,pending:31,disenrolled:8}},
+  {name:'Sunshine Health Brokers',level:'MGA',states:'FL',agents:18,leads:190,enrolled:287,conv:'12.4%',status:'Pending',
+   topAgents:[{name:'Carlos Diaz',npn:'8876543',enrollments:22,leads:38}],
+   recentLeads:[{name:'Susan Miller',source:'Event',status:'Contacted',assigned:'Carlos Diaz',date:'Jul 27'}],
+   members:{active:287,pending:14,disenrolled:5}},
+  {name:'Southeast Benefits Alliance',level:'GA',states:'GA, FL',agents:32,leads:420,enrolled:890,conv:'18.9%',status:'Active',
+   topAgents:[{name:'Robert Johnson',npn:'3345678',enrollments:38,leads:64},{name:'Amanda Clark',npn:'5567890',enrollments:31,leads:52}],
+   recentLeads:[{name:'Paul Anderson',source:'Digital',status:'New',assigned:'Unassigned',date:'Jul 31'}],
+   members:{active:890,pending:38,disenrolled:9}}
+];
+
+function openAgencyDetail(idx){
+  var a = AGENCIES[idx];
+  document.getElementById('slideAgencyName').textContent = a.name;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;font-size:12px">'
+    +'<div style="padding:10px;background:#f8f6fc;border-radius:8px"><div style="color:#5f6368;margin-bottom:2px">Level</div><div style="font-weight:700;color:#4a148c">'+a.level+'</div></div>'
+    +'<div style="padding:10px;background:#f8f6fc;border-radius:8px"><div style="color:#5f6368;margin-bottom:2px">States</div><div style="font-weight:700">'+a.states+'</div></div>'
+    +'<div style="padding:10px;background:#f8f6fc;border-radius:8px"><div style="color:#5f6368;margin-bottom:2px">Status</div><div style="font-weight:700;color:'+(a.status==='Active'?'#2e7d32':'#e65100')+'">'+a.status+'</div></div>'
+    +'<div style="padding:10px;background:#f8f6fc;border-radius:8px"><div style="color:#5f6368;margin-bottom:2px">Conversion</div><div style="font-weight:700;color:#2e7d32">'+a.conv+'</div></div></div>';
+
+  // Members summary
+  html += '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:700;color:#4a148c;margin-bottom:8px"><i class="fas fa-users" style="margin-right:6px"></i>Members Enrolled</div>'
+    +'<div style="display:flex;gap:12px">'
+    +'<div style="flex:1;text-align:center;padding:10px;background:#e8f5e9;border-radius:8px"><div style="font-size:18px;font-weight:700;color:#2e7d32">'+a.members.active+'</div><div style="font-size:10px;color:#5f6368">Active</div></div>'
+    +'<div style="flex:1;text-align:center;padding:10px;background:#fff3e0;border-radius:8px"><div style="font-size:18px;font-weight:700;color:#e65100">'+a.members.pending+'</div><div style="font-size:10px;color:#5f6368">Pending</div></div>'
+    +'<div style="flex:1;text-align:center;padding:10px;background:#ffebee;border-radius:8px"><div style="font-size:18px;font-weight:700;color:#c62828">'+a.members.disenrolled+'</div><div style="font-size:10px;color:#5f6368">Disenrolled</div></div>'
+    +'</div></div>';
+
+  // Assigned Agents
+  html += '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:700;color:#4a148c;margin-bottom:8px"><i class="fas fa-user-check" style="margin-right:6px"></i>Top Agents ('+a.agents+' total)</div>'
+    +'<table style="width:100%;font-size:12px;border-collapse:collapse"><thead><tr style="background:#f8f9fa"><th style="padding:6px 8px;text-align:left">Agent</th><th style="padding:6px 8px">NPN</th><th style="padding:6px 8px">Enrollments</th><th style="padding:6px 8px">Leads</th></tr></thead><tbody>';
+  a.topAgents.forEach(function(ag){
+    html += '<tr style="border-bottom:1px solid #f1f3f4"><td style="padding:6px 8px;font-weight:600">'+ag.name+'</td><td style="padding:6px 8px;font-family:monospace;font-size:11px">'+ag.npn+'</td><td style="padding:6px 8px;text-align:center;font-weight:700;color:#4a148c">'+ag.enrollments+'</td><td style="padding:6px 8px;text-align:center">'+ag.leads+'</td></tr>';
+  });
+  html += '</tbody></table></div>';
+
+  // Leads Assigned
+  html += '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:700;color:#4a148c;margin-bottom:8px"><i class="fas fa-address-book" style="margin-right:6px"></i>Recent Leads Assigned ('+a.leads+' total last 30d)</div>'
+    +'<table style="width:100%;font-size:12px;border-collapse:collapse"><thead><tr style="background:#f8f9fa"><th style="padding:6px 8px;text-align:left">Lead</th><th style="padding:6px 8px">Source</th><th style="padding:6px 8px">Status</th><th style="padding:6px 8px">Assigned To</th><th style="padding:6px 8px">Date</th></tr></thead><tbody>';
+  a.recentLeads.forEach(function(l){
+    var sc = l.status==='Enrolled'?'#2e7d32':l.status==='New'?'#0277bd':l.status==='Contacted'?'#e65100':'#4a148c';
+    html += '<tr style="border-bottom:1px solid #f1f3f4"><td style="padding:6px 8px;font-weight:600">'+l.name+'</td><td style="padding:6px 8px">'+l.source+'</td><td style="padding:6px 8px"><span class="bdg" style="background:'+sc+'22;color:'+sc+'">'+l.status+'</span></td><td style="padding:6px 8px;font-size:11px">'+(l.assigned==='Unassigned'?'<span style="color:#c62828;font-weight:600">Unassigned</span>':l.assigned)+'</td><td style="padding:6px 8px;font-size:11px">'+l.date+'</td></tr>';
+  });
+  html += '</tbody></table></div>';
+
+  // Actions
+  html += '<div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid #e8eaed">'
+    +'<button class="btn-pr btn-sm" onclick="showToast(\'Opening agency full profile...\',\'info\')"><i class="fas fa-external-link-alt" style="margin-right:4px"></i>Full Profile</button>'
+    +'<button class="btn-ol btn-sm" onclick="showToast(\'Lead assignment panel opened.\',\'info\')"><i class="fas fa-user-tag" style="margin-right:4px"></i>Assign Leads</button>'
+    +'<button class="btn-ol btn-sm" onclick="showToast(\'Agency report generated.\',\'success\')"><i class="fas fa-file-alt" style="margin-right:4px"></i>Report</button>'
+    +'</div>';
+
+  document.getElementById('slideBody').innerHTML = html;
+  document.getElementById('agencySlide').style.display = 'block';
+}
+
+function closeAgencyDetail(){ document.getElementById('agencySlide').style.display = 'none'; }
+
+function filterAgencies(){
+  var level = document.getElementById('fLevel').value;
+  var state = document.getElementById('fState').value;
+  var status = document.getElementById('fStatus').value;
+  var search = document.getElementById('fSearch').value.toLowerCase();
+  document.querySelectorAll('#agencyTbody tr').forEach(function(r){
+    var rLevel = r.getAttribute('data-level')||'';
+    var rState = r.getAttribute('data-state')||'';
+    var rStatus = r.getAttribute('data-status')||'';
+    var text = r.textContent.toLowerCase();
+    var show = true;
+    if(level && rLevel !== level) show = false;
+    if(state && rState.indexOf(state) < 0) show = false;
+    if(status && rStatus !== status) show = false;
+    if(search && text.indexOf(search) < 0) show = false;
+    r.style.display = show ? '' : 'none';
+  });
+}
+
+function clearFilters(){
+  document.getElementById('fLevel').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fStatus').value='';
+  document.getElementById('fSearch').value='';
+  filterAgencies();
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';setTimeout(function(){t.style.display='none';},4000);
+}
+function nfpExport(l){showToast(l+' export started.','info');}
+
+// URL param: pre-fill search from leads page
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var search = params.get('search');
+  if(search){
+    document.getElementById('fSearch').value = search;
+    filterAgencies();
+  }
+})();
+</script>
+</body>
+</html>

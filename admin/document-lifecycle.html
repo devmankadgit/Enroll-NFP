@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Document Lifecycle Management | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.doc-type-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.ver-badge{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;background:#e3f2fd;color:#1565c0}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Document Lifecycle Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Document Lifecycle</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-history"></i> Audit Log</button>
+      <button class="btn-pr btn-sm" onclick="document.getElementById('uploadModal').style.display='flex'"><i class="fas fa-upload"></i> Upload Document</button>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-file-alt"></i></div><div><div class="stat-label">Total Documents</div><div class="stat-val">47</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Published (Active)</div><div class="stat-val">38</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Expiring (30 days)</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f5f5f5;color:#616161"><i class="fas fa-archive"></i></div><div><div class="stat-label">Archived</div><div class="stat-val">9</div></div></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Document Repository</h5><div class="dflex g8">
+        <select class="form-control" style="width:140px"><option>All Categories</option><option>Contracts</option><option>Benefit Summaries</option><option>SOA Forms</option><option>HRA Forms</option><option>Compliance</option><option>Marketing</option><option>Training</option></select>
+        <select class="form-control" style="width:120px"><option>All Status</option><option>Published</option><option>Draft</option><option>Archived</option><option>Expired</option></select>
+        <select class="form-control" style="width:140px"><option>All Visibility</option><option>All Roles</option><option>Admin Only</option><option>Agent</option><option>Agency Admin</option></select>
+        <input type="text" class="tb-search" placeholder="Search documents" style="max-width:180px">
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','document-lifecycle_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th style="width:30px"></th><th>Document Name</th><th>Category</th><th>Version</th><th>Status</th><th>Visibility</th><th>Expiry</th><th>Last Updated</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div class="doc-type-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-file-contract"></i></div></td>
+              <td><strong>Agent Contracting Agreement</strong><br><span style="font-size:11px;color:#757575">Standard agent contract template CY2026</span></td>
+              <td>Contracts</td>
+              <td><span class="ver-badge">v3.2</span></td>
+              <td><span class="badge bg-success">Published</span></td>
+              <td>Agent, Agency Admin</td>
+              <td>12 31,2026</td>
+              <td>05 15,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-ol btn-sm" onclick="document.getElementById('versionModal').style.display='flex'"><i class="fas fa-code-branch"></i></button> <button class="btn-ol btn-sm" onclick="if(confirm('Archive this document?'))alert('Archived')"><i class="fas fa-archive"></i></button></td>
+            </tr>
+            <tr>
+              <td><div class="doc-type-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-medical"></i></div></td>
+              <td><strong>Scope of Appointment (SOA) Form</strong><br><span style="font-size:11px;color:#757575">CMS-required SOA for Medicare Advantage</span></td>
+              <td>SOA Forms</td>
+              <td><span class="ver-badge">v2.0</span></td>
+              <td><span class="badge bg-success">Published</span></td>
+              <td>Agent</td>
+              <td>09 30,2026</td>
+              <td>04 01,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-ol btn-sm" onclick="document.getElementById('versionModal').style.display='flex'"><i class="fas fa-code-branch"></i></button> <button class="btn-ol btn-sm" onclick="if(confirm('Archive?'))alert('Archived')"><i class="fas fa-archive"></i></button></td>
+            </tr>
+            <tr>
+              <td><div class="doc-type-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-file-invoice"></i></div></td>
+              <td><strong>Health Risk Assessment (HRA) Form</strong><br><span style="font-size:11px;color:#757575">Member HRA for initial health assessment</span></td>
+              <td>HRA Forms</td>
+              <td><span class="ver-badge">v1.4</span></td>
+              <td><span class="badge bg-success">Published</span></td>
+              <td>Agent, Member</td>
+              <td>12 31,2026</td>
+              <td>03 20,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-ol btn-sm" onclick="document.getElementById('versionModal').style.display='flex'"><i class="fas fa-code-branch"></i></button> <button class="btn-ol btn-sm" onclick="if(confirm('Archive?'))alert('Archived')"><i class="fas fa-archive"></i></button></td>
+            </tr>
+            <tr>
+              <td><div class="doc-type-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-gavel"></i></div></td>
+              <td><strong>CMS Compliance Reference Guide</strong><br><span style="font-size:11px;color:#757575">Annual compliance rules and prohibited activities</span></td>
+              <td>Compliance</td>
+              <td><span class="ver-badge">v4.1</span></td>
+              <td><span class="badge bg-success">Published</span></td>
+              <td>All Roles</td>
+              <td>10 15,2026</td>
+              <td>01 10,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-ol btn-sm" onclick="document.getElementById('versionModal').style.display='flex'"><i class="fas fa-code-branch"></i></button> <button class="btn-ol btn-sm" onclick="if(confirm('Archive?'))alert('Archived')"><i class="fas fa-archive"></i></button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td><div class="doc-type-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-file-pdf"></i></div></td>
+              <td><strong>Plan Benefit Summary  Gold PPO</strong><br><span style="font-size:11px;color:#e65100"><i class="fas fa-exclamation-triangle"></i> Expiring in 22 days</span></td>
+              <td>Benefit Summaries</td>
+              <td><span class="ver-badge">v2.3</span></td>
+              <td><span class="badge bg-warning text-dark">Expiring Soon</span></td>
+              <td>Agent, Member</td>
+              <td style="color:#c62828;font-weight:600">06 16,2026</td>
+              <td>02 05,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-ol btn-sm" onclick="document.getElementById('uploadModal').style.display='flex'"><i class="fas fa-upload"></i> New Ver.</button></td>
+            </tr>
+            <tr>
+              <td><div class="doc-type-icon" style="background:#ede7f6;color:#7b1fa2"><i class="fas fa-ad"></i></div></td>
+              <td><strong>Medicare Advantage Marketing Flyer</strong><br><span style="font-size:11px;color:#757575">CMS-approved marketing material</span></td>
+              <td>Marketing</td>
+              <td><span class="ver-badge">v1.0</span></td>
+              <td><span class="badge bg-info">Draft</span></td>
+              <td>Agent</td>
+              <td></td>
+              <td>05 24,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="document.getElementById('editDocModal').style.display='flex'"><i class="fas fa-edit"></i></button> <button class="btn-pr btn-sm" onclick="nfpSave('Document published. Agents will see Updated badge.')"><i class="fas fa-paper-plane"></i> Publish</button></td>
+            </tr>
+            <tr style="opacity:.6">
+              <td><div class="doc-type-icon" style="background:#f5f5f5;color:#9e9e9e"><i class="fas fa-file-alt"></i></div></td>
+              <td><strong>Agent Contract CY2025 (Superseded)</strong><br><span style="font-size:11px;color:#757575">Previous year contract  archived</span></td>
+              <td>Contracts</td>
+              <td><span class="ver-badge">v3.1</span></td>
+              <td><span class="badge bg-secondary">Archived</span></td>
+              <td>Admin Only</td>
+              <td>Expired</td>
+              <td>12 30,2025</td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Viewing archived document. This is the superseded version.','info')"><i class="fas fa-eye"></i></button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="if(confirm('Permanently delete this archived document?'))alert('Deleted permanently.')"><i class="fas fa-trash"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Activity Log -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:6px"></i>Document Activity Log</h5><button class="btn-ol btn-sm"><i class="fas fa-download"></i> Export</button></div>
+      <div style="padding:12px;max-height:180px;overflow-y:auto;font-size:12px">
+        <div style="padding:4px 0;border-bottom:1px solid #f5f5f5"><strong>05 24,2026 14:30</strong>  Sandra Adams <span style="color:#1565c0">uploaded draft</span> "Medicare Advantage Marketing Flyer" (v1.0)</div>
+        <div style="padding:4px 0;border-bottom:1px solid #f5f5f5"><strong>05 15,2026 10:15</strong>  Sandra Adams <span style="color:#2e7d32">published new version</span> "Agent Contracting Agreement" (v3.1 ? v3.2). Agents notified.</div>
+        <div style="padding:4px 0;border-bottom:1px solid #f5f5f5"><strong>05 15,2026 10:14</strong>  System <span style="color:#757575">archived</span> "Agent Contracting Agreement" v3.1 (superseded by v3.2)</div>
+        <div style="padding:4px 0;border-bottom:1px solid #f5f5f5"><strong>04 01,2026 09:00</strong>  Sandra Adams <span style="color:#2e7d32">published</span> "SOA Form" (v2.0). Visibility: Agent. Acknowledge required.</div>
+        <div style="padding:4px 0"><strong>03 20,2026 11:30</strong>  Sandra Adams <span style="color:#e65100">updated metadata</span> "HRA Form"  changed visibility from "Agent" to "Agent, Member"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upload New Document / New Version Modal -->
+<div class="modal-overlay" id="uploadModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-upload" style="margin-right:6px"></i>Upload Document</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Document Name <span class="text-danger">*</span></label><input type="text" class="form-control" placeholder="e.g., Agent Contracting Agreement CY2026"></div>
+      <div class="mb-3"><label class="form-label">Category <span class="text-danger">*</span></label><select class="form-control"><option>Contracts</option><option>Benefit Summaries</option><option>SOA Forms</option><option>HRA Forms</option><option>Compliance</option><option>Marketing</option><option>Training</option></select></div>
+      <div class="mb-3"><label class="form-label">Upload File <span class="text-danger">*</span></label><input type="file" class="form-control" accept=".pdf,.docx,.xlsx"><small style="font-size:11px;color:#666">Accepted: PDF, DOCX, XLSX. Max 25MB.</small></div>
+      <div class="mb-3"><label class="form-label">Version</label><div class="dflex g8"><input type="text" class="form-control" style="width:80px" value="v1.0" placeholder="v1.0"><label style="font-size:12px;align-self:center"><input type="checkbox"> This is a new version of an existing document</label></div></div>
+      <div class="mb-3"><label class="form-label">Supersedes Document</label><select class="form-control"><option> None (New Document) </option><option>Agent Contracting Agreement v3.2</option><option>SOA Form v2.0</option><option>HRA Form v1.4</option></select></div>
+      <div class="mb-3"><label class="form-label">Description / Change Notes</label><textarea class="form-control" rows="2" placeholder="Describe what changed in this version"></textarea></div>
+      <div class="mb-3"><label class="form-label">Visibility (Roles) <span class="text-danger">*</span></label>
+        <div style="font-size:12px"><label><input type="checkbox" checked> Agent</label></div>
+        <div style="font-size:12px"><label><input type="checkbox" checked> Agency Admin</label></div>
+        <div style="font-size:12px"><label><input type="checkbox"> Member</label></div>
+        <div style="font-size:12px"><label><input type="checkbox"> Compliance Officer</label></div>
+        <div style="font-size:12px"><label><input type="checkbox"> Admin Only</label></div>
+      </div>
+      <div class="mb-3"><label class="form-label">Hierarchy Visibility</label><select class="form-control"><option selected>All Agencies</option><option>Specific Agencies Only</option><option>Top-Level GA Only</option></select></div>
+      <div class="mb-3"><label class="form-label">Expiry Date</label><input type="date" class="form-control" value="2026-12-31"></div>
+      <div class="mb-3"><label class="form-label">Requires Acknowledgment</label><label class="toggle-sw"><input type="checkbox"><span class="slider" style="position:relative;width:40px;height:22px;display:inline-block;background:#ccc;border-radius:22px"></span></label><span style="font-size:11px;color:#666;margin-left:8px">Agents must click "I have read this" before proceeding</span></div>
+      <div class="mb-3"><label class="form-label">Initial Status</label><select class="form-control"><option>Save as Draft</option><option selected>Publish Immediately</option></select></div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button><button class="btn-pr" onclick="nfpSubmit('Document uploaded and published.\n\nVersion: v1.0\nVisibility: Agent, Agency Admin\nNotification sent to eligible users.\nAudit log entry created.')"><i class="fas fa-upload"></i> Upload & Publish</button></div>
+  </div>
+</div>
+
+<!-- Edit Document Metadata Modal -->
+<div class="modal-overlay" id="editDocModal" style="display:none">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr"><h5>Edit Document Metadata</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Document Name</label><input type="text" class="form-control" value="Agent Contracting Agreement"></div>
+      <div class="mb-3"><label class="form-label">Category</label><select class="form-control"><option selected>Contracts</option><option>Benefit Summaries</option><option>SOA Forms</option><option>HRA Forms</option><option>Compliance</option><option>Marketing</option></select></div>
+      <div class="mb-3"><label class="form-label">Current Version</label><input type="text" class="form-control" value="v3.2" readonly></div>
+      <div class="mb-3"><label class="form-label">Visibility</label>
+        <div style="font-size:12px"><label><input type="checkbox" checked> Agent</label></div>
+        <div style="font-size:12px"><label><input type="checkbox" checked> Agency Admin</label></div>
+        <div style="font-size:12px"><label><input type="checkbox"> Member</label></div>
+        <div style="font-size:12px"><label><input type="checkbox"> Admin Only</label></div>
+      </div>
+      <div class="mb-3"><label class="form-label">Expiry Date</label><input type="date" class="form-control" value="2026-12-31"></div>
+      <div class="mb-3"><label class="form-label">Requires Acknowledgment</label><select class="form-control"><option selected>Yes</option><option>No</option></select></div>
+      <div class="mb-3"><label class="form-label">Status</label><select class="form-control"><option selected>Published</option><option>Draft</option><option>Archived</option></select></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#c62828;border-color:#c62828" onclick="if(confirm('Archive this document? It will no longer be visible to users.'))alert('Document archived.')"><i class="fas fa-archive"></i> Archive</button>
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="nfpSave('Document metadata updated. Audit log entry created.')"><i class="fas fa-save"></i> Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Version History Modal -->
+<div class="modal-overlay" id="versionModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-code-branch" style="margin-right:6px"></i>Version History</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <h6 style="font-size:13px;margin-bottom:12px">Agent Contracting Agreement</h6>
+      <div style="font-size:12px">
+        <div style="padding:8px;background:#e8f5e9;border-radius:6px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">
+          <div><strong>v3.2</strong> (Current)  05 15,2026<br><span style="color:#616161">Updated commission schedule tables and compliance language</span></div>
+          <button class="btn-ol btn-sm"><i class="fas fa-download"></i></button>
+        </div>
+        <div style="padding:8px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">
+          <div><strong>v3.1</strong> (Archived)  12 30,2025<br><span style="color:#616161">CY2025 contract  superseded by v3.2</span></div>
+          <div class="dflex g4"><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="if(confirm('Restore this version as current?'))alert('Version restored.')"><i class="fas fa-undo"></i></button></div>
+        </div>
+        <div style="padding:8px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">
+          <div><strong>v3.0</strong> (Archived)  01 02,2025<br><span style="color:#616161">Initial CY2025 contract</span></div>
+          <button class="btn-ol btn-sm"><i class="fas fa-download"></i></button>
+        </div>
+        <div style="padding:8px;border:1px solid #e0e0e0;border-radius:6px;display:flex;justify-content:space-between;align-items:center;opacity:.6">
+          <div><strong>v2.0</strong> (Deleted)  01 05,2024<br><span style="color:#616161">CY2024 contract  permanently removed</span></div>
+          <span style="font-size:10px;color:#c62828">Deleted</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button></div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

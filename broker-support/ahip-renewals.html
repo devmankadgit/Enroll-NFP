@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — AHIP Renewals & Validation -->
+<title>AHIP Renewals | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html" class="active"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>AHIP Renewals &amp; Validation</h4><p style="font-size:12px;color:#5f6368;margin:0">Track AHIP certification status, pending manual reviews, and renewal deadlines</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('AHIP Renewals Report')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Current Year Valid</div><div class="stat-val">298</div><div class="stat-sub">Auto-verified via API</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-hourglass-half"></i></div>
+        <div><div class="stat-label">Pending Manual Review</div><div class="stat-val">8</div><div class="stat-sub">Manually uploaded certs</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div>
+        <div><div class="stat-label">Expired / Not Renewed</div><div class="stat-val">12</div><div class="stat-sub">Blocked from selling</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-bell"></i></div>
+        <div><div class="stat-label">Renewal Reminders Sent</div><div class="stat-val">24</div><div class="stat-sub">60/30/7-day notices</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fStatus"><option>All Statuses</option><option>Valid</option><option>Pending Review</option><option>Expired</option><option>Reminder Sent</option></select>
+      <select id="fSource"><option>All Sources</option><option>API Verified</option><option>Manual Upload</option></select>
+      <select id="fExpiry"><option>All Expiry</option><option>Expiring in 7 days</option><option>Expiring in 30 days</option><option>Expiring in 60 days</option><option>Already Expired</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent name or NPN..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:180px">
+    </div>
+
+    <!-- AHIP Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-certificate" style="color:#0277bd;margin-right:8px"></i>AHIP Certification Tracker</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" id="ahipTable" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Cert Year</th><th>Source</th><th>Completion Date</th><th>Score</th><th>Status</th><th>Expiry</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Sarah Kim</td><td>9912388</td><td>2025</td><td>API</td><td>10 12,2024</td><td>94%</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Expired</span></td><td style="color:#c62828;font-weight:600">12 31,2025</td><td><button class="btn-pr btn-sm" onclick="nfpAction('Send Renewal Reminder — Sarah Kim')">Remind</button></td></tr>
+            <tr><td style="font-weight:600">Kevin Patel</td><td>7823410</td><td>2025</td><td>Manual Upload</td><td>11 05,2024</td><td>88%</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Expired</span></td><td style="color:#c62828;font-weight:600">12 31,2025</td><td><button class="btn-pr btn-sm" onclick="nfpAction('Send Renewal Reminder — Kevin Patel')">Remind</button></td></tr>
+            <tr><td style="font-weight:600">Angela Torres</td><td>6651209</td><td>2026</td><td>Manual Upload</td><td>06 05,2026</td><td>87%</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Review</span></td><td>12 31,2026</td><td><button class="btn-pr btn-sm" onclick="showReview('Angela Torres','6651209','2026','Manual Upload','06 05,2026','87%','Pending Review','12 31,2026','Certificate uploaded manually. Year matches CY2026. Score meets minimum threshold (85%). Needs manual verification — confirm certificate ID against AHIP system records.')">Review</button></td></tr>
+            <tr><td style="font-weight:600">Mark Wilson</td><td>3312789</td><td>2026</td><td>Manual Upload</td><td>06 03,2026</td><td>91%</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Review</span></td><td>12 31,2026</td><td><button class="btn-pr btn-sm" onclick="showReview('Mark Wilson','3312789','2026','Manual Upload','06 03,2026','91%','Pending Review','12 31,2026','Manually uploaded PDF. Certificate appears valid for 2026 plan year. AHIP ID not auto-matched — requires manual cross-reference with AHIP portal. Score: 91%.')">Review</button></td></tr>
+            <tr><td style="font-weight:600">James Lee</td><td>8834521</td><td>2026</td><td>API</td><td>06 02,2026</td><td>92%</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Valid</span></td><td>12 31,2026</td><td><button class="btn-ol btn-sm" onclick="showView('James Lee','8834521','2026','API','06 02,2026','92%','Valid','12 31,2026','Auto-verified via AHIP API integration. Certificate ID: AHIP-2026-JL-88345. FWA + Medicare compliance modules completed. No issues detected.')">View</button></td></tr>
+            <tr><td style="font-weight:600">Patricia Nguyen</td><td>5521833</td><td>2026</td><td>API</td><td>05 18,2026</td><td>96%</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Valid</span></td><td>12 31,2026</td><td><button class="btn-ol btn-sm" onclick="showView('Patricia Nguyen','5521833','2026','API','05 18,2026','96%','Valid','12 31,2026','Auto-verified via AHIP API. Certificate ID: AHIP-2026-PN-55218. Top performer — 96% score. All modules completed ahead of schedule.')">View</button></td></tr>
+            <tr><td style="font-weight:600">Robert Martinez</td><td>4432887</td><td>2026</td><td>API</td><td>05 14,2026</td><td>89%</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Valid</span></td><td>12 31,2026</td><td><button class="btn-ol btn-sm" onclick="showView('Robert Martinez','4432887','2026','API','05 14,2026','89%','Valid','12 31,2026','Auto-verified via AHIP API. Certificate ID: AHIP-2026-RM-44328. Score meets threshold. Valid through 12 31,2026.')">View</button></td></tr>
+            <tr><td style="font-weight:600">Lisa Park</td><td>3356090</td><td>2026</td><td>Manual Upload</td><td>06 07,2026</td><td>85%</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Review</span></td><td>12 31,2026</td><td><button class="btn-pr btn-sm" onclick="showReview('Lisa Park','3356090','2026','Manual Upload','06 07,2026','85%','Pending Review','12 31,2026','Certificate uploaded manually. Score 85% — at minimum threshold. Verify certificate authenticity and confirm completion date matches AHIP records.')">Review</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AHIP Detail Modal -->
+<div id="ahipModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-certificate" style="color:#0277bd;margin-right:8px"></i><span id="amTitle">AHIP Certificate</span></h6>
+      <button onclick="closeAhipModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="amAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="amNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Cert Year</div><div id="amYear" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Source</div><div id="amSource" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Completion Date</div><div id="amDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Score</div><div id="amScore" style="font-size:13px;font-weight:700;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="amStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Expiry</div><div id="amExpiry" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Review Notes</div>
+        <div id="amNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div id="amActions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeAhipModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var rows=document.querySelectorAll('#ahipTable tbody tr');
+var fStatus=document.getElementById('fStatus');
+var fSource=document.getElementById('fSource');
+var fExpiry=document.getElementById('fExpiry');
+var fSearch=document.getElementById('fSearch');
+
+function applyFilters(){
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var statusText=cells[6]?cells[6].textContent.trim():'';
+    var sourceText=cells[3]?cells[3].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var search=fSearch.value.trim().toLowerCase();
+    var show=true;
+    if(fStatus.value!=='All Statuses'&&statusText.indexOf(fStatus.value)<0) show=false;
+    if(fSource.value!=='All Sources'&&sourceText.indexOf(fSource.value)<0) show=false;
+    if(search&&rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+  });
+  showToast('Filters applied','info');
+}
+fStatus.addEventListener('change',applyFilters);
+fSource.addEventListener('change',applyFilters);
+fExpiry.addEventListener('change',applyFilters);
+fSearch.addEventListener('input',applyFilters);
+
+function openAhipModal(agent,npn,year,source,date,score,status,expiry,notes){
+  document.getElementById('amAgent').textContent=agent;
+  document.getElementById('amNPN').textContent=npn;
+  document.getElementById('amYear').textContent=year;
+  document.getElementById('amSource').textContent=source;
+  document.getElementById('amDate').textContent=date;
+  document.getElementById('amScore').textContent=score;
+  document.getElementById('amExpiry').textContent=expiry;
+  document.getElementById('amNotes').textContent=notes;
+  var s=document.getElementById('amStatus');
+  if(status==='Valid'){s.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Valid</span>';}
+  else if(status==='Pending Review'){s.innerHTML='<span style="color:#e65100"><i class="fas fa-clock" style="margin-right:4px"></i>Pending Review</span>';}
+  else{s.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>Expired</span>';}
+  document.getElementById('ahipModal').style.display='flex';
+}
+function closeAhipModal(){document.getElementById('ahipModal').style.display='none';}
+document.getElementById('ahipModal').addEventListener('click',function(e){if(e.target===this)closeAhipModal();});
+
+function showReview(agent,npn,year,source,date,score,status,expiry,notes){
+  openAhipModal(agent,npn,year,source,date,score,status,expiry,notes);
+  document.getElementById('amTitle').textContent='Review — '+agent;
+  document.getElementById('amActions').innerHTML='<button class="btn-pr btn-sm" onclick="showToast(\'Certificate approved — status updated to Valid\',\'success\');closeAhipModal()"><i class="fas fa-check" style="margin-right:4px"></i>Approve</button><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showToast(\'Certificate rejected — agent notified\',\'warning\');closeAhipModal()"><i class="fas fa-times" style="margin-right:4px"></i>Reject</button><button class="btn-ol btn-sm" onclick="showToast(\'Reminder sent to agent\',\'info\')"><i class="fas fa-envelope" style="margin-right:4px"></i>Request Resubmit</button>';
+}
+function showView(agent,npn,year,source,date,score,status,expiry,notes){
+  openAhipModal(agent,npn,year,source,date,score,status,expiry,notes);
+  document.getElementById('amTitle').textContent='Certificate — '+agent;
+  document.getElementById('amActions').innerHTML='<button class="btn-ol btn-sm" onclick="showToast(\'Certificate PDF downloaded\',\'info\')"><i class="fas fa-download" style="margin-right:4px"></i>Download</button><button class="btn-ol btn-sm" onclick="showToast(\'Details copied\',\'info\')"><i class="fas fa-copy" style="margin-right:4px"></i>Copy Details</button>';
+}
+</script>
+</body>
+</html>

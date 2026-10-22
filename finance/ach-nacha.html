@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ACH &amp; NACHA File Management | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.nacha-field{font-family:monospace;font-size:11.5px;background:#263238;color:#80cbc4;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.return-row{background:#fff8e1}
+.prenote-row{background:#e8f5e9}
+.undeliv-row{background:#fce4ec}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html" class="active"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>ACH &amp; NACHA File Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>ACH &amp; NACHA</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpExport('ACH Log')"><i class="fas fa-download"></i>Export Log</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Overview Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-file-code"></i></div><div><div class="stat-label">Last NACHA File</div><div class="stat-val">NACHA-2026-05</div><div class="stat-sub text-muted">Transmitted May 17</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clipboard-check"></i></div><div><div class="stat-label">Pre-note Pending</div><div class="stat-val">2</div><div class="stat-sub text-muted">3-day clearance hold</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">ACH Returns</div><div class="stat-val">2</div><div class="stat-sub text-muted">Pending Finance action</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#880e4f"><i class="fas fa-envelope-open-text"></i></div><div><div class="stat-label">Undeliverable Checks</div><div class="stat-val">1</div><div class="stat-sub text-muted">Pending re-issue/void</div></div></div></div>
+    </div>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'tabNacha')">NACHA File Status</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabPrenote')">Pre-note Queue</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabReturns')">ACH Returns</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabCheck')">Check Disbursement</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabMethod')">Payment Method Updates</button>
+    </div>
+
+    <!-- ====== TAB 1: NACHA FILE STATUS ====== -->
+    <div id="tabNacha" class="tab-pane active">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-file-code" style="margin-right:8px;color:#004d40"></i>NACHA File Generation &amp; Transmission</h5>
+          <button class="btn-pr btn-sm" onclick="generateNacha()"><i class="fas fa-play"></i>Generate NACHA File</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','ach-nacha_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>NACHA files use <strong>PPD</strong> transaction code for individual agents and <strong>CCD</strong> for agency accounts. File is transmitted to the configured payment processor SFTP on the payment date. Files are retained for <strong>7 years</strong>. Balance check is performed before transmission.</span></div>
+          <table id="tblExport1" class="tbl">
+            <thead><tr><th>File ID</th><th>Batch Ref</th><th>Payment Cycle</th><th>File Type</th><th>Entry Count</th><th>Total Amount</th><th>Balance Check</th><th>Status</th><th>Transmitted At</th><th>Actions</th></tr></thead>
+            <tbody id="nachaTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- NACHA File Detail -->
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-code" style="margin-right:8px;color:#5f6368"></i>NACHA Detail Record Preview — NACHA-2026-05</h5>
+          <span class="text-muted text-sm">Account numbers masked in UI. Full numbers in transmitted file.</span>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','ach-nacha_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport2" class="tbl">
+            <thead><tr><th>Rec Type</th><th>Trans. Code</th><th>Routing (RDFI)</th><th>Account (masked)</th><th>Amount</th><th>Individual ID (NPN)</th><th>Name (15 chars)</th><th>Pre-note</th><th>Status</th></tr></thead>
+            <tbody id="nachaDetailTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 2: PRE-NOTE QUEUE ====== -->
+    <div id="tabPrenote" class="tab-pane">
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i>
+        <span><strong>Pre-note Policy:</strong> Any agent or agency whose banking details were added or changed within the last 3 banking days receives a zero-dollar pre-note NACHA entry. Actual payment is held for <strong>3 banking days</strong> after pre-note transmission. Finance is notified when clearance period ends.</span></div>
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-clipboard-check" style="margin-right:8px;color:#1b5e20"></i>Pre-note Verification Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','ach-nacha_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table id="tblExport3" class="tbl">
+            <thead><tr><th>Agent NPN</th><th>Agent Name</th><th>Banking Change Date</th><th>Pre-note Sent</th><th>Clearance Date</th><th>Hold Status</th><th>Actions</th></tr></thead>
+            <tbody id="prenoteTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 3: ACH RETURNS ====== -->
+    <div id="tabReturns" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-exclamation-triangle" style="margin-right:8px;color:#c62828"></i>ACH Return File — Finance Review Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','ach-nacha_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="al-warn mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+          <span>ACH returns are received from the payment processor and must be actioned by Finance. Return codes <strong>R02, R03</strong> (closed/no account) automatically set agent banking status to <em>Invalid</em> and hold payment. <strong>R07</strong> (authorization revoked) requires Finance review before retry.</span></div>
+        <div class="table-wrap">
+          <table id="tblExport4" class="tbl">
+            <thead><tr><th>Return Date</th><th>Agent NPN</th><th>Agent Name</th><th>Return Code</th><th>Return Description</th><th>Original Amount</th><th>Auto-Action</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="returnsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 4: CHECK DISBURSEMENT ====== -->
+    <div id="tabCheck" class="tab-pane">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-print" style="margin-right:8px;color:#e65100"></i>Check Disbursement Files</h5>
+          <button class="btn-pr btn-sm" onclick="generateCheckFile()"><i class="fas fa-file-csv"></i>Generate Check File (CSV)</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport5','ach-nacha_Table5')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+          <span>Check files are generated in CSV format and transmitted to the check printing vendor. Agents with no valid mailing address are set to <strong>On Hold - Address Gap</strong> and excluded from the check file. Both check files and NACHA files are retained for <strong>7 years</strong>.</span></div>
+        <table id="tblExport5" class="tbl">
+          <thead><tr><th>File ID</th><th>Batch Ref</th><th>Check Count</th><th>Total Amount</th><th>Generated At</th><th>Transmitted At</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="checkFileTbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Undeliverable checks -->
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-envelope-open-text" style="margin-right:8px;color:#c62828"></i>Undeliverable Check Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport6','ach-nacha_Table6')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table id="tblExport6" class="tbl">
+            <thead><tr><th>Return Date</th><th>Agent NPN</th><th>Agent Name</th><th>Mailing Address</th><th>Check No.</th><th>Amount</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="undelivTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 5: PAYMENT METHOD UPDATES ====== -->
+    <div id="tabMethod" class="tab-pane">
+      <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+        <span>Payment method changes are audit-logged with old method, new method, timestamp, and actor. <strong>Switching to ACH:</strong> banking details must be admin-verified and pre-noted before next payment cycle. <strong>Switching to Check:</strong> Finance Admin is notified; mailing address must be confirmed.</span></div>
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-exchange-alt" style="margin-right:8px;color:#0d47a1"></i>Payment Method Change Audit Log</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport7','ach-nacha_Table7')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table id="tblExport7" class="tbl">
+            <thead><tr><th>Change Date</th><th>Agent NPN</th><th>Agent Name</th><th>Old Method</th><th>New Method</th><th>Changed By</th><th>Verification Status</th><th>Finance Notified</th></tr></thead>
+            <tbody id="methodLogTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NACHA GENERATE MODAL ===== -->
+<div class="modal-overlay" id="nachaGenModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-file-code" style="color:#004d40;margin-right:8px"></i>Generate NACHA File</h5>
+      <button class="modal-close" onclick="closeModal('nachaGenModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg"><label>Batch Reference</label><select id="nachaBatchRef"><option>BATCH-2026-06 (May 2026 — Pending Approval)</option></select></div>
+      <div class="fg"><label>Payment Date</label><input type="date" id="nachaPayDate" value="2026-05-29"></div>
+      <div class="al-info"><i class="fas fa-balance-scale" style="flex-shrink:0"></i><span>System will perform a <strong>balance check</strong> before transmission: sum of all PPD/CCD entries must match the approved batch net payable. Any discrepancy blocks transmission and alerts Finance.</span></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillNacha()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('nachaGenModal')">Cancel</button>
+        <button class="btn-pr" onclick="confirmNachaGen()"><i class="fas fa-play"></i>Generate &amp; Queue Transmission</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ACH RETURN ACTION MODAL ===== -->
+<div class="modal-overlay" id="returnActionModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr">
+      <h5 id="returnActionTitle"></h5>
+      <button class="modal-close" onclick="closeModal('returnActionModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="returnActionBody"></div>
+    <div class="modal-foot" id="returnActionFoot"></div>
+  </div>
+</div>
+
+<!-- ===== UNDELIV CHECK MODAL ===== -->
+<div class="modal-overlay" id="undelivModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr">
+      <h5 id="undelivTitle"></h5>
+      <button class="modal-close" onclick="closeModal('undelivModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="undelivBody"></div>
+    <div class="modal-foot" id="undelivFoot"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const nachaFiles = [
+  {id:'NACHA-2026-05',batch:'BATCH-2026-05',cycle:'April 2026',type:'PPD+CCD',count:48,total:87432.00,balanceOk:true,status:'Transmitted',transmittedAt:'2026-05-17 08:02'},
+  {id:'NACHA-2026-04',batch:'BATCH-2026-04',cycle:'March 2026',type:'PPD+CCD',count:45,total:81204.50,balanceOk:true,status:'Transmitted',transmittedAt:'2026-04-17 08:05'},
+  {id:'NACHA-2026-03',batch:'BATCH-2026-03',cycle:'February 2026',type:'PPD+CCD',count:42,total:76330.00,balanceOk:true,status:'Transmitted',transmittedAt:'2026-03-17 08:01'},
+];
+const nachaDetails = [
+  {type:6,txCode:'22',routing:'021000021',acct:'****8821',amount:723.00,npn:'8823441',name:'MARTINEZ JAMES',prenote:false,status:'Cleared'},
+  {type:6,txCode:'22',routing:'021000021',acct:'****4492',amount:1663.16,npn:'7719022',name:'CHEN SARAH',prenote:false,status:'Cleared'},
+  {type:6,txCode:'22',routing:'063100277',acct:'****9034',amount:2081.04,npn:'9912345',name:'NGUYEN KEVIN',prenote:false,status:'Cleared'},
+  {type:6,txCode:'22',routing:'026009593',acct:'****1177',amount:636.24,npn:'5521833',name:'BROWN MARK',prenote:false,status:'Cleared'},
+  {type:6,txCode:'22',routing:'021000021',acct:'****5590',amount:259.75,npn:'6643201',name:'TORRES ANGELA',prenote:false,status:'Cleared'},
+  {type:6,txCode:'52',routing:'021000089',acct:'****2200',amount:2340.00,npn:'9988811',name:'HEALTHFIRST DIST',prenote:false,status:'Cleared'},
+  {type:6,txCode:'22',routing:'021000021',acct:'****0011',amount:0.00,npn:'7712090',name:'HAYES ROBERT',prenote:true,status:'Pre-note sent'},
+];
+const prenotes = [
+  {npn:'7712090',name:'Robert Hayes',changeDate:'2026-05-26',prenoteSent:'2026-05-27',clearanceDate:'2026-05-30',holdStatus:'Clearing'},
+  {npn:'4419330',name:'Susan Park',changeDate:'2026-05-25',prenoteSent:'2026-05-26',clearanceDate:'2026-05-29',holdStatus:'Cleared — payment released'},
+];
+const achReturns = [
+  {returnDate:'2026-05-20',npn:'9830112',agentName:'Thomas Reed',returnCode:'R02',description:'Account Closed',originalAmt:487.50,autoAction:'Banking status ? Invalid; payment held',status:'Pending Action'},
+  {returnDate:'2026-05-19',npn:'6601234',agentName:'Nancy Moore',returnCode:'R07',description:'Authorization Revoked by Originator',originalAmt:312.00,autoAction:'Payment held — Finance review required',status:'Pending Review'},
+];
+const checkFiles = [
+  {id:'CHK-2026-05',batch:'BATCH-2026-05',count:3,total:882.36,generatedAt:'2026-05-16 15:40',transmittedAt:'2026-05-17 09:00',status:'Transmitted'},
+  {id:'CHK-2026-04',batch:'BATCH-2026-04',count:2,total:550.00,generatedAt:'2026-04-16 15:35',transmittedAt:'2026-04-17 09:00',status:'Transmitted'},
+];
+const undeliverable = [
+  {returnDate:'2026-05-22',npn:'4432177',name:'Patricia Lee',address:'455 Oak Ave, Austin TX 78701',checkNo:'CHK-00441',amount:318.12,reason:'Return to Sender — Moved / Left No Address',status:'Pending Action'},
+];
+const methodLog = [
+  {changeDate:'2026-05-25',npn:'7712090',name:'Robert Hayes',oldMethod:'Physical Check',newMethod:'ACH PPD',changedBy:'Robert Hayes (self)',verificationStatus:'Pre-note pending',financeNotified:'Yes — May 25 09:14'},
+  {changeDate:'2026-05-18',npn:'4432177',name:'Patricia Lee',oldMethod:'ACH PPD',newMethod:'Physical Check',changedBy:'Patricia Lee (self)',verificationStatus:'Address confirmed',financeNotified:'Yes — May 18 14:22'},
+  {changeDate:'2026-04-10',npn:'6601234',name:'Nancy Moore',oldMethod:'Physical Check',newMethod:'ACH PPD',changedBy:'Nancy Moore (self)',verificationStatus:'Pre-note cleared',financeNotified:'Yes — Apr 10 10:05'},
+];
+
+function statusBadge(s){
+  const m={'Transmitted':'b-green','Pending':'b-amber','Queued':'b-blue','Failed':'b-red',
+    'Cleared':'b-green','Pre-note sent':'b-blue','Clearing':'b-blue',
+    'Pending Action':'b-red','Pending Review':'b-amber','Resolved':'b-green'};
+  return `<span class="bdg ${m[s]||'b-grey'}" style="font-size:11px">${s}</span>`;
+}
+
+function renderNacha(){
+  document.getElementById('nachaTbody').innerHTML = nachaFiles.map(f=>`<tr>
+    <td><code style="font-size:11px">${f.id}</code></td>
+    <td><code style="font-size:11px">${f.batch}</code></td>
+    <td>${f.cycle}</td>
+    <td><span class="bdg b-blue" style="font-size:11px">${f.type}</span></td>
+    <td>${f.count}</td>
+    <td>$${f.total.toFixed(2)}</td>
+    <td><span class="bdg ${f.balanceOk?'b-green':'b-red'}" style="font-size:11px">${f.balanceOk?'PASS':'FAIL'}</span></td>
+    <td>${statusBadge(f.status)}</td>
+    <td style="font-size:12px">${f.transmittedAt}</td>
+    <td><button class="btn-ol btn-sm" onclick="downloadNacha('${f.id}')"><i class="fas fa-download"></i>Download</button></td>
+  </tr>`).join('');
+
+  document.getElementById('nachaDetailTbody').innerHTML = nachaDetails.map(d=>`<tr class="${d.prenote?'prenote-row':''}">
+    <td><span class="nacha-field">${d.type}</span></td>
+    <td><span class="nacha-field">${d.txCode}</span></td>
+    <td><span class="nacha-field">${d.routing}</span></td>
+    <td><span class="nacha-field">${d.acct}</span></td>
+    <td><strong>$${d.amount.toFixed(2)}</strong></td>
+    <td><code style="font-size:11px">${d.npn}</code></td>
+    <td style="font-family:monospace;font-size:11.5px">${d.name}</td>
+    <td>${d.prenote?'<span class="bdg b-blue" style="font-size:11px">Pre-note</span>':'<span class="text-muted" style="font-size:11px">—</span>'}</td>
+    <td>${statusBadge(d.status)}</td>
+  </tr>`).join('');
+}
+function renderPrenotes(){
+  document.getElementById('prenoteTbody').innerHTML = prenotes.map(p=>`<tr class="prenote-row">
+    <td><code style="font-size:11px">${p.npn}</code></td>
+    <td>${p.name}</td>
+    <td>${p.changeDate}</td>
+    <td>${p.prenoteSent}</td>
+    <td>${p.clearanceDate}</td>
+    <td>${statusBadge(p.holdStatus)}</td>
+    <td><button class="btn-ol btn-sm" onclick="showToast('Pre-note status for ${p.name}: ${p.holdStatus}','info')"><i class="fas fa-eye"></i>Details</button></td>
+  </tr>`).join('');
+}
+function renderReturns(){
+  document.getElementById('returnsTbody').innerHTML = achReturns.map(r=>`<tr class="return-row">
+    <td>${r.returnDate}</td>
+    <td><code style="font-size:11px">${r.npn}</code></td>
+    <td>${r.agentName}</td>
+    <td><strong style="color:#c62828">${r.returnCode}</strong></td>
+    <td style="font-size:12.5px">${r.description}</td>
+    <td>$${r.originalAmt.toFixed(2)}</td>
+    <td style="font-size:11.5px;color:#5f6368">${r.autoAction}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td><div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="openReturnAction('${r.npn}','void')"><i class="fas fa-ban"></i>Void</button>
+      <button class="btn-ol btn-sm" onclick="openReturnAction('${r.npn}','check')"><i class="fas fa-envelope"></i>Reissue Check</button>
+      <button class="btn-pr btn-sm" onclick="openReturnAction('${r.npn}','retry')"><i class="fas fa-redo"></i>Retry ACH</button>
+    </div></td>
+  </tr>`).join('');
+}
+function renderCheckFiles(){
+  document.getElementById('checkFileTbody').innerHTML = checkFiles.map(f=>`<tr>
+    <td><code style="font-size:11px">${f.id}</code></td>
+    <td><code style="font-size:11px">${f.batch}</code></td>
+    <td>${f.count}</td>
+    <td>$${f.total.toFixed(2)}</td>
+    <td style="font-size:12px">${f.generatedAt}</td>
+    <td style="font-size:12px">${f.transmittedAt}</td>
+    <td>${statusBadge(f.status)}</td>
+    <td><button class="btn-ol btn-sm" onclick="downloadCheckFile('${f.id}')"><i class="fas fa-download"></i>Download CSV</button></td>
+  </tr>`).join('');
+
+  document.getElementById('undelivTbody').innerHTML = undeliverable.map(u=>`<tr class="undeliv-row">
+    <td>${u.returnDate}</td>
+    <td><code style="font-size:11px">${u.npn}</code></td>
+    <td>${u.name}</td>
+    <td style="font-size:12px">${u.address}</td>
+    <td><code style="font-size:11px">${u.checkNo}</code></td>
+    <td>$${u.amount.toFixed(2)}</td>
+    <td style="font-size:12px">${u.reason}</td>
+    <td>${statusBadge(u.status)}</td>
+    <td><div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="openUndeliv('${u.npn}','reissue')"><i class="fas fa-redo"></i>Re-issue</button>
+      <button class="btn-danger btn-sm" onclick="openUndeliv('${u.npn}','void')"><i class="fas fa-ban"></i>Void</button>
+    </div></td>
+  </tr>`).join('');
+}
+function renderMethodLog(){
+  document.getElementById('methodLogTbody').innerHTML = methodLog.map(m=>`<tr>
+    <td style="font-size:12px">${m.changeDate}</td>
+    <td><code style="font-size:11px">${m.npn}</code></td>
+    <td>${m.name}</td>
+    <td><span class="bdg b-grey" style="font-size:11px">${m.oldMethod}</span></td>
+    <td><span class="bdg b-blue" style="font-size:11px">${m.newMethod}</span></td>
+    <td style="font-size:12px">${m.changedBy}</td>
+    <td style="font-size:12px">${m.verificationStatus}</td>
+    <td style="font-size:12px">${m.financeNotified}</td>
+  </tr>`).join('');
+}
+
+function generateNacha(){ showModal('nachaGenModal'); }
+function prefillNacha(){
+  document.getElementById('nachaPayDate').value='2026-05-29';
+  showToast('NACHA form prefilled with sample data','info');
+}
+function confirmNachaGen(){
+  closeModal('nachaGenModal');
+  showToast('NACHA-2026-06 generation queued. Balance check in progress. Transmission scheduled for 05 29,2026 08:00.','success');
+}
+function downloadNacha(id){ showToast(`${id} NACHA file download started. File retained per 7-year policy.`,'info'); }
+function generateCheckFile(){ showToast('Check disbursement CSV generated for BATCH-2026-06. 1 check entry — Patricia Lee $318.12. Transmitted to check printing vendor.','success'); }
+function downloadCheckFile(id){ showToast(`${id} check file download started.`,'info'); }
+
+function openReturnAction(npn, action){
+  const r = achReturns.find(x=>x.npn===npn);
+  document.getElementById('returnActionTitle').innerHTML = `<i class="fas fa-reply" style="color:#c62828;margin-right:8px"></i>ACH Return Action — ${r.agentName}`;
+  const actionLabels={'void':'Void Payment','check':'Re-issue as Check','retry':'Retry ACH'};
+  document.getElementById('returnActionBody').innerHTML = `
+    <div style="background:#ffebee;border-radius:8px;padding:10px 14px;margin-bottom:14px">
+      <strong>Return Code ${r.returnCode}:</strong> ${r.description}<br>
+      <strong>Original Amount:</strong> $${r.originalAmt.toFixed(2)} &nbsp;|&nbsp; <strong>Agent:</strong> ${r.agentName}
+    </div>
+    <div class="fg"><label>Action Notes <span class="req">*</span></label><textarea id="returnActionNotes" rows="2" placeholder="Document your action decision..."></textarea></div>
+    ${action==='check'?'<div class="al-warn"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Re-issuing as check requires a valid mailing address on file. System will verify address before generating check.</span></div>':''}
+    ${action==='retry'?'<div class="al-warn"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Retrying ACH for R07 (Authorization Revoked) requires Finance review confirmation that authorization has been re-obtained from the agent.</span></div>':''}`;
+  document.getElementById('returnActionFoot').innerHTML = `
+    <button class="btn-ol" onclick="closeModal('returnActionModal')">Cancel</button>
+    <button class="btn-pr" onclick="confirmReturnAction('${npn}','${action}')"><i class="fas fa-check"></i>${actionLabels[action]}</button>`;
+  showModal('returnActionModal');
+}
+function confirmReturnAction(npn, action){
+  const notes=document.getElementById('returnActionNotes').value.trim();
+  if(!notes){ showToast('Action notes are required.','warn'); return; }
+  const r=achReturns.find(x=>x.npn===npn);
+  r.status='Resolved';
+  closeModal('returnActionModal');
+  renderReturns();
+  const msgs={'void':`Payment voided for ${r.agentName}. $${r.originalAmt.toFixed(2)} will not be reissued.`,'check':`Check reissue queued for ${r.agentName}. Address verification in progress.`,'retry':`ACH retry queued for ${r.agentName}. New NACHA entry will be included in next file.`};
+  showToast(msgs[action],'success');
+}
+
+function openUndeliv(npn, action){
+  const u=undeliverable.find(x=>x.npn===npn);
+  document.getElementById('undelivTitle').innerHTML = `<i class="fas fa-envelope-open-text" style="color:#c62828;margin-right:8px"></i>Undeliverable Check — ${u.name}`;
+  document.getElementById('undelivBody').innerHTML = `
+    <div style="background:#ffebee;border-radius:8px;padding:10px 14px;margin-bottom:14px">
+      <strong>Check #:</strong> ${u.checkNo} &nbsp;|&nbsp; <strong>Amount:</strong> $${u.amount.toFixed(2)}<br>
+      <strong>Address on file:</strong> ${u.address}<br>
+      <strong>Reason:</strong> ${u.reason}
+    </div>
+    ${action==='reissue'?`<div class="fg"><label>Updated Mailing Address <span class="req">*</span></label><input type="text" id="undelivAddr" placeholder="Enter confirmed mailing address..." value="${u.address}"></div><div class="al-warn"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Cannot re-issue without a valid, confirmed mailing address. Address will be updated in agent profile.</span></div>`:
+    '<div class="al-danger"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span><strong>Voiding this check cancels the payment permanently.</strong> This action is logged and cannot be undone. Agent will be notified.</span></div>'}
+    <div class="fg"><label>Notes <span class="req">*</span></label><textarea id="undelivNotes" rows="2" placeholder="Document your decision..."></textarea></div>`;
+  document.getElementById('undelivFoot').innerHTML = `
+    <button class="btn-ol" onclick="closeModal('undelivModal')">Cancel</button>
+    <button class="${action==='void'?'btn-danger':'btn-pr'}" onclick="confirmUndeliv('${npn}','${action}')">
+      <i class="fas fa-${action==='void'?'ban':'redo'}"></i>${action==='void'?'Void Check':'Re-issue Check'}
+    </button>`;
+  showModal('undelivModal');
+}
+function confirmUndeliv(npn, action){
+  const notes=document.getElementById('undelivNotes').value.trim();
+  if(!notes){ showToast('Notes are required.','warn'); return; }
+  if(action==='reissue'){
+    const addr=document.getElementById('undelivAddr').value.trim();
+    if(!addr){ showToast('Confirmed mailing address is required for re-issue.','warn'); return; }
+  }
+  const u=undeliverable.find(x=>x.npn===npn);
+  u.status=action==='void'?'Voided':'Re-issued';
+  closeModal('undelivModal');
+  renderCheckFiles();
+  showToast(action==='void'?`Check ${u.checkNo} voided. Payment cancelled.`:`Check re-issue queued for ${u.name} to updated address.`,'success');
+}
+
+function switchTab(btn, paneId){
+  btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.closest('.page').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById(paneId).classList.add('active');
+}
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToast(msg, type='info'){
+  const t=document.getElementById('toast');
+  const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;
+  t.style.display='block'; setTimeout(()=>t.style.display='none',5000);
+}
+function nfpExport(label){ showToast(`${label} export started.`,'info'); }
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
+renderNacha(); renderPrenotes(); renderReturns(); renderCheckFiles(); renderMethodLog();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

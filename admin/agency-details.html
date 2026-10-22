@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agency Details | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html" class="active"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Agency Details</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Agency Details</li></ol>
+    </div>
+    <button class="btn-pr btn-sm" onclick="openCreateModal()"><i class="fas fa-plus"></i> Add Agency</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-building"></i></div><div><div class="stat-label">Total Agencies</div><div class="stat-val">24</div><div class="stat-sub">All contracted agencies</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active</div><div class="stat-val">20</div><div class="stat-sub">Currently operational</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending</div><div class="stat-val">3</div><div class="stat-sub">Awaiting approval</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-ban"></i></div><div><div class="stat-label">Deactivated</div><div class="stat-val">1</div><div class="stat-sub">Suspended agencies</div></div></div></div>
+    </div>
+
+    <!-- Agency Listing -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-building" style="margin-right:8px;color:#1a237e"></i>Agency Listing</h5><span class="text-muted" style="font-size:12px" id="agencyCount">Showing 6 of 24 agencies</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('','agency-details_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <!-- Filter Bar -->
+      <div class="filter-bar" style="border-radius:0;border-left:0;border-right:0;border-top:0;margin-bottom:0">
+        <label>Agency Type:</label>
+        <select id="fType" onchange="filterAgencies()">
+          <option value="">All Types</option>
+          <option value="FMO">FMO</option>
+          <option value="MGA">MGA</option>
+          <option value="SGA">SGA</option>
+          <option value="GA">GA</option>
+        </select>
+        <label>Status:</label>
+        <select id="fStatus" onchange="filterAgencies()">
+          <option value="">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="Pending">Pending</option>
+          <option value="Deactivated">Deactivated</option>
+        </select>
+        <label>State:</label>
+        <select id="fState" onchange="filterAgencies()">
+          <option value="">All States</option>
+          <option value="FL">FL</option>
+          <option value="TX">TX</option>
+          <option value="CA">CA</option>
+          <option value="NY">NY</option>
+          <option value="GA">GA</option>
+          <option value="AL">AL</option>
+          <option value="OR">OR</option>
+          <option value="WA">WA</option>
+          <option value="OK">OK</option>
+          <option value="NJ">NJ</option>
+        </select>
+        <label>Search:</label>
+        <input type="text" id="fSearch" class="tb-search" placeholder="Agency name or Tax ID..." oninput="filterAgencies()" style="min-width:200px">
+        <button class="btn-ol btn-sm" onclick="resetAgencyFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1" id="agencyTable">
+          <thead><tr><th>Agency Name</th><th>Agency Type</th><th>Tax ID</th><th>Primary Contact</th><th>State(s)</th><th>Agents</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr data-status="Active" data-states="FL,TX,GA">
+              <td><strong><a href="agency-agents.html?agency=Premier%20Medicare%20Group" style="color:#1a237e;text-decoration:none">Premier Medicare Group</a></strong></td><td><span class="bdg" style="background:#ede7f6;color:#4527a0">FMO</span></td><td><code>59-3847201</code></td><td>Angela Rivera</td><td>FL, TX, GA</td><td style="text-align:center">86</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openEditModal('Premier Medicare Group')" title="Edit"><i class="fas fa-edit"></i> Edit</button><button class="btn-ol btn-sm" onclick="deactivateAgency('Premier Medicare Group')" title="Deactivate" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-ban"></i></button></div></td>
+            </tr>
+            <tr data-status="Active" data-states="FL,GA,AL">
+              <td><strong><a href="agency-agents.html?agency=Southeast%20Health%20Advisors" style="color:#1a237e;text-decoration:none">Southeast Health Advisors</a></strong></td><td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">MGA</span></td><td><code>58-2934810</code></td><td>Marcus Johnson</td><td>FL, GA, AL</td><td style="text-align:center">64</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openEditModal('Southeast Health Advisors')" title="Edit"><i class="fas fa-edit"></i> Edit</button><button class="btn-ol btn-sm" onclick="deactivateAgency('Southeast Health Advisors')" title="Deactivate" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-ban"></i></button></div></td>
+            </tr>
+            <tr data-status="Active" data-states="CA,OR,WA">
+              <td><strong><a href="agency-agents.html?agency=Pacific%20Coast%20Insurance" style="color:#1a237e;text-decoration:none">Pacific Coast Insurance</a></strong></td><td><span class="bdg" style="background:#e8f5e9;color:#1b5e20">GA</span></td><td><code>94-7721053</code></td><td>Linda Chen</td><td>CA, OR, WA</td><td style="text-align:center">52</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openEditModal('Pacific Coast Insurance')" title="Edit"><i class="fas fa-edit"></i> Edit</button><button class="btn-ol btn-sm" onclick="deactivateAgency('Pacific Coast Insurance')" title="Deactivate" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-ban"></i></button></div></td>
+            </tr>
+            <tr data-status="Active" data-states="TX,OK">
+              <td><strong><a href="agency-agents.html?agency=Heartland%20Benefits" style="color:#1a237e;text-decoration:none">Heartland Benefits</a></strong></td><td><span class="bdg" style="background:#fff8e1;color:#e65100">SGA</span></td><td><code>75-6601284</code></td><td>Robert Williams</td><td>TX, OK</td><td style="text-align:center">38</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openEditModal('Heartland Benefits')" title="Edit"><i class="fas fa-edit"></i> Edit</button><button class="btn-ol btn-sm" onclick="deactivateAgency('Heartland Benefits')" title="Deactivate" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-ban"></i></button></div></td>
+            </tr>
+            <tr data-status="Pending" data-states="FL">
+              <td><strong><a href="agency-agents.html?agency=Sunshine%20Senior%20Solutions" style="color:#1a237e;text-decoration:none">Sunshine Senior Solutions</a></strong></td><td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">MGA</span></td><td><code>59-4482017</code></td><td>Karen Mitchell</td><td>FL</td><td style="text-align:center">27</td>
+              <td><span class="bdg b-amber">Pending</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openEditModal('Sunshine Senior Solutions')" title="Edit"><i class="fas fa-edit"></i> Edit</button></div></td>
+            </tr>
+            <tr data-status="Deactivated" data-states="NY,NJ">
+              <td><strong><a href="agency-agents.html?agency=Liberty%20Health%20Partners" style="color:#1a237e;text-decoration:none">Liberty Health Partners</a></strong></td><td><span class="bdg" style="background:#e8f5e9;color:#1b5e20">GA</span></td><td><code>36-9918472</code></td><td>David Ortiz</td><td>NY, NJ</td><td style="text-align:center">0</td>
+              <td><span class="bdg b-grey">Deactivated</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="reactivateAgency('Liberty Health Partners')" title="Reactivate" style="color:#2e7d32;border-color:#a5d6a7"><i class="fas fa-undo"></i> Reactivate</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div id="paginationBar" style="padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <div id="pageInfo" style="font-size:13px;color:#5f6368">Page 1 of 1</div>
+        <div class="dflex g8" id="pageButtons"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE AGENCY MODAL -->
+<div id="createModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:600px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-building" style="margin-right:8px"></i>Add Agency</h6>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button onclick="prefillCreateAgency()" style="background:#fff3e0;border:1px solid #fb8c00;color:#e65100;border-radius:6px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+        <button onclick="document.getElementById('createModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row"><div class="fg" style="flex:2"><label>Agency Name <span style="color:#c62828">*</span></label><input id="crName" placeholder="e.g. Premier Medicare Group"></div></div>
+      <div class="form-row"><div class="fg"><label>Agency NPN <span style="color:#c62828">*</span></label><input id="crNpn" placeholder="e.g. 1234567890" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div><div class="fg"><label>Agency Type <span style="color:#c62828">*</span></label><select id="crType"><option value="">— Select Type —</option><option>GA</option><option>MGA</option><option>SGA</option><option>FMO</option><option>Independent</option></select></div></div>
+      <div class="form-row"><div class="fg"><label>Parent Agency</label><input id="crParentName" placeholder="Parent agency name (if applicable)"></div><div class="fg"><label>Parent Agency NPN</label><input id="crParentNpn" placeholder="Parent NPN" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div></div>
+      <div class="form-row"><div class="fg"><label>Tax ID <span style="color:#c62828">*</span></label><input id="crTax" placeholder="e.g. 59-3847201"></div><div class="fg"><label>Phone</label><input id="crPhone" type="tel" placeholder="(800) 555-0100"></div></div>
+      <div class="form-row"><div class="fg"><label>Primary Contact <span style="color:#c62828">*</span></label><input id="crContact" placeholder="Full name"></div><div class="fg"><label>Contact Email <span style="color:#c62828">*</span></label><input id="crEmail" type="email" placeholder="admin@agency.com"></div></div>
+      <div class="form-row"><div class="fg"><label>Operational State(s) <span style="color:#c62828">*</span></label><input id="crStates" placeholder="e.g. FL, TX, CA"></div><div class="fg"><label>Hierarchy Level</label><select id="crLevel"><option>GA</option><option>MGA</option><option>SGA</option><option>FMO</option></select></div></div>
+      <div class="form-row"><div class="fg" style="flex:2"><label>Address 1</label><input id="crAddress1" placeholder="Street address"></div><div class="fg"><label>Address 2</label><input id="crAddress2" placeholder="Apt, Suite, Unit"></div></div>
+      <div class="form-row"><div class="fg"><label>ZIP</label><input id="crZip" placeholder="33101" maxlength="5" oninput="nfpZipLookup(this,'crCity','crAddrState','crCounty')"></div><div class="fg"><label>City</label><input id="crCity" placeholder="Auto-filled from ZIP"></div><div class="fg"><label>State</label><input id="crAddrState" placeholder="Auto-filled from ZIP"></div><div class="fg"><label>County</label><input id="crCounty" readonly placeholder="Auto-filled" style="background:#f8f9fa"></div></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('createModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="saveNewAgency()"><i class="fas fa-check"></i> Add Agency</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT AGENCY MODAL -->
+<div id="editModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:600px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="editTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-edit" style="margin-right:8px"></i>Edit Agency</h6>
+      <button onclick="document.getElementById('editModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row"><div class="fg" style="flex:2"><label>Agency Name <span style="color:#c62828">*</span></label><input id="edName"></div></div>
+      <div class="form-row"><div class="fg"><label>Agency NPN <span style="color:#c62828">*</span></label><input id="edNpn" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div><div class="fg"><label>Agency Type</label><select id="edType"><option>GA</option><option>MGA</option><option>SGA</option><option>FMO</option><option>Independent</option></select></div></div>
+      <div class="form-row"><div class="fg"><label>Parent Agency</label><input id="edParentName" placeholder="Parent agency name (if applicable)"></div><div class="fg"><label>Parent Agency NPN</label><input id="edParentNpn" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div></div>
+      <div class="form-row"><div class="fg"><label>Tax ID</label><input id="edTax" readonly style="background:#f5f5f5"></div><div class="fg"><label>Phone</label><input id="edPhone" type="tel"></div></div>
+      <div class="form-row"><div class="fg"><label>Primary Contact</label><input id="edContact"></div><div class="fg"><label>Contact Email</label><input id="edEmail" type="email"></div></div>
+      <div class="form-row"><div class="fg"><label>Operational State(s)</label><input id="edStates"></div><div class="fg"><label>Status</label><select id="edStatus"><option>Active</option><option>Pending</option><option>Deactivated</option></select></div></div>
+      <div class="form-row"><div class="fg" style="flex:2"><label>Address 1</label><input id="edAddress1"></div><div class="fg"><label>Address 2</label><input id="edAddress2"></div></div>
+      <div class="form-row"><div class="fg"><label>ZIP</label><input id="edZip" maxlength="5" oninput="nfpZipLookup(this,'edCity','edAddrState','edCounty')"></div><div class="fg"><label>City</label><input id="edCity"></div><div class="fg"><label>State</label><input id="edAddrState"></div><div class="fg"><label>County</label><input id="edCounty" readonly style="background:#f8f9fa"></div></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('editModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="saveEditAgency()"><i class="fas fa-save"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 10,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+var agencyData={
+  'Premier Medicare Group':{tax:'59-3847201',contact:'Angela Rivera',email:'admin@premiermedicare.com',phone:'(305) 555-0100',states:'FL, TX, GA',agents:86,status:'Active',address:'1200 Brickell Ave, Miami, FL 33131'},
+  'Southeast Health Advisors':{tax:'58-2934810',contact:'Marcus Johnson',email:'m.johnson@sehealthadvisors.com',phone:'(404) 555-0198',states:'FL, GA, AL',agents:64,status:'Active',address:'400 Peachtree St, Atlanta, GA 30308'},
+  'Pacific Coast Insurance':{tax:'94-7721053',contact:'Linda Chen',email:'l.chen@pacificcoast.com',phone:'(415) 555-0276',states:'CA, OR, WA',agents:52,status:'Active',address:'555 Market St, San Francisco, CA 94105'},
+  'Heartland Benefits':{tax:'75-6601284',contact:'Robert Williams',email:'r.williams@heartlandbenefits.com',phone:'(214) 555-0333',states:'TX, OK',agents:38,status:'Active',address:'2000 McKinney Ave, Dallas, TX 75201'},
+  'Sunshine Senior Solutions':{tax:'59-4482017',contact:'Karen Mitchell',email:'k.mitchell@sunshinesenior.com',phone:'(813) 555-0421',states:'FL',agents:27,status:'Pending',address:'100 Tampa St, Tampa, FL 33602'},
+  'Liberty Health Partners':{tax:'36-9918472',contact:'David Ortiz',email:'d.ortiz@libertyhealth.com',phone:'(212) 555-0588',states:'NY, NJ',agents:0,status:'Deactivated',address:'350 5th Ave, New York, NY 10118'}
+};
+
+function openCreateModal(){
+  document.getElementById('crName').value='Coastal Medicare Partners';
+  document.getElementById('crTax').value='47-8832019';
+  document.getElementById('crPhone').value='(561) 555-0742';
+  document.getElementById('crContact').value='Jennifer Hayes';
+  document.getElementById('crEmail').value='j.hayes@coastalmedicare.com';
+  document.getElementById('crStates').value='FL, SC, NC';
+  document.getElementById('crAddress1').value='900 Clematis St, West Palm Beach, FL 33401';
+  document.getElementById('crLevel').selectedIndex=2;
+  document.getElementById('createModal').classList.add('open');
+}
+
+function prefillCreateAgency(){
+  var s=function(id,v){var el=document.getElementById(id);if(el)el.value=v;};
+  s('crName','BrightPath Medicare Advisors');
+  s('crNpn','1029384756');
+  s('crType','MGA');
+  s('crParentName','National Medicare Group');
+  s('crParentNpn','9876543210');
+  s('crTax','61-4829301');
+  s('crPhone','(312) 555-0192');
+  s('crContact','Diana Reyes');
+  s('crEmail','admin@brightpathmedicare.com');
+  s('crStates','IL, IN, WI');
+  s('crAddress','233 S Wacker Dr, Suite 4400, Chicago, IL 60606');
+  var lvl=document.getElementById('crLevel');if(lvl)lvl.value='MGA';
+}
+
+function saveNewAgency(){
+  if(!document.getElementById('crName').value.trim()){showToast('Agency Name is required.','error');return;}
+  if(!document.getElementById('crTax').value.trim()){showToast('Tax ID is required.','error');return;}
+  if(!document.getElementById('crContact').value.trim()){showToast('Primary Contact is required.','error');return;}
+  if(!document.getElementById('crEmail').value.trim()){showToast('Contact Email is required.','error');return;}
+  if(!document.getElementById('crStates').value.trim()){showToast('Operational State(s) required.','error');return;}
+  document.getElementById('createModal').classList.remove('open');
+  showToast('Agency created successfully.','success');
+}
+
+function openEditModal(name){
+  var a=agencyData[name];
+  if(!a){showToast('Agency data not found.','error');return;}
+  document.getElementById('editTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px"></i>Edit: '+name;
+  document.getElementById('edName').value=name;
+  document.getElementById('edTax').value=a.tax;
+  document.getElementById('edPhone').value=a.phone;
+  document.getElementById('edContact').value=a.contact;
+  document.getElementById('edEmail').value=a.email;
+  document.getElementById('edStates').value=a.states;
+  document.getElementById('edAddress1').value=a.address;
+  var stSel=document.getElementById('edStatus');
+  for(var i=0;i<stSel.options.length;i++){if(stSel.options[i].text===a.status) stSel.selectedIndex=i;}
+  document.getElementById('editModal').classList.add('open');
+}
+
+function saveEditAgency(){
+  document.getElementById('editModal').classList.remove('open');
+  showToast('Agency updated successfully.','success');
+}
+
+function deactivateAgency(name){
+  if(confirm('Deactivate '+name+'? All agents under this agency will lose portal access.')){
+    var rows=document.querySelectorAll('#agencyTable tbody tr');
+    rows.forEach(function(row){
+      var cell=row.querySelector('td:first-child strong a');
+      if(cell && cell.textContent.trim()===name){
+        row.setAttribute('data-status','Deactivated');
+        var badge=row.querySelector('.bdg');
+        if(badge){ badge.className='bdg b-grey'; badge.textContent='Deactivated'; }
+        // Replace Deactivate button with Reactivate
+        var actions=row.querySelector('td:last-child .dflex');
+        if(actions) actions.innerHTML='<button class="btn-ol btn-sm" onclick="reactivateAgency(\''+name+'\')" title="Reactivate" style="color:#2e7d32;border-color:#a5d6a7"><i class="fas fa-undo"></i> Reactivate</button>';
+      }
+    });
+    showToast(name+' has been deactivated.','warning');
+  }
+}
+
+function reactivateAgency(name){
+  if(confirm('Reactivate '+name+'?')){
+    var rows=document.querySelectorAll('#agencyTable tbody tr');
+    rows.forEach(function(row){
+      var cell=row.querySelector('td:first-child strong a');
+      if(cell && cell.textContent.trim()===name){
+        row.setAttribute('data-status','Active');
+        var badge=row.querySelector('.bdg');
+        if(badge){ badge.className='bdg b-green'; badge.textContent='Active'; }
+        // Restore Deactivate button
+        var actions=row.querySelector('td:last-child .dflex');
+        if(actions) actions.innerHTML='<button class="btn-ol btn-sm" onclick="openEditModal(\''+name+'\')" title="Edit"><i class="fas fa-edit"></i> Edit</button><button class="btn-ol btn-sm" onclick="deactivateAgency(\''+name+'\')" title="Deactivate" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-ban"></i></button>';
+      }
+    });
+    showToast(name+' has been reactivated.','success');
+  }
+}
+
+function filterAgencies(){
+  var status=document.getElementById('fStatus').value;
+  var state=document.getElementById('fState').value;
+  var search=document.getElementById('fSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#agencyTable tbody tr');
+  rows.forEach(function(row){
+    var rowStatus=row.dataset.status||'';
+    var rowStates=row.dataset.states||'';
+    var rowText=row.textContent.toLowerCase();
+    var show=true;
+    if(status && rowStatus!==status) show=false;
+    if(state && rowStates.indexOf(state)===-1) show=false;
+    if(search && rowText.indexOf(search)===-1) show=false;
+    row.dataset.filtered=show?'1':'0';
+  });
+  currentPage=1;
+  renderPagination();
+}
+
+function resetAgencyFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fSearch').value='';
+  filterAgencies();
+}
+
+/* ---- Pagination Logic ---- */
+var rowsPerPage=5;
+var currentPage=1;
+
+function getVisibleRows(){
+  var rows=document.querySelectorAll('#agencyTable tbody tr');
+  var visible=[];
+  rows.forEach(function(row){
+    if(row.dataset.filtered!=='0') visible.push(row);
+  });
+  return visible;
+}
+
+function renderPagination(){
+  var visible=getVisibleRows();
+  var totalPages=Math.max(1,Math.ceil(visible.length/rowsPerPage));
+  if(currentPage>totalPages) currentPage=totalPages;
+
+  // Hide all, then show current page rows
+  document.querySelectorAll('#agencyTable tbody tr').forEach(function(r){r.style.display='none';});
+  var start=(currentPage-1)*rowsPerPage;
+  var end=start+rowsPerPage;
+  for(var i=start;i<end&&i<visible.length;i++){
+    visible[i].style.display='';
+  }
+
+  // Update count
+  document.getElementById('agencyCount').textContent='Showing '+visible.length+' of 24 agencies';
+
+  // Render page buttons
+  var html='';
+  html+='<button class="btn-ol btn-sm" onclick="goToPage('+(currentPage-1)+')"'+(currentPage<=1?' disabled':'')+' ><i class="fas fa-chevron-left"></i> Previous</button>';
+  for(var p=1;p<=totalPages;p++){
+    if(p===currentPage){
+      html+='<button class="btn-ol btn-sm" style="background:#1a237e;color:#fff;border-color:#1a237e">'+p+'</button>';
+    } else {
+      html+='<button class="btn-ol btn-sm" onclick="goToPage('+p+')">'+p+'</button>';
+    }
+  }
+  html+='<button class="btn-ol btn-sm" onclick="goToPage('+(currentPage+1)+')"'+(currentPage>=totalPages?' disabled':'')+'>Next <i class="fas fa-chevron-right"></i></button>';
+  document.getElementById('pageButtons').innerHTML=html;
+  document.getElementById('pageInfo').textContent='Page '+currentPage+' of '+totalPages;
+}
+
+function goToPage(page){
+  var visible=getVisibleRows();
+  var totalPages=Math.max(1,Math.ceil(visible.length/rowsPerPage));
+  if(page<1||page>totalPages) return;
+  currentPage=page;
+  renderPagination();
+}
+
+// Initialize pagination on load
+(function(){
+  document.querySelectorAll('#agencyTable tbody tr').forEach(function(r){r.dataset.filtered='1';});
+  renderPagination();
+})();
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

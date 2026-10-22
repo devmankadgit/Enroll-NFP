@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>System Monitoring | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>System Monitoring &amp; Alerts</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Monitoring</li></ol>
+    </div>
+    <div class="dflex g8">
+      <span class="badge bg-success" style="padding:8px 12px;font-size:13px"><i class="fas fa-circle" style="font-size:8px;margin-right:4px"></i>All Systems Operational</span>
+      <button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-cog"></i>Alert Config</button>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Real-time Metrics -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-tachometer-alt"></i></div><div><div class="stat-label">Avg API Response</div><div class="stat-val">142ms</div><div class="stat-sub stat-up">Within threshold (&lt;500ms)</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-bug"></i></div><div><div class="stat-label">Error Rate</div><div class="stat-val">0.3%</div><div class="stat-sub stat-up">Below 1% threshold</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Active Sessions</div><div class="stat-val">87</div><div class="stat-sub">Peak today: 134</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-server"></i></div><div><div class="stat-label">Uptime</div><div class="stat-val">99.97%</div><div class="stat-sub">Last 30 days</div></div></div></div>
+    </div>
+
+    <div class="row-grid">
+      <!-- Batch Job Status -->
+      <div class="col-3">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Batch Job Status</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','monitoring_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table class="tbl" id="tblExport1">
+              <thead><tr><th>Job</th><th>Schedule</th><th>Last Run</th><th>Duration</th><th>Records</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Daily Commission Calc</td><td>Daily 2:00 AM</td><td>Today 2:00 AM</td><td>47 min</td><td>1,847</td><td><span class="badge bg-success">Completed</span></td></tr>
+                <tr><td>CMS Enrollment Submit</td><td>Daily 6:00 AM</td><td>Today 6:00 AM</td><td>12 min</td><td>28</td><td><span class="badge bg-success">Completed</span></td></tr>
+                <tr><td>NIPR License Refresh</td><td>Daily 4:00 AM</td><td>Today 4:00 AM</td><td>23 min</td><td>143</td><td><span class="badge bg-success">Completed</span></td></tr>
+                <tr><td>ACH Payment File</td><td>Monthly 17th</td><td>05 17,2026</td><td>8 min</td><td>132</td><td><span class="badge bg-success">Completed</span></td></tr>
+                <tr><td>MMR File Processing</td><td>Monthly 1st</td><td>05 01,2026</td><td>1h 12min</td><td>4,291</td><td><span class="badge bg-success">Completed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert Configuration -->
+      <div class="col-1">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Alert Thresholds</h5></div>
+          <div class="card-body">
+            <div class="mb-3"><label class="form-label">API Response &gt; (ms)</label><input type="number" class="form-control" value="500"></div>
+            <div class="mb-3"><label class="form-label">Error Rate &gt; (%)</label><input type="number" class="form-control" value="1"></div>
+            <div class="mb-3"><label class="form-label">Alert Channels</label>
+              <div><input type="checkbox" checked> Email (IT On-Call)<br><input type="checkbox" checked> SMS (IT Lead)<br><input type="checkbox"> Portal Notification</div>
+            </div>
+            <button class="btn-pr btn-sm" style="width:100%" onclick="saveThresholds()">Save Thresholds</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Health -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Integration Health (Real-Time)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','monitoring_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Integration</th><th>Status</th><th>Avg Response</th><th>Error Rate (24h)</th><th>Last Call</th></tr></thead>
+          <tbody>
+            <tr><td>NIPR</td><td><span class="badge bg-warning text-dark">Degraded</span></td><td>1,240ms</td><td>2.3%</td><td>2 min ago</td></tr>
+            <tr><td>AHIP</td><td><span class="badge bg-success">Healthy</span></td><td>320ms</td><td>0.1%</td><td>5 min ago</td></tr>
+            <tr><td>CMS SFTP</td><td><span class="badge bg-success">Healthy</span></td><td></td><td>0%</td><td>6:00 AM</td></tr>
+            <tr><td>ACH Gateway</td><td><span class="badge bg-success">Healthy</span></td><td>210ms</td><td>0%</td><td>May 17</td></tr>
+            <tr><td>OEC Vendor</td><td><span class="badge bg-success">Healthy</span></td><td>180ms</td><td>0%</td><td>1 min ago</td></tr>
+            <tr><td>IBR Screening</td><td><span class="badge bg-success">Healthy</span></td><td>450ms</td><td>0.5%</td><td>22 min ago</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recent Alerts -->
+    <div class="card">
+      <div class="card-hdr"><h5>Recent Alerts</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','monitoring_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport3">
+          <thead><tr><th>Time</th><th>Severity</th><th>Source</th><th>Message</th><th>Notified</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>May 24, 10:15 AM</td><td><span class="badge bg-warning text-dark">Warning</span></td><td>NIPR API</td><td>Response time exceeded 1000ms threshold (5001ms)</td><td>IT Team (email)</td><td>Active</td></tr>
+            <tr><td>May 23, 3:42 PM</td><td><span class="badge bg-info">Info</span></td><td>Batch Jobs</td><td>Daily commission calc completed: 1,847 records in 47 min</td><td></td><td>Resolved</td></tr>
+            <tr><td>May 22, 8:10 AM</td><td><span class="badge bg-danger">Critical</span></td><td>CMS SFTP</td><td>Connection timeout — enrollment batch delayed 15 min</td><td>IT + Finance (SMS)</td><td>Resolved</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+function saveThresholds() {
+  var inputs = document.querySelectorAll('.card-body input[type=number]');
+  var apiMs  = inputs[0] ? +inputs[0].value : 0;
+  var errPct = inputs[1] ? +inputs[1].value : 0;
+  if(!apiMs || apiMs < 50) { showToast('API response threshold must be at least 50ms.', 'error'); return; }
+  if(errPct < 0 || errPct > 100) { showToast('Error rate must be between 0 and 100%.', 'error'); return; }
+  showToast('Alert thresholds saved. Alerts fire when API response > ' + apiMs + 'ms or error rate > ' + errPct + '%.', 'success');
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

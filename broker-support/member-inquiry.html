@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Broker Support — Member Inquiry -->
+<title>Member Inquiry | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html" class="active"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Member Inquiry</h4><p style="font-size:12px;color:#5f6368;margin:0">Look up member information to assist agents and resolve enrollment or service inquiries</p></div>
+    <div class="dflex g8">
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Search Bar -->
+    <div class="card">
+      <div class="card-body" style="padding:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;align-items:end">
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Member Name / ID</label><input type="text" id="fSearch" placeholder="Name, Member ID, or MBI..." style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Agent</label><input type="text" id="fAgent" placeholder="Agent name..." style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Plan</label><select id="fPlan" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"><option>All Plans</option><option>Gold Kidney MA</option><option>Gold Kidney D-SNP</option><option>Gold Kidney C-SNP</option></select></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Status</label><select id="fStatus" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"><option>All Statuses</option><option>Active</option><option>Pending</option><option>Disenrolled</option></select></div>
+          <button class="btn-pr" onclick="applyFilters()" style="padding:8px 16px"><i class="fas fa-search" style="margin-right:6px"></i>Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-users" style="color:#0277bd;margin-right:8px"></i>Search Results</h6><span class="badge" style="background:#e3f2fd;color:#0277bd">1,247 members</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Member</th><th>Member ID</th><th>MBI</th><th>Plan</th><th>Agent</th><th>Status</th><th>Enrolled</th><th>PCP</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Martha Johnson</td><td>GK-2026-00441</td><td>1EG4-TE5-MK72</td><td>Gold Kidney C-SNP</td><td>Lisa Wang</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>01 01,2026</td><td>Dr. Sarah Miller</td><td><button class="btn-ol btn-sm" onclick="showMember('martha')">View</button></td></tr>
+            <tr><td style="font-weight:600">Robert Wilson</td><td>GK-2026-00398</td><td>4AB2-RK9-JL45</td><td>Gold Kidney MA</td><td>James Martinez</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td><td>—</td><td>Pending selection</td><td><button class="btn-ol btn-sm" onclick="showMember('robert')">View</button></td></tr>
+            <tr><td style="font-weight:600">Linda Garcia</td><td>GK-2025-00289</td><td>7FD1-WP3-HN88</td><td>Gold Kidney D-SNP</td><td>Sarah Chen</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>10 15,2025</td><td>Dr. Michael Torres</td><td><button class="btn-ol btn-sm" onclick="showMember('linda')">View</button></td></tr>
+            <tr><td style="font-weight:600">David Brown</td><td>GK-2026-00455</td><td>2TH8-QR6-BX19</td><td>Gold Kidney MA</td><td>Angela Torres</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td><td>—</td><td>Dr. Emily Park</td><td><button class="btn-ol btn-sm" onclick="showMember('david')">View</button></td></tr>
+            <tr><td style="font-weight:600">Mary Thompson</td><td>GK-2025-00156</td><td>9KN4-LM2-VS67</td><td>Gold Kidney MA</td><td>David Chen</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>07 01,2025</td><td>Dr. James Wright</td><td><button class="btn-ol btn-sm" onclick="showMember('mary')">View</button></td></tr>
+            <tr><td style="font-weight:600">James Anderson</td><td>GK-2026-00467</td><td>5PQ7-CD1-YN33</td><td>Gold Kidney D-SNP</td><td>Lisa Wang</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td><td>—</td><td>Pending selection</td><td><button class="btn-ol btn-sm" onclick="showMember('james')">View</button></td></tr>
+            <tr><td style="font-weight:600">Patricia Davis</td><td>GK-2025-00201</td><td>8GH3-NB5-DF92</td><td>Gold Kidney MA</td><td>Sarah Chen</td><td><span class="badge" style="background:#fce4ec;color:#c62828">Disenrollment Pending</span></td><td>04 01,2025</td><td>Dr. Lisa Adams</td><td><button class="btn-ol btn-sm" onclick="showMember('patricia')">View</button></td></tr>
+            <tr><td style="font-weight:600">Thomas White</td><td>GK-2026-00412</td><td>3RS9-VW4-KT56</td><td>Gold Kidney MA</td><td>James Martinez</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending SEP</span></td><td>—</td><td>Dr. Robert Kim</td><td><button class="btn-ol btn-sm" onclick="showMember('thomas')">View</button></td></tr>
+            <tr><td style="font-weight:600">Karen Mitchell</td><td>GK-2025-00078</td><td>6XT2-JP8-AM14</td><td>Gold Kidney C-SNP</td><td>Angela Torres</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>01 01,2025</td><td>Dr. Nancy Chen</td><td><button class="btn-ol btn-sm" onclick="showMember('karen')">View</button></td></tr>
+            <tr><td style="font-weight:600">Steven Clark</td><td>GK-2024-00412</td><td>1ML5-HK7-QW23</td><td>Gold Kidney MA</td><td>David Chen</td><td><span class="badge" style="background:#e8eaed;color:#5f6368">Disenrolled</span></td><td>01 01,2024</td><td>—</td><td><button class="btn-ol btn-sm" onclick="showMember('steven')">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Member Detail Panel (shows on View click) -->
+    <div class="row g-3" style="margin-top:16px">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-chart-pie" style="color:#0277bd;margin-right:8px"></i>Members by Plan</h6></div>
+          <div class="card-body" style="padding:14px 16px;font-size:13px">
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Gold Kidney MA</span><strong>712</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:57%;background:#0277bd;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Gold Kidney D-SNP</span><strong>389</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:31%;background:#7b1fa2;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between"><span>Gold Kidney C-SNP</span><strong>146</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:12%;background:#00695c;border-radius:3px"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-bolt" style="color:#e65100;margin-right:8px"></i>Quick Actions</h6></div>
+          <div class="card-body" style="padding:12px 16px">
+            <div style="display:grid;gap:8px">
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Verify Enrollment Status')"><i class="fas fa-check-circle" style="margin-right:8px;color:#2e7d32"></i>Verify Enrollment Status</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Check Eligibility')"><i class="fas fa-clipboard-check" style="margin-right:8px;color:#0277bd"></i>Check Eligibility</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('View ID Card')"><i class="fas fa-id-card" style="margin-right:8px;color:#5f6368"></i>View / Reissue ID Card</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Enrollment History')"><i class="fas fa-history" style="margin-right:8px;color:#7b1fa2"></i>View Enrollment History</button>
+              <button class="btn-ol btn-sm" style="width:100%;text-align:left" onclick="nfpAction('Create Support Case')"><i class="fas fa-plus-circle" style="margin-right:8px;color:#e65100"></i>Create Enrollment Support Case</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Member Detail Modal -->
+<div id="memModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:640px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-id-card" style="color:#0277bd;margin-right:8px"></i><span id="mmTitle">Member Detail</span></h6>
+      <button onclick="closeMemModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Member Name</div><div id="mmName" style="font-size:14px;font-weight:700;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Member ID</div><div id="mmID" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">MBI (Medicare)</div><div id="mmMBI" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Plan</div><div id="mmPlan" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Status</div><div id="mmStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Enrolled Since</div><div id="mmEnrolled" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Assigned Agent</div><div id="mmAgent" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">PCP</div><div id="mmPCP" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:12px">
+        <div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:6px">Enrollment Notes</div>
+        <div id="mmNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeMemModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var members={
+  'martha':{name:'Martha Johnson',id:'GK-2026-00441',mbi:'1EG4-TE5-MK72',plan:'Gold Kidney C-SNP',status:'Active',enrolled:'01 01,2026',agent:'Lisa Wang (NPN: 7719022)',pcp:'Dr. Sarah Miller — Nephrology Associates, Miami FL',notes:'C-SNP member with Stage 4 CKD. CSNP physician verification letter confirmed Dec 2025. Enrolled during OEP 2026. Dialysis 3x/week at DaVita Miami Lakes. Current HRA completed 01 15,2026. Healthy Visit scheduled Aug 2026. No open issues.'},
+  'robert':{name:'Robert Wilson',id:'GK-2026-00398',mbi:'4AB2-RK9-JL45',plan:'Gold Kidney MA',status:'Pending — Application In Progress',enrolled:'Application submitted 06 07,2026',agent:'James Martinez (NPN: 8823441)',pcp:'Pending selection',notes:'OEP enrollment application submitted. SOA attestation issue (system error — IT ticket ESC-4421). Agent working on manual SOA upload as workaround. PCP selection pending. Expected completion by Jun 12.'},
+  'linda':{name:'Linda Garcia',id:'GK-2025-00289',mbi:'7FD1-WP3-HN88',plan:'Gold Kidney D-SNP',status:'Active',enrolled:'10 15,2025',agent:'Sarah Chen (NPN: 7719022)',pcp:'Dr. Michael Torres — Community Health Center, Houston TX',notes:'Dual-eligible member (Medicare + Medicaid). Medicaid ID: FL-MED-9912345. Enrolled via SEP Oct 2025 after losing employer coverage. HRA completed Nov 2025. Active and in good standing. Recent enrollment support case for Medicaid ID validation timeout — resolved.'},
+  'david':{name:'David Brown',id:'GK-2026-00455',mbi:'2TH8-QR6-BX19',plan:'Gold Kidney MA',status:'Pending — PCP Issue',enrolled:'Application submitted 06 08,2026',agent:'Angela Torres (NPN: 6651209)',pcp:'Dr. Emily Park (selected but not in network)',notes:'Application pending. Agent selected Dr. Emily Park as PCP but provider left Gold Kidney network 06 01,2026. Agent needs to select alternative PCP. Provider directory update expected Jun 15. Agent notified of issue Jun 9.'},
+  'mary':{name:'Mary Thompson',id:'GK-2025-00156',mbi:'9KN4-LM2-VS67',plan:'Gold Kidney MA',status:'Active',enrolled:'07 01,2025',agent:'David Chen',pcp:'Dr. James Wright — Premier Internal Medicine, Tampa FL',notes:'Active MA member since Jul 2025. DOB verification issue resolved Aug 2025 (case ENR-2026-0449 was a repeat — resolved). Annual HRA completed Mar 2026. Healthy Visit completed Apr 2026. No open issues.'},
+  'james':{name:'James Anderson',id:'GK-2026-00467',mbi:'5PQ7-CD1-YN33',plan:'Gold Kidney D-SNP',status:'Pending — Plan Selection',enrolled:'Application started 06 09,2026',agent:'Lisa Wang (NPN: 7719022)',pcp:'Pending selection',notes:'Dual-eligible member in Broward County FL. Agent requesting D-SNP plan comparison assistance. Member has CKD Stage 3 and needs dialysis coverage evaluation. Agent advised to select Gold Kidney D-SNP Enhanced for better dialysis network and $0 specialist copays.'},
+  'patricia':{name:'Patricia Davis',id:'GK-2025-00201',mbi:'8GH3-NB5-DF92',plan:'Gold Kidney MA',status:'Disenrollment Pending',enrolled:'04 01,2025 — Disenrollment effective 08 01,2026',agent:'Sarah Chen (NPN: 7719022)',pcp:'Dr. Lisa Adams',notes:'Member submitted voluntary disenrollment 06 08,2026. Reason: relocating to Ohio (Gold Kidney not available). Disenrollment request processing — effective 08 01,2026. Member will transition to Original Medicare. Final month of coverage: Jul 2026.'},
+  'thomas':{name:'Thomas White',id:'GK-2026-00412',mbi:'3RS9-VW4-KT56',plan:'Gold Kidney MA',status:'Pending SEP',enrolled:'SEP application submitted 06 05,2026',agent:'James Martinez (NPN: 8823441)',pcp:'Dr. Robert Kim — Primary Care Plus, Miami FL',notes:'SEP enrollment pending qualifying event documentation. Member lost employer coverage May 30. Proof of coverage loss (employer letter or COBRA notice) required. Member expected to provide documentation by Jun 13. If received, enrollment effective Jul 1.'},
+  'karen':{name:'Karen Mitchell',id:'GK-2025-00078',mbi:'6XT2-JP8-AM14',plan:'Gold Kidney C-SNP',status:'Active',enrolled:'01 01,2025',agent:'Angela Torres (NPN: 6651209)',pcp:'Dr. Nancy Chen — Kidney Care Specialists, Fort Lauderdale FL',notes:'C-SNP member with Stage 5 CKD (ESRD). On dialysis 3x/week at Fresenius Medical Care. CSNP verification renewed Jan 2026. Annual HRA completed Feb 2026. Transplant evaluation in progress at Jackson Memorial Hospital. Stable and compliant with care plan.'},
+  'steven':{name:'Steven Clark',id:'GK-2024-00412',mbi:'1ML5-HK7-QW23',plan:'Gold Kidney MA (former)',status:'Disenrolled — 12 31,2025',enrolled:'01 01,2024 — 12 31,2025',agent:'David Chen (former agent)',pcp:'N/A',notes:'Member disenrolled 12 31,2025 during OEP. Moved to competitor plan (Humana MA). Was active for 2 years. No outstanding claims or issues. Commission payments finalized. Record retained for historical reference.'}
+};
+function showMember(key){
+  var m=members[key];if(!m)return;
+  document.getElementById('mmTitle').textContent='Member — '+m.name;
+  document.getElementById('mmName').textContent=m.name;
+  document.getElementById('mmID').textContent=m.id;
+  document.getElementById('mmMBI').textContent=m.mbi;
+  document.getElementById('mmPlan').textContent=m.plan;
+  document.getElementById('mmStatus').textContent=m.status;
+  document.getElementById('mmEnrolled').textContent=m.enrolled;
+  document.getElementById('mmAgent').textContent=m.agent;
+  document.getElementById('mmPCP').textContent=m.pcp;
+  document.getElementById('mmNotes').textContent=m.notes;
+  document.getElementById('memModal').style.display='flex';
+}
+function closeMemModal(){document.getElementById('memModal').style.display='none';}
+document.getElementById('memModal').addEventListener('click',function(e){if(e.target===this)closeMemModal();});
+
+// Filters
+var memRows=document.querySelectorAll('.table tbody tr');
+function applyFilters(){
+  var search=document.getElementById('fSearch').value.trim().toLowerCase();
+  var agent=document.getElementById('fAgent').value.trim().toLowerCase();
+  var plan=document.getElementById('fPlan').value;
+  var status=document.getElementById('fStatus').value;
+  var visible=0;
+  memRows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var rName=cells[0]?cells[0].textContent.trim().toLowerCase():'';
+    var rID=cells[1]?cells[1].textContent.trim().toLowerCase():'';
+    var rMBI=cells[2]?cells[2].textContent.trim().toLowerCase():'';
+    var rPlan=cells[3]?cells[3].textContent.trim():'';
+    var rAgent=cells[4]?cells[4].textContent.trim().toLowerCase():'';
+    var rStatus=cells[5]?cells[5].textContent.trim():'';
+    var show=true;
+    if(search && rName.indexOf(search)<0 && rID.indexOf(search)<0 && rMBI.indexOf(search)<0) show=false;
+    if(agent && rAgent.indexOf(agent)<0) show=false;
+    if(plan!=='All Plans' && rPlan.indexOf(plan)<0) show=false;
+    if(status!=='All Statuses'){
+      if(status==='Active' && rStatus!=='Active') show=false;
+      if(status==='Pending' && rStatus.indexOf('Pending')<0) show=false;
+      if(status==='Disenrolled' && rStatus.indexOf('Disenrol')<0) show=false;
+    }
+    row.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  showToast(visible+' member'+(visible!==1?'s':'')+' found','info');
+}
+document.getElementById('fSearch').addEventListener('input',applyFilters);
+document.getElementById('fAgent').addEventListener('input',applyFilters);
+document.getElementById('fPlan').addEventListener('change',applyFilters);
+document.getElementById('fStatus').addEventListener('change',applyFilters);
+</script>
+</body>
+</html>

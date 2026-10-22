@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HRA Management | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}.window-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:600;margin-bottom:12px}.window-ok{background:#e8f5e9;color:#1b5e20}.window-warn{background:#fff8e1;color:#e65100}.window-danger{background:#fce4ec;color:#c62828}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html" class="active"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Health Risk Assessment (HRA)</h4><ol class="breadcrumb-bar"><li>HRA Form, Status Tracking &amp; 14-Day Window</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- 14-Day Window Indicator -->
+    <div class="window-bar window-warn">
+      <i class="fas fa-clock"></i>
+      <span>14-Day Window: 11 days remaining for Susan Walsh (signed 05 14,2026 ? deadline 05 28,2026). Submit before deadline to earn $25.00 HRA incentive.</span>
+    </div>
+
+    <!-- My HRA Queue -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-list" style="margin-right:8px;color:#0d47a1"></i>My HRA Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','hra-management_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Member</th><th>App Signature Date</th><th>14-Day Deadline</th><th>Days Remaining</th><th>Status</th><th>Incentive</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr style="background:#fff5f5">
+              <td><strong>Susan Walsh</strong></td>
+              <td>05 14,2026</td>
+              <td>05 28,2026</td>
+              <td style="color:#e65100;font-weight:700">3 days</td>
+              <td><span class="bdg b-red">Not Started</span></td>
+              <td>$25.00</td>
+              <td><button class="btn-pr btn-sm" onclick="document.getElementById('hra-form').scrollIntoView({behavior:'smooth'})">Start Now</button></td>
+            </tr>
+            <tr>
+              <td><strong>Earl Thompson</strong></td>
+              <td>05 12,2026</td>
+              <td>05 26,2026</td>
+              <td style="color:#e65100;font-weight:700">1 day</td>
+              <td><span class="bdg b-amber">In Progress (60%)</span></td>
+              <td>$25.00</td>
+              <td><div class="dflex g6"><button class="btn-pr btn-sm" onclick="continueHRA('earl')">Continue</button><button class="btn-ol btn-sm" onclick="startHRA('earl')">Start Over</button></div></td>
+            </tr>
+            <tr>
+              <td><strong>Thomas Rivera</strong></td>
+              <td>03 28,2026</td>
+              <td>04 11,2026</td>
+              <td></td>
+              <td><span class="bdg b-green">Submitted Apr 2</span></td>
+              <td><span style="color:#1b5e20;font-weight:600">$25.00 ? Earned</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewHRA('thomas')">View</button></td>
+            </tr>
+            <tr>
+              <td><strong>Dorothy Henderson</strong></td>
+              <td>03 01,2026</td>
+              <td>03 15,2026</td>
+              <td></td>
+              <td><span class="bdg b-green">Submitted Mar 8</span></td>
+              <td><span style="color:#1b5e20;font-weight:600">$25.00 ? Earned</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewHRA('dorothy')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HRA Form (Y0171_HRAQuest_0724C) -->
+    <div class="card" id="hra-form">
+      <div class="card-hdr" style="background:#e3f2fd"><h5 id="hraFormTitle"><i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Questionnaire: Susan Walsh</h5><div style="display:flex;align-items:center;gap:8px"><button class="btn-ol btn-sm" onclick="prefillHRA(this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button><button class="btn-ol btn-sm" onclick="clearHRAForm()" style="display:flex;align-items:center;gap:6px"><i class="fas fa-eraser"></i>Clear Form</button><span class="bdg b-blue" id="hraFormBadge">New</span></div></div>
+      <div class="card-body" style="font-size:13px" id="hraFormBody">
+        <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:#0d47a1;display:flex;align-items:flex-start;gap:10px">
+          <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
+          <div><strong>Health Risk Assessment (HRA) &mdash; Y0171_HRAQuest_0724C</strong><br>This questionnaire helps Gold Kidney Health Plan identify members' health needs, coordinate care, and connect them with appropriate resources. Completing the HRA within 14 days of enrollment earns the agent a $25.00 incentive. All responses are confidential and protected under HIPAA.</div>
+        </div>
+
+        <!-- Contact Information -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-user" style="margin-right:6px"></i>Contact Information</h6>
+          <div class="form-row">
+            <div class="fg"><label>First Name <span style="color:#c62828">*</span></label><input type="text" id="hraFirstName"></div>
+            <div class="fg"><label>Last Name <span style="color:#c62828">*</span></label><input type="text" id="hraLastName"></div>
+            <div class="fg"><label>Phone Number</label><input type="tel" id="hraPhone" placeholder="(555) 555-5555"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Date of Birth <span style="color:#c62828">*</span></label><input type="date" id="hraDOB"></div>
+            <div class="fg"><label>Gold Kidney ID Number</label><input type="text" id="hraGKID" placeholder="GK-XXXX-XXXXXX"></div>
+            <div class="fg"><label>Type of Assessment</label>
+              <select id="hraAssessType"><option value="">Select...</option><option>Initial</option><option>Annual</option><option>TOC (Transition of Care)</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Language / Cultural -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-globe" style="margin-right:6px"></i>Language / Cultural</h6>
+          <div class="fg" style="margin-bottom:12px"><label>1. Do you have a language preference other than English? <span style="color:#c62828">*</span></label>
+            <select id="hraQ1"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px" id="hraQ1Lang" style="display:none"><label>If yes, which language?</label>
+            <select id="hraQ1LangSel"><option value="">Select...</option><option>Arabic</option><option>Chinese</option><option>French</option><option>German</option><option>Hindi</option><option>Korean</option><option>Navajo</option><option>Spanish</option><option>Tagalog</option><option>Vietnamese</option><option>Other</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>2. Are there any specific cultural or religious beliefs that may affect your health care? <span style="color:#c62828">*</span></label>
+            <select id="hraQ2"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px" id="hraQ2Beliefs"><label>If yes, which?</label>
+            <select id="hraQ2BeliefSel"><option value="">Select...</option><option>Amish</option><option>Baha'i</option><option>Buddhism</option><option>Christianity</option><option>Hindu</option><option>Jehovah's Witness</option><option>Judaism</option><option>Muslim</option><option>Seventh-day Adventist</option><option>Sikh</option><option>Other</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Demographics -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-id-card" style="margin-right:6px"></i>Demographics</h6>
+          <div class="fg" style="margin-bottom:12px"><label>3. What is your race?</label>
+            <select id="hraQ3"><option value="">Select...</option><option>American Indian or Alaska Native</option><option>Asian Indian</option><option>Black or African American</option><option>Chinese</option><option>Filipino</option><option>Guamanian or Chamorro</option><option>Japanese</option><option>Korean</option><option>Native Hawaiian</option><option>Samoan</option><option>Vietnamese</option><option>White</option><option>Other Asian</option><option>Other Pacific Islander</option><option>Prefer not to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>4. What is your ethnicity?</label>
+            <select id="hraQ4"><option value="">Select...</option><option>Not of Hispanic, Latino/a or Spanish origin</option><option>Puerto Rican</option><option>Mexican, Mexican American, Chicano/a</option><option>Cuban</option><option>Another Hispanic, Latino or Spanish origin</option><option>Prefer not to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>5. What is the highest level of education you have completed?</label>
+            <select id="hraQ5"><option value="">Select...</option><option>8th grade or less</option><option>High School Graduate or GED</option><option>Some College</option><option>College Degree</option><option>Advanced Degree</option></select>
+          </div>
+        </div>
+
+        <!-- Section: General Health -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-heartbeat" style="margin-right:6px"></i>General Health</h6>
+          <div class="fg" style="margin-bottom:12px"><label>6. In general, how would you rate your current health? <span style="color:#c62828">*</span></label>
+            <select id="hraQ6"><option value="">Select...</option><option>Excellent</option><option>Very good</option><option>Good</option><option>Fair</option><option>Poor</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg"><label>Are there specific reasons that made you answer the question the way you did?</label><textarea id="hraQ6Reason" rows="2" placeholder="Optional..."></textarea></div>
+        </div>
+
+        <!-- Section: Activity / Exercise -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-running" style="margin-right:6px"></i>Activity / Exercise</h6>
+          <div class="fg" style="margin-bottom:12px"><label>7. How is your current activity level? <span style="color:#c62828">*</span></label>
+            <select id="hraQ7"><option value="">Select...</option><option>Same as 3 months ago</option><option>Better than 3 months ago</option><option>Worse than 3 months ago</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>8. Do you use any of the following assistive devices in your home?</label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:6px" id="hraQ8Checks">
+              <label><input type="checkbox" name="hraQ8" value="Cane"> Cane</label>
+              <label><input type="checkbox" name="hraQ8" value="Walker"> Walker</label>
+              <label><input type="checkbox" name="hraQ8" value="Crutches"> Crutches</label>
+              <label><input type="checkbox" name="hraQ8" value="Manual Wheelchair"> Manual Wheelchair</label>
+              <label><input type="checkbox" name="hraQ8" value="Scooter"> Scooter</label>
+              <label><input type="checkbox" name="hraQ8" value="Powered Wheelchair"> Powered Wheelchair</label>
+              <label><input type="checkbox" name="hraQ8" value="None"> None</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Substance Use -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-wine-glass-alt" style="margin-right:6px"></i>Substance Use</h6>
+          <div class="fg" style="margin-bottom:12px"><label>9. How often do you use alcohol? <span style="color:#c62828">*</span></label>
+            <select id="hraQ9"><option value="">Select...</option><option>Never</option><option>Sometimes</option><option>Often</option><option>Very often</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>10. Do you use illegal substances or medications not prescribed to you? <span style="color:#c62828">*</span></label>
+            <select id="hraQ10"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px" id="hraQ10Follow"><label>If yes, do you want to quit?</label>
+            <select id="hraQ10Quit"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>11. Do you use tobacco / nicotine products (e-cigarettes, vape, dip/chew)? <span style="color:#c62828">*</span></label>
+            <select id="hraQ11"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px" id="hraQ11Follow"><label>If yes, do you want to quit?</label>
+            <select id="hraQ11Quit"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Mental Health (PHQ-2) -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-brain" style="margin-right:6px"></i>Mental Health (PHQ-2)</h6>
+          <div class="fg" style="margin-bottom:12px"><label>12. Over the past 2 weeks, how often have you had little interest or pleasure in doing things? <span style="color:#c62828">*</span></label>
+            <select id="hraQ12"><option value="">Select...</option><option value="0">Not at all (0)</option><option value="1">Several days (1)</option><option value="2">More than half the days (2)</option><option value="3">Nearly every day (3)</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>13. Over the past 2 weeks, how often have you been feeling down, depressed, or hopeless? <span style="color:#c62828">*</span></label>
+            <select id="hraQ13"><option value="">Select...</option><option value="0">Not at all (0)</option><option value="1">Several days (1)</option><option value="2">More than half the days (2)</option><option value="3">Nearly every day (3)</option></select>
+          </div>
+          <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:11px;color:#e65100"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>If total PHQ-2 score &ge; 3, additional PHQ-9 questions and case management referral will be triggered.</div>
+        </div>
+
+        <!-- Section: Vaccination -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-syringe" style="margin-right:6px"></i>Vaccination</h6>
+          <div class="fg" style="margin-bottom:12px"><label>14. Have you had a flu shot / vaccine? <span style="color:#c62828">*</span></label>
+            <select id="hraQ14"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If so, when was your last flu shot?</label><input type="date" id="hraQ14Date"></div>
+          <div class="fg" style="margin-bottom:12px"><label>15. Have you had a Td/Tdap shot in the last 9 years?</label>
+            <select id="hraQ15"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>16. If over 50, have you had a shingles shot after turning 50?</label>
+            <select id="hraQ16"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>17. Have you had a pneumococcal shot / vaccine?</label>
+            <select id="hraQ17"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, how many?</label>
+            <select id="hraQ17Doses"><option value="">Select...</option><option>1st dose</option><option>2nd dose</option><option>Booster</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>18. Have you had a Hepatitis immunization shot?</label>
+            <select id="hraQ18"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, how many doses?</label>
+            <select id="hraQ18Doses"><option value="">Select...</option><option>One dose</option><option>Two doses</option><option>Three doses</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Chronic Conditions -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-notes-medical" style="margin-right:6px"></i>Chronic Conditions</h6>
+          <div class="fg" style="margin-bottom:12px"><label>19. Has a doctor ever told you that you have the following? <span style="color:#c62828">*</span></label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:6px" id="hraQ19Checks">
+              <label><input type="checkbox" name="hraQ19" value="Diabetes or Prediabetes"> Diabetes or Prediabetes</label>
+              <label><input type="checkbox" name="hraQ19" value="High blood pressure"> High blood pressure</label>
+              <label><input type="checkbox" name="hraQ19" value="Kidney disease"> Kidney disease</label>
+              <label><input type="checkbox" name="hraQ19" value="Heart disease"> Heart disease</label>
+              <label><input type="checkbox" name="hraQ19" value="Asthma"> Asthma</label>
+              <label><input type="checkbox" name="hraQ19" value="COPD"> COPD</label>
+              <label><input type="checkbox" name="hraQ19" value="HIV / AIDS"> HIV / AIDS</label>
+              <label><input type="checkbox" name="hraQ19" value="Stroke"> Stroke</label>
+              <label><input type="checkbox" name="hraQ19" value="Cancer"> Cancer</label>
+              <label><input type="checkbox" name="hraQ19" value="Bipolar disorder"> Bipolar disorder</label>
+              <label><input type="checkbox" name="hraQ19" value="Depression"> Depression</label>
+              <label><input type="checkbox" name="hraQ19" value="Schizophrenia"> Schizophrenia</label>
+              <label><input type="checkbox" name="hraQ19" value="Dementia"> Dementia</label>
+              <label><input type="checkbox" name="hraQ19" value="Hearing problems"> Hearing problems</label>
+              <label><input type="checkbox" name="hraQ19" value="Vision problems"> Vision problems</label>
+              <label><input type="checkbox" name="hraQ19" value="None"> None</label>
+            </div>
+          </div>
+          <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:8px 12px;font-size:11px;color:#0d47a1"><i class="fas fa-info-circle" style="margin-right:4px"></i>Specific assessments auto-trigger for diabetes, kidney disease, heart disease, and lung disease if marked.</div>
+        </div>
+
+        <!-- Section: Current Care -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-user-md" style="margin-right:6px"></i>Current Care</h6>
+          <div class="fg" style="margin-bottom:12px"><label>20. Do you have a primary care doctor you can easily see on a routine basis? <span style="color:#c62828">*</span></label>
+            <select id="hraQ20"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, name and contact info of your PCP:</label><input type="text" id="hraQ20PCP" placeholder="e.g., Dr. Smith, (555) 123-4567"></div>
+          <div class="fg" style="margin-bottom:12px"><label>21. Do you have other doctors / specialists that you see?</label>
+            <select id="hraQ21"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, specialist name, type, and contact:</label><input type="text" id="hraQ21Spec" placeholder="e.g., Dr. Patel (Nephrologist)"></div>
+          <div class="fg" style="margin-bottom:12px"><label>22. In the past 3 months, have you visited the ER or stayed overnight in the hospital? <span style="color:#c62828">*</span></label>
+            <select id="hraQ22"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, how many times and for what reasons?</label><input type="text" id="hraQ22Detail" placeholder="e.g., 1 time, chest pain"></div>
+          <div class="fg" style="margin-bottom:12px"><label>23. Do you use any medical devices in your home?</label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:6px" id="hraQ23Checks">
+              <label><input type="checkbox" name="hraQ23" value="Oxygen"> Oxygen</label>
+              <label><input type="checkbox" name="hraQ23" value="CPAP/BiPAP"> CPAP/BiPAP</label>
+              <label><input type="checkbox" name="hraQ23" value="Wound vac"> Wound vac</label>
+              <label><input type="checkbox" name="hraQ23" value="Insulin pump"> Insulin pump</label>
+              <label><input type="checkbox" name="hraQ23" value="Hospital bed"> Hospital bed</label>
+              <label><input type="checkbox" name="hraQ23" value="None"> None</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: ADLs / IADLs -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-hands-helping" style="margin-right:6px"></i>Activities of Daily Living (ADLs / IADLs)</h6>
+          <div class="fg" style="margin-bottom:12px"><label>24. Do you need help from others to perform everyday activities (eating, dressing, grooming, bathing, walking, toileting)? <span style="color:#c62828">*</span></label>
+            <select id="hraQ24"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, do you get the help you need?</label>
+            <select id="hraQ24Help"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>25. Do you need help with laundry, housekeeping, shopping, telephone, cooking, transportation, home repair, or taking medications? <span style="color:#c62828">*</span></label>
+            <select id="hraQ25"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, do you get the help you need?</label>
+            <select id="hraQ25Help"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Fall -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Fall Risk</h6>
+          <div class="fg" style="margin-bottom:12px"><label>26. Have you fallen more than once in the past 6 months? <span style="color:#c62828">*</span></label>
+            <select id="hraQ26"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Living Situation -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-home" style="margin-right:6px"></i>Living Situation</h6>
+          <div class="fg" style="margin-bottom:12px"><label>27. What is your living situation today? <span style="color:#c62828">*</span></label>
+            <select id="hraQ27"><option value="">Select...</option><option>I have a steady place to live</option><option>I have a place to live today, but I am worried about losing it in the future</option><option>I do not have a steady place to live</option><option>Other</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>28. Do you have problems with any of the following at home? (Check all that apply)</label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:6px" id="hraQ28Checks">
+              <label><input type="checkbox" name="hraQ28" value="Pests (bugs, ants, mice)"> Pests (bugs, ants, mice)</label>
+              <label><input type="checkbox" name="hraQ28" value="Mold"> Mold</label>
+              <label><input type="checkbox" name="hraQ28" value="Lead paint or pipes"> Lead paint or pipes</label>
+              <label><input type="checkbox" name="hraQ28" value="Lack of heat"> Lack of heat</label>
+              <label><input type="checkbox" name="hraQ28" value="Oven or stove not working"> Oven/stove not working</label>
+              <label><input type="checkbox" name="hraQ28" value="Smoke detectors missing"> Smoke detectors missing</label>
+              <label><input type="checkbox" name="hraQ28" value="Water leaks"> Water leaks</label>
+              <label><input type="checkbox" name="hraQ28" value="None of the above"> None of the above</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Food Security -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-utensils" style="margin-right:6px"></i>Food Security</h6>
+          <div class="fg" style="margin-bottom:12px"><label>29. Within the past 12 months, you worried that your food would run out before you got money to buy more. <span style="color:#c62828">*</span></label>
+            <select id="hraQ29"><option value="">Select...</option><option>Often True</option><option>Sometimes True</option><option>Never True</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>30. Within the past 12 months, the food you bought just didn't last and you didn't have money to get more. <span style="color:#c62828">*</span></label>
+            <select id="hraQ30"><option value="">Select...</option><option>Often True</option><option>Sometimes True</option><option>Never True</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Transportation -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-car" style="margin-right:6px"></i>Transportation</h6>
+          <div class="fg" style="margin-bottom:12px"><label>31. In the past 12 months, has lack of reliable transportation kept you from medical appointments or getting things needed for daily living? <span style="color:#c62828">*</span></label>
+            <select id="hraQ31"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Medication -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-pills" style="margin-right:6px"></i>Medication</h6>
+          <div class="fg" style="margin-bottom:12px"><label>32. Do you have any difficulty getting your medications? <span style="color:#c62828">*</span></label>
+            <select id="hraQ32"><option value="">Select...</option><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If yes, what is your difficulty?</label><input type="text" id="hraQ32Detail" placeholder="e.g., cost, pharmacy distance"></div>
+          <div class="fg" style="margin-bottom:12px"><label>33. Do you understand your medications and how to take them? <span style="color:#c62828">*</span></label>
+            <select id="hraQ33"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If no, what do you not understand?</label><input type="text" id="hraQ33Detail" placeholder="e.g., dosage timing, side effects"></div>
+        </div>
+
+        <!-- Section: Pain -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-band-aid" style="margin-right:6px"></i>Pain</h6>
+          <div class="fg" style="margin-bottom:12px"><label>34. In the past 7 days, how much pain have you felt? <span style="color:#c62828">*</span></label>
+            <select id="hraQ34"><option value="">Select...</option><option>None</option><option>Some</option><option>A lot</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If pain, specify location or cause:</label><input type="text" id="hraQ34Detail" placeholder="e.g., lower back, arthritis"></div>
+          <div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:11px;color:#c62828"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>If member scores positive for pain, immediately refer to Case Management.</div>
+        </div>
+
+        <!-- Section: Advance Directive -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-file-medical-alt" style="margin-right:6px"></i>Advance Directive</h6>
+          <div class="fg" style="margin-bottom:12px"><label>35. Do you have an advance directive? <span style="color:#c62828">*</span></label>
+            <select id="hraQ35"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>If no, can we provide you with information regarding advance directives?</label>
+            <select id="hraQ35Info"><option value="">Select...</option><option>Yes</option><option>No</option><option>Unable to assess</option><option>Declined to answer</option></select>
+          </div>
+        </div>
+
+        <!-- Section: Reporting -->
+        <div style="margin-bottom:20px">
+          <h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:6px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Reporting</h6>
+          <div class="form-row">
+            <div class="fg"><label>36. Assessment Status <span style="color:#c62828">*</span></label>
+              <select id="hraQ36"><option value="">Select...</option><option>Completed</option><option>Pending</option><option>Refused</option></select>
+            </div>
+            <div class="fg"><label>Completion Date</label><input type="date" id="hraQ36Date"></div>
+            <div class="fg"><label>Who completed the form?</label>
+              <select id="hraQ36Who"><option value="">Select...</option><option>Member</option><option>Spouse</option><option>Family Member or Friend</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:8px;align-items:center;padding-top:16px;border-top:2px solid #e8eaed">
+          <button class="btn-pr" onclick="submitHRA()"><i class="fas fa-paper-plane"></i> Submit HRA</button>
+          <button class="btn-ol" onclick="saveHRADraft()"><i class="fas fa-save"></i> Save Draft</button>
+          <span style="margin-left:auto;font-size:11px;color:#5f6368"><i class="fas fa-lock" style="margin-right:4px"></i>Responses are confidential &amp; HIPAA-protected</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thank You / Submission Confirmation (hidden by default) -->
+    <div class="card" id="hraThankYou" style="display:none">
+      <div class="card-body" style="text-align:center;padding:40px 24px">
+        <div style="width:70px;height:70px;border-radius:50%;background:#e8f5e9;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-check-circle" style="font-size:36px;color:#2e7d32"></i></div>
+        <h4 style="color:#1b5e20;margin-bottom:8px">HRA Submitted Successfully!</h4>
+        <p style="font-size:13px;color:#5f6368;max-width:560px;margin:0 auto 16px">The Health Risk Assessment for <strong id="tyMemberName">Susan Walsh</strong> has been submitted to Gold Kidney Health Plan's Care Coordination team.</p>
+        <div style="background:#f8f9fa;border-radius:10px;padding:16px 20px;max-width:480px;margin:0 auto 20px;text-align:left;font-size:12px">
+          <div style="font-weight:700;margin-bottom:10px;color:#1a237e"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>What happens next?</div>
+          <ul style="margin:0;padding-left:18px;line-height:2.2;color:#424242">
+            <li>The HRA will be reviewed by Gold Kidney's <strong>Care Management</strong> team</li>
+            <li>Identified health risks will trigger <strong>targeted care coordination</strong> outreach</li>
+            <li>Members with chronic conditions (CKD, Diabetes, Heart Disease) receive <strong>enhanced care plans</strong></li>
+            <li>PHQ-2 scores &ge; 3 are referred for <strong>behavioral health follow-up</strong></li>
+            <li>Social determinant needs (food, housing, transport) are routed to <strong>community resource navigators</strong></li>
+            <li>Your <strong>$25.00 HRA incentive</strong> will be included in the next commission cycle</li>
+          </ul>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <button class="btn-pr btn-sm" onclick="resetHRAForm()"><i class="fas fa-plus"></i> Start New HRA</button>
+          <button class="btn-ol btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print Confirmation</button>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:#9e9e9e">Submission ID: <span id="tySubId">HRA-2026-XXXX</span> &nbsp;|&nbsp; Submitted: <span id="tySubDate"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- HRA View Modal -->
+<div class="modal fade" id="hraViewModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header" style="background:#e3f2fd"><h5 class="modal-title" id="hraViewTitle"><i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Form</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" id="hraViewBody" style="font-size:13px;padding:20px"></div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button><button class="btn btn-primary btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print</button></div>
+</div></div></div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var currentHraMember='Susan Walsh';
+
+function prefillHRA(btn){
+  function setVal(id,v){var el=document.getElementById(id);if(el)el.value=v;}
+  function setChk(name,vals){
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(c){c.checked=vals.indexOf(c.value)>=0;});
+  }
+  // Contact
+  setVal('hraFirstName','Susan');
+  setVal('hraLastName','Walsh');
+  setVal('hraPhone','(603) 555-4821');
+  setVal('hraDOB','1956-08-14');
+  setVal('hraGKID','GK-2026-004291');
+  setVal('hraAssessType','Initial');
+  // Language / Cultural
+  setVal('hraQ1','No');
+  setVal('hraQ2','No');
+  // Demographics
+  setVal('hraQ3','White');
+  setVal('hraQ4','Not of Hispanic, Latino/a or Spanish origin');
+  setVal('hraQ5','Some College');
+  // General
+  setVal('hraQ6','Good');
+  setVal('hraQ6Reason','Feel okay most days but get tired in the afternoons');
+  // Activity
+  setVal('hraQ7','Same as 3 months ago');
+  setChk('hraQ8',['None']);
+  // Substance Use
+  setVal('hraQ9','Never');
+  setVal('hraQ10','No');
+  setVal('hraQ11','No');
+  // Mental Health
+  setVal('hraQ12','0');
+  setVal('hraQ13','0');
+  // Vaccination
+  setVal('hraQ14','Yes');
+  setVal('hraQ14Date','2025-10-15');
+  setVal('hraQ15','Yes');
+  setVal('hraQ16','Yes');
+  setVal('hraQ17','Yes');
+  setVal('hraQ17Doses','2nd dose');
+  setVal('hraQ18','Yes');
+  setVal('hraQ18Doses','Three doses');
+  // Chronic Conditions
+  setChk('hraQ19',['Kidney disease','High blood pressure']);
+  // Current Care
+  setVal('hraQ20','Yes');
+  setVal('hraQ20PCP','Dr. Maria Santos, (603) 555-7200');
+  setVal('hraQ21','Yes');
+  setVal('hraQ21Spec','Dr. Rajesh Patel (Nephrologist), (603) 555-8100');
+  setVal('hraQ22','No');
+  setChk('hraQ23',['None']);
+  // ADLs
+  setVal('hraQ24','No');
+  setVal('hraQ25','No');
+  // Fall
+  setVal('hraQ26','No');
+  // Living
+  setVal('hraQ27','I have a steady place to live');
+  setChk('hraQ28',['None of the above']);
+  // Food
+  setVal('hraQ29','Never True');
+  setVal('hraQ30','Never True');
+  // Transport
+  setVal('hraQ31','No');
+  // Medication
+  setVal('hraQ32','No');
+  setVal('hraQ33','Yes');
+  // Pain
+  setVal('hraQ34','Some');
+  setVal('hraQ34Detail','Mild lower back pain, managed with OTC medication');
+  // Advance Directive
+  setVal('hraQ35','Yes');
+  // Reporting
+  setVal('hraQ36','Completed');
+  setVal('hraQ36Date',new Date().toISOString().split('T')[0]);
+  setVal('hraQ36Who','Member');
+
+  if(btn){
+    btn.innerHTML='<i class="fas fa-check"></i> Prefilled!';
+    btn.style.background='#e8f5e9';btn.style.borderColor='#2e7d32';btn.style.color='#1b5e20';
+    setTimeout(function(){btn.innerHTML='<i class="fas fa-magic"></i>Prefill Data';btn.style.background='#fff3e0';btn.style.borderColor='#fb8c00';btn.style.color='#e65100';},2000);
+  }
+  if(typeof showToast==='function') showToast('All 36 HRA questions prefilled for '+currentHraMember,'success');
+}
+
+function submitHRA(){
+  // Validate required fields
+  var required=[
+    {id:'hraFirstName',label:'First Name'},{id:'hraLastName',label:'Last Name'},{id:'hraDOB',label:'Date of Birth'},
+    {id:'hraQ1',label:'Q1 (Language)'},{id:'hraQ2',label:'Q2 (Cultural beliefs)'},{id:'hraQ6',label:'Q6 (Overall health)'},
+    {id:'hraQ7',label:'Q7 (Activity level)'},{id:'hraQ9',label:'Q9 (Alcohol use)'},
+    {id:'hraQ10',label:'Q10 (Substance use)'},{id:'hraQ11',label:'Q11 (Tobacco)'},
+    {id:'hraQ12',label:'Q12 (PHQ-2 interest)'},{id:'hraQ13',label:'Q13 (PHQ-2 depression)'},
+    {id:'hraQ14',label:'Q14 (Flu shot)'},{id:'hraQ20',label:'Q20 (Primary care)'},
+    {id:'hraQ22',label:'Q22 (ER visits)'},{id:'hraQ24',label:'Q24 (ADLs)'},
+    {id:'hraQ25',label:'Q25 (IADLs)'},{id:'hraQ26',label:'Q26 (Falls)'},
+    {id:'hraQ27',label:'Q27 (Living situation)'},{id:'hraQ29',label:'Q29 (Food security 1)'},
+    {id:'hraQ30',label:'Q30 (Food security 2)'},{id:'hraQ31',label:'Q31 (Transportation)'},
+    {id:'hraQ32',label:'Q32 (Medication access)'},{id:'hraQ33',label:'Q33 (Medication understanding)'},
+    {id:'hraQ34',label:'Q34 (Pain)'},{id:'hraQ35',label:'Q35 (Advance directive)'},
+    {id:'hraQ36',label:'Q36 (Assessment status)'}
+  ];
+  var missing=[];
+  required.forEach(function(r){
+    var el=document.getElementById(r.id);
+    if(!el) return;
+    if(!el.value||!el.value.trim()){el.style.borderColor='#c62828';missing.push(r.label);}
+    else{el.style.borderColor='';}
+  });
+  // Check Q19 (chronic conditions) has at least one checked
+  var q19=document.querySelectorAll('input[name="hraQ19"]:checked');
+  if(!q19.length) missing.push('Q19 (Chronic conditions)');
+
+  if(missing.length){
+    var b=document.getElementById('hraErrBanner');
+    if(!b){
+      b=document.createElement('div');
+      b.id='hraErrBanner';
+      b.style.cssText='background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#5f6368;display:flex;gap:8px;align-items:flex-start';
+      var body=document.getElementById('hraFormBody');
+      body.insertBefore(b,body.firstChild);
+    }
+    b.innerHTML='<i class="fas fa-exclamation-triangle" style="color:#e65100;flex-shrink:0;margin-top:2px"></i><div><strong style="color:#e65100">'+missing.length+' required field(s) missing:</strong><ul style="margin:4px 0 0;padding-left:16px;line-height:1.8">'+missing.map(function(m){return'<li>'+m+'</li>';}).join('')+'</ul></div>';
+    b.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  var b=document.getElementById('hraErrBanner');if(b)b.remove();
+
+  // Show thank you
+  document.getElementById('hra-form').style.display='none';
+  document.getElementById('hraThankYou').style.display='block';
+  document.getElementById('tyMemberName').textContent=currentHraMember;
+  document.getElementById('tySubId').textContent='HRA-2026-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('tySubDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('hraThankYou').scrollIntoView({behavior:'smooth',block:'start'});
+  if(typeof showToast==='function') showToast('HRA submitted successfully for '+currentHraMember+'. $25.00 incentive queued.','success');
+}
+
+function saveHRADraft(){
+  if(typeof showToast==='function') showToast('HRA draft saved for '+currentHraMember,'info');
+  document.getElementById('hraFormBadge').textContent='Draft';
+  document.getElementById('hraFormBadge').className='bdg b-amber';
+}
+
+function clearHRAForm(){
+  document.querySelectorAll('#hraFormBody select').forEach(function(s){s.selectedIndex=0;s.style.borderColor='';});
+  document.querySelectorAll('#hraFormBody input[type="text"],#hraFormBody input[type="tel"],#hraFormBody input[type="date"]').forEach(function(i){i.value='';i.style.borderColor='';});
+  document.querySelectorAll('#hraFormBody textarea').forEach(function(t){t.value='';});
+  document.querySelectorAll('#hraFormBody input[type="checkbox"]').forEach(function(c){c.checked=false;});
+  var b=document.getElementById('hraErrBanner');if(b)b.remove();
+  document.getElementById('hraFormBadge').textContent='New';
+  document.getElementById('hraFormBadge').className='bdg b-blue';
+  if(typeof showToast==='function') showToast('Form cleared','info');
+}
+
+function resetHRAForm(){
+  document.getElementById('hraThankYou').style.display='none';
+  document.getElementById('hra-form').style.display='block';
+  // Reset all fields
+  document.querySelectorAll('#hraFormBody select').forEach(function(s){s.selectedIndex=0;s.style.borderColor='';});
+  document.querySelectorAll('#hraFormBody input[type="text"],#hraFormBody input[type="tel"],#hraFormBody input[type="date"]').forEach(function(i){i.value='';i.style.borderColor='';});
+  document.querySelectorAll('#hraFormBody textarea').forEach(function(t){t.value='';});
+  document.querySelectorAll('#hraFormBody input[type="checkbox"]').forEach(function(c){c.checked=false;});
+  currentHraMember='Susan Walsh';
+  document.getElementById('hraFormTitle').innerHTML='<i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Questionnaire: '+currentHraMember;
+  document.getElementById('hraFormBadge').textContent='New';
+  document.getElementById('hraFormBadge').className='bdg b-blue';
+  document.getElementById('hra-form').scrollIntoView({behavior:'smooth'});
+}
+
+function continueHRA(key){
+  if(key==='earl'){
+    currentHraMember='Earl Thompson';
+    document.getElementById('hraFormTitle').innerHTML='<i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Questionnaire: Earl Thompson';
+    document.getElementById('hraFormBadge').textContent='In Progress';
+    document.getElementById('hraFormBadge').className='bdg b-amber';
+    // Partial fill (60%)
+    document.getElementById('hraFirstName').value='Earl';
+    document.getElementById('hraLastName').value='Thompson';
+    document.getElementById('hraDOB').value='1960-11-03';
+    document.getElementById('hraGKID').value='GK-2026-003102';
+    document.getElementById('hraAssessType').value='Initial';
+    document.getElementById('hraQ1').value='No';
+    document.getElementById('hraQ2').value='No';
+    document.getElementById('hraQ6').value='Fair';
+    document.getElementById('hraQ7').value='Worse than 3 months ago';
+    document.getElementById('hraQ9').value='Sometimes';
+    document.getElementById('hraQ10').value='No';
+    document.getElementById('hraQ11').value='No';
+    document.getElementById('hraQ12').value='1';
+    document.getElementById('hraQ13').value='1';
+    document.getElementById('hraQ14').value='Yes';
+    document.getElementById('hraQ20').value='Yes';
+    document.getElementById('hraQ20PCP').value='Dr. Kevin Brooks, (603) 555-3300';
+    document.getElementById('hra-form').scrollIntoView({behavior:'smooth'});
+    if(typeof showToast==='function') showToast('Loaded partial HRA for Earl Thompson \u2014 complete remaining questions','info');
+  }
+}
+
+function startHRA(key){
+  var names={earl:'Earl Thompson',susan:'Susan Walsh'};
+  var name=names[key]||'Member';
+  currentHraMember=name;
+  resetHRAForm();
+  document.getElementById('hraFormTitle').innerHTML='<i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Questionnaire: '+name;
+  if(typeof showToast==='function') showToast('Starting fresh HRA for '+name,'info');
+}
+
+function viewHRA(key){
+  var data={
+    thomas:{
+      name:'Thomas Rivera',id:'GK-2026-003847',dob:'09/15/1958',phone:'(603) 555-9102',date:'04 02,2026',assessType:'Initial',
+      q1:'No',q1Lang:'',q2:'No',q2Belief:'',
+      q3:'White',q4:'Not of Hispanic, Latino/a or Spanish origin',q5:'High School Graduate or GED',
+      q6:'Good',q6Reason:'Feeling better since starting dialysis regularly',
+      q7:'Worse than 3 months ago',q8:'Walker',
+      q9:'Never',q10:'No',q10Quit:'',q11:'No',q11Quit:'',
+      q12:'Not at all (0)',q13:'Not at all (0)',
+      q14:'Yes',q14Date:'Oct 2025',q15:'Yes',q16:'Yes',q17:'Yes',q17Doses:'2nd dose',q18:'Yes',q18Doses:'Three doses',
+      q19:'Kidney disease, High blood pressure, Diabetes or Prediabetes',
+      q20:'Yes',q20PCP:'Dr. Maria Santos, (603) 555-7200',q21:'Yes',q21Spec:'Dr. Chen (Cardiologist), Dr. Patel (Nephrologist)',q22:'No',q22Detail:'',q23:'None',
+      q24:'No',q24Help:'',q25:'Yes',q25Help:'Yes',
+      q26:'No',
+      q27:'I have a steady place to live',q28:'None of the above',
+      q29:'Never True',q30:'Never True',
+      q31:'No',
+      q32:'No',q32Detail:'',q33:'Yes',q33Detail:'',
+      q34:'None',q34Detail:'',
+      q35:'Yes',q35Info:'',
+      q36:'Completed',q36Date:'04 02,2026',q36Who:'Member'
+    },
+    dorothy:{
+      name:'Dorothy Henderson',id:'GK-2025-002341',dob:'03/22/1952',phone:'(603) 555-6744',date:'03 08,2026',assessType:'Initial',
+      q1:'No',q1Lang:'',q2:'Yes',q2Belief:'Christianity',
+      q3:'Black or African American',q4:'Not of Hispanic, Latino/a or Spanish origin',q5:'Some College',
+      q6:'Fair',q6Reason:'Back pain limits activity; fatigued most afternoons',
+      q7:'Worse than 3 months ago',q8:'Cane',
+      q9:'Sometimes',q10:'No',q10Quit:'',q11:'No',q11Quit:'',
+      q12:'Several days (1)',q13:'Not at all (0)',
+      q14:'Yes',q14Date:'Nov 2025',q15:'Yes',q16:'No',q17:'Yes',q17Doses:'1st dose',q18:'No',q18Doses:'',
+      q19:'Kidney disease, High blood pressure, Vision problems',
+      q20:'Yes',q20PCP:'Dr. Rajesh Patel, (603) 555-8100',q21:'Yes',q21Spec:'Dr. Nguyen (Ophthalmologist)',q22:'Yes',q22Detail:'1 time — dizziness and fall',q23:'None',
+      q24:'Yes',q24Help:'Yes',q25:'Yes',q25Help:'Yes',
+      q26:'Yes',
+      q27:'I have a steady place to live',q28:'None of the above',
+      q29:'Never True',q30:'Never True',
+      q31:'No',
+      q32:'No',q32Detail:'',q33:'Yes',q33Detail:'',
+      q34:'Some',q34Detail:'Lower back, arthritis',
+      q35:'No',q35Info:'Yes',
+      q36:'Completed',q36Date:'03 08,2026',q36Who:'Member'
+    }
+  };
+  var d=data[key];if(!d)return;
+  document.getElementById('hraViewTitle').innerHTML='<i class="fas fa-clipboard-list" style="margin-right:8px;color:#0d47a1"></i>HRA Questionnaire: '+d.name;
+  function row(label,val){return val?'<tr><td style="color:#5f6368;white-space:nowrap;padding:4px 12px 4px 0;vertical-align:top;font-size:12px">'+label+'</td><td style="font-weight:600;padding:4px 0;font-size:12px">'+val+'</td></tr>':'';}
+  function section(icon,title){return'<h6 style="color:#1a237e;border-bottom:2px solid #0d47a1;padding-bottom:5px;margin:18px 0 10px;font-size:13px"><i class="fas '+icon+'" style="margin-right:6px"></i>'+title+'</h6>';}
+  var html='<div style="margin-bottom:14px;padding:10px 14px;background:#e8f5e9;border-radius:6px;font-size:12px;display:flex;align-items:center;gap:8px"><i class="fas fa-check-circle" style="color:#2e7d32"></i><strong>Submitted '+d.date+'</strong> &mdash; $25.00 HRA Incentive Earned</div>';
+  html+=section('fa-user','Contact Information');
+  html+='<table style="width:100%">'+row('Name',d.name)+row('DOB',d.dob)+row('Phone',d.phone)+row('Gold Kidney ID',d.id)+row('Assessment Type',d.assessType)+'</table>';
+  html+=section('fa-globe','Language / Cultural');
+  html+='<table style="width:100%">'+row('1. Language preference other than English?',d.q1)+row('Language',d.q1Lang)+row('2. Cultural/religious beliefs affecting care?',d.q2)+row('Belief',d.q2Belief)+'</table>';
+  html+=section('fa-id-card','Demographics');
+  html+='<table style="width:100%">'+row('3. Race',d.q3)+row('4. Ethnicity',d.q4)+row('5. Education level',d.q5)+'</table>';
+  html+=section('fa-heartbeat','General Health');
+  html+='<table style="width:100%">'+row('6. Current health rating',d.q6)+row('Reason',d.q6Reason)+'</table>';
+  html+=section('fa-running','Activity / Exercise');
+  html+='<table style="width:100%">'+row('7. Activity level',d.q7)+row('8. Assistive devices',d.q8)+'</table>';
+  html+=section('fa-wine-glass-alt','Substance Use');
+  html+='<table style="width:100%">'+row('9. Alcohol use',d.q9)+row('10. Illegal substances?',d.q10)+row('Want to quit?',d.q10Quit)+row('11. Tobacco/nicotine?',d.q11)+row('Want to quit?',d.q11Quit)+'</table>';
+  html+=section('fa-brain','Mental Health (PHQ-2)');
+  html+='<table style="width:100%">'+row('12. Little interest/pleasure',d.q12)+row('13. Feeling down/depressed',d.q13)+'</table>';
+  html+=section('fa-syringe','Vaccination');
+  html+='<table style="width:100%">'+row('14. Flu shot?',d.q14)+row('Last flu shot date',d.q14Date)+row('15. Td/Tdap in last 9 years?',d.q15)+row('16. Shingles shot (if over 50)?',d.q16)+row('17. Pneumococcal shot?',d.q17)+row('How many?',d.q17Doses)+row('18. Hepatitis shot?',d.q18)+row('How many doses?',d.q18Doses)+'</table>';
+  html+=section('fa-notes-medical','Chronic Conditions');
+  html+='<table style="width:100%">'+row('19. Diagnosed conditions',d.q19)+'</table>';
+  html+=section('fa-user-md','Current Care');
+  html+='<table style="width:100%">'+row('20. Primary care doctor?',d.q20)+row('PCP info',d.q20PCP)+row('21. Specialists?',d.q21)+row('Specialist info',d.q21Spec)+row('22. ER/hospital visit (3 months)?',d.q22)+row('Details',d.q22Detail)+row('23. Medical devices at home',d.q23)+'</table>';
+  html+=section('fa-hands-helping','ADLs / IADLs');
+  html+='<table style="width:100%">'+row('24. Need help with ADLs?',d.q24)+row('Get help needed?',d.q24Help)+row('25. Need help with IADLs?',d.q25)+row('Get help needed?',d.q25Help)+'</table>';
+  html+=section('fa-exclamation-triangle','Fall Risk');
+  html+='<table style="width:100%">'+row('26. Fallen more than once (6 months)?',d.q26)+'</table>';
+  html+=section('fa-home','Living Situation');
+  html+='<table style="width:100%">'+row('27. Living situation',d.q27)+row('28. Home problems',d.q28)+'</table>';
+  html+=section('fa-utensils','Food Security');
+  html+='<table style="width:100%">'+row('29. Worried food would run out?',d.q29)+row('30. Food didn\'t last?',d.q30)+'</table>';
+  html+=section('fa-car','Transportation');
+  html+='<table style="width:100%">'+row('31. Lack of transport barrier?',d.q31)+'</table>';
+  html+=section('fa-pills','Medication');
+  html+='<table style="width:100%">'+row('32. Difficulty getting medications?',d.q32)+row('Difficulty details',d.q32Detail)+row('33. Understand medications?',d.q33)+row('What not understood?',d.q33Detail)+'</table>';
+  html+=section('fa-band-aid','Pain');
+  html+='<table style="width:100%">'+row('34. Pain in past 7 days?',d.q34)+row('Location/cause',d.q34Detail)+'</table>';
+  html+=section('fa-file-medical-alt','Advance Directive');
+  html+='<table style="width:100%">'+row('35. Have advance directive?',d.q35)+row('Want information?',d.q35Info)+'</table>';
+  html+=section('fa-clipboard-check','Reporting');
+  html+='<table style="width:100%">'+row('36. Assessment status',d.q36)+row('Completion date',d.q36Date)+row('Completed by',d.q36Who)+'</table>';
+  document.getElementById('hraViewBody').innerHTML=html;
+  new bootstrap.Modal(document.getElementById('hraViewModal')).show();
+}
+</script>
+</body>
+</html>

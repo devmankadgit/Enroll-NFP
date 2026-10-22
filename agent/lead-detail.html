@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lead Detail ? Linda Park | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html" class="active"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Lead Detail ? Linda Park</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="leads.html">Leads</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Linda Park</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-edit"></i>Edit Lead</button>
+      <a href="soa-form.html" class="btn-ol btn-sm"><i class="fas fa-file-signature"></i>Get SOA</a>
+      <a href="enrollment.html" class="btn-pr"><i class="fas fa-file-medical"></i>Start Enrollment</a>
+    </div>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid">
+      <!-- Left: Lead Info + Status -->
+      <div class="col-3">
+        <!-- Lead Info -->
+        <div class="form-sect">
+          <div class="form-sect-title"><i class="fas fa-user"></i>Lead Information</div>
+          <div class="form-row">
+            <div class="fg"><label>First Name</label><input value="Linda" readonly></div>
+            <div class="fg"><label>Last Name</label><input value="Park" readonly></div>
+            <div class="fg"><label>Date of Birth</label><input value="09/22/1948" readonly></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Phone</label><input value="(305) 555-0142" readonly></div>
+            <div class="fg"><label>Email</label><input value="linda.park@gmail.com" readonly></div>
+            <div class="fg"><label>ZIP Code</label><input value="33101" readonly></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>County / State</label><input value="Miami-Dade / FL" readonly></div>
+            <div class="fg"><label>Lead Source</label><input value="Digital Form" readonly></div>
+            <div class="fg"><label>Campaign</label><input value="AEP 2026 Florida Drive (AEP-FL-2026)" readonly></div>
+          </div>
+          <div class="form-row">
+            <div class="fg col-full"><label>Health Conditions</label><input value="ESRD (End-Stage Renal Disease)" readonly></div>
+          </div>
+        </div>
+
+        <!-- Status Update -->
+        <div class="form-sect">
+          <div class="form-sect-title"><i class="fas fa-exchange-alt"></i>Lead Status &amp; Follow-up</div>
+          <div class="form-row">
+            <div class="fg">
+              <label>Current Status</label>
+              <select>
+                <option selected>New</option>
+                <option>Contacted</option><option>Appointment Set</option><option>SOA Obtained</option>
+                <option>Enrolled</option><option>Not Interested</option><option>Unreachable</option><option>Duplicate</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Priority</label>
+              <select><option selected>High</option><option>Medium</option><option>Low</option></select>
+            </div>
+            <div class="fg"><label>Follow-up Date</label><input type="date" value="2026-05-24"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg col-full"><label>Notes</label>
+              <textarea rows="3">Member submitted form via AEP 2026 landing page. Interested in ESRD C-SNP plans starting Jan 2026. Prefers morning calls (before noon). Has existing dialysis center ? Center for Renal Care, Miami.</textarea>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-pr btn-sm"><i class="fas fa-save"></i>Save Changes</button>
+            <button class="btn-ol btn-sm"><i class="fas fa-calendar"></i>Log Call</button>
+          </div>
+        </div>
+
+        <!-- Duplicate Check Result -->
+        <div class="al-success mb16"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>No duplicate detected.</strong> No existing lead or enrolled member with this phone + DOB combination.</span></div>
+
+        <!-- Enrollment Readiness -->
+        <div class="form-sect">
+          <div class="form-sect-title"><i class="fas fa-clipboard-check"></i>Enrollment Readiness Checklist</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="dflex ai-center g8"><i class="fas fa-circle" style="color:#e8eaed;font-size:10px"></i><span style="font-size:13px">SOA ? <span style="color:#c62828">Not Obtained</span> &nbsp;<a href="soa-form.html" style="color:#0d47a1;font-size:12px">Get SOA ?</a></span></div>
+            <div class="dflex ai-center g8"><i class="fas fa-circle" style="color:#e8eaed;font-size:10px"></i><span style="font-size:13px">BEQ Eligibility ? <span style="color:#c62828">Not Run</span></span></div>
+            <div class="dflex ai-center g8"><i class="fas fa-circle" style="color:#e8eaed;font-size:10px"></i><span style="font-size:13px">PQAT Health Assessment ? <span style="color:#c62828">Not Started</span></span></div>
+            <div class="dflex ai-center g8"><i class="fas fa-circle" style="color:#e8eaed;font-size:10px"></i><span style="font-size:13px">Plan Selected ? <span style="color:#c62828">Not Yet</span></span></div>
+          </div>
+          <a href="soa-form.html" class="btn-pr" style="margin-top:14px;display:inline-flex"><i class="fas fa-play"></i>Begin Enrollment Journey</a>
+        </div>
+      </div>
+
+      <!-- Right: Quick Actions + Activity -->
+      <div class="col-1">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Quick Actions</h5></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:8px;padding:14px">
+            <a href="soa-form.html" class="btn-ol" style="justify-content:flex-start"><i class="fas fa-file-signature"></i>Create SOA</a>
+            <a href="enrollment.html" class="btn-pr" style="justify-content:flex-start"><i class="fas fa-file-medical"></i>Start Enrollment</a>
+            <button class="btn-ol" style="justify-content:flex-start"><i class="fas fa-calendar"></i>Schedule Appointment</button>
+            <button class="btn-ol" style="justify-content:flex-start"><i class="fas fa-phone"></i>Log Phone Call</button>
+            <button class="btn-ol" style="justify-content:flex-start"><i class="fas fa-envelope"></i>Send Email</button>
+          </div>
+        </div>
+
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Lead Summary</h5></div>
+          <div class="card-body" style="font-size:13px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div><div class="text-muted text-sm">Lead ID</div><div class="text-bold">LD-2026-0847</div></div>
+              <div><div class="text-muted text-sm">Created</div><div class="text-bold">05 20,2026</div></div>
+              <div><div class="text-muted text-sm">Source</div><div class="text-bold">Digital Form</div></div>
+              <div><div class="text-muted text-sm">Campaign Code</div><div class="text-bold">AEP-FL-2026</div></div>
+              <div><div class="text-muted text-sm">County</div><div class="text-bold">Miami-Dade, FL</div></div>
+              <div><div class="text-muted text-sm">Assigned To</div><div class="text-bold">James Martinez</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><h5>Activity Log</h5></div>
+          <div class="card-body" style="padding:12px">
+            <ul class="timeline" style="margin:0">
+              <li class="tl-item"><div class="tl-time">05 20,2026 · 2:14 PM</div>Lead created via AEP digital form<div class="tl-by">System — Campaign: AEP-FL-2026</div></li>
+              <li class="tl-item"><div class="tl-time">05 20,2026 · 2:15 PM</div>Lead auto-assigned to James Martinez<div class="tl-by">System ? Round-robin assignment ? GA-FL territory</div></li>
+              <li class="tl-item"><div class="tl-time">05 21,2026 · 9:02 AM</div>Status updated: New → Contacted<div class="tl-by">James Martinez</div></li>
+              <li class="tl-item"><div class="tl-time">05 21,2026 · 9:05 AM</div>Phone call logged — left voicemail<div class="tl-by">James Martinez</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

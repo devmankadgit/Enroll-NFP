@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Master Data Management | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html" class="active"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Master Data Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Master Data</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-upload"></i>Bulk Upload (CSV)</button>
+      <button class="btn-pr btn-sm" onclick="addRecord()"><i class="fas fa-plus"></i>Add Record</button>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Data Categories (Tabs) -->
+    <div class="card mb16">
+      <div class="card-body" style="padding:12px 16px">
+        <div class="dflex g8" style="flex-wrap:wrap">
+          <button id="mdtab-countzip" class="btn-pr btn-sm" onclick="switchMDTab('countzip')">County-ZIP Mapping</button>
+          <button id="mdtab-sep" class="btn-ol btn-sm" onclick="switchMDTab('sep')">SEP Reason Codes</button>
+          <button id="mdtab-periods" class="btn-ol btn-sm" onclick="switchMDTab('periods')">Enrollment Periods</button>
+          <button id="mdtab-cms" class="btn-ol btn-sm" onclick="switchMDTab('cms')">CMS Rejection Codes</button>
+          <button id="mdtab-compliance" class="btn-ol btn-sm" onclick="switchMDTab('compliance')">Compliance Rules</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- County-ZIP Mapping Table -->
+    <div id="mdsec-countzip" class="card mb16">
+      <div class="card-hdr"><h5>County-to-ZIP Mapping — Plan Year 2026</h5><div class="dflex g8"><select id="mdStateFilter" class="form-control" style="width:120px" onchange="filterCountyZip()"><option>Florida</option><option>Texas</option><option>California</option></select><input id="mdZipSearch" type="text" class="tb-search" placeholder="Search ZIP/County" style="max-width:180px" oninput="filterCountyZip()"></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','master-data_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>State</th><th>County</th><th>ZIP Codes</th><th>Plans Available</th><th>Effective</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr id="czr-miami"><td>FL</td><td>Miami-Dade</td><td>33101, 33102, 33109, 33125, 33126, 33127</td><td>HMO, PPO, C-SNP, D-SNP</td><td>01 01,2026</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('Miami-Dade')">Edit</button></td></tr>
+            <tr id="czr-broward"><td>FL</td><td>Broward</td><td>33301, 33304, 33306, 33308, 33309</td><td>HMO, PPO, D-SNP</td><td>01 01,2026</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('Broward')">Edit</button></td></tr>
+            <tr id="czr-palm"><td>FL</td><td>Palm Beach</td><td>33401, 33403, 33405, 33407, 33410</td><td>HMO, PPO, C-SNP</td><td>01 01,2026</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('Palm Beach')">Edit</button></td></tr>
+            <tr id="czr-hills"><td>FL</td><td>Hillsborough</td><td>33601, 33602, 33603, 33604, 33605</td><td>HMO, PPO</td><td>01 01,2026</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('Hillsborough')">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Enrollment Period Calendar -->
+    <div id="mdsec-periods" class="card mb16" style="display:none">
+      <div class="card-hdr"><h5>Enrollment Period Calendar — 2026</h5><button class="btn-ol btn-sm" onclick="editEnrollmentDates()"><i class="fas fa-edit"></i>Edit Dates</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','master-data_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Period</th><th>Type</th><th>Start Date</th><th>End Date</th><th>Effective Coverage</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Annual Enrollment Period (AEP)</td><td>AEP</td><td>10 15,2025</td><td>12 07,2025</td><td>01 01,2026</td><td><span class="badge bg-secondary">Closed</span></td></tr>
+            <tr><td>Initial Coverage Election (ICEP)</td><td>IEP</td><td>3 months before Part B</td><td>3 months after Part B</td><td>1st of month after</td><td><span class="badge bg-success">Active</span></td></tr>
+            <tr><td>Open Enrollment Period (OEP)</td><td>OEP</td><td>01 01,2026</td><td>03 31,2026</td><td>1st of month after</td><td><span class="badge bg-secondary">Closed</span></td></tr>
+            <tr><td>Special Enrollment Period</td><td>SEP</td><td>Varies by qualifying event</td><td>Varies</td><td>1st of month after</td><td><span class="badge bg-success">Active (per event)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEP Reason Codes -->
+    <div id="mdsec-sep" class="card mb16" style="display:none">
+      <div class="card-hdr"><h5>SEP Reason Codes</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','master-data_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport3">
+          <thead><tr><th>Code</th><th>Reason</th><th>Documentation Required</th><th>Window (days)</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>SEP-01</td><td>Moved out of service area</td><td>Proof of new address</td><td>63</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('SEP-01')">Edit</button></td></tr>
+            <tr><td>SEP-02</td><td>Loss of creditable coverage</td><td>Loss of coverage letter</td><td>63</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('SEP-02')">Edit</button></td></tr>
+            <tr><td>SEP-03</td><td>Institutional release</td><td>Discharge documentation</td><td>63</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('SEP-03')">Edit</button></td></tr>
+            <tr><td>SEP-04</td><td>Dual-eligible / LIS change</td><td>LIS/Medicaid notice</td><td>Continuous</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('SEP-04')">Edit</button></td></tr>
+            <tr><td>SEP-05</td><td>C-SNP qualifying condition</td><td>Physician attestation</td><td>Continuous (with PQAT)</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('SEP-05')">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CMS Rejection Codes -->
+    <div id="mdsec-cms" class="card mb16" style="display:none">
+      <div class="card-hdr"><h5>CMS Rejection / Return Codes</h5><button class="btn-ol btn-sm" onclick="importCodes()"><i class="fas fa-upload"></i>Import Codes</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','master-data_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport4">
+          <thead><tr><th>Code</th><th>Description</th><th>Resolution Action</th><th>Auto-Retry</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>RC-001</td><td>Invalid Medicare number</td><td>Verify MBI with member; resubmit</td><td>No</td><td><button class="btn-ol btn-sm" onclick="editRecord('RC-001')">Edit</button></td></tr>
+            <tr><td>RC-002</td><td>Duplicate enrollment</td><td>Check existing enrollment; cancel if dup</td><td>No</td><td><button class="btn-ol btn-sm" onclick="editRecord('RC-002')">Edit</button></td></tr>
+            <tr><td>RC-003</td><td>Outside enrollment period</td><td>Validate SEP documentation</td><td>No</td><td><button class="btn-ol btn-sm" onclick="editRecord('RC-003')">Edit</button></td></tr>
+            <tr><td>RC-004</td><td>Plan not available in county</td><td>Verify ZIP-to-county mapping</td><td>No</td><td><button class="btn-ol btn-sm" onclick="editRecord('RC-004')">Edit</button></td></tr>
+            <tr><td>RC-005</td><td>Missing SOA documentation</td><td>Attach SOA; resubmit</td><td>No</td><td><button class="btn-ol btn-sm" onclick="editRecord('RC-005')">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Compliance Rules -->
+    <div id="mdsec-compliance" class="card" style="display:none">
+      <div class="card-hdr"><h5>Compliance Rules</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport5','master-data_Table5')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport5">
+          <thead><tr><th>Rule Name</th><th>Category</th><th>Trigger Condition</th><th>Action</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>AHIP Certification Expiry</td><td>Training</td><td>30 days before AHIP expiry</td><td>Alert</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('AHIP Certification Expiry')">Edit</button></td></tr>
+            <tr><td>E&O Insurance Lapse</td><td>Licensing</td><td>On expiration date</td><td>Hold Commissions</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('E&O Insurance Lapse')">Edit</button></td></tr>
+            <tr><td>State Appointment Missing</td><td>Appointment</td><td>Enrollment without active appointment</td><td>Terminate</td><td><span class="badge bg-success">Active</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('State Appointment Missing')">Edit</button></td></tr>
+            <tr><td>Background Check Overdue</td><td>Background</td><td>No result within 30 days of submission</td><td>Alert</td><td><span class="badge bg-warning text-dark">Inactive</span></td><td><button class="btn-ol btn-sm" onclick="editRecord('Background Check Overdue')">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ADD/EDIT RECORD MODAL -->
+<div id="mdModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:620px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="mdModalTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-plus" style="margin-right:8px"></i>Add Record</h6>
+      <button onclick="document.getElementById('mdModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div id="mdErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px" id="mdFormBody"></div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillMDForm()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('mdModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="saveMDRecord()"><i class="fas fa-save"></i>Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+var mdTabMap={countzip:'mdsec-countzip',sep:'mdsec-sep',periods:'mdsec-periods',cms:'mdsec-cms',compliance:'mdsec-compliance'};
+var currentMDTab='countzip';
+
+function switchMDTab(tab){
+  currentMDTab=tab;
+  Object.keys(mdTabMap).forEach(function(k){
+    var sec=document.getElementById(mdTabMap[k]);
+    var btn=document.getElementById('mdtab-'+k);
+    if(sec) sec.style.display=(k===tab)?'':'none';
+    if(btn) btn.className=(k===tab)?'btn-pr btn-sm':'btn-ol btn-sm';
+  });
+}
+
+function getActiveTab(){
+  return Object.keys(mdTabMap).find(function(k){var sec=document.getElementById(mdTabMap[k]);return sec&&sec.style.display!=='none';})||'countzip';
+}
+
+var formTemplates={
+  countzip:'<div class="form-row"><div class="fg"><label>State <span style="color:#c62828">*</span></label><select id="mdState"><option value="">Select</option><option>FL</option><option>TX</option><option>GA</option><option>AZ</option><option>CA</option></select></div><div class="fg" style="flex:2"><label>County <span style="color:#c62828">*</span></label><input id="mdCounty" placeholder="e.g. Miami-Dade"></div></div><div class="form-row"><div class="fg" style="flex:2"><label>ZIP Codes <span style="color:#c62828">*</span></label><input id="mdZips" placeholder="Comma-separated: 33101, 33102, 33109"></div></div><div class="form-row"><div class="fg"><label>Plans Available <span style="color:#c62828">*</span></label><input id="mdPlans" placeholder="HMO, PPO, C-SNP"></div><div class="fg"><label>Effective Date <span style="color:#c62828">*</span></label><input id="mdEff" type="date"></div></div><div class="form-row"><div class="fg"><label>Status</label><select id="mdStatus"><option>Active</option><option>Inactive</option></select></div></div>',
+  sep:'<div class="form-row"><div class="fg"><label>Code <span style="color:#c62828">*</span></label><input id="mdCode" placeholder="SEP-06"></div><div class="fg" style="flex:2"><label>Reason <span style="color:#c62828">*</span></label><input id="mdReason" placeholder="Describe qualifying event"></div></div><div class="form-row"><div class="fg" style="flex:2"><label>Documentation Required <span style="color:#c62828">*</span></label><input id="mdDocs" placeholder="e.g. Proof of qualifying event"></div><div class="fg"><label>Window (days) <span style="color:#c62828">*</span></label><input id="mdWindow" placeholder="63"></div></div><div class="form-row"><div class="fg"><label>Status</label><select id="mdStatus"><option>Active</option><option>Inactive</option></select></div></div>',
+  periods:'<div class="form-row"><div class="fg" style="flex:2"><label>Period Name <span style="color:#c62828">*</span></label><input id="mdPeriod" placeholder="e.g. AEP 2027"></div><div class="fg"><label>Type <span style="color:#c62828">*</span></label><select id="mdPType"><option value="">Select</option><option>AEP</option><option>OEP</option><option>IEP</option><option>SEP</option></select></div></div><div class="form-row"><div class="fg"><label>Start Date <span style="color:#c62828">*</span></label><input id="mdStart" type="date"></div><div class="fg"><label>End Date <span style="color:#c62828">*</span></label><input id="mdEnd" type="date"></div><div class="fg"><label>Effective Coverage</label><input id="mdCoverage" placeholder="01 01,2027"></div></div><div class="form-row"><div class="fg"><label>Status</label><select id="mdStatus"><option>Active</option><option>Closed</option><option>Upcoming</option></select></div></div>',
+  cms:'<div class="form-row"><div class="fg"><label>Code <span style="color:#c62828">*</span></label><input id="mdCode" placeholder="RC-006"></div><div class="fg" style="flex:2"><label>Description <span style="color:#c62828">*</span></label><input id="mdDesc" placeholder="Rejection reason description"></div></div><div class="form-row"><div class="fg" style="flex:2"><label>Resolution Action <span style="color:#c62828">*</span></label><input id="mdResolution" placeholder="Steps to resolve this rejection"></div><div class="fg"><label>Auto-Retry</label><select id="mdAutoRetry"><option>No</option><option>Yes</option></select></div></div>',
+  compliance:'<div class="form-row"><div class="fg"><label>Rule Name <span style="color:#c62828">*</span></label><input id="mdRuleName" placeholder="e.g. AHIP Expiry Check"></div><div class="fg"><label>Category <span style="color:#c62828">*</span></label><select id="mdRuleCat"><option value="">Select</option><option>Licensing</option><option>Training</option><option>Appointment</option><option>Background</option></select></div></div><div class="form-row"><div class="fg" style="flex:2"><label>Trigger Condition <span style="color:#c62828">*</span></label><input id="mdTrigger" placeholder="e.g. 30 days before expiry date"></div><div class="fg"><label>Action <span style="color:#c62828">*</span></label><select id="mdAction"><option value="">Select</option><option>Alert</option><option>Suspend</option><option>Terminate</option><option>Hold Commissions</option></select></div></div><div class="form-row"><div class="fg"><label>Status</label><select id="mdStatus"><option>Active</option><option>Inactive</option></select></div></div>'
+};
+
+var prefillData={
+  countzip:{mdState:'FL',mdCounty:'Orange',mdZips:'32801, 32803, 32804, 32806, 32807, 32809',mdPlans:'HMO, PPO, C-SNP, D-SNP',mdEff:'2026-01-01',mdStatus:'Active'},
+  sep:{mdCode:'SEP-06',mdReason:'Involuntary loss of PDP coverage',mdDocs:'Termination notice from prior plan',mdWindow:'63',mdStatus:'Active'},
+  periods:{mdPeriod:'AEP 2027',mdPType:'AEP',mdStart:'2026-10-15',mdEnd:'2026-12-07',mdCoverage:'01 01,2027',mdStatus:'Upcoming'},
+  cms:{mdCode:'RC-006',mdDesc:'Missing PQAT attestation for C-SNP',mdResolution:'Obtain physician attestation form; resubmit',mdAutoRetry:'No'},
+  compliance:{mdRuleName:'AHIP Certification Expiry',mdRuleCat:'Training',mdTrigger:'30 days before AHIP expiry',mdAction:'Alert',mdStatus:'Active'}
+};
+
+var editingRecord=null;
+
+function addRecord(){
+  editingRecord=null;
+  var tab=getActiveTab();
+  var labels={countzip:'County-ZIP Mapping',sep:'SEP Reason Code',periods:'Enrollment Period',cms:'CMS Rejection Code',compliance:'Compliance Rule'};
+  document.getElementById('mdModalTitle').innerHTML='<i class="fas fa-plus" style="margin-right:8px"></i>Add '+labels[tab];
+  document.getElementById('mdErr').style.display='none';
+  document.getElementById('mdFormBody').innerHTML=formTemplates[tab]||'<p>Form not available for this category.</p>';
+  document.getElementById('mdModal').classList.add('open');
+}
+
+function editRecord(name){
+  editingRecord=name;
+  var tab=getActiveTab();
+  var labels={countzip:'County-ZIP Mapping',sep:'SEP Reason Code',periods:'Enrollment Period',cms:'CMS Rejection Code',compliance:'Compliance Rule'};
+  document.getElementById('mdModalTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px"></i>Edit '+labels[tab]+': '+name;
+  document.getElementById('mdErr').style.display='none';
+  document.getElementById('mdFormBody').innerHTML=formTemplates[tab]||'';
+  // Prefill with data from the table
+  var pf=null;
+  if(tab==='countzip'){
+    var countyData={'Miami-Dade':{mdState:'FL',mdCounty:'Miami-Dade',mdZips:'33101, 33102, 33109, 33125, 33126, 33127',mdPlans:'HMO, PPO, C-SNP, D-SNP',mdEff:'2026-01-01',mdStatus:'Active'},'Broward':{mdState:'FL',mdCounty:'Broward',mdZips:'33301, 33304, 33306, 33308, 33309',mdPlans:'HMO, PPO, D-SNP',mdEff:'2026-01-01',mdStatus:'Active'},'Palm Beach':{mdState:'FL',mdCounty:'Palm Beach',mdZips:'33401, 33403, 33405, 33407, 33410',mdPlans:'HMO, PPO, C-SNP',mdEff:'2026-01-01',mdStatus:'Active'},'Hillsborough':{mdState:'FL',mdCounty:'Hillsborough',mdZips:'33601, 33602, 33603, 33604, 33605',mdPlans:'HMO, PPO',mdEff:'2026-01-01',mdStatus:'Active'}};
+    pf=countyData[name]||prefillData.countzip;
+  } else if(tab==='sep'){
+    var sepData={'SEP-01':{mdCode:'SEP-01',mdReason:'Moved out of service area',mdDocs:'Proof of new address',mdWindow:'63',mdStatus:'Active'},'SEP-02':{mdCode:'SEP-02',mdReason:'Loss of creditable coverage',mdDocs:'Loss of coverage letter',mdWindow:'63',mdStatus:'Active'},'SEP-03':{mdCode:'SEP-03',mdReason:'Institutional release',mdDocs:'Discharge documentation',mdWindow:'63',mdStatus:'Active'},'SEP-04':{mdCode:'SEP-04',mdReason:'Dual-eligible / LIS change',mdDocs:'LIS/Medicaid notice',mdWindow:'Continuous',mdStatus:'Active'},'SEP-05':{mdCode:'SEP-05',mdReason:'C-SNP qualifying condition',mdDocs:'Physician attestation',mdWindow:'Continuous (with PQAT)',mdStatus:'Active'}};
+    pf=sepData[name]||prefillData.sep;
+  } else if(tab==='cms'){
+    var cmsData={'RC-001':{mdCode:'RC-001',mdDesc:'Invalid Medicare number',mdResolution:'Verify MBI with member; resubmit',mdAutoRetry:'No'},'RC-002':{mdCode:'RC-002',mdDesc:'Duplicate enrollment',mdResolution:'Check existing enrollment; cancel if dup',mdAutoRetry:'No'},'RC-003':{mdCode:'RC-003',mdDesc:'Outside enrollment period',mdResolution:'Validate SEP documentation',mdAutoRetry:'No'},'RC-004':{mdCode:'RC-004',mdDesc:'Plan not available in county',mdResolution:'Verify ZIP-to-county mapping',mdAutoRetry:'No'},'RC-005':{mdCode:'RC-005',mdDesc:'Missing SOA documentation',mdResolution:'Attach SOA; resubmit',mdAutoRetry:'No'}};
+    pf=cmsData[name]||prefillData.cms;
+  } else if(tab==='compliance'){
+    var compData={'AHIP Certification Expiry':{mdRuleName:'AHIP Certification Expiry',mdRuleCat:'Training',mdTrigger:'30 days before AHIP expiry',mdAction:'Alert',mdStatus:'Active'},'E&O Insurance Lapse':{mdRuleName:'E&O Insurance Lapse',mdRuleCat:'Licensing',mdTrigger:'On expiration date',mdAction:'Hold Commissions',mdStatus:'Active'},'State Appointment Missing':{mdRuleName:'State Appointment Missing',mdRuleCat:'Appointment',mdTrigger:'Enrollment without active appointment',mdAction:'Terminate',mdStatus:'Active'},'Background Check Overdue':{mdRuleName:'Background Check Overdue',mdRuleCat:'Background',mdTrigger:'No result within 30 days of submission',mdAction:'Alert',mdStatus:'Inactive'}};
+    pf=compData[name]||prefillData.compliance;
+  } else if(tab==='periods'){
+    pf=prefillData.periods;
+  }
+  if(pf){
+    setTimeout(function(){
+      Object.keys(pf).forEach(function(id){var el=document.getElementById(id);if(el) el.value=pf[id];});
+    },10);
+  }
+  document.getElementById('mdModal').classList.add('open');
+}
+
+function saveMDRecord(){
+  var tab=getActiveTab();
+  var errors=[];
+  var required={
+    countzip:['mdState','mdCounty','mdZips','mdPlans','mdEff'],
+    sep:['mdCode','mdReason','mdDocs','mdWindow'],
+    periods:['mdPeriod','mdPType','mdStart','mdEnd'],
+    cms:['mdCode','mdDesc','mdResolution'],
+    compliance:['mdRuleName','mdRuleCat','mdTrigger','mdAction']
+  };
+  (required[tab]||[]).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&!el.value.trim()) errors.push(el.previousElementSibling?el.previousElementSibling.textContent.replace(' *',''):id+' is required.');
+  });
+  var err=document.getElementById('mdErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+' is required.</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';return;
+  }
+  err.style.display='none';
+  var action=editingRecord?'updated':'created';
+  showToast('Record '+action+' successfully.','success');
+  document.getElementById('mdModal').classList.remove('open');
+}
+
+function filterCountyZip(){
+  var state=document.getElementById('mdStateFilter').value.toLowerCase();
+  var q=document.getElementById('mdZipSearch').value.toLowerCase();
+  ['czr-miami','czr-broward','czr-palm','czr-hills'].forEach(function(id){
+    var r=document.getElementById(id);
+    if(!r) return;
+    var text=r.textContent.toLowerCase();
+    r.style.display=(text.includes(q)&&(state==='florida'?text.includes('fl'):state==='texas'?text.includes('tx'):text.includes('ca')))?'':'none';
+  });
+}
+
+function editEnrollmentDates(){
+  editingRecord='Enrollment Periods';
+  currentMDTab='periods';
+  document.getElementById('mdModalTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px"></i>Edit Enrollment Period';
+  document.getElementById('mdErr').style.display='none';
+  document.getElementById('mdFormBody').innerHTML=formTemplates['periods'];
+  document.getElementById('mdModal').classList.add('open');
+}
+
+function importCodes(){
+  showToast('CSV import dialog opened. Download template, populate, and re-upload.','info');
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+function prefillMDForm(){
+  var tab=getActiveTab();
+  var pf=prefillData[tab];
+  if(pf){
+    Object.keys(pf).forEach(function(id){var el=document.getElementById(id);if(el) el.value=pf[id];});
+    showToast('Form prefilled with sample data.','info');
+  }
+}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

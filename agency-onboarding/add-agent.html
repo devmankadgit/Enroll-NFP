@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Add Agent to Agency | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-shield" style="margin-right:8px;opacity:.8"></i>Admin Portal</div></div>
+  <div class="sb-nav">
+    <a href="../admin/dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agency Onboarding</div>
+    <a href="review-queue.html"><i class="fas fa-clipboard-check"></i>Review Queue</a>
+    <a href="create-agency.html"><i class="fas fa-plus-circle"></i>Create Agency</a>
+    <a href="add-agent.html" class="active"><i class="fas fa-user-plus"></i>Add Agent</a>
+    <a href="agency-admin-setup.html"><i class="fas fa-cog"></i>Portal Setup</a>
+    <a href="direct-contracting.html"><i class="fas fa-file-contract"></i>Direct Contract</a>
+    <a href="tfn-mapping.html"><i class="fas fa-phone"></i>TFN Mapping</a>  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">AW</div><div><div class="sb-u-name">Amy White</div><div class="sb-u-role">System Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Add Agent to Agency</h4><ol class="breadcrumb-bar"><li>NPN Search & Agency Assignment</li></ol></div>
+  </div>
+
+  <div class="page">
+    <!-- NPN Search -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-search" style="margin-right:8px;color:#0d47a1"></i>Step 1: Search Agent by NPN</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>National Producer Number (NPN) <span style="color:#c62828">*</span></label><input type="text" placeholder="Enter 7-10 digit NPN..." style="max-width:300px"></div>
+          <div class="fg" style="align-self:flex-end"><button class="btn-pr btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-search"></i>Lookup NPN</button></div>
+        </div>
+        <div class="al-info" style="margin-top:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>NPN lookup validates against NIPR database. Agent must have active FL Health + Life license and completed AHIP certification for current plan year.</span></div>
+      </div>
+    </div>
+
+    <!-- NPN Result -->
+    <div class="card mb16" style="border:2px solid #1b5e20">
+      <div class="card-hdr" style="background:#e8f5e9"><h5><i class="fas fa-check-circle" style="margin-right:8px;color:#1b5e20"></i>NPN Found: 8823441</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div><strong>Name:</strong> James A. Martinez</div>
+          <div><strong>NPN:</strong> 8823441</div>
+          <div><strong>FL License:</strong> W204519 (Active, exp. Sep 2027)</div>
+          <div><strong>Lines of Authority:</strong> Health, Life, Variable Annuities</div>
+          <div><strong>AHIP:</strong> ? Certified 2026</div>
+          <div><strong>E&O:</strong> ? Active (exp. Jan 2027)</div>
+          <div><strong>Current Agency:</strong> <span style="color:#5f6368">None (unaffiliated)</span></div>
+          <div><strong>Gold Kidney Status:</strong> <span class="bdg b-green">Ready to Contract</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignment -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-link" style="margin-right:8px;color:#4a148c"></i>Step 2: Assign to Agency</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Target Agency <span style="color:#c62828">*</span></label>
+            <select><option>Select agency...</option><option>AGY-2026-0048 — Sunshine Senior Benefits, LLC</option><option>AGY-2026-0001 — National Medicare Partners</option><option>AGY-2026-0012 — Southeast Senior Group</option></select>
+          </div>
+          <div class="fg"><label>Agent Role within Agency <span style="color:#c62828">*</span></label>
+            <select><option>Select...</option><option>Producing Agent</option><option>Agency Admin (Manager)</option><option>Supervising Agent</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Commission Tier</label>
+            <select><option>Inherit from agency (Tier A — Standard)</option><option>Override: Tier B — Preferred</option><option>Override: Tier C — Elite</option></select>
+          </div>
+          <div class="fg"><label>Effective Date <span style="color:#c62828">*</span></label><input type="date"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Territory Assignment</label>
+            <select><option>Same as agency (Miami-Dade, Broward)</option><option>Custom — select below</option></select>
+          </div>
+          <div class="fg"><label>Training Requirement</label>
+            <select><option>Standard (AHIP + Gold Kidney Carrier)</option><option>Waived (previously completed)</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-clipboard-list" style="margin-right:8px;color:#5f6368"></i>Pre-Assignment Checklist</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div style="margin-bottom:6px"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:8px"></i>FL Health & Life license — Active</div>
+        <div style="margin-bottom:6px"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:8px"></i>AHIP 2026 — Certified</div>
+        <div style="margin-bottom:6px"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:8px"></i>E&O Insurance — Active</div>
+        <div style="margin-bottom:6px"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:8px"></i>No CMS sanctions or OIG exclusions</div>
+        <div style="margin-bottom:6px"><i class="fas fa-exclamation-circle" style="color:#e65100;margin-right:8px"></i>Gold Kidney carrier-specific training  <strong>Pending</strong> (required within 14 days)</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:16px">
+      <button class="btn-pr" style="padding:10px 40px"><i class="fas fa-user-plus" style="margin-right:8px"></i>Add Agent to Agency</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

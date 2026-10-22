@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Broker-Assisted Enrollment | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+.step-tracker{display:flex;gap:4px;margin-bottom:24px;padding:0 4px}
+.step-tracker .step{flex:1;text-align:center;position:relative}
+.step-tracker .step .step-bar{height:4px;background:#e0e0e0;border-radius:2px;margin-bottom:6px}
+.step-tracker .step.active .step-bar{background:#0d47a1}
+.step-tracker .step.completed .step-bar{background:#1a237e}
+.step-tracker .step .step-lbl{font-size:10px;color:#757575;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.step-tracker .step.active .step-lbl{color:#0d47a1;font-weight:700}
+.step-tracker .step.completed .step-lbl{color:#1a237e}
+.enr-section{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:20px 24px;margin-bottom:16px}
+.enr-section h5{font-size:14px;font-weight:700;margin-bottom:12px;color:#1a237e}
+.enr-section h5 i{margin-right:8px;color:#0d47a1}
+.step-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.step-head h5{margin-bottom:0}
+.plan-card{border:2px solid #e8eaed;border-radius:10px;padding:16px;transition:all .2s;cursor:pointer}
+.plan-card:hover{border-color:#0d47a1;box-shadow:0 2px 12px rgba(13,71,161,.1)}
+.plan-card.selected{border-color:#0d47a1;background:#e3f2fd}
+.plan-card .plan-name{font-weight:700;font-size:14px;margin-bottom:4px}
+.plan-card .plan-type{font-size:11px;color:#757575;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.plan-card .plan-premium{font-size:20px;font-weight:700;color:#0d47a1}
+.plan-card .plan-premium span{font-size:11px;color:#757575;font-weight:400}
+.compare-table{width:100%;font-size:12px;border-collapse:collapse}
+.compare-table th,.compare-table td{padding:8px 10px;border:1px solid #e8eaed;text-align:center}
+.compare-table th{background:#f8f9fa;font-weight:600;font-size:11px;text-transform:uppercase}
+.compare-table td.highlight{background:#e3f2fd;font-weight:600}
+.elig-result{padding:12px 16px;border-radius:8px;font-size:13px;margin-top:12px}
+.elig-result.pass{background:#e3f2fd;border:1px solid #90caf9;color:#0d47a1}
+.elig-result.fail{background:#fce4ec;border:1px solid #ef9a9a;color:#c62828}
+.disclosure-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px;font-size:12px;color:#5f6368;max-height:140px;overflow-y:auto;margin-bottom:10px}
+.ack-check{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:12px;font-weight:500}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.3px}
+.fg input,.fg select{padding:8px 10px;border:1px solid #dadce0;border-radius:6px;font-size:13px}
+.fg input:focus,.fg select:focus{border-color:#0d47a1;outline:none;box-shadow:0 0 0 2px rgba(13,71,161,.1)}
+.validation-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600}
+.validation-badge.valid{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.validation-badge.invalid{background:#fce4ec;border:1px solid #ef9a9a;color:#c62828}
+.status-approved{background:linear-gradient(135deg,#1b5e20 0%,#388e3c 100%);color:#fff;border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px}
+.status-approved i{font-size:36px;opacity:.9}
+.oec-timeline{position:relative;padding-left:24px;margin-top:16px}
+.oec-timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#e0e0e0}
+.oec-timeline .tl-item{position:relative;padding-bottom:14px;font-size:12px}
+.oec-timeline .tl-item::before{content:'';position:absolute;left:-20px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid #0d47a1;background:#fff}
+.oec-timeline .tl-item.done::before{background:#0d47a1}
+.oec-timeline .tl-item .tl-time{font-size:10px;color:#9e9e9e;margin-top:2px}
+.agent-tag{display:inline-flex;align-items:center;gap:4px;background:#e3f2fd;color:#0d47a1;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html" class="active"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Broker-Assisted Enrollment</h4><ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>New Enrollment</li></ol></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="agent-tag"><i class="fas fa-user-tie"></i>Broker-Assisted</span>
+      <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- SOA Verification Banner -->
+    <div class="al-success mb16"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>SOA Verified:</strong> SOA-2026-0847 signed 05 20,2026 (14 days ago). Plan types: Medicare Advantage, C-SNP. Valid for enrollment.</span></div>
+
+    <!-- Step Tracker -->
+    <div class="step-tracker">
+      <div class="step active"><div class="step-bar"></div><div class="step-lbl">1. Personal Details</div></div>
+      <div class="step"><div class="step-bar"></div><div class="step-lbl">2. Eligibility (BEQ)</div></div>
+      <div class="step"><div class="step-bar"></div><div class="step-lbl">3. PQAT Screening</div></div>
+      <div class="step"><div class="step-bar"></div><div class="step-lbl">4. Plan Recommendation</div></div>
+      <div class="step"><div class="step-bar"></div><div class="step-lbl">5. Enrollment</div></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STEP 1: Personal Details & Address -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="enr-section" id="enr-step1">
+      <div class="step-head"><h5><i class="fas fa-user-circle"></i>Step 1 — Member Personal Details &amp; Address</h5><button class="btn-ol btn-sm" onclick="prefillStep(1,this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:14px">Enter the member's personal information, residential address, Medicare details, and basic health information.</p>
+
+      <!-- Personal Information -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Personal Information</div>
+      <div class="form-row three">
+        <div class="fg"><label>First Name</label><input type="text" id="s1FirstName" placeholder="Enter first name"></div>
+        <div class="fg"><label>Middle Initial</label><input type="text" id="s1MiddleInit" placeholder="M.I." maxlength="1"></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="s1LastName" placeholder="Enter last name"></div>
+      </div>
+      <div class="form-row three">
+        <div class="fg"><label>Date of Birth</label><input type="date" id="s1Dob"></div>
+        <div class="fg"><label>Sex</label><select id="s1Sex"><option value="">Select...</option><option>Female</option><option>Male</option></select></div>
+        <div class="fg"><label>Phone</label><input type="tel" id="s1Phone" placeholder="(000) 000-0000"></div>
+      </div>
+      <div class="form-row three">
+        <div class="fg"><label>Email</label><input type="email" id="s1Email" placeholder="email@example.com"></div>
+        <div class="fg"><label>SSN (Last 4)</label><input type="text" id="s1Ssn" maxlength="4" placeholder="0000"></div>
+        <div class="fg"><label>Preferred Language</label><select id="s1Lang"><option selected>English</option><option>Spanish</option><option>Creole</option></select></div>
+      </div>
+
+      <!-- Residential Address -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Residential Address</div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Address 1 <span style="color:#c62828">*</span></label><input type="text" id="s1Street" placeholder="Street address"></div>
+        <div class="fg"><label>Address 2</label><input type="text" id="s1Street2" placeholder="Apt, Suite, Unit"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>ZIP Code <span style="color:#c62828">*</span></label><input type="text" id="s1Zip" maxlength="5" placeholder="00000" oninput="nfpZipLookup(this,'s1City','s1State','s1County')"></div>
+        <div class="fg"><label>City <span style="color:#c62828">*</span></label><input type="text" id="s1City" placeholder="Auto-filled from ZIP"></div>
+        <div class="fg"><label>State <span style="color:#c62828">*</span></label><input type="text" id="s1State" placeholder="Auto-filled from ZIP"></div>
+        <div class="fg"><label>County</label><input type="text" id="s1County" placeholder="Auto-filled from ZIP" readonly style="background:#f5f5f5"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Residence Duration</label><select id="s1ResDuration"><option selected>6+ months</option><option>Less than 6 months</option></select></div>
+      </div>
+
+      <!-- Address Validation -->
+      <div id="addressValidation" style="display:none;margin-top:12px;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:#424242;text-transform:uppercase;margin-bottom:8px"><i class="fas fa-map-marked-alt" style="margin-right:6px;color:#0d47a1"></i>Address Validation Results</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div><span class="validation-badge valid"><i class="fas fa-check-circle"></i>County: Miami-Dade</span></div>
+          <div><span class="validation-badge valid"><i class="fas fa-check-circle"></i>ZIP: 33101 &#10003;</span></div>
+          <div><span class="validation-badge valid"><i class="fas fa-check-circle"></i>Service Area: Active</span></div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>Address validated — within Gold Kidney Health Plan service area (Miami-Dade County, FL)</div>
+      </div>
+
+      <button id="validateAddrBtn" onclick="validateAddress()" style="margin-top:12px;padding:8px 16px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer"><i class="fas fa-map-marker-alt" style="margin-right:6px"></i>Validate Address</button>
+
+      <!-- Medicare Information -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Medicare Information</div>
+      <div class="form-row three">
+        <div class="fg"><label>Medicare Beneficiary Identifier (MBI)</label><input type="text" id="s1Mbi" placeholder="1XXX-XX0-XX00" style="letter-spacing:1px"></div>
+        <div class="fg"><label>Part A Effective Date</label><input type="date" id="s1PartA"></div>
+        <div class="fg"><label>Part B Effective Date</label><input type="date" id="s1PartB"></div>
+      </div>
+      <div class="form-row three">
+        <div class="fg"><label>ESRD Status</label><select id="s1Esrd"><option value="">Select...</option><option>Yes — Currently on Dialysis</option><option>Yes — Transplant Recipient</option><option>No</option></select></div>
+        <div class="fg"><label>Medicaid Number (if applicable)</label><input type="text" id="s1Medicaid" placeholder="Optional"></div>
+        <div class="fg"><label>Preferred Contact Method</label><select id="s1ContactMethod"><option selected>Phone</option><option>Email</option><option>Mail</option></select></div>
+      </div>
+
+      <!-- Basic Health Info -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Health Information</div>
+      <div class="form-row three">
+        <div class="fg"><label>Primary Condition</label><select id="s1PrimaryCondition"><option value="">Select...</option><option>End-Stage Renal Disease (ESRD)</option><option>Chronic Kidney Disease (CKD)</option><option>Cardiovascular Disease</option><option>Diabetes</option><option>None of the above</option></select></div>
+        <div class="fg"><label>Currently Receiving Dialysis?</label><select id="s1Dialysis"><option value="">Select...</option><option>Yes — Hemodialysis</option><option>Yes — Peritoneal</option><option>No</option></select></div>
+        <div class="fg"><label>Nephrologist on Record?</label><select id="s1Nephro"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Nephrologist / Practice Name</label><input type="text" id="s1NephName" placeholder="e.g. Dr. Maria Sanchez — South FL Renal Care"></div>
+        <div class="fg"><label>NPI (if known)</label><input type="text" id="s1NephNpi" placeholder="Optional"></div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;align-items:center">
+        <button onclick="goToStep(2)" style="padding:9px 22px;background:#0d47a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Continue to Eligibility Check <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STEP 2: Eligibility Check (BEQ) -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="enr-section" id="enr-step2" style="display:none">
+      <div class="step-head"><h5><i class="fas fa-id-card"></i>Step 2 — Eligibility Verification (BEQ)</h5><button class="btn-ol btn-sm" onclick="prefillStep(2,this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:14px">Verify the member's Medicare eligibility through the CMS Beneficiary Eligibility Query (BEQ) system. This confirms Medicare Parts A &amp; B status and ESRD eligibility.</p>
+
+      <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:12px 16px;font-size:12px;color:#1a237e;margin-bottom:16px">
+        <i class="fas fa-info-circle" style="margin-right:6px"></i><strong>BEQ Verification:</strong> Data pre-populated from Step 1. Click "Run Eligibility Check" to query the CMS BEQ system in real-time.
+      </div>
+
+      <!-- BEQ Query Parameters -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">BEQ Query Parameters</div>
+      <div class="form-row three">
+        <div class="fg"><label>Medicare Beneficiary Identifier (MBI)</label><input type="text" id="s2Mbi" readonly style="background:#f5f5f5;letter-spacing:1px"></div>
+        <div class="fg"><label>Date of Birth</label><input type="date" id="s2Dob" readonly style="background:#f5f5f5"></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="s2LastName" readonly style="background:#f5f5f5"></div>
+      </div>
+
+      <button id="runBEQ" onclick="runEligibilityCheck()" style="padding:9px 18px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer"><i class="fas fa-satellite-dish" style="margin-right:6px"></i>Run Eligibility Check</button>
+
+      <!-- BEQ Results -->
+      <div id="beqResults" style="display:none;margin-top:16px">
+        <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">BEQ Response</div>
+        <div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+            <div style="padding:10px;background:#e8f5e9;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Part A Status</div><div style="font-weight:700;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active</div><div style="font-size:10px;color:#757575">Effective: 04 01,2013</div></div>
+            <div style="padding:10px;background:#e8f5e9;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Part B Status</div><div style="font-weight:700;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active</div><div style="font-size:10px;color:#757575">Effective: 04 01,2013</div></div>
+            <div style="padding:10px;background:#e8f5e9;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">ESRD Status</div><div style="font-weight:700;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>Confirmed</div><div style="font-size:10px;color:#757575">Dialysis: Active</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Enrollment Period</div><div style="font-weight:600;font-size:12px">ICEP/IEP — Special Election Eligible</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Current Plan</div><div style="font-weight:600;font-size:12px">Original Medicare (FFS)</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">MSP Flag</div><div style="font-weight:600;font-size:12px">No</div></div>
+          </div>
+        </div>
+
+        <div class="elig-result pass" style="margin-top:12px">
+          <i class="fas fa-check-circle" style="margin-right:6px"></i><strong>Eligible</strong> — Medicare Parts A &amp; B active. ESRD status confirmed. Qualifies for C-SNP enrollment via SEP.
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+        <button onclick="goToStep(1)" style="padding:9px 22px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-arrow-left" style="margin-right:6px"></i>Back</button>
+        <button onclick="goToStep(3)" style="padding:9px 22px;background:#0d47a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Continue to PQAT <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STEP 3: PQAT Health Questionnaire -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="enr-section" id="enr-step3" style="display:none">
+      <div class="step-head"><h5><i class="fas fa-clipboard-check"></i>Step 3 — PQAT Health Questionnaire</h5><button class="btn-ol btn-sm" onclick="prefillStep(3,this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:14px">Complete the Pre-Qualification Assessment Tool (PQAT) with the member. This determines which Special Needs Plans the member qualifies for based on their health conditions.</p>
+
+      <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:10px 14px;font-size:12px;color:#e65100;margin-bottom:16px">
+        <i class="fas fa-stethoscope" style="margin-right:6px"></i><strong>Clinical Validation Required:</strong> PQAT responses are validated by a licensed healthcare practitioner before plan eligibility is confirmed.
+      </div>
+
+      <!-- Lab Results -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Renal Function Lab Results</div>
+      <div class="form-row three">
+        <div class="fg"><label>eGFR (most recent)</label><input type="number" id="s3Egfr" placeholder="e.g. 12"></div>
+        <div class="fg"><label>Lab Test Date</label><input type="date" id="s3TestDate"></div>
+        <div class="fg"><label>Lab Provider</label><input type="text" id="s3LabProvider" placeholder="e.g. Quest Diagnostics"></div>
+      </div>
+      <div class="form-row three">
+        <div class="fg"><label>Serum Creatinine (mg/dL)</label><input type="text" id="s3Creatinine" placeholder="e.g. 6.1"></div>
+        <div class="fg"><label>BUN (mg/dL)</label><input type="text" id="s3Bun" placeholder="e.g. 52"></div>
+        <div class="fg"><label>Rx Medication for Kidney Disease</label><select id="s3RxKidney"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
+      </div>
+
+      <!-- Condition Flags -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Condition Flags (check all that apply)</div>
+      <div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:12px">
+          <label><input id="pqCkd3a" type="checkbox"> Chronic Kidney Disease — Stage 3a (eGFR 45–59)</label>
+          <label><input id="pqCkd3b" type="checkbox"> Chronic Kidney Disease — Stage 3b (eGFR 30–44)</label>
+          <label><input id="pqCkd4" type="checkbox"> Chronic Kidney Disease — Stage 4 (eGFR 15–29)</label>
+          <label><input id="pqEsrd" type="checkbox"> End-Stage Renal Disease — ESRD / Dialysis (eGFR &lt; 15)</label>
+          <label><input id="pqTransplant" type="checkbox"> Kidney Transplant Recipient (within 36 months)</label>
+          <label><input id="pqTransplantEval" type="checkbox"> On kidney transplant evaluation list</label>
+          <label><input id="pqNephro" type="checkbox"> Under active nephrologist care</label>
+          <label><input id="pqDiabetes" type="checkbox"> Type 2 Diabetes</label>
+          <label><input id="pqHypertension" type="checkbox"> Hypertension</label>
+          <label><input id="pqHeartFailure" type="checkbox"> Heart Failure (CHF)</label>
+          <label><input id="pqCardio" type="checkbox"> Cardiovascular Disease</label>
+          <label><input id="pqCopd" type="checkbox"> COPD</label>
+        </div>
+      </div>
+
+      <!-- Additional Screening Questions -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Additional Screening</div>
+      <div class="form-row three">
+        <div class="fg"><label>Currently Under Hospice Care?</label><select id="s3Hospice"><option value="">Select...</option><option>No</option><option>Yes</option></select></div>
+        <div class="fg"><label>Long-Term Care Facility?</label><select id="s3LTC"><option value="">Select...</option><option>No</option><option>Yes</option></select></div>
+        <div class="fg"><label>Receiving Home Dialysis?</label><select id="s3HomeDialysis"><option value="">Select...</option><option>No</option><option>Yes — In-Center Hemodialysis</option><option>Yes — Peritoneal Dialysis</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Treating Physician Name</label><input type="text" id="s3PhysName" placeholder="Physician managing kidney condition"></div>
+        <div class="fg"><label>Physician NPI</label>
+          <div style="display:flex;gap:8px;align-items:flex-start">
+            <input type="text" id="s3PhysNpi" placeholder="Enter 10-digit NPI" style="flex:1" maxlength="10">
+            <button type="button" onclick="lookupNpi()" style="padding:8px 14px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap"><i class="fas fa-search" style="margin-right:4px"></i>Lookup</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NPI Lookup Result -->
+      <div id="npiLookupResult" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:8px;font-size:12px"></div>
+
+      <!-- Manual Provider Entry (shown when NPI not found) -->
+      <div id="manualProviderEntry" style="display:none;margin-bottom:12px;border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px;background:#fafafa">
+        <div style="font-size:12px;font-weight:700;color:#e65100;margin-bottom:10px"><i class="fas fa-edit" style="margin-right:6px"></i>Manual Provider Entry</div>
+        <div class="form-row">
+          <div class="fg"><label>Provider Name</label><input type="text" id="s3ManualProvName" placeholder="Full provider name"></div>
+          <div class="fg"><label>Specialty</label><input type="text" id="s3ManualSpecialty" placeholder="e.g. Nephrology"></div>
+        </div>
+        <div class="form-row three">
+          <div class="fg"><label>Phone</label><input type="tel" id="s3ManualPhone" placeholder="(000) 000-0000"></div>
+          <div class="fg"><label>Fax</label><input type="tel" id="s3ManualFax" placeholder="(000) 000-0000"></div>
+          <div class="fg"><label>City</label><input type="text" id="s3ManualCity" placeholder="City name"></div>
+        </div>
+      </div>
+
+      <!-- Supporting Documentation -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Supporting Documentation</div>
+      <div class="form-row three">
+        <div class="fg"><label>C-SNP Verification Document</label><input type="file" id="s3DocUpload" accept=".pdf,.jpg,.png" style="font-size:12px"></div>
+        <div class="fg"><label>Document Type</label><select id="s3DocType"><option value="">Select...</option><option>Physician Statement</option><option>Lab Results</option><option>Diagnosis Letter</option><option>Dialysis Records</option></select></div>
+        <div class="fg"><label>Document Date</label><input type="date" id="s3DocDate"></div>
+      </div>
+
+      <!-- Practitioner Validation -->
+      <div id="pqatValidation" style="display:none;margin-top:16px;padding:14px 16px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <i class="fas fa-user-md" style="font-size:18px;color:#1b5e20"></i>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#1b5e20">Healthcare Practitioner Validation</div>
+            <div style="font-size:11px;color:#5f6368">Validated by Dr. Maria Sanchez, MD — South Florida Renal Care</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <span class="validation-badge valid"><i class="fas fa-check-circle"></i>PQAT Complete</span>
+          <span class="validation-badge valid"><i class="fas fa-check-circle"></i>eGFR Confirmed</span>
+          <span class="validation-badge valid"><i class="fas fa-check-circle"></i>ESRD Diagnosis Verified</span>
+          <span class="validation-badge valid"><i class="fas fa-check-circle"></i>C-SNP Eligible</span>
+        </div>
+      </div>
+
+      <button id="validatePqatBtn" onclick="validatePqat()" style="margin-top:14px;padding:9px 18px;background:#0d47a1;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer"><i class="fas fa-stethoscope" style="margin-right:6px"></i>Submit for Clinical Validation</button>
+
+      <!-- Release of Information -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Release of Information</div>
+      <div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px;background:#f8f9fa">
+        <div class="ack-check">
+          <input type="checkbox" id="s3RoiConsent" style="margin-top:2px">
+          <label for="s3RoiConsent" style="font-size:12px;color:#333;line-height:1.5;cursor:pointer">I herewith authorize and direct Gold Kidney Health Plan to confirm my chronic conditions and obtain my medical records until I am no longer enrolled in the Gold Kidney Health Plan. <strong style="color:#c62828">(Box must be checked for C-SNP applications)</strong></label>
+        </div>
+        <div class="form-row" style="margin-top:12px;margin-bottom:0">
+          <div class="fg"><label>Signature</label><input type="text" id="s3RoiSignature" placeholder="Member full legal name as signature"></div>
+          <div class="fg"><label>Date</label><input type="date" id="s3RoiDate"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+        <button onclick="goToStep(2)" style="padding:9px 22px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-arrow-left" style="margin-right:6px"></i>Back</button>
+        <button onclick="goToStep(4)" style="padding:9px 22px;background:#0d47a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Continue to Plan Recommendations <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STEP 4: Plan Recommendation -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="enr-section" id="enr-step4" style="display:none">
+      <div class="step-head"><h5><i class="fas fa-star"></i>Step 4 — Plan Recommendation</h5><button class="btn-ol btn-sm" onclick="prefillStep(4,this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:14px">Based on geography (Miami-Dade, FL), eligibility (ESRD confirmed), and PQAT results, recommended plans are ranked below. Present options to the member.</p>
+
+      <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:12px;color:#1b5e20;margin-bottom:16px">
+        <i class="fas fa-robot" style="margin-right:6px"></i><strong>Smart Recommendation:</strong> Plans ranked by match score based on the member's health profile, geographic availability, and cost-effectiveness.
+      </div>
+
+      <!-- Recommendation Criteria -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <span style="background:#e3f2fd;color:#0d47a1;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px"><i class="fas fa-map-marker-alt" style="margin-right:4px"></i>Miami-Dade, FL</span>
+        <span style="background:#fce4ec;color:#c62828;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px"><i class="fas fa-heartbeat" style="margin-right:4px"></i>ESRD Confirmed</span>
+        <span style="background:#e8eaf6;color:#283593;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px"><i class="fas fa-clipboard-check" style="margin-right:4px"></i>eGFR: 12 (Stage 5 ESRD)</span>
+        <span style="background:#fff8e1;color:#f57f17;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px"><i class="fas fa-pills" style="margin-right:4px"></i>Dialysis: Active</span>
+      </div>
+
+      <!-- Comparison Table -->
+      <div style="overflow-x:auto;margin-bottom:16px">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">Benefit</th>
+              <th>Gold Kidney ESRD C-SNP Gold<br><span style="color:#1b5e20;font-size:10px">&#11088; #1 Match (96%)</span></th>
+              <th>Gold Kidney ESRD C-SNP Platinum<br><span style="color:#0d47a1;font-size:10px">#2 Match (91%)</span></th>
+              <th>Gold Kidney CKD SNP Gold<br><span style="color:#757575;font-size:10px">#3 Match (68%)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="text-align:left;font-weight:600">Contract ID</td><td class="highlight">H1234-001</td><td>H1234-002</td><td>H1234-003</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Monthly Premium</td><td class="highlight">$0</td><td>$45</td><td>$28</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Annual MOOP</td><td class="highlight">$3,400</td><td>$2,900</td><td>$4,200</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Dialysis Copay</td><td class="highlight">$0</td><td>$0</td><td>$25/session</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Nephrology Visits</td><td class="highlight">$0 copay</td><td>$5 copay</td><td>$10 copay</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Rx Coverage (Tier 1)</td><td>$0</td><td>$0</td><td>$0</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Transportation</td><td class="highlight">24 rides/yr</td><td>Unlimited</td><td>12 rides/yr</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Dental/Vision</td><td>Comprehensive</td><td>Comprehensive</td><td>Preventive only</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Care Coordination</td><td class="highlight">Dedicated renal team</td><td>Dedicated renal team</td><td>Nurse hotline</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Star Rating</td><td class="highlight">&#11088;&#11088;&#11088;&#11088;&#189;</td><td>&#11088;&#11088;&#11088;&#11088;&#11088;</td><td>&#11088;&#11088;&#11088;&#11088;</td></tr>
+            <tr><td style="text-align:left;font-weight:600">Commission Rate</td><td class="highlight">$573 initial</td><td>$573 initial</td><td>$573 initial</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Plan Cards -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="plan-card selected" id="planCard1" onclick="selectPlan(1)" style="flex:1;min-width:200px;position:relative">
+          <div style="position:absolute;top:8px;right:8px;background:#1b5e20;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px">BEST MATCH</div>
+          <div class="plan-type">C-SNP &middot; ESRD &middot; H1234-001</div>
+          <div class="plan-name">Gold Kidney ESRD C-SNP Gold</div>
+          <div class="plan-premium">$0 <span>/month</span></div>
+          <div style="margin-top:8px;font-size:11px;color:#0d47a1;font-weight:600"><i class="fas fa-check-circle"></i> Selected</div>
+        </div>
+        <div class="plan-card" id="planCard2" onclick="selectPlan(2)" style="flex:1;min-width:200px">
+          <div class="plan-type">C-SNP &middot; ESRD &middot; H1234-002</div>
+          <div class="plan-name">Gold Kidney ESRD C-SNP Platinum</div>
+          <div class="plan-premium">$45 <span>/month</span></div>
+        </div>
+        <div class="plan-card" id="planCard3" onclick="selectPlan(3)" style="flex:1;min-width:200px">
+          <div class="plan-type">C-SNP &middot; CKD &middot; H1234-003</div>
+          <div class="plan-name">Gold Kidney CKD SNP Gold</div>
+          <div class="plan-premium">$28 <span>/month</span></div>
+        </div>
+      </div>
+
+      <!-- Enrollment Period -->
+      <div style="margin-top:16px">
+        <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Enrollment Period &amp; Effective Date</div>
+        <div class="form-row three">
+          <div class="fg"><label>Enrollment Period</label><select id="s4EnrollPeriod" onchange="toggleSepReason()"><option value="">Select...</option><option value="SEP">SEP — Special Election (C-SNP)</option><option value="AEP">AEP (Oct 15 – Dec 7)</option><option value="OEP">OEP (Jan 1 – Mar 31)</option><option value="ICEP">ICEP — Initial Coverage</option></select></div>
+          <div class="fg" id="s4SepCodeWrap" style="display:none"><label>SEP Reason Code</label><select id="s4SepCode"><option>A01 — Chronic Condition C-SNP</option><option>B01 — Moved out of area</option><option>Other</option></select></div>
+          <div class="fg"><label>Effective Date (calculated)</label><input type="text" id="s4EffDate" value="07 01,2026" readonly style="background:#f5f5f5;font-weight:600;color:#1b5e20"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+        <button onclick="goToStep(3)" style="padding:9px 22px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-arrow-left" style="margin-right:6px"></i>Back</button>
+        <button onclick="goToStep(5)" style="padding:9px 22px;background:#0d47a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Continue to Enrollment <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STEP 5: Enrollment Submission -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="enr-section" id="enr-step5" style="display:none">
+      <div class="step-head"><h5><i class="fas fa-paper-plane"></i>Step 5 — Agent Attestation &amp; Enrollment Submission</h5><button class="btn-ol btn-sm" onclick="prefillStep(5,this)" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <p style="font-size:12px;color:#5f6368;margin-bottom:14px">Complete agent attestation, obtain member consent, and submit enrollment to the OEC processing hub. The 7-day CMS submission clock begins at application signature date.</p>
+
+      <!-- Agent Info -->
+      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-size:12px;color:#0d47a1;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+        <i class="fas fa-user-tie" style="font-size:18px"></i>
+        <div>
+          <div style="font-weight:700">Agent: James Martinez &middot; NPN 8823441</div>
+          <div style="font-size:11px;color:#5f6368">SOA: SOA-2026-0847 &middot; Channel: Broker-Assisted &middot; Commission attribution: NPN 8823441</div>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Premium Payment Method</div>
+      <div class="form-row three">
+        <div class="fg"><label>Payment Method</label><select id="s5PayMethod"><option>Social Security Deduction</option><option selected>Bank Draft (ACH)</option><option>Coupon Book (Mail)</option></select></div>
+        <div class="fg"><label>Bank Routing Number</label><input type="text" id="s5Routing" placeholder="9 digits"></div>
+        <div class="fg"><label>Account Number</label><input type="text" id="s5AcctNum" placeholder="Account number"></div>
+      </div>
+
+      <!-- PCP Selection -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Primary Care Provider (Optional)</div>
+      <div class="form-row three">
+        <div class="fg"><label>PCP Name</label><input type="text" id="s5PcpName" placeholder="Dr. Last Name"></div>
+        <div class="fg"><label>PCP NPI</label><input type="text" id="s5PcpNpi" placeholder="10-digit NPI"></div>
+        <div class="fg"><label>Practice Name</label><input type="text" id="s5PcpPractice" placeholder="Practice name"></div>
+      </div>
+
+      <!-- Part D -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Part D Drug Coverage</div>
+      <div class="form-row">
+        <div class="fg"><label>Include Part D Coverage?</label><select id="s5PartD"><option selected>Yes — Include Part D coverage</option><option>No — Decline Part D</option></select></div>
+        <div class="fg"><label>IRMAA Acknowledgment</label><div style="font-size:12px;padding-top:8px"><label><input type="checkbox" id="s5Irmaa" checked> I understand high-income premium adjustment may apply</label></div></div>
+      </div>
+
+      <!-- Disclosures -->
+      <div style="font-size:12px;font-weight:700;color:#0d47a1;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.5px">Required Disclosures &amp; Acknowledgments</div>
+      <div class="disclosure-box">
+        By enrolling in Gold Kidney ESRD C-SNP Gold (H1234-001), the member acknowledges that: (1) They must continue to pay their Medicare Part B premium. (2) They must use plan providers for non-emergency care. (3) This plan is a Medicare Advantage Special Needs Plan for individuals with End-Stage Renal Disease. (4) They must have Medicare Parts A and B to enroll. (5) Benefits, premiums, copays, and provider networks may change on January 1 of each year. (6) They can leave this plan during the Annual Enrollment Period or through a Special Enrollment Period if they qualify.
+      </div>
+      <div class="disclosure-box" style="margin-top:8px">
+        Release of Information: By joining this Medicare health plan, the member acknowledges that Gold Kidney Health Plan will release their information to Medicare and other plans as necessary for treatment, payment, and health care operations. The member confirms they have read and understood the enrollment rules, beneficiary rights, and plan obligations.
+      </div>
+
+      <!-- Agent Attestation -->
+      <div style="margin-top:14px;padding:14px 16px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#e65100;margin-bottom:10px"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Agent Attestation &amp; Member Consent</div>
+        <div class="ack-check"><input id="ack1" type="checkbox"><span><strong>Agent Attestation:</strong> I certify that I personally assisted this beneficiary, explained all plan options, and obtained their informed consent to enroll in the selected plan.</span></div>
+        <div class="ack-check"><input id="ack2" type="checkbox"><span><strong>Member Consent:</strong> Member confirms they understand the plan costs, benefits, and their right to disenroll.</span></div>
+        <div class="ack-check"><input id="ack3" type="checkbox"><span><strong>SOA Confirmation:</strong> Scope of Appointment was obtained prior to this enrollment meeting and covers the plan type being enrolled.</span></div>
+        <div class="ack-check"><input id="ack4" type="checkbox"><span><strong>Compliance:</strong> I confirm this enrollment follows CMS marketing guidelines and no prohibited activities occurred.</span></div>
+      </div>
+
+      <!-- Signatures -->
+      <div style="margin-top:16px">
+        <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Signatures</div>
+        <div class="form-row three">
+          <div class="fg"><label>Member Signature (type full name)</label><input id="s5MemberSig" type="text" placeholder="Member's full legal name" style="font-style:italic;font-size:15px;font-family:cursive"></div>
+          <div class="fg"><label>Application Signature Date</label><input type="date" id="s5SigDate"></div>
+          <div class="fg"><label>Agent NPN</label><input type="text" id="s5AgentNpn" value="8823441" readonly style="background:#f5f5f5"></div>
+        </div>
+      </div>
+
+      <!-- Submit Buttons -->
+      <div id="submitArea" style="margin-top:20px;display:flex;gap:12px;align-items:center;justify-content:center">
+        <button onclick="nfpSave('Draft saved')" style="padding:10px 20px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-save" style="margin-right:6px"></i>Save Draft</button>
+        <button id="submitEnrollBtn" onclick="submitEnrollment()" style="padding:12px 32px;background:#1a237e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(26,35,126,.3)"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Submit Enrollment to OEC Hub</button>
+      </div>
+
+      <!-- OEC Submission Result -->
+      <div id="oecResult" style="display:none;margin-top:20px">
+        <!-- Approved Status Banner -->
+        <div class="status-approved">
+          <i class="fas fa-check-circle"></i>
+          <div>
+            <div style="font-size:18px;font-weight:700">Enrollment Approved</div>
+            <div style="font-size:12px;opacity:.85">Application processed and approved by OEC Hub — Gold Kidney Health Plan</div>
+          </div>
+        </div>
+
+        <!-- Processing Details -->
+        <div style="margin-top:16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:16px">
+          <div style="font-size:12px;font-weight:700;color:#424242;margin-bottom:12px;text-transform:uppercase">OEC Processing Summary</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;font-size:12px">
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Application ID</div><div style="font-weight:700;color:#0d47a1;font-family:monospace;font-size:13px">APP-2026-06-03-1253</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Submission Channel</div><div style="font-weight:700"><span class="agent-tag"><i class="fas fa-user-tie"></i>Broker-Assisted</span></div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Plan Selected</div><div style="font-weight:600">Gold Kidney ESRD C-SNP Gold (H1234-001)</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Effective Date</div><div style="font-weight:700;color:#1b5e20">07 01,2026</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Monthly Premium</div><div style="font-weight:700;color:#0d47a1;font-size:16px">$0</div></div>
+            <div style="padding:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase">Status</div><div style="font-weight:700;color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>APPROVED</div></div>
+          </div>
+
+          <!-- Commission Info -->
+          <div style="margin-top:12px;padding:10px 14px;background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;display:flex;align-items:center;gap:10px">
+            <i class="fas fa-dollar-sign" style="color:#0d47a1;font-size:16px"></i>
+            <div style="font-size:12px">
+              <strong>Commission Attribution:</strong> NPN 8823441 (James Martinez) &middot; Initial: $573 &middot; Renewal: $287/yr &middot; Payment cycle: Next monthly run
+            </div>
+          </div>
+        </div>
+
+        <!-- OEC Timeline -->
+        <div style="margin-top:16px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:16px">
+          <div style="font-size:12px;font-weight:700;color:#424242;margin-bottom:12px;text-transform:uppercase">Processing Timeline</div>
+          <div class="oec-timeline">
+            <div class="tl-item done"><strong>Application Received</strong> — Submitted via Broker-Assisted channel (NPN 8823441)<div class="tl-time">06 03,2026 at 12:53 PM EST</div></div>
+            <div class="tl-item done"><strong>SOA Verified</strong> — SOA-2026-0847 validated (signed 05 20,2026)<div class="tl-time">06 03,2026 at 12:53 PM EST</div></div>
+            <div class="tl-item done"><strong>BEQ Eligibility Verified</strong> — Parts A &amp; B active, ESRD confirmed<div class="tl-time">06 03,2026 at 12:53 PM EST</div></div>
+            <div class="tl-item done"><strong>PQAT Validated</strong> — Clinical practitioner sign-off received<div class="tl-time">06 03,2026 at 12:54 PM EST</div></div>
+            <div class="tl-item done"><strong>Address &amp; Service Area Verified</strong> — Miami-Dade County, FL<div class="tl-time">06 03,2026 at 12:54 PM EST</div></div>
+            <div class="tl-item done"><strong>OEC Hub Decision: APPROVED</strong> — Enrollment confirmed<div class="tl-time">06 03,2026 at 12:55 PM EST</div></div>
+          </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div style="margin-top:16px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:14px 16px">
+          <div style="font-size:12px;font-weight:700;color:#1b5e20;margin-bottom:8px"><i class="fas fa-forward" style="margin-right:6px"></i>What Happens Next</div>
+          <ul style="font-size:12px;color:#2e7d32;margin:0;padding-left:18px;line-height:1.8">
+            <li>Confirmation sent to member at <strong>linda.park@email.com</strong> and to agent</li>
+            <li>Member ID card &amp; Evidence of Coverage mailed within 7–10 business days</li>
+            <li>Coverage begins <strong>07 01,2026</strong> — plan active for dialysis and all covered services</li>
+            <li>Health Risk Assessment (HRA) auto-scheduled within 90 days of enrollment</li>
+            <li>Commission ($573 initial) will appear in next monthly payment cycle</li>
+            <li><strong>7-day CMS clock:</strong> Application submitted within required window</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:12px;justify-content:center">
+          <a href="enrollment-status.html" style="padding:9px 22px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none"><i class="fas fa-clock" style="margin-right:6px"></i>View All Enrollments</a>
+          <button onclick="goToStep(1)" style="padding:9px 22px;background:#0d47a1;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-plus" style="margin-right:6px"></i>Start New Enrollment</button>
+        </div>
+      </div>
+
+      <!-- Back button (hidden after submission) -->
+      <div id="step5Nav" style="margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-start;align-items:center">
+        <button onclick="goToStep(4)" style="padding:9px 22px;background:#fff;color:#0d47a1;border:2px solid #0d47a1;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer"><i class="fas fa-arrow-left" style="margin-right:6px"></i>Back</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 03,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function goToStep(n){
+  for(var i=1;i<=5;i++){
+    var sec=document.getElementById('enr-step'+i);
+    if(sec) sec.style.display=(i===n)?'':'none';
+  }
+  var steps=document.querySelectorAll('.step-tracker .step');
+  steps.forEach(function(el,idx){
+    el.classList.remove('active','completed');
+    if(idx+1<n) el.classList.add('completed');
+    else if(idx+1===n) el.classList.add('active');
+  });
+  if(n===2){
+    var mbi=document.getElementById('s1Mbi');
+    var dob=document.getElementById('s1Dob');
+    var ln=document.getElementById('s1LastName');
+    if(mbi) document.getElementById('s2Mbi').value=mbi.value;
+    if(dob) document.getElementById('s2Dob').value=dob.value;
+    if(ln) document.getElementById('s2LastName').value=ln.value;
+  }
+  var tracker=document.querySelector('.step-tracker');
+  if(tracker) window.scrollTo({top:tracker.getBoundingClientRect().top+window.scrollY-20,behavior:'smooth'});
+}
+
+function validateAddress(){
+  document.getElementById('addressValidation').style.display='';
+  document.getElementById('validateAddrBtn').innerHTML='<i class="fas fa-check-circle" style="margin-right:6px"></i>Address Validated';
+  document.getElementById('validateAddrBtn').style.background='#1b5e20';
+  if(typeof showToast==='function') showToast('Address validated — within service area','success');
+}
+
+function runEligibilityCheck(){
+  document.getElementById('beqResults').style.display='';
+  document.getElementById('runBEQ').innerHTML='<i class="fas fa-check-circle" style="margin-right:6px"></i>Eligibility Verified';
+  document.getElementById('runBEQ').style.background='#1b5e20';
+  if(typeof showToast==='function') showToast('BEQ eligibility verified — Medicare Parts A & B active, ESRD confirmed','success');
+}
+
+function validatePqat(){
+  document.getElementById('pqatValidation').style.display='';
+  document.getElementById('validatePqatBtn').innerHTML='<i class="fas fa-check-circle" style="margin-right:6px"></i>Validated';
+  document.getElementById('validatePqatBtn').style.background='#1b5e20';
+  if(typeof showToast==='function') showToast('PQAT validated by healthcare practitioner — C-SNP eligible','success');
+}
+
+function toggleSepReason(){
+  var val=document.getElementById('s4EnrollPeriod').value;
+  var wrap=document.getElementById('s4SepCodeWrap');
+  wrap.style.display=(val==='SEP')?'':'none';
+}
+
+function lookupNpi(){
+  var npi=document.getElementById('s3PhysNpi').value.trim();
+  var resultDiv=document.getElementById('npiLookupResult');
+  var manualDiv=document.getElementById('manualProviderEntry');
+  if(!npi||npi.length!==10||!/^\d{10}$/.test(npi)){
+    resultDiv.style.display='block';
+    resultDiv.style.background='#fff8e1';
+    resultDiv.style.border='1px solid #ffe082';
+    resultDiv.style.color='#e65100';
+    resultDiv.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Please enter a valid 10-digit NPI number.';
+    manualDiv.style.display='none';
+    return;
+  }
+  // Simulate lookup — demo NPI 1234567890 is "found"
+  if(npi==='1234567890'){
+    resultDiv.style.display='block';
+    resultDiv.style.background='#e8f5e9';
+    resultDiv.style.border='1px solid #a5d6a7';
+    resultDiv.style.color='#1b5e20';
+    resultDiv.innerHTML='<i class="fas fa-check-circle" style="margin-right:6px"></i><strong>NPI Verified:</strong> Dr. Maria Sanchez, MD — Nephrology — South Florida Renal Care, Miami FL — (305) 555-8100';
+    manualDiv.style.display='none';
+    document.getElementById('s3PhysName').value='Dr. Maria Sanchez, MD';
+  } else {
+    resultDiv.style.display='block';
+    resultDiv.style.background='#fce4ec';
+    resultDiv.style.border='1px solid #ef9a9a';
+    resultDiv.style.color='#c62828';
+    resultDiv.innerHTML='<i class="fas fa-times-circle" style="margin-right:6px"></i><strong>NPI not found.</strong> Please enter provider details manually below.';
+    manualDiv.style.display='block';
+  }
+  if(typeof showToast==='function') showToast(npi==='1234567890'?'NPI verified successfully':'NPI not found — enter provider manually','info');
+}
+
+function selectPlan(n){
+  for(var i=1;i<=3;i++){
+    var card=document.getElementById('planCard'+i);
+    if(card){
+      card.classList.toggle('selected',i===n);
+      var check=card.querySelector('.fa-check-circle');
+      if(i===n && !check){
+        var div=document.createElement('div');
+        div.style.cssText='margin-top:8px;font-size:11px;color:#0d47a1;font-weight:600';
+        div.innerHTML='<i class="fas fa-check-circle"></i> Selected';
+        card.appendChild(div);
+      } else if(i!==n && check){
+        check.parentNode.remove();
+      }
+    }
+  }
+}
+
+function submitEnrollment(){
+  var sig=document.getElementById('s5MemberSig').value.trim();
+  var sigDate=document.getElementById('s5SigDate').value;
+  var acks=document.querySelectorAll('#enr-step5 .ack-check input[type="checkbox"]');
+  var allChecked=true;
+  acks.forEach(function(cb){ if(!cb.checked) allChecked=false; });
+  if(!sig){ if(typeof showToast==='function') showToast('Please provide member signature','error'); return; }
+  if(!sigDate){ if(typeof showToast==='function') showToast('Please provide application signature date','error'); return; }
+  if(!allChecked){ if(typeof showToast==='function') showToast('Please complete all attestation checkboxes','error'); return; }
+  document.getElementById('oecResult').style.display='';
+  document.getElementById('submitArea').style.display='none';
+  document.getElementById('step5Nav').style.display='none';
+  if(typeof showToast==='function') showToast('Enrollment APPROVED — processed by OEC Hub. Commission credited to NPN 8823441.','success');
+}
+
+function nfpSave(msg){
+  if(typeof showToast==='function') showToast(msg||'Draft saved','success');
+}
+
+function prefillStep(step,btn){
+  if(step===1){
+    document.getElementById('s1FirstName').value='Linda';
+    document.getElementById('s1MiddleInit').value='S';
+    document.getElementById('s1LastName').value='Park';
+    document.getElementById('s1Dob').value='1952-03-15';
+    document.getElementById('s1Sex').value='Female';
+    document.getElementById('s1Phone').value='(305) 555-0182';
+    document.getElementById('s1Email').value='linda.park@email.com';
+    document.getElementById('s1Ssn').value='4821';
+    document.getElementById('s1Street').value='742 Evergreen Terrace';
+    document.getElementById('s1City').value='Miami';
+    document.getElementById('s1State').value='FL';
+    document.getElementById('s1Zip').value='33101';
+    document.getElementById('s1County').value='Miami-Dade';
+    document.getElementById('s1Mbi').value='1EG4-TE5-MK72';
+    document.getElementById('s1PartA').value='2013-04-01';
+    document.getElementById('s1PartB').value='2013-04-01';
+    document.getElementById('s1Esrd').value='Yes — Currently on Dialysis';
+    document.getElementById('s1Medicaid').value='';
+    document.getElementById('s1PrimaryCondition').value='End-Stage Renal Disease (ESRD)';
+    document.getElementById('s1Dialysis').value='Yes — Hemodialysis';
+    document.getElementById('s1Nephro').value='Yes';
+    document.getElementById('s1NephName').value='Dr. Maria Sanchez — South Florida Renal Care';
+    document.getElementById('s1NephNpi').value='1598374621';
+    validateAddress();
+  } else if(step===2){
+    document.getElementById('s2Mbi').value='1EG4-TE5-MK72';
+    document.getElementById('s2Dob').value='1952-03-15';
+    document.getElementById('s2LastName').value='Park';
+    runEligibilityCheck();
+  } else if(step===3){
+    document.getElementById('s3Egfr').value='12';
+    document.getElementById('s3TestDate').value='2026-05-18';
+    document.getElementById('s3LabProvider').value='Quest Diagnostics';
+    document.getElementById('s3Creatinine').value='6.1';
+    document.getElementById('s3Bun').value='52';
+    document.getElementById('s3RxKidney').value='Yes';
+    document.getElementById('s3Hospice').value='No';
+    document.getElementById('s3LTC').value='No';
+    document.getElementById('s3HomeDialysis').value='Yes — In-Center Hemodialysis';
+    document.getElementById('s3PhysName').value='Dr. Maria Sanchez';
+    document.getElementById('s3PhysNpi').value='1234567890';
+    document.getElementById('s3DocType').value='Physician Statement';
+    document.getElementById('s3DocDate').value='2026-05-18';
+    document.getElementById('s3RoiConsent').checked=true;
+    document.getElementById('s3RoiSignature').value='Linda S Park';
+    document.getElementById('s3RoiDate').value='2026-06-03';
+    ['pqEsrd','pqNephro','pqDiabetes','pqHypertension','pqHeartFailure'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.checked=true;
+    });
+    ['pqCkd3a','pqCkd3b','pqCkd4','pqTransplant','pqTransplantEval','pqCardio','pqCopd'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.checked=false;
+    });
+    lookupNpi();
+    validatePqat();
+  } else if(step===4){
+    selectPlan(1);
+    document.getElementById('s4EnrollPeriod').value='SEP';
+    toggleSepReason();
+  } else if(step===5){
+    document.getElementById('s5Routing').value='021000021';
+    document.getElementById('s5AcctNum').value='4501234567';
+    document.getElementById('s5PcpName').value='Dr. Maria Sanchez';
+    document.getElementById('s5PcpNpi').value='1598374621';
+    document.getElementById('s5PcpPractice').value='South Florida Renal Care';
+    document.getElementById('s5SigDate').value='2026-06-03';
+    document.getElementById('s5MemberSig').value='Linda S Park';
+    ['ack1','ack2','ack3','ack4'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.checked=true;
+    });
+  }
+  if(btn){
+    btn.innerHTML='<i class="fas fa-check"></i> Prefilled!';
+    btn.style.background='#e8f5e9';btn.style.borderColor='#2e7d32';btn.style.color='#1b5e20';
+    setTimeout(function(){
+      btn.innerHTML='<i class="fas fa-magic"></i>Prefill Data';
+      btn.style.background='#fff3e0';btn.style.borderColor='#fb8c00';btn.style.color='#e65100';
+    },2000);
+  }
+  if(typeof showToast==='function') showToast('Step '+step+' prefilled','success');
+}
+</script>
+</body>
+</html>

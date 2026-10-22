@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Hold Queue | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.hold-card{background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:10px;border:1px solid #e8eaed;transition:box-shadow .15s}
+.hold-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.hold-card.priority-critical{border-left:3px solid #e53935}
+.hold-card.priority-high{border-left:3px solid #fb8c00}
+.hold-card.priority-medium{border-left:3px solid #1e88e5}
+.hold-id{font-family:monospace;font-size:12px;color:#004d40;font-weight:600}
+.hold-agent{font-size:13px;font-weight:600;color:#1a1a2e;margin:4px 0 2px}
+.hold-meta{font-size:11px;color:#80868b}
+.hold-badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.h-badge{padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.hb-critical{background:#fce4ec;color:#c62828}
+.hb-high{background:#fff3e0;color:#e65100}
+.hb-medium{background:#e3f2fd;color:#1565c0}
+.hb-pending{background:#fff8e1;color:#f57f17}
+.hb-awaiting{background:#e0f2f1;color:#00695c}
+.hb-investigating{background:#f3e5f5;color:#6a1b9a}
+.hb-resolved{background:#e8f5e9;color:#2e7d32}
+.sla-warn{color:#e65100;font-weight:600;font-size:10px}
+.sla-breach{color:#c62828;font-weight:700;font-size:10px}
+.timeline-item{position:relative;padding-left:24px;padding-bottom:12px;border-left:2px solid #e0e0e0;margin-left:6px;font-size:12px}
+.timeline-item:last-child{border-left:none;padding-bottom:0}
+.timeline-item::before{content:'';position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:#004d40}
+.timeline-ts{font-size:10px;color:#9e9e9e;display:block;margin-bottom:2px}
+.no-results{text-align:center;padding:40px 20px;color:#9e9e9e;font-size:13px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html" class="active"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#004d40;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Compliance Hold Queue</h4>
+      <ol class="breadcrumb-bar"><li>Review &amp; Resolve Holds &nbsp;|&nbsp; SLA Tracked &nbsp;|&nbsp; Audit Logged</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Hold Queue')"><i class="fas fa-download"></i> Export</button>
+      <a href="../auth-carrier/login.html" class="btn-ol btn-sm" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- KPI Row -->
+    <div class="row-grid" style="margin-bottom:18px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-pause-circle"></i></div><div><div class="stat-label">Active Holds</div><div class="stat-val">12</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#f57f17"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending Review</div><div class="stat-val">5</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e0f2f1;color:#00695c"><i class="fas fa-search"></i></div><div><div class="stat-label">Awaiting Verification</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Resolved (30d)</div><div class="stat-val">28</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-stopwatch"></i></div><div><div class="stat-label">Avg Resolution</div><div class="stat-val">3.2d</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">SLA Breach Risk</div><div class="stat-val">2</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select id="filterStatus" onchange="renderQueue()">
+        <option value="">All Statuses</option>
+        <option value="Pending Review">Pending Review</option>
+        <option value="Awaiting Verification">Awaiting Verification</option>
+        <option value="Under Investigation">Under Investigation</option>
+      </select>
+      <select id="filterReason" onchange="renderQueue()">
+        <option value="">All Reasons</option>
+        <option value="License Suspension">License Suspension</option>
+        <option value="License Revocation">License Revocation</option>
+        <option value="License Expiration">License Expiration</option>
+        <option value="Reinstatement Review">Reinstatement Review</option>
+        <option value="AHIP Lapse">AHIP Lapse</option>
+      </select>
+      <select id="filterPriority" onchange="renderQueue()">
+        <option value="">All Priority</option>
+        <option value="Critical">Critical</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+      </select>
+      <select id="filterState" onchange="renderQueue()">
+        <option value="">All States</option>
+        <option value="FL">FL</option>
+        <option value="TX">TX</option>
+        <option value="CA">CA</option>
+        <option value="NY">NY</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Search NPN or agent name..." style="width:200px" oninput="renderQueue()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+      <span id="queueCount" style="font-size:11px;color:#80868b;margin-left:auto"></span>
+    </div>
+
+    <!-- Queue Container -->
+    <div class="table-wrap">
+      <table class="tbl" id="holdQueue">
+        <thead><tr><th>Hold ID</th><th>Agent</th><th>NPN</th><th>State</th><th>Reason</th><th>Priority</th><th>Status</th><th>Enrollments</th><th>SLA</th><th>Opened</th><th>Actions</th></tr></thead>
+        <tbody id="holdTbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- Review Slide-Over -->
+<div id="overBg" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1040" onclick="closeReview()"></div>
+<div id="reviewSlide" style="position:fixed;top:0;right:0;width:560px;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.12);z-index:1050;overflow-y:auto;padding:24px;display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h5 style="margin:0;font-size:15px;color:#004d40"><i class="fas fa-gavel" style="margin-right:6px"></i>Hold Review</h5>
+    <button onclick="closeReview()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9e9e9e">&times;</button>
+  </div>
+  <div id="reviewContent"></div>
+</div>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var HOLDS = [
+  {id:'HOLD-2026-0547',agent:'Robert Chen',npn:'18294756',state:'FL',reason:'License Suspension',reasonDetail:'CE non-compliance',trigger:'NIPR Alert',priority:'Critical',status:'Pending Review',opened:'05 25,2026 10:48 AM',sla:null,enrollments:42,upline:'Premier Health Agency (MGA)'},
+  {id:'HOLD-2026-0543',agent:'Angela Torres',npn:'39485721',state:'NY',reason:'License Revocation',reasonDetail:'Fraud conviction',trigger:'NIPR Alert',priority:'Critical',status:'Awaiting Verification',opened:'05 24,2026 3:15 PM',sla:'18h remaining',enrollments:0,upline:'Empire Benefits Group (SGA)'},
+  {id:'HOLD-2026-0545',agent:'Maria Rodriguez',npn:'29384756',state:'TX',reason:'Reinstatement Review',reasonDetail:'CE requirements fulfilled',trigger:'NIPR Alert',priority:'High',status:'Pending Review',opened:'05 25,2026 8:12 AM',sla:null,enrollments:23,upline:'Lone Star Insurance (GA)'},
+  {id:'HOLD-2026-0541',agent:'James Wilson',npn:'38472910',state:'CA',reason:'License Expiration',reasonDetail:'License expired - not renewed',trigger:'NIPR Alert',priority:'High',status:'Pending Review',opened:'05 23,2026',sla:'BREACHED (48h+)',enrollments:15,upline:'Pacific Insurance Group (FMO)'},
+  {id:'HOLD-2026-0539',agent:'Kevin Patel',npn:'47382910',state:'FL',reason:'AHIP Lapse',reasonDetail:'AHIP 2026 certification not completed',trigger:'System Check',priority:'Medium',status:'Pending Review',opened:'05 22,2026',sla:null,enrollments:8,upline:'Premier Health Agency (MGA)'},
+  {id:'HOLD-2026-0536',agent:'Patricia Davis',npn:'10293847',state:'FL',reason:'License Suspension',reasonDetail:'Disciplinary action',trigger:'NIPR Alert',priority:'Critical',status:'Under Investigation',opened:'05 20,2026',sla:null,enrollments:31,upline:'Southern Benefits LLC (GA)'}
+];
+
+function renderQueue(){
+  var status = document.getElementById('filterStatus').value;
+  var reason = document.getElementById('filterReason').value;
+  var priority = document.getElementById('filterPriority').value;
+  var state = document.getElementById('filterState').value;
+  var search = document.getElementById('filterSearch').value.toLowerCase();
+
+  var filtered = HOLDS.filter(function(h){
+    if(status && h.status !== status) return false;
+    if(reason && h.reason !== reason) return false;
+    if(priority && h.priority !== priority) return false;
+    if(state && h.state !== state) return false;
+    if(search && h.agent.toLowerCase().indexOf(search)<0 && h.npn.indexOf(search)<0) return false;
+    return true;
+  });
+
+  document.getElementById('queueCount').textContent = filtered.length + ' hold' + (filtered.length!==1?'s':'');
+  var container = document.getElementById('holdTbody');
+
+  if(!filtered.length){
+    container.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:40px;color:#9e9e9e">No holds match your filters</td></tr>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(h){
+    var pBadge = h.priority==='Critical'?'hb-critical':h.priority==='High'?'hb-high':'hb-medium';
+    var sBadge = h.status==='Pending Review'?'hb-pending':h.status==='Awaiting Verification'?'hb-awaiting':h.status==='Under Investigation'?'hb-investigating':'hb-resolved';
+    var slaHtml = '';
+    if(h.sla){
+      slaHtml = h.sla.indexOf('BREACH')>=0
+        ? '<span class="sla-breach"><i class="fas fa-exclamation-circle"></i> '+h.sla+'</span>'
+        : '<span class="sla-warn"><i class="fas fa-clock"></i> '+h.sla+'</span>';
+    } else { slaHtml = '<span style="color:#2e7d32;font-size:11px">OK</span>'; }
+    var rowBg = h.priority==='Critical'?'background:#fff5f5':h.sla&&h.sla.indexOf('BREACH')>=0?'background:#fff8e1':'';
+    return '<tr style="'+rowBg+'">'
+      +'<td><code style="font-size:11px">'+h.id+'</code></td>'
+      +'<td><strong style="font-size:12.5px">'+h.agent+'</strong></td>'
+      +'<td style="font-family:monospace;font-size:11px">'+h.npn+'</td>'
+      +'<td>'+h.state+'</td>'
+      +'<td><div style="font-size:12px">'+h.reason+'</div><div style="font-size:10px;color:#80868b">'+h.reasonDetail+'</div></td>'
+      +'<td><span class="h-badge '+pBadge+'">'+h.priority+'</span></td>'
+      +'<td><span class="h-badge '+sBadge+'">'+h.status+'</span></td>'
+      +'<td style="font-weight:'+(h.enrollments>20?'700':'400')+';color:'+(h.enrollments>20?'#c62828':'#3c4043')+'">'+h.enrollments+'</td>'
+      +'<td>'+slaHtml+'</td>'
+      +'<td style="font-size:11px;color:#5f6368">'+h.opened+'</td>'
+      +'<td><button class="btn-pr btn-sm" style="font-size:11px" onclick="openReview(\''+h.id+'\')"><i class="fas fa-gavel"></i> Review</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function clearFilters(){
+  document.getElementById('filterStatus').value='';
+  document.getElementById('filterReason').value='';
+  document.getElementById('filterPriority').value='';
+  document.getElementById('filterState').value='';
+  document.getElementById('filterSearch').value='';
+  renderQueue();
+}
+
+function openReview(holdId){
+  var h = HOLDS.find(function(x){return x.id===holdId;});
+  if(!h) return;
+  var pBadge = h.priority==='Critical'?'hb-critical':h.priority==='High'?'hb-high':'hb-medium';
+  var html = '<div style="margin-bottom:16px"><span class="h-badge '+pBadge+'" style="font-size:11px">'+h.priority+'</span> <span class="hold-id" style="font-size:13px">'+h.id+'</span></div>'
+    +'<div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;margin-bottom:14px">'
+    +'<table style="width:100%;font-size:12px;border-collapse:collapse">'
+    +'<tr><td style="padding:4px 8px;color:#80868b;width:120px">Agent</td><td style="padding:4px 8px;font-weight:600">'+h.agent+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">NPN</td><td style="padding:4px 8px;font-family:monospace">'+h.npn+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">State</td><td style="padding:4px 8px">'+h.state+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">Reason</td><td style="padding:4px 8px">'+h.reason+' &mdash; '+h.reasonDetail+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">Trigger</td><td style="padding:4px 8px">'+h.trigger+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">Active Enrollments</td><td style="padding:4px 8px;font-weight:600;color:'+(h.enrollments>20?'#c62828':'#3c4043')+'">'+h.enrollments+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">Upline</td><td style="padding:4px 8px">'+h.upline+'</td></tr>'
+    +'<tr><td style="padding:4px 8px;color:#80868b">Opened</td><td style="padding:4px 8px">'+h.opened+'</td></tr>'
+    +'</table></div>'
+    +'<div style="font-size:12px;font-weight:600;color:#004d40;margin-bottom:8px"><i class="fas fa-stream" style="margin-right:5px"></i>Case Timeline</div>'
+    +'<div style="margin-bottom:16px">'
+    +'<div class="timeline-item"><span class="timeline-ts">'+h.opened+'</span>Compliance Hold applied automatically</div>'
+    +'<div class="timeline-item"><span class="timeline-ts">'+h.opened+'</span>OEC feed updated &mdash; agent removed</div>'
+    +'<div class="timeline-item"><span class="timeline-ts">'+h.opened+'</span>Agent &amp; upline notified (email + portal)</div>'
+    +'</div>'
+    +'<div style="font-size:12px;font-weight:600;color:#004d40;margin-bottom:8px"><i class="fas fa-tools" style="margin-right:5px"></i>Verification Actions</div>'
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">'
+    +'<button class="btn-ol btn-sm" style="font-size:11px" onclick="showToast(\'Re-running NIPR check for '+h.npn+'...\',\'#004d40\')"><i class="fas fa-sync"></i> NIPR Re-check</button>'
+    +'<button class="btn-ol btn-sm" style="font-size:11px" onclick="showToast(\'Requesting documents from agent...\',\'#004d40\')"><i class="fas fa-file-upload"></i> Request Docs</button>'
+    +'<button class="btn-ol btn-sm" style="font-size:11px" onclick="showToast(\'Contacting upline...\',\'#004d40\')"><i class="fas fa-phone"></i> Contact Upline</button>'
+    +'</div>'
+    +'<div style="font-size:12px;font-weight:600;color:#004d40;margin-bottom:8px"><i class="fas fa-gavel" style="margin-right:5px"></i>Resolution Decision</div>'
+    +'<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:500;color:#5f6368;display:block;margin-bottom:4px">Decision</label>'
+    +'<select class="form-control" id="decisionSelect" style="font-size:12px"><option>Maintain Hold</option><option>Approve Reactivation</option><option>Escalate</option><option>Initiate Termination</option></select></div>'
+    +'<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:500;color:#5f6368;display:block;margin-bottom:4px">Justification <span style="color:#c62828">*</span></label>'
+    +'<textarea class="form-control" rows="3" style="font-size:12px" placeholder="Document the reason for your decision..."></textarea></div>'
+    +'<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:500;color:#5f6368;display:block;margin-bottom:4px">Follow-up Date</label>'
+    +'<input type="date" class="form-control" style="font-size:12px;width:180px" value="2026-06-25"></div>'
+    +'<div style="margin-bottom:14px"><label style="font-size:11px;font-weight:500;color:#5f6368;display:block;margin-bottom:4px">Notifications</label>'
+    +'<label style="font-size:11px;display:flex;align-items:center;gap:5px;margin-bottom:3px"><input type="checkbox" checked> Notify Agent</label>'
+    +'<label style="font-size:11px;display:flex;align-items:center;gap:5px;margin-bottom:3px"><input type="checkbox" checked> Notify Upline</label>'
+    +'<label style="font-size:11px;display:flex;align-items:center;gap:5px"><input type="checkbox"> Update OEC Feed (reactivation only)</label></div>'
+    +'<button class="btn-pr btn-sm" style="width:100%" onclick="submitDecision(\''+h.id+'\')"><i class="fas fa-check-circle"></i> Submit Decision</button>';
+  document.getElementById('reviewContent').innerHTML = html;
+  document.getElementById('reviewSlide').style.display = 'block';
+  document.getElementById('overBg').style.display = 'block';
+}
+
+function closeReview(){
+  document.getElementById('reviewSlide').style.display = 'none';
+  document.getElementById('overBg').style.display = 'none';
+}
+
+function submitDecision(holdId){
+  closeReview();
+  showToast('Decision submitted for '+holdId+'. Agent and upline notified.','#1b5e20');
+}
+
+function showToast(msg,color){var el=document.getElementById('toastEl');el.textContent=msg;el.style.background=color||'#1b5e20';el.style.display='block';setTimeout(function(){el.style.display='none';},3500);}
+
+renderQueue();
+</script>
+</body>
+</html>

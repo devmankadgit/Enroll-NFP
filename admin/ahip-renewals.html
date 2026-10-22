@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHIP Renewal Status | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.cert-badge{padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.cb-valid{background:#e8f5e9;color:#1b5e20}
+.cb-expiring{background:#fff8e1;color:#e65100}
+.cb-expired{background:#fce4ec;color:#b71c1c}
+.cb-renewed{background:#e3f2fd;color:#0d47a1}
+.cb-hold{background:#f3e5f5;color:#4a148c}
+.reminder-pill{display:inline-flex;align-items:center;gap:4px;background:#f1f3f4;border-radius:10px;padding:2px 8px;font-size:10px;color:#5f6368;margin:2px}
+.countdown-chip{background:#fff3e0;color:#e65100;border:1px solid #ffcc80;border-radius:8px;padding:2px 8px;font-size:11px;font-weight:700}
+.slide-over{position:fixed;top:0;right:0;width:500px;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.15);z-index:1050;overflow-y:auto;padding:24px;display:none}
+.slide-over.open{display:block}
+.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1040}
+.overlay-bg.open{display:block}
+.job-status-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;font-size:12px;color:#1b5e20;margin-bottom:16px}
+.escalation-row{background:#fff8e1!important}
+.hold-row{background:#fce4ec!important}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>AHIP Renewal Status &amp; Reminder Tracking</h4>
+      <ol class="breadcrumb-bar"><li>Automated Reminders &nbsp;|&nbsp; Duplicate Prevention &nbsp;|&nbsp; Escalation &nbsp;|&nbsp; Auto Compliance Hold</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="simulateDailyJob()"><i class="fas fa-play"></i> Run Daily Check</button>
+      <a href="ahip-config.html" class="btn-ol btn-sm"><i class="fas fa-cog"></i> Configure AHIP</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="job-status-bar" id="jobStatusBar">
+      <i class="fas fa-check-circle" style="font-size:18px;flex-shrink:0"></i>
+      <div><strong>Daily AHIP Certificate Check ? Last Run: 05 27,2026 06:00 AM</strong><br>
+      <span style="font-size:11px">Processed 247 active agents. 3 reminders queued &amp; sent. 1 escalation triggered. 0 Compliance Holds applied. Next run: 05 28,2026 06:00 AM.</span></div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-row" style="margin-bottom:20px">
+      <div class="kpi-card"><div class="kpi-val" style="color:#1b5e20">181</div><div class="kpi-lbl">Valid (active)</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#e65100">12</div><div class="kpi-lbl">Expiring Soon (&le;60 days)</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#b71c1c">3</div><div class="kpi-lbl">Expired</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#0d47a1">49</div><div class="kpi-lbl">Renewed This Plan Year</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#4a148c">2</div><div class="kpi-lbl">On Compliance Hold</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#e65100">1</div><div class="kpi-lbl">Escalated to Broker Support</div></div>
+    </div>
+
+    <!-- Escalation Banner -->
+    <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+      <i class="fas fa-exclamation-triangle" style="color:#e65100;font-size:18px;flex-shrink:0"></i>
+      <div style="flex:1"><strong style="color:#e65100">1 Escalation Alert Active</strong> ? Michael Torres (NPN: 54321098) reached 7-day threshold without renewal on 05 24,2026. Broker Support has been notified.</div>
+      <button class="btn-ol btn-sm" style="font-size:11px;flex-shrink:0" onclick="openAgentDetail('54321098')"><i class="fas fa-eye"></i> View</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select class="form-control" id="filterStatus" style="width:160px" onchange="renderTable()">
+        <option value="">All Statuses</option>
+        <option>Valid</option><option>Expiring Soon</option><option>Upcoming</option><option>Expired</option><option>Renewed</option><option>Compliance Hold</option>
+      </select>
+      <input class="form-control" id="filterSearch" type="text" placeholder="Agent name or NPN..." style="width:220px" oninput="renderTable()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- Renewals Table -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-certificate" style="margin-right:6px;color:#1a237e"></i>AHIP Certificate Status ? All Agents</h5>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="bulkSendReminder()"><i class="fas fa-bell"></i> Send Reminder (Selected)</button>
+          <button class="btn-ol btn-sm" onclick="nfpExport('AHIP Renewals')"><i class="fas fa-file-excel" style="color:#2e7d32"></i> Export</button>
+          <span id="tableCount" style="font-size:12px;color:#5f6368;align-self:center"></span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','ahip-renewals_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="cursor:pointer"></th><th>Agent Name</th><th>NPN</th><th>Training Year</th><th>Certification</th><th>Cert Status</th><th>Expiry Date</th><th>Days Left</th><th>Reminders Sent (PY2026)</th><th>Escalated</th><th>Actions</th></tr></thead>
+          <tbody id="renewalTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Reminder Audit Log -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr">
+        <h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Reminder &amp; Event Audit Log</h5>
+        <span style="font-size:11px;color:#9e9e9e">All reminder sends, escalations, and compliance holds are audit-logged</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','ahip-renewals_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Timestamp</th><th>Agent</th><th>NPN</th><th>Event Type</th><th>Details</th></tr></thead>
+          <tbody id="reminderAuditTbody">
+            <tr><td>2026-05-24 06:00:01</td><td>Michael Torres</td><td>54321098</td><td><span style="background:#fff8e1;color:#e65100;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">7-Day Escalation</span></td><td>Broker Support notified. Agent has not renewed. PY2026. Duplicate check: first escalation this plan year ? sent.</td></tr>
+            <tr><td>2026-05-24 06:00:00</td><td>Michael Torres</td><td>54321098</td><td><span style="background:#e3f2fd;color:#0d47a1;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">7-Day Reminder</span></td><td>Email + SMS + portal sent. Duplicate check: no prior 7-day reminder found. PY2026.</td></tr>
+            <tr><td>2026-05-10 06:00:00</td><td>Sarah Nguyen</td><td>11223344</td><td><span style="background:#e3f2fd;color:#0d47a1;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">30-Day Reminder</span></td><td>Email + SMS + portal sent. Duplicate check: passed. PY2026.</td></tr>
+            <tr><td>2026-04-12 06:00:00</td><td>James Wilson</td><td>77889900</td><td><span style="background:#e8f5e9;color:#1b5e20;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">Renewed</span></td><td>AHIP API returned renewed cert (PY2026). Reminder cycle stopped for this agent.</td></tr>
+            <tr><td>2026-04-01 06:00:00</td><td>Lisa Johnson</td><td>99887711</td><td><span style="background:#e3f2fd;color:#0d47a1;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">60-Day Reminder</span></td><td>Email + SMS + portal sent. Duplicate check: passed. PY2026.</td></tr>
+            <tr><td>2026-01-02 00:01:00</td><td>SYSTEM</td><td>multiple</td><td><span style="background:#f3e5f5;color:#4a148c;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">Auto Compliance Hold</span></td><td>2 agents placed on Compliance Hold: certs expired 12 31,2025. Agent + upline admin + Broker Support notified. PY2025.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Slide-Over -->
+<div class="overlay-bg" id="overBg" onclick="closeDetail()"></div>
+<div class="slide-over" id="agentSlide">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h5 style="margin:0;font-size:16px;color:#1a237e"><i class="fas fa-certificate" style="margin-right:6px"></i>AHIP Certificate Detail</h5>
+    <button onclick="closeDetail()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9e9e9e">&times;</button>
+  </div>
+  <div id="detailContent"></div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal-overlay" id="uploadModal" style="display:none">
+  <div class="modal-box" style="max-width:460px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-upload" style="margin-right:6px;color:#1a237e"></i>Upload Renewed AHIP Certificate</h5>
+      <button onclick="closeUploadModal()" class="modal-close">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="font-size:13px;margin-bottom:14px">Uploading renewed certificate for <strong id="uploadAgentName"></strong>.</div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Certificate PDF <span class="req">*</span></label>
+        <input type="file" class="form-control" id="certFile" accept=".pdf,.jpg,.png">
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Certificate Issue Date <span class="req">*</span></label>
+        <input type="date" class="form-control" id="certIssueDate">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Notes (optional)</label>
+        <textarea class="form-control" id="certNotes" rows="2" placeholder="Any notes for compliance review..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol btn-sm" onclick="closeUploadModal()">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="confirmUpload()"><i class="fas fa-upload"></i> Upload Certificate</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px"></div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* ============================================================
+   US-2.5: AHIP Annual Renewal Reminders & Status Tracking
+   Daily job simulation | Duplicate-send prevention
+   Escalation | Auto Compliance Hold | Audit log
+   ============================================================ */
+
+var AGENTS = [
+  {npn:'12345678',name:'Robert Chen',      expiry:'2026-12-31',status:'Valid',    daysLeft:218,reminders:[],escalated:false,hold:false, trainingYear:'2026',cert:'MA Certification'},
+  {npn:'87654321',name:'Jennifer Lopez',   expiry:'2026-12-31',status:'Valid',    daysLeft:218,reminders:[],escalated:false,hold:false, trainingYear:'2026',cert:'MA Certification'},
+  {npn:'54321098',name:'Michael Torres',   expiry:'2026-05-31',status:'Expiring', daysLeft:4,  reminders:['60-Day','30-Day','7-Day'],escalated:true,hold:false, trainingYear:'2026',cert:'MA + PDP'},
+  {npn:'11223344',name:'Sarah Nguyen',     expiry:'2026-06-26',status:'Expiring', daysLeft:30, reminders:['60-Day','30-Day'],escalated:false,hold:false, trainingYear:'2026',cert:'MA Certification'},
+  {npn:'99887766',name:'Angela Williams',  expiry:'2026-12-31',status:'Renewed',  daysLeft:218,reminders:['60-Day'],escalated:false,hold:false,renewedDate:'2026-04-15', trainingYear:'2026',cert:'MA + PDP'},
+  {npn:'55443322',name:'David Kim',        expiry:'2026-12-31',status:'Valid',    daysLeft:218,reminders:[],escalated:false,hold:false, trainingYear:'2026',cert:'MA Certification'},
+  {npn:'77889900',name:'James Wilson',     expiry:'2026-12-31',status:'Renewed',  daysLeft:218,reminders:['60-Day','30-Day'],escalated:false,hold:false,renewedDate:'2026-04-12', trainingYear:'2026',cert:'MA Certification'},
+  {npn:'99887711',name:'Lisa Johnson',     expiry:'2026-07-31',status:'Expiring', daysLeft:65, reminders:['60-Day'],escalated:false,hold:false, trainingYear:'2026',cert:'MA Certification'},
+  {npn:'33221100',name:'Carlos Reyes',     expiry:'2026-12-31',status:'Valid',    daysLeft:218,reminders:[],escalated:false,hold:false, trainingYear:'2026',cert:'MA + PDP'},
+  {npn:'10293847',name:'Patricia Davis',   expiry:'2026-03-01',status:'Expired',  daysLeft:-87,reminders:['60-Day','30-Day','7-Day'],escalated:true,hold:true, trainingYear:'2025',cert:'MA Certification'},
+  {npn:'56473829',name:'Frank O\'Brien',   expiry:'2026-04-15',status:'Expired',  daysLeft:-42,reminders:['60-Day','30-Day','7-Day'],escalated:true,hold:true, trainingYear:'2025',cert:'MA Certification'},
+  {npn:'19283746',name:'Michelle Park',    expiry:'2026-06-15',status:'Expiring', daysLeft:19, reminders:['60-Day','30-Day'],escalated:false,hold:false, trainingYear:'2026',cert:'MA + PDP'}
+];
+
+/* ---- RENDER TABLE ---- */
+function renderTable(){
+  var status = document.getElementById('filterStatus').value;
+  var search = document.getElementById('filterSearch').value.toLowerCase();
+  var tbody = document.getElementById('renewalTbody');
+  tbody.innerHTML = '';
+  var filtered = AGENTS.filter(function(a){
+    return (!status || getStatusLabel(a) === status)
+        && (!search || a.name.toLowerCase().indexOf(search)>=0 || a.npn.indexOf(search)>=0);
+  });
+  document.getElementById('tableCount').textContent = filtered.length + ' agents';
+
+  filtered.forEach(function(a){
+    var label = getStatusLabel(a);
+    var cls = label==='Valid'?'cb-valid':label==='Expiring Soon'?'cb-expiring':label==='Expired'?'cb-expired':label==='Renewed'?'cb-renewed':label==='Upcoming'?'cb-expiring':'cb-hold';
+    var daysChip = (a.daysLeft<=60 && a.daysLeft>0)
+      ? '<span class="countdown-chip"><i class="fas fa-hourglass-half" style="margin-right:3px;font-size:9px"></i>'+a.daysLeft+' days</span>'
+      : (a.daysLeft<=0 ? '<span class="countdown-chip" style="background:#fce4ec;color:#b71c1c;border-color:#ef9a9a">Expired</span>' : '?');
+    var remPills = a.reminders.length
+      ? a.reminders.map(function(r){return '<span class="reminder-pill"><i class="fas fa-bell" style="font-size:8px"></i>'+r+'</span>';}).join('')
+      : '<span style="font-size:11px;color:#9e9e9e">None</span>';
+    var escCell = a.escalated
+      ? '<span style="background:#fff8e1;color:#e65100;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700"><i class="fas fa-exclamation-triangle" style="font-size:8px;margin-right:3px"></i>Yes</span>'
+      : '<span style="font-size:11px;color:#9e9e9e">No</span>';
+    var actBtns = '<button class="btn-ol btn-sm" style="font-size:11px" onclick="openAgentDetail(\''+a.npn+'\')"><i class="fas fa-eye"></i> Detail</button>';
+    if(label==='Expiring Soon'||label==='Expired'||label==='Upcoming') actBtns += ' <button class="btn-ol btn-sm" style="font-size:11px" onclick="openUploadModal(\''+a.npn+'\')"><i class="fas fa-upload"></i> Upload</button>';
+    actBtns += ' <button class="btn-ol btn-sm" style="font-size:11px" onclick="sendReminder(\''+a.npn+'\',\''+a.name+'\')"><i class="fas fa-bell"></i> Remind</button>';
+    actBtns += ' <button class="btn-ol btn-sm" style="font-size:11px" onclick="markVerified(\''+a.npn+'\',\''+a.name+'\')"><i class="fas fa-check-circle"></i> Verify</button>';
+    var tr = document.createElement('tr');
+    if(a.hold) tr.className='hold-row';
+    else if(a.escalated) tr.className='escalation-row';
+    tr.innerHTML='<td><input type="checkbox" class="row-chk" data-npn="'+a.npn+'" style="cursor:pointer"></td>'
+      +'<td><strong>'+a.name+'</strong></td><td style="font-family:monospace;font-size:12px">'+a.npn+'</td>'
+      +'<td style="font-size:12px">'+a.trainingYear+'</td>'
+      +'<td style="font-size:11px">'+a.cert+'</td>'
+      +'<td><span class="cert-badge '+cls+'"><i class="fas fa-circle" style="font-size:7px"></i>'+label+'</span></td>'
+      +'<td>'+a.expiry+'</td><td>'+daysChip+'</td><td>'+remPills+'</td><td>'+escCell+'</td><td>'+actBtns+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function getStatusLabel(a){
+  if(a.hold) return 'Compliance Hold';
+  if(a.status==='Renewed') return 'Renewed';
+  if(a.daysLeft<=0) return 'Expired';
+  if(a.daysLeft<=60) return 'Expiring Soon';
+  if(a.daysLeft<=180) return 'Upcoming';
+  return 'Valid';
+}
+function clearFilters(){ document.getElementById('filterStatus').value=''; document.getElementById('filterSearch').value=''; renderTable(); }
+function toggleSelectAll(cb){ document.querySelectorAll('.row-chk').forEach(function(c){c.checked=cb.checked;}); }
+function sendReminder(npn, name){ addReminderAudit(name, npn, 'Manual Reminder', 'Reminder manually triggered by admin.'); showToast('Reminder sent to '+name+'.','#1b5e20'); }
+function markVerified(npn, name){
+  var a = AGENTS.find(function(x){return x.npn===npn;});
+  if(a){ a.status='Renewed'; a.hold=false; }
+  addReminderAudit(name, npn, 'Manually Verified', 'AHIP cert manually marked as verified by admin.');
+  renderTable();
+  showToast(name+' marked as verified.','#1b5e20');
+}
+function bulkSendReminder(){
+  var selected = Array.from(document.querySelectorAll('.row-chk:checked')).map(function(c){return c.getAttribute('data-npn');});
+  if(!selected.length){ showToast('No agents selected.','#e65100'); return; }
+  selected.forEach(function(npn){
+    var a = AGENTS.find(function(x){return x.npn===npn;});
+    if(a) addReminderAudit(a.name, npn, 'Bulk Reminder', 'Bulk reminder sent by admin.');
+  });
+  showToast('Reminder sent to '+selected.length+' agent(s).','#1b5e20');
+}
+
+/* ---- AGENT DETAIL SLIDE-OVER ---- */
+function openAgentDetail(npn){
+  var a = AGENTS.find(function(x){return x.npn===npn;});
+  if(!a) return;
+  var label = getStatusLabel(a);
+  var cls = label==='Valid'?'cb-valid':label==='Expiring Soon'?'cb-expiring':label==='Expired'?'cb-expired':label==='Renewed'?'cb-renewed':'cb-hold';
+  var remList = a.reminders.length
+    ? a.reminders.map(function(r){return '<li style="font-size:12px;padding:4px 0;border-bottom:1px solid #f1f3f4"><i class="fas fa-bell" style="color:#1a237e;margin-right:6px;font-size:10px"></i>'+r+' reminder sent (PY2026)</li>';}).join('')
+    : '<li style="font-size:12px;color:#9e9e9e;padding:4px 0">No reminders sent yet</li>';
+  var dupNote = '<div style="background:#e3f2fd;border-radius:6px;padding:8px 12px;font-size:11px;color:#0d47a1;margin-top:8px"><i class="fas fa-shield-alt" style="margin-right:5px"></i><strong>Duplicate Prevention:</strong> Before each send, the system checks the audit log for a prior reminder of the same type for this agent in PY2026. Duplicate sends are blocked.</div>';
+  var escSection = a.escalated ? '<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#e65100"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i><strong>Escalation Sent:</strong> Broker Support notified at 7-day threshold. One-time per plan year.</div>' : '';
+  var holdSection = a.hold ? '<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#b71c1c"><i class="fas fa-pause-circle" style="margin-right:6px"></i><strong>Compliance Hold Active:</strong> Placed automatically on expiry. Agent, upline admin &amp; Broker Support notified.</div>' : '';
+  var uploadBtn = (label==='Expiring Soon'||label==='Expired') ? '<button class="btn-pr btn-sm" style="margin-top:16px;width:100%" onclick="closeDetail();openUploadModal(\''+a.npn+'\')"><i class="fas fa-upload"></i> Upload Renewed Certificate</button>' : '';
+  document.getElementById('detailContent').innerHTML =
+    '<div style="padding:6px 0 10px"><span class="cert-badge '+cls+'" style="font-size:13px"><i class="fas fa-user-circle" style="font-size:12px"></i>'+a.name+' ? '+label+'</span></div>'
+    +'<table class="tbl" id="tblExport3" style="margin:8px 0"><tbody>'
+    +'<tr><td style="font-size:11px;color:#9e9e9e;width:130px">NPN</td><td style="font-family:monospace;font-size:12px">'+a.npn+'</td></tr>'
+    +'<tr><td style="font-size:11px;color:#9e9e9e">Certificate Expiry</td><td>'+a.expiry+'</td></tr>'
+    +(a.renewedDate?'<tr><td style="font-size:11px;color:#9e9e9e">Renewed Date</td><td style="color:#1b5e20;font-weight:700">'+a.renewedDate+'</td></tr>':'')
+    +'<tr><td style="font-size:11px;color:#9e9e9e">Days Until Expiry</td><td>'+(a.daysLeft>0?'<span class="countdown-chip">'+a.daysLeft+' days</span>':'<span class="countdown-chip" style="background:#fce4ec;color:#b71c1c;border-color:#ef9a9a">'+Math.abs(a.daysLeft)+' days overdue</span>')+'</td></tr>'
+    +'</tbody></table>'
+    +'<div style="font-size:12px;font-weight:700;color:#1a237e;margin:10px 0 6px"><i class="fas fa-bell" style="margin-right:5px"></i>Reminders Sent (PY2026)</div>'
+    +'<ul style="padding-left:0;list-style:none;margin:0">'+remList+'</ul>'
+    +dupNote+escSection+holdSection+uploadBtn;
+  document.getElementById('agentSlide').classList.add('open');
+  document.getElementById('overBg').classList.add('open');
+}
+function closeDetail(){ document.getElementById('agentSlide').classList.remove('open'); document.getElementById('overBg').classList.remove('open'); }
+
+/* ---- UPLOAD MODAL ---- */
+var uploadNpn = null;
+function openUploadModal(npn){
+  uploadNpn = npn;
+  var a = AGENTS.find(function(x){return x.npn===npn;});
+  document.getElementById('uploadAgentName').textContent = a ? a.name : npn;
+  document.getElementById('certFile').value='';
+  document.getElementById('certIssueDate').value='';
+  document.getElementById('certNotes').value='';
+  document.getElementById('uploadModal').style.display='flex';
+}
+function closeUploadModal(){ document.getElementById('uploadModal').style.display='none'; uploadNpn=null; }
+function confirmUpload(){
+  if(!document.getElementById('certFile').value){ showToast('Please select a certificate file.','#b71c1c'); return; }
+  if(!document.getElementById('certIssueDate').value){ showToast('Certificate issue date is required.','#b71c1c'); return; }
+  var a = AGENTS.find(function(x){return x.npn===uploadNpn;});
+  if(a){ a.status='Renewed'; a.renewedDate=document.getElementById('certIssueDate').value; a.hold=false; }
+  addReminderAudit(a?a.name:'?', uploadNpn||'?','Certificate Uploaded (Manual)','Certificate uploaded manually. Renewal cycle stopped for PY2026.');
+  closeUploadModal(); renderTable();
+  showToast('Certificate uploaded. Agent status updated to Renewed.','#1b5e20');
+  console.log('[AUDIT] AHIPCertUpload | NPN:'+(uploadNpn||'?')+' | User:Sandra Adams');
+}
+
+/* ---- SIMULATE DAILY JOB ---- */
+function simulateDailyJob(){
+  var bar = document.getElementById('jobStatusBar');
+  bar.innerHTML='<i class="fas fa-circle-notch fa-spin" style="font-size:18px;flex-shrink:0"></i><div><strong>Running daily AHIP certificate check...</strong><br><span style="font-size:11px">Checking all active agents against AHIP API &amp; audit log for duplicate-send prevention...</span></div>';
+  setTimeout(function(){
+    bar.innerHTML='<i class="fas fa-check-circle" style="font-size:18px;flex-shrink:0"></i><div><strong>Daily AHIP Check ? Completed: Just now</strong><br><span style="font-size:11px">247 agents checked. No new reminders queued (all already sent or not yet due). Duplicate send check: passed for all agents. 0 new escalations (one-time per agent per plan year limit enforced).</span></div>';
+    showToast('Daily job completed. Duplicate prevention enforced. No new sends needed.','#1b5e20');
+    console.log('[AUDIT] AHIPDailyJob | Processed:247 | NewReminders:0 | User:SYSTEM');
+  }, 2200);
+}
+
+/* ---- AUDIT LOG ---- */
+function addReminderAudit(agent, npn, eventType, details){
+  var tbody = document.getElementById('reminderAuditTbody');
+  var row = document.createElement('tr');
+  var ts = new Date().toISOString().replace('T',' ').substring(0,19);
+  row.innerHTML='<td>'+ts+'</td><td>'+agent+'</td><td>'+npn+'</td>'
+    +'<td><span style="background:#e3f2fd;color:#0d47a1;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700">'+eventType+'</span></td>'
+    +'<td>'+details+'</td>';
+  tbody.insertBefore(row, tbody.firstChild);
+}
+
+/* ---- TOAST ---- */
+function showToast(msg,color){ var el=document.getElementById('toastEl'); el.textContent=msg; el.style.background=color||'#1b5e20'; el.style.display='block'; setTimeout(function(){el.style.display='none';},3800); }
+
+/* ---- INIT ---- */
+renderTable();
+</script>
+</body>
+</html>

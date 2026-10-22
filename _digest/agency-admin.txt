@@ -1,0 +1,234 @@
+##### SIDEBAR variant used by 14 pages: action-items.html, agents.html, bob.html, bulletin-board.html, campaigns.html, commission-details.html, commissions.html, dashboard.html, hierarchy-view.html, invitations.html, leads.html, member-profile.html, onboarding-cases.html, soa-management.html
+- Dashboard [dashboard.html]
+## Agent Management
+- My Agents [agents.html]
+- Hierarchy View [hierarchy-view.html]
+- Invitations [invitations.html]
+- Onboarding Cases [onboarding-cases.html]
+## Members & Enrollment
+  - My Book of Business [bob.html?tab=mybob]
+  - My Downline Business [bob.html]
+  - Leads & Assignment [leads.html]
+  - Campaign Management [leads.html?tab=campaigns]
+- SOA Management [soa-management.html]
+## Operations & Finance
+- Action Items [action-items.html]
+- Commissions Management [commissions.html]
+
+=== /agency-admin/action-items.html | Action Items | Gold Kidney Agency Admin
+ACTIVE NAV: Action Items
+USER: RV Rachel Vargas Agency Admin
+HEADER: Consolidated Action Items (Downline) | BC: Aggregated Action Items Across Downline Agents
+KPIs: Total Overdue=14 ; HRA Due=6 ; PQAT Due=4 ; Lead Follow-ups=12
+CARDS/SECTIONS: All Downline Action Items (36) || Agent Action Item Performance
+TABLE1 (6 rows) cols: Agent | Type | Member / Lead | Due Date | Status | Priority | Actions
+   row1: J. Martinez Lead Follow-up Linda Park May 24 1 day overdue High Remind Reassign
+TABLE2 (3 rows) cols: Agent | Total Items | Overdue | On-Time Rate | HRA Completion | PQAT Completion
+   row1: James Martinez (8823441) 8 3 62.5% 75% 60%
+FORM LABELS: Agent: | Type: | Priority:
+SELECTS: [All Agents, J. Martinez (8823441), S. Chen (7719022), K. Nguyen (9912345)] [All Types, HRA Due, PQAT Due, Healthy Visit, C-SNP Re-Verify, Lead Follow-up] [All Priority, High (Overdue), Medium, Low]
+BUTTONS: Apply | Reset | Send Reminders | Export | Export to Excel | Remind | Reassign
+BADGES: Lead Follow-up | 1 day overdue | HRA Due | 3 days left | 2 days overdue | 5 days left | PQAT Due | 21 days | Healthy Visit | 68 days
+
+=== /agency-admin/agents.html | My Agents | Gold Kidney Agency Admin
+ACTIVE NAV: My Agents
+USER: RV Rachel Vargas Agency Admin
+HEADER: My Agents (Downline) | BC: Dashboard My Agents
+KPIs: Active=3 ; Onboarding=2 ; Compliance Hold=0 ; Terminated=1
+CARDS/SECTIONS: All Downline Agents
+TABLE1 (5 rows) cols: Agent Name | NPN | Hierarchy Level | States | Status | AHIP | License | Carrier Appt | Leads Assigned | Converted | Active BoB | Enrollments YTD | YTD Commissions | 
+   row1: James Martinez 8823441 GA - 10 FL, TX Active Valid Active Appointed 18 8 32 12 $8,750 View
+SELECTS: [All Status, Active, Onboarding, Hold, Terminated]
+BUTTONS: Export to Excel | View
+MODALS/DRAWERS: addAgentModal:Add Agent to My Agency ; agentDetailModal:Agent Profile ; docsModal:Documents ; docModalName: ; trainingModal:Training Records ; trainModalName:
+BADGES: Active | Valid | Appointed | Onboarding | Pending | Terminated | Expired
+LINKS: onboarding-cases.html
+
+=== /agency-admin/bob.html | Downline Book of Business | Agency Admin
+ACTIVE NAV: My Downline Business
+USER: RV Rachel Vargas Agency Admin
+HEADER: My Downline Business | BC: 
+KPIs: Total Members=18 ; Active=15 ; Termed=3 ; Chronic Verified=13 ; New Members MTD=4 ; Renewals Due=6
+CARDS/SECTIONS: Agency Book of Business ? HealthFirst Distribution
+TABLE1 (18 rows) cols: Member ID | MBI | First Name | Last Name | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified | HRA Status ($25 incentive) | Healthy Visit ($50 incentive) | PCP
+   row1: MEM-100201 1EG4-TE5-MK72 Dorothy Henderson (305) 555-0172 01 01,2026 ? H1234 H1234-001 2026 Yes Complete $25 Complete $50 Dr. Rivera, Maria
+TABLE2 (7 rows) cols: Member ID | MBI | First Name | Last Name | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified | HRA Status ($25 incentive) | Healthy Visit ($50 incentive) | PCP
+   row1: MEM-200301 1EG4-TE5-MK72 Dorothy Henderson (305) 555-0172 01 01,2026 ? H1234 H1234-001 2026 Yes Complete $25 Complete $50 Dr. Rivera, Maria
+TABLE3 (6 rows) cols: Member ID | MBI | First Name | Last Name | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified | HRA Status ($25 incentive) | Healthy Visit ($50 incentive) | PCP
+   row1: MEM-200401 8GH7-AB3-QR55 Charles Williams (305) 555-0821 01 01,2026 ? H1234 H1234-004 2026 N/A N/A Not Scheduled Dr. Chen, Wei
+TABLE4 (5 rows) cols: Member ID | MBI | First Name | Last Name | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified | HRA Status ($25 incentive) | Healthy Visit ($50 incentive) | PCP
+   row1: MEM-200501 5ST9-MN5-WX44 George Harris (713) 555-1489 06 01,2026 ? H1234 H1234-004 2026 N/A N/A Not Scheduled Dr. Johnson, Mark
+TABLE5 (5 rows) cols: Member ID | MBI | First Name | Last Name | Phone | Effective Date | Termination Date | Contract | Plan | Mem Year | Chronic Condition Verified | HRA Status ($25 incentive) | Healthy Visit ($50 incentive) | PCP
+   row1: MEM-200601 1CD2-WX4-EF88 Mark Taylor (713) 555-2035 01 01,2026 ? H1234 H1234-001 2026 Yes Complete $25 Complete $50 Dr. Johnson, Mark
+FORM LABELS: Plan: | Year: | Chronic: | Agent:
+SELECTS: [All Plans, H1234-001, H1234-002, H1234-003, H1234-004] [All Years, 2026, 2025] [All, Verified, Pending, Not Verified] [All Agents, James Martinez, Sarah Chen, Michael Torres, Diana Foster] [All, Yes, Pending, No]
+BUTTONS: Apply | Reset | Export CSV | Export to Excel
+MODALS/DRAWERS: memberProfileModal:Member Profile
+BADGES: Yes | Complete $25 | Complete $50 | Scheduled ($50 pending) | Pending ($25) | Not Scheduled ($50) | Pending | Overdue ($25 at risk) | N/A | Not Scheduled
+
+=== /agency-admin/bulletin-board.html | Bulletin Board | Agency Admin | Gold Kidney
+USER: RV Rachel Vargas Agency Admin
+HEADER:  | BC: 
+KPIs: Total Active Bulletins=4 ; Urgent=2 ; Avg Read Rate=76% ; Expired This Month=1
+CARDS/SECTIONS: Create Bulletin
+TABLE1 (4 rows) cols: Priority | Title | Audience | Display Period | Read Rate | Status | Actions
+   row1: Urgent AEP 2027 Kickoff — Mandatory Training Reminder All Agents May 20 – 06 30,2026 89% (42/47 read) Active
+FORM LABELS: Title (max 100 characters) | Body (max 1000 characters) | Priority | Target Audience | Display Start Date | Display End Date
+SELECTS: [All Priorities, Urgent, Normal] [All Audiences, All Agents, Specific Teams, New Agents Only] [Normal, Urgent] [All Agents, Specific Teams, New Agents Only]
+PLACEHOLDERS: Enter bulletin title… | Enter bulletin content…
+BUTTONS: Create Bulletin | Export to Excel | Cancel | Publish Bulletin
+MODALS/DRAWERS: createBulletinModal:Create Bulletin
+BADGES: Urgent | Active | Normal | Low Read
+
+=== /agency-admin/campaigns.html | Campaigns | Gold Kidney Agency Admin
+ACTIVE NAV: Campaign Management
+USER: RV Rachel Vargas Agency Admin
+HEADER: Campaigns | BC: Dashboard Campaigns
+KPIs: Active Campaigns=4 ; Total Leads Generated=287 ; Total Enrolled=23 ; Avg Conversion Rate=8.0%
+CARDS/SECTIONS: All Campaigns || Campaign Performance Summary
+TABLE1 (5 rows) cols: Campaign Name | Type | Status | Leads | Contacted | Enrolled | Conv. Rate | Start Date | Actions
+   row1: Spring ESRD Outreach 2026 Digital Active 112 89 11 9.8% 03 01,2026 Details Leads
+FORM LABELS: Status: | Type:
+SELECTS: [All Status, Active, Paused, Completed] [All Types, Digital, Direct Mail, Event, Referral]
+BUTTONS: Apply | Reset | Export | Export to Excel | Details | Leads
+MODALS/DRAWERS: campDetailsModal:Campaign Details ; newCampModal:New Campaign
+BADGES: Digital | Active | Direct Mail | Event | Referral
+JS NAV: leads.html?campaign=
+
+=== /agency-admin/commission-details.html | Commission Details | Gold Kidney Agency Admin
+ACTIVE NAV: Commissions Management
+USER: RV Rachel Vargas Agency Admin
+HEADER: Commission Details — Member Level | BC: Dashboard Commissions Details
+ALERT: Note: Initial = first enrollment payment ($520 per new enrollment). Renewal = monthly recurring ($28.92 per member). Override = agency admin override on downline production. Click 
+CARDS/SECTIONS: Member-Level Commission Details
+TABLE1 (0 rows) cols: Agent | Member ID | Member Name | Plan | Commission Type | Effective Date | Commission Amount | Payment Batch | Payment Status | 
+FORM LABELS: Agent: | Commission Type: | Payment Status: | Batch:
+SELECTS: [All Agents, Rachel Vargas, James Martinez, Sarah Chen, Kevin Nguyen, Mark Brown] [All Types, Initial, Renewal, Override, Chargeback] [All Status, Paid, Pending, Sent for Approval, Chargeback] [All Batches, May 2026, Apr 2026, Mar 2026]
+BUTTONS: Reset | Export to Excel
+MODALS/DRAWERS: disputeModal:Raise Commission Dispute
+BADGES: Initial | Renewal | Override | Chargeback
+
+=== /agency-admin/commissions.html | Commissions | Gold Kidney Agency Admin
+ACTIVE NAV: Commissions Management
+USER: RV Rachel Vargas Agency Admin
+HEADER: Commissions Management | BC: My Agency + Downline Agent Commissions
+ALERT: Commissions Management: This module shows agency and downline agent commissions. Initial = first enrollment payment; Renewal = monthly recurring. Override is shown separately. Clic
+KPIs: Agency YTD Earnings=$9,845 ; Initial Payments=$5,200 ; Renewal Payments=$4,645 ; Chargebacks=-$320 ; Pending Approval=$2,340
+CARDS/SECTIONS: Commission Summary || Payment History (My Agency + Overrides) || Commission Disputes
+TABLE1 (6 rows) cols: Payee | Payee Type | NPN | Initial Payments | Renewal Payments | Override | Chargebacks | Net Earnings | Commission Period | Payment Batch | Status | 
+   row1: Rachel Vargas My Agency AGY-001 $800.00 (4 enr) $1,080.00 (11 ren) — -$0.00 $1,880.00 May 2026 BATCH-2026-05 Pending
+TABLE2 (4 rows) cols: Month | Payment Date | Category | Initial | Renewal | Chargebacks | Net Amount | Method | Statement
+   row1: April 2026 04 17,2026 My Agency Production $600.00 $855.00 -$0.00 $1,455.00 ACH (CCD) PDF
+TABLE3 (3 rows) cols: Dispute ID | Agent | Member ID | Member Name | Commission Type | Disputed Amount | Category | Submitted | Status | 
+   row1: DSP-2026-041 Sarah Chen MEM-200406 Angela Turner Chargeback -$160.00 Chargeback Disputed 07 15,2026 Under Review View
+FORM LABELS: Agent: | Type: | Status: | Batch:
+SELECTS: [All Agents, Rachel Vargas, James Martinez, Sarah Chen, Kevin Nguyen, Mark Brown] [All Types, Initial, Renewal, Override] [All Status, Paid, Pending, Sent for Approval, Unpaid] [All Batches, May 2026, Apr 2026, Mar 2026]
+BUTTONS: Reset | Export to Excel | PDF | Raise New Dispute | Export | View
+MODALS/DRAWERS: drillDownModal:Commission Details ; disputeModal:Raise Commission Dispute ; disputeDetailModal:Dispute Detail
+BADGES: My Agency | Pending | Downline Agent | Paid | Sent for Approval | Chargeback | Under Review | Escalated to Finance | Renewal | Resolved - Adjusted
+JS NAV: commission-details.html?agent=
+
+=== /agency-admin/dashboard.html | Agency Admin Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: RV Rachel Vargas Agency Admin
+HEADER: Agency Dashboard — HealthFirst Distribution | BC: 
+ALERT: C-SNP Risk: James Martinez has 2 C-SNP re-verifications approaching deadline (Dorothy Henderson — Jun 1, Robert Nguyen — Jun 30).
+ALERT: 6 HRA incentives pending across all downline agents.
+ALERT: AEP planning window opens in 3 months. Review campaign readiness with all agents.
+KPIs: Active Agents=3 ; Total BoB Members=57 ; Enrollments MTD=5 ; Open Action Items=11 ; Agency YTD Commissions=$27,841 ; License Expiring=2 ; Training Due=1 ; Ready to Sell=2 ; Today's Leads=7 ; SOA Pending=4 ; Follow-up Due=9 ; Overdue=3 ; Enrollment Rate=40%
+CARDS/SECTIONS: Downline Agent Performance — May 2026 || Agency Alerts || Agent Performance Comparison || Agency Revenue Trend
+TABLE1 (3 rows) cols: Agent | NPN | States | Active BoB | Enrollments Month-To-Date | Leads Assigned | SOA Completed | Members Enrolled | Open Actions | HRA Pending | C-SNP Due | YTD Commissions | Status | 
+   row1: James Martinez 8823441 FL, GA 24 2 18 12 8 6 3 2 (overdue risk) $11,284 Active View
+BUTTONS: Export to Excel | View
+MODALS/DRAWERS: agentDetailModal:Agent Detail ; dashInviteModal:Send Contracting Invitation
+BADGES: 6 | 3 | 2 (overdue risk) | Active | 2
+CHARTS: 2 canvas bar,line
+
+=== /agency-admin/hierarchy-view.html | Hierarchy View | Gold Kidney Agency Admin
+ACTIVE NAV: Hierarchy View
+USER: RV Rachel Vargas Agency Admin
+HEADER: Hierarchy Visualization | BC: Dashboard Hierarchy View
+ALERT: PO-03 — Hierarchy Visualization: As an agency admin you see the full downline subtree beneath your organization. Use filters above to narrow by status (Active, Pending, Suspended, 
+CARDS/SECTIONS: Organization Tree — HealthFirst Distribution (Full Downline Subtree) || Upline Information || Pending Agent Transfers
+TABLE1 (3 rows) cols: Transfer ID | Agent | NPN | Transfer To | Type | Effective Date | BoB Impact | Submitted | Status | 
+   row1: TRF-2026-001 Robert Chen 8834221 Sunshine Medicare Group (GA-014) Permanent 08 01,2026 0 members 07 20,2026 Under Review View
+BUTTONS: Expand All | Collapse | View
+MODALS/DRAWERS: addAgentModal:Add Agent to My Hierarchy ; transferModal:Request Agent Transfer ; transferDetailModal:Transfer Detail
+BADGES: Active | Onboarding | Terminated | Pending | Under Review | Submitted
+LINKS: onboarding-cases.html
+
+=== /agency-admin/invitations.html | Invitation Tracking | Gold Kidney Agency Admin
+ACTIVE NAV: Invitations
+USER: RV Rachel Vargas Agency Admin
+HEADER: Contracting Invitations | BC: Dashboard Invitations
+KPIs: Total Sent=24 ; Accepted=18 ; Sent (Awaiting)=4 ; Expired / Rejected=3
+CARDS/SECTIONS: All Invitations || Invitation Activity Log || Payer-Initiated Invitations
+TABLE1 (9 rows) cols: Invited Agent/Agency | Email | Sent Date | Expires | Status | Hierarchy Position | 
+   row1: Jennifer Adams jadams@email.com — — Draft Agent under GA-001 Send Now Edit
+TABLE2 (2 rows) cols: Agent Name | Email | Initiated By | Sent Date | Hierarchy Assignment | Status
+   row1: Robert Kim rkim@agency.com Carrier Admin (Gold Kidney) 05 24,2026 Agent under GA-001 Sent
+SELECTS: [All Status, Draft, Sent, Opened, Accepted, Expired, Cancelled, Rejected]
+PLACEHOLDERS: Search name/email—
+BUTTONS: Export to Excel | Send Now | Edit | Resend | Cancel | Remind | Re-Send | Reason
+MODALS/DRAWERS: inviteModal:Send Contracting Invitation ; bulkInviteModal:Bulk Invite Agents
+BADGES: Draft | Sent | Opened | Accepted | Expired | Rejected | Cancelled | Sent by Carrier Admin
+LINKS: onboarding-cases.html
+
+=== /agency-admin/leads.html | My Leads | Gold Kidney Agency Admin
+ACTIVE NAV: Leads & Assignment
+USER: RV Rachel Vargas Agency Admin
+HEADER: My Leads | BC: Agency Lead Management & Assignments
+KPIs: Active Campaigns=4 ; Total Leads Generated=287 ; Total Enrolled=23 ; Avg Conversion Rate=8.0% ; Today's Leads=8 ; SOA Pending=14 ; Follow-up Due=9 ; Overdue=3 ; Enrollment Rate=14.3%
+CARDS/SECTIONS: All Campaigns || Campaign Performance Summary || My Leads || Campaign Performance
+TABLE1 (5 rows) cols: Campaign Name | Type | Status | Leads | Contacted | Enrolled | Conv. Rate | Start Date | Actions
+   row1: Spring ESRD Outreach 2026 Digital Active 112 89 11 9.8% 03 01,2026 Details Leads
+TABLE2 (0 rows) cols:  | Lead Name | DOB | Gender | Medicare ID | Phone | State | Source | Campaign | Status | Priority | Assigned To | Assigned Date | Next Follow-up | Last Contact Outcome | Actions
+TABLE3 (4 rows) cols: Campaign | Total Leads | Contacted | Interested | Enrolled | Conversion % | Avg Days to Enroll | 
+   row1: AEP 2026 FL Digital 98 82 54 28 28.6% 14 days Details
+FORM LABELS: Status: | Type:
+SELECTS: [All Status, Active, Paused, Completed] [All Types, Digital, Direct Mail, Event, Referral] [All Status, New, Contacted, Interested, Enrolled, Lost] [All Sources, Web Form, TV Campaign, Mailer, Broker Referral, Phone] [All Campaigns, AEP 2026 FL Digital, OEC 2026 TV, DTC Mailer, Broker Referral Program] [All States, FL, TX, GA, NY] [All Priority, High, Medium, Low]
+PLACEHOLDERS: Search name, phone, email...
+BUTTONS: New Campaign | Apply | Reset | Export | Export to Excel | Details | Leads | Add New Lead | Apply Filters | Previous | Next
+MODALS/DRAWERS: leadDetailModal:Lead Detail ; campaignModal:Campaign Details ; campDetailsModal:Campaign Details ; newCampModal:New Campaign ; addLeadModal:Add New Lead
+BADGES: Digital | Active | Direct Mail | Event | Referral
+
+=== /agency-admin/member-profile.html | Member Profile | Gold Kidney Agency Admin
+ACTIVE NAV: My Downline Business
+USER: RV Rachel Vargas Agency Admin
+HEADER: Member Profile | BC: Book of Business / Member Profile
+HEADINGS: Dorothy Henderson
+CARDS/SECTIONS: Plan & Coverage || Care Management Status || Open Action Items || Activity Log
+TABLE1 (0 rows) cols: Plan Name | StarPlus ESRD SNP
+TABLE2 (2 rows) cols: Type | Due Date | Status | Priority | Notes | 
+   row1: C-SNP Re-Verify 06 01,2026 Pending High Annual recertification for ESRD condition Initiate
+BUTTONS: Submit HRA | Schedule Visit | New Enrollment | Export to Excel | Initiate | Complete
+MODALS/DRAWERS: hraModal:Submit HRA ; visitModal:Schedule Care Visit ; enrollModal:New Enrollment
+BADGES: Active | Completed | Re-Verification Due Jun 1 | 04 20,2026 | C-SNP Re-Verify | Pending | Follow-up Call | Scheduled
+
+=== /agency-admin/onboarding-cases.html | Onboarding Cases | Gold Kidney Agency Admin
+ACTIVE NAV: Onboarding Cases
+USER: RV Rachel Vargas Agency Admin
+HEADER: Onboarding Cases | BC: Dashboard Onboarding Cases
+KPIs: In Progress=4 ; Awaiting Review=2 ; Invitation Expired=1 ; Completed (MTD)=1
+CARDS/SECTIONS: Downline Onboarding Cases || Case Detail — Kevin Williams
+TABLE1 (7 rows) cols: Agent/Agency | NPN | Started | Invitation Status | Form | NIPR | AHIP | Background | Training | Carrier Appt | State Appointments | Ready to Sell | 
+   row1: Kevin Williams 8847123 05 15,2026 Accepted Accepted May 16 Pending — Pending FL – Pending TX – Not Started Not Ready View
+SELECTS: [All Status, In Progress, Awaiting Review, Activated, Denied]
+BUTTONS: Export to Excel | View | Review | Resend
+MODALS/DRAWERS: caseDetailModal:Case Detail ; reviewModal:Review Onboarding Case
+BADGES: Accepted | Pending | — | FL – Pending | TX – Not Started | Not Ready | FL – Active | GA – Active | Sent | Partial | FL – Not Started | Expired | Resent | CA – Not Started | Appointed | TX – Active | Ready
+
+=== /agency-admin/soa-management.html | SOA Management | Gold Kidney Agency Admin
+ACTIVE NAV: SOA Management
+USER: RV Rachel Vargas Agency Admin
+HEADER: SOA Management | BC: Dashboard SOA Management
+ALERT: SOA Consent Workflow: Send Consent Receive Consent Member Signs Appointment Enrollment
+KPIs: Total SOAs=124 ; Consent Sent=12 ; Pending Signature=8 ; Signed & Enrolled=89 ; Cancelled / Invalid=4
+CARDS/SECTIONS: Scope of Appointment Records
+TABLE1 (9 rows) cols: SOA # | Member Name | Agent | Contact Method | Appointment Date | Consent Sent | Consent Received | Member Signed | Status | Enrollment Status | Actions
+   row1: SOA-2026-0041 Dorothy Henderson James Martinez In-Person 11 10,2025 Nov 8 Nov 9 Nov 10 Signed Enrolled PDF
+FORM LABELS: Agent: | Status: | Method:
+SELECTS: [All Agents, James Martinez (8823441), Sarah Chen (7719022), Kevin Nguyen (9912345)] [All Status, Signed, Pending Signature, Consent Sent, Expired, Cancelled, Invalid] [All Methods, In-Person, Phone, Mail]
+BUTTONS: Apply | Reset | Export | Export to Excel | PDF | Consent | Remind | Reschedule | Renew | Redo
+MODALS/DRAWERS: newSOAModal:New Scope of Appointment ; pdfPreviewModal:SOA Document Preview ; consentWorkflowModal:Member Consent & Signature Workflow
+BADGES: Signed | Pending | Consent Sent | Cancelled | Expired | Invalid | Enrolled | Not Enrolled | Nov 8 | Nov 9 | Nov 10 | Nov 3 | Nov 4 | Nov 6 | Oct 25 | Oct 26 | Oct 28 | Oct 18 | Oct 22 | May 18 | May 20 | — | May 22 | Waiting | Jan 3 | Jan 8 | Jan 10 | May 10

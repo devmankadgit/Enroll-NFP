@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Training Progress | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .att-input{width:52px;padding:2px 6px;border:1px solid #90caf9;border-radius:4px;font-size:13px;text-align:center}
+.overdue-tag{background:#fce4ec;color:#c62828;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;display:inline-block;margin-left:4px}
+.rts-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;display:inline-flex;align-items:center;gap:4px}
+.rts-ready{background:#e8f5e9;color:#2e7d32}
+.rts-pending{background:#fff3e0;color:#e65100}
+.rts-blocked{background:#fce4ec;color:#c62828}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub sb-sub-open">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html" class="active"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Agent Training Progress</h4><ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="training-admin.html">Training</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Agent Training Progress</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Completed</div><div class="stat-val">2</div><div class="stat-sub">agents</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-spinner"></i></div><div><div class="stat-label">In Progress</div><div class="stat-val">1</div><div class="stat-sub">agents</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Not Started</div><div class="stat-val">1</div><div class="stat-sub">agents</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#b71c1c"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Overdue</div><div class="stat-val">2</div><div class="stat-sub">past due date</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-rocket"></i></div><div><div class="stat-label">Ready to Sell</div><div class="stat-val">2</div><div class="stat-sub">of 4 agents</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-percentage"></i></div><div><div class="stat-label">Overall Completion</div><div class="stat-val">50%</div><div class="stat-sub">4 total agents</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:16px">
+      <label>Package:</label>
+      <select id="filterPkg" onchange="filterProgress()">
+        <option value="">All Packages</option>
+        <option selected>Gold Kidney 2026 Product Training</option>
+        <option>AEP 2027 Certification</option>
+        <option>Compliance &amp; CMS Guidelines</option>
+      </select>
+      <label>Status:</label>
+      <select id="filterStatus" onchange="filterProgress()">
+        <option value="">All</option>
+        <option>Complete</option>
+        <option>In Progress</option>
+        <option>Not Started</option>
+      </select>
+      <label>Agency:</label>
+      <select id="filterAgency" onchange="filterProgress()">
+        <option value="">All Agencies</option>
+        <option>Acme Insurance</option>
+        <option>FL Health Partners</option>
+        <option>Southeast Benefits</option>
+      </select>
+      <span style="flex:1"></span>
+      <button class="btn-ol btn-sm" onclick="exportProgress()"><i class="fas fa-download"></i> Export CSV</button>
+    </div>
+
+    <!-- Completion Dashboard -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#1b5e20"></i>Completion Dashboard: Gold Kidney 2026 Product Training</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agent-training-progress_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>Assigned Date</th><th>Start Date</th><th>Due Date</th><th>End Date</th><th>Module 1</th><th>Module 2</th><th>Module 3</th><th>Quiz</th><th>Attempts</th><th>Pass/Fail</th><th>Status</th><th>Ready to Sell</th><th>Actions</th></tr></thead>
+          <tbody id="progressTbody">
+            <tr>
+              <td>James Martinez</td><td>8823441</td><td>Acme Insurance</td>
+              <td>04 28,2026</td>
+              <td>05 04,2026</td>
+              <td>06 01,2026</td>
+              <td style="color:#1b5e20;font-weight:600">05 28,2026</td>
+              <td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> 92%</span></td>
+              <td class="att-cell"><span class="att-val">1</span><input type="number" class="att-input" min="0" max="10" value="1" style="display:none"></td><td><span class="bdg b-green">Pass</span></td><td><span class="bdg b-green">Complete</span></td>
+              <td><span class="rts-badge rts-ready"><i class="fas fa-check-circle"></i>Ready to Sell</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="editAttempts(this)"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="downloadCert('James Martinez','8823441','92%','05 28,2026')" title="Download Certification PDF"><i class="fas fa-download" style="color:#1b5e20"></i></button></div></td>
+            </tr>
+            <tr>
+              <td>Sarah Chen</td><td>7719022</td><td>Acme Insurance</td>
+              <td>04 30,2026</td>
+              <td>05 06,2026</td>
+              <td>06 15,2026</td>
+              <td style="color:#1b5e20;font-weight:600">06 10,2026</td>
+              <td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> 88%</span></td>
+              <td class="att-cell"><span class="att-val">2</span><input type="number" class="att-input" min="0" max="10" value="2" style="display:none"></td><td><span class="bdg b-green">Pass</span></td><td><span class="bdg b-green">Complete</span></td>
+              <td><span class="rts-badge rts-ready"><i class="fas fa-check-circle"></i>Ready to Sell</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="editAttempts(this)"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="downloadCert('Sarah Chen','7719022','88%','06 10,2026')" title="Download Certification PDF"><i class="fas fa-download" style="color:#1b5e20"></i></button></div></td>
+            </tr>
+            <tr style="background:#fff5f5">
+              <td>Kevin Nguyen</td><td>9912345</td><td>FL Health Partners</td>
+              <td>04 28,2026</td>
+              <td>05 08,2026</td>
+              <td>06 01,2026 <span class="overdue-tag"><i class="fas fa-exclamation-triangle" style="margin-right:2px"></i>58 days overdue</span></td>
+              <td><span class="text-muted">—</span></td>
+              <td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#e65100">In Progress</span></td><td></td><td></td>
+              <td class="att-cell"><span class="att-val">0</span><input type="number" class="att-input" min="0" max="10" value="0" style="display:none"></td><td><span class="bdg b-grey">&mdash;</span></td><td><span class="bdg b-amber">In Progress</span></td>
+              <td><span class="rts-badge rts-pending"><i class="fas fa-clock"></i>Pending Training</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="editAttempts(this)"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="remindAgent('Kevin Nguyen','9912345')" title="Send Reminder"><i class="fas fa-bell" style="color:#e65100"></i></button></div></td>
+            </tr>
+            <tr style="background:#fff5f5">
+              <td>Mark Brown</td><td>5521833</td><td>Southeast Benefits</td>
+              <td>05 01,2026</td>
+              <td>—</td>
+              <td>06 15,2026 <span class="overdue-tag"><i class="fas fa-exclamation-triangle" style="margin-right:2px"></i>44 days overdue</span></td>
+              <td><span class="text-muted">—</span></td>
+              <td></td><td></td><td></td><td></td>
+              <td class="att-cell"><span class="att-val">0</span><input type="number" class="att-input" min="0" max="10" value="0" style="display:none"></td><td><span class="bdg b-grey">&mdash;</span></td><td><span class="bdg b-red">Not Started</span></td>
+              <td><span class="rts-badge rts-blocked"><i class="fas fa-ban"></i>Blocked — Not Trained</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="editAttempts(this)"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="remindAgent('Mark Brown','5521833')" title="Send Reminder"><i class="fas fa-bell" style="color:#c62828"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 12,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function remindAgent(name, npn) {
+  showToast('Reminder sent to ' + name + ' (NPN ' + npn + ') via email and portal notification.', 'success');
+}
+
+function editAttempts(btn) {
+  var row = btn.closest('tr');
+  var cell = row.querySelector('.att-cell');
+  var span = cell.querySelector('.att-val');
+  var input = cell.querySelector('.att-input');
+  if (input.style.display === 'none') {
+    span.style.display = 'none';
+    input.style.display = 'inline-block';
+    input.focus();
+    btn.innerHTML = '<i class="fas fa-save"></i> Save';
+  } else {
+    span.textContent = input.value;
+    span.style.display = '';
+    input.style.display = 'none';
+    btn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+    showToast('Attempts updated to ' + input.value + ' for ' + row.cells[0].textContent + '.', 'success');
+  }
+}
+
+
+
+function filterProgress(){
+  var status = document.getElementById('filterStatus').value.toLowerCase();
+  var agency = document.getElementById('filterAgency').value.toLowerCase();
+  var cnt=0;
+  document.querySelectorAll('#progressTbody tr').forEach(function(tr){
+    var text=tr.textContent.toLowerCase();
+    var show=true;
+    if(status && !text.includes(status)) show=false;
+    if(agency && !text.includes(agency)) show=false;
+    tr.style.display=show?'':'none';
+    if(show) cnt++;
+  });
+  showToast('Showing '+cnt+' agent(s)','info');
+}
+
+function exportProgress(){
+  showToast('Agent training progress exported as CSV.','success');
+}
+
+function downloadCert(name, npn, score, completedDate){
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  // Border
+  doc.setDrawColor(26,35,126);
+  doc.setLineWidth(2);
+  doc.rect(10,10,277,190);
+  doc.setLineWidth(0.5);
+  doc.rect(14,14,269,182);
+  // Header
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(14);
+  doc.setTextColor(198,40,40);
+  doc.text('GOLD KIDNEY HEALTH PLAN, INC.',148.5,32,{align:'center'});
+  doc.setFontSize(10);
+  doc.setTextColor(100);
+  doc.text('Product Training Certification',148.5,39,{align:'center'});
+  // Title
+  doc.setFontSize(28);
+  doc.setTextColor(26,35,126);
+  doc.text('Certificate of Completion',148.5,58,{align:'center'});
+  // Divider
+  doc.setDrawColor(26,35,126);
+  doc.setLineWidth(0.8);
+  doc.line(60,63,237,63);
+  // Body
+  doc.setFontSize(12);
+  doc.setTextColor(80);
+  doc.setFont('helvetica','normal');
+  doc.text('This is to certify that',148.5,76,{align:'center'});
+  doc.setFontSize(22);
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(26,35,126);
+  doc.text(name,148.5,90,{align:'center'});
+  doc.setFontSize(12);
+  doc.setFont('helvetica','normal');
+  doc.setTextColor(80);
+  doc.text('NPN: '+npn,148.5,99,{align:'center'});
+  doc.text('has successfully completed the required training program:',148.5,112,{align:'center'});
+  doc.setFontSize(16);
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(26,35,126);
+  doc.text('Gold Kidney 2026 Product Training',148.5,124,{align:'center'});
+  doc.setFontSize(11);
+  doc.setFont('helvetica','normal');
+  doc.setTextColor(80);
+  doc.text('Quiz Score: '+score+'  |  Completed: '+completedDate,148.5,134,{align:'center'});
+  // Ready to Sell
+  doc.setFillColor(232,245,233);
+  doc.roundedRect(95,142,107,14,3,3,'F');
+  doc.setFontSize(13);
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(46,125,50);
+  doc.text('READY TO SELL — Plan Year 2026',148.5,152,{align:'center'});
+  // Footer
+  doc.setDrawColor(200);
+  doc.line(40,172,130,172);
+  doc.line(167,172,257,172);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.setTextColor(100);
+  doc.text('Sandra Adams, Carrier Admin',85,179,{align:'center'});
+  doc.text('Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),212,179,{align:'center'});
+  doc.setFontSize(8);
+  doc.setTextColor(150);
+  doc.text('Gold Kidney Health Plan, Inc. | This certificate is electronically generated and valid without a physical signature.',148.5,192,{align:'center'});
+  // Save
+  doc.save('Certificate_'+name.replace(/\s/g,'_')+'_NPN_'+npn+'.pdf');
+  showToast('Certificate PDF downloaded for '+name+' (NPN '+npn+')','success');
+}
+</script>
+</body>
+</html>
+

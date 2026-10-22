@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agency Admin Portal Setup | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-shield" style="margin-right:8px;opacity:.8"></i>Admin Portal</div></div>
+  <div class="sb-nav">
+    <a href="../admin/dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agency Onboarding</div>
+    <a href="review-queue.html"><i class="fas fa-clipboard-check"></i>Review Queue</a>
+    <a href="create-agency.html"><i class="fas fa-plus-circle"></i>Create Agency</a>
+    <a href="add-agent.html"><i class="fas fa-user-plus"></i>Add Agent</a>
+    <a href="agency-admin-setup.html" class="active"><i class="fas fa-cog"></i>Portal Setup</a>
+    <a href="direct-contracting.html"><i class="fas fa-file-contract"></i>Direct Contract</a>
+    <a href="tfn-mapping.html"><i class="fas fa-phone"></i>TFN Mapping</a>  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">AW</div><div><div class="sb-u-name">Amy White</div><div class="sb-u-role">System Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Agency Admin Portal Setup</h4><ol class="breadcrumb-bar"><li>Account Provisioning, Permissions & Branding</li></ol></div>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Provision the Agency Admin portal for an approved agency. This creates login credentials, sets permission scope, and optionally configures co-branding elements.</span></div>
+
+    <!-- Select Agency -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-building" style="margin-right:8px;color:#0d47a1"></i>Select Agency to Provision</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Agency <span style="color:#c62828">*</span></label>
+            <select><option>AGY-2026-0048 — Sunshine Senior Benefits, LLC</option><option>AGY-2026-0001 — National Medicare Partners</option></select>
+          </div>
+          <div class="fg"><label>Portal Status</label><input type="text" value="Not Yet Provisioned" readonly style="background:#fff8e1;color:#e65100;font-weight:600"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Account -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-user-cog" style="margin-right:8px;color:#4a148c"></i>Agency Admin Account</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Admin User (Principal) <span style="color:#c62828">*</span></label><input type="text" value="Maria Gonzalez" readonly style="background:#f5f5f5"></div>
+          <div class="fg"><label>Login Email <span style="color:#c62828">*</span></label><input type="email" value="mgonzalez@sunshinesenior.com"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Temporary Password Method</label>
+            <select><option>Auto-generate & email to admin</option><option>Set manually (send via secure channel)</option></select>
+          </div>
+          <div class="fg"><label>MFA Requirement</label>
+            <select><option>Required (TOTP or SMS)</option><option>Optional (agent's choice)</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permissions -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-lock" style="margin-right:8px;color:#00695c"></i>Permission Scope</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agency-admin-setup_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Module</th><th>Access Level</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Agent Management</td><td><select><option selected>Full (add/remove/edit)</option><option>View only</option><option>None</option></select></td><td>Manage downline agents</td></tr>
+            <tr><td>Lead Management</td><td><select><option selected>Full (assign/reassign)</option><option>View only</option><option>None</option></select></td><td>Bulk reassign leads</td></tr>
+            <tr><td>Commission View</td><td><select><option selected>Downline only</option><option>Full agency</option><option>None</option></select></td><td>Override visibility</td></tr>
+            <tr><td>Action Items</td><td><select><option selected>Full (view + remind)</option><option>View only</option><option>None</option></select></td><td>Consolidated downline items</td></tr>
+            <tr><td>Enrollment Data</td><td><select><option>View only</option><option selected>None</option></select></td><td>Member PHI restriction</td></tr>
+            <tr><td>Reporting</td><td><select><option selected>Agency-level reports</option><option>None</option></select></td><td>Production & campaign</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Branding -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-palette" style="margin-right:8px;color:#e65100"></i>Co-Branding (Optional)</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Agency Logo Upload</label><input type="file" accept=".png,.jpg,.svg"><small>PNG/SVG preferred, max 20060px</small></div>
+          <div class="fg"><label>Custom Sidebar Color</label><input type="color" value="#0d47a1" style="width:60px;height:36px"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Custom Welcome Message</label><textarea rows="2" placeholder="Welcome to Sunshine Senior Benefits agent portal..."></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:16px">
+      <button class="btn-pr" style="padding:10px 40px"><i class="fas fa-rocket" style="margin-right:8px"></i>Provision Agency Admin Portal</button>
+      <div style="font-size:12px;color:#5f6368;margin-top:8px">Sends welcome email with login link & temp password to agency admin.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

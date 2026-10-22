@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chargebacks &amp; Rapid Disenrollment | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.cb-full{background:#ffebee;border-left:4px solid #c62828}
+.cb-partial{background:#fff8e1;border-left:4px solid #e65100}
+.cb-amount{color:#c62828;font-weight:700}
+.cb-retained{color:#1b5e20;font-weight:600}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html" class="active"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Chargebacks &amp; Rapid Disenrollment</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Chargebacks</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpExport('Chargebacks')"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i>
+      <span><strong>Finance Review Required:</strong> All chargebacks must be reviewed and approved by a Finance Admin before they are deducted from any payment batch. Agents and upline hierarchy are notified automatically when a chargeback is generated. Finance receives a daily digest of new chargebacks.</span></div>
+
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Pending Finance Review</div><div class="stat-val">2</div><div class="stat-sub text-muted">Require action</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#880e4f"><i class="fas fa-bolt"></i></div><div><div class="stat-label">Rapid Disenrollment</div><div class="stat-val">1</div><div class="stat-sub text-muted">Full chargeback</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-calculator"></i></div><div><div class="stat-label">Partial Chargeback</div><div class="stat-val">2</div><div class="stat-sub text-muted">Prorated recovery</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Approved This Month</div><div class="stat-val">1</div><div class="stat-sub text-muted">Applied to batch</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Pending Recovery</div><div class="stat-val">$1,892.67</div></div></div></div>
+    </div>
+
+    <div class="filter-bar mb16">
+      <label>Agent Search</label>
+      <input type="text" id="fAgent" placeholder="NPN or Name..." oninput="applyFilters()">
+      <label>Type</label>
+      <select id="fType" onchange="applyFilters()">
+        <option value="">All Types</option><option>Full Rapid Disenrollment</option><option>Partial Chargeback</option>
+      </select>
+      <label>Status</label>
+      <select id="fStatus" onchange="applyFilters()">
+        <option value="">All Statuses</option>
+        <option>Pending Finance Review</option><option>Approved</option><option>Rejected</option><option>Applied</option>
+      </select>
+      <label>From</label><input type="date" id="fFrom" onchange="applyFilters()">
+      <label>To</label><input type="date" id="fTo" onchange="applyFilters()">
+      <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i>Filter</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-undo" style="margin-right:8px;color:#c62828"></i>Chargeback Records</h5>
+        <span class="text-muted text-sm">Chargebacks within the 3-month window = Full Rapid. After 3 months = Partial prorated recovery.</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','chargebacks_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>CB ID</th><th>Member</th><th>Orig. Enrollment ID</th><th>Agent</th><th>Eff Date</th><th>Term Date</th><th>Months Active</th><th>Type</th><th>Chargeback Reason</th><th>Original Comm.</th><th>Chargeback Amt</th><th>Retained</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="cbTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REVIEW / APPROVE MODAL ===== -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal-box" style="max-width:780px">
+    <div class="modal-hdr">
+      <h5 id="reviewTitle"></h5>
+      <button class="modal-close" onclick="closeModal('reviewModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="reviewBody"></div>
+    <div class="modal-foot" id="reviewFoot"></div>
+  </div>
+</div>
+
+<!-- ===== REJECT MODAL ===== -->
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-ban" style="color:#c62828;margin-right:8px"></i>Reject Chargeback</h5>
+      <button class="modal-close" onclick="closeModal('rejectModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Rejecting this chargeback means the original commission payment stands and no deduction is made. This action is audit-logged.</span></div>
+      <div class="fg"><label>Rejection Reason <span class="req">*</span></label><textarea id="rejectReason" rows="3" placeholder="Provide detailed reason for rejection..."></textarea></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillReject()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('rejectModal')">Cancel</button>
+        <button class="btn-danger" onclick="confirmReject()"><i class="fas fa-ban"></i>Confirm Rejection</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const WINDOW_MONTHS = 3;
+let pendingReviewId = null, pendingRejectId = null;
+
+const chargebacks = [
+  { id:'CB-2026-001', originalEnrollId:'ENR-2025-0881', enrollId:'ENR-2026-0105', memberId:'5LI8-UT4-QR63', memberName:'Dorothy Miller',
+    agentNPN:'8823441', agentName:'James Martinez',
+    effDate:'2026-01-01', termDate:'2026-01-31', monthsActive:1,
+    cbType:'Full Rapid Disenrollment', cbWindow:3,
+    levels:[
+      {level:'Agent',name:'James Martinez',npn:'8823441',original:694.00,chargeback:694.00,retained:0.00,note:''},
+      {level:'GA',name:'Acme Insurance Group',npn:'GA-001',original:100.00,chargeback:100.00,retained:0.00,note:''}
+    ],
+    originalTotal:794.00, chargebackTotal:794.00, retainedTotal:0.00,
+    status:'Pending Finance Review', financeNotes:'',
+    commissionPaid:true, termReason:'Member requested disenrollment ? changed mind after enrollment.',
+    auditLog:[{date:'05 28,2026 2:00 AM',user:'System',action:'Chargeback Generated',detail:'Full rapid disenrollment. 1 month active = 3-month window.'}]
+  },
+  { id:'CB-2026-002', originalEnrollId:'ENR-2025-0247', enrollId:'ENR-2026-0234', memberId:'9QR2-AB7-XY12', memberName:'Carlos Rivera',
+    agentNPN:'7719022', agentName:'Sarah Chen',
+    effDate:'2026-01-01', termDate:'2026-05-15', monthsActive:5,
+    cbType:'Partial Chargeback', cbWindow:3,
+    levels:[
+      {level:'Agent',name:'Sarah Chen',npn:'7719022',original:694.00,chargeback:404.83,retained:289.17,note:'Agent retains 5/12 ? $694.00 = $289.17; chargeback 7/12 ? $694.00 = $404.83'},
+      {level:'GA',name:'Premier Health Group',npn:'GA-002',original:100.00,chargeback:58.33,retained:41.67,note:'Prorated same ratio'}
+    ],
+    originalTotal:794.00, chargebackTotal:463.17, retainedTotal:330.83,
+    status:'Pending Finance Review', financeNotes:'',
+    commissionPaid:true, termReason:'Member moved out of service area.',
+    auditLog:[{date:'05 28,2026 2:01 AM',user:'System',action:'Chargeback Generated',detail:'Partial chargeback. 5 months active > 3-month window. 7 remaining months charged back.'}]
+  },
+  { id:'CB-2026-003', originalEnrollId:'ENR-2026-0104', enrollId:'ENR-2026-0067', memberId:'2MN5-CD8-EF34', memberName:'Helen Petersen',
+    agentNPN:'9912345', agentName:'Kevin Nguyen',
+    effDate:'2026-01-01', termDate:'2026-02-28', monthsActive:2,
+    cbType:'Full Rapid Disenrollment', cbWindow:3,
+    levels:[
+      {level:'Agent',name:'Kevin Nguyen',npn:'9912345',original:694.00,chargeback:694.00,retained:0.00,note:''},
+      {level:'GA',name:'Sunbelt Agency',npn:'GA-003',original:100.00,chargeback:100.00,retained:0.00,note:''}
+    ],
+    originalTotal:794.00, chargebackTotal:794.00, retainedTotal:0.00,
+    status:'Approved', financeNotes:'Approved per policy. Full rapid disenrollment within 3-month window.',
+    commissionPaid:true, termReason:'Duplicate enrollment ? member already covered.',
+    auditLog:[
+      {date:'05 20,2026 10:30 AM',user:'David Park',action:'Approved',detail:'Approved per policy. Applied to June batch.'},
+      {date:'05 19,2026 2:00 AM',user:'System',action:'Chargeback Generated',detail:'Full rapid disenrollment.'}
+    ]
+  },
+  { id:'CB-2026-004', originalEnrollId:'ENR-2025-0973', enrollId:'ENR-2025-9988', memberId:'4KL6-GH9-IJ56', memberName:'Bernard Thompson',
+    agentNPN:'5521833', agentName:'Mark Brown',
+    effDate:'2025-10-01', termDate:'2026-03-31', monthsActive:6,
+    cbType:'Partial Chargeback', cbWindow:3,
+    levels:[
+      {level:'Agent',name:'Mark Brown',npn:'5521833',original:173.25,chargeback:86.63,retained:86.62,note:'2026 partial: retains Jan-Mar ($28.92?3=$86.76); chargeback Apr-Jun plan year correction'},
+      {level:'GA',name:'Coastal Benefits',npn:'GA-004',original:45.00,chargeback:22.50,retained:22.50,note:'Prorated same'}
+    ],
+    originalTotal:218.25, chargebackTotal:109.13, retainedTotal:109.12,
+    status:'Rejected', financeNotes:'Agent provided documentation that termination was carrier-initiated due to plan discontinuation. Chargeback waived per policy exception.',
+    commissionPaid:true, termReason:'Plan discontinued ? carrier initiated.',
+    auditLog:[
+      {date:'05 15,2026 3:20 PM',user:'David Park',action:'Rejected',detail:'Chargeback waived ? carrier-initiated termination.'},
+      {date:'05 14,2026 2:00 AM',user:'System',action:'Chargeback Generated',detail:'Partial chargeback.'}
+    ]
+  }
+];
+
+function cbTypeBadge(t){
+  return t==='Full Rapid Disenrollment'
+    ? '<span class="bdg b-red"><i class="fas fa-bolt" style="font-size:10px"></i> Full Rapid</span>'
+    : '<span class="bdg b-amber"><i class="fas fa-calculator" style="font-size:10px"></i> Partial</span>';
+}
+function statusBadge(s){
+  const m={'Pending Finance Review':'b-amber','Approved':'b-green','Rejected':'b-grey','Applied':'b-blue'};
+  return `<span class="bdg ${m[s]||'b-grey'}">${s}</span>`;
+}
+
+function renderTable(list){
+  document.getElementById('cbTbody').innerHTML = list.map(cb=>{
+    const isFull = cb.cbType==='Full Rapid Disenrollment';
+    return `<tr class="${isFull?'cb-full':cb.status!=='Pending Finance Review'?'':'cb-partial'}" style="opacity:${cb.status==='Rejected'?'.6':'1'}">
+      <td><code style="font-size:12px">${cb.id}</code></td>
+      <td><div style="font-weight:600;font-size:13px">${cb.memberName}</div><div style="font-size:11px;color:#80868b">${cb.memberId}</div></td>
+      <td><code style="font-size:11px">${cb.originalEnrollId||'&mdash;'}</code></td>
+      <td><div style="font-size:13px">${cb.agentName}</div><div style="font-size:11px;color:#80868b">NPN: ${cb.agentNPN}</div></td>
+      <td>${cb.effDate}</td>
+      <td><span style="color:#c62828">${cb.termDate}</span></td>
+      <td><strong>${cb.monthsActive}</strong> <span style="font-size:11px;color:${cb.monthsActive<=WINDOW_MONTHS?'#c62828':'#e65100'}">(${cb.monthsActive<=WINDOW_MONTHS?'= window':'> window'})</span></td>
+      <td>${cbTypeBadge(cb.cbType)}</td>
+      <td style="font-size:12px;max-width:160px;white-space:normal;color:#5f6368">${cb.termReason}</td>
+      <td>$${cb.originalTotal.toFixed(2)}</td>
+      <td class="cb-amount">($${cb.chargebackTotal.toFixed(2)})</td>
+      <td class="cb-retained">$${cb.retainedTotal.toFixed(2)}</td>
+      <td>${statusBadge(cb.status)}</td>
+      <td><div class="dflex g8">
+        <button class="btn-ol btn-sm" onclick="openReview('${cb.id}')"><i class="fas fa-eye"></i>Review</button>
+        ${cb.status==='Pending Finance Review'?`<button class="btn-pr btn-sm" style="background:#1b5e20" onclick="quickApprove('${cb.id}')"><i class="fas fa-check"></i>Approve</button>`:''}
+        ${cb.status==='Pending Finance Review'?`<button class="btn-danger btn-sm" onclick="openReject('${cb.id}')"><i class="fas fa-ban"></i>Reject</button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function applyFilters(){
+  const agent=(document.getElementById('fAgent').value||'').toLowerCase();
+  const type=document.getElementById('fType').value;
+  const status=document.getElementById('fStatus').value;
+  renderTable(chargebacks.filter(cb=>{
+    if(agent && !cb.agentName.toLowerCase().includes(agent) && !cb.agentNPN.includes(agent) && !cb.memberName.toLowerCase().includes(agent)) return false;
+    if(type && cb.cbType!==type) return false;
+    if(status && cb.status!==status) return false;
+    return true;
+  }));
+}
+function resetFilters(){
+  document.getElementById('fAgent').value='';
+  document.getElementById('fType').value='';
+  document.getElementById('fStatus').value='';
+  document.getElementById('fFrom').value='';
+  document.getElementById('fTo').value='';
+  renderTable(chargebacks);
+}
+
+function openReview(id){
+  pendingReviewId = id;
+  const cb = chargebacks.find(x=>x.id===id); if(!cb) return;
+  document.getElementById('reviewTitle').innerHTML = `<i class="fas fa-undo" style="color:#c62828;margin-right:8px"></i>Chargeback Review ? ${cb.id} &nbsp;${statusBadge(cb.status)}`;
+
+  const levelsHtml = cb.levels.map(l=>`
+    <tr>
+      <td><span class="bdg b-grey">${l.level}</span></td>
+      <td>${l.name}</td><td><code style="font-size:11px">${l.npn}</code></td>
+      <td>$${l.original.toFixed(2)}</td>
+      <td class="cb-amount">($${l.chargeback.toFixed(2)})</td>
+      <td class="cb-retained">$${l.retained.toFixed(2)}</td>
+      <td style="font-size:11.5px;color:#5f6368">${l.note||'?'}</td>
+    </tr>`).join('');
+
+  const auditHtml = `<ul class="timeline">${cb.auditLog.map(a=>`<li class="tl-item"><div class="tl-time">${a.date}</div><div><strong>${a.action}</strong> ? ${a.detail}</div><div class="tl-by">by ${a.user}</div></li>`).join('')}</ul>`;
+
+  document.getElementById('reviewBody').innerHTML = `
+    <div class="row-grid mb16" style="gap:10px">
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Member</div><div style="font-weight:600">${cb.memberName}</div><div style="font-size:11px;color:#80868b">${cb.memberId}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div style="font-weight:600">${cb.agentName}</div><div style="font-size:11px;color:#80868b">NPN: ${cb.agentNPN}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Type</div><div style="margin-top:4px">${cbTypeBadge(cb.cbType)}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Months Active</div><div style="font-weight:700;font-size:17px;color:${cb.monthsActive<=WINDOW_MONTHS?'#c62828':'#e65100'}">${cb.monthsActive}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Original Enrollment ID</div><div style="font-weight:600;font-size:13px"><code>${cb.originalEnrollId||'&mdash;'}</code></div></div>
+    </div>
+
+    <div class="form-sect" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px"><i class="fas fa-calculator" style="margin-right:6px"></i>Chargeback Calculation</div>
+      <div class="row-grid" style="gap:8px;margin-bottom:10px">
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Enrollment Effective</div><div style="font-weight:600">${cb.effDate}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Termination Date</div><div style="font-weight:600;color:#c62828">${cb.termDate}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Chargeback Window</div><div style="font-weight:600">${cb.cbWindow} months</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Chargeback Rule</div><div style="font-weight:600;color:${cb.cbType==='Full Rapid Disenrollment'?'#c62828':'#e65100'}">${cb.cbType==='Full Rapid Disenrollment'?'Full Recovery':'Prorated Recovery'}</div></div>
+      </div>
+      ${cb.cbType==='Partial Chargeback'?`<div class="al-info" style="margin-bottom:10px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Partial Calculation:</strong> Agent retains commission for ${cb.monthsActive} active months. Chargeback = ${12-cb.monthsActive} remaining months ? monthly rate. Monthly rate = Annual ? 12.</span></div>`:''}
+      <div style="font-size:11px;color:#c62828;margin-bottom:6px">Termination Reason: <em>${cb.termReason}</em></div>
+      <table id="tblExport2" class="tbl" style="font-size:12.5px">
+        <thead><tr><th>Level</th><th>Name</th><th>NPN/ID</th><th>Original Commission</th><th>Chargeback Amount</th><th>Retained Commission</th><th>Basis</th></tr></thead>
+        <tbody>${levelsHtml}</tbody>
+        <tfoot><tr style="background:#fff0f0;font-weight:700"><td colspan="3"><strong>Totals</strong></td><td>$${cb.originalTotal.toFixed(2)}</td><td class="cb-amount">($${cb.chargebackTotal.toFixed(2)})</td><td class="cb-retained">$${cb.retainedTotal.toFixed(2)}</td><td></td></tr></tfoot>
+      </table>
+    </div>
+
+    ${cb.status==='Pending Finance Review'?`
+    <div class="form-sect" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:10px"><i class="fas fa-edit" style="margin-right:6px"></i>Finance Adjustment (Optional)</div>
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Finance may adjust the chargeback amount before approving. Adjusted amount cannot exceed the original commission. Adjustment reason is required if amount is modified.</span></div>
+      <div class="form-row">
+        <div class="fg"><label>Adjusted Chargeback Amount (leave blank to use calculated)</label><input type="number" id="adjAmount" step="0.01" min="0" max="${cb.chargebackTotal}" placeholder="e.g., ${cb.chargebackTotal.toFixed(2)}"></div>
+        <div class="fg fg-2"><label>Adjustment Reason (required if adjusting)</label><input type="text" id="adjReason" placeholder="e.g., Carrier-initiated termination exception..."></div>
+      </div>
+    </div>`:''}
+
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:8px">Audit Log</div>
+      ${auditHtml}
+    </div>
+    ${cb.financeNotes?`<div class="al-info"><i class="fas fa-sticky-note" style="flex-shrink:0"></i><span><strong>Finance Notes:</strong> ${cb.financeNotes}</span></div>`:''}
+  `;
+
+  const isPending = cb.status==='Pending Finance Review';
+  document.getElementById('reviewFoot').innerHTML = `
+    <button class="btn-ol" onclick="closeModal('reviewModal')">Close</button>
+    ${isPending?`<button class="btn-danger" onclick="closeModal('reviewModal');openReject('${cb.id}')"><i class="fas fa-ban"></i>Reject</button><button class="btn-pr" style="background:#1b5e20" onclick="confirmApprove('${cb.id}')"><i class="fas fa-check"></i>Approve &amp; Apply</button>`:''}
+  `;
+  showModal('reviewModal');
+}
+
+function quickApprove(id){ pendingReviewId=id; confirmApprove(id); }
+function confirmApprove(id){
+  const adjAmt = document.getElementById('adjAmount');
+  const adjRsn = document.getElementById('adjReason');
+  const adjustedAmt = adjAmt ? parseFloat(adjAmt.value) : NaN;
+  const cb = chargebacks.find(x=>x.id===id);
+  if(cb){
+    if(!isNaN(adjustedAmt)){
+      if(adjustedAmt > cb.chargebackTotal){ showToast(`Adjusted chargeback cannot exceed original commission amount of $${cb.chargebackTotal.toFixed(2)}.`,'warn'); return; }
+      if(adjustedAmt !== cb.chargebackTotal && adjRsn && !adjRsn.value.trim()){ showToast('Adjustment reason is required when modifying the chargeback amount.','warn'); return; }
+    }
+    cb.status='Approved';
+    cb.financeNotes = adjRsn&&adjRsn.value ? adjRsn.value : 'Approved as calculated.';
+    cb.auditLog.unshift({date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}),user:'David Park',action:'Approved',detail:cb.financeNotes});
+  }
+  closeModal('reviewModal'); renderTable(chargebacks);
+  showToast(`Chargeback ${id} approved. Will be applied to next payment batch.`,'success');
+}
+
+function openReject(id){ pendingRejectId=id; document.getElementById('rejectReason').value=''; showModal('rejectModal'); }
+function prefillReject(){
+  document.getElementById('rejectReason').value='Chargeback invalid — disenrollment was reversed on 05/12/2026 per CMS confirmation. Member remains active on plan. Original commission payment stands.';
+  showToast('Reject form prefilled with sample data','info');
+}
+function confirmReject(){
+  const reason = document.getElementById('rejectReason').value.trim();
+  if(!reason){ showToast('Please provide a rejection reason.','warn'); return; }
+  const cb = chargebacks.find(x=>x.id===pendingRejectId);
+  if(cb){
+    cb.status='Rejected'; cb.financeNotes=reason;
+    cb.auditLog.unshift({date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}),user:'David Park',action:'Rejected',detail:reason});
+  }
+  closeModal('rejectModal'); renderTable(chargebacks);
+  showToast(`Chargeback ${pendingRejectId} rejected. Original commission stands.`,'warn');
+  pendingRejectId=null;
+}
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToast(msg, type='info'){
+  const t=document.getElementById('toast');
+  const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;
+  t.style.display='block'; setTimeout(()=>t.style.display='none',3800);
+}
+function nfpExport(label){ showToast(`${label} export started.`,'info'); }
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
+renderTable(chargebacks);
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

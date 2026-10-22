@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Leads | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html" class="active"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>My Leads</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Leads</li></ol>
+    </div>
+    <input type="text" class="tb-search" placeholder="Search by name, phone, ZIP?">
+    <a href="notifications.html" class="tb-btn"><i class="fas fa-bell"></i><span class="n-dot"></span></a>
+    <button class="btn-pr btn-sm" onclick="document.getElementById('newLeadModal').style.display='flex'"><i class="fas fa-plus"></i>New Lead</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Leads</div><div class="stat-val">28</div><div class="stat-sub">This month</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-phone"></i></div><div><div class="stat-label">To Contact</div><div class="stat-val">7</div><div class="stat-sub">Follow-up needed</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-calendar-check"></i></div><div><div class="stat-label">Appt. Set</div><div class="stat-val">4</div><div class="stat-sub">Next 7 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Enrolled YTD</div><div class="stat-val">12</div><div class="stat-sub stat-up">? 3 vs last year</div></div></div></div>
+    </div>
+
+    <div class="filter-bar">
+      <label>Status:</label>
+      <select id="fStatus" onchange="applyLeadFilters()"><option value="">All Statuses</option><option>New</option><option>Contacted</option><option>Appt. Set</option><option>SOA Obtained</option><option>Enrolled</option><option>Not Interested</option><option>Unreachable</option><option>Duplicate</option></select>
+      <label>Source:</label>
+      <select id="fSource" onchange="applyLeadFilters()"><option value="">All Sources</option><option>Digital Form</option><option>TFN Inbound</option><option>Manual Entry</option><option>Bulk Import</option></select>
+      <label>Campaign:</label>
+      <select id="fCampaign" onchange="applyLeadFilters()"><option value="">All Campaigns</option><option>AEP FL 2026</option><option>ESRD Outreach</option></select>
+      <label>State:</label>
+      <select id="fState" onchange="applyLeadFilters()"><option value="">All States</option><option>FL</option><option>GA</option><option>TX</option></select>
+      <label>Priority:</label>
+      <select id="fPriority" onchange="applyLeadFilters()"><option value="">All Priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <input type="text" id="fSearch" placeholder="Name or phone?" style="flex:1;min-width:140px" oninput="applyLeadFilters()">
+      <button class="btn-ol btn-sm" onclick="applyLeadFilters()"><i class="fas fa-filter"></i>Filter</button>
+      <button class="btn-ol btn-sm" onclick="resetLeadFilters()"><i class="fas fa-undo"></i>Reset</button>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <h5>All Leads (28)</h5>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="nfpAction('CSV import dialog opened','info')"><i class="fas fa-upload"></i>Bulk Import CSV</button>
+          <button class="btn-ol btn-sm" onclick="nfpExport('Leads')"><i class="fas fa-download"></i>Export</button>
+          <button class="btn-pr btn-sm" onclick="document.getElementById('newLeadModal').style.display='flex'"><i class="fas fa-plus"></i>New Lead</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','leads_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr>
+              <th><input type="checkbox"></th>
+              <th>Name</th><th>DOB</th><th>Gender</th><th>Phone</th><th>Medicare ID</th><th>ZIP / State / County</th><th>Health Conditions</th>
+              <th>Source</th><th>Campaign</th><th>Status</th><th>Priority</th>
+              <th>Assigned Date</th><th>Next Follow-up Date</th><th>Last Contact Outcome</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Linda Park</a></td>
+              <td>09/22/1948</td><td>F</td>
+              <td>(305) 555-0142</td><td><code>1EG4-TE5-MK72</code></td><td>33101 / FL / Miami-Dade</td>
+              <td><span class="chip" style="font-size:11px">ESRD</span></td>
+              <td>Digital Form</td><td>AEP FL 2026</td>
+              <td><span class="bdg b-blue">New</span></td>
+              <td><span class="bdg b-red">High</span></td>
+              <td>May 20</td><td style="color:#c62828;font-size:12px"><i class="fas fa-exclamation-circle"></i> Overdue</td><td>—</td>
+              <td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Thomas Rivera</a></td>
+              <td>05/14/1955</td><td>M</td>
+              <td>(404) 555-0287</td><td><code>2RK7-QA3-JL84</code></td><td>30309 / GA / Fulton</td>
+              <td><span class="chip" style="font-size:11px">CKD</span></td>
+              <td>TFN Inbound</td><td>AEP FL 2026</td>
+              <td><span class="bdg b-amber">Contacted</span></td>
+              <td><span class="bdg b-amber">Medium</span></td>
+              <td>May 18</td><td style="font-size:12px">May 25</td><td>Left voicemail</td>
+              <td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Grace Kim</a></td>
+              <td>11/30/1949</td><td>F</td>
+              <td>(305) 555-0398</td><td><code>3TF9-BJ8-PM91</code></td><td>33126 / FL / Miami-Dade</td>
+              <td><span class="chip" style="font-size:11px">Diabetes</span><span class="chip" style="font-size:11px">CHF</span></td>
+              <td>Manual Entry</td><td>?</td>
+              <td><span class="bdg b-purple">Appt. Set</span></td>
+              <td><span class="bdg b-red">High</span></td>
+              <td>May 15</td><td style="font-size:12px">May 24</td><td>Appointment confirmed</td>
+              <td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Frank Johnson</a></td>
+              <td>07/04/1947</td><td>M</td>
+              <td>(770) 555-0431</td><td><code>4WX2-PL5-ST63</code></td><td>30301 / GA / Fulton</td>
+              <td><span class="chip" style="font-size:11px">ESRD</span></td>
+              <td>Digital Form</td><td>ESRD Outreach</td>
+              <td><span class="bdg b-teal">SOA Obtained</span></td>
+              <td><span class="bdg b-red">High</span></td>
+              <td>May 12</td><td style="font-size:12px">—</td><td>SOA signed, ready to enroll</td>
+              <td><a href="enrollment.html" class="btn-pr btn-sm">Enroll Now</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Nancy Collins</a></td>
+              <td>03/18/1951</td><td>F</td>
+              <td>(305) 555-0721</td><td><code>5AB1-MN9-UV84</code></td><td>33139 / FL / Miami-Dade</td>
+              <td><span class="chip" style="font-size:11px">CKD</span><span class="chip" style="font-size:11px">Diabetes</span></td>
+              <td>Bulk Import</td><td>AEP FL 2026</td>
+              <td><span class="bdg b-blue">New</span></td>
+              <td><span class="bdg b-amber">Medium</span></td>
+              <td>May 21</td><td style="font-size:12px">May 26</td><td>—</td>
+              <td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Susan Walsh</a></td>
+              <td>12/09/1953</td><td>F</td>
+              <td>(305) 555-0512</td><td><code>6CD3-WX7-WX95</code></td><td>33150 / FL / Miami-Dade</td>
+              <td><span class="chip" style="font-size:11px">CVD</span></td>
+              <td>TFN Inbound</td><td>AEP FL 2026</td>
+              <td><span class="bdg b-green">Enrolled</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td>Apr 28</td><td style="font-size:12px">—</td><td>Enrolled successfully</td>
+              <td><a href="bob.html" class="btn-ol btn-sm">View in BoB</a></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">Earl Thompson</a></td>
+              <td>08/22/1944</td><td>M</td>
+              <td>(678) 555-0614</td><td>—</td><td>30318 / GA / Dekalb</td>
+              <td><span class="chip" style="font-size:11px">None</span></td>
+              <td>Manual Entry</td><td>—</td>
+              <td><span class="bdg b-grey">Not Interested</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td>Apr 20</td><td style="font-size:12px">—</td><td>Declined, not interested</td>
+              <td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <span class="text-sm text-muted" id="leadCount">Showing 1-7 of 7 leads</span>
+        <div class="dflex g8"><button class="btn-ol btn-sm" id="btnPrev" onclick="goPage(-1)" disabled style="opacity:.5;cursor:not-allowed">&#8592; Prev</button><span class="btn-ol btn-sm" id="pageInfo" style="background:#f0f2f5;border-color:#e8eaed">1 / 1</span><button class="btn-pr btn-sm" id="btnNext" onclick="goPage(1)">Next &#8594;</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Lead Modal -->
+<div id="newLeadModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;width:620px;max-width:95%;padding:28px;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h5 style="font-size:16px;font-weight:700;color:#1a1a2e">Create New Lead</h5>
+      <button onclick="closeLeadModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9aa0a6">&#10005;</button>
+    </div>
+    <div id="leadModalErr" class="al-danger mb16" style="display:none"></div>
+    <div class="form-row">
+      <div class="fg"><label>First Name <span class="req">*</span></label><input id="nlFirst" placeholder="e.g. Dorothy"></div>
+      <div class="fg"><label>Last Name <span class="req">*</span></label><input id="nlLast" placeholder="e.g. Henderson"></div>
+      <div class="fg"><label>Date of Birth <span class="req">*</span></label><input id="nlDob" type="date"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Gender</label>
+        <select id="nlGender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Phone <span class="req">*</span></label><input id="nlPhone" placeholder="(305) 555-0000"></div>
+      <div class="fg"><label>Email</label><input id="nlEmail" placeholder="email@domain.com" type="email"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg" style="flex:2"><label>Address 1 <span class="req">*</span></label><input id="nlAddress1" placeholder="e.g. 1200 NW 7th Ave"></div>
+      <div class="fg"><label>Address 2</label><input id="nlAddress2" placeholder="Apt, Suite, Unit"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>ZIP Code <span class="req">*</span></label><input id="nlZip" placeholder="33101" maxlength="5" oninput="nfpZipLookup(this,'nlCity','nlState','nlCounty')"></div>
+      <div class="fg"><label>City <span class="req">*</span></label><input id="nlCity" placeholder="Auto-filled from ZIP"></div>
+      <div class="fg"><label>State <span class="req">*</span></label><input id="nlState" placeholder="Auto-filled from ZIP"></div>
+      <div class="fg"><label>County</label><input id="nlCounty" readonly placeholder="Auto-filled from ZIP" style="background:#f8f9fa"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Preferred Language</label>
+        <select id="nlLanguage"><option>English</option><option>Spanish</option><option>Haitian Creole</option><option>Portuguese</option><option>Chinese</option><option>Vietnamese</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Preferred Contact Method</label>
+        <select id="nlContactMethod"><option>Phone</option><option>Email</option><option>SMS/Text</option><option>Mail</option></select>
+      </div>
+      <div class="fg"><label>Medicare ID</label><input id="nlMedicareId" placeholder="e.g. 1EG4-TE5-MK72"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Health Conditions</label>
+        <select id="nlHealth"><option>None</option><option>ESRD</option><option>CKD</option><option>CHF</option><option>Cardiovascular Disease</option><option>Diabetes</option><option>COPD</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Lead Source</label>
+        <select id="nlSource"><option>Manual Entry</option><option>Digital Form</option><option>TFN Inbound</option><option>Bulk Import</option></select>
+      </div>
+      <div class="fg"><label>Campaign Code</label>
+        <select id="nlCampaign"><option value="">— None —</option><option>AEP-FL-2026</option><option>YR-ESRD-2026</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Priority</label><select id="nlPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
+      <div class="fg"><label>Notes</label><textarea id="nlNotes" rows="2" placeholder="Optional notes about this lead?"></textarea></div>
+    </div>
+    <div class="al-info mt8 mb16" style="font-size:12.5px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Duplicate check will run automatically on save. If a matching lead is found (same phone + DOB), you will be prompted to confirm.</span></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn-ol" onclick="closeLeadModal()">Cancel</button>
+      <button class="btn-pr" onclick="saveNewLead()"><i class="fas fa-save"></i>Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Pagination
+var currentPage=1;
+var rowsPerPage=7;
+
+function applyLeadFilters(){
+  var status=document.getElementById('fStatus').value;
+  var source=document.getElementById('fSource').value;
+  var campaign=document.getElementById('fCampaign').value;
+  var state=document.getElementById('fState').value;
+  var priority=document.getElementById('fPriority').value;
+  var search=document.getElementById('fSearch').value.toLowerCase().trim();
+
+  var rows=document.querySelectorAll('.tbl tbody tr');
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    if(cells.length<11){row.setAttribute('data-filtered','hidden');return;}
+
+    var name=(cells[1].textContent||'').toLowerCase();
+    var phone=(cells[2].textContent||'').replace(/\s/g,'').toLowerCase();
+    var loc=(cells[3].textContent||'');
+    var rowSource=(cells[5].textContent||'').trim();
+    var rowCampaign=(cells[6].textContent||'').trim();
+    var rowStatus=(cells[7].textContent||'').replace(/\s+/g,' ').trim();
+    var rowPriority=(cells[8].textContent||'').replace(/\s+/g,' ').trim();
+
+    var show=true;
+
+    // Status match: handle abbreviations
+    if(status){
+      var statusMatch=false;
+      if(rowStatus.toLowerCase()===status.toLowerCase()) statusMatch=true;
+      if(status==='Appointment Set' && rowStatus==='Appt. Set') statusMatch=true;
+      if(status==='SOA Obtained' && rowStatus.indexOf('SOA')!==-1) statusMatch=true;
+      if(!statusMatch) show=false;
+    }
+
+    // Source match
+    if(source && rowSource.toLowerCase()!==source.toLowerCase()) show=false;
+
+    // Campaign match
+    if(campaign && rowCampaign.toLowerCase().indexOf(campaign.toLowerCase())===-1) show=false;
+
+    // State match: parse from "ZIP / STATE / County" format
+    if(state){
+      var parts=loc.split('/');
+      var rowState=(parts[1]||'').trim();
+      if(rowState!==state) show=false;
+    }
+
+    // Priority match
+    if(priority && rowPriority.toLowerCase()!==priority.toLowerCase()) show=false;
+
+    // Text search: name or phone
+    if(search){
+      var phoneClean=phone.replace(/[^\d]/g,'');
+      var searchClean=search.replace(/[^\d]/g,'');
+      var nameMatch=name.indexOf(search)!==-1;
+      var phoneMatch=phone.indexOf(search)!==-1 || (searchClean.length>=3 && phoneClean.indexOf(searchClean)!==-1);
+      if(!nameMatch && !phoneMatch) show=false;
+    }
+
+    row.setAttribute('data-filtered',show?'visible':'hidden');
+  });
+  currentPage=1;
+  renderPage();
+}
+
+function resetLeadFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fSource').value='';
+  document.getElementById('fCampaign').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fPriority').value='';
+  document.getElementById('fSearch').value='';
+  applyLeadFilters();
+}
+
+function renderPage(){
+  var rows=document.querySelectorAll('.tbl tbody tr');
+  var visible=[];
+  rows.forEach(function(r){if(r.getAttribute('data-filtered')!=='hidden') visible.push(r);});
+  var totalPages=Math.max(1,Math.ceil(visible.length/rowsPerPage));
+  if(currentPage>totalPages) currentPage=totalPages;
+  if(currentPage<1) currentPage=1;
+  var start=(currentPage-1)*rowsPerPage;
+  var end=start+rowsPerPage;
+  // Hide all rows first, then show only current page
+  rows.forEach(function(r){r.style.display='none';});
+  visible.forEach(function(r,i){r.style.display=(i>=start&&i<end)?'':'none';});
+  document.getElementById('leadCount').textContent='Showing '+(visible.length?start+1:0)+'-'+Math.min(end,visible.length)+' of '+visible.length+' leads';
+  document.getElementById('pageInfo').textContent=currentPage+' / '+totalPages;
+  var btnPrev=document.getElementById('btnPrev');
+  var btnNext=document.getElementById('btnNext');
+  if(currentPage<=1){btnPrev.disabled=true;btnPrev.style.opacity='.5';btnPrev.style.cursor='not-allowed';}else{btnPrev.disabled=false;btnPrev.style.opacity='1';btnPrev.style.cursor='pointer';}
+  if(currentPage>=totalPages){btnNext.disabled=true;btnNext.style.opacity='.5';btnNext.style.cursor='not-allowed';}else{btnNext.disabled=false;btnNext.style.opacity='1';btnNext.style.cursor='pointer';}
+}
+
+function goPage(dir){
+  currentPage+=dir;
+  renderPage();
+}
+function resetLeadFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fSource').value='';
+  document.getElementById('fCampaign').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fPriority').value='';
+  document.getElementById('fSearch').value='';
+  applyLeadFilters();
+}
+
+function autoFillCounty(el){
+  nfpZipLookup(el,'nlCity','nlState','nlCounty');
+}
+
+function saveNewLead(){
+  var err=document.getElementById('leadModalErr');
+  var first=document.getElementById('nlFirst').value.trim();
+  var last=document.getElementById('nlLast').value.trim();
+  var dob=document.getElementById('nlDob').value;
+  var phone=document.getElementById('nlPhone').value.trim();
+  var zip=document.getElementById('nlZip').value.trim();
+  var email=document.getElementById('nlEmail').value.trim();
+
+  // Clear previous errors and field highlights
+  err.style.display='none';
+  ['nlFirst','nlLast','nlDob','nlPhone','nlZip'].forEach(function(id){
+    document.getElementById(id).style.border='';
+  });
+
+  var errors=[];
+  if(!first){errors.push('First Name is required');document.getElementById('nlFirst').style.border='1.5px solid #c62828';}
+  if(!last){errors.push('Last Name is required');document.getElementById('nlLast').style.border='1.5px solid #c62828';}
+  if(!dob){errors.push('Date of Birth is required');document.getElementById('nlDob').style.border='1.5px solid #c62828';}
+  if(!phone){errors.push('Phone is required');document.getElementById('nlPhone').style.border='1.5px solid #c62828';}
+  else if(!/^[\d\(\)\-\s\+]{7,15}$/.test(phone)){errors.push('Phone format is invalid');document.getElementById('nlPhone').style.border='1.5px solid #c62828';}
+  if(!zip){errors.push('ZIP Code is required');document.getElementById('nlZip').style.border='1.5px solid #c62828';}
+  else if(!/^\d{5}$/.test(zip)){errors.push('ZIP Code must be 5 digits');document.getElementById('nlZip').style.border='1.5px solid #c62828';}
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){errors.push('Email format is invalid');document.getElementById('nlEmail').style.border='1.5px solid #c62828';}
+  if(dob){var dobDate=new Date(dob);var age=(new Date()-dobDate)/(365.25*24*60*60*1000);if(age<18){errors.push('Lead must be at least 18 years old');document.getElementById('nlDob').style.border='1.5px solid #c62828';}}
+
+  if(errors.length>0){
+    err.style.display='flex';
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix the following:</strong><ul style="margin:4px 0 0;padding-left:18px">'+errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+    return;
+  }
+
+  // Duplicate check simulation (same phone + DOB)
+  var existingLeads=[{phone:'(305) 555-0142',dob:'1948-09-22'},{phone:'(404) 555-0287',dob:'1955-05-14'},{phone:'(305) 555-0398',dob:'1949-11-30'}];
+  var isDuplicate=existingLeads.some(function(l){return l.phone===phone || (phone.replace(/\D/g,'')===l.phone.replace(/\D/g,'') && dob===l.dob);});
+  if(isDuplicate){
+    if(!confirm('A potential duplicate was found (matching phone + DOB). Do you want to save this lead anyway?')) return;
+  }
+
+  // Add new row to the table
+  var health=document.getElementById('nlHealth').value;
+  var source=document.getElementById('nlSource').value;
+  var campaign=document.getElementById('nlCampaign').value||'—';
+  var priority=document.getElementById('nlPriority').value;
+  var county=document.getElementById('nlCounty').value||'—';
+  var gender=document.getElementById('nlGender').value||'—';
+  var medicareId=document.getElementById('nlMedicareId').value.trim()||'—';
+  var today=new Date();var monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var createdDate=monthNames[today.getMonth()]+' '+today.getDate();
+  var priClass=priority==='High'?'b-red':priority==='Medium'?'b-amber':'b-grey';
+  var dobFormatted=dob.split('-');dobFormatted=dobFormatted[1]+'/'+dobFormatted[2]+'/'+dobFormatted[0];
+
+  var tr=document.createElement('tr');
+  tr.setAttribute('data-filtered','visible');
+  tr.innerHTML='<td><input type="checkbox"></td>'+
+    '<td><a href="lead-detail.html" style="color:#0d47a1;text-decoration:none;font-weight:500">'+first+' '+last+'</a></td>'+
+    '<td>'+dobFormatted+'</td>'+
+    '<td>'+gender+'</td>'+
+    '<td>'+phone+'</td>'+
+    '<td>'+(medicareId!=='—'?'<code>'+medicareId+'</code>':'—')+'</td>'+
+    '<td>'+zip+' / '+county+'</td>'+
+    '<td><span class="chip" style="font-size:11px">'+health+'</span></td>'+
+    '<td>'+source+'</td>'+
+    '<td>'+campaign+'</td>'+
+    '<td><span class="bdg b-blue">New</span></td>'+
+    '<td><span class="bdg '+priClass+'">'+priority+'</span></td>'+
+    '<td>'+createdDate+'</td>'+
+    '<td style="color:#c62828;font-size:12px"><i class="fas fa-exclamation-circle"></i> Pending</td>'+
+    '<td>—</td>'+
+    '<td><a href="lead-detail.html" class="btn-ol btn-sm">View</a></td>';
+
+  var tbody=document.querySelector('.tbl tbody');
+  tbody.insertBefore(tr,tbody.firstChild);
+
+  nfpSubmit('Lead "'+first+' '+last+'" saved successfully! Duplicate check passed.');
+  closeLeadModal();
+  currentPage=1;
+  applyLeadFilters();
+}
+
+function closeLeadModal(){
+  document.getElementById('newLeadModal').style.display='none';
+  document.getElementById('leadModalErr').style.display='none';
+  ['nlFirst','nlLast','nlDob','nlPhone','nlZip','nlEmail','nlAddress1','nlAddress2','nlMedicareId','nlCity','nlState'].forEach(function(id){
+    document.getElementById(id).style.border='';
+    document.getElementById(id).value='';
+  });
+  document.getElementById('nlCounty').value='';
+  document.getElementById('nlHealth').selectedIndex=0;
+  document.getElementById('nlSource').selectedIndex=0;
+  document.getElementById('nlCampaign').selectedIndex=0;
+  document.getElementById('nlGender').selectedIndex=0;
+  document.getElementById('nlLanguage').selectedIndex=0;
+  document.getElementById('nlContactMethod').selectedIndex=0;
+  document.getElementById('nlPriority').selectedIndex=1;
+  document.getElementById('nlNotes').value='';
+}
+
+// Initial render
+(function(){var rows=document.querySelectorAll('.tbl tbody tr');rows.forEach(function(r){r.setAttribute('data-filtered','visible');});renderPage();})();
+</script>
+</body>
+</html>

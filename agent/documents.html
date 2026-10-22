@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Document Vault | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}
+.doc-icon{font-size:22px;width:38px;text-align:center}
+.doc-icon.pdf{color:#c62828}
+.doc-icon.word{color:#1565c0}
+.doc-icon.excel{color:#1b5e20}
+.doc-icon.img{color:#6a1b9a}
+.updated-badge{background:#ff9800;color:white;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;margin-left:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.ack-btn{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer}
+.ack-btn.done{background:#c8e6c9;pointer-events:none;opacity:.7}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html" class="active"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div></nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Document Vault</h4></div>
+    <input type="text" class="tb-search" placeholder="Search documents?">
+    <button class="btn-pr" onclick="nfpSave('Changes')"><i class="fas fa-upload"></i>Upload Document</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Filters -->
+    <div class="filter-bar">
+      <label>Category:</label>
+      <select id="filterCategory" onchange="filterDocs()"><option value="">All Categories</option><option value="SOA">SOA</option><option value="Enrollment">Enrollment Application</option><option value="C-SNP">C-SNP Verification</option><option value="Commission">Commission Remittance</option><option value="CMS">CMS Acknowledgment</option><option value="Training">Training</option><option value="Leads">Leads</option><option value="Plan Material">Carrier Materials</option></select>
+      <label>Member:</label>
+      <input type="text" id="filterMember" placeholder="Member name?" oninput="filterDocs()" style="height:32px;border:1px solid #e0e0e0;border-radius:6px;padding:0 10px;font-size:12px">
+      <label>Date From:</label>
+      <input type="date" id="filterDateFrom" onchange="filterDocs()" style="height:32px;border:1px solid #e0e0e0;border-radius:6px;padding:0 10px;font-size:12px">
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><h5>My Documents</h5><span class="text-sm text-muted">18 documents</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','documents_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr><th></th><th>Document Name</th><th>Category</th><th>Member / Reference</th><th>Date</th><th>Size</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr data-category="SOA" data-member="Frank Johnson" data-date="2026-05-19">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">SOA ? Frank Johnson ? 05 19,2026</td>
+              <td><span class="chip">SOA</span></td>
+              <td>Frank Johnson ? SOA-0853</td>
+              <td>05 19,2026</td><td>142 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="Enrollment" data-member="Frank Johnson" data-date="2026-05-23">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Enrollment Application ? Frank Johnson</td>
+              <td><span class="chip">Enrollment</span></td>
+              <td>Frank Johnson ? ENR-2026-00541</td>
+              <td>05 23,2026</td><td>287 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="C-SNP" data-member="Dorothy Henderson" data-date="2025-12-12">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">C-SNP Verification ? Dorothy Henderson</td>
+              <td><span class="chip">C-SNP</span></td>
+              <td>Dorothy Henderson ? ENR-2025-00847</td>
+              <td>12 12,2025</td><td>184 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="Commission" data-member="" data-date="2026-05-17">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Commission Remittance ? 05 17,2026</td>
+              <td><span class="chip">Commission</span></td>
+              <td>BATCH-2026-05</td>
+              <td>05 17,2026</td><td>98 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="CMS" data-member="Dorothy Henderson" data-date="2025-12-20">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">CMS ATN ? Dorothy Henderson (ENR-2025-00847)</td>
+              <td><span class="chip">CMS</span></td>
+              <td>Dorothy Henderson</td>
+              <td>12 20,2025</td><td>56 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="Leads" data-member="" data-date="2025-10-15">
+              <td><i class="doc-icon excel fas fa-file-excel"></i></td>
+              <td class="text-bold">AEP 2026 Lead Import ? Florida Drive</td>
+              <td><span class="chip">Leads</span></td>
+              <td>Campaign: AEP-FL-2026</td>
+              <td>10 15,2025</td><td>34 KB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Download</button></div></td>
+            </tr>
+            <tr data-category="Training" data-member="" data-date="2026-01-05">
+              <td><i class="doc-icon word fas fa-file-word"></i></td>
+              <td class="text-bold">Gold Kidney Agent Training Guide ? 2026</td>
+              <td><span class="chip">Training</span></td>
+              <td>Carrier Material</td>
+              <td>01 05,2026</td><td>2.1 MB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr data-category="Plan Material" data-member="" data-date="2025-09-15">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">StarPlus ESRD SNP 2026 ? Plan Summary</td>
+              <td><span class="chip">Plan Material</span></td>
+              <td>GK-ESRD-2026</td>
+              <td>09 15,2025</td><td>1.2 MB</td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <span class="text-sm text-muted">Showing 8 of 18 documents</span>
+        <div class="dflex g8"><button class="btn-ol btn-sm">&#8592; Prev</button><button class="btn-pr btn-sm">Next &#8594;</button></div>
+      </div>
+    </div>
+
+    <!-- Carrier Document Library (Self-Service) -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-building" style="margin-right:6px;color:#1565c0"></i>Carrier Document Library</h5><span style="font-size:11px;color:#757575">Documents published by Gold Kidney Health Plan for your role</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','documents_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div style="padding:12px 16px;background:#e3f2fd;border-bottom:1px solid #90caf9;font-size:12px;display:flex;align-items:center;gap:8px">
+        <i class="fas fa-info-circle" style="color:#1565c0"></i>
+        <span>Documents marked with <span class="updated-badge">Updated</span> have a new version since your last access. Please review and acknowledge.</span>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport2" class="tbl">
+          <thead><tr><th></th><th>Document</th><th>Category</th><th>Version</th><th>Published</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr style="background:#fff8e1">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Agent Contracting Agreement<span class="updated-badge">Updated</span><br><span style="font-size:11px;color:#616161">Standard agent contract CY2026 — updated commission tables</span></td>
+              <td><span class="chip">Contract</span></td>
+              <td>v3.2</td>
+              <td>05 15,2026</td>
+              <td><span style="font-size:11px;color:#e65100"><i class="fas fa-exclamation-circle"></i> Needs Acknowledgment</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button><button class="ack-btn" onclick="this.innerHTML='<i class=\'fas fa-check\'></i> Acknowledged';this.classList.add('done');this.closest('tr').style.background='';this.closest('tr').querySelector('.updated-badge').remove()"><i class="fas fa-check-circle"></i> Acknowledge</button></div></td>
+            </tr>
+            <tr>
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Scope of Appointment (SOA) Form<br><span style="font-size:11px;color:#616161">CMS-required SOA for Medicare Advantage appointments</span></td>
+              <td><span class="chip">SOA Forms</span></td>
+              <td>v2.0</td>
+              <td>04 01,2026</td>
+              <td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-check-circle"></i> Acknowledged</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Health Risk Assessment (HRA) Form<br><span style="font-size:11px;color:#616161">Member HRA for initial health assessment</span></td>
+              <td><span class="chip">HRA</span></td>
+              <td>v1.4</td>
+              <td>03 20,2026</td>
+              <td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-check-circle"></i> Acknowledged</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">CMS Compliance Reference Guide<span class="updated-badge">Updated</span><br><span style="font-size:11px;color:#616161">Annual compliance rules and prohibited activities — 2026 update</span></td>
+              <td><span class="chip">Compliance</span></td>
+              <td>v4.1</td>
+              <td>01 10,2026</td>
+              <td><span style="font-size:11px;color:#e65100"><i class="fas fa-exclamation-circle"></i> Needs Acknowledgment</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button><button class="ack-btn" onclick="this.innerHTML='<i class=\'fas fa-check\'></i> Acknowledged';this.classList.add('done');this.closest('tr').style.background='';this.closest('tr').querySelector('.updated-badge').remove()"><i class="fas fa-check-circle"></i> Acknowledge</button></div></td>
+            </tr>
+            <tr>
+              <td><i class="doc-icon pdf fas fa-file-pdf"></i></td>
+              <td class="text-bold">Plan Benefit Summary — Gold PPO<br><span style="font-size:11px;color:#616161">Member-facing benefit summary</span></td>
+              <td><span class="chip">Benefits</span></td>
+              <td>v2.3</td>
+              <td>02 05,2026</td>
+              <td><span style="font-size:11px;color:#757575">No acknowledgment required</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm"><i class="fas fa-eye"></i>View</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Document View Modal -->
+<div class="modal fade" id="docViewModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title" id="docViewTitle">Document Preview</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" id="docViewBody" style="min-height:300px;background:#f5f5f5;padding:24px;font-size:13px"></div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button><button class="btn btn-primary btn-sm" id="docViewDownload"><i class="fas fa-download"></i> Download PDF</button></div>
+</div></div></div>
+
+<script>
+// Dummy PDF content generator (creates a real downloadable PDF)
+function generateDummyPDF(docName){
+  // Minimal valid PDF structure
+  var content='%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 612 792]/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>>>endobj\n5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj\n4 0 obj<</Length 120>>\nstream\nBT\n/F1 16 Tf\n50 700 Td\n('+docName+') Tj\n/F1 12 Tf\n0 -30 Td\n(Gold Kidney Health Plan - Document Preview) Tj\n0 -20 Td\n(This is a sample document for demonstration purposes.) Tj\nET\nendstream\nendobj\nxref\n0 6\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n0000000266 00000 n \n0000000206 00000 n \ntrailer<</Size 6/Root 1 0 R>>\nstartxref\n440\n%%EOF';
+  var blob=new Blob([content],{type:'application/pdf'});
+  return blob;
+}
+
+function downloadDoc(docName){
+  var blob=generateDummyPDF(docName);
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  a.download=docName.replace(/[^a-zA-Z0-9 ]/g,'').replace(/\s+/g,'_')+'.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function viewDoc(docName, category, date, size){
+  document.getElementById('docViewTitle').textContent=docName;
+  document.getElementById('docViewBody').innerHTML=
+    '<div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:24px">' +
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><i class="fas fa-file-pdf" style="font-size:32px;color:#c62828"></i><div><h6 style="margin:0">'+docName+'</h6><span style="font-size:11px;color:#757575">'+category+' &bull; '+date+' &bull; '+size+'</span></div></div>' +
+    '<hr style="margin:12px 0">' +
+    '<p style="color:#424242;line-height:1.7"><strong>Document Contents:</strong></p>' +
+    '<p style="color:#616161;line-height:1.7">This is a preview of <strong>'+docName+'</strong>. The document contains information related to '+category+' operations for Gold Kidney Health Plan.</p>' +
+    '<p style="color:#616161;line-height:1.7">In a production environment, this area would render the actual PDF content using an embedded viewer.</p>' +
+    '<div style="margin-top:16px;padding:12px;background:#e3f2fd;border-radius:6px;font-size:11px"><i class="fas fa-info-circle" style="color:#1565c0;margin-right:6px"></i>Document generated on '+date+'. File size: '+size+'.</div>' +
+    '</div>';
+  document.getElementById('docViewDownload').onclick=function(){downloadDoc(docName)};
+  new bootstrap.Modal(document.getElementById('docViewModal')).show();
+}
+
+// Attach event handlers to all View and Download buttons
+document.querySelectorAll('.tbl tbody tr').forEach(function(row){
+  var nameCell=row.querySelector('td:nth-child(2)') || row.querySelector('.text-bold');
+  if(!nameCell) return;
+  var docName=nameCell.textContent.trim().split('\n')[0].trim();
+  var catEl=row.querySelector('.chip');
+  var category=catEl?catEl.textContent.trim():'Document';
+  var cells=row.querySelectorAll('td');
+  var date='', size='';
+  // Find date and size from cells
+  cells.forEach(function(c){
+    var t=c.textContent.trim();
+    if(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s/.test(t)) date=t;
+    if(/^\d+(\.\d+)?\s*(KB|MB|GB)$/i.test(t)) size=t;
+  });
+
+  var btns=row.querySelectorAll('button.btn-ol');
+  btns.forEach(function(btn){
+    if(btn.innerHTML.indexOf('fa-eye')!==-1){
+      btn.onclick=function(){viewDoc(docName, category, date, size)};
+    } else if(btn.innerHTML.indexOf('fa-download')!==-1){
+      btn.onclick=function(){downloadDoc(docName)};
+    }
+  });
+});
+
+// Filter documents by category, member, and date
+function filterDocs(){
+  var cat=document.getElementById('filterCategory').value.toLowerCase();
+  var member=document.getElementById('filterMember').value.toLowerCase().trim();
+  var dateFrom=document.getElementById('filterDateFrom').value; // ISO yyyy-mm-dd
+  var rows=document.querySelectorAll('.card:first-of-type .tbl tbody tr');
+  var visible=0;
+  rows.forEach(function(r){
+    var rCat=(r.dataset.category||'').toLowerCase();
+    var rMember=(r.dataset.member||'').toLowerCase();
+    var rDate=r.dataset.date||'';
+    var show=true;
+    if(cat && rCat!==cat) show=false;
+    if(member && rMember.indexOf(member)===-1) show=false;
+    if(dateFrom && rDate && rDate<dateFrom) show=false;
+    r.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  var countEl=document.querySelector('.card:first-of-type .card-hdr .text-muted');
+  if(countEl) countEl.textContent=visible+' document'+(visible!==1?'s':'');
+}
+</script>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Broker Support — Commission Inquiries -->
+<title>Commission Inquiries | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html" class="active"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Commission Inquiries</h4><p style="font-size:12px;color:#5f6368;margin:0">Track and resolve agent commission questions — payment status, tier disputes, missing payments</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Commission Inquiries')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPI Summary -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#f3e5f5;color:#7b1fa2"><i class="fas fa-dollar-sign"></i></div>
+        <div><div class="stat-label">Open Inquiries</div><div class="stat-val">6</div><div class="stat-sub">1 escalated to Finance</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div>
+        <div><div class="stat-label">Avg Resolution</div><div class="stat-val">1.8 days</div><div class="stat-sub"><i class="fas fa-arrow-down" style="color:#2e7d32"></i> −0.4 days vs last month</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Resolved MTD</div><div class="stat-val">18</div><div class="stat-sub">94% within SLA</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div>
+        <div><div class="stat-label">Escalated to Finance</div><div class="stat-val">2</div><div class="stat-sub">1 payment correction pending</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fStatus"><option>All Statuses</option><option>Open</option><option>In Progress</option><option>Awaiting Finance</option><option>Awaiting Agent</option><option>Resolved</option></select>
+      <select id="fCategory"><option>All Categories</option><option>Missing Payment</option><option>Payment Amount</option><option>Tier Dispute</option><option>Override Question</option><option>ACH / Routing</option><option>Commission Statement</option></select>
+      <select id="fPeriod"><option>All Periods</option><option>Current Cycle</option><option>Last Cycle</option><option>Last 3 Months</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent name, NPN, or inquiry ID..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:200px">
+    </div>
+
+    <!-- Inquiries Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-list" style="color:#0277bd;margin-right:8px"></i>Commission Inquiry Queue</h6><span class="badge" style="background:#f3e5f5;color:#7b1fa2">6 open</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Inquiry ID</th><th>Agent</th><th>NPN</th><th>Category</th><th>Description</th><th>Amount</th><th>Status</th><th>Created</th><th>SLA</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">COM-2026-0112</td><td>James Martinez</td><td>8823441</td><td><span class="badge" style="background:#fce4ec;color:#c62828">Missing</span></td><td>May cycle payment not received — 42 active members</td><td>$4,200</td><td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td><td>Jun 7</td><td><span style="color:#e65100">1 day left</span></td><td><button class="btn-pr btn-sm" onclick="showComInquiry('COM-2026-0112')">Review</button></td></tr>
+            <tr><td style="font-weight:600">COM-2026-0113</td><td>Sarah Chen</td><td>7719022</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Tier</span></td><td>Tier 1 applied instead of Tier 2 — 28 members qualifies</td><td>$1,400</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Open</span></td><td>Jun 8</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showComInquiry('COM-2026-0113')">Review</button></td></tr>
+            <tr><td style="font-weight:600">COM-2026-0114</td><td>Angela Torres</td><td>6651209</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Statement</span></td><td>Commission statement PDF not generating in agent portal</td><td>—</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Open</span></td><td>Jun 9</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showComInquiry('COM-2026-0114')">Review</button></td></tr>
+            <tr><td style="font-weight:600">COM-2026-0115</td><td>David Chen</td><td>4478122</td><td><span class="badge" style="background:#f3e5f5;color:#7b1fa2">Override</span></td><td>Override commission not showing for downline agent</td><td>$320</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Awaiting Finance</span></td><td>Jun 5</td><td><span style="color:#c62828;font-weight:600">Escalated</span></td><td><button class="btn-ol btn-sm" onclick="showComInquiry('COM-2026-0115')">Track</button></td></tr>
+            <tr><td style="font-weight:600">COM-2026-0116</td><td>Lisa Wang</td><td>5534098</td><td><span class="badge" style="background:#e0f2f1;color:#00695c">ACH</span></td><td>ACH routing number update — payment returned</td><td>$2,100</td><td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td><td>Jun 6</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showComInquiry('COM-2026-0116')">Review</button></td></tr>
+            <tr><td style="font-weight:600">COM-2026-0117</td><td>Michael Brown</td><td>3398712</td><td><span class="badge" style="background:#fce4ec;color:#c62828">Missing</span></td><td>Rapid pay bonus not applied for Q1 target met</td><td>$500</td><td><span class="badge" style="background:#fff8e1;color:#f57f17">Awaiting Agent</span></td><td>Jun 4</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-ol btn-sm" onclick="showComInquiry('COM-2026-0117')">Follow Up</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Two-Column: Category Breakdown + Resolution Trends -->
+    <div class="row g-3" style="margin-top:16px">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-chart-pie" style="color:#0277bd;margin-right:8px"></i>Inquiries by Category</h6><span style="font-size:11px;color:#5f6368">Last 30 Days</span></div>
+          <div class="card-body" style="padding:14px 16px;font-size:13px">
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Missing Payment</span><strong>9</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:38%;background:#c62828;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Tier Dispute</span><strong>6</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:25%;background:#e65100;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Override Question</span><strong>4</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:17%;background:#7b1fa2;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>ACH / Routing</span><strong>3</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:13%;background:#00695c;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between"><span>Statement Issues</span><strong>2</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:8%;background:#0277bd;border-radius:3px"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-chart-line" style="color:#2e7d32;margin-right:8px"></i>Resolution Summary</h6><span style="font-size:11px;color:#5f6368">MTD</span></div>
+          <div class="card-body" style="padding:14px 16px;font-size:13px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f3f4"><span>Resolved by Broker Support</span><strong style="color:#2e7d32">14</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f3f4"><span>Escalated to Finance</span><strong style="color:#e65100">4</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f3f4"><span>Avg Resolution Time</span><strong>1.8 days</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f3f4"><span>SLA Compliance</span><strong style="color:#2e7d32">94%</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0"><span>Agent Satisfaction</span><strong style="color:#2e7d32">4.6 / 5.0</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Commission Inquiry Detail Modal -->
+<div id="comModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-dollar-sign" style="color:#7b1fa2;margin-right:8px"></i><span id="cmTitle">Commission Inquiry</span></h6>
+      <button onclick="closeComModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Inquiry ID</div><div id="cmId" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="cmAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="cmNpn" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Category</div><div id="cmCat" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Amount</div><div id="cmAmount" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="cmStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Issue Detail</div>
+        <div id="cmDetail" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div style="background:#f3e5f5;border-radius:8px;padding:14px;border-left:4px solid #7b1fa2">
+        <div style="font-size:11px;font-weight:700;color:#7b1fa2;text-transform:uppercase;margin-bottom:6px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Resolution / Next Steps</div>
+        <div id="cmResolution" style="font-size:13px;line-height:1.6;color:#333">—</div>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeComModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var comData={
+  'COM-2026-0112':{id:'COM-2026-0112',agent:'James Martinez',npn:'8823441',cat:'Missing Payment',amount:'$4,200',status:'In Progress',detail:'Agent reports May 2026 commission cycle payment not received. Agent has 42 active enrolled members. Payment was expected by Jun 5 (standard 5-day cycle). Agent confirmed ACH details are correct and bank has no pending deposits. Previous months paid correctly.',resolution:'Payment file for May cycle shows agent\'s commission was calculated ($4,200 for 42 members at $100/member). Issue identified: payment batch #PB-2026-052 failed ACH validation for 3 agents including this one. Finance team is reprocessing the batch. Expected resolution: Jun 10. Agent notified of delay.'},
+  'COM-2026-0113':{id:'COM-2026-0113',agent:'Sarah Chen',npn:'7719022',cat:'Tier Dispute',amount:'$1,400',status:'Open',detail:'Agent has 28 active members (Tier 2 threshold is 25+). System applied Tier 1 rate ($100/member) instead of Tier 2 ($150/member). Agent reached Tier 2 on May 15 when 26th member enrolled. Difference: $50 x 28 = $1,400 underpayment for May cycle.',resolution:'Tier upgrade was not triggered because member #26 enrollment was processed on May 16 (one day after cycle cutoff on May 15). System uses enrollment effective date, not processing date. Need to verify: was the enrollment submitted before May 15 cutoff? If yes, this is a system timing issue and adjustment should be made. Escalate to Finance with enrollment dates.'},
+  'COM-2026-0114':{id:'COM-2026-0114',agent:'Angela Torres',npn:'6651209',cat:'Commission Statement',amount:'—',status:'Open',detail:'Agent reports that commission statement PDF is not generating when clicking "Download Statement" in agent portal. Issue started Jun 7. Agent can see commission amounts on screen but PDF export shows "Error generating document." Other agents have not reported this issue.',resolution:'Isolated issue for this agent account. Likely cause: agent profile has special characters in agency name field (Torres & Associates LLC — the ampersand may be breaking PDF generation). IT ticket #TK-9012 opened. Workaround: agent can screenshot the on-screen statement. Fix expected in next release (Jun 15).'},
+  'COM-2026-0115':{id:'COM-2026-0115',agent:'David Chen',npn:'4478122',cat:'Override Question',amount:'$320',status:'Awaiting Finance',detail:'Agent is an MGA with one downline agent (Lisa Park). Override commission of $20/member x 16 members = $320 should appear on David\'s statement. May statement shows $0 in override column. Agent confirmed Lisa Park had 16 active members in May.',resolution:'Override commission requires hierarchy mapping in commission engine. Investigation shows David Chen\'s hierarchy record was updated on May 10 (added Lisa Park as downline) but commission engine sync runs on 1st of month. Override will auto-calculate starting Jun 1 cycle. For May retro-payment, Finance must manually process adjustment. Escalated to Finance — ticket FIN-0892.'},
+  'COM-2026-0116':{id:'COM-2026-0116',agent:'Lisa Wang',npn:'5534098',cat:'ACH / Routing',amount:'$2,100',status:'In Progress',detail:'Agent updated bank account (routing number change) on May 28. Jun payment of $2,100 was sent to OLD routing number and returned by bank as "account closed." Agent needs payment re-issued to new account.',resolution:'Payment returned confirmed in ACH return file (reason code R02 — Account Closed). Agent\'s new routing number verified in system (updated May 28). Re-issue process: Finance will include in next payment run (Jun 12). Agent confirmed new account details are correct. No action needed from agent — payment will arrive Jun 14-15.'},
+  'COM-2026-0117':{id:'COM-2026-0117',agent:'Michael Brown',npn:'3398712',cat:'Missing Payment',amount:'$500',status:'Awaiting Agent',detail:'Agent claims Q1 rapid pay bonus ($500 for hitting 30+ enrollments) was not paid. System shows agent had 28 enrollments in Q1 (Jan-Mar), which is below the 30-member threshold. Agent disputes the count.',resolution:'System shows 28 Q1 enrollments. Agent claims 2 additional enrollments (members Thompson and Garcia) were submitted in March but processed in April. Need agent to provide enrollment confirmation emails with dates. If submissions were before Mar 31, bonus qualifies for adjustment. Follow-up sent Jun 8 — awaiting agent response by Jun 12.'}
+};
+
+function showComInquiry(inqId){
+  var d=comData[inqId];if(!d)return;
+  document.getElementById('cmTitle').textContent='Inquiry '+d.id;
+  document.getElementById('cmId').textContent=d.id;
+  document.getElementById('cmAgent').textContent=d.agent;
+  document.getElementById('cmNpn').textContent=d.npn;
+  document.getElementById('cmCat').textContent=d.cat;
+  document.getElementById('cmAmount').textContent=d.amount;
+  document.getElementById('cmStatus').textContent=d.status;
+  document.getElementById('cmDetail').textContent=d.detail;
+  document.getElementById('cmResolution').textContent=d.resolution;
+  document.getElementById('comModal').style.display='flex';
+}
+function closeComModal(){document.getElementById('comModal').style.display='none';}
+document.getElementById('comModal').addEventListener('click',function(e){if(e.target===this)closeComModal();});
+
+// Filters
+var comRows=document.querySelectorAll('.card .table tbody tr');
+function applyComFilters(){
+  var status=document.getElementById('fStatus').value;
+  var cat=document.getElementById('fCategory').value;
+  var search=document.getElementById('fSearch').value.trim().toLowerCase();
+  var visible=0;
+  comRows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var rStatus=cells[6]?cells[6].textContent.trim():'';
+    var rCat=cells[3]?cells[3].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var show=true;
+    if(status!=='All Statuses'){
+      if(rStatus.indexOf(status)<0) show=false;
+    }
+    if(cat!=='All Categories'){
+      if(cat==='Missing Payment' && rCat!=='Missing') show=false;
+      if(cat==='Payment Amount' && rCat.indexOf('Amount')<0) show=false;
+      if(cat==='Tier Dispute' && rCat!=='Tier') show=false;
+      if(cat==='Override Question' && rCat!=='Override') show=false;
+      if(cat==='ACH / Routing' && rCat!=='ACH') show=false;
+      if(cat==='Commission Statement' && rCat!=='Statement') show=false;
+    }
+    if(search && rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  showToast(visible+' inquir'+(visible!==1?'ies':'y')+' shown','info');
+}
+document.getElementById('fStatus').addEventListener('change',applyComFilters);
+document.getElementById('fCategory').addEventListener('change',applyComFilters);
+document.getElementById('fPeriod').addEventListener('change',applyComFilters);
+document.getElementById('fSearch').addEventListener('input',applyComFilters);
+</script>
+</body>
+</html>

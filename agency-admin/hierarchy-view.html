@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hierarchy View | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100} .tree-node{padding:8px 12px;margin:4px 0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s} .tree-node:hover{background:#fff3e0;border-color:#e65100} .tree-indent{margin-left:32px} .tree-indent-2{margin-left:64px} .node-toggle{width:22px;height:22px;border-radius:50%;border:1px solid #e0e0e0;display:inline-flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;flex-shrink:0;background:#fff;transition:all .15s} .node-toggle:hover{background:#fff3e0;border-color:#e65100} .tree-node.selected{background:#fff3e0;border-color:#e65100;box-shadow:0 1px 4px rgba(230,81,0,.12)} .level-badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html" class="active"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Hierarchy Visualization</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Hierarchy View</li></ol>
+    </div>
+    <div class="dflex g8">
+      <select class="form-control" id="statusFilter" onchange="filterHierarchy()" style="width:130px"><option value="">All Status</option><option value="Active">Active</option><option value="Pending">Pending</option><option value="Suspended">Suspended</option><option value="Terminated">Terminated</option></select>
+      <select class="form-control" id="stateFilter" onchange="filterHierarchy()" style="width:120px"><option value="">All States</option><option value="FL">Florida</option><option value="TX">Texas</option></select>
+      <select class="form-control" id="yearFilter" onchange="filterHierarchy()" style="width:120px"><option value="">All Years</option><option value="2026" selected>2026</option><option value="2027">2027</option></select>
+      <button class="btn-pr btn-sm" onclick="document.getElementById('addAgentModal').style.display='flex'" style="white-space:nowrap"><i class="fas fa-user-plus" style="margin-right:4px"></i>Add Agent</button>
+      <button class="btn-ol btn-sm" onclick="openTransferModal()" style="white-space:nowrap"><i class="fas fa-exchange-alt" style="margin-right:4px"></i>Request Transfer</button>
+    </div>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- PO-03 Info -->
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>PO-03 — Hierarchy Visualization:</strong> As an agency admin you see the full downline subtree beneath your organization. Use filters above to narrow by status (Active, Pending, Suspended, Terminated), state, or plan year. Individual agents see only their own data and direct upline.</span></div>
+
+    <!-- Filter Results -->
+    <div id="filterInfo" style="font-size:11px;color:#5f6368;margin-bottom:8px;display:none"><i class="fas fa-filter" style="margin-right:4px;color:#e65100"></i><span id="filterText"></span> <a href="#" onclick="document.getElementById('statusFilter').value='';document.getElementById('stateFilter').value='';document.getElementById('yearFilter').value='2026';filterHierarchy();return false;" style="margin-left:8px;font-size:11px">Clear</a></div>
+
+    <!-- Hierarchy Tree -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Organization Tree — HealthFirst Distribution <small style="font-weight:400;color:#5f6368">(Full Downline Subtree)</small></h5>
+        <div style="display:flex;gap:6px">
+          <button class="btn-ol btn-sm" onclick="expandAll()" style="font-size:10px"><i class="fas fa-expand-arrows-alt" style="margin-right:3px"></i>Expand All</button>
+          <button class="btn-ol btn-sm" onclick="collapseAll()" style="font-size:10px"><i class="fas fa-compress-arrows-alt" style="margin-right:3px"></i>Collapse</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- Level 0: This agency -->
+        <div class="tree-node" style="background:#fff3e0;border-color:#e65100" onclick="selectNode(this)">
+          <span class="node-toggle" onclick="event.stopPropagation();toggleChildren(this)"><i class="fas fa-minus"></i></span>
+          <i class="fas fa-building" style="color:#e65100;font-size:18px"></i>
+          <div style="flex:1">
+            <strong>HealthFirst Distribution</strong> <span class="level-badge" style="background:#fff3e0;color:#e65100">GA</span> <span class="badge bg-success">Active</span><br>
+            <small class="text-muted">GA-001 — General Agency — FL, TX — Rachel Vargas (Admin)</small>
+          </div>
+          <div style="text-align:right">
+            <div><strong>57</strong> <small>BoB Members</small></div>
+            <div><strong>5</strong> <small>Agents</small></div>
+          </div>
+        </div>
+
+        <!-- Level 1: Direct reports -->
+        <div class="tree-indent" id="downlineGroup">
+          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="8823441">
+            <i class="fas fa-user-tie" style="color:#0d47a1"></i>
+            <div style="flex:1">
+              <strong>James Martinez</strong> <span class="level-badge" style="background:#e3f2fd;color:#0d47a1">Agent</span> <span class="badge bg-success">Active</span><br>
+              <small class="text-muted">NPN 8823441 — Agent — FL, TX</small>
+            </div>
+            <div style="text-align:right">
+              <div><strong>32</strong> <small>BoB</small></div>
+              <div><strong>$8,750</strong> <small>YTD</small></div>
+            </div>
+          </div>
+
+          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="7734112">
+            <i class="fas fa-user-tie" style="color:#0d47a1"></i>
+            <div style="flex:1">
+              <strong>Maria Lopez</strong> <span class="level-badge" style="background:#e3f2fd;color:#0d47a1">Agent</span> <span class="badge bg-success">Active</span><br>
+              <small class="text-muted">NPN 7734112 — Agent — FL</small>
+            </div>
+            <div style="text-align:right">
+              <div><strong>18</strong> <small>BoB</small></div>
+              <div><strong>$5,200</strong> <small>YTD</small></div>
+            </div>
+          </div>
+
+          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="7722118">
+            <i class="fas fa-user-tie" style="color:#0d47a1"></i>
+            <div style="flex:1">
+              <strong>Lisa Park</strong> <span class="level-badge" style="background:#e3f2fd;color:#0d47a1">Agent</span> <span class="badge bg-success">Active</span><br>
+              <small class="text-muted">NPN 7722118 — Agent — FL</small>
+            </div>
+            <div style="text-align:right">
+              <div><strong>7</strong> <small>BoB</small></div>
+              <div><strong>$2,100</strong> <small>YTD</small></div>
+            </div>
+          </div>
+
+          <!-- Sub-agency -->
+          <div class="tree-node" style="background:#f5f5f5" onclick="selectNode(this)">
+            <i class="fas fa-building" style="color:#6a1b9a"></i>
+            <div style="flex:1">
+              <strong>Premier Health Agency</strong> <span class="level-badge" style="background:#f3e5f5;color:#6a1b9a">Sub-GA</span> <span class="badge bg-warning text-dark">Onboarding</span><br>
+              <small class="text-muted">Sub-GA — FL — Admin: Pending</small>
+            </div>
+            <div style="text-align:right">
+              <div><strong>0</strong> <small>Agents</small></div>
+            </div>
+          </div>
+
+          <div class="tree-node" style="opacity:0.6" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="8834221">
+            <i class="fas fa-user-tie" style="color:#9e9e9e"></i>
+            <div style="flex:1">
+              <strong>Robert Chen</strong> <span class="level-badge" style="background:#ffebee;color:#c62828">Agent</span> <span class="badge bg-danger">Terminated</span><br>
+              <small class="text-muted">NPN 8834221 — Agent — FL — Terminated 05 24,2026</small>
+            </div>
+            <div style="text-align:right">
+              <div><strong>0</strong> <small>BoB</small></div>
+            </div>
+          </div>
+
+          <div class="tree-node" style="border-style:dashed" onclick="selectNode(this)" data-npn="8847123">
+            <i class="fas fa-user-clock" style="color:#e65100"></i>
+            <div style="flex:1">
+              <strong>Kevin Williams</strong> <span class="level-badge" style="background:#fff8e1;color:#e65100">Agent</span> <span class="badge bg-warning text-dark">Pending</span><br>
+              <small class="text-muted">NPN 8847123 — Onboarding in progress — FL, TX</small>
+            </div>
+            <div style="text-align:right">
+              <a href="onboarding-cases.html" class="btn-ol btn-sm" onclick="event.stopPropagation()">Track</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upline Info -->
+    <div class="card">
+      <div class="card-hdr"><h5>Upline Information</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-2">
+            <p><strong>Direct Upline:</strong> National Medicare Partners (FMO-101)</p>
+            <p><strong>FMO Contact:</strong> operations@natlmedicare.com</p>
+            <p><strong>Commission Routing:</strong> Override paid to FMO; direct commission to agents</p>
+          </div>
+          <div class="col-2">
+            <p><strong>Plan Year:</strong> 2026</p>
+            <p><strong>Override Tier:</strong> Tier 2 (GA level)</p>
+            <p><strong>States Contracted:</strong> FL, TX</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Transfers -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-exchange-alt" style="color:#e65100;margin-right:6px"></i>Pending Agent Transfers</h5></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblPendingTransfers">
+          <thead><tr><th>Transfer ID</th><th>Agent</th><th>NPN</th><th>Transfer To</th><th>Type</th><th>Effective Date</th><th>BoB Impact</th><th>Submitted</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>TRF-2026-001</code></td>
+              <td class="text-bold">Robert Chen</td>
+              <td>8834221</td>
+              <td>Sunshine Medicare Group (GA-014)</td>
+              <td>Permanent</td>
+              <td>08 01,2026</td>
+              <td>0 members</td>
+              <td>07 20,2026</td>
+              <td><span class="badge bg-warning text-dark">Under Review</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewTransferDetail('TRF-2026-001')">View</button></td>
+            </tr>
+            <tr>
+              <td><code>TRF-2026-002</code></td>
+              <td class="text-bold">Lisa Park</td>
+              <td>7722118</td>
+              <td>Premier Health Agency (Sub-GA)</td>
+              <td>Temporary</td>
+              <td>09 01,2026</td>
+              <td>7 members</td>
+              <td>07 24,2026</td>
+              <td><span class="badge bg-primary">Submitted</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewTransferDetail('TRF-2026-002')">View</button></td>
+            </tr>
+            <tr id="trfNoResults" style="display:none"><td colspan="10" style="text-align:center;color:#666;padding:16px">No pending transfers.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD AGENT MODAL -->
+<div class="modal-overlay" id="addAgentModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px"></i>Add Agent to My Hierarchy</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="aaFirst" placeholder="e.g. John"></div>
+        <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="aaLast" placeholder="e.g. Smith"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>NPN <span class="req">*</span></label><input type="text" id="aaNPN" placeholder="8-10 digits" maxlength="10"></div>
+        <div class="fg"><label>Licensed States <span class="req">*</span></label><input type="text" id="aaStates" placeholder="e.g. FL, TX"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Email</label><input type="email" id="aaEmail" placeholder="agent@example.com"></div>
+        <div class="fg"><label>Phone</label><input type="text" id="aaPhone" placeholder="(305) 555-0000"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Status</label><select id="aaStatus"><option value="Active">Active</option><option value="Pending" selected>Pending (Onboarding)</option></select></div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillAddAgent()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+        <button class="btn-pr" onclick="addAgentToHierarchy()"><i class="fas fa-user-plus" style="margin-right:4px"></i>Add Agent</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENT TRANSFER REQUEST MODAL -->
+<div class="modal-overlay" id="transferModal" style="display:none">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr"><h5><i class="fas fa-exchange-alt" style="margin-right:8px;color:#e65100"></i>Request Agent Transfer</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-warn" style="margin-bottom:14px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Transferring an agent impacts commission routing, Book of Business ownership, lead assignments, and open action items. Both agencies must approve.</span></div>
+      <div class="form-row">
+        <div class="fg"><label>Agent to Transfer <span class="req">*</span></label>
+          <select id="trfAgent" class="form-control" onchange="updateTransferImpact()">
+            <option value="">-- Select Agent --</option>
+            <option value="james">James Martinez (NPN 8823441)</option>
+            <option value="maria">Maria Lopez (NPN 7734112)</option>
+            <option value="lisa">Lisa Park (NPN 7722118)</option>
+            <option value="robert">Robert Chen (NPN 8834221)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Transfer To (Agency) <span class="req">*</span></label>
+          <select id="trfTarget" class="form-control">
+            <option value="">-- Select Target Agency --</option>
+            <option value="sunshine">Sunshine Medicare Group (GA-014)</option>
+            <option value="premier">Premier Health Agency (Sub-GA)</option>
+            <option value="coastal">Coastal Benefits Group (GA-027)</option>
+            <option value="southeast">Southeast Insurance Partners (GA-031)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Transfer Type <span class="req">*</span></label>
+          <select id="trfType" class="form-control">
+            <option value="permanent">Permanent</option>
+            <option value="temporary">Temporary (with return date)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="trfDate" class="form-control"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="width:100%"><label>Reason for Transfer</label><textarea id="trfReason" class="form-control" rows="2" placeholder="e.g. Agent relocating to new territory, agency restructuring..."></textarea></div>
+      </div>
+
+      <!-- Business Impact Summary -->
+      <div id="trfImpactSection" style="display:none;margin-top:14px">
+        <h6 style="font-weight:700;margin-bottom:8px"><i class="fas fa-chart-pie" style="color:#c62828;margin-right:6px"></i>Business Impact Summary</h6>
+        <div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:14px">
+          <div class="row-grid">
+            <div class="col-2">
+              <p style="margin:4px 0"><i class="fas fa-address-book" style="color:#e65100;width:18px"></i> <strong>BoB Members:</strong> <span id="trfBoB">0</span> will transfer</p>
+              <p style="margin:4px 0"><i class="fas fa-users" style="color:#1565c0;width:18px"></i> <strong>Active Leads:</strong> <span id="trfLeads">0</span> will reassign</p>
+              <p style="margin:4px 0"><i class="fas fa-file-medical" style="color:#2e7d32;width:18px"></i> <strong>Pending Enrollments:</strong> <span id="trfEnrollments">0</span></p>
+            </div>
+            <div class="col-2">
+              <p style="margin:4px 0"><i class="fas fa-dollar-sign" style="color:#6a1b9a;width:18px"></i> <strong>Pending Commissions:</strong> <span id="trfCommissions">$0</span></p>
+              <p style="margin:4px 0"><i class="fas fa-tasks" style="color:#e65100;width:18px"></i> <strong>Open Action Items:</strong> <span id="trfActions">0</span></p>
+              <p style="margin:4px 0"><i class="fas fa-file-signature" style="color:#0d47a1;width:18px"></i> <strong>SOAs Pending:</strong> <span id="trfSOA">0</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="al-danger" style="margin-top:10px"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span id="trfImpactNote">Commission routing will change on the effective date. Override tiers recalculated for both agencies.</span></div>
+      </div>
+
+      <div style="margin-top:14px">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="trfAcknowledge" style="margin-top:3px">
+          <span>I acknowledge this transfer will impact commission routing, Book of Business ownership, lead assignments, and open action items. Both the releasing and receiving agency must approve before the transfer is finalized.</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="submitTransferRequest()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit Transfer Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSFER DETAIL MODAL -->
+<div class="modal-overlay" id="transferDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h5><i class="fas fa-exchange-alt" style="margin-right:8px;color:#e65100"></i><span id="tdTitle">Transfer Detail</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>Transfer ID:</strong> <span id="tdID"></span></p>
+          <p><strong>Agent:</strong> <span id="tdAgent"></span></p>
+          <p><strong>From:</strong> HealthFirst Distribution (GA-001)</p>
+          <p><strong>To:</strong> <span id="tdTo"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Type:</strong> <span id="tdType"></span></p>
+          <p><strong>Effective Date:</strong> <span id="tdDate"></span></p>
+          <p><strong>Status:</strong> <span id="tdStatus"></span></p>
+          <p><strong>Submitted:</strong> <span id="tdSubmitted"></span></p>
+        </div>
+      </div>
+      <h6 style="font-weight:700;margin-top:14px;margin-bottom:6px">Approval Workflow</h6>
+      <div id="tdWorkflow"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-ol" style="color:#c62828;border-color:#c62828" onclick="cancelTransfer()"><i class="fas fa-times"></i> Cancel Transfer</button>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// PO-03: Interactive filter for agency-admin hierarchy
+function filterHierarchy(){
+  var status=document.getElementById('statusFilter').value;
+  var state=document.getElementById('stateFilter').value;
+  var nodes=document.querySelectorAll('#downlineGroup > .tree-node');
+  var shown=0,total=nodes.length;
+  nodes.forEach(function(n){
+    var text=n.textContent||'';
+    var matchStatus=!status||text.indexOf(status)>-1;
+    var matchState=!state||text.indexOf(state)>-1||(state==='FL'&&text.indexOf('Florida')>-1)||(state==='TX'&&text.indexOf('Texas')>-1);
+    if(matchStatus&&matchState){n.style.display='';shown++}
+    else{n.style.display='none'}
+  });
+  var info=document.getElementById('filterInfo');
+  var txt=document.getElementById('filterText');
+  if(status||state){
+    info.style.display='block';
+    txt.textContent='Filtered: '+shown+' of '+total+' entities shown'+(status?' | Status: '+status:'')+(state?' | State: '+state:'');
+  } else {
+    info.style.display='none';
+  }
+}
+
+// PO-03: Expand/Collapse toggle
+function toggleChildren(toggleBtn){
+  var parentNode=toggleBtn.closest('.tree-node');
+  var group=parentNode.nextElementSibling;
+  if(!group||!group.id) group=document.getElementById('downlineGroup');
+  if(!group) return;
+  var icon=toggleBtn.querySelector('i');
+  if(icon.classList.contains('fa-minus')){
+    icon.classList.replace('fa-minus','fa-plus');
+    group.style.display='none';
+  } else {
+    icon.classList.replace('fa-plus','fa-minus');
+    group.style.display='';
+  }
+}
+function expandAll(){
+  var group=document.getElementById('downlineGroup');
+  if(group) group.style.display='';
+  document.querySelectorAll('.node-toggle i.fa-plus').forEach(function(i){i.classList.replace('fa-plus','fa-minus')});
+}
+function collapseAll(){
+  var group=document.getElementById('downlineGroup');
+  if(group) group.style.display='none';
+  document.querySelectorAll('.node-toggle i.fa-minus').forEach(function(i){i.classList.replace('fa-minus','fa-plus')});
+}
+
+// PO-03: Click node to select & view profile
+function selectNode(el){
+  document.querySelectorAll('.tree-node').forEach(function(n){n.classList.remove('selected')});
+  el.classList.add('selected');
+  var profile=el.getAttribute('data-profile');
+  var npn=el.getAttribute('data-npn');
+  var name=el.querySelector('strong');
+  if(name) showToast('Selected: '+name.textContent+(npn?' (NPN '+npn+')':''),'info');
+}
+
+// Add Agent to hierarchy tree and agents listing
+function prefillAddAgent(){
+  document.getElementById('aaFirst').value='Angela';
+  document.getElementById('aaLast').value='Ramirez';
+  document.getElementById('aaNPN').value='99102847';
+  document.getElementById('aaStates').value='FL, GA';
+  document.getElementById('aaEmail').value='angela.ramirez@insurepro.com';
+  document.getElementById('aaPhone').value='(305) 555-7821';
+  document.getElementById('aaStatus').value='Pending';
+  showToast('Form prefilled with sample data.','info');
+}
+function addAgentToHierarchy(){
+  var first=document.getElementById('aaFirst').value.trim();
+  var last=document.getElementById('aaLast').value.trim();
+  var npn=document.getElementById('aaNPN').value.trim();
+  var states=document.getElementById('aaStates').value.trim();
+  var status=document.getElementById('aaStatus').value;
+  if(!first||!last||!npn||!states){showToast('Please fill all required fields','error');return;}
+  if(npn.length<8||!/^\d+$/.test(npn)){showToast('NPN must be 8-10 digits','error');return;}
+
+  var group=document.getElementById('downlineGroup');
+  var newNode=document.createElement('div');
+  newNode.className='tree-node';
+  newNode.setAttribute('onclick','selectNode(this)');
+  newNode.setAttribute('data-profile','../agent/profile.html');
+  newNode.setAttribute('data-npn',npn);
+
+  var isActive=status==='Active';
+  var badgeClass=isActive?'bg-success':'bg-warning text-dark';
+  var icon=isActive?'fa-user-tie':'fa-user-clock';
+  var iconColor=isActive?'color:#0d47a1':'color:#e65100';
+  var borderStyle=isActive?'':'border-style:dashed;';
+
+  newNode.style.cssText=borderStyle;
+  newNode.innerHTML='<i class="fas '+icon+'" style="'+iconColor+'"></i>'+
+    '<div style="flex:1"><strong>'+first+' '+last+'</strong> <span class="level-badge" style="background:#e3f2fd;color:#0d47a1">Agent</span> <span class="badge '+badgeClass+'">'+status+'</span><br>'+
+    '<small class="text-muted">NPN '+npn+' — Agent — '+states+'</small></div>'+
+    '<div style="text-align:right"><div><strong>0</strong> <small>BoB</small></div><div><strong>$0</strong> <small>YTD</small></div></div>';
+
+  if(group) group.appendChild(newNode);
+
+  document.getElementById('addAgentModal').style.display='none';
+  showToast('Agent "'+first+' '+last+'" (NPN '+npn+') added to your hierarchy','success');
+
+  // Reset form
+  document.getElementById('aaFirst').value='';
+  document.getElementById('aaLast').value='';
+  document.getElementById('aaNPN').value='';
+  document.getElementById('aaStates').value='';
+  document.getElementById('aaEmail').value='';
+  document.getElementById('aaPhone').value='';
+}
+
+// Transfer workflow data
+var TRANSFER_IMPACT = {
+  james: {bob:32, leads:18, enrollments:2, commissions:'$1,420', actions:6, soa:3},
+  maria: {bob:18, leads:14, enrollments:1, commissions:'$890', actions:3, soa:2},
+  lisa:  {bob:7,  leads:10, enrollments:0, commissions:'$340', actions:2, soa:1},
+  robert:{bob:0,  leads:0,  enrollments:0, commissions:'$0',   actions:0, soa:0}
+};
+var TRANSFER_CASES = {
+  'TRF-2026-001': {agent:'Robert Chen',to:'Sunshine Medicare Group (GA-014)',type:'Permanent',date:'08 01,2026',status:'Under Review',submitted:'07 20,2026',
+    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">— 07 20,2026</span></div><div style="margin-bottom:6px"><span class="badge bg-warning text-dark">Step 2</span> Receiving agency review <span class="text-muted">— Pending approval from Sunshine Medicare Group</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval — Gold Kidney compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed — BoB, leads, commissions reassigned</div></div>'},
+  'TRF-2026-002': {agent:'Lisa Park',to:'Premier Health Agency (Sub-GA)',type:'Temporary',date:'09 01,2026',status:'Submitted',submitted:'07 24,2026',
+    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">— 07 24,2026</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 2</span> Receiving agency review — Awaiting Premier Health Agency</div><div style="opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval — Gold Kidney compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed — BoB, leads, commissions temporarily reassigned</div></div>'}
+};
+
+function openTransferModal() {
+  document.getElementById('trfAgent').value = '';
+  document.getElementById('trfTarget').value = '';
+  document.getElementById('trfType').value = 'permanent';
+  document.getElementById('trfDate').value = '';
+  document.getElementById('trfReason').value = '';
+  document.getElementById('trfAcknowledge').checked = false;
+  document.getElementById('trfImpactSection').style.display = 'none';
+  document.getElementById('transferModal').style.display = 'flex';
+}
+
+function updateTransferImpact() {
+  var agentKey = document.getElementById('trfAgent').value;
+  var section = document.getElementById('trfImpactSection');
+  if (!agentKey) { section.style.display = 'none'; return; }
+  var d = TRANSFER_IMPACT[agentKey];
+  if (!d) { section.style.display = 'none'; return; }
+  document.getElementById('trfBoB').textContent = d.bob;
+  document.getElementById('trfLeads').textContent = d.leads;
+  document.getElementById('trfEnrollments').textContent = d.enrollments;
+  document.getElementById('trfCommissions').textContent = d.commissions;
+  document.getElementById('trfActions').textContent = d.actions;
+  document.getElementById('trfSOA').textContent = d.soa;
+  var note = d.bob > 0
+    ? d.bob + ' BoB members and ' + d.leads + ' active leads will transfer. Commission routing will change on the effective date. Override tiers recalculated for both agencies.'
+    : 'No active members or leads to transfer. Commission routing will be updated on the effective date.';
+  document.getElementById('trfImpactNote').textContent = note;
+  section.style.display = 'block';
+}
+
+function submitTransferRequest() {
+  var agent = document.getElementById('trfAgent').value;
+  var target = document.getElementById('trfTarget').value;
+  var date = document.getElementById('trfDate').value;
+  var ack = document.getElementById('trfAcknowledge').checked;
+  if (!agent || !target) { showToast('Please select an agent and target agency', 'error'); return; }
+  if (!date) { showToast('Please select an effective date', 'error'); return; }
+  if (!ack) { showToast('Please acknowledge the business impact before submitting', 'error'); return; }
+  var agentName = document.getElementById('trfAgent').selectedOptions[0].text;
+  var targetName = document.getElementById('trfTarget').selectedOptions[0].text;
+  document.getElementById('transferModal').style.display = 'none';
+  showToast('Transfer request submitted for ' + agentName + ' to ' + targetName + '. Both agencies and carrier must approve.', 'success');
+}
+
+function viewTransferDetail(id) {
+  var d = TRANSFER_CASES[id];
+  if (!d) return;
+  document.getElementById('tdTitle').textContent = id + ' — ' + d.agent;
+  document.getElementById('tdID').textContent = id;
+  document.getElementById('tdAgent').textContent = d.agent;
+  document.getElementById('tdTo').textContent = d.to;
+  document.getElementById('tdType').textContent = d.type;
+  document.getElementById('tdDate').textContent = d.date;
+  document.getElementById('tdStatus').textContent = d.status;
+  document.getElementById('tdSubmitted').textContent = d.submitted;
+  document.getElementById('tdWorkflow').innerHTML = d.workflow;
+  document.getElementById('transferDetailModal').style.display = 'flex';
+}
+
+function cancelTransfer() {
+  document.getElementById('transferDetailModal').style.display = 'none';
+  showToast('Transfer request cancelled. Both parties have been notified.', 'success');
+}
+</script>
+</body>
+</html>
+

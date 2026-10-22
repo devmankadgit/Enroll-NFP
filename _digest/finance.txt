@@ -1,0 +1,464 @@
+##### SIDEBAR variant used by 24 pages: ach-nacha.html, banking-gap.html, batch-detail.html, batch-review.html, batches.html, bob-ledger.html, bob-members.html, calc-audit.html, chargebacks.html, commission-admin.html, commission-config.html, compliance-holds.html, dashboard.html, disputes.html, hra-review.html, manual-adjustments.html, missing-cms-data.html, missing-npn.html, patient-activation-fees.html, reconciliation.html, remittance.html, reports.html, run-history.html, state-reporting.html
+- Dashboard [dashboard.html]
+## Commission Processing
+- Calculation Engine [calc-engine.html]
+- Run History [run-history.html]
+- Configuration [commission-config.html]
+## Payment Exceptions
+- Banking Holds [banking-gap.html]
+- Missing NPN [missing-npn.html]
+- Missing CMS Data [missing-cms-data.html]
+- Compliance Holds [compliance-holds.html]
+- Chargebacks [chargebacks.html]
+- HRA Incentive Review [hra-review.html]
+- Manual Adjustments [manual-adjustments.html]
+## Payment Batch
+- Review Batch [batch-review.html]
+- Generate ACH / Checks [ach-nacha.html]
+- Release Payments [batches.html]
+- Payment History [remittance.html]
+- Reconciliation [reconciliation.html]
+- Book of Business [bob-ledger.html]
+## Dispute Management
+- Dispute Queue [disputes.html]
+## Reports & Audit
+- Reports [reports.html]
+- Audit Trail [calc-audit.html]
+
+##### SIDEBAR variant used by 1 pages: calc-engine.html
+- Dashboard [dashboard.html]
+## Commission Processing
+- Calculation Engine [calc-engine.html]
+- Run History [run-history.html]
+- Configuration [commission-config.html]
+## Payment Exceptions
+- Banking Holds [banking-gap.html]
+- Missing NPN [missing-npn.html]
+- Missing CMS Data [missing-cms-data.html]
+- Compliance Holds [compliance-holds.html]
+- Chargebacks [chargebacks.html]
+- HRA Incentive Review [hra-review.html]
+- Manual Adjustments [manual-adjustments.html]
+## Payment Batch
+- Review Batch [batch-review.html]
+- Generate ACH / Checks [ach-nacha.html]
+- Release Payments [batches.html]
+- Payment History [remittance.html]
+- Reconciliation [reconciliation.html]
+## Dispute Management
+- Dispute Queue [disputes.html]
+## Reports & Audit
+- Reports [reports.html]
+- Audit Trail [calc-audit.html]
+
+=== /finance/ach-nacha.html | ACH & NACHA File Management | Gold Kidney Finance
+ACTIVE NAV: Generate ACH / Checks
+USER: DP David Park Finance Admin
+HEADER: ACH & NACHA File Management | BC: Finance Portal ACH & NACHA
+ALERT: NACHA files use PPD transaction code for individual agents and CCD for agency accounts. File is transmitted to the configured payment processor SFTP on the payment date. Files are 
+ALERT: Pre-note Policy: Any agent or agency whose banking details were added or changed within the last 3 banking days receives a zero-dollar pre-note NACHA entry. Actual payment is held 
+ALERT: ACH returns are received from the payment processor and must be actioned by Finance. Return codes R02, R03 (closed/no account) automatically set agent banking status to Invalid and
+ALERT: Check files are generated in CSV format and transmitted to the check printing vendor. Agents with no valid mailing address are set to On Hold - Address Gap and excluded from the ch
+ALERT: Payment method changes are audit-logged with old method, new method, timestamp, and actor. Switching to ACH: banking details must be admin-verified and pre-noted before next paymen
+KPIs: Last NACHA File=NACHA-2026-05 ; Pre-note Pending=2 ; ACH Returns=2 ; Undeliverable Checks=1
+CARDS/SECTIONS: NACHA File Generation & Transmission || NACHA Detail Record Preview — NACHA-2026-05 || Pre-note Verification Queue || ACH Return File — Finance Review Queue || Check Disbursement Files || Undeliverable Check Queue || Payment Method Change Audit Log
+TABLE1 (0 rows) cols: File ID | Batch Ref | Payment Cycle | File Type | Entry Count | Total Amount | Balance Check | Status | Transmitted At | Actions
+TABLE2 (0 rows) cols: Rec Type | Trans. Code | Routing (RDFI) | Account (masked) | Amount | Individual ID (NPN) | Name (15 chars) | Pre-note | Status
+TABLE3 (0 rows) cols: Agent NPN | Agent Name | Banking Change Date | Pre-note Sent | Clearance Date | Hold Status | Actions
+TABLE4 (0 rows) cols: Return Date | Agent NPN | Agent Name | Return Code | Return Description | Original Amount | Auto-Action | Status | Action
+TABLE5 (0 rows) cols: File ID | Batch Ref | Check Count | Total Amount | Generated At | Transmitted At | Status | Actions
+TABLE6 (0 rows) cols: Return Date | Agent NPN | Agent Name | Mailing Address | Check No. | Amount | Reason | Status | Action
+TABLE7 (0 rows) cols: Change Date | Agent NPN | Agent Name | Old Method | New Method | Changed By | Verification Status | Finance Notified
+TABS: NACHA File Status | Pre-note Queue | ACH Returns | Check Disbursement | Payment Method Updates
+BUTTONS: NACHA File Status | Pre-note Queue | ACH Returns | Check Disbursement | Payment Method Updates | Generate NACHA File | Export to Excel | Generate Check File (CSV)
+MODALS/DRAWERS: nachaGenModal:Generate NACHA File ; returnActionModal: ; undelivModal:
+
+=== /finance/banking-gap.html | Banking Gap Report | Gold Kidney Finance
+ACTIVE NAV: Banking Holds
+USER: DP David Park Finance Admin
+HEADER: Banking Gap Report | BC: Finance Banking Gap — On Hold Commissions
+KPIs: Total Amount On Hold=$4,818.00 ; Agents w/ Banking Gap=6 ; Avg Days On Hold=52 ; Resolved This Month=3
+CARDS/SECTIONS: Filters || Agents with Commission Hold — Banking Gap || Recent Release Activity
+TABLE1 (8 rows) cols:  | NPN | Agent Name | Hierarchy | Payment Method | Banking Status | Held Cycles | Total On Hold | Last Notified | Days On Hold | Actions
+   row1: 7731004 Sandra Williams Direct-to-Plan ACH Direct Deposit No Banking Details 3 cycles $1,204.00 05 23,2026 94 days Release Notify
+FORM LABELS: Status: | Hierarchy: | Days on Hold:
+SELECTS: [All Statuses, On Hold — Unverified, Escalated (90+ days), Recently Resolved] [All Hierarchy Levels, Direct-to-Plan, Agency Agent, MGA, FMO] [Any Duration, 1–30 days, 31–60 days, 61–90 days, 90+ days (Escalated)]
+PLACEHOLDERS:  Search NPN or agent name...
+BUTTONS: Clear All | Release Selected Commissions | Clear | Export to Excel | Release | Notify | View
+MODALS/DRAWERS: viewAgentModal:Agent Banking Details ; verifyBankModal:Verify Banking Details to Release
+BADGES: No Banking Details | Doc Unverified | Doc Pending Review | Pre-Note Pending | Address Unconfirmed | Verified
+
+=== /finance/batch-detail.html | Batch Ledger — BATCH-2026-05 | Finance Admin
+ACTIVE NAV: Review Batch
+USER: DP David Park Finance Admin
+HEADER: Batch Ledger — BATCH-2026-05 | BC: Batches BATCH-2026-05
+CARDS/SECTIONS: Agent Line Items — BATCH-2026-05
+TABLE1 (4 rows) cols: Agent Name | NPN | Agency | Active Members | Base Commission | HRA Incentives | Visit Incentives | Chargebacks | Net Payment | Remittance
+   row1: James Martinez 8823441 HealthFirst (AGY-001) 24 $300.48 $0 $275.00 $0 $1,403.48
+BUTTONS: Filter | Export to Excel
+BADGES: Paid — ACH May 17
+
+=== /finance/batch-review.html | Batch Review | Gold Kidney Finance
+ACTIVE NAV: Review Batch
+USER: DP David Park Finance Admin
+HEADER: Payment Batch Review | BC: Finance Portal Batch Review
+ALERT: Auto-Generated: BATCH-2026-06 was automatically generated on 05 16,2026 after the May 15 cutoff. The batch includes all Calculated ledger entries for the May 2026 commission cycle.
+ALERT: Approval rules: All Pending Adjustment line items must be co-approved by a second Finance user before batch approval. On Hold entries are excluded from this batch and will roll to 
+KPIs: Total Payable Entries=7 ; Gross Payable=$9,121.27 ; Chargeback Deductions=-$463.17 ; Net Payable=$8,658.10
+CARDS/SECTIONS: Payment Method Breakdown BATCH-2026-06 Pending Review || Batch Line Items
+TABLE1 (0 rows) cols: Agent NPN | Agent / Entity | Payment Method | Comm. Type Breakdown | Gross Commission | Chargebacks | Net Payable | Prepared By | Reviewed By | Status | Actions
+FORM LABELS: Agent Search | Payment Method | Status
+SELECTS: [All, ACH PPD, ACH CCD, Physical Check] [All, Calculated, Pending Adjustment, On Hold, Held - Co-Approval]
+PLACEHOLDERS: NPN or Name...
+BUTTONS: Export to Excel | Filter | Reset
+MODALS/DRAWERS: holdModal:Place Line Item On Hold ; adjustModal:Adjust Line Item Amount ; coApproveModal:Co-Approve Adjustment ; batchApproveModal:Approve Payment Batch
+BADGES: BATCH-2026-06 | Pending Review
+
+=== /finance/batches.html | Payment Batches | Gold Kidney Finance Portal
+ACTIVE NAV: Release Payments
+USER: DP David Park Finance Admin
+HEADER: Payment Batches & ACH/NACHA | BC: ACH/NACHA Generation, PPD/CCD, Pre-Note & Check Disbursement
+ALERT: NACHA Standards: Individual agents → PPD (Prearranged Payment & Deposit). Agencies/corporate → CCD (Corporate Credit or Debit). File includes batch header, entry detail, and batch 
+ALERT: Check Payments: Agents without verified ACH or who opted for paper check receive mailed payments. $5.00 processing fee applied. Checks mailed 2 business days after batch approval.
+ALERT: Payments grouped by agent state of licensure for multi-state reporting compliance. Required for DOI filing in each state where commissions are disbursed.
+KPIs: Batch Total=$48,720.00 ; ACH (PPD+CCD)=89 ; Paper Checks=4 ; Pre-Note Pending=2 ; Chargebacks Applied=$1,150.00
+CARDS/SECTIONS: NACHA File Generation — BATCH-2026-05 || Batch Line Items (93 entries) || Check Disbursement Queue (4) || Payment Breakdown by State || Batch History & Confirmation Log
+TABLE1 (3 rows) cols: Entry Class | Count | Total Amount | Description
+   row1: PPD Individual Agent 82 $38,450.00 Commission payments to individual agent bank accounts
+TABLE2 (8 rows) cols: Payee | NPN / Entity | Type | Commission | Chargebacks | Net Amount | Routing # | Account | Pre-Note | Status
+   row1: James Martinez 8823441 PPD $601.00 $0.00 $601.00 021000021 ****4821 Verified Ready
+TABLE3 (4 rows) cols: Payee | NPN | Net Amount | Mailing Address | Reason | Check # | Status | Actions
+   row1: Mark Brown 5521833 $289.00 456 Oak St, Tampa, FL 33601 No ACH on file 10241 Queued Print
+TABLE4 (5 rows) cols: State | Agents | ACH Payments | Check Payments | Total Amount | % of Batch | State Reporting
+   row1: Florida 62 59 3 $32,840.00 67.4% Filed
+TABLE5 (5 rows) cols: Batch ID | Cycle | Payment Date | Total Amount | Entries | ACH | Checks | Status | Approved By | Confirmed | Actions
+   row1: BATCH-2026-05 May 2026 05 17,2026 $48,720.00 93 89 4 Disbursing David Park Pending View
+TABS: NACHA Generation | Line Items | Check Queue | State Breakdown | Batch History
+BUTTONS: NACHA Generation | Line Items | Check Queue | State Breakdown | Batch History | Export to Excel | Generate NACHA File | Preview File | Validate | Submit to Bank | Filter | Export CSV | Print All | Print | Export for Reporting | View | Confirm Bank Settlement | Release Held Payments (2) | Void Check | Reissue Payment | Generate Remittance Statements | Export Batch | Reverse Batch
+MODALS/DRAWERS: confirmSettleModal:Confirm Bank Settlement ; releaseHeldModal:Release Held Payments ; voidCheckModal:Void Check ; reissueModal:Reissue Payment ; reverseBatchModal:Reverse Entire Batch
+BADGES: Finance Approved | Ready to Generate | PPD | CCD | PRE | Ready | Pre-Note | CHK | Check | Queued | Filed | Pending | Disbursing | Confirmed
+
+=== /finance/bob-ledger.html | Book of Business Ledger | Gold Kidney Finance
+USER: DP David Park Finance Admin
+HEADER: Commission Book of Business Ledger | BC: Finance Portal Book of Business
+ALERT: BoB records are created when an enrollment application is submitted (not when CMS approves). The Application Date is the reference date for all agent eligibility checks. Entries wi
+ALERT: Entries flagged during eligibility or duplicate checks. Validation: "Application date cannot be in the future." — any BoB record with an application date after today is held and su
+KPIs: Active Members=487 ; Eligibility On Hold=23 ; CMS Rejected=8 ; Disenrolled=34 ; Pending CMS=12
+CARDS/SECTIONS: Agent Summary || BoB Records || Finance Discrepancy Queue 3 Flagged
+TABLE1 (0 rows) cols: Agent | NPN | Enrollments | Active | On Hold | Total Commission | Paid | Pending | 
+TABLE2 (0 rows) cols: BoB ID | Agent NPN / Name | Member / MBI | Plan / State | Application Date | Eff Date | Term Date | BoB Status | Eligibility | Actions
+TABLE3 (3 rows) cols: BoB ID | Agent | Member | Flag Reason | Hold Type | Detected | Action
+   row1: BOB-003 Kevin Nguyen Charles Davis Agent license expired on Application Date On Hold - License 2026-01-02 Review Hold
+FORM LABELS: Agent Search | BoB Status | Payment Status | Eligibility | Enr. State | Comm. Type | Date Range
+SELECTS: [All, Active, Pending CMS, CMS Rejected, Disenrolled, Compliance Hold] [All, Paid, Calculated, On Hold, Chargeback, Skipped] [All, Eligible, On Hold, On Hold - Appointment, On Hold - Address Gap] [All, FL, TX, GA, NC, AZ] [All, Initial, Renewal, HRA, Healthy Visit, Chargeback]
+PLACEHOLDERS: NPN or Name...
+BUTTONS: Filter | Reset | Export | Back to Agent Summary | Export to Excel | Review Hold | Verify | Review
+MODALS/DRAWERS: ledgerModal: ; adjustmentModal:Add Adjustment Entry ; bobDetailModal: ; holdModal:Eligibility Hold — Finance Review
+BADGES: 3 Flagged | On Hold - License | On Hold - Appointment | On Hold - Address Gap
+LINKS: reconciliation.html
+JS NAV: bob-members.html?agent=${a.npn} bob-members.html?agent=
+
+=== /finance/bob-members.html | Member Listing | Gold Kidney Finance
+ACTIVE NAV: Book of Business
+USER: DP David Park Finance Admin
+HEADER: Agent Members — Book of Business | BC: Finance Portal Book of Business Members
+CARDS/SECTIONS: Loading... || Members
+TABLE1 (0 rows) cols: BoB ID | Member Name | MBI | Plan | State | App Date | Eff Date | Term Date | Status | Eligibility | Commission
+SELECTS: [All Statuses, Active, Pending CMS, CMS Rejected, Disenrolled, Compliance Hold] [All Eligibility, Eligible, On Hold]
+PLACEHOLDERS: Search member name or MBI...
+BUTTONS: Reset
+JS NAV: bob-ledger.html
+
+=== /finance/calc-audit.html | Calc Audit Trail | Gold Kidney Finance
+ACTIVE NAV: Audit Trail
+USER: DP David Park Finance Admin
+HEADER: Commission Calculation Audit Trail | BC: Finance Portal Calc Audit Trail
+ALERT: Gap Check verifies that the sequential Audit Record ID sequence is unbroken. Any gap could indicate a deletion attempt or system error and triggers a compliance alert. Last gap che
+ALERT: Gap Check Passed (last run: 05 29,2026 02:14 AM) Audit Record IDs AUD-2026-00001 through AUD-2026-01841 — no gaps detected. Sequence integrity confirmed.
+CARDS/SECTIONS: Search Filters || Audit Records || Sequential ID Gap Check
+TABLE1 (0 rows) cols: Audit Record ID | Calc Run ID | Event Type | Agent NPN | Enrollment ID | Config Version | Net Output | Timestamp | Detail
+TABLE2 (2 rows) cols: Check Run | Range | Records Checked | Gaps Found | Status | Run By
+   row1: 05 29,2026 02:14 AM AUD-2026-00001 — AUD-2026-01841 1,841 0 Pass System (Nightly)
+TABS: Search Audit Records | Gap Check Report
+FORM LABELS: Enrollment ID / MBI | Agent NPN | Event Type | Calc Date From | Calc Date To | Plan Year | Enrollment State | Config Version | Calc Run ID | Carrier
+SELECTS: [Initial Commission Calc, Renewal Commission Calc, HRA Commission Calc, Override Commission Calc, Chargeback Calc, True-Up Calc, Manual Override Calc] [All, 2026, 2025] [All, FL, AZ, TX] [All Carriers, Gold Kidney (GKHP), Humana, UnitedHealth, Aetna, BCBS, Cigna]
+PLACEHOLDERS: e.g. ENR-2026-0041 | e.g. 8823441 | e.g. v3.1.2 | e.g. RUN-2026-05-29
+BUTTONS: Search Audit Records | Gap Check Report | Clear | Search | Export to Excel | Export CSV | Run Gap Check
+MODALS/DRAWERS: auditDetailModal:Audit Record Detail
+BADGES: Pass
+
+=== /finance/calc-engine.html | Commission Calculation Engine | Gold Kidney Finance
+ACTIVE NAV: Calculation Engine
+USER: DP David Park Finance Admin
+HEADER: Commission Calculation Engine | BC: Finance Portal Calculation Engine
+ALERT: Enrollments skipped during last calculation run. Finance reviews and takes action — Production Support executes recalculation after approval.
+ALERT: Workflow: Finance submits a recalculation request → Production Support reviews and executes → Finance is notified upon completion. Finance staff do not execute calculations directl
+KPIs: Last Run Processed=1,247 ; Error Queue=4 ; Total Calculated (Jul)=$91,204 ; Avg Run Duration=4.2 min
+CARDS/SECTIONS: Calculation Error Queue 4 || Recent Runs || Active Config || Request Recalculation
+TABLE1 (4 rows) cols: Agent | Enrollment | Reason | Impact | Assigned To | Action
+   row1: Kevin Nguyen NPN 9912345 ENR-2025-9841 No Rate Config $694.00 blocked Lisa Rodriguez Review Approve Hold Reject
+TABLE2 (5 rows) cols: Run ID | Period | Triggered By | Records | Total | Status | Actions
+   row1: RUN-2026-018 Jul 2026 System (Scheduled) 1,247 $91,204 Completed Details Ledger
+TABLE3 (3 rows) cols: Request ID | Period | Scope | Requested By | Date | Status
+   row1: RCR-2026-004 Jul 2026 Errors Only David Park 07 16,2026 Pending
+BUTTONS: Export | Review | Approve | Hold | Reject | Details | Ledger
+MODALS/DRAWERS: errorDetailModal: ; runDetailModal: ; ledgerModal:
+BADGES: 4 | No Rate Config | Banking Missing | NPN Invalid | CMS Data Missing | Completed | 3 Errors | Pending
+LINKS: run-history.html commission-config.html
+
+=== /finance/chargebacks.html | Chargebacks & Rapid Disenrollment | Gold Kidney Finance
+ACTIVE NAV: Chargebacks
+USER: DP David Park Finance Admin
+HEADER: Chargebacks & Rapid Disenrollment | BC: Finance Portal Chargebacks
+ALERT: Finance Review Required: All chargebacks must be reviewed and approved by a Finance Admin before they are deducted from any payment batch. Agents and upline hierarchy are notified 
+KPIs: Pending Finance Review=2 ; Rapid Disenrollment=1 ; Partial Chargeback=2 ; Approved This Month=1 ; Total Pending Recovery=$1,892.67
+CARDS/SECTIONS: Chargeback Records
+TABLE1 (0 rows) cols: CB ID | Member | Orig. Enrollment ID | Agent | Eff Date | Term Date | Months Active | Type | Chargeback Reason | Original Comm. | Chargeback Amt | Retained | Status | Actions
+FORM LABELS: Agent Search | Type | Status | From | To
+SELECTS: [All Types, Full Rapid Disenrollment, Partial Chargeback] [All Statuses, Pending Finance Review, Approved, Rejected, Applied]
+PLACEHOLDERS: NPN or Name...
+BUTTONS: Filter | Reset | Export to Excel
+MODALS/DRAWERS: reviewModal: ; rejectModal:Reject Chargeback
+
+=== /finance/commission-admin.html | Commission Configuration Admin | Gold Kidney Finance
+ACTIVE NAV: Configuration
+USER: DP David Park Finance Admin
+HEADER: Commission Configuration Admin | BC: Finance Portal Config Admin
+ALERT: Configuration Admin Panel: Changes to triggers and thresholds take effect on the next commission engine run. Eligibility checks cannot be disabled — only hold reason code labels ar
+ALERT: Annual Renewal Trigger Protection: The Annual Renewal trigger cannot be disabled on January 1. If you attempt to disable it on that date, the system will show: "The Annual Renewal 
+ALERT: Duplicate threshold must be 1 or higher . Setting it to 0 or negative is not allowed. The engine also enforces idempotency on all triggers: per-enrollment + per-cycle ledger entry 
+KPIs: Active Triggers=4 ; Eligibility Checks=4 ; Dup. Prevention Rules=3 ; Intake Mode (Carriers)=1
+CARDS/SECTIONS: Commission Trigger Configuration || Eligibility Check Configuration || Duplicate Prevention Configuration || Intake Mode Configuration — Initial/Renewal Classification || True-Up Adjustment Queue || Configuration Change Audit Log
+TABLE1 (0 rows) cols: Trigger Name | Description | Enabled | Last Modified By | Last Modified At
+TABLE2 (0 rows) cols: Check Name | Description | Hold Reason Code Label | Enabled | Last Edited By
+TABLE3 (0 rows) cols: Rule Type | Description | Max Count (default: 1) | Action on Duplicate | Last Modified By
+TABLE4 (0 rows) cols: Carrier | Current Mode | New Mode | Effective From | Last Modified By | Last Modified At | Actions
+TABLE5 (0 rows) cols: Enrollment ID | Member | Agent | Original Classification | Confirmed Classification | Renewal Paid | Initial Rate | Delta Amount | Status | Batch
+TABLE6 (0 rows) cols: Timestamp | Section | Field / Rule | Old Value | New Value | Changed By
+TABS: Commission Triggers | Eligibility Checks | Duplicate Prevention | Intake Mode | Audit Log
+BUTTONS: Commission Triggers | Eligibility Checks | Duplicate Prevention | Intake Mode | Audit Log | Export to Excel | Export
+MODALS/DRAWERS: saveModal:Save Configuration Changes
+
+=== /finance/commission-config.html | Commission Rate Configuration | Gold Kidney Finance
+ACTIVE NAV: Configuration
+USER: DP David Park Finance Admin
+HEADER: Commission Rate Configuration | BC: Finance Portal Rate Configuration
+KPIs: Active Configs=1 ; Pending Approval=1 ; Drafts=1 ; Archived=3
+CARDS/SECTIONS: Rate Configuration Records
+TABLE1 (0 rows) cols: Config ID | Plan Year | Carrier | Effective Date | Base Initial | Base Renewal PMPM | Status | Submitted By | Approval | Actions
+FORM LABELS: Plan Year | Carrier | Status
+SELECTS: [All Years, 2024, 2025, 2026, 2027] [All Carriers, Gold Kidney Health Plan] [All Statuses, Draft, Pending Approval, Active, Archived]
+BUTTONS: Filter | Reset | Export to Excel
+MODALS/DRAWERS: newConfigModal:New Rate Configuration ; detailModal: ; approveModal:Approve Rate Configuration ; rejectModal:Reject Rate Configuration ; compareModal:Side-by-Side Rate Config Comparison ; rollbackModal:Rollback to Prior Configuration
+
+=== /finance/compliance-holds.html | Compliance Holds | Finance Portal
+ACTIVE NAV: Compliance Holds
+USER: DP David Park Finance Admin
+HEADER: Compliance Holds | BC: 
+ALERT: Policy: Commission payments are automatically held when an agent's AHIP certification, state license, or E&O insurance lapses. Payments are released to the next batch once complian
+KPIs: Active Holds=5 ; Total Held=$6,420 ; AHIP Expired=3 ; Released This Month=2
+CARDS/SECTIONS: Agents on Compliance Hold
+TABLE1 (5 rows) cols: Agent | NPN | Agency | Hold Reason | Commission Held | Hold Since | Days | Status | 
+   row1: Kevin Patel 6612009 Alliance Health Partners AHIP Expired $1,840 07 15,2026 19 Held Notify
+BUTTONS: Notify
+BADGES: 5 active holds | AHIP Expired | Held | State License Lapsed | Under Review | New | E&O Insurance Lapsed
+
+=== /finance/dashboard.html | Finance Admin Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: DP David Park Finance Admin
+HEADER: Finance Admin Dashboard | BC: 
+KPIs: Total Paid (CY2026)=$438,216 ; Last Batch Paid=$87,432 ; Total Payable This Month=$91,200 ; HRA Incentives Pending=14
+MODALS/DRAWERS: impactModal:Hierarchy Transfer — Impact Review ; exceptionsModal:Inactive Broker Exceptions
+LINKS: batch-review.html manual-adjustments.html chargebacks.html hra-review.html
+CHARTS: 3 canvas bar,doughnut,line
+
+=== /finance/disputes.html | Commission Dispute Queue | Gold Kidney Finance
+ACTIVE NAV: Dispute Queue
+USER: DP David Park Finance Admin
+HEADER: Commission Dispute Queue | BC: Finance Portal Dispute Queue
+ALERT: SLA Policy: Disputes must be acknowledged within 5 business days and resolved within 30 business days of submission. Dispute submission window: 120 days from commission payment dat
+ALERT: House Account Policy: Agentless enrollments (no broker NPN) are automatically classified as house accounts . No commission ledger is created and no dispute is triggered. Processing
+ALERT: All flagged calculations have their corresponding payments automatically held until the discrepancy is reviewed and resolved by Finance. Note: Agentless enrollments are NOT flagged
+ALERT: Disputes must be submitted within 120 days of the commission payment date. This window is configurable per carrier/plan year via Admin › Dispute Window Config . Submissions outside
+ALERT: Upon submission, a system-generated acknowledgment will be sent to the agent. Disputes are tracked with statuses: Open → Under Review → Resolved/Rejected . Finance must acknowledge
+KPIs: System Flags=3 ; Open Disputes=3 ; SLA At Risk=1 ; SLA Breached=1 ; Resolved (MTD)=4
+CARDS/SECTIONS: Automated Validation Flags — Payment Held || Open Dispute Cases || Escalated Disputes — Senior Finance Reviewer Queue || Resolved & Closed Disputes || Submit New Dispute (Agent Self-Service)
+TABLE1 (0 rows) cols: Flag ID | Enrollment Ref | Agent / NPN | Validation Rule | Description | Payment | Flagged Date | Days Open | SLA Status | Actions
+TABLE2 (0 rows) cols: Dispute ID | Source | Enrollment Ref | Submitted By | Submitted Date | Payment Date | Amount Disputed | Expected Amt | Reason | Days Open | SLA Status | Status | Actions
+TABLE3 (0 rows) cols: Dispute ID | Submitted By | Submitted Date | Payment Date | Amount Disputed | Reason | Days Open | SLA Status | Escalated By | Actions
+TABLE4 (0 rows) cols: Dispute ID | Source | Submitted By | Payment Date | Amount Disputed | Correction Applied | Resolved By | Resolution Date | Outcome | Resolution Notes | Appeal Deadline
+TABS: System Flags 2 | Open Disputes | Escalated | Resolved / Closed | Submit Dispute
+FORM LABELS: Enrollment Reference ID * | Payment Batch * | Payment Date | Amount Paid | Expected (Correct) Amount * | Dispute Reason * | Description of Discrepancy * | Supporting Document (Optional)
+SELECTS: [All Flag Types, Invalid Enrollment Status, Rate Table Mismatch, Duplicate Payment Trigger] [All Sources, Agent Submitted, System Flagged] [All Reasons, Incorrect Rate Applied, Enrollment Not in My Book of Business, HRA / Healthy Visit Incentive Missing, Chargeback Applied Incorrectly, Incorrect Proration, Override Amount Incorrect, Broker Claims Ownership (House Account), Other] [All SLA, Within SLA, SLA Warning, SLA Breached] [— Select Payment Batch —, BATCH-2026-05 (May 2026), BATCH-2026-04 (Apr 2026), BATCH-2026-03 (Mar 2026), BATCH-2026-02 (Feb 2026)] [— Select Reason —, Incorrect Rate Applied, Enrollment Not in My Book of Business, HRA / Healthy Visit Incentive Missing, Chargeback Applied Incorrectly, Incorrect Proration, Override Amount Incorrect, Broker Claims Ownership (House Account), Other (requires explanation)]
+PLACEHOLDERS: e.g. ENR-2025-0012 | Auto-populated | Enter the correct amount you expected | Describe the discrepancy in detail (minimum 50 characters)...
+BUTTONS: System Flags 2 | Open Disputes | Escalated | Resolved / Closed | Submit Dispute | Export to Excel | Export | Clear
+MODALS/DRAWERS: reviewModal:Review Dispute ; detailModal:
+LINKS: ../admin/commission-config.html https://goldkidney.com/get-contracted/
+
+=== /finance/hra-review.html | HRA Finance Review | Gold Kidney Finance Portal
+ACTIVE NAV: HRA Incentive Review
+USER: DP David Park Finance Admin
+HEADER: HRA Finance Review Queue | BC: HRA Incentive Review & 14-Day Window Check
+ALERT: 14-Day Window Rule: HRAs submitted within 14 calendar days of enrollment are auto-approved ($25.00 incentive). Finance only reviews out-of-window submissions requiring override or 
+ALERT: Out-of-window overrides require Finance Manager approval and are logged in the compliance audit trail.
+KPIs: Needs Manual Review=2 ; Auto-Approved (In-Window)=5 ; Out-of-Window (>14 days)=3 ; Total Incentive Value=$300.00
+CARDS/SECTIONS: HRA Submissions Awaiting Review || Rejection / Override Workflow
+TABLE1 (8 rows) cols: Member | Agent NPN | Enrollment Date | HRA Date | Days | HRA Status | Incentive | Actions
+   row1: Susan Walsh 8823441 (J. Martinez) 05 14,2026 05 20,2026 6 days Auto-Approved $25.00 Auto-approved (in-window)
+FORM LABELS: Rejection Reason | Override Justification (for out-of-window approvals)
+SELECTS: [Select reason..., HRA submitted after 14-day window, Incomplete HRA form, Duplicate submission, Member not enrolled, Agent not eligible for incentive]
+PLACEHOLDERS: e.g., Agent was on medical leave; extension approved by manager
+BUTTONS: Export to Excel | Override | Reject
+MODALS/DRAWERS: approveModal:Approve HRA Incentive ; rejectModal:Reject HRA Incentive ; overrideModal:Override Out-of-Window HRA ; batchModal:Batch Approve In-Window HRAs
+
+=== /finance/manual-adjustments.html | Manual Adjustments | Finance Portal
+ACTIVE NAV: Manual Adjustments
+USER: DP David Park Finance Admin
+HEADER: Manual Adjustments | BC: 
+ALERT: Policy: Manual adjustments require Finance Admin approval. Credits over $1,000 require VP Finance sign-off. All adjustments are logged in the audit trail with full justification. A
+KPIs: Pending Approval=3 ; Approved (MTD)=7 ; Credits=$3,180 ; Debits=$1,140
+CARDS/SECTIONS: Adjustment History
+TABLE1 (7 rows) cols: Adj ID | Agent | Type | Amount | Reason | Batch | Requested By | Date | Status | 
+   row1: ADJ-2026-041 James Martinez Credit +$680 Missed renewal commission - system error in May batch BATCH-2026-06 Maria Johnson Aug 1 Pending Approve
+SELECTS: [All Types, Credit, Debit, Bonus, Correction] [All Statuses, Pending, Approved, Rejected]
+PLACEHOLDERS: Search by agent, reason, or ID...
+BUTTONS: Approve
+MODALS/DRAWERS: adjModal:New Manual Adjustment
+BADGES: Credit | Pending | Debit | Bonus | Approved
+
+=== /finance/missing-cms-data.html | Missing CMS Data | Finance Portal
+ACTIVE NAV: Missing CMS Data
+USER: DP David Park Finance Admin
+HEADER: Missing CMS Data | BC: 
+ALERT: Policy: Commission calculation requires CMS confirmation data (HICN, effective date, contract ID, PBP, segment). Missing data is resolved via daily MMR feed import. Records unresol
+KPIs: Missing CMS Records=6 ; Estimated Impact=$4,860 ; Avg Days Waiting=6.5 ; Next CMS Feed=Aug 4
+CARDS/SECTIONS: Enrollments Awaiting CMS Confirmation
+TABLE1 (6 rows) cols: Member | Agent | Plan | Enrollment Date | Missing Data | Days Waiting | Est. Commission | Status | 
+   row1: Martha Johnson Lisa Wang Gold Kidney CSNP 07 22,2026 HICN not returned 12 days $1,200 Awaiting CMS Flag
+BUTTONS: Flag
+BADGES: 6 pending | HICN not returned | Awaiting CMS | Effective date missing | Contract ID pending | Processing | PBP number missing | Segment ID missing | Confirmation pending | New
+
+=== /finance/missing-npn.html | Missing NPN | Finance Portal
+ACTIVE NAV: Missing NPN
+USER: DP David Park Finance Admin
+HEADER: Missing NPN | BC: 
+ALERT: Policy: Commission payments are held when NPN (National Producer Number) is not on file or cannot be validated against NIPR. Agents are notified via email and portal. If unresolved
+KPIs: Missing NPN=4 ; Total Held=$3,240 ; Avg Days Pending=8.2 ; Resolved This Month=2
+CARDS/SECTIONS: Agents Missing NPN
+TABLE1 (4 rows) cols: Agent Name | Agency | State | Commission Earned | Batch | Days Pending | Last Contact | Status | 
+   row1: Carlos Mendez Southwest Medicare Solutions AZ $1,280 BATCH-2026-06 12 days Jul 28 - Email sent Awaiting Agent Remind
+BUTTONS: Remind
+BADGES: 4 pending | Awaiting Agent | In Progress | New
+
+=== /finance/patient-activation-fees.html | Patient Activation Fees | Gold Kidney Finance
+USER: DP David Park Finance Admin
+HEADER: Patient Activation Fees — HRA & Healthy Visit | BC: Finance Portal Patient Activation Fees
+ALERT: HRA 14-Day Window Rule: HRA must be completed within 14 days of the application signature date. Submissions outside this window are flagged for Finance review — not auto-rejected. 
+ALERT: BRD Rule: Incentive trigger is NOT fired if broker is inactive/suspended at time of payment. Exception is logged here for Finance review. Finance must confirm agent reinstatement o
+KPIs: Pending Review=4 ; Flagged for Review=2 ; Approved (MTD)=8 ; Paid (YTD)=$7,875.00
+CARDS/SECTIONS: Inactive Broker Exception Queue || Patient Activation Fee Records
+TABLE1 (2 rows) cols: Exception ID | Agent | NPN | Event | Member | Amount | Agent Status | Date Blocked | Action
+   row1: EXC-2026-0041 Sarah Kim 5501887 HRA Completion Dorothy Harris (***-**-3356) $25.00 Inactive (eff. May 28) 06 03,2026 Review
+TABLE2 (0 rows) cols: ID | Member | Condition | Agent | Fee Type | Trigger Date | App Signature Date | Days Since Sig | In Window | Amount | Status | Batch | Actions
+FORM LABELS: Agent Search | Fee Type | Status | 14-Day Window
+SELECTS: [All Types, HRA, Healthy Visit] [All, Pending, Flagged for Review, Approved, Paid, Rejected] [All, In Window, Outside Window, N/A (Visit)]
+PLACEHOLDERS: NPN or Name...
+BUTTONS: Export to Excel | Review | Filter | Reset
+MODALS/DRAWERS: detailModal: ; rejectModal:Reject Patient Activation Fee
+BADGES: 2 exceptions | HRA Completion | Inactive | Healthy Visit (ESRD) | Suspended
+
+=== /finance/reconciliation.html | Reconciliation & Commission Audit | Gold Kidney Finance
+ACTIVE NAV: Reconciliation
+USER: DP David Park Finance Admin
+HEADER: Post-Payment Reconciliation & Commission Audit | BC: Finance Portal Reconciliation
+ALERT: Reconciliation Policy: Post-payment reconciliation auto-runs within 1-2 business days of each payment date (configurable via Admin › Recon Deadline Config ). The system performs a 
+ALERT: Zero variance tolerance — all discrepancies must be documented, resolved, or escalated. Escalated discrepancies trigger an email to Finance Manager with full line-item detail.
+ALERT: ACH returns and returned checks are auto-detected from bank settlement files. Returned amounts are reconciled against the payment batch. The affected producer is notified automatic
+ALERT: Entries where the commission calculation record does not match a payment batch record, or a payment was disbursed without a corresponding calculation. Disenrollment data sourced fr
+KPIs: Last Recon Report=REC-2026-05 ; Open Discrepancies=2 ; Resolved (MTD)=5 ; ACH Returns=2 ; Reports (CY2026)=5
+CARDS/SECTIONS: Reconciliation Report History || Line-Item Audit — REC-2026-05 (BATCH-2026-05 — May 2026) || Discrepancy Review Queue || ACH Returns & Check Rejections || Unmatched Entries
+TABLE1 (0 rows) cols: Report ID | Payment Cycle | Payment Date | Batch ID | Approved Total | NACHA Total | Bank Confirmed | Variance | Discrepancies | ACH Returns | Status | Finance Sign-Off | Actions
+TABLE2 (0 rows) cols: Agent NPN | Agent Name | Calculated | Approved | Paid (NACHA) | Delta (Approved vs Paid) | Variance Type | Status
+TABLE3 (0 rows) cols: Discrepancy ID | Report | Agent NPN | Agent Name | Approved Amt | Paid Amt | Delta | Variance Type | Status | Actions
+TABLE4 (0 rows) cols: Return ID | Recon Report | Agent NPN | Agent Name | Original Amount | Return Code | Return Reason | Return Date | Producer Notified | Status | Actions
+TABLE5 (0 rows) cols: Entry ID | Type | Recon Report | Agent NPN | Agent Name | Enrollment Ref | Calculated Amt | Paid Amt | Source | Days Open | Status | Actions
+TABS: Recon Reports | Line-Item Audit (REC-2026-05) | Discrepancy Queue | ACH Returns & Exceptions | Unmatched Entries
+FORM LABELS: Agent Search | Variance Type
+SELECTS: [All, Match, Unexplained Variance, Documented Adjustment]
+PLACEHOLDERS: NPN or Name...
+BUTTONS: Recon Reports | Line-Item Audit (REC-2026-05) | Discrepancy Queue | ACH Returns & Exceptions | Unmatched Entries | Export to Excel | Export | Filter | Reset
+MODALS/DRAWERS: signoffModal:Finance Sign-Off ; achDetailModal: ; discModal: ; discModalTitle: ; discModalBody: ; discModalFoot: ; reconDetailModal:
+LINKS: ../admin/commission-config.html
+
+=== /finance/remittance.html | Remittance | Gold Kidney Finance
+ACTIVE NAV: Payment History
+USER: DP David Park Finance Admin
+HEADER: Consolidated Payment & Remittance | BC: Finance Portal Remittance
+ALERT: Consolidation Rule: All commission types (Initial, Renewal, Override, HRA, Healthy Visit) for the same producer within the same batch cycle are consolidated into one net payment . 
+ALERT: Producers below have a negative net payable — chargebacks exceeded gross commission. No payment was issued. The negative balance will be deducted from their next cycle's gross befo
+KPIs: Statements Generated=12 ; Emails Sent=11 ; Carried Forward=1 ; Total Net Disbursed=$87,169.25
+CARDS/SECTIONS: Remittance Statements — BATCH-2026-05 (May 2026) || Carried Forward Balances
+TABLE1 (0 rows) cols: Payment ID | Producer NPN | Producer Name | Payment Method | Gross Commission | Chargebacks | Withholding | Net Payable | Email Status | Actions
+TABLE2 (0 rows) cols: Producer NPN | Producer Name | Original Cycle | Gross Commission | Total Chargebacks | Net (Negative) | Carry-Fwd Applied To | Status
+TABS: Remittance Statements | Carried Forward
+SELECTS: [All Email Status, Sent, Email Failed, Carried Forward]
+PLACEHOLDERS: Search producer...
+BUTTONS: Remittance Statements | Carried Forward | Export to Excel
+MODALS/DRAWERS: remitModal: ; remitModalTitle: ; remitModalBody:
+
+=== /finance/reports.html | Reports & Analytics | Gold Kidney Finance
+ACTIVE NAV: Reports
+USER: DP David Park Finance Admin
+HEADER: Commission Reports & Analytics | BC: Finance Portal Reports & Analytics
+ALERT: Budget figures are entered by Finance per period per commission type. Variance = Actual Paid - Budget. Positive variance = over-budget.
+ALERT: Agent-level commission detail for the selected filter period. Positive amounts = commission paid. Negative amounts = chargebacks deducted. Running Net Balance = cumulative net per 
+ALERT: Export Validation: "Export exceeds 50,000 rows. Please narrow your filters." — triggered when row count > 50,000. | "No active enrollments found for the selected period." — shown w
+CARDS/SECTIONS: Global Report Filters || Monthly Commission Liability Forecast || Commission vs. Budget Variance Report || Producer-Facing Commission Report || Batch-Level Commission Summary || YTD Commission Summary by Type (2026) || Chargeback History || Pending Chargebacks
+TABLE1 (0 rows) cols: 
+TABLE2 (0 rows) cols: Month | Initial (Projected) | Renewal PMPM | HRA / Healthy Visit | Override (GA+FMO) | Total Projected | vs. Prior Month
+TABLE3 (0 rows) cols: Period | Commission Type | Budget | Actual Paid | Variance ($) | Variance (%) | Status
+TABLE4 (5 rows) cols: Member Name | Member ID | Line Item Type | Application Signature Date | Actual Effective Date | Enrollment Status | Amount | Running Net Balance
+   row1: Robert Thompson 1EG4-TE5-MK72 Commission 2025-11-15 2026-01-01 Active +$929.00 $929.00
+TABLE5 (5 rows) cols: Payment Date | Payment Reference | Payment Method | Total Commission Entries | Total Chargeback Entries | Gross Commission | Total Chargebacks | Net Commission
+   row1: 05 17,2026 BATCH-2026-05 ACH (PPD/CCD) 87 2 $48,720.00 -$509.29 $48,210.71
+TABLE6 (2 rows) cols: CB ID | Agent | Member | Amount | Reason | Batch Applied
+   row1: CB-2026-001 Mark Brown Dorothy Miller -$794.00 Rapid Disenrollment BATCH-2026-02
+TABLE7 (2 rows) cols: CB ID | Agent | Member | Amount | Status
+   row1: CB-2026-003 Kevin Nguyen James Owens -$263.17 Pending Review
+TABS: Finance Reports | Sales Leadership | Liability Forecast | Budget Variance | Producer Reports | Batch Summary
+FORM LABELS: Date Range | Plan Year | State | Commission Type | Agent/Agency | Forecast Months
+SELECTS: [All, 2026, 2025] [All States, FL, AZ, TX] [All, Initial, Renewal, HRA, Healthy Visit, Chargeback] [Next 3 Months, Next 6 Months, Next 12 Months]
+PLACEHOLDERS: NPN or name...
+BUTTONS: Reset | Apply | Finance Reports | Sales Leadership | Liability Forecast | Budget Variance | Producer Reports | Batch Summary | Run | Export | CSV | Close | Export Excel | Export PDF | Export to Excel | Export CSV | Generate Forecast
+BADGES: Commission | Active | Chargeback | Disenrolled | On Hold | Pending Review
+CHARTS: 3 canvas Initial,Renewal,HRA,bar,line
+
+=== /finance/run-history.html | Run History | Gold Kidney Finance
+ACTIVE NAV: Run History
+USER: DP David Park Finance Admin
+HEADER: Commission Calculation — Run History | BC: Finance Calculation Engine Run History
+KPIs: Total Runs (CY2026)=18 ; Last Run=Jul 15 ; Runs with Errors=2 ; Avg Duration=4.2 min
+CARDS/SECTIONS: Calculation Run Log
+TABLE1 (10 rows) cols: Run ID | Cycle | Type | Started | Duration | Records | Total Calculated | Errors | Status | Actions
+   row1: RUN-2026-018 Jul 2026 Scheduled 07 15,2026 02:00 AM 4.1 min 1,247 $91,204.56 0 Completed View
+FORM LABELS: Cycle | Status | Type
+SELECTS: [All Cycles, Jul 2026, Jun 2026, May 2026, Apr 2026, Mar 2026, Feb 2026, Jan 2026] [All, Completed, Error, In Progress] [All, Scheduled, Manual, Re-Run]
+BUTTONS: Filter | View
+MODALS/DRAWERS: runDetailModal:Run Detail
+BADGES: Scheduled | Completed | Manual | Re-Run | Error
+
+=== /finance/state-reporting.html | State Reporting | Gold Kidney Finance
+ACTIVE NAV: Reports
+USER: DP David Park Finance Admin
+HEADER: Multi-State Payment Management & State Reporting | BC: Finance Portal State Reporting
+ALERT: State Derivation Rule: Enrollment state is derived from the member's county + plan code at the time of enrollment via the CMS plan directory. This field is immutable once the ledge
+ALERT: Add a new state by clicking the "Add State" button. All changes are audit-logged. Withholding rate must be between 0 and 100. Changes apply to the next payment cycle.
+CARDS/SECTIONS: State Configuration — Plan Year 2026 || Report Filters || State Configuration Audit Log
+TABLE1 (0 rows) cols: State Code | State Name | Reporting Enabled | Withholding Rate % | Reporting Note | Status | Last Modified By | Last Modified At
+TABLE2 (0 rows) cols: Producer NPN | Producer Name | State | Commission Type | Enrollment Count | Gross Commission | Chargebacks Deducted | State Withholding | Net Commission | Batch ID
+TABLE3 (0 rows) cols: Timestamp | State | Field | Old Value | New Value | Changed By
+TABS: State Configuration | State Commission Report | Config Audit Log
+FORM LABELS: Payment Cycle * | State | Commission Type | Producer NPN
+SELECTS: [— Select —, May 2026, April 2026, March 2026] [Florida (FL), Arizona (AZ), Texas (TX)] [All, Initial, Renewal, HRA, Healthy Visit, Chargeback]
+PLACEHOLDERS: Optional...
+BUTTONS: State Configuration | State Commission Report | Config Audit Log | Save Changes | Export to Excel | Add State | Generate | Export CSV | Export

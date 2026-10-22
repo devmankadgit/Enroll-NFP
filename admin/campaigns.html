@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaign Management | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn.active{color:#1a237e;border-bottom-color:#1a237e;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1050;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;max-width:680px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 8px 40px rgba(0,0,0,.22)}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+.perf-bar{height:6px;border-radius:3px;background:#e8eaed;overflow:hidden;margin-top:4px}
+.perf-fill{height:100%;border-radius:3px;background:#1a237e}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Campaign Configuration &amp; Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Admin Portal</a></li><li>Campaigns</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="exportCampaigns()"><i class="fas fa-download"></i>Export</button>
+    <button class="btn-pr btn-sm" onclick="openCampaignModal()"><i class="fas fa-plus"></i>Create Campaign</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1a237e"><i class="fas fa-bullhorn"></i></div><div><div class="stat-label">Active Campaigns</div><div class="stat-val" id="kpiActive">6</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Leads (MTD)</div><div class="stat-val" id="kpiLeads">265</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Conversions (MTD)</div><div class="stat-val" id="kpiConv">68</div><div class="stat-sub text-muted">25.7% rate</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Commission Revenue (MTD)</div><div class="stat-val" id="kpiRev">$47,192</div></div></div></div>
+    </div>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'tabCampaigns')"><i class="fas fa-list" style="margin-right:5px"></i>All Campaigns</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabPerf')"><i class="fas fa-chart-bar" style="margin-right:5px"></i>Performance</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabAudit')"><i class="fas fa-history" style="margin-right:5px"></i>Audit Log</button>
+    </div>
+
+    <div id="tabCampaigns" class="tab-pane active">
+      <div class="filter-bar" style="margin-bottom:12px">
+        <label>Type:</label>
+        <select id="fType" onchange="renderCampaigns()"><option value="">All Types</option><option>AEP</option><option>OEP</option><option>SEP</option><option>Year-Round</option></select>
+        <label>Status:</label>
+        <select id="fStatus" onchange="renderCampaigns()"><option value="">All</option><option>Draft</option><option>Active</option><option>Paused</option><option>Closed</option><option>Archived</option></select>
+        <label>State:</label>
+        <select id="fCState" onchange="renderCampaigns()"><option value="">All States</option><option>FL</option><option>AZ</option><option>TX</option><option>GA</option></select>
+        <input type="text" id="fSearch" placeholder="Search name or code&hellip;" style="flex:1;min-width:140px" oninput="renderCampaigns()">
+        <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-undo"></i>Reset</button>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><h5 id="campaignCount">Campaigns</h5>
+          <button class="btn-pr btn-sm" onclick="openCampaignModal()"><i class="fas fa-plus"></i>Create Campaign</button>
+        </div>
+        <div class="table-wrap">
+          <table class="tbl" id="tblExport1">
+            <thead><tr><th>Campaign Name</th><th>Code</th><th>Type</th><th>Dates</th><th>States</th><th>Lead Source</th><th>TFN</th><th>Budget</th><th>Leads</th><th>Conv%</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="campaignTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabPerf" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#1a237e"></i>Campaign Performance Summary</h5>
+          <button class="btn-ol btn-sm" onclick="exportCampaigns()"><i class="fas fa-download"></i>Export CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table class="tbl" id="tblExport2">
+            <thead><tr><th>Campaign</th><th>Type</th><th>Leads</th><th>Contacted</th><th>Converted</th><th>Conversion Rate</th><th>Commission Revenue</th><th>Cost/Enrollment</th></tr></thead>
+            <tbody id="perfTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabAudit" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>Campaign Configuration Audit Log</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','campaigns_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table class="tbl" id="tblExport3">
+            <thead><tr><th>Timestamp</th><th>Campaign</th><th>Action</th><th>Changed By</th><th>Field</th><th>Old Value</th><th>New Value</th></tr></thead>
+            <tbody id="auditTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAMPAIGN CREATE/EDIT MODAL -->
+<div id="campaignModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700" id="campaignModalTitle"><i class="fas fa-bullhorn" style="margin-right:8px;color:#1a237e"></i>Create Campaign</h6>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button onclick="prefillCampaign()" class="btn-ol btn-sm" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button>
+        <button onclick="closeCampaignModal()" style="border:none;background:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div id="campaignModalErr" class="al-danger mb16" style="display:none"></div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Campaign Name <span class="req">*</span></label><input id="cName" placeholder="e.g. AEP Florida 2026 Digital"></div>
+        <div class="fg"><label>Campaign Code <span class="req">*</span> <button type="button" onclick="genCode()" style="font-size:10px;padding:1px 6px;border:1px solid #1a237e;border-radius:4px;background:#e3f2fd;color:#1a237e;cursor:pointer;margin-left:4px">Auto-Gen</button></label><input id="cCode" placeholder="e.g. AEP-FL-2026-D"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:1"><label>Description</label><textarea id="cDesc" rows="2" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px;resize:vertical" placeholder="Brief description of campaign purpose, target audience, and goals..."></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Campaign Type <span class="req">*</span></label>
+          <select id="cType"><option value="">? Select ?</option><option>AEP</option><option>OEP</option><option>SEP</option><option>Year-Round</option></select></div>
+        <div class="fg"><label>Start Date <span class="req">*</span></label><input id="cStart" type="date"></div>
+        <div class="fg"><label>End Date <span class="req">*</span></label><input id="cEnd" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Target States <span class="req">*</span></label>
+          <div id="cStates" style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px">
+            <label style="font-size:12px"><input type="checkbox" value="FL"> FL</label>
+            <label style="font-size:12px"><input type="checkbox" value="AZ"> AZ</label>
+            <label style="font-size:12px"><input type="checkbox" value="TX"> TX</label>
+            <label style="font-size:12px"><input type="checkbox" value="GA"> GA</label>
+            <label style="font-size:12px"><input type="checkbox" value="CA"> CA</label>
+            <label style="font-size:12px"><input type="checkbox" value="NY"> NY</label>
+            <label style="font-size:12px"><input type="checkbox" value="OH"> OH</label>
+          </div>
+        </div>
+        <div class="fg"><label>Target Plans</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px">
+            <label style="font-size:12px"><input type="checkbox" id="pMA" value="MA"> MA</label>
+            <label style="font-size:12px"><input type="checkbox" id="pMAPD" value="MAPD"> MAPD</label>
+            <label style="font-size:12px"><input type="checkbox" id="pCSNP" value="C-SNP"> C-SNP</label>
+            <label style="font-size:12px"><input type="checkbox" id="pDSNP" value="D-SNP"> D-SNP</label>
+            <label style="font-size:12px"><input type="checkbox" id="pPDP" value="PDP"> PDP</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Lead Source Type <span class="req">*</span></label>
+          <select id="cLeadSrc" onchange="toggleTFN()"><option value="">? Select ?</option><option>Online</option><option>TFN</option><option>Both</option></select></div>
+        <div class="fg" id="tfnGroup" style="display:none"><label>Assigned TFN</label>
+          <select id="cTFN">
+            <option value="">? Select Active TFN ?</option>
+            <option value="8005552026">(800) 555-2026 ? AEP FL Main</option>
+            <option value="8005552027">(800) 555-2027 ? TV South FL</option>
+            <option value="8005552030">(800) 555-2030 ? ESRD Outreach</option>
+            <option value="8005552031">(800) 555-2031 ? Year-Round</option>
+          </select>
+          <div style="font-size:11px;color:#5f6368;margin-top:2px">TFNs managed in US-11.9 TFN-to-Campaign module.</div>
+        </div>
+        <div class="fg"><label>Assigned Agent(s) / Agency</label>
+          <div id="cAgents" style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;max-height:90px;overflow-y:auto">
+            <label style="font-size:12px"><input type="checkbox" value="8823441"> James Martinez (8823441)</label>
+            <label style="font-size:12px"><input type="checkbox" value="7719022"> Sarah Chen (7719022)</label>
+            <label style="font-size:12px"><input type="checkbox" value="6614533"> Robert Kim (6614533)</label>
+            <label style="font-size:12px"><input type="checkbox" value="AGY-001"> Chen &amp; Associates</label>
+            <label style="font-size:12px"><input type="checkbox" value="AGY-002"> Pacific Benefits Group</label>
+          </div>
+          <div style="font-size:11px;color:#5f6368;margin-top:2px">Select one or more agents/agencies to link.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Budget (optional)</label><input id="cBudget" type="number" min="0" step="100" placeholder="0.00"></div>
+        <div class="fg"><label>Status <span class="req">*</span></label>
+          <select id="cStatus"><option value="Draft">Draft</option><option value="Active">Active</option><option value="Paused">Paused</option><option value="Closed">Closed</option></select></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeCampaignModal()">Cancel</button>
+      <button class="btn-pr" onclick="saveCampaign()"><i class="fas fa-save"></i>Save Campaign</button>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHIVE CONFIRM MODAL -->
+<div id="archiveModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-archive" style="margin-right:8px"></i>Archive Campaign</h6>
+      <button onclick="closeModal('archiveModal')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body"><p style="font-size:13.5px">Archive <strong id="archiveName"></strong>? Archived campaigns no longer accept new leads. This action is audit-logged and cannot be reversed via the UI.</p></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('archiveModal')">Cancel</button>
+      <button class="btn-danger" onclick="confirmArchive()"><i class="fas fa-archive"></i>Archive</button>
+    </div>
+  </div>
+</div>
+
+<!-- PERFORMANCE DETAIL MODAL -->
+<div id="perfModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700" id="perfModalTitle"></h6>
+      <button onclick="closeModal('perfModal')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body" id="perfModalBody"></div>
+    <div class="modal-foot"><button class="btn-ol" onclick="closeModal('perfModal')">Close</button></div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let campaigns=[
+  {id:1,name:'AEP 2026 FL Digital',code:'AEP-FL-2026-D',type:'AEP',start:'2025-10-15',end:'2025-12-07',states:['FL'],plans:['MA','C-SNP'],leadSrc:'Online',tfn:'',agents:[],budget:15000,status:'Active',desc:'Annual Enrollment Period digital campaign targeting Florida Medicare-eligible beneficiaries via web forms and landing pages.',leads:142,contacted:98,converted:38,revenue:26372},
+  {id:2,name:'OEC 2026 TV South FL',code:'OEC-FL-TV-001',type:'Year-Round',start:'2026-01-01',end:'2026-12-31',states:['FL'],plans:['MA','MAPD'],leadSrc:'TFN',tfn:'8005552027',agents:['AGY-001'],budget:20000,status:'Active',desc:'Year-round TV advertising campaign in South Florida markets with dedicated toll-free number.',leads:89,contacted:62,converted:22,revenue:15268},
+  {id:3,name:'DTC Mailer Miami-Dade',code:'DTC-MDC-2026',type:'Year-Round',start:'2026-03-01',end:'2026-09-30',states:['FL'],plans:['MA','C-SNP'],leadSrc:'Both',tfn:'8005552029',agents:[],budget:5000,status:'Active',desc:'Direct-to-consumer mailer campaign for Miami-Dade county targeting CKD/ESRD eligible members.',leads:34,contacted:20,converted:8,revenue:5552},
+  {id:4,name:'ESRD Outreach Statewide',code:'YR-ESRD-2026',type:'Year-Round',start:'2026-01-01',end:'2026-12-31',states:['FL','AZ','TX'],plans:['C-SNP'],leadSrc:'Both',tfn:'8005552030',agents:['8823441'],budget:10000,status:'Active',desc:'Multi-state ESRD awareness and outreach program targeting dialysis centers and nephrologist referrals.',leads:0,contacted:0,converted:0,revenue:0},
+  {id:5,name:'OEP 2026 Arizona',code:'OEP-AZ-2026',type:'OEP',start:'2026-01-01',end:'2026-03-31',states:['AZ'],plans:['MA','MAPD','C-SNP'],leadSrc:'Online',tfn:'',agents:['7719022'],budget:8000,status:'Closed',desc:'Open Enrollment Period campaign for Arizona market.',leads:28,contacted:18,converted:0,revenue:0},
+  {id:6,name:'Year-Round Texas SEP',code:'YR-TX-2026',type:'Year-Round',start:'2026-01-01',end:'2026-12-31',states:['TX'],plans:['MA'],leadSrc:'TFN',tfn:'8005552031',agents:[],budget:12000,status:'Active',desc:'Special Enrollment Period outreach for Texas Medicare beneficiaries qualifying via chronic conditions.',leads:0,contacted:0,converted:0,revenue:0},
+];
+let auditLog=[
+  {ts:'05 29,2026 09:41',campaign:'DTC Mailer Miami-Dade',action:'Status Changed',by:'Karen White',field:'Status',old:'Inactive',newVal:'Active'},
+  {ts:'05 20,2026 14:22',campaign:'ESRD Outreach Statewide',action:'Budget Updated',by:'Karen White',field:'Budget',old:'$8,000',newVal:'$10,000'},
+  {ts:'04 01,2026 10:00',campaign:'OEP 2026 Arizona',action:'Status Changed',by:'Karen White',field:'Status',old:'Active',newVal:'Inactive'},
+  {ts:'01 01,2026 00:00',campaign:'OEC 2026 TV South FL',action:'Campaign Created',by:'Karen White',field:'?',old:'?',newVal:'Active'},
+];
+let editingId=null, archiveTargetId=null;
+
+function prefillCampaign(){
+  document.getElementById('cName').value='SEP 2026 CKD Awareness ? Florida & Georgia';
+  document.getElementById('cCode').value='SEP-FLGA-2026-CKD';
+  document.getElementById('cDesc').value='Special Enrollment Period campaign targeting Chronic Kidney Disease patients in FL and GA via nephrology referral partnerships and community health events.';
+  document.getElementById('cType').value='SEP';
+  document.getElementById('cStart').value='2026-07-01';
+  document.getElementById('cEnd').value='2026-12-31';
+  document.getElementById('cLeadSrc').value='Both';
+  toggleTFN();
+  document.getElementById('cTFN').value='8005552030';
+  document.querySelectorAll('#cAgents input').forEach(function(cb){cb.checked=(cb.value==='8823441'||cb.value==='7719022');});
+  document.getElementById('cBudget').value='18000';
+  document.getElementById('cStatus').value='Active';
+  document.querySelectorAll('#cStates input').forEach(function(cb){cb.checked=(cb.value==='FL'||cb.value==='GA');});
+  var planMap={pMA:false,pMAPD:true,pCSNP:true,pDSNP:false,pPDP:false};
+  Object.keys(planMap).forEach(function(pid){var el=document.getElementById(pid);if(el)el.checked=planMap[pid];});
+  showToast('Campaign form prefilled with sample data','success');
+}
+
+function genCode(){
+  const type=document.getElementById('cType').value||'YR';
+  const state=getCheckedStates()[0]||'ALL';
+  const rand=Math.floor(100+Math.random()*900);
+  document.getElementById('cCode').value=`${type}-${state}-2026-${rand}`;
+}
+function getCheckedStates(){return Array.from(document.querySelectorAll('#cStates input:checked')).map(c=>c.value);}
+function toggleTFN(){const s=document.getElementById('cLeadSrc').value;document.getElementById('tfnGroup').style.display=(s==='TFN'||s==='Both')?'block':'none';}
+
+function openCampaignModal(id){
+  editingId=id||null;
+  document.getElementById('campaignModalErr').style.display='none';
+  document.getElementById('campaignModalTitle').innerHTML=id
+    ?'<i class="fas fa-edit" style="margin-right:8px;color:#1a237e"></i>Edit Campaign'
+    :'<i class="fas fa-bullhorn" style="margin-right:8px;color:#1a237e"></i>Create Campaign';
+  if(id){
+    const c=campaigns.find(x=>x.id===id); if(!c) return;
+    document.getElementById('cName').value=c.name;
+    document.getElementById('cCode').value=c.code;
+    document.getElementById('cDesc').value=c.desc||'';
+    document.getElementById('cType').value=c.type;
+    document.getElementById('cStart').value=c.start;
+    document.getElementById('cEnd').value=c.end;
+    document.getElementById('cLeadSrc').value=c.leadSrc;
+    document.getElementById('cTFN').value=c.tfn||'';
+    document.querySelectorAll('#cAgents input').forEach(cb=>cb.checked=(c.agents||[]).includes(cb.value));
+    document.getElementById('cBudget').value=c.budget||'';
+    document.getElementById('cStatus').value=c.status;
+    document.querySelectorAll('#cStates input').forEach(cb=>cb.checked=c.states.includes(cb.value));
+    ['pMA','pMAPD','pCSNP','pDSNP','pPDP'].forEach(pid=>{const el=document.getElementById(pid);if(el) el.checked=c.plans.includes(el.value);});
+    toggleTFN();
+  } else {
+    ['cName','cCode','cBudget','cDesc'].forEach(id=>document.getElementById(id).value='');
+    ['cType','cLeadSrc','cTFN'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('cStatus').value='Active';
+    ['cStart','cEnd'].forEach(id=>document.getElementById(id).value='');
+    document.querySelectorAll('#cStates input,#cAgents input,[id^=p]').forEach(cb=>{if(cb.type==='checkbox') cb.checked=false;});
+    document.getElementById('tfnGroup').style.display='none';
+  }
+  document.getElementById('campaignModal').classList.add('open');
+}
+function closeCampaignModal(){document.getElementById('campaignModal').classList.remove('open');editingId=null;}
+
+function saveCampaign(){
+  const err=document.getElementById('campaignModalErr');
+  const errors=[];
+  const name=document.getElementById('cName').value.trim();
+  const code=document.getElementById('cCode').value.trim().toUpperCase();
+  const desc=document.getElementById('cDesc').value.trim();
+  const type=document.getElementById('cType').value;
+  const start=document.getElementById('cStart').value;
+  const end=document.getElementById('cEnd').value;
+  const leadSrc=document.getElementById('cLeadSrc').value;
+  const tfn=document.getElementById('cTFN').value;
+  const agents=Array.from(document.querySelectorAll('#cAgents input:checked')).map(cb=>cb.value);
+  const budget=parseFloat(document.getElementById('cBudget').value)||0;
+  const status=document.getElementById('cStatus').value;
+  const states=getCheckedStates();
+  const plans=['pMA','pMAPD','pCSNP','pDSNP','pPDP'].filter(id=>{const el=document.getElementById(id);return el&&el.checked;}).map(id=>document.getElementById(id).value);
+
+  if(!name) errors.push('Campaign Name is required.');
+  if(!code) errors.push('Campaign Code is required.');
+  else if(campaigns.find(c=>c.code.toUpperCase()===code&&c.id!==editingId)) errors.push('This campaign code is already in use.');
+  if(!type) errors.push('Campaign Type is required.');
+  if(!start) errors.push('Effective Start Date is required.');
+  if(!end) errors.push('Effective End Date is required.');
+  else if(start&&end&&end<=start) errors.push('End date must be after start date.');
+  if(!leadSrc) errors.push('Lead Source Type is required.');
+  if((leadSrc==='TFN'||leadSrc==='Both')&&!tfn) errors.push('Assigned TFN is required when Lead Source includes TFN.');
+  if(states.length===0) errors.push('At least one target state is required.');
+  if(!status) errors.push('Status is required.');
+
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix the following:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(e=>`<li>${e}</li>`).join('')+'</ul></div>';
+    err.style.display='flex';err.scrollIntoView({behavior:'smooth',block:'center'});return;
+  }
+  err.style.display='none';
+  const ts='06 05,2026 '+new Date().toLocaleTimeString();
+  if(editingId){
+    const c=campaigns.find(x=>x.id===editingId);
+    auditLog.unshift({ts,campaign:name,action:'Campaign Updated',by:'Karen White',field:'Multiple',old:'?',newVal:status});
+    Object.assign(c,{name,code,desc,type,start,end,states,plans,leadSrc,tfn,agents,budget,status});
+    showToast(`Campaign "${name}" updated successfully.`,'success');
+  } else {
+    const nid=Math.max(...campaigns.map(c=>c.id))+1;
+    campaigns.push({id:nid,name,code,desc,type,start,end,states,plans,leadSrc,tfn,agents,budget,status,leads:0,contacted:0,converted:0,revenue:0});
+    auditLog.unshift({ts,campaign:name,action:'Campaign Created',by:'Karen White',field:'?',old:'?',newVal:status});
+    showToast(`Campaign "${name}" created successfully.`,'success');
+  }
+  renderCampaigns();renderPerf();renderAudit();closeCampaignModal();
+}
+
+function toggleStatus(id){
+  const c=campaigns.find(x=>x.id===id); if(!c) return;
+  const old=c.status;
+  if(c.status==='Active') c.status='Paused';
+  else if(c.status==='Paused') c.status='Active';
+  else if(c.status==='Draft') c.status='Active';
+  else if(c.status==='Closed'){showToast('Closed campaigns cannot be reactivated.','warn');return;}
+  auditLog.unshift({ts:'06 05,2026 '+new Date().toLocaleTimeString(),campaign:c.name,action:'Status Changed',by:'Karen White',field:'Status',old,newVal:c.status});
+  renderCampaigns();renderAudit();
+  showToast(`Campaign "${c.name}" is now ${c.status}.`,'success');
+}
+
+function openArchive(id){
+  archiveTargetId=id;
+  const c=campaigns.find(x=>x.id===id);
+  document.getElementById('archiveName').textContent=c?c.name:'';
+  document.getElementById('archiveModal').classList.add('open');
+}
+function confirmArchive(){
+  const c=campaigns.find(x=>x.id===archiveTargetId);
+  if(c){auditLog.unshift({ts:'05 29,2026 '+new Date().toLocaleTimeString(),campaign:c.name,action:'Archived',by:'Karen White',field:'Status',old:c.status,newVal:'Archived'});c.status='Archived';showToast(`Campaign "${c.name}" archived.`,'info');renderCampaigns();renderPerf();renderAudit();}
+  closeModal('archiveModal');archiveTargetId=null;
+}
+
+function openPerfDetail(id){
+  const c=campaigns.find(x=>x.id===id); if(!c) return;
+  const conv=c.leads?((c.converted/c.leads)*100).toFixed(1)+'%':'N/A';
+  document.getElementById('perfModalTitle').innerHTML=`<i class="fas fa-chart-bar" style="margin-right:8px;color:#1a237e"></i>${c.name} ? Performance`;
+  document.getElementById('perfModalBody').innerHTML=`
+    <div class="row-grid mb16">
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Leads Generated</div><div class="stat-val">${c.leads}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Contacted</div><div class="stat-val">${c.contacted}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Converted</div><div class="stat-val">${c.converted}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Conversion Rate</div><div class="stat-val">${conv}</div></div></div>
+    </div>
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Commission Revenue</div><div class="stat-val" style="color:#1b5e20">$${c.revenue.toLocaleString()}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Budget</div><div class="stat-val">$${c.budget.toLocaleString()}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Cost/Enrollment</div><div class="stat-val">${c.converted&&c.budget?'$'+Math.round(c.budget/c.converted):'N/A'}</div></div></div>
+    </div>`;
+  document.getElementById('perfModal').classList.add('open');
+}
+
+function renderCampaigns(){
+  const fType=document.getElementById('fType').value;
+  const fSt=document.getElementById('fStatus').value;
+  const fState=document.getElementById('fCState').value;
+  const fSrch=document.getElementById('fSearch').value.toLowerCase();
+  const list=campaigns.filter(c=>{
+    if(fType&&c.type!==fType) return false;
+    if(fSt&&c.status!==fSt) return false;
+    if(fState&&!c.states.includes(fState)) return false;
+    if(fSrch&&!c.name.toLowerCase().includes(fSrch)&&!c.code.toLowerCase().includes(fSrch)) return false;
+    return true;
+  });
+  document.getElementById('campaignCount').textContent=`Campaigns (${list.length})`;
+  document.getElementById('campaignTbody').innerHTML=list.map(c=>{
+    const conv=c.leads?((c.converted/c.leads)*100).toFixed(0)+'%':'?';
+    const statusBadges={'Active':'<span class="bdg b-green">Active</span>','Draft':'<span class="bdg b-blue">Draft</span>','Paused':'<span class="bdg b-amber">Paused</span>','Closed':'<span class="bdg b-grey">Closed</span>','Archived':'<span class="bdg b-grey">Archived</span>'};
+    const sb=statusBadges[c.status]||'<span class="bdg b-grey">'+c.status+'</span>';
+    const toggleIcon=c.status==='Active'?'<i class="fas fa-pause"></i>':c.status==='Closed'||c.status==='Archived'?'':'<i class="fas fa-play"></i>';
+    const toggleTitle=c.status==='Active'?'Pause':c.status==='Paused'?'Resume':c.status==='Draft'?'Activate':'';
+    return `<tr>
+      <td><strong>${c.name}</strong><div class="text-sm text-muted">${c.desc?c.desc.substring(0,60)+'?':(c.plans.join(', ')||'?')}</div></td>
+      <td><code style="font-size:11px">${c.code}</code></td>
+      <td><span class="bdg b-blue" style="font-size:11px">${c.type}</span></td>
+      <td style="font-size:12px">${c.start}<br><span style="color:#5f6368">? ${c.end}</span></td>
+      <td>${c.states.map(s=>`<span class="chip" style="font-size:11px">${s}</span>`).join(' ')}</td>
+      <td style="font-size:12.5px">${c.leadSrc}</td>
+      <td style="font-size:12px">${c.tfn?`(${c.tfn.slice(0,3)}) ${c.tfn.slice(3,6)}-${c.tfn.slice(6)}`:'?'}</td>
+      <td>${c.budget?'$'+c.budget.toLocaleString():'?'}</td>
+      <td style="font-weight:600">${c.leads}</td>
+      <td style="font-weight:600;color:${c.leads&&(c.converted/c.leads)>.2?'#1b5e20':'#5f6368'}">${conv}</td>
+      <td>${sb}</td>
+      <td><div class="dflex g8">
+        <button class="btn-ol btn-sm" onclick="openCampaignModal(${c.id})" title="Edit"><i class="fas fa-edit"></i></button>
+        <button class="btn-ol btn-sm" onclick="openPerfDetail(${c.id})" title="Performance"><i class="fas fa-chart-bar"></i></button>
+        ${toggleIcon?`<button class="btn-ol btn-sm" onclick="toggleStatus(${c.id})" title="${toggleTitle}">${toggleIcon}</button>`:''}
+        ${c.status!=='Archived'&&c.status!=='Closed'?`<button class="btn-danger btn-sm" onclick="openArchive(${c.id})" title="Archive"><i class="fas fa-archive"></i></button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPerf(){
+  document.getElementById('perfTbody').innerHTML=campaigns.filter(c=>c.status!=='Archived').map(c=>{
+    const conv=c.leads?((c.converted/c.leads)*100).toFixed(1):'0.0';
+    return `<tr>
+      <td><strong>${c.name}</strong></td>
+      <td><span class="bdg b-blue" style="font-size:11px">${c.type}</span></td>
+      <td>${c.leads}</td><td>${c.contacted}</td><td>${c.converted}</td>
+      <td style="font-weight:600;color:${parseFloat(conv)>=20?'#1b5e20':'#e65100'}">${conv}%
+        <div class="perf-bar"><div class="perf-fill" style="width:${Math.min(100,parseFloat(conv)*3)}%"></div></div>
+      </td>
+      <td style="font-weight:700;color:#1b5e20">$${c.revenue.toLocaleString()}</td>
+      <td>${c.converted&&c.budget?'$'+Math.round(c.budget/c.converted):'?'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAudit(){
+  document.getElementById('auditTbody').innerHTML=auditLog.map(a=>`<tr>
+    <td style="font-size:12px">${a.ts}</td><td style="font-size:12.5px">${a.campaign}</td>
+    <td><span class="bdg b-blue" style="font-size:11px">${a.action}</span></td>
+    <td style="font-size:12px">${a.by}</td><td style="font-size:12px">${a.field}</td>
+    <td style="font-size:12px;color:#c62828">${a.old}</td>
+    <td style="font-size:12px;color:#1b5e20">${a.newVal}</td>
+  </tr>`).join('');
+}
+
+function resetFilters(){
+  document.getElementById('fType').selectedIndex=0;
+  document.getElementById('fStatus').selectedIndex=0;
+  document.getElementById('fCState').selectedIndex=0;
+  document.getElementById('fSearch').value='';
+  renderCampaigns();
+  showToast('Filters reset','info');
+}
+function exportCampaigns(){showToast('Campaign data exported to CSV.','success');}
+function switchTab(btn,paneId){btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');btn.closest('.page').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById(paneId).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function showToast(msg,type='info'){const t=document.getElementById('toast');const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]||'#0d47a1'};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;t.style.display='block';setTimeout(()=>t.style.display='none',5000);}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');}));
+renderCampaigns();renderPerf();renderAudit();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

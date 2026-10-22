@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7-Day CMS Compliance Tracker | Enrollment Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.risk-safe{background:#e8f5e9;color:#1b5e20;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.risk-at{background:#fff8e1;color:#e65100;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.risk-breach{background:#fce4ec;color:#c62828;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:540px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+.rej-code{background:#fce4ec;color:#c62828;padding:4px 10px;border-radius:6px;font-size:11px;font-family:monospace;font-weight:700}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>OEC Submission &amp; 7-Day CMS Compliance Tracker</h4><ol class="breadcrumb-bar"><li></li></ol></div>
+    <input type="text" class="tb-search" placeholder="Search Application ID, Member...">
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>CMS Requirement:</strong> Enrollment applications must be submitted within <strong>7 calendar days</strong> of application signature date. At-Risk alerts at Day 5 (configurable). Compliance Breach escalation at Day 8.</span></div>
+
+    <div class="al-info mb16"><i class="fas fa-calendar-check" style="flex-shrink:0"></i><span><strong>Effective Date Lifecycle:</strong> Agent enters a <em>Requested Effective Date</em> (always 1st of month). On CMS acceptance, a <em>Confirmed Effective Date</em> is returned and used for all downstream commission calculations (Initial vs. Renewal per CMS MMR). Rejected enrollments receive no confirmed date and generate no commission. Delayed CMS updates that change the confirmed date trigger automatic proration recalculation.</span></div>
+
+    <!-- Risk Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Safe (0-4 days)</div><div class="stat-val">32</div><div class="stat-sub">On track for submission</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">At Risk (5-6 days)</div><div class="stat-val">8</div><div class="stat-sub stat-dn">Supervisor alerted</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Breached (7+ days)</div><div class="stat-val">2</div><div class="stat-sub stat-dn">Compliance Manager escalated</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Submitted (ATN Received)</div><div class="stat-val">156</div><div class="stat-sub stat-up">This month</div></div></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <label>Risk Level:</label>
+      <select id="fRisk" onchange="applyFilters()"><option value="">All</option><option value="safe">Safe</option><option value="at-risk">At Risk</option><option value="breach">Breached</option></select>
+      <label>Status:</label>
+      <select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="pending">Pending Submission</option><option value="submitted-atn">Submitted - Pending ATN</option><option value="rejected">CMS Rejected</option><option value="accepted">CMS Accepted</option></select>
+      <label>Agent:</label>
+      <select id="fAgent" onchange="applyFilters()"><option value="">All Agents</option><option value="8823441">James Martinez (8823441)</option><option value="7714200">Sarah Chen (7714200)</option></select>
+      <label>Days:</label>
+      <input type="number" id="fDaysMin" placeholder="Min" style="width:58px" oninput="applyFilters()"> <span style="font-size:12px">–</span>
+      <input type="number" id="fDaysMax" placeholder="Max" style="width:58px" oninput="applyFilters()">
+      <label>App Date:</label>
+      <input type="date" id="fDateFrom" style="width:130px" oninput="applyFilters()"> <span style="font-size:12px">to</span> <input type="date" id="fDateTo" style="width:130px" oninput="applyFilters()">
+      <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i>Filter</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Compliance Tracker Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>7-Day Compliance Tracker</h5><div class="dflex g8"><button class="btn-ol btn-sm" onclick="nfpExport('7-Day Compliance Report')"><i class="fas fa-download"></i>Export Report</button></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','compliance-tracker_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1" id="trackerTbl">
+          <thead>
+            <tr><th>Application ID</th><th>Member Name</th><th>Agent NPN</th><th>App Signature Date</th><th>Days Elapsed</th><th>CMS Submission</th><th>ATN</th><th>Status</th><th>Risk Level</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr data-risk="at-risk" data-status="pending" data-agent="8823441" data-days="5" data-date="2026-05-20">
+              <td><code>APP-2026-1247</code></td><td>Linda Park</td><td>8823441</td><td>05 20,2026</td>
+              <td style="font-weight:700;color:#e65100">5</td><td></td><td></td>
+              <td><span class="bdg b-amber">Pending Submission</span></td>
+              <td><span class="risk-at">At Risk</span></td>
+              <td><button class="btn-pr btn-sm" onclick="openResubmit('APP-2026-1247','Linda Park','2026-05-20',5)"><i class="fas fa-redo"></i>Manual Resubmit</button></td>
+            </tr>
+            <tr data-risk="breach" data-status="rejected" data-agent="8823441" data-days="11" data-date="2026-05-18">
+              <td><code>APP-2026-1249</code></td><td>Frank Johnson</td><td>8823441</td><td>05 18,2026</td>
+              <td style="font-weight:700;color:#c62828">11</td><td>May 19 (rejected)</td><td></td>
+              <td><span class="bdg b-red">CMS Rejected</span></td>
+              <td><span class="risk-breach">Breached</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openRejDetail('APP-2026-1249','Frank Johnson','R001','Invalid MBI format. The MBI provided does not match CMS format requirements.')"><i class="fas fa-exclamation-circle"></i>View Rejection</button> <button class="btn-pr btn-sm" onclick="openResubmit('APP-2026-1249','Frank Johnson','2026-05-18',11)"><i class="fas fa-redo"></i>Resubmit</button></td>
+            </tr>
+            <tr data-risk="safe" data-status="submitted-atn" data-agent="8823441" data-days="1" data-date="2026-05-24">
+              <td><code>APP-2026-1251</code></td><td>Nancy Collins</td><td>8823441</td><td>05 24,2026</td>
+              <td style="font-weight:700;color:#1b5e20">1</td><td>May 24 14:22 UTC</td><td><code>ATN-882341</code></td>
+              <td><span class="bdg b-green">Submitted - Pending CMS</span></td>
+              <td><span class="risk-safe">Safe</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showDetail('APP-2026-1251','Nancy Collins','8823441','James Martinez','05 24,2026','May 24 14:22 UTC','ATN-882341','Submitted - Pending CMS','Safe','1','ESRD SNP','07 01,2026','Application submitted same day via OEC Vendor. ATN received within 2 hours. Awaiting CMS eligibility verification and acceptance. SOA on file. No issues detected.')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-risk="safe" data-status="accepted" data-agent="7714200" data-days="2" data-date="2026-05-23">
+              <td><code>APP-2026-1252</code></td><td>Earl Thompson</td><td>7714200</td><td>05 23,2026</td>
+              <td style="font-weight:700;color:#1b5e20">2</td><td>May 23 09:45 UTC</td><td><code>ATN-882342</code></td>
+              <td><span class="bdg b-green">CMS Accepted</span><div style="font-size:10px;color:#1b5e20;margin-top:2px">Confirmed Eff: 07 01,2026</div></td>
+              <td><span class="risk-safe">Safe</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showDetail('APP-2026-1252','Earl Thompson','7714200','Sarah Chen','05 23,2026','May 23 09:45 UTC','ATN-882342','CMS Accepted','Safe','2','CKD SNP','07 01,2026','CMS accepted enrollment. Confirmed effective date: 07 01,2026. Welcome packet sent. ID card generated. PCP assignment pending member selection. Commission classified as Initial per CMS MMR. Agent: Sarah Chen.')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-risk="at-risk" data-status="submitted-atn" data-agent="8823441" data-days="6" data-date="2026-05-19">
+              <td><code>APP-2026-1244</code></td><td>Robert Harris</td><td>8823441</td><td>05 19,2026</td>
+              <td style="font-weight:700;color:#e65100">6</td><td>May 20 (pending)</td><td></td>
+              <td><span class="bdg b-amber">Submitted - Pending ATN</span></td>
+              <td><span class="risk-at">At Risk</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showDetail('APP-2026-1244','Robert Harris','8823441','James Martinez','05 19,2026','May 20 (pending)','—','Submitted - Pending ATN','At Risk','6','H&D SNP','07 01,2026','Submitted via OEC Vendor on Day 1 but no ATN received after 6 days. Vendor inquiry initiated. Possible submission failure at vendor gateway. Supervisor alerted at Day 5. If no ATN by Day 7, manual resubmission via Direct API required.')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-risk="breach" data-status="rejected" data-agent="7714200" data-days="15" data-date="2026-05-14">
+              <td><code>APP-2026-1231</code></td><td>Carol Wright</td><td>7714200</td><td>05 14,2026</td>
+              <td style="font-weight:700;color:#c62828">15</td><td>May 15 (rejected)</td><td></td>
+              <td><span class="bdg b-red">CMS Rejected</span></td>
+              <td><span class="risk-breach">Breached</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openRejDetail('APP-2026-1231','Carol Wright','R003','Enrollment period ineligibility. Member does not qualify for a Special Enrollment Period based on the reason code provided.')"><i class="fas fa-exclamation-circle"></i>View Rejection</button> <button class="btn-danger btn-sm" onclick="openResubmit('APP-2026-1231','Carol Wright','2026-05-14',15)">Resubmit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Submission Pathway Config -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-cog" style="margin-right:8px;color:#00695c"></i>CMS Submission Configuration</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="row-grid">
+          <div class="col-1">
+            <div style="padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:11px;text-transform:uppercase;color:#5f6368;font-weight:600">Submission Pathway</div>
+              <div style="font-size:15px;font-weight:700;margin-top:4px">OEC Vendor (Configurable)</div>
+              <div style="font-size:11px;color:#80868b">Direct API / OEC Vendor / File Batch</div>
+            </div>
+          </div>
+          <div class="col-1">
+            <div style="padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:11px;text-transform:uppercase;color:#5f6368;font-weight:600">Auto-Submit Window</div>
+              <div style="font-size:15px;font-weight:700;margin-top:4px">Within 24 hours</div>
+              <div style="font-size:11px;color:#80868b">Of application signature</div>
+            </div>
+          </div>
+          <div class="col-1">
+            <div style="padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:11px;text-transform:uppercase;color:#5f6368;font-weight:600">At Risk Alert Day</div>
+              <div style="font-size:15px;font-weight:700;margin-top:4px;color:#e65100">Day 5 (configurable)</div>
+              <div style="font-size:11px;color:#80868b">Email to Enrollment Ops Supervisor</div>
+            </div>
+          </div>
+          <div class="col-1">
+            <div style="padding:12px;background:#f8f9fa;border-radius:8px">
+              <div style="font-size:11px;text-transform:uppercase;color:#5f6368;font-weight:600">Breach Escalation Day</div>
+              <div style="font-size:15px;font-weight:700;margin-top:4px;color:#c62828">Day 8 (configurable)</div>
+              <div style="font-size:11px;color:#80868b">Email to Compliance Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="al-info mt8" style="margin-top:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Manual resubmit blocked if &gt;14 days since signature date. CMS rejection details visible in View Rejection panel.</span></div>
+        <div class="al-info mt8" style="margin-top:8px"><i class="fas fa-balance-scale" style="flex-shrink:0"></i><span><strong>Reconciliation:</strong> Every CMS submission and response is logged as a reconciliation record. Submission log is accessible to both Enrollment Ops and Compliance. Commission classification (Initial/Renewal per MMR) is triggered automatically upon CMS acceptance with confirmed effective date.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW DETAIL MODAL -->
+<div id="viewDetailModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-file-medical" style="margin-right:8px;color:#00695c"></i><span id="vdTitle">Application Detail</span></h6><button onclick="document.getElementById('viewDetailModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Application ID</div><div id="vdAppId" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Member</div><div id="vdMember" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent (NPN)</div><div id="vdNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Plan</div><div id="vdPlan" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Signature Date</div><div id="vdSigDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">CMS Submission</div><div id="vdSubDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">ATN</div><div id="vdATN" style="font-size:13px;font-family:monospace;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Requested Effective</div><div id="vdEffDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Days Elapsed</div><div id="vdDays" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="vdStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div style="grid-column:span 2"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Risk Level</div><div id="vdRisk" style="margin-top:4px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Processing Notes</div>
+        <div id="vdNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div id="vdActions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('viewDetailModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MANUAL RESUBMIT MODAL -->
+<div id="resubmitModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-redo" style="margin-right:8px;color:#00695c"></i>Manual CMS Resubmission</h6><button onclick="document.getElementById('resubmitModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div id="resubmitBlockedMsg" class="al-danger" style="display:none"><i class="fas fa-ban" style="flex-shrink:0"></i><span><strong>Blocked:</strong> This application is beyond the CMS late submission window (14 days) and cannot be re-submitted electronically. Please contact your Compliance Manager.</span></div>
+      <div id="resubmitForm">
+        <p style="font-size:13px">Initiating manual resubmission for <strong id="rsAppId"></strong> — <strong id="rsMember"></strong></p>
+        <div class="al-info" style="margin-bottom:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Re-submission must fall within the <strong>7-day window</strong> from the original signature date. Days elapsed: <strong id="rsDays" style="color:#e65100"></strong>. CMS hard deadline: 14 days.</span></div>
+        <div class="fg" style="margin-bottom:10px"><label>Resubmission Reason / Resolution Notes <span class="req">*</span></label><textarea id="rsNotes" rows="3" placeholder="Describe what was corrected before resubmission (required, min 20 characters)..."></textarea></div>
+        <div class="fg" style="margin-bottom:10px"><label>Submission Pathway</label>
+          <select id="rsPathway">
+            <option value="direct">Direct API to CMS</option>
+            <option value="vendor" selected>OEC Vendor Intermediary</option>
+            <option value="batch">File Batch</option>
+          </select>
+        </div>
+        <div id="rsErr" class="al-danger" style="display:none;margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" id="rsPrefillBtn" onclick="prefillResubmit()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div>
+        <button class="btn-ol" onclick="document.getElementById('resubmitModal').classList.remove('open')">Cancel</button>
+        <button id="rsSubmitBtn" class="btn-pr" onclick="confirmResubmit()"><i class="fas fa-paper-plane"></i>Resubmit to CMS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REJECTION DETAIL MODAL -->
+<div id="rejModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-times-circle" style="margin-right:8px"></i>CMS Rejection Detail</h6><button onclick="document.getElementById('rejModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;margin-bottom:12px">Rejection details for <strong id="rejAppId"></strong> — <strong id="rejMember"></strong></p>
+      <div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:8px;padding:14px 16px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <span class="rej-code" id="rejCode"></span>
+          <span style="font-size:13px;font-weight:600;color:#c62828" id="rejShortDesc"></span>
+        </div>
+        <div style="font-size:12.5px;color:#5f6368" id="rejFullDesc"></div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:#424242;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Common CMS Rejection Codes (Master Data)</div>
+      <div style="font-size:12px">
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R001</span><span>Invalid MBI format — MBI does not match CMS alphanumeric pattern</span></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R002</span><span>Member not Medicare-eligible on the requested effective date</span></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R003</span><span>Enrollment period ineligibility — no qualifying SEP/AEP/OEP</span></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R004</span><span>Duplicate application — existing enrollment for same plan year</span></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R005</span><span>Plan not available in member's county of residence</span></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span class="rej-code">R006</span><span>Missing required field — name, DOB, or address incomplete</span></div>
+        <div style="padding:6px 0;display:flex;gap:8px"><span class="rej-code">R007</span><span>C-SNP eligibility not verified — qualifying condition not documented</span></div>
+      </div>
+      <div class="al-info" style="margin-top:14px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Resolve the rejection reason, update the enrollment application, then use <strong>Manual Resubmit</strong>. Re-submission must be within 14 days of the original signature date.</span></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('rejModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var resubmitTarget={appId:'',member:'',sigDate:'',days:0};
+
+function openResubmit(appId,member,sigDate,days){
+  resubmitTarget={appId:appId,member:member,sigDate:sigDate,days:days};
+  document.getElementById('rsAppId').textContent=appId;
+  document.getElementById('rsMember').textContent=member;
+  document.getElementById('rsDays').textContent=days+' days elapsed';
+  document.getElementById('rsNotes').value='';
+  document.getElementById('rsErr').style.display='none';
+  var blocked=days>14;
+  document.getElementById('resubmitBlockedMsg').style.display=blocked?'flex':'none';
+  document.getElementById('resubmitForm').style.display=blocked?'none':'block';
+  document.getElementById('rsSubmitBtn').style.display=blocked?'none':'inline-flex';
+  document.getElementById('rsPrefillBtn').style.display=blocked?'none':'inline-flex';
+  document.getElementById('resubmitModal').classList.add('open');
+}
+function confirmResubmit(){
+  var notes=document.getElementById('rsNotes').value.trim();
+  var err=document.getElementById('rsErr');
+  if(notes.length<20){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>Resubmission notes are required and must be at least 20 characters (current: '+notes.length+').</div>';err.style.display='flex';return;}
+  err.style.display='none';
+  var pathway=document.getElementById('rsPathway').value;
+  document.getElementById('resubmitModal').classList.remove('open');
+  showToast('Manual resubmission initiated for '+resubmitTarget.member+' ('+resubmitTarget.appId+') via '+pathway+'. CMS acknowledgment expected within 24 hours.','success');
+}
+
+function prefillResubmit(){
+  document.getElementById('rsNotes').value='Corrected MBI format from legacy format to CMS-compliant 11-character alphanumeric. Verified against member Medicare card. Address updated to match CMS records.';
+  document.getElementById('rsPathway').value='direct';
+  var err=document.getElementById('rsErr');
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing.</div>';
+  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
+}
+
+function openRejDetail(appId,member,code,desc){
+  document.getElementById('rejAppId').textContent=appId;
+  document.getElementById('rejMember').textContent=member;
+  document.getElementById('rejCode').textContent=code;
+  var shortDescs={'R001':'Invalid MBI Format','R002':'Member Not Eligible','R003':'Enrollment Period Ineligibility','R004':'Duplicate Application','R005':'Plan Not Available in County','R006':'Missing Required Field','R007':'C-SNP Eligibility Not Verified'};
+  document.getElementById('rejShortDesc').textContent=shortDescs[code]||'Rejection';
+  document.getElementById('rejFullDesc').textContent=desc;
+  document.getElementById('rejModal').classList.add('open');
+}
+
+function showDetail(appId,member,npn,agent,sigDate,subDate,atn,status,risk,days,plan,effDate,notes){
+  document.getElementById('vdAppId').textContent=appId;
+  document.getElementById('vdMember').textContent=member;
+  document.getElementById('vdNPN').textContent=npn+' ('+agent+')';
+  document.getElementById('vdPlan').textContent=plan;
+  document.getElementById('vdSigDate').textContent=sigDate;
+  document.getElementById('vdSubDate').textContent=subDate||'Not yet submitted';
+  document.getElementById('vdATN').textContent=atn||'Pending';
+  document.getElementById('vdEffDate').textContent=effDate;
+  document.getElementById('vdDays').textContent=days+' days';
+  document.getElementById('vdNotes').textContent=notes;
+  document.getElementById('vdTitle').textContent=appId+' — '+member;
+  var s=document.getElementById('vdStatus');
+  if(status.indexOf('Accepted')>=0) s.innerHTML='<span style="color:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>'+status+'</span>';
+  else if(status.indexOf('Rejected')>=0) s.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>'+status+'</span>';
+  else s.innerHTML='<span style="color:#e65100"><i class="fas fa-clock" style="margin-right:4px"></i>'+status+'</span>';
+  var r=document.getElementById('vdRisk');
+  if(risk==='Safe') r.innerHTML='<span class="risk-safe">Safe</span>';
+  else if(risk==='At Risk') r.innerHTML='<span class="risk-at">At Risk</span>';
+  else r.innerHTML='<span class="risk-breach">Breached</span>';
+  var actions=document.getElementById('vdActions');
+  if(status.indexOf('Accepted')>=0){
+    actions.innerHTML='<button class="btn-ol btn-sm" onclick="showToast(\'Welcome packet resent to '+member+'\',\'success\')"><i class="fas fa-envelope-open" style="margin-right:4px"></i>Resend Welcome</button><button class="btn-ol btn-sm" onclick="showToast(\'Details copied to clipboard\',\'info\')"><i class="fas fa-copy" style="margin-right:4px"></i>Copy Details</button>';
+  } else {
+    actions.innerHTML='<button class="btn-ol btn-sm" onclick="showToast(\'CMS status check initiated for '+appId+'\',\'info\')"><i class="fas fa-sync" style="margin-right:4px"></i>Check CMS Status</button><button class="btn-ol btn-sm" onclick="showToast(\'Agent '+agent+' notified\',\'info\')"><i class="fas fa-envelope" style="margin-right:4px"></i>Notify Agent</button><button class="btn-ol btn-sm" onclick="showToast(\'Escalated to supervisor\',\'warn\')"><i class="fas fa-arrow-up" style="margin-right:4px"></i>Escalate</button>';
+  }
+  document.getElementById('viewDetailModal').classList.add('open');
+}
+
+function applyFilters(){
+  var risk=(document.getElementById('fRisk').value||'').toLowerCase();
+  var status=(document.getElementById('fStatus').value||'').toLowerCase();
+  var agent=(document.getElementById('fAgent').value||'').toLowerCase();
+  var dMin=parseInt(document.getElementById('fDaysMin').value||'0');
+  var dMax=parseInt(document.getElementById('fDaysMax').value||'9999');
+  var dateFrom=document.getElementById('fDateFrom').value;
+  var dateTo=document.getElementById('fDateTo').value;
+  var rows=document.querySelectorAll('#trackerTbl tbody tr');
+  var shown=0;
+  rows.forEach(function(row){
+    var rr=(row.dataset.risk||'').toLowerCase();
+    var rs=(row.dataset.status||'').toLowerCase();
+    var ra=(row.dataset.agent||'').toLowerCase();
+    var rd=parseInt(row.dataset.days||'0');
+    var rDate=row.getAttribute('data-date')||'';
+    var show=true;
+    if(risk&&rr.indexOf(risk)===-1) show=false;
+    if(status&&rs!==status) show=false;
+    if(agent&&ra!==agent) show=false;
+    if(rd<dMin||rd>dMax) show=false;
+    if(dateFrom&&rDate<dateFrom) show=false;
+    if(dateTo&&rDate>dateTo) show=false;
+    row.style.display=show?'':'none';
+    if(show) shown++;
+  });
+  showToast('Filters applied \u2014 '+shown+' of '+rows.length+' records shown.','info');
+}
+function resetFilters(){
+  ['fRisk','fStatus','fAgent'].forEach(function(id){document.getElementById(id).value='';});
+  ['fDaysMin','fDaysMax','fDateFrom','fDateTo'].forEach(function(id){document.getElementById(id).value='';});
+  document.querySelectorAll('#trackerTbl tbody tr').forEach(function(r){r.style.display='';});
+  showToast('All filters cleared.','info');
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},5000);
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+</script>
+</body>
+</html>
+</html>
+

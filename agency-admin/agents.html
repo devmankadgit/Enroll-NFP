@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Agents | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html" class="active"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>My Agents (Downline)</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>My Agents</li></ol>
+    </div>
+    <div class="dflex g8">
+      <input type="text" class="tb-search" placeholder="Search by name, NPN—">
+      <button class="btn-pr btn-sm" onclick="document.getElementById('addAgentModal').style.display='flex'"><i class="fas fa-user-plus"></i>Add Agent</button>
+      <a href="invitations.html" class="btn-ol btn-sm"><i class="fas fa-paper-plane"></i>Invite Agent</a>
+    </div>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Onboarding</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Compliance Hold</div><div class="stat-val">0</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f5f5f5;color:#616161"><i class="fas fa-user-times"></i></div><div><div class="stat-label">Terminated</div><div class="stat-val">1</div></div></div></div>
+    </div>
+
+    <!-- Agent List -->
+    <div class="card">
+      <div class="card-hdr"><h5>All Downline Agents</h5><select class="form-control" style="width:120px"><option>All Status</option><option>Active</option><option>Onboarding</option><option>Hold</option><option>Terminated</option></select><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agents_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Agent Name</th><th>NPN</th><th>Hierarchy Level</th><th>States</th><th>Status</th><th>AHIP</th><th>License</th><th>Carrier Appt</th><th>Leads Assigned</th><th>Converted</th><th>Active BoB</th><th>Enrollments YTD</th><th>YTD Commissions</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>James Martinez</strong></td><td>8823441</td><td>GA - 10</td><td>FL, TX</td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Valid</span></td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Appointed</span></td>
+              <td>18</td><td>8</td>
+              <td>32</td><td>12</td><td>$8,750</td>
+              <td><button class="btn-ol btn-sm" onclick="viewAgentDetail('James Martinez','8823441','FL, TX','Active','Valid','Active','Appointed',18,8,32,12,'$8,750')">View</button></td>
+            </tr>
+            <tr>
+              <td><strong>Maria Lopez</strong></td><td>7734112</td><td>MGA - 20</td><td>FL</td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Valid</span></td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Appointed</span></td>
+              <td>14</td><td>6</td>
+              <td>18</td><td>7</td><td>$5,200</td>
+              <td><button class="btn-ol btn-sm" onclick="viewAgentDetail('Maria Lopez','7734112','FL','Active','Valid','Active','Appointed',14,6,18,7,'$5,200')">View</button></td>
+            </tr>
+            <tr>
+              <td><strong>Lisa Park</strong></td><td>7722118</td><td>Agent - 10</td><td>FL</td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Valid</span></td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-success">Appointed</span></td>
+              <td>10</td><td>3</td>
+              <td>7</td><td>3</td><td>$2,100</td>
+              <td><button class="btn-ol btn-sm" onclick="viewAgentDetail('Lisa Park','7722118','FL','Active','Valid','Active','Appointed',10,3,7,3,'$2,100')">View</button></td>
+            </tr>
+            <tr>
+              <td><strong>Kevin Williams</strong></td><td>8847123</td><td>Agent - 10</td><td>FL, TX</td>
+              <td><span class="badge bg-warning text-dark">Onboarding</span></td>
+              <td><span class="badge bg-secondary">Pending</span></td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td>—</td><td>—</td>
+              <td>—</td><td>—</td><td>—</td>
+              <td><a href="onboarding-cases.html" class="btn-ol btn-sm">Track</a></td>
+            </tr>
+            <tr>
+              <td><strong>Robert Chen</strong></td><td>8834221</td><td>SGA - 30</td><td>FL</td>
+              <td><span class="badge bg-danger">Terminated</span></td>
+              <td><span class="badge bg-secondary">Expired</span></td>
+              <td><span class="badge bg-danger">Expired</span></td>
+              <td><span class="badge bg-danger">Terminated</span></td>
+              <td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>$0</td>
+              <td><button class="btn-ol btn-sm" onclick="viewAgentDetail('Robert Chen','8834221','FL','Terminated','Expired','Expired','Terminated',0,0,0,0,'$0')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD AGENT MODAL -->
+<div class="modal-overlay" id="addAgentModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px"></i>Add Agent to My Agency</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-info" style="margin-bottom:14px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Add an agent directly to your agency. The agent will appear in your downline listing after submission.</span></div>
+      <div class="form-row">
+        <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="agFirst" placeholder="e.g. John"></div>
+        <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="agLast" placeholder="e.g. Smith"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>NPN <span class="req">*</span></label><input type="text" id="agNPN" placeholder="8-10 digits" maxlength="10"></div>
+        <div class="fg"><label>Licensed States <span class="req">*</span></label><input type="text" id="agStates" placeholder="e.g. FL, TX"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Email</label><input type="email" id="agEmail" placeholder="agent@example.com"></div>
+        <div class="fg"><label>Phone</label><input type="text" id="agPhone" placeholder="(305) 555-0000"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>AHIP Status</label><select id="agAHIP"><option value="Valid">Valid</option><option value="Pending" selected>Pending</option><option value="Expired">Expired</option></select></div>
+        <div class="fg"><label>License Status</label><select id="agLicense"><option value="Active">Active</option><option value="Pending" selected>Pending</option></select></div>
+        <div class="fg"><label>Status</label><select id="agStatus"><option value="Active">Active</option><option value="Onboarding" selected>Onboarding</option></select></div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillAddAgent()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+        <button class="btn-pr" onclick="addAgentToListing()"><i class="fas fa-user-plus" style="margin-right:4px"></i>Add Agent</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function addAgentToListing(){
+  var first=document.getElementById('agFirst').value.trim();
+  var last=document.getElementById('agLast').value.trim();
+  var npn=document.getElementById('agNPN').value.trim();
+  var states=document.getElementById('agStates').value.trim();
+  var ahip=document.getElementById('agAHIP').value;
+  var license=document.getElementById('agLicense').value;
+  var status=document.getElementById('agStatus').value;
+  if(!first||!last||!npn||!states){showToast('Please fill all required fields','error');return;}
+  if(npn.length<8||!/^\d+$/.test(npn)){showToast('NPN must be 8-10 digits','error');return;}
+
+  var tbody=document.querySelector('.tbl tbody');
+  var tr=document.createElement('tr');
+  var statusBadge=status==='Active'?'<span class="badge bg-success">Active</span>':'<span class="badge bg-warning text-dark">Onboarding</span>';
+  var ahipBadge=ahip==='Valid'?'<span class="badge bg-success">Valid</span>':(ahip==='Pending'?'<span class="badge bg-secondary">Pending</span>':'<span class="badge bg-danger">Expired</span>');
+  var licenseBadge=license==='Active'?'<span class="badge bg-success">Active</span>':'<span class="badge bg-secondary">Pending</span>';
+  var actionBtn=status==='Active'?'<button class="btn-ol btn-sm">View</button>':'<a href="onboarding-cases.html" class="btn-ol btn-sm">Track</a>';
+
+  var carrierBadge=status==='Active'?'<span class="badge bg-warning text-dark">Pending</span>':'<span class="badge bg-secondary">Pending</span>';
+  tr.innerHTML='<td><strong>'+first+' '+last+'</strong></td><td>'+npn+'</td><td>Agent - 10</td><td>'+states+'</td><td>'+statusBadge+'</td><td>'+ahipBadge+'</td><td>'+licenseBadge+'</td><td>'+carrierBadge+'</td><td>'+(status==='Active'?'0':'\u2014')+'</td><td>'+(status==='Active'?'0':'\u2014')+'</td><td>'+(status==='Active'?'0':'\u2014')+'</td><td>'+(status==='Active'?'0':'\u2014')+'</td><td>'+(status==='Active'?'$0':'\u2014')+'</td><td>'+actionBtn+'</td>';
+  tbody.insertBefore(tr,tbody.firstChild);
+
+  document.getElementById('addAgentModal').style.display='none';
+  showToast('Agent "'+first+' '+last+'" (NPN '+npn+') added to your agency','success');
+
+  // Reset form
+  ['agFirst','agLast','agNPN','agStates','agEmail','agPhone'].forEach(function(id){document.getElementById(id).value='';});
+}
+
+function prefillAddAgent(){
+  document.getElementById('agFirst').value='Angela';
+  document.getElementById('agLast').value='Ramirez';
+  document.getElementById('agNPN').value='99102847';
+  document.getElementById('agStates').value='FL, GA';
+  document.getElementById('agEmail').value='angela.ramirez@insurepro.com';
+  document.getElementById('agPhone').value='(305) 555-8821';
+  document.getElementById('agAHIP').value='Valid';
+  document.getElementById('agLicense').value='Active';
+  document.getElementById('agStatus').value='Active';
+  showToast('Form prefilled with sample agent data (Angela Ramirez, NPN 99102847)','info');
+}
+</script>
+
+<!-- Agent Detail Modal -->
+<div class="modal-overlay" id="agentDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-tie" style="margin-right:8px;color:#e65100"></i><span id="adName">Agent Profile</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>NPN:</strong> <span id="adNPN"></span></p>
+          <p><strong>Licensed States:</strong> <span id="adStates"></span></p>
+          <p><strong>Status:</strong> <span id="adStatus"></span></p>
+          <p><strong>AHIP Certification:</strong> <span id="adAHIP"></span></p>
+          <p><strong>License Status:</strong> <span id="adLic"></span></p>
+          <p><strong>Carrier Appointment:</strong> <span id="adCarrier"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Leads Assigned:</strong> <span id="adLeads"></span></p>
+          <p><strong>Leads Converted:</strong> <span id="adConverted"></span></p>
+          <p><strong>Active BoB Members:</strong> <span id="adBoB"></span></p>
+          <p><strong>Enrollments YTD:</strong> <span id="adEnr"></span></p>
+          <p><strong>YTD Commissions:</strong> <span id="adYTD"></span></p>
+        </div>
+      </div>
+      <h6 style="font-weight:700;margin-top:16px;margin-bottom:8px"><i class="fas fa-folder-open" style="color:#e65100;margin-right:6px"></i>Documents & Training</h6>
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>E&O Insurance:</strong> <span id="adEO"></span></p>
+          <p><strong>Background Check:</strong> <span id="adBG"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Product Training:</strong> <span id="adTraining"></span></p>
+          <p><strong>Compliance Docs:</strong> <span id="adDocs"></span></p>
+        </div>
+      </div>
+      <div class="dflex g8" style="margin-top:14px;flex-wrap:wrap">
+        <a href="bob.html" class="btn-ol btn-sm"><i class="fas fa-address-book"></i> View BoB</a>
+        <a href="action-items.html" class="btn-ol btn-sm"><i class="fas fa-tasks"></i> Action Items</a>
+        <a href="commissions.html" class="btn-ol btn-sm"><i class="fas fa-dollar-sign"></i> Commissions</a>
+        <button class="btn-ol btn-sm" onclick="openDocsModal()"><i class="fas fa-file-alt"></i> View Documents</button>
+        <button class="btn-ol btn-sm" onclick="openTrainingModal()"><i class="fas fa-graduation-cap"></i> Training Records</button>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button></div>
+  </div>
+</div>
+
+<script>
+var agentDocData = {
+  'James Martinez': {eo:'Valid – Exp 12/2026',bg:'Cleared',training:'AHIP 2026 Complete, Product Training Complete',docs:'All current'},
+  'Maria Lopez': {eo:'Valid – Exp 03/2027',bg:'Cleared',training:'AHIP 2026 Complete, Product Training Complete',docs:'All current'},
+  'Lisa Park': {eo:'Valid – Exp 09/2026',bg:'Cleared',training:'AHIP 2026 Complete, Product Training Complete',docs:'All current'},
+  'Kevin Williams': {eo:'Pending',bg:'In Progress',training:'AHIP Pending',docs:'Incomplete'},
+  'Robert Chen': {eo:'Expired',bg:'Cleared',training:'AHIP Expired',docs:'Archived'}
+};
+function viewAgentDetail(name, npn, states, status, ahip, lic, carrier, leads, converted, bob, enr, ytd) {
+  document.getElementById('adName').textContent = name;
+  document.getElementById('adNPN').textContent = npn;
+  document.getElementById('adStates').textContent = states;
+  document.getElementById('adStatus').textContent = status;
+  document.getElementById('adAHIP').textContent = ahip;
+  document.getElementById('adLic').textContent = lic;
+  document.getElementById('adCarrier').textContent = carrier;
+  document.getElementById('adLeads').textContent = leads;
+  document.getElementById('adConverted').textContent = converted;
+  document.getElementById('adBoB').textContent = bob;
+  document.getElementById('adEnr').textContent = enr;
+  document.getElementById('adYTD').textContent = ytd;
+  var doc = agentDocData[name] || {eo:'—',bg:'—',training:'—',docs:'—'};
+  document.getElementById('adEO').textContent = doc.eo;
+  document.getElementById('adBG').textContent = doc.bg;
+  document.getElementById('adTraining').textContent = doc.training;
+  document.getElementById('adDocs').textContent = doc.docs;
+  currentAgentName = name;
+  document.getElementById('agentDetailModal').style.display = 'flex';
+}
+var currentAgentName = '';
+var agentDocsDetail = {
+  'James Martinez': {
+    docs: [
+      {name:'E&O Certificate of Insurance',type:'PDF',uploaded:'01 15,2026',expires:'12 31,2026',status:'Current'},
+      {name:'State License – FL (License #L0884231)',type:'PDF',uploaded:'02 01,2026',expires:'03 31,2028',status:'Current'},
+      {name:'State License – TX (License #T0223441)',type:'PDF',uploaded:'02 01,2026',expires:'06 30,2027',status:'Current'},
+      {name:'Carrier Appointment Confirmation',type:'PDF',uploaded:'03 05,2026',expires:'—',status:'Current'},
+      {name:'W-9 Form',type:'PDF',uploaded:'01 10,2026',expires:'—',status:'Current'},
+      {name:'Background Check Clearance',type:'PDF',uploaded:'01 20,2026',expires:'—',status:'Cleared'}
+    ],
+    training: [
+      {course:'AHIP Medicare Certification 2026',completed:'01 08,2026',expires:'12 31,2026',status:'Complete',score:'92%'},
+      {course:'Gold Kidney Product Training – MA',completed:'02 12,2026',expires:'12 31,2026',status:'Complete',score:'88%'},
+      {course:'Gold Kidney Product Training – Part D',completed:'02 12,2026',expires:'12 31,2026',status:'Complete',score:'95%'},
+      {course:'Compliance & FWA Training',completed:'01 15,2026',expires:'12 31,2026',status:'Complete',score:'100%'},
+      {course:'C-SNP Verification Training',completed:'03 01,2026',expires:'12 31,2026',status:'Complete',score:'90%'}
+    ]
+  },
+  'Maria Lopez': {
+    docs: [
+      {name:'E&O Certificate of Insurance',type:'PDF',uploaded:'02 10,2026',expires:'03 31,2027',status:'Current'},
+      {name:'State License – FL (License #L0776112)',type:'PDF',uploaded:'01 20,2026',expires:'09 30,2027',status:'Current'},
+      {name:'Carrier Appointment Confirmation',type:'PDF',uploaded:'03 01,2026',expires:'—',status:'Current'},
+      {name:'W-9 Form',type:'PDF',uploaded:'02 05,2026',expires:'—',status:'Current'},
+      {name:'Background Check Clearance',type:'PDF',uploaded:'02 15,2026',expires:'—',status:'Cleared'}
+    ],
+    training: [
+      {course:'AHIP Medicare Certification 2026',completed:'01 12,2026',expires:'12 31,2026',status:'Complete',score:'90%'},
+      {course:'Gold Kidney Product Training – MA',completed:'02 20,2026',expires:'12 31,2026',status:'Complete',score:'85%'},
+      {course:'Compliance & FWA Training',completed:'01 18,2026',expires:'12 31,2026',status:'Complete',score:'100%'}
+    ]
+  },
+  'Lisa Park': {
+    docs: [
+      {name:'E&O Certificate of Insurance',type:'PDF',uploaded:'03 01,2026',expires:'09 30,2026',status:'Current'},
+      {name:'State License – FL (License #L0722118)',type:'PDF',uploaded:'03 05,2026',expires:'12 31,2027',status:'Current'},
+      {name:'Carrier Appointment Confirmation',type:'PDF',uploaded:'03 15,2026',expires:'—',status:'Current'},
+      {name:'W-9 Form',type:'PDF',uploaded:'03 01,2026',expires:'—',status:'Current'},
+      {name:'Background Check Clearance',type:'PDF',uploaded:'02 28,2026',expires:'—',status:'Cleared'}
+    ],
+    training: [
+      {course:'AHIP Medicare Certification 2026',completed:'03 05,2026',expires:'12 31,2026',status:'Complete',score:'94%'},
+      {course:'Gold Kidney Product Training – MA',completed:'03 18,2026',expires:'12 31,2026',status:'Complete',score:'91%'},
+      {course:'Compliance & FWA Training',completed:'03 10,2026',expires:'12 31,2026',status:'Complete',score:'100%'}
+    ]
+  },
+  'Kevin Williams': {
+    docs: [
+      {name:'State License – FL (License #L0847123)',type:'PDF',uploaded:'05 15,2026',expires:'04 30,2028',status:'Current'},
+      {name:'State License – TX (License #T0447123)',type:'PDF',uploaded:'05 15,2026',expires:'07 31,2027',status:'Current'},
+      {name:'W-9 Form',type:'PDF',uploaded:'05 16,2026',expires:'—',status:'Current'},
+      {name:'E&O Certificate of Insurance',type:'—',uploaded:'—',expires:'—',status:'Not Submitted'},
+      {name:'Background Check Clearance',type:'—',uploaded:'05 19,2026',expires:'—',status:'In Progress'}
+    ],
+    training: [
+      {course:'AHIP Medicare Certification 2026',completed:'—',expires:'—',status:'Not Started',score:'—'},
+      {course:'Gold Kidney Product Training – MA',completed:'—',expires:'—',status:'Not Started',score:'—'}
+    ]
+  },
+  'Robert Chen': {
+    docs: [
+      {name:'E&O Certificate of Insurance',type:'PDF',uploaded:'01 05,2025',expires:'12 31,2025',status:'Expired'},
+      {name:'State License – FL (License #L0834221)',type:'PDF',uploaded:'01 10,2025',expires:'03 31,2026',status:'Expired'},
+      {name:'Carrier Appointment Confirmation',type:'PDF',uploaded:'02 01,2025',expires:'—',status:'Terminated'}
+    ],
+    training: [
+      {course:'AHIP Medicare Certification 2025',completed:'01 10,2025',expires:'12 31,2025',status:'Expired',score:'86%'}
+    ]
+  }
+};
+function openDocsModal() {
+  var d = agentDocsDetail[currentAgentName];
+  if (!d) { showToast('No document records found for this agent','error'); return; }
+  document.getElementById('docModalName').textContent = currentAgentName + ' — Documents';
+  var html = '';
+  d.docs.forEach(function(doc) {
+    var sc = doc.status==='Current'||doc.status==='Cleared'?'bg-success':(doc.status==='Expired'||doc.status==='Terminated'?'bg-danger':(doc.status==='In Progress'?'bg-warning text-dark':'bg-secondary'));
+    var dlBtn = (doc.type==='PDF'&&doc.status!=='Not Submitted') ? '<button class="btn-ol btn-sm" onclick="downloadDoc(\''+doc.name+'\',\''+currentAgentName+'\')" title="Download"><i class="fas fa-download"></i> Download</button>' : '<span style="color:#999">—</span>';
+    html += '<tr><td><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>'+doc.name+'</td><td>'+doc.uploaded+'</td><td>'+doc.expires+'</td><td><span class="badge '+sc+'">'+doc.status+'</span></td><td>'+dlBtn+'</td></tr>';
+  });
+  document.getElementById('docTableBody').innerHTML = html;
+  document.getElementById('agentDetailModal').style.display = 'none';
+  document.getElementById('docsModal').style.display = 'flex';
+}
+function openTrainingModal() {
+  var d = agentDocsDetail[currentAgentName];
+  if (!d) { showToast('No training records found for this agent','error'); return; }
+  document.getElementById('trainModalName').textContent = currentAgentName + ' — Training Records';
+  var html = '';
+  d.training.forEach(function(t) {
+    var sc = t.status==='Complete'?'bg-success':(t.status==='Expired'?'bg-danger':'bg-secondary');
+    html += '<tr><td>'+t.course+'</td><td>'+t.completed+'</td><td>'+t.expires+'</td><td>'+t.score+'</td><td><span class="badge '+sc+'">'+t.status+'</span></td></tr>';
+  });
+  document.getElementById('trainTableBody').innerHTML = html;
+  document.getElementById('agentDetailModal').style.display = 'none';
+  document.getElementById('trainingModal').style.display = 'flex';
+}
+function downloadDoc(docName, agentName) {
+  var safeName = docName.replace(/[^a-zA-Z0-9\s\-]/g,'').replace(/\s+/g,'_');
+  var safeAgent = agentName.replace(/\s+/g,'_');
+  var filename = safeAgent + '_' + safeName + '.pdf';
+  var blob = new Blob(['[Simulated PDF] ' + docName + ' — ' + agentName + '\nGenerated: ' + new Date().toLocaleDateString()], {type:'application/pdf'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('Downloaded: ' + filename, 'success');
+}
+</script>
+
+<!-- Documents Modal -->
+<div class="modal-overlay" id="docsModal" style="display:none">
+  <div class="modal-box" style="max-width:780px">
+    <div class="modal-hdr"><h5><i class="fas fa-folder-open" style="margin-right:8px;color:#e65100"></i><span id="docModalName">Documents</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none';document.getElementById('agentDetailModal').style.display='flex'">&times;</button></div>
+    <div class="modal-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Document</th><th>Uploaded</th><th>Expires</th><th>Status</th><th></th></tr></thead>
+          <tbody id="docTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none';document.getElementById('agentDetailModal').style.display='flex'"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Profile</button></div>
+  </div>
+</div>
+
+<!-- Training Records Modal -->
+<div class="modal-overlay" id="trainingModal" style="display:none">
+  <div class="modal-box" style="max-width:780px">
+    <div class="modal-hdr"><h5><i class="fas fa-graduation-cap" style="margin-right:8px;color:#e65100"></i><span id="trainModalName">Training Records</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none';document.getElementById('agentDetailModal').style.display='flex'">&times;</button></div>
+    <div class="modal-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Course</th><th>Completed</th><th>Expires</th><th>Score</th><th>Status</th></tr></thead>
+          <tbody id="trainTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none';document.getElementById('agentDetailModal').style.display='flex'"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Profile</button></div>
+  </div>
+</div>
+
+</body>
+</html>
+

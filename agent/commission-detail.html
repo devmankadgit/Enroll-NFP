@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Detailed View | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group open">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html" class="active"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Commission Detailed View</h4><ol class="breadcrumb-bar"><li>Member-Level Commission Breakdown by Month</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">YTD Earned</div><div class="stat-val">$3,474.96</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-users"></i></div><div><div class="stat-label">Members Earning</div><div class="stat-val">7</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-calendar-alt"></i></div><div><div class="stat-label">Months Active</div><div class="stat-val">6</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Avg/Month</div><div class="stat-val">$579.16</div></div></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <label>Search:</label>
+      <input type="text" id="cdSearch" placeholder="Search member name..." style="width:180px" oninput="filterCommissions()">
+      <label>Month:</label>
+      <select id="cdMonth" onchange="filterCommissions()">
+        <option value="">All Months</option>
+        <option value="Jan 2026">Jan 2026</option>
+        <option value="Feb 2026">Feb 2026</option>
+        <option value="Mar 2026">Mar 2026</option>
+        <option value="Apr 2026">Apr 2026</option>
+        <option value="May 2026">May 2026</option>
+        <option value="Jun 2026">Jun 2026</option>
+      </select>
+      <label>From:</label>
+      <input type="date" id="cdDateFrom" onchange="filterCommissions()">
+      <label>To:</label>
+      <input type="date" id="cdDateTo" onchange="filterCommissions()">
+      <button class="btn-ol btn-sm" onclick="resetCommFilters()"><i class="fas fa-times"></i>Reset</button>
+      <button class="btn-ol btn-sm" onclick="showToast('Commission report exported','info')"><i class="fas fa-download"></i>Export</button>
+    </div>
+
+    <!-- Detail Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>Commission Earnings by Member &amp; Month</h5><div style="display:flex;align-items:center;gap:12px"><span id="cdCount" style="font-size:12px;color:#5f6368">Showing 18 records</span><button class="btn-ol btn-sm" onclick="openDispute()" style="color:#c62828;border-color:#c62828"><i class="fas fa-exclamation-circle"></i>Dispute a Payment</button></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-detail_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Member</th><th>Member ID</th><th>Plan</th><th>Month</th><th>Commission Type</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="cdTableBody">
+            <!-- Jan 2026 -->
+            <tr data-member="dorothy henderson" data-month="Jan 2026" data-date="2026-01-15">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Jan 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="robert nguyen" data-month="Jan 2026" data-date="2026-01-15">
+              <td class="text-bold">Robert Nguyen</td><td><code>MEM-200302</code></td><td>H1234-002</td><td>Jan 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="patricia johnson" data-month="Jan 2026" data-date="2026-01-15">
+              <td class="text-bold">Patricia Johnson</td><td><code>MEM-200304</code></td><td>H1234-003</td><td>Jan 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="elizabeth young" data-month="Jan 2026" data-date="2026-01-20">
+              <td class="text-bold">Elizabeth Young</td><td><code>MEM-200306</code></td><td>H1234-002</td><td>Jan 2026</td><td>Renewal</td><td style="font-weight:700;color:#1b5e20">$287.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <!-- Feb 2026 -->
+            <tr data-member="maria gonzalez" data-month="Feb 2026" data-date="2026-02-15">
+              <td class="text-bold">Maria Gonzalez</td><td><code>MEM-200303</code></td><td>H1234-003</td><td>Feb 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="dorothy henderson" data-month="Feb 2026" data-date="2026-02-15">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Feb 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="robert nguyen" data-month="Feb 2026" data-date="2026-02-15">
+              <td class="text-bold">Robert Nguyen</td><td><code>MEM-200302</code></td><td>H1234-002</td><td>Feb 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <!-- Mar 2026 -->
+            <tr data-member="dorothy henderson" data-month="Mar 2026" data-date="2026-03-15">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Mar 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="robert nguyen" data-month="Mar 2026" data-date="2026-03-15">
+              <td class="text-bold">Robert Nguyen</td><td><code>MEM-200302</code></td><td>H1234-002</td><td>Mar 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="patricia johnson" data-month="Mar 2026" data-date="2026-03-15">
+              <td class="text-bold">Patricia Johnson</td><td><code>MEM-200304</code></td><td>H1234-003</td><td>Mar 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <!-- Apr 2026 -->
+            <tr data-member="william scott" data-month="Apr 2026" data-date="2026-04-15">
+              <td class="text-bold">William Scott</td><td><code>MEM-200305</code></td><td>H1234-001</td><td>Apr 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="dorothy henderson" data-month="Apr 2026" data-date="2026-04-15">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Apr 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="dorothy henderson" data-month="Apr 2026" data-date="2026-04-20">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Apr 2026</td><td>HRA Incentive</td><td style="font-weight:700;color:#1b5e20">$25.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <!-- May 2026 -->
+            <tr data-member="raymond cruz" data-month="May 2026" data-date="2026-05-15">
+              <td class="text-bold">Raymond Cruz</td><td><code>MEM-200307</code></td><td>H1234-001</td><td>May 2026</td><td>Initial Enrollment</td><td style="font-weight:700;color:#1b5e20">$573.00</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="dorothy henderson" data-month="May 2026" data-date="2026-05-15">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>May 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <tr data-member="robert nguyen" data-month="May 2026" data-date="2026-05-15">
+              <td class="text-bold">Robert Nguyen</td><td><code>MEM-200302</code></td><td>H1234-002</td><td>May 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#1b5e20">$50.08</td><td><span class="bdg b-green">Paid</span></td>
+            </tr>
+            <!-- Jun 2026 -->
+            <tr data-member="dorothy henderson" data-month="Jun 2026" data-date="2026-06-02">
+              <td class="text-bold">Dorothy Henderson</td><td><code>MEM-200301</code></td><td>H1234-001</td><td>Jun 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#0d47a1">$50.08</td><td><span class="bdg b-amber">Pending</span></td>
+            </tr>
+            <tr data-member="robert nguyen" data-month="Jun 2026" data-date="2026-06-02">
+              <td class="text-bold">Robert Nguyen</td><td><code>MEM-200302</code></td><td>H1234-002</td><td>Jun 2026</td><td>Monthly Residual</td><td style="font-weight:700;color:#0d47a1">$50.08</td><td><span class="bdg b-amber">Pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Dispute Modal -->
+<div class="modal fade" id="disputeModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header" style="background:#fce4ec"><h5 class="modal-title"><i class="fas fa-exclamation-circle" style="margin-right:8px;color:#c62828"></i>Dispute a Commission Payment</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" style="padding:20px">
+    <div style="font-size:12px;color:#5f6368;margin-bottom:16px;padding:10px;background:#fff8e1;border-radius:6px"><i class="fas fa-info-circle" style="color:#e65100;margin-right:6px"></i>Submit a dispute for a commission payment you believe is incorrect. The compliance team will review within 5 business days.</div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Enrollment Reference ID <span style="color:#c62828">*</span></label><input type="text" id="disputeEnrollRef" class="form-control form-control-sm" placeholder="e.g., ENR-2026-00541"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Payment Date in Question <span style="color:#c62828">*</span></label><input type="date" id="disputePayDate" class="form-control form-control-sm"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Disputed Amount <span style="color:#c62828">*</span></label><input type="text" id="disputeAmount" class="form-control form-control-sm" placeholder="e.g., $573.00"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Description of the Discrepancy <span style="color:#c62828">*</span></label><textarea id="disputeDesc" class="form-control form-control-sm" rows="3" placeholder="Describe what you believe is incorrect about this payment..."></textarea></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-danger btn-sm" onclick="submitDispute()"><i class="fas fa-paper-plane"></i> Submit Dispute</button></div>
+</div></div></div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function filterCommissions(){
+  var search = document.getElementById('cdSearch').value.toLowerCase().trim();
+  var month = document.getElementById('cdMonth').value;
+  var dateFrom = document.getElementById('cdDateFrom').value;
+  var dateTo = document.getElementById('cdDateTo').value;
+  var rows = document.querySelectorAll('#cdTableBody tr');
+  var visible = 0;
+
+  rows.forEach(function(row){
+    var rm = row.dataset.member || '';
+    var rMonth = row.dataset.month || '';
+    var rDate = row.dataset.date || '';
+
+    var matchSearch = !search || rm.indexOf(search) > -1 || row.textContent.toLowerCase().indexOf(search) > -1;
+    var matchMonth = !month || rMonth === month;
+    var matchDateFrom = !dateFrom || rDate >= dateFrom;
+    var matchDateTo = !dateTo || rDate <= dateTo;
+
+    var show = matchSearch && matchMonth && matchDateFrom && matchDateTo;
+    row.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+
+  document.getElementById('cdCount').textContent = 'Showing ' + visible + ' records';
+}
+
+function resetCommFilters(){
+  document.getElementById('cdSearch').value = '';
+  document.getElementById('cdMonth').value = '';
+  document.getElementById('cdDateFrom').value = '';
+  document.getElementById('cdDateTo').value = '';
+  filterCommissions();
+}
+
+function openDispute(){
+  document.getElementById('disputeEnrollRef').value='';
+  document.getElementById('disputePayDate').value='';
+  document.getElementById('disputeAmount').value='';
+  document.getElementById('disputeDesc').value='';
+  new bootstrap.Modal(document.getElementById('disputeModal')).show();
+}
+
+function submitDispute(){
+  var ref=document.getElementById('disputeEnrollRef').value.trim();
+  var payDate=document.getElementById('disputePayDate').value;
+  var amount=document.getElementById('disputeAmount').value.trim();
+  var desc=document.getElementById('disputeDesc').value.trim();
+  if(!ref||!payDate||!amount||!desc){
+    alert('Please fill in all required fields.');
+    return;
+  }
+  bootstrap.Modal.getInstance(document.getElementById('disputeModal')).hide();
+  if(typeof showToast==='function') showToast('Dispute submitted for '+ref+'. You will be notified within 5 business days.','success');
+}
+</script>
+</body>
+</html>

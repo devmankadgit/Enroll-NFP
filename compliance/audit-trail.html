@@ -1,0 +1,831 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Audit Trail & Analytics | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#004d40}
+/* Audit Log */
+.al-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.al-ob{background:#e3f2fd;color:#0d47a1}
+.al-vc{background:#e8f5e9;color:#1b5e20}
+.al-hc{background:#f3e5f5;color:#4a148c}
+.al-lc{background:#fff8e1;color:#e65100}
+.al-os{background:#fce4ec;color:#b71c1c}
+.al-role-co{background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
+.al-role-sa{background:#e3f2fd;color:#0d47a1;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
+.al-role-ag{background:#f3e5f5;color:#4a148c;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
+.json-panel{background:#1a1a2e;color:#e0e0e0;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:11px;margin-top:4px;overflow-x:auto;max-height:120px;overflow-y:auto}
+.json-panel .key{color:#64b5f6}
+.json-panel .val{color:#a5d6a7}
+.json-panel .masked{color:#ef9a9a}
+.expand-btn{background:none;border:none;color:#1a237e;font-size:11px;cursor:pointer;padding:0;text-decoration:underline}
+.export-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:none;transition:all .15s}
+.export-btn:disabled{opacity:.4;cursor:not-allowed}
+.export-csv{background:#1b5e20;color:#fff}
+.export-csv:hover:not(:disabled){background:#2e7d32}
+.export-xlsx{background:#0d47a1;color:#fff}
+.export-xlsx:hover:not(:disabled){background:#1565c0}
+/* Analytics */
+.kpi-tile{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.kpi-tile .val{font-size:28px;font-weight:800;color:#004d40;line-height:1}
+.kpi-tile .delta{font-size:10px;font-weight:700;margin-top:2px}
+.delta-up{color:#1b5e20}
+.delta-dn{color:#b71c1c}
+.bar-chart-wrap{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:11px}
+.bar-label{width:180px;flex-shrink:0;color:#333;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;cursor:pointer}
+.bar-label:hover{color:#004d40;text-decoration:underline}
+.bar-track{flex:1;background:#f1f3f4;border-radius:4px;height:14px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:#004d40;transition:width .4s}
+.bar-count{width:40px;text-align:right;color:#5f6368;font-weight:700;flex-shrink:0}
+.heatmap-wrap{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px;overflow-x:auto}
+.hm-cell{width:30px;height:24px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;cursor:pointer}
+.hm-0{background:#f1f3f4;color:#bdbdbd}
+.hm-1{background:#a5d6a7}
+.hm-2{background:#66bb6a}
+.hm-3{background:#43a047}
+.hm-4{background:#2e7d32}
+.hm-5{background:#1b5e20}
+.line-chart{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px}
+.lc-svg{width:100%;height:140px}
+.drill-down-table{font-size:12px}
+.al-immutable-note{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:12px;color:#1b5e20;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.slide-over{position:fixed;top:0;right:0;width:500px;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.15);z-index:1050;display:none;overflow-y:auto;padding:24px}
+.slide-over.open{display:block}
+/* Read-only enforcement: absolutely no edit/delete/checkbox/bulk controls rendered */
+/* Tabs */
+.inv-tab{padding:10px 20px;font-size:13px;font-weight:600;border:none;background:transparent;color:#5f6368;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s}
+.inv-tab:hover{color:#004d40;background:#e0f2f1}
+.inv-tab.active{color:#004d40;border-bottom-color:#004d40;background:#e0f2f1}
+.inv-tab i{margin-right:6px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html" class="active"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div><div style="font-size:9px;color:#80cbc4;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Full Audit Access</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#004d40;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Audit Trail &amp; Usage Analytics</h4>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Audit Summary')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- Tab Bar -->
+    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid #e8eaed;padding-bottom:0">
+      <button class="inv-tab active" id="atab-log" onclick="switchAuditTab('log')" style="border-radius:8px 8px 0 0">
+        <i class="fas fa-history"></i> Compliance Audit Log
+      </button>
+      <button class="inv-tab" id="atab-analytics" onclick="switchAuditTab('analytics')" style="border-radius:8px 8px 0 0">
+        <i class="fas fa-chart-bar"></i> Usage Analytics Dashboard
+      </button>
+    </div>
+
+    <!-- ============================================
+         TAB 1: COMPLIANCE AUDIT LOG
+         ============================================ -->
+    <div id="auditLogTab">
+
+      <!-- Immutability notice -->
+      <div class="al-immutable-note">
+        <i class="fas fa-lock" style="flex-shrink:0;font-size:16px"></i>
+        <span><strong>Immutable Audit Log:</strong> All records are append-only and cannot be modified or deleted by any user, including System Admin. Sensitive fields (SSN, MBI, bank account, routing number, EIN) are masked to <code>****[last 4]</code> at write time. Records retained for 7 years per CMS compliance requirements. No edit, delete, or mutation controls are present on this screen.</span>
+      </div>
+
+      <!-- Search & Filter panel -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:6px"></i>Search &amp; Filter &mdash; All fields combinable</h5></div>
+        <div style="padding:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Date Range Start</label>
+              <input id="alFilterDateFrom" type="datetime-local" class="form-control" oninput="validateDateRange();updateExportState()">
+              <div id="dateRangeErr" style="display:none;color:#b71c1c;font-size:11px;margin-top:2px"><i class="fas fa-exclamation-circle"></i> End date must be after start date</div>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Date Range End</label>
+              <input id="alFilterDateTo" type="datetime-local" class="form-control" oninput="validateDateRange();updateExportState()">
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Action Type</label>
+              <select id="alFilterAction" class="form-control" onchange="updateExportState()">
+                <option value="">All Action Types</option>
+                <optgroup label="Onboarding &amp; Form"><option>Form Field Saved</option><option>Form Submitted</option><option>Document Uploaded</option><option>Document Approved</option><option>Document Rejected</option></optgroup>
+                <optgroup label="Verification &amp; Compliance"><option>NIPR License Check</option><option>AHIP Validation</option><option>IBR Background Check</option><option>CSNP Verification</option></optgroup>
+                <optgroup label="Hierarchy &amp; Configuration"><option>Hierarchy Transfer Executed</option><option>Invitation Sent</option><option>Invitation Accepted</option><option>Plan Year Config Created</option><option>Payment Routing Changed</option></optgroup>
+                <optgroup label="Lifecycle"><option>Agent Activated</option><option>Agent Deactivated</option><option>Compliance Hold Applied</option><option>Agent Terminated</option></optgroup>
+                <optgroup label="Override &amp; Security"><option>Admin Override Applied</option><option>Login Success</option><option>Login Failed</option><option>Role Changed</option><option>Password Reset</option></optgroup>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Entity Type</label>
+              <select id="alFilterEntity" class="form-control" onchange="updateExportState()">
+                <option value="">All Entity Types</option>
+                <option>Agent</option><option>Org</option><option>Invitation</option><option>Document</option><option>Override</option><option>Hierarchy</option><option>Session</option><option>System</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">Entity ID / NPN</label>
+              <input id="alFilterEntityId" type="text" class="form-control" placeholder="Agent NPN, Case ID, Org ID..." oninput="updateExportState()">
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">User Who Performed Action</label>
+              <input id="alFilterUser" type="text" class="form-control" placeholder="Name or user ID..." oninput="updateExportState()">
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px">IP Address</label>
+              <input id="alFilterIP" type="text" class="form-control" placeholder="e.g. 10.0.1.42" oninput="updateExportState()">
+            </div>
+            </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <button class="btn-pr btn-sm" onclick="runAuditSearch()"><i class="fas fa-search" style="margin-right:4px"></i>Search</button>
+            <button class="btn-ol btn-sm" onclick="clearAuditFilters()"><i class="fas fa-times" style="margin-right:4px"></i>Clear Filters</button>
+            <div style="margin-left:auto;display:flex;gap:8px">
+              <!-- Export buttons: visible only to Compliance Officer and Admin -->
+              <button id="btnExportCSV" class="export-btn export-csv" onclick="exportAuditCSV()" disabled>
+                <i class="fas fa-file-csv"></i>Export to CSV
+              </button>
+              <button id="btnExportXLSX" class="export-btn export-xlsx" onclick="exportAuditXLSX()" disabled>
+                <i class="fas fa-file-excel"></i>Export to Excel
+              </button>
+            </div>
+          </div>
+          <div id="exportThresholdWarn" style="display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:12px;color:#e65100;margin-top:10px">
+            <i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>Your filter returned more than <strong>10,000</strong> records. Please narrow your date range or add more filters before exporting.
+          </div>
+        </div>
+      </div>
+
+      <!-- Audit Log Table (Read-Only - no edit/delete/checkbox/bulk controls) -->
+      <div class="card">
+        <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between">
+          <h5>Audit Log <span id="alPageInfo" style="font-size:12px;color:#5f6368;font-weight:400;margin-left:8px"></span></h5>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:#9e9e9e"><i class="fas fa-shield-alt" style="margin-right:3px;color:#1b5e20"></i>Read-Only &mdash; No mutation controls</span>
+            <div style="display:flex;gap:4px">
+              <button class="btn-ol btn-sm" onclick="alPage=Math.max(1,alPage-1);renderAuditTable()" id="alPrevBtn" disabled><i class="fas fa-chevron-left"></i></button>
+              <button class="btn-ol btn-sm" onclick="alPage++;renderAuditTable()" id="alNextBtn"><i class="fas fa-chevron-right"></i></button>
+              <button class="btn-ol btn-sm" onclick="exportTableToExcel('auditTable','audit-trail_auditTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="tbl" id="auditTable">
+            <thead>
+              <tr>
+                <th style="cursor:pointer" onclick="sortAudit('timestamp')">Timestamp <i class="fas fa-sort" id="sortTs" style="font-size:9px;color:#9e9e9e"></i></th>
+                <th>User Name</th>
+                <th>Role</th>
+                <th>Action Type</th>
+                <th>Entity Type</th>
+                <th>Entity Name / ID</th>
+                <th>Field Changed</th>
+                <th>Old Value</th>
+                <th>New Value</th>
+                <th>IP Address</th>
+                <th id="sessionColHdr" style="display:none">Session ID</th>
+              </tr>
+            </thead>
+            <tbody id="auditTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /auditLogTab -->
+    <!-- ============================================
+         TAB 2: USAGE ANALYTICS DASHBOARD
+         ============================================ -->
+    <div id="analyticsTab" style="display:none">
+
+      <!-- Filter bar -->
+      <div class="filter-bar" style="margin-bottom:16px">
+        <label style="font-size:12px;font-weight:600">Role:</label>
+        <select id="anFilterRole" class="form-control" style="width:150px" onchange="renderAnalytics()">
+          <option value="">All Roles</option>
+          <option>System Admin</option><option>Compliance Officer</option><option>Agent</option><option>Agency Admin</option>
+        </select>
+        <label style="font-size:12px;font-weight:600">Time Period:</label>
+        <input id="anFilterFrom" type="date" class="form-control" style="width:140px" onchange="renderAnalytics()">
+        <span style="font-size:11px">to</span>
+        <input id="anFilterTo" type="date" class="form-control" style="width:140px" onchange="renderAnalytics()">
+        <label style="font-size:12px;font-weight:600">Module:</label>
+        <select id="anFilterModule" class="form-control" style="width:150px" onchange="renderAnalytics()">
+          <option value="">All Modules</option>
+          <option>Onboarding</option><option>Enrollment</option><option>Commission</option><option>Admin</option><option>Leads</option><option>Documents</option><option>Reports</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="resetAnalyticsFilters()"><i class="fas fa-times"></i> Reset</button>
+        <!-- CSV Export: Admin only -->
+        <button id="anExportCSV" class="export-btn export-csv" style="margin-left:auto;padding:6px 14px;font-size:11px" onclick="exportAnalyticsCSV()">
+          <i class="fas fa-file-csv"></i>Export CSV
+        </button>
+      </div>
+
+      <!-- 4 KPI Tiles -->
+      <div class="row-grid" style="margin-bottom:16px" id="anKpiRow">
+        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#e8f5e9;color:#1b5e20;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-desktop"></i></div><div><div class="val" id="kpiTotalSessions">1,284</div><div class="lbl" style="font-size:11px;color:#5f6368">Total Sessions</div><div class="delta delta-up" id="deltaSession">+8% vs prior period</div></div></div></div>
+        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#e3f2fd;color:#0d47a1;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-users"></i></div><div><div class="val" id="kpiUniqueUsers">247</div><div class="lbl" style="font-size:11px;color:#5f6368">Unique Active Users</div><div class="delta delta-up" id="deltaUsers">+12% vs prior period</div></div></div></div>
+        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#f3e5f5;color:#4a148c;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-clock"></i></div><div><div class="val" id="kpiAvgSession">14m 32s</div><div class="lbl" style="font-size:11px;color:#5f6368">Avg Session Duration</div><div class="delta delta-dn" id="deltaSession2">-3% vs prior period</div></div></div></div>
+        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#fff8e1;color:#e65100;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-star"></i></div><div><div class="val" id="kpiTopModule" style="font-size:18px">Onboarding</div><div class="lbl" style="font-size:11px;color:#5f6368">Most Accessed Module</div><div class="delta delta-up">38% of all visits</div></div></div></div>
+      </div>
+
+      <!-- Charts Row 1: Top Screens + Avg Time -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+
+        <!-- Chart 1: Top 10 Most-Visited Screens -->
+        <div class="bar-chart-wrap">
+          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:12px"><i class="fas fa-list-ol" style="margin-right:6px;color:#004d40"></i>Top 10 Most-Visited Screens <span style="font-size:10px;color:#9e9e9e;font-weight:400">(click screen name to drill down)</span></div>
+          <div id="chart1"></div>
+        </div>
+
+        <!-- Chart 2: Avg Time Spent Per Screen -->
+        <div class="bar-chart-wrap">
+          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:12px"><i class="fas fa-hourglass-half" style="margin-right:6px;color:#0d47a1"></i>Avg Time Spent Per Screen <span style="font-size:10px;color:#9e9e9e;font-weight:400">(seconds)</span></div>
+          <div id="chart2"></div>
+        </div>
+
+      </div>
+
+      <!-- Chart 3: Feature Usage Heatmap -->
+      <div class="heatmap-wrap" style="margin-bottom:14px">
+        <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:12px"><i class="fas fa-th" style="margin-right:6px;color:#4a148c"></i>Feature Usage Frequency Heatmap &mdash; Workflow vs. Week <span style="font-size:10px;color:#9e9e9e;font-weight:400">(click cell to drill down)</span></div>
+        <div id="chart3"></div>
+      </div>
+
+      <!-- Charts Row 2: Active Users + Session Count Trend -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="line-chart">
+          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:8px"><i class="fas fa-users" style="margin-right:6px;color:#1b5e20"></i>Active Users Over Time (by Role)</div>
+          <svg class="lc-svg" id="chart4"></svg>
+        </div>
+        <div class="line-chart">
+          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:8px"><i class="fas fa-wave-square" style="margin-right:6px;color:#e65100"></i>Session Count Trend</div>
+          <svg class="lc-svg" id="chart5"></svg>
+        </div>
+      </div>
+
+      <!-- Drill-Down Table -->
+      <div id="drillDownPanel" style="display:none">
+        <div class="card">
+          <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between">
+            <h5 id="drillDownTitle">Per-User Breakdown</h5>
+            <button class="btn-ol btn-sm" onclick="document.getElementById('drillDownPanel').style.display='none'"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="table-wrap">
+            <table class="tbl drill-down-table">
+              <thead><tr><th>User Name</th><th>Role</th><th>Visit Count</th><th>Avg Time on Screen (sec)</th><th>Last Visited</th></tr></thead>
+              <tbody id="drillDownTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /analyticsTab -->
+
+  </div><!-- /page -->
+</div><!-- /main -->
+
+<!-- Record Detail Slide-Over -->
+<div class="slide-over" id="auditDetailSlide">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h6 style="margin:0;font-weight:700;color:#004d40"><i class="fas fa-file-alt" style="margin-right:6px"></i>Audit Record Detail</h6>
+    <button onclick="closeAuditDetail()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#9e9e9e">&times;</button>
+  </div>
+  <div id="auditDetailBody"></div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script><script>
+/* =========================================================
+   US-1.19 / US-1.20: AUDIT LOG DATA (Simulated - 20 records)
+   Sensitive fields pre-masked at write time per this requirement
+   ========================================================= */
+var AUDIT_RECORDS = [
+  {id:'AUD-0001',ts:'2026-05-27 09:14:32',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Login Success',actionCat:'os',entity:'Session',entityId:'sess-9f2a1c',fieldChanged:null,oldVal:null,newVal:null,ip:'10.0.1.42',justification:null,relatedType:'',relatedId:''},
+  {id:'AUD-0002',ts:'2026-05-27 09:18:05',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Invitation Sent',actionCat:'hc',entity:'Invitation',entityId:'tk_004',fieldChanged:'status',oldVal:'{"status":"Draft"}',newVal:'{"status":"Sent","sentTo":"jlopez@email.com","npn":""}',ip:'10.0.1.42',justification:null,relatedType:'Agent',relatedId:'Jennifer Lopez'},
+  {id:'AUD-0003',ts:'2026-05-27 09:25:14',user:'SYSTEM',role:'System',sessionId:'SYSTEM:hierarchy-engine',action:'Hierarchy Transfer Executed',actionCat:'hc',entity:'Hierarchy',entityId:'TFR-2026-4821',fieldChanged:'uplineOrg',oldVal:'{"uplineOrg":"HealthFirst Distribution (GA-2201)","effectiveDate":"2026-06-01"}',newVal:'{"uplineOrg":"National FMO (SFMO-2024-001)","effectiveDate":"2026-06-01"}',ip:null,justification:'Agent consolidated under SFMO for plan year 2026',relatedType:'Agent',relatedId:'8823441'},
+  {id:'AUD-0004',ts:'2026-05-27 09:25:15',user:'SYSTEM',role:'System',sessionId:'SYSTEM:hierarchy-engine',action:'Onboarding Case Hierarchy Updated',actionCat:'hc',entity:'Agent',entityId:'OB-2026-0328',fieldChanged:'uplineOrg',oldVal:'{"uplineOrg":"HealthFirst Distribution (GA-2201)"}',newVal:'{"uplineOrg":"National FMO (SFMO-2024-001)"}',ip:null,justification:'Auto-updated due to transfer TFR-2026-4821',relatedType:'Hierarchy',relatedId:'TFR-2026-4821'},
+  {id:'AUD-0005',ts:'2026-05-27 09:30:00',user:'Diana Murphy',role:'Compliance Officer',sessionId:'sess-3d8b22',action:'NIPR License Check',actionCat:'vc',entity:'Agent',entityId:'98765432',fieldChanged:'npnVerified',oldVal:'{"npnVerified":false}',newVal:'{"npnVerified":true,"niprName":"Robert Chen","niprState":"GA"}',ip:'10.0.2.18',justification:null,relatedType:'',relatedId:''},
+  {id:'AUD-0006',ts:'2026-05-27 09:35:47',user:'Diana Murphy',role:'Compliance Officer',sessionId:'sess-3d8b22',action:'Document Approved',actionCat:'ob',entity:'Document',entityId:'DOC-E&O-0441',fieldChanged:'status',oldVal:'{"status":"Pending Review"}',newVal:'{"status":"Approved","approvedBy":"Diana Murphy"}',ip:'10.0.2.18',justification:null,relatedType:'Agent',relatedId:'OB-2026-0441'},
+  {id:'AUD-0007',ts:'2026-05-27 09:41:22',user:'SYSTEM',role:'System',sessionId:'SYSTEM:readiness-engine',action:'Hierarchy Readiness Check Failed',actionCat:'hc',entity:'Agent',entityId:'OB-2026-0449',fieldChanged:'caseStatus',oldVal:'{"caseStatus":"Pending"}',newVal:'{"caseStatus":"On Hold - Hierarchy Issue","holdReasons":["Upline org inactive","Payment routing missing"]}',ip:null,justification:'Auto-triggered on invitation acceptance',relatedType:'Org',relatedId:'GA-2288'},
+  {id:'AUD-0008',ts:'2026-05-27 10:02:11',user:'Alex Rivera',role:'Agent',sessionId:'sess-7c4f90',action:'Form Submitted',actionCat:'ob',entity:'Agent',entityId:'OB-2026-0467',fieldChanged:'formStatus',oldVal:'{"formStatus":"In Progress"}',newVal:'{"formStatus":"Submitted"}',ip:'192.168.1.105',justification:null,relatedType:'Invitation',relatedId:'tk_004'},
+  {id:'AUD-0009',ts:'2026-05-27 10:14:55',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Admin Override Applied',actionCat:'os',entity:'Override',entityId:'OVR-2026-0043',fieldChanged:'commissionRate',oldVal:'{"rate":"3.5%","approvedBy":null}',newVal:'{"rate":"4.2%","approvedBy":"Sandra Adams","approver2":"James Rollins","expiry":"2026-12-31"}',ip:'10.0.1.42',justification:'Exception approved per regional VP authorization. Rate matches carrier agreement addendum dated 2026-05-15.',relatedType:'Agent',relatedId:'8823441'},
+  {id:'AUD-0010',ts:'2026-05-27 10:18:33',user:'SYSTEM',role:'System',sessionId:'SYSTEM:ahip-integration',action:'AHIP Validation',actionCat:'vc',entity:'Agent',entityId:'55443322',fieldChanged:'ahipCertified',oldVal:'{"ahipCertified":false}',newVal:'{"ahipCertified":true,"certYear":2026,"certDate":"2026-05-10"}',ip:null,justification:null,relatedType:'Agent',relatedId:'OB-2026-0510'},
+  {id:'AUD-0011',ts:'2026-05-27 10:30:00',user:'Maria Santos',role:'Agent',sessionId:'sess-2e1099',action:'Form Field Saved',actionCat:'ob',entity:'Agent',entityId:'OB-2026-0449',fieldChanged:'bankAccount',oldVal:'{"bankAccount":"****6789"}',newVal:'{"bankAccount":"****1234"}',ip:'192.168.1.112',justification:null,relatedType:'',relatedId:''},
+  {id:'AUD-0012',ts:'2026-05-27 10:45:18',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'NPN Duplicate Check',actionCat:'vc',entity:'Agent',entityId:'12345678',fieldChanged:null,oldVal:null,newVal:'{"result":"DUPLICATE_TERMINATED","existingAgent":"Patricia Thompson","action":"Admin confirmed reuse"}',ip:'10.0.1.42',justification:'Admin confirmed reuse of terminated NPN per this requirement',relatedType:'Agent',relatedId:'12345678'},
+  {id:'AUD-0013',ts:'2026-05-27 11:00:00',user:'James Rollins',role:'Agency Admin',sessionId:'sess-aa8823',action:'Agent Activated',actionCat:'lc',entity:'Agent',entityId:'98765432',fieldChanged:'status',oldVal:'{"status":"Pending"}',newVal:'{"status":"Active","activatedBy":"James Rollins"}',ip:'10.0.3.55',justification:null,relatedType:'Org',relatedId:'GA-2201'},
+  {id:'AUD-0014',ts:'2026-05-27 11:15:42',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Plan Year Config Created',actionCat:'hc',entity:'System',entityId:'PY-2027',fieldChanged:'planYearConfig',oldVal:null,newVal:'{"planYear":2027,"status":"Active","createdBy":"Sandra Adams"}',ip:'10.0.1.42',justification:null,relatedType:'System',relatedId:'PY-2027'},
+  {id:'AUD-0015',ts:'2026-05-27 11:28:09',user:'UNKNOWN',role:'-',sessionId:'-',action:'Login Failed',actionCat:'os',entity:'Session',entityId:'',fieldChanged:null,oldVal:null,newVal:'{"username":"swilliams@healthfirst.com","failReason":"Invalid password (attempt 3 of 5)"}',ip:'203.88.12.14',justification:null,relatedType:'',relatedId:''},
+  {id:'AUD-0016',ts:'2026-05-27 11:45:00',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Hold Released',actionCat:'lc',entity:'Agent',entityId:'OB-2026-0449',fieldChanged:'caseStatus',oldVal:'{"caseStatus":"On Hold - Hierarchy Issue"}',newVal:'{"caseStatus":"Pending","releasedBy":"Sandra Adams"}',ip:'10.0.1.42',justification:'Upline org reactivated and payment routing configured by Finance. Verified by Sandra Adams.',relatedType:'Org',relatedId:'GA-2288'},
+  {id:'AUD-0017',ts:'2026-05-27 12:00:00',user:'Diana Murphy',role:'Compliance Officer',sessionId:'sess-3d8b22',action:'Document Rejected',actionCat:'ob',entity:'Document',entityId:'DOC-LIC-0510',fieldChanged:'status',oldVal:'{"status":"Pending Review"}',newVal:'{"status":"Rejected","rejectedBy":"Diana Murphy","reason":"License expired - please upload current license"}',ip:'10.0.2.18',justification:null,relatedType:'Agent',relatedId:'OB-2026-0510'},
+  {id:'AUD-0018',ts:'2026-05-27 12:15:33',user:'SYSTEM',role:'System',sessionId:'SYSTEM:auto-termination',action:'Agent Terminated',actionCat:'lc',entity:'Agent',entityId:'11223344',fieldChanged:'status',oldVal:'{"status":"Active"}',newVal:'{"status":"Terminated","reason":"Auto-termination: License expired 2026-05-13 per compliance rule CR-004"}',ip:null,justification:'Auto-termination rule CR-004 executed',relatedType:'Compliance',relatedId:'CR-004'},
+  {id:'AUD-0019',ts:'2026-05-27 12:30:10',user:'Sandra Adams',role:'System Admin',sessionId:'sess-9f2a1c',action:'Role Changed',actionCat:'os',entity:'Agent',entityId:'USR-2026-0088',fieldChanged:'role',oldVal:'{"role":"Agent"}',newVal:'{"role":"Agency Admin","changedBy":"Sandra Adams"}',ip:'10.0.1.42',justification:'User promoted to Agency Admin per request REQ-2026-0221',relatedType:'',relatedId:''},
+  {id:'AUD-0020',ts:'2026-05-27 12:45:00',user:'Diana Murphy',role:'Compliance Officer',sessionId:'sess-3d8b22',action:'Compliance Hold Applied',actionCat:'lc',entity:'Agent',entityId:'6612890',fieldChanged:'status',oldVal:'{"status":"Active"}',newVal:'{"status":"Compliance Hold","reason":"Missing required annual training - AHIP 2026 not completed"}',ip:'10.0.2.18',justification:'Hold applied pending AHIP 2026 completion. Agent notified.',relatedType:'Compliance',relatedId:''}
+];
+
+/* Simulated current user role (Compliance Officer by default) */
+var CURRENT_USER_ROLE = 'Compliance Officer'; // Change to 'System Admin' to see Session ID column
+
+var AL_PAGE_SIZE = 10;
+var alPage = 1;
+var alSortAsc = false;
+var alFilteredRecords = AUDIT_RECORDS.slice();
+var FILTER_ACTIVE = false;
+
+/* =========================================================
+   TAB SWITCH
+   ========================================================= */
+function switchAuditTab(tab){
+  document.getElementById('auditLogTab').style.display = tab==='log'?'':'none';
+  document.getElementById('analyticsTab').style.display = tab==='analytics'?'':'none';
+  document.getElementById('atab-log').classList.toggle('active', tab==='log');
+  document.getElementById('atab-analytics').classList.toggle('active', tab==='analytics');
+  if(tab==='analytics') renderAnalytics();
+}
+
+/* =========================================================
+   US-1.19: RBAC - Session ID column visible only to Admin
+   Export buttons visible only to Compliance Officer + Admin (already shown)
+   ========================================================= */
+function applyRBAC(){
+  // Session ID column - Admin only
+  var sessionHdr = document.getElementById('sessionColHdr');
+  if(sessionHdr) sessionHdr.style.display = CURRENT_USER_ROLE==='System Admin'?'':'none';
+}
+
+/* =========================================================
+   AUDIT LOG: DATE RANGE VALIDATION
+   ========================================================= */
+function validateDateRange(){
+  var from = document.getElementById('alFilterDateFrom').value;
+  var to   = document.getElementById('alFilterDateTo').value;
+  var err  = document.getElementById('dateRangeErr');
+  if(from && to && to <= from){
+    err.style.display='block';
+    return false;
+  }
+  err.style.display='none';
+  return true;
+}
+
+/* =========================================================
+   EXPORT BUTTON STATE (US-1.19: disabled until filter active)
+   ========================================================= */
+function updateExportState(){
+  var hasFilter = hasAnyFilter();
+  var dateOk = validateDateRange();
+  // Both dates must be provided if either is set
+  var from = document.getElementById('alFilterDateFrom').value;
+  var to   = document.getElementById('alFilterDateTo').value;
+  var dateReady = (!from && !to) || (from && to && dateOk);
+  var enabled = hasFilter && dateReady;
+  document.getElementById('btnExportCSV').disabled = !enabled;
+  document.getElementById('btnExportXLSX').disabled = !enabled;
+  FILTER_ACTIVE = hasFilter;
+}
+
+function hasAnyFilter(){
+  return !!(
+    document.getElementById('alFilterDateFrom').value ||
+    document.getElementById('alFilterDateTo').value ||
+    document.getElementById('alFilterAction').value ||
+    document.getElementById('alFilterEntity').value ||
+    document.getElementById('alFilterEntityId').value.trim() ||
+    document.getElementById('alFilterUser').value.trim() ||
+    document.getElementById('alFilterIP').value.trim()
+  );
+}
+
+/* =========================================================
+   AUDIT LOG: SEARCH & FILTER
+   ========================================================= */
+function runAuditSearch(){
+  if(!validateDateRange()) return;
+  var from    = document.getElementById('alFilterDateFrom').value;
+  var to      = document.getElementById('alFilterDateTo').value;
+  var action  = document.getElementById('alFilterAction').value;
+  var entity  = document.getElementById('alFilterEntity').value;
+  var entityId= document.getElementById('alFilterEntityId').value.trim().toLowerCase();
+  var user    = document.getElementById('alFilterUser').value.trim().toLowerCase();
+  var ip      = document.getElementById('alFilterIP').value.trim();
+
+  alFilteredRecords = AUDIT_RECORDS.filter(function(r){
+    if(from && r.ts < from.replace('T',' ')) return false;
+    if(to   && r.ts > to.replace('T',' '))   return false;
+    if(action && r.action !== action) return false;
+    if(entity && r.entity !== entity) return false;
+    if(entityId && (r.entityId||'').toLowerCase().indexOf(entityId)<0) return false;
+    if(user    && (r.user||'').toLowerCase().indexOf(user)<0) return false;
+    if(ip      && (r.ip||'').indexOf(ip)<0) return false;
+    return true;
+  });
+  // Sort default: timestamp descending
+  alFilteredRecords.sort(function(a,b){ return alSortAsc?a.ts.localeCompare(b.ts):b.ts.localeCompare(a.ts); });
+  alPage = 1;
+  renderAuditTable();
+  updateExportState();
+}
+
+function clearAuditFilters(){
+  ['alFilterDateFrom','alFilterDateTo','alFilterEntityId','alFilterUser','alFilterIP'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.value='';
+  });
+  ['alFilterAction','alFilterEntity'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.selectedIndex=0;
+  });
+  document.getElementById('dateRangeErr').style.display='none';
+  alFilteredRecords = AUDIT_RECORDS.slice();
+  alPage = 1;
+  renderAuditTable();
+  updateExportState();
+}
+
+function sortAudit(field){
+  alSortAsc = !alSortAsc;
+  alFilteredRecords.sort(function(a,b){ return alSortAsc?a.ts.localeCompare(b.ts):b.ts.localeCompare(a.ts); });
+  document.getElementById('sortTs').className = 'fas fa-sort-'+(alSortAsc?'up':'down');
+  renderAuditTable();
+}
+
+/* =========================================================
+   RENDER AUDIT TABLE (US-1.19: no edit/delete/checkbox/bulk controls)
+   ========================================================= */
+function renderAuditTable(){
+  var tbody = document.getElementById('auditTbody');
+  var start = (alPage-1)*AL_PAGE_SIZE;
+  var end   = start + AL_PAGE_SIZE;
+  var page  = alFilteredRecords.slice(start, end);
+  var total = alFilteredRecords.length;
+  var totalPages = Math.ceil(total/AL_PAGE_SIZE)||1;
+
+  document.getElementById('alPageInfo').textContent = 'Showing '+Math.min(start+1,total)+' - '+Math.min(end,total)+' of '+total+' records';
+  document.getElementById('alPrevBtn').disabled = alPage<=1;
+  document.getElementById('alNextBtn').disabled = alPage>=totalPages;
+
+  var catMap={'ob':'al-ob Onboarding','vc':'al-vc Verification','hc':'al-hc Hierarchy','lc':'al-lc Lifecycle','os':'al-os Override/Security'};
+  var roleMap={'System Admin':'al-role-sa','Compliance Officer':'al-role-co','Agent':'al-role-ag','Agency Admin':'al-role-co','System':'al-role-ag'};
+  var isAdmin = CURRENT_USER_ROLE === 'System Admin';
+
+  tbody.innerHTML = page.map(function(r, rowIdx){
+    var realIdx = start + rowIdx;
+    var catParts = (catMap[r.actionCat]||'al-ob '+r.actionCat).split(' ');
+    var catClass = catParts[0]; var catLabel = catParts.slice(1).join(' ');
+    var roleClass = roleMap[r.role]||'al-role-ag';
+    var oldValHtml = r.oldVal ? '<button class="expand-btn" onclick="toggleJson(\'old-'+realIdx+'\')" title="View old value"><i class="fas fa-eye"></i></button><div id="old-'+realIdx+'" style="display:none">'+renderMaskedJson(r.oldVal)+'</div>' : '<span style="color:#bdbdbd">&mdash;</span>';
+    var newValHtml = r.newVal ? '<button class="expand-btn" onclick="toggleJson(\'new-'+realIdx+'\')" title="View new value"><i class="fas fa-eye"></i></button><div id="new-'+realIdx+'" style="display:none">'+renderMaskedJson(r.newVal)+'</div>' : '<span style="color:#bdbdbd">&mdash;</span>';
+    var sessionCell = isAdmin ? '<td><a href="#" onclick="openAnalyticsForSession(\''+r.sessionId+'\')" style="font-family:monospace;font-size:10px;color:#0d47a1">'+r.sessionId+'</a></td>' : '';
+
+    return '<tr style="cursor:pointer" onclick="openAuditDetail('+realIdx+')">'
+      +'<td style="font-size:11px;font-family:monospace;white-space:nowrap">'+r.ts+'</td>'
+      +'<td style="font-size:12px">'+r.user+'</td>'
+      +'<td><span class="'+roleClass+'">'+r.role+'</span></td>'
+      +'<td><span class="al-badge '+catClass+'">'+r.action+'</span></td>'
+      +'<td style="font-size:12px">'+r.entity+'</td>'
+      +'<td style="font-family:monospace;font-size:11px">'+r.entityId+'</td>'
+      +'<td style="font-size:11px">'+(r.fieldChanged||'<span style="color:#bdbdbd">&mdash;</span>')+'</td>'
+      +'<td style="max-width:120px" onclick="event.stopPropagation()">'+oldValHtml+'</td>'
+      +'<td style="max-width:120px" onclick="event.stopPropagation()">'+newValHtml+'</td>'
+      +'<td style="font-family:monospace;font-size:11px">'+(r.ip||'<span style="color:#bdbdbd">system</span>')+'</td>'
+      +sessionCell
+      +'</tr>';
+  }).join('');
+  // DEVELOPER GUARD: Assert no edit/delete/mutation elements exist
+  var mutationSelectors = ['[data-action="delete"]','[data-action="edit"]','.bulk-action','.delete-btn','.edit-btn'];
+  mutationSelectors.forEach(function(sel){
+    if(document.querySelector('#auditTable '+sel)){
+      console.error('[READ-ONLY GUARD] Mutation element detected in audit table: '+sel+'. This violates US-1.19 read-only requirement.');
+    }
+  });
+}
+
+/* =========================================================
+   US-1.19: SENSITIVE FIELD MASKING DISPLAY
+   Values arrive pre-masked from backend.
+   Frontend NEVER attempts to unmask. Display as-is.
+   ========================================================= */
+function renderMaskedJson(jsonStr){
+  try {
+    var obj = JSON.parse(jsonStr);
+    var lines = [];
+    Object.keys(obj).forEach(function(k){
+      var v = obj[k];
+      var isMasked = typeof v === 'string' && v.startsWith('****');
+      var valClass = isMasked ? 'masked' : (typeof v === 'string' ? 'val' : 'val');
+      if(typeof v === 'object') v = JSON.stringify(v);
+      lines.push('<span class="key">"'+k+'"</span>: <span class="'+valClass+'">'+JSON.stringify(v)+'</span>');
+    });
+    return '<div class="json-panel">'+lines.join('<br>')+'</div>';
+  } catch(e) {
+    return '<div class="json-panel"><span class="val">'+jsonStr+'</span></div>';
+  }
+}
+
+function toggleJson(id){
+  var el = document.getElementById(id);
+  if(el) el.style.display = el.style.display==='none'?'block':'none';
+}
+
+/* =========================================================
+   RECORD DETAIL SLIDE-OVER
+   ========================================================= */
+function openAuditDetail(idx){
+  var r = alFilteredRecords[idx];
+  if(!r) return;
+  var isAdmin = CURRENT_USER_ROLE === 'System Admin';
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:16px">'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Audit ID</div><div style="font-family:monospace;font-weight:700">'+r.id+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Timestamp</div><div style="font-family:monospace">'+r.ts+' UTC</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">User</div><div>'+r.user+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Role</div><div>'+r.role+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Action</div><div style="font-weight:600">'+r.action+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Entity</div><div>'+r.entity+' / <span style="font-family:monospace">'+r.entityId+'</span></div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">IP Address</div><div style="font-family:monospace">'+(r.ip||'System/null')+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:10px;font-weight:700;text-transform:uppercase">Session ID</div><div style="font-family:monospace;font-size:10px">'+r.sessionId+'</div></div>'
+    +'</div>';
+
+  // Old / New values (pre-masked, rendered as-is per this requirement)
+  if(r.oldVal||r.newVal){
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">'
+      +'<div><div style="font-size:11px;font-weight:700;margin-bottom:4px">Old Value <span style="font-weight:400;color:#9e9e9e">(pre-masked)</span></div>'+(r.oldVal?renderMaskedJson(r.oldVal):'<span style="color:#bdbdbd;font-size:11px">&mdash;</span>')+'</div>'
+      +'<div><div style="font-size:11px;font-weight:700;margin-bottom:4px">New Value <span style="font-weight:400;color:#9e9e9e">(pre-masked)</span></div>'+(r.newVal?renderMaskedJson(r.newVal):'<span style="color:#bdbdbd;font-size:11px">&mdash;</span>')+'</div>'
+      +'</div>';
+  }
+
+  // Justification/Notes
+  if(r.justification){
+    html += '<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:10px 12px;font-size:12px;margin-bottom:14px">'
+      +'<div style="font-weight:700;color:#e65100;margin-bottom:4px"><i class="fas fa-sticky-note" style="margin-right:5px"></i>Justification / Notes</div>'+r.justification+'</div>';
+  }
+
+  // Related records
+  if(r.relatedType && r.relatedId){
+    html += '<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 12px;font-size:12px;margin-bottom:14px">'
+      +'<div style="font-weight:700;color:#0d47a1;margin-bottom:4px"><i class="fas fa-link" style="margin-right:5px"></i>Related Records</div>'
+      +'<div>Type: <strong>'+r.relatedType+'</strong> &nbsp;|&nbsp; ID: <span style="font-family:monospace">'+r.relatedId+'</span></div></div>';
+  }
+
+  // Raw payload - Admin only
+  if(isAdmin){
+    html += '<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:4px"><i class="fas fa-code" style="margin-right:5px"></i>Raw Event Payload <span style="font-weight:400;color:#9e9e9e">(Admin only)</span></div>'
+      +'<div class="json-panel">{"audit_id":"'+r.id+'","action_type":"'+r.action+'","entity_type":"'+r.entity+'","entity_id":"'+r.entityId+'","user_id":"'+r.user+'","session_id":"'+r.sessionId+'","timestamp_utc":"'+r.ts+'","old_value":'+( r.oldVal||'null')+',"new_value":'+(r.newVal||'null')+'}</div></div>';
+  }
+
+  document.getElementById('auditDetailBody').innerHTML = html;
+  document.getElementById('auditDetailSlide').classList.add('open');
+}
+
+function closeAuditDetail(){
+  document.getElementById('auditDetailSlide').classList.remove('open');
+}
+
+/* =========================================================
+   EXPORT FUNCTIONS (US-1.19: calls backend API with filters)
+   ========================================================= */
+function exportAuditCSV(){
+  if(!FILTER_ACTIVE){return;}
+  // Simulate export row count check
+  if(alFilteredRecords.length > 10000){
+    document.getElementById('exportThresholdWarn').style.display='block';
+    return;
+  }
+  document.getElementById('exportThresholdWarn').style.display='none';
+  var headers = ['Audit ID','Timestamp','User','Role','Action','Entity','Entity ID','Field','Old Value','New Value','IP'];
+  var rows = alFilteredRecords.map(function(r){
+    return [r.id,r.ts,r.user,r.role,r.action,r.entity,r.entityId,r.fieldChanged||'',r.oldVal||'',r.newVal||'',r.ip||''].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
+  });
+  var csv = headers.join(',')+'\n'+rows.join('\n');
+  var blob = new Blob([csv],{type:'text/csv'});
+  var a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='audit-log-export.csv'; a.click();
+  console.log('[AUDIT] Export Initiated | Format:CSV | Records:'+alFilteredRecords.length+' | User:Diana Murphy');
+}
+
+function exportAuditXLSX(){
+  if(!FILTER_ACTIVE){return;}
+  if(alFilteredRecords.length > 10000){
+    document.getElementById('exportThresholdWarn').style.display='block';
+    return;
+  }
+  // Simulate: show confirmation
+  alert('Excel export initiated. File will be downloaded as audit-log-export.xlsx\n(Simulated \u2014 in production calls /audit-log/export?format=xlsx with active filters)');
+  console.log('[AUDIT] Export Initiated | Format:XLSX | Records:'+alFilteredRecords.length+' | User:Diana Murphy');
+}
+
+/* =========================================================
+   US-1.19: USAGE ANALYTICS - 5 Charts
+   ========================================================= */
+var AN_SCREENS = [
+  {name:'Onboarding Form',module:'Onboarding',visits:487,avgTime:312,role:'Agent'},
+  {name:'Hierarchy Manager',module:'Admin',visits:341,avgTime:184,role:'System Admin'},
+  {name:'Agent Invitations',module:'Admin',visits:298,avgTime:96,role:'System Admin'},
+  {name:'Enrollment Form',module:'Enrollment',visits:276,avgTime:245,role:'Agent'},
+  {name:'Commission Config',module:'Commission',visits:231,avgTime:143,role:'System Admin'},
+  {name:'Audit Trail',module:'Reports',visits:198,avgTime:78,role:'Compliance Officer'},
+  {name:'NIPR Alerts',module:'Onboarding',visits:187,avgTime:61,role:'Compliance Officer'},
+  {name:'Onboarding Cases',module:'Onboarding',visits:172,avgTime:104,role:'System Admin'},
+  {name:'Lead Management',module:'Leads',visits:165,avgTime:88,role:'Agent'},
+  {name:'Document Library',module:'Documents',visits:142,avgTime:67,role:'Agent'}
+];
+
+var AN_HEATMAP = [
+  {workflow:'Send Invitation',weeks:[5,12,8,3,9]},
+  {workflow:'Validate NPN',weeks:[8,15,11,6,14]},
+  {workflow:'Hierarchy Transfer',weeks:[2,4,3,1,5]},
+  {workflow:'Upload Document',weeks:[12,18,14,9,16]},
+  {workflow:'Run NIPR Check',weeks:[6,9,7,4,10]},
+  {workflow:'Commission Override',weeks:[1,2,2,0,3]},
+  {workflow:'Release Hold',weeks:[3,5,4,2,4]}
+];
+
+var AN_LINE_DATA = {
+  dates:['May 1','May 5','May 10','May 15','May 20','May 25','May 27'],
+  admin:[12,15,14,18,16,20,22],
+  agent:[28,32,35,30,38,42,44],
+  compliance:[8,9,11,10,12,11,13],
+  sessions:[48,56,60,58,66,73,79]
+};
+
+function renderAnalytics(){
+  renderChart1(); renderChart2(); renderChart3(); renderChart4(); renderChart5();
+}
+
+function applyAnFilter(data){
+  var role   = document.getElementById('anFilterRole').value;
+  var module = document.getElementById('anFilterModule').value;
+  return data.filter(function(d){
+    if(role && d.role !== role) return false;
+    if(module && d.module !== module) return false;
+    return true;
+  });
+}
+
+function renderChart1(){
+  var data = applyAnFilter(AN_SCREENS);
+  var maxV = Math.max.apply(null, data.map(function(d){return d.visits;}))||1;
+  document.getElementById('chart1').innerHTML = data.map(function(d){
+    var pct = Math.round(d.visits/maxV*100);
+    return '<div class="bar-row"><span class="bar-label" onclick="openDrillDown(\''+d.name+'\')" title="'+d.name+'">'+d.name+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><span class="bar-count">'+d.visits+'</span></div>';
+  }).join('');
+}
+
+function renderChart2(){
+  var data = applyAnFilter(AN_SCREENS);
+  var maxV = Math.max.apply(null, data.map(function(d){return d.avgTime;}))||1;
+  document.getElementById('chart2').innerHTML = data.map(function(d){
+    var pct = Math.round(d.avgTime/maxV*100);
+    return '<div class="bar-row"><span class="bar-label" onclick="openDrillDown(\''+d.name+'\')" title="'+d.name+'">'+d.name+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:#0d47a1"></div></div><span class="bar-count">'+d.avgTime+'s</span></div>';
+  }).join('');
+}
+
+function renderChart3(){
+  var weeks = ['Wk 1','Wk 2','Wk 3','Wk 4','Wk 5'];
+  var hmHtml = '<table style="border-collapse:separate;border-spacing:3px"><thead><tr><th style="width:160px;font-size:10px;color:#9e9e9e;text-align:left;padding-bottom:4px">Workflow</th>';
+  weeks.forEach(function(w){ hmHtml += '<th style="font-size:10px;color:#9e9e9e;text-align:center;width:32px">'+w+'</th>'; });
+  hmHtml += '</tr></thead><tbody>';
+  AN_HEATMAP.forEach(function(row){
+    hmHtml += '<tr><td style="font-size:11px;padding-right:8px;white-space:nowrap">'+row.workflow+'</td>';
+    row.weeks.forEach(function(v, wi){
+      var lvl = v===0?0:v<=4?1:v<=8?2:v<=12?3:v<=16?4:5;
+      hmHtml += '<td><div class="hm-cell hm-'+lvl+'" onclick="openDrillDown(\''+row.workflow+'\')") title="'+row.workflow+' - Week '+(wi+1)+': '+v+' initiations">'+v+'</div></td>';
+    });
+    hmHtml += '</tr>';
+  });
+  hmHtml += '</tbody></table>';
+  document.getElementById('chart3').innerHTML = hmHtml;
+}
+
+function renderLineChart(svgId, datasets, colors, labels){
+  var el = document.getElementById(svgId);
+  if(!el) return;
+  var W = el.parentElement.clientWidth||300; var H = 130; var PL=40; var PR=10; var PT=10; var PB=24;
+  var cW = W-PL-PR; var cH = H-PT-PB;
+  el.setAttribute('viewBox','0 0 '+W+' '+H);
+  var maxV = 0;
+  datasets.forEach(function(ds){ ds.forEach(function(v){ if(v>maxV) maxV=v; }); });
+  maxV = maxV || 1;
+  var xCount = datasets[0].length;
+  function px(i){ return PL + (i/(xCount-1))*cW; }
+  function py(v){ return PT + cH - (v/maxV)*cH; }
+  var html = '';
+  // Grid lines
+  [0,0.25,0.5,0.75,1].forEach(function(f){
+    var y = PT + cH*(1-f);
+    html += '<line x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'" stroke="#f1f3f4" stroke-width="1"/>';
+    html += '<text x="'+(PL-4)+'" y="'+(y+4)+'" text-anchor="end" font-size="9" fill="#9e9e9e">'+Math.round(maxV*f)+'</text>';
+  });
+  // X-axis labels
+  AN_LINE_DATA.dates.forEach(function(d,i){
+    html += '<text x="'+px(i)+'" y="'+(H-4)+'" text-anchor="middle" font-size="8" fill="#9e9e9e">'+d+'</text>';
+  });
+  // Lines
+  datasets.forEach(function(ds, di){
+    var pts = ds.map(function(v,i){ return px(i)+','+py(v); }).join(' ');
+    html += '<polyline points="'+pts+'" fill="none" stroke="'+colors[di]+'" stroke-width="2.5" stroke-linejoin="round"/>';
+    // Dots
+    ds.forEach(function(v,i){
+      html += '<circle cx="'+px(i)+'" cy="'+py(v)+'" r="3" fill="'+colors[di]+'"/>';
+    });
+  });
+  // Legend
+  colors.forEach(function(c,i){
+    var lx = PL + i*(W/colors.length);
+    html += '<rect x="'+lx+'" y="'+PT+'" width="10" height="4" fill="'+c+'"/>';
+    html += '<text x="'+(lx+13)+'" y="'+(PT+5)+'" font-size="8" fill="#5f6368">'+(labels[i]||'')+'</text>';
+  });
+  el.innerHTML = html;
+}
+
+function renderChart4(){
+  renderLineChart('chart4',
+    [AN_LINE_DATA.admin, AN_LINE_DATA.agent, AN_LINE_DATA.compliance],
+    ['#0d47a1','#4a148c','#1b5e20'],
+    ['Admin','Agent','Compliance']
+  );
+}
+
+function renderChart5(){
+  renderLineChart('chart5',
+    [AN_LINE_DATA.sessions],
+    ['#e65100'],
+    ['Sessions']
+  );
+}
+
+function openDrillDown(screenName){
+  document.getElementById('drillDownTitle').textContent = 'Per-User Breakdown: '+screenName;
+  var rows = [
+    {user:'Sandra Adams',role:'System Admin',visits:24,avgTime:187,last:'2026-05-27 09:18'},
+    {user:'Diana Murphy',role:'Compliance Officer',visits:18,avgTime:92,last:'2026-05-27 12:00'},
+    {user:'Alex Rivera',role:'Agent',visits:12,avgTime:245,last:'2026-05-27 10:02'},
+    {user:'James Rollins',role:'Agency Admin',visits:9,avgTime:134,last:'2026-05-27 11:00'},
+    {user:'Maria Santos',role:'Agent',visits:7,avgTime:198,last:'2026-05-27 10:30'}
+  ];
+  document.getElementById('drillDownTbody').innerHTML = rows.map(function(r){
+    return '<tr><td>'+r.user+'</td><td>'+r.role+'</td><td>'+r.visits+'</td><td>'+r.avgTime+'s</td><td style="font-size:11px;color:#5f6368">'+r.last+'</td></tr>';
+  }).join('');
+  document.getElementById('drillDownPanel').style.display='block';
+  document.getElementById('drillDownPanel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function openAnalyticsForSession(sessionId){
+  switchAuditTab('analytics');
+  alert('Analytics view filtered to session: '+sessionId+'\n(In production, pre-fills filters and shows session-scoped events)');
+}
+
+function exportAnalyticsCSV(){
+  alert('Analytics CSV export initiated.\n(In production calls /analytics/usage?format=csv with active filter params)');
+  console.log('[AUDIT] Analytics Export | User:Diana Murphy | Time:'+new Date().toISOString());
+}
+
+function resetAnalyticsFilters(){
+  ['anFilterRole','anFilterModule'].forEach(function(id){ var el=document.getElementById(id);if(el)el.selectedIndex=0; });
+  ['anFilterFrom','anFilterTo'].forEach(function(id){ var el=document.getElementById(id);if(el)el.value=''; });
+  renderAnalytics();
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+window.addEventListener('DOMContentLoaded', function(){
+  applyRBAC();
+  alFilteredRecords = AUDIT_RECORDS.slice();
+  alFilteredRecords.sort(function(a,b){return b.ts.localeCompare(a.ts);});
+  renderAuditTable();
+  updateExportState();
+  // Pre-set analytics date range to last 30 days
+  var today = new Date().toISOString().split('T')[0];
+  var month = new Date(Date.now()-30*24*60*60*1000).toISOString().split('T')[0];
+  document.getElementById('anFilterFrom').value = month;
+  document.getElementById('anFilterTo').value   = today;
+});
+</script>
+
+</body>
+</html>

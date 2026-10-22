@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Network Health | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html" class="active"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Agent Network Health</h4></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Network Health')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active & Selling</div><div class="stat-val">289</div><div class="stat-sub">Enrolled 1+ member (30d)</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Active — No Sales</div><div class="stat-val">53</div><div class="stat-sub">No enrollments in 30 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Compliance Hold</div><div class="stat-val">28</div><div class="stat-sub">Cannot sell</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">In Onboarding</div><div class="stat-val">12</div><div class="stat-sub">Pending activation</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-heartbeat"></i></div><div><div class="stat-label">Health Score</div><div class="stat-val">84.5%</div><div class="stat-sub">Active selling / total</div></div></div></div>
+    </div>
+
+    <!-- Agent Status Breakdown -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-users" style="color:#4a148c;margin-right:8px"></i>Agent Status Breakdown</h6></div>
+      <div class="table-wrap">
+        <table class="table table-hover" style="font-size:13px">
+          <thead><tr><th>Status</th><th>Count</th><th>% of Total</th><th>Avg Enrollments (30d)</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2e7d32;margin-right:8px"></span>Active & Selling</td><td style="font-weight:700">289</td><td>75.5%</td><td>4.3</td><td style="color:#2e7d32">↑ +8 agents</td></tr>
+            <tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e65100;margin-right:8px"></span>Active — No Sales (30d)</td><td style="font-weight:700">53</td><td>13.8%</td><td>0</td><td style="color:#c62828">↑ +5 agents</td></tr>
+            <tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#c62828;margin-right:8px"></span>Compliance Hold</td><td style="font-weight:700">28</td><td>7.3%</td><td>—</td><td style="color:#2e7d32">↓ −3 agents</td></tr>
+            <tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#0277bd;margin-right:8px"></span>In Onboarding</td><td style="font-weight:700">12</td><td>3.1%</td><td>—</td><td>Steady</td></tr>
+            <tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#757575;margin-right:8px"></span>Terminated YTD</td><td style="font-weight:700">14</td><td>—</td><td>—</td><td style="color:#5f6368">3 fraud, 11 voluntary</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- At-Risk Agents -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-exclamation-triangle" style="color:#e65100;margin-right:8px"></i>At-Risk Agents — No Production (30+ days)</h6></div>
+      <div class="table-wrap">
+        <table class="table table-hover" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>State</th><th>Days Inactive</th><th>Last Enrollment</th><th>BoB Size</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">David Chen</td><td>4478122</td><td>National Benefits (SGA)</td><td>TX</td><td style="color:#e65100;font-weight:600">42</td><td>04 28,2026</td><td>12</td></tr>
+            <tr><td style="font-weight:600">Lisa Park</td><td>3356090</td><td>Premier Insurance (FMO)</td><td>FL</td><td style="color:#e65100;font-weight:600">38</td><td>05 02,2026</td><td>8</td></tr>
+            <tr><td style="font-weight:600">Michael Brown</td><td>5590812</td><td>Alliance Health (MGA)</td><td>CA</td><td style="color:#e65100;font-weight:600">35</td><td>05 05,2026</td><td>5</td></tr>
+            <tr><td style="font-weight:600">Karen Wilson</td><td>6612344</td><td>Southwest Medicare (GA)</td><td>FL</td><td style="color:#e65100;font-weight:600">31</td><td>05 09,2026</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

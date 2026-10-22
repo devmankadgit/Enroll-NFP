@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accept Contracting Invitation | Gold Kidney Health Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px}
+.inv-card{background:#fff;border-radius:16px;padding:0;max-width:640px;width:100%;box-shadow:0 8px 48px rgba(0,0,0,.22)}
+.inv-card-header{background:linear-gradient(135deg,#1a237e,#1565c0);border-radius:16px 16px 0 0;padding:24px 32px;color:#fff}
+.inv-card-body{padding:28px 32px}
+.inv-card-footer{padding:16px 32px 24px;border-top:1px solid #f1f3f4}
+.locked-field{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:10px}
+.locked-icon{color:#9e9e9e;font-size:12px}
+.locked-label{font-size:11px;color:#5f6368;margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.locked-value{font-size:14px;font-weight:700;color:#1a237e}
+.step-indicator{display:flex;gap:0;margin-bottom:24px}
+.step-dot{flex:1;text-align:center;position:relative}
+.step-dot::before{content:'';position:absolute;top:14px;left:50%;right:-50%;height:2px;background:#e8eaed;z-index:0}
+.step-dot:last-child::before{display:none}
+.step-circle{width:28px;height:28px;border-radius:50%;border:2px solid #e8eaed;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 4px;position:relative;z-index:1;color:#9e9e9e}
+.step-circle.active{background:#1a237e;border-color:#1a237e;color:#fff}
+.step-circle.done{background:#1b5e20;border-color:#1b5e20;color:#fff}
+.step-label{font-size:10px;color:#9e9e9e;font-weight:600}
+.step-label.active{color:#1a237e}
+.step-label.done{color:#1b5e20}
+.error-state{text-align:center;padding:40px 32px}
+.form-step{display:none}
+.form-step.active{display:block}
+.audit-log-entry{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;font-size:11px;color:#5f6368;margin-bottom:6px;display:flex;align-items:flex-start;gap:8px}
+.inv-by-banner{background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+</style>
+</head>
+<body>
+
+<div class="inv-card">
+  <!-- HEADER -->
+  <div class="inv-card-header">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0"><i class="fas fa-handshake"></i></div>
+      <div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:2px">Gold Kidney Health Plan</div>
+        <div style="font-size:12px;opacity:.8">Producer Contracting Invitation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR STATE (expired / used) -->
+  <div id="invErrorState" class="error-state" style="display:none">
+    <div style="font-size:52px;margin-bottom:16px;color:#ef9a9a"><i class="fas fa-link"></i></div>
+    <h5 id="invErrorTitle" style="color:#b71c1c;margin-bottom:8px">Invitation Link Expired</h5>
+    <p id="invErrorMsg" style="color:#5f6368;font-size:14px;margin-bottom:20px">This invitation link has expired. Please contact your upline administrator or Broker Support.</p>
+    <div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:8px;padding:14px;font-size:13px;color:#b71c1c;margin-bottom:20px">
+      <i class="fas fa-info-circle" style="margin-right:6px"></i>
+      If you believe this is an error, ask your upline admin to resend the invitation from the <strong>Agent Invitations</strong> screen.
+    </div>
+    <a href="login.html" style="display:inline-block;background:#1a237e;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Go to Login</a>
+  </div>
+
+  <!-- MAIN REGISTRATION FORM -->
+  <div id="invFormState">
+    <div class="inv-card-body">
+
+      <!-- Step indicator -->
+      <div class="step-indicator" id="stepIndicator">
+        <div class="step-dot"><div class="step-circle active" id="sc1">1</div><div class="step-label active" id="sl1">Verify</div></div>
+        <div class="step-dot"><div class="step-circle" id="sc2">2</div><div class="step-label" id="sl2">Personal Info</div></div>
+        <div class="step-dot"><div class="step-circle" id="sc3">3</div><div class="step-label" id="sl3">Licensing</div></div>
+        <div class="step-dot"><div class="step-circle" id="sc4">4</div><div class="step-label" id="sl4">Confirm</div></div>
+      </div>
+
+      <!-- STEP 1: Invitation Context -->
+      <div class="form-step active" id="step1">
+        <!-- Invited By Banner -->
+        <div class="inv-by-banner">
+          <div style="width:36px;height:36px;background:#1a237e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0"><i class="fas fa-user-tie"></i></div>
+          <div>
+            <div style="font-size:11px;color:#5f6368;font-weight:600">INVITED BY</div>
+            <div id="invitedByName" style="font-size:14px;font-weight:700;color:#1a237e">Sandra Adams</div>
+            <div id="invitedByOrg" style="font-size:11px;color:#5f6368">National FMO (SFMO-2024-001)</div>
+          </div>
+        </div>
+
+        <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:10px"><i class="fas fa-lock" style="margin-right:6px;color:#9e9e9e"></i>Pre-Configured Hierarchy (Read-Only)</div>
+        <div style="font-size:12px;color:#5f6368;margin-bottom:14px;background:#fffde7;border:1px solid #ffe082;border-radius:6px;padding:8px 12px">
+          <i class="fas fa-info-circle" style="margin-right:4px;color:#e65100"></i>The fields below were set by your inviter and <strong>cannot be changed</strong>. They define where you will be placed in the producer hierarchy. If these details are incorrect, please contact your upline.
+        </div>
+
+        <!-- US-1.15: Pre-filled LOCKED fields -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div class="locked-field">
+            <i class="fas fa-sitemap locked-icon"></i>
+            <div>
+              <div class="locked-label">Hierarchy Level</div>
+              <div class="locked-value" id="lockedLevel">Agent/Broker</div>
+            </div>
+            <i class="fas fa-lock" style="color:#dadce0;margin-left:auto;font-size:11px"></i>
+          </div>
+          <div class="locked-field">
+            <i class="fas fa-building locked-icon"></i>
+            <div>
+              <div class="locked-label">Upline Organization</div>
+              <div class="locked-value" id="lockedUplineOrg">HealthFirst Distribution (GA-2201)</div>
+            </div>
+            <i class="fas fa-lock" style="color:#dadce0;margin-left:auto;font-size:11px"></i>
+          </div>
+          <div class="locked-field">
+            <i class="fas fa-calendar locked-icon"></i>
+            <div>
+              <div class="locked-label">Plan Year</div>
+              <div class="locked-value" id="lockedPlanYear">2026</div>
+            </div>
+            <i class="fas fa-lock" style="color:#dadce0;margin-left:auto;font-size:11px"></i>
+          </div>
+          <div class="locked-field">
+            <i class="fas fa-user-tag locked-icon"></i>
+            <div>
+              <div class="locked-label">Role Type</div>
+              <div class="locked-value" id="lockedRole">Individual Agent</div>
+            </div>
+            <i class="fas fa-lock" style="color:#dadce0;margin-left:auto;font-size:11px"></i>
+          </div>
+        </div>
+
+        <!-- Invitation expiry -->
+        <div id="invExpiryInfo" style="font-size:12px;color:#e65100;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;margin-bottom:20px">
+          <i class="fas fa-clock" style="margin-right:4px"></i>This invitation link expires on <strong id="invExpiryDate">05 30,2026 at 12:00 PM</strong>. Complete your registration before it expires.
+        </div>
+      </div>
+
+      <!-- STEP 2: Personal Information -->
+      <div class="form-step" id="step2">
+        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600">First Name <span class="req">*</span></label>
+            <input id="regFirstName" class="form-control" placeholder="First name"></div>
+          <div><label style="font-size:12px;font-weight:600">Last Name <span class="req">*</span></label>
+            <input id="regLastName" class="form-control" placeholder="Last name"></div>
+        </div>
+        <div class="mb-3"><label style="font-size:12px;font-weight:600">Email Address <span class="req">*</span></label>
+          <input id="regEmail" class="form-control" type="email" placeholder="Your email address">
+          <div id="regEmailNote" style="font-size:11px;color:#5f6368;margin-top:3px"><i class="fas fa-info-circle"></i> This should match the email to which the invitation was sent.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600">Phone Number</label>
+            <input id="regPhone" class="form-control" type="tel" placeholder="(555) 555-5555"></div>
+          <div><label style="font-size:12px;font-weight:600">Date of Birth</label>
+            <input id="regDOB" class="form-control" type="date"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600">Password <span class="req">*</span></label>
+            <input id="regPassword" class="form-control" type="password" placeholder="Min 10 chars, 1 uppercase, 1 number"></div>
+          <div><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label>
+            <input id="regPasswordConfirm" class="form-control" type="password" placeholder="Re-enter password"></div>
+        </div>
+        <div id="step2Alert" style="display:none;margin-top:8px"></div>
+      </div>
+
+      <!-- STEP 3: Licensing -->
+      <div class="form-step" id="step3">
+        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-id-badge" style="margin-right:6px"></i>Licensing &amp; Credentials</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600">NPN (National Producer Number) <span class="req">*</span></label>
+            <input id="regNPN" class="form-control" maxlength="10" placeholder="8-10 digits" oninput="validateRegNPN()" onblur="checkRegNPNDuplicate()">
+            <div id="regNPNErr" style="display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:6px 10px;font-size:11px;color:#b71c1c;margin-top:4px"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>NPN must be 8 to 10 numeric digits. No letters or special characters.</div>
+            <div id="regNPNDupActiveErr" style="display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:6px 10px;font-size:11px;color:#b71c1c;margin-top:4px"><i class="fas fa-ban" style="margin-right:4px"></i>An active agent with this NPN already exists in the system. Please contact Broker Support.</div>
+            <div id="regNPNDupPendErr" style="display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:6px 10px;font-size:11px;color:#b71c1c;margin-top:4px"><i class="fas fa-clock" style="margin-right:4px"></i>An onboarding case for this NPN is already in progress. Please contact Broker Support.</div>
+            <div id="regNPNTermWarn" style="display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:6px 10px;font-size:11px;color:#e65100;margin-top:4px"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>A terminated agent record with this NPN exists. Your registration is still being reviewed by your admin.</div>
+          </div>
+          <div><label style="font-size:12px;font-weight:600">License Number</label>
+            <input id="regLicense" class="form-control" placeholder="State license number"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="font-size:12px;font-weight:600">Licensed States</label>
+            <input id="regStates" class="form-control" placeholder="e.g. TX, FL, CA"></div>
+          <div><label style="font-size:12px;font-weight:600">License Expiry Date</label>
+            <input id="regLicenseExpiry" class="form-control" type="date"></div>
+        </div>
+        <div class="mb-3"><label style="font-size:12px;font-weight:600">E&amp;O Coverage Provider</label>
+          <input id="regEO" class="form-control" placeholder="E&O carrier name (optional)"></div>
+        <div id="step3Alert" style="display:none;margin-top:8px"></div>
+      </div>
+
+      <!-- STEP 4: Review & Submit -->
+      <div class="form-step" id="step4">
+        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Review &amp; Confirm</div>
+        <div id="step4Summary"></div>
+
+        <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:14px;margin-bottom:14px">
+          <div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:8px"><i class="fas fa-shield-alt" style="margin-right:5px"></i>Audit Trail — Events Logged for this Invitation</div>
+          <div class="audit-log-entry"><i class="fas fa-link" style="color:#1a237e;margin-top:1px"></i><div><strong>Link Opened</strong> — Invitation link was accessed. Status updated from <em>Sent</em> to <em>Opened</em>.<br><span style="color:#9e9e9e">Today at approx. page load time</span></div></div>
+          <div class="audit-log-entry"><i class="fas fa-edit" style="color:#e65100;margin-top:1px"></i><div><strong>Form Started</strong> — Agent began filling out registration form. Invitation remains valid until expiry.<br><span style="color:#9e9e9e">Today</span></div></div>
+          <div class="audit-log-entry" id="auditSubmitEntry" style="display:none"><i class="fas fa-check-circle" style="color:#1b5e20;margin-top:1px"></i><div><strong>Form Submitted</strong> — Registration complete. Invitation status updated from <em>Opened</em> to <em>Accepted</em>. Onboarding case created.<br><span style="color:#9e9e9e">Pending submission</span></div></div>
+        </div>
+
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:13px;cursor:pointer;margin-bottom:14px">
+          <input type="checkbox" id="regConsent" style="margin-top:3px">
+          <span>I confirm that the information provided is accurate and I agree to the <a href="#" style="color:#1a237e">Terms of Contracting</a>. I understand that my hierarchy placement (<strong id="confirmLevel">Agent/Broker</strong> under <strong id="confirmOrg">HealthFirst Distribution</strong>) was pre-set by my upline and cannot be modified.</span>
+        </label>
+        <div id="step4Alert" style="display:none;margin-top:8px"></div>
+      </div>
+
+    </div><!-- /inv-card-body -->
+
+    <!-- ON HOLD STATE (US-1.17: Hierarchy Readiness failure) -->
+    <div id="invOnHoldState" style="display:none;padding:28px 32px;">
+      <div style="display:flex;align-items:center;gap:14px;background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:16px 20px;margin-bottom:20px">
+        <div style="font-size:36px;color:#e65100"><i class="fas fa-pause-circle"></i></div>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:#e65100">Registration Received — Account Setup On Hold</div>
+          <div style="font-size:13px;color:#5f6368;margin-top:4px">Your registration was received. Your account setup is being reviewed. You will be notified by email when you can proceed.</div>
+        </div>
+      </div>
+      <div id="holdDetails" style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:14px;font-size:12px;margin-bottom:16px"></div>
+      <div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;font-size:12px;color:#b71c1c">
+        <i class="fas fa-info-circle" style="margin-right:5px"></i>Your upline administrator has been notified and will resolve the issue. No action is required from you at this time.
+      </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div id="invSuccessState" style="display:none;padding:32px;text-align:center">
+      <div style="font-size:52px;color:#a5d6a7;margin-bottom:16px"><i class="fas fa-check-circle"></i></div>
+      <h5 style="color:#1b5e20;margin-bottom:8px">Registration Complete!</h5>
+      <p style="color:#5f6368;font-size:14px;margin-bottom:16px">Your contracting invitation has been accepted. An onboarding case has been created and your hierarchy placement is confirmed.</p>
+      <div id="successDetails" style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:14px;text-align:left;font-size:12px;margin-bottom:20px"></div>
+      <a href="../agent/onboarding.html" style="display:inline-block;background:#1a237e;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;margin-right:10px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>View Onboarding Case</a>
+      <a href="login.html" style="display:inline-block;background:#fff;color:#1a237e;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;border:1px solid #9fa8da"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Sign In</a>
+    </div>
+
+    <div class="inv-card-footer">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <button class="btn-ol" id="btnBack" onclick="invStepBack()" style="display:none"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back</button>
+        <div style="flex:1"></div>
+        <button class="btn-pr" id="btnNext" onclick="invStepNext()"><i class="fas fa-arrow-right" style="margin-right:4px"></i>Continue</button>
+        <button class="btn-pr" id="btnSubmit" onclick="submitRegistration()" style="display:none"><i class="fas fa-check-circle" style="margin-right:4px"></i>Complete Registration</button>
+      </div>
+    </div>
+  </div><!-- /invFormState -->
+</div><!-- /inv-card -->
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* =========================================================
+   US-1.15: INVITATION TOKEN VALIDATION & PRE-FILL
+   ========================================================= */
+
+// US-1.16: NPN Registry (status-aware duplicate check)
+var REG_NPN_REGISTRY = {
+  '8823441':  { status:'Active',     name:'James Martinez',    org:'HealthFirst Distribution' },
+  '7745123':  { status:'Active',     name:'Sarah Williams',    org:'National FMO' },
+  '6612890':  { status:'Pending',    name:'Carlos Rivera',     org:'Coastal Medicare Partners' },
+  '12345678': { status:'Terminated', name:'Patricia Thompson', org:'Pacific Health Distributors' },
+  '99887766': { status:'Pending',    name:'Michael Chen',      org:'HealthFirst Distribution' }
+};
+var REG_NPN_HAS_BLOCK = false;
+
+// US-1.17: Hierarchy Readiness data
+var HIERARCHY_READINESS = {
+  'HealthFirst Distribution (GA-2201)': { uplineActive:true,  hasAdmin:true, planYearConfig:true,  paymentRouting:true },
+  'Coastal Medicare Partners (GA-2288)': { uplineActive:false, hasAdmin:true, planYearConfig:true,  paymentRouting:true },
+  'SunBridge Medicare Advisors (MGA-1014)': { uplineActive:true,  hasAdmin:true, planYearConfig:false, paymentRouting:false }
+};
+
+// Simulated invitation records (in real system, fetched from server by token)
+var INVITE_TOKENS = {
+  'tk_004': {firstName:'Jennifer',lastName:'Lopez',email:'jlopez@email.com',npn:'',level:'Agent/Broker',uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',role:'Individual Agent',expiryDate:'2026-05-28T23:59:00',sentBy:'Sandra Adams',sentByOrg:'National FMO (SFMO-2024-001)',status:'Sent'},
+  'tk_002': {firstName:'Maria',lastName:'Santos',email:'msantos@email.com',npn:'',level:'Agent/Broker',uplineOrg:'Coastal Medicare Partners (GA-2288)',planYear:'2026',role:'Individual Agent',expiryDate:'2026-05-28T23:59:00',sentBy:'Sandra Adams',sentByOrg:'National FMO (SFMO-2024-001)',status:'Opened'},
+  'tk_EXPIRED': {firstName:'Amanda',lastName:'White',email:'awhite@email.com',npn:'',level:'Agent/Broker',uplineOrg:'Coastal Medicare Partners (GA-2288)',planYear:'2026',role:'Individual Agent',expiryDate:'2026-05-13T23:59:00',sentBy:'Sandra Adams',sentByOrg:'National FMO (SFMO-2024-001)',status:'Expired'},
+  'tk_USED': {firstName:'Robert',lastName:'Chen',email:'rchen@email.com',npn:'98765432',level:'Agent/Broker',uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',role:'Individual Agent',expiryDate:'2026-05-23T23:59:00',sentBy:'Sandra Adams',sentByOrg:'National FMO (SFMO-2024-001)',status:'Accepted'}
+};
+
+var CURRENT_STEP = 1;
+var TOTAL_STEPS = 4;
+var CURRENT_TOKEN = null;
+var CURRENT_INVITE = null;
+
+/* =========================================================
+   ON PAGE LOAD: Validate token from URL param
+   ========================================================= */
+window.addEventListener('DOMContentLoaded', function(){
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token') || 'tk_004'; // Demo default
+
+  CURRENT_TOKEN = token;
+  var invite = INVITE_TOKENS[token];
+
+  // US-1.15: Token validation
+  if(!invite){
+    showError('Invalid Invitation Link','This invitation link is invalid or has already expired. Please contact your upline administrator or Broker Support.');
+    return;
+  }
+
+  if(invite.status === 'Accepted'){
+    showError('Invitation Already Accepted','This invitation has already been accepted. If you need assistance, contact Broker Support.');
+    return;
+  }
+
+  var now = new Date();
+  var expiry = new Date(invite.expiryDate);
+  if(invite.status === 'Expired' || now > expiry){
+    showError('Invitation Link Expired','This invitation link has expired. Please contact your upline administrator or Broker Support.');
+    return;
+  }
+
+  // Valid invite — pre-populate locked fields
+  CURRENT_INVITE = invite;
+  invite.status = 'Opened'; // US-1.15: Update status to Opened on link click
+
+  // Pre-fill locked display fields
+  setLocked('lockedLevel', invite.level);
+  setLocked('lockedUplineOrg', invite.uplineOrg);
+  setLocked('lockedPlanYear', invite.planYear);
+  setLocked('lockedRole', invite.role);
+  document.getElementById('invitedByName').textContent = invite.sentBy;
+  document.getElementById('invitedByOrg').textContent = invite.sentByOrg;
+  document.getElementById('confirmLevel').textContent = invite.level;
+  document.getElementById('confirmOrg').textContent = invite.uplineOrg.split(' (')[0];
+
+  // Set expiry display
+  var expiryStr = expiry.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+' at '+expiry.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('invExpiryDate').textContent = expiryStr;
+
+  // Pre-fill email if known
+  if(invite.email){
+    document.getElementById('regEmail').value = invite.email;
+  }
+  if(invite.firstName) document.getElementById('regFirstName').value = invite.firstName;
+  if(invite.lastName) document.getElementById('regLastName').value = invite.lastName;
+  if(invite.npn) document.getElementById('regNPN').value = invite.npn;
+});
+
+function setLocked(id, value) {
+  var el = document.getElementById(id);
+  if(el) el.textContent = value;
+}
+
+function showError(title, msg) {
+  document.getElementById('invFormState').style.display = 'none';
+  document.getElementById('invErrorState').style.display = 'block';
+  document.getElementById('invErrorTitle').textContent = title;
+  document.getElementById('invErrorMsg').textContent = msg;
+}
+
+/* =========================================================
+   MULTI-STEP FORM NAVIGATION
+   ========================================================= */
+function invStepNext(){
+  if(!validateStep(CURRENT_STEP)) return;
+  if(CURRENT_STEP < TOTAL_STEPS){
+    CURRENT_STEP++;
+    updateSteps();
+    if(CURRENT_STEP === 4) buildStep4Summary();
+  }
+}
+
+function invStepBack(){
+  if(CURRENT_STEP > 1){
+    CURRENT_STEP--;
+    updateSteps();
+  }
+}
+
+function updateSteps(){
+  for(var i=1;i<=TOTAL_STEPS;i++){
+    var stepEl = document.getElementById('step'+i);
+    if(stepEl) stepEl.classList.toggle('active', i===CURRENT_STEP);
+    var sc = document.getElementById('sc'+i);
+    var sl = document.getElementById('sl'+i);
+    if(sc){
+      sc.classList.remove('active','done');
+      if(i < CURRENT_STEP){sc.classList.add('done');sc.innerHTML='<i class="fas fa-check" style="font-size:9px"></i>';}
+      else if(i === CURRENT_STEP) sc.classList.add('active');
+      else sc.textContent=i;
+    }
+    if(sl){sl.classList.remove('active','done');if(i<CURRENT_STEP)sl.classList.add('done');else if(i===CURRENT_STEP)sl.classList.add('active');}
+  }
+  document.getElementById('btnBack').style.display = CURRENT_STEP>1?'':'none';
+  document.getElementById('btnNext').style.display = CURRENT_STEP<TOTAL_STEPS?'':'none';
+  document.getElementById('btnSubmit').style.display = CURRENT_STEP===TOTAL_STEPS?'':'none';
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function validateStep(step){
+  if(step === 1) return true; // Locked fields, no validation needed
+  if(step === 2){
+    var first = document.getElementById('regFirstName').value.trim();
+    var last = document.getElementById('regLastName').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var pass = document.getElementById('regPassword').value;
+    var passC = document.getElementById('regPasswordConfirm').value;
+    var zone = document.getElementById('step2Alert');
+    if(!first||!last){showStepAlert(zone,'First and Last name are required.','danger');return false;}
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showStepAlert(zone,'Please enter a valid email address.','danger');return false;}
+    if(!pass||pass.length<10){showStepAlert(zone,'Password must be at least 10 characters.','danger');return false;}
+    if(!/[A-Z]/.test(pass)||!/[0-9]/.test(pass)){showStepAlert(zone,'Password must contain at least one uppercase letter and one number.','danger');return false;}
+    if(pass!==passC){showStepAlert(zone,'Passwords do not match.','danger');return false;}
+    zone.style.display='none';
+    return true;
+  }
+  if(step === 3){
+    var npn = document.getElementById('regNPN').value.trim();
+    var zone = document.getElementById('step3Alert');
+    if(!npn){showStepAlert(zone,'NPN is required.','danger');return false;}
+    if(!/^\d{8,10}$/.test(npn)){showStepAlert(zone,'NPN must be 8 to 10 numeric digits. No letters or special characters.','danger');return false;}
+    if(REG_NPN_HAS_BLOCK){showStepAlert(zone,'This NPN cannot be used. Please review the error above or contact Broker Support.','danger');return false;}
+    zone.style.display='none';
+    return true;
+  }
+  return true;
+}
+
+function validateRegNPN(){
+  var npn = document.getElementById('regNPN').value.trim();
+  var err = document.getElementById('regNPNErr');
+  ['regNPNDupActiveErr','regNPNDupPendErr','regNPNTermWarn'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  if(!npn){err.style.display='none';REG_NPN_HAS_BLOCK=false;return;}
+  var valid = /^\d{8,10}$/.test(npn);
+  err.style.display = valid?'none':'block';
+  REG_NPN_HAS_BLOCK = !valid;
+}
+
+function checkRegNPNDuplicate(){
+  var npn = document.getElementById('regNPN').value.trim();
+  if(!npn||!/^\d{8,10}$/.test(npn)) return;
+  var rec = REG_NPN_REGISTRY[npn];
+  if(!rec){ REG_NPN_HAS_BLOCK=false; return; }
+  // US-1.16: Status-aware messages, user-friendly (no internal details)
+  if(rec.status==='Active'){
+    document.getElementById('regNPNDupActiveErr').style.display='block';
+    REG_NPN_HAS_BLOCK=true;
+  } else if(rec.status==='Pending'){
+    document.getElementById('regNPNDupPendErr').style.display='block';
+    REG_NPN_HAS_BLOCK=true;
+  } else if(rec.status==='Terminated'){
+    document.getElementById('regNPNTermWarn').style.display='block';
+    REG_NPN_HAS_BLOCK=false; // Warning only for agent self-reg
+  }
+  // US-1.16: Log duplicate check result to audit trail
+  console.log('[AUDIT] NPN Duplicate Check | NPN:'+npn+' | Status:'+rec.status+' | Source:invite-accept | Time:'+new Date().toISOString());
+}
+
+function buildStep4Summary(){
+  var inv = CURRENT_INVITE||{};
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;font-size:12px">'
+    +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">Name</div><div style="font-weight:700">'+document.getElementById('regFirstName').value+' '+document.getElementById('regLastName').value+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">Email</div><div>'+document.getElementById('regEmail').value+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">NPN</div><div style="font-weight:700">'+document.getElementById('regNPN').value+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">Licensed States</div><div>'+(document.getElementById('regStates').value||'—')+'</div></div>'
+    +'</div>'
+    +'<div style="background:#e8eaf6;border-radius:8px;padding:12px;font-size:12px;margin-bottom:0">'
+    +'<div style="font-weight:700;color:#1a237e;margin-bottom:8px"><i class="fas fa-lock" style="margin-right:5px"></i>Hierarchy Placement (Pre-Configured — Read Only)</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+    +'<div><div style="color:#5f6368;font-size:11px">Hierarchy Level</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedLevel').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Upline Organization</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedUplineOrg').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Plan Year</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedPlanYear').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Role Type</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedRole').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Invited By</div><div>'+document.getElementById('invitedByName').textContent+'</div></div>'
+    +'</div></div>';
+  document.getElementById('step4Summary').innerHTML = html;
+}
+
+function submitRegistration(){
+  var consent = document.getElementById('regConsent').checked;
+  var zone = document.getElementById('step4Alert');
+  if(!consent){showStepAlert(zone,'Please read and accept the Terms of Contracting before submitting.','danger');return;}
+
+  // US-1.17: Run hierarchy readiness checks before accepting
+  var uplineOrg = document.getElementById('lockedUplineOrg').textContent;
+  var planYear  = document.getElementById('lockedPlanYear').textContent;
+  var level     = document.getElementById('lockedLevel').textContent;
+  var holdReasons = runHierarchyReadinessCheck(uplineOrg, planYear, level);
+
+  var caseId = 'OB-2026-0'+Math.floor(Math.random()*1000+442);
+
+  // Hide form, hide footer
+  document.getElementById('step4').style.display='none';
+  document.getElementById('stepIndicator').style.display='none';
+  document.querySelector('.inv-card-footer').style.display='none';
+  document.getElementById('auditSubmitEntry').style.display='flex';
+
+  if(holdReasons.length > 0){
+    // US-1.17: Case created with status On Hold - Hierarchy Issue
+    if(CURRENT_INVITE) CURRENT_INVITE.status = 'Accepted';
+    var holdHtml = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px">'
+      +'<div><div style="color:#5f6368;font-size:11px">Case ID</div><div style="font-weight:700;color:#1a237e">'+caseId+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Case Status</div><div style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:8px;font-weight:700;font-size:11px;display:inline-block">On Hold — Hierarchy Issue</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Agent Name</div><div style="font-weight:700">'+document.getElementById('regFirstName').value+' '+document.getElementById('regLastName').value+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Upline Org</div><div>'+uplineOrg+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Placed On Hold</div><div>'+new Date().toLocaleString()+'</div></div>'
+      +'</div>'
+      +'<div style="font-weight:700;font-size:11px;color:#b71c1c;margin-bottom:6px"><i class="fas fa-times-circle" style="margin-right:4px"></i>Hierarchy Readiness Checks Failed:</div>';
+    holdReasons.forEach(function(r){
+      holdHtml += '<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:7px 10px;font-size:11px;color:#b71c1c;margin-bottom:5px"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>'+r+'</div>';
+    });
+    document.getElementById('holdDetails').innerHTML = holdHtml;
+    document.getElementById('invOnHoldState').style.display='block';
+    console.log('[AUDIT] Onboarding Case Created On Hold | CaseID:'+caseId+' | HoldReasons:'+holdReasons.join('; '));
+  } else {
+    // US-1.15: Update invitation status to Accepted
+    if(CURRENT_INVITE) CURRENT_INVITE.status = 'Accepted';
+    document.getElementById('successDetails').innerHTML =
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">'
+      +'<div><div style="color:#5f6368;font-size:11px">Name</div><div style="font-weight:700">'+document.getElementById('regFirstName').value+' '+document.getElementById('regLastName').value+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Onboarding Case</div><div style="font-weight:700;color:#1a237e">'+caseId+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Hierarchy Level</div><div style="font-weight:700">'+document.getElementById('lockedLevel').textContent+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Upline Organization</div><div style="font-weight:700">'+document.getElementById('lockedUplineOrg').textContent+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Plan Year</div><div style="font-weight:700">'+document.getElementById('lockedPlanYear').textContent+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Invitation Status</div><div style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:8px;font-weight:700;font-size:11px;display:inline-block">Accepted</div></div>'
+      +'</div>';
+    document.getElementById('invSuccessState').style.display='block';
+  }
+}
+
+function runHierarchyReadinessCheck(uplineOrg, planYear, level){
+  // US-1.17: 4-check hierarchy readiness engine
+  var readiness = HIERARCHY_READINESS[uplineOrg];
+  var fails = [];
+  if(!readiness){
+    // Unknown org: default pass (in real system, would call API)
+    return [];
+  }
+  if(!readiness.uplineActive){
+    fails.push('Upline organization '+uplineOrg.split(' (')[0]+' is inactive. Reactivate before proceeding.');
+  }
+  if(!readiness.hasAdmin){
+    fails.push('Upline organization has no active admin user. At least one active admin is required.');
+  }
+  if(!readiness.planYearConfig){
+    fails.push('No plan year configuration exists for '+planYear+'. Contact Finance Admin.');
+  }
+  if(!readiness.paymentRouting){
+    fails.push('Payment routing is not configured for '+level+' in plan year '+planYear+'.');
+  }
+  return fails;
+}
+
+function showStepAlert(zone,msg,type){
+  if(!zone)return;
+  var c={danger:'#fce4ec',warning:'#fff8e1',success:'#e8f5e9'};
+  var b={danger:'#ef9a9a',warning:'#ffe082',success:'#a5d6a7'};
+  var ic={danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',success:'fa-check-circle'};
+  zone.innerHTML='<div style="background:'+c[type]+';border:1px solid '+b[type]+';border-radius:6px;padding:8px 12px;font-size:12px"><i class="fas '+ic[type]+'" style="margin-right:5px"></i>'+msg+'</div>';
+  zone.style.display='block';
+}
+</script>
+</body>
+</html>

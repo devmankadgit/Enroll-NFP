@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Document Templates | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html" class="active"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Document &amp; Template Administration</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Document Templates</li></ol>
+    </div>
+    <button class="btn-pr btn-sm" onclick="openAddTemplate()"><i class="fas fa-plus"></i>Add New Document Template</button>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Template List -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Managed Templates</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('','templates_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="filter-bar" style="border-radius:0;border-left:0;border-right:0;border-top:0;margin-bottom:0">
+        <label>Document Name:</label>
+        <input type="text" id="fDocName" class="tb-search" placeholder="Search name..." oninput="filterTemplates()" style="min-width:160px">
+        <label>Category:</label>
+        <select id="fCategory" onchange="filterTemplates()">
+          <option value="">All Categories</option><option value="SOA">SOA</option><option value="Contracts">Contracts</option><option value="HRA">HRA</option><option value="W-9">W-9</option><option value="Enrollment">Enrollment</option><option value="Marketing">Marketing</option><option value="Finance">Finance</option>
+        </select>
+        <label>From:</label>
+        <input type="date" id="fFromDate" onchange="filterTemplates()" style="width:140px">
+        <label>To:</label>
+        <input type="date" id="fToDate" onchange="filterTemplates()" style="width:140px">
+        <label>Approval:</label>
+        <select id="fApproval" onchange="filterTemplates()">
+          <option value="">All</option><option value="Approved">Approved</option><option value="Pending">Pending Approval</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="resetDocFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1" id="tplTable">
+          <thead><tr><th>Template Name</th><th>Category</th><th>Version</th><th>Effective Date</th><th>Expiry Date</th><th>Status</th><th>Approval</th><th>Dynamic Fields</th><th>Retention</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><i class="fas fa-file-pdf text-danger"></i> <strong>Scope of Appointment (SOA)</strong></td><td>SOA</td><td>v3.2</td><td>01 01,2026</td><td>12 31,2026</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-success">Approved</span></td><td>agent_name, member_name, date, plan_types</td><td>10 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Scope of Appointment (SOA)')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Scope of Appointment (SOA)')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Scope of Appointment (SOA)')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('Scope of Appointment (SOA)')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-pdf text-danger"></i> <strong>Producer Contract</strong></td><td>Contracts</td><td>v2.1</td><td>01 01,2026</td><td>12 31,2026</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-success">Approved</span></td><td>agent_name, npn, effective_date, states</td><td>7 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Producer Contract')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Producer Contract')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Producer Contract')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('Producer Contract')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-pdf text-danger"></i> <strong>Health Risk Assessment (HRA)</strong></td><td>HRA</td><td>v1.4</td><td>03 15,2026</td><td>03 14,2027</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-success">Approved</span></td><td>member_name, dob, conditions, medications</td><td>10 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Health Risk Assessment (HRA)')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Health Risk Assessment (HRA)')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Health Risk Assessment (HRA)')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('Health Risk Assessment (HRA)')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-alt text-primary"></i> <strong>W-9 Form</strong></td><td>W-9</td><td>v1.0</td><td>01 01,2025</td><td>12 31,2025</td><td><span class="badge bg-danger">Inactive</span></td><td><span class="badge bg-success">Approved</span></td><td>legal_name, tin, entity_type, address</td><td>7 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('W-9 Form')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('W-9 Form')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('W-9 Form')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('W-9 Form')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-pdf text-danger"></i> <strong>Enrollment Application</strong></td><td>Enrollment</td><td>v4.0</td><td>10 15,2025</td><td>10 14,2026</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-success">Approved</span></td><td>member_*, plan_*, agent_npn, effective_date</td><td>10 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Enrollment Application')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Enrollment Application')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Enrollment Application')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('Enrollment Application')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-alt text-primary"></i> <strong>Marketing Flyer  AEP 2026</strong></td><td>Marketing</td><td>v1.1</td><td>09 01,2025</td><td>08 31,2026</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-success">Approved</span></td><td>plan_name, benefits_summary, county</td><td>3 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Marketing Flyer AEP 2026')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Marketing Flyer AEP 2026')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Marketing Flyer AEP 2026')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="showTemplateHistory('Marketing Flyer AEP 2026')" title="History"><i class="fas fa-history"></i></button></div></td></tr>
+            <tr><td><i class="fas fa-file-pdf text-danger"></i> <strong>Commission Statement</strong></td><td>Finance</td><td>v2.0</td><td>01 01,2026</td><td>12 31,2026</td><td><span class="badge bg-success">Active</span></td><td><span class="badge bg-warning text-dark">Pending Approval</span></td><td>agent_name, period, total_amount, details</td><td>7 years</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="previewDocument('Commission Statement')" title="Preview"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="downloadDocument('Commission Statement')" title="Download"><i class="fas fa-download"></i></button><button class="btn-ol btn-sm" onclick="openTemplateEdit('Commission Statement')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-ol btn-sm" onclick="nfpApprove('Commission Statement template v2.0 approved and published.')" title="Approve"><i class="fas fa-check-circle"></i></button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<!-- ADD NEW DOCUMENT TEMPLATE MODAL -->
+<div id="addModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:640px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-plus" style="margin-right:8px"></i>Add New Document Template</h6>
+      <button onclick="document.getElementById('addModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div id="addErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Template Name <span style="color:#c62828">*</span></label><input id="addName" placeholder="e.g. Enrollment Confirmation Letter"></div>
+        <div class="fg"><label>Category <span style="color:#c62828">*</span></label>
+          <select id="addCategory"><option value="">-- Select --</option><option>SOA</option><option>Contracts</option><option>HRA</option><option>W-9</option><option>Enrollment</option><option>Marketing</option><option>Finance</option><option>Compliance</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Version <span style="color:#c62828">*</span></label><input id="addVersion" placeholder="v1.0"></div>
+        <div class="fg"><label>Effective Date <span style="color:#c62828">*</span></label><input id="addEffDate" type="date"></div>
+        <div class="fg"><label>Expiry Date <span style="color:#c62828">*</span></label><input id="addExpDate" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Retention <span style="color:#c62828">*</span></label>
+          <select id="addRetention"><option value="">-- Select --</option><option>3 years</option><option>5 years</option><option>7 years</option><option>10 years</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Dynamic Fields (comma-separated)</label><input id="addFields" placeholder="field_name_1, field_name_2"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Change Description <span style="color:#c62828">*</span></label><input id="addChanges" placeholder="Initial version description"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Upload Document (PDF)</label>
+          <div style="border:2px dashed #e0e0e0;border-radius:8px;padding:20px;text-align:center;background:#fafafa;cursor:pointer" onclick="showToast('File picker opened','info')">
+            <i class="fas fa-cloud-upload-alt" style="font-size:24px;color:#9e9e9e;margin-bottom:6px"></i>
+            <div style="font-size:12px;color:#5f6368">Click to upload or drag & drop</div>
+            <div style="font-size:11px;color:#9e9e9e;margin-top:2px">PDF, DOCX up to 10MB</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Approval Status</label>
+          <select id="addApproval"><option value="Draft">Draft - Pending Review</option><option value="Pending">Submit for Approval</option><option value="Approved">Approved (Compliance Lead)</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillAddTemplate()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('addModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="saveAddTemplate()"><i class="fas fa-save"></i>Save Template</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT TEMPLATE MODAL -->
+<div id="editModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:640px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="editTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-edit" style="margin-right:8px"></i>Edit Template</h6>
+      <button onclick="document.getElementById('editModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div id="editErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Template Name <span style="color:#c62828">*</span></label><input id="edName"></div>
+        <div class="fg"><label>Category</label>
+          <select id="edCategory"><option value="">-- Select --</option><option>SOA</option><option>Contracts</option><option>HRA</option><option>W-9</option><option>Enrollment</option><option>Marketing</option><option>Finance</option><option>Compliance</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Current Version</label><input id="edVersion"></div>
+        <div class="fg"><label>Effective Date <span style="color:#c62828">*</span></label><input id="edEffDate" type="date"></div>
+        <div class="fg"><label>Expiry Date <span style="color:#c62828">*</span></label><input id="edExpDate" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Retention</label>
+          <select id="edRetention"><option value="">-- Select --</option><option>3 years</option><option>5 years</option><option>7 years</option><option>10 years</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Dynamic Fields (comma-separated)</label><input id="edFields" placeholder="field_name_1, field_name_2"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Change Description <span style="color:#c62828">*</span></label><input id="edChanges" placeholder="Describe what changed in this version"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Upload New Version (PDF)</label>
+          <div style="border:2px dashed #e0e0e0;border-radius:8px;padding:20px;text-align:center;background:#fafafa;cursor:pointer" onclick="showToast('File picker opened ? select your PDF','info')">
+            <i class="fas fa-cloud-upload-alt" style="font-size:24px;color:#9e9e9e;margin-bottom:6px"></i>
+            <div style="font-size:12px;color:#5f6368">Click to upload or drag & drop</div>
+            <div style="font-size:11px;color:#9e9e9e;margin-top:2px">PDF, DOCX up to 10MB</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Approval Status</label>
+          <select id="edApproval"><option value="Draft">Draft ? Pending Review</option><option value="Pending">Submit for Approval</option><option value="Approved">Approved (Compliance Lead)</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillTemplateEdit()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('editModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="saveTemplateEdit()"><i class="fas fa-save"></i>Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY MODAL -->
+<div id="historyModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:700px;max-height:85vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="histTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-history" style="margin-right:8px"></i>Version History</h6>
+      <button onclick="document.getElementById('historyModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px">
+      <div id="histContent"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="document.getElementById('historyModal').classList.remove('open')">Close</button></div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+var tplData={
+  'Scope of Appointment (SOA)':{cat:'SOA',ver:'v3.2',eff:'2026-01-01',exp:'2026-12-31',ret:'10 years',fields:'agent_name, member_name, date, plan_types',history:[
+    {ver:'v3.2',eff:'01 01,2026',by:'Sandra Adams',changes:'Added telephonic SOA fields per CMS guidance',approver:'Compliance Lead'},
+    {ver:'v3.1',eff:'10 15,2025',by:'Sandra Adams',changes:'Updated plan type list for 2026 AEP',approver:'Compliance Lead'},
+    {ver:'v3.0',eff:'01 01,2025',by:'IT Admin',changes:'CMS format revision ? new required fields',approver:'Compliance Lead'},
+    {ver:'v2.4',eff:'10 01,2024',by:'Sandra Adams',changes:'Added D-SNP plan type option',approver:'Compliance Lead'}
+  ]},
+  'Producer Contract':{cat:'Contracts',ver:'v2.1',eff:'2026-01-01',exp:'2026-12-31',ret:'7 years',fields:'agent_name, npn, effective_date, states',history:[
+    {ver:'v2.1',eff:'01 01,2026',by:'Legal Dept',changes:'Updated state-specific addendum language',approver:'General Counsel'},
+    {ver:'v2.0',eff:'07 01,2025',by:'Legal Dept',changes:'Restructured commission schedule section',approver:'General Counsel'},
+    {ver:'v1.0',eff:'01 01,2024',by:'IT Admin',changes:'Initial contract template',approver:'General Counsel'}
+  ]},
+  'Health Risk Assessment (HRA)':{cat:'HRA',ver:'v1.4',eff:'2026-03-15',exp:'2027-03-14',ret:'10 years',fields:'member_name, dob, conditions, medications',history:[
+    {ver:'v1.4',eff:'03 15,2026',by:'Clinical Ops',changes:'Added PHQ-2 mental health screening section',approver:'CMO'},
+    {ver:'v1.3',eff:'01 01,2026',by:'Clinical Ops',changes:'Updated medication list format',approver:'CMO'},
+    {ver:'v1.2',eff:'10 01,2025',by:'Sandra Adams',changes:'Added fall risk assessment questions',approver:'CMO'}
+  ]},
+  'W-9 Form':{cat:'W-9',ver:'v1.0',eff:'2025-01-01',exp:'2025-12-31',ret:'7 years',fields:'legal_name, tin, entity_type, address',history:[
+    {ver:'v1.0',eff:'01 01,2025',by:'Finance Dept',changes:'Standard IRS W-9 form adopted',approver:'CFO'}
+  ]},
+  'Enrollment Application':{cat:'Enrollment',ver:'v4.0',eff:'2025-10-15',exp:'2026-10-14',ret:'10 years',fields:'member_*, plan_*, agent_npn, effective_date',history:[
+    {ver:'v4.0',eff:'10 15,2025',by:'Enrollment Ops',changes:'2026 AEP format ? CMS model updates',approver:'Compliance Lead'},
+    {ver:'v3.8',eff:'10 15,2024',by:'Enrollment Ops',changes:'2025 AEP format',approver:'Compliance Lead'},
+    {ver:'v3.5',eff:'10 15,2023',by:'Enrollment Ops',changes:'2024 AEP format',approver:'Compliance Lead'}
+  ]},
+  'Marketing Flyer AEP 2026':{cat:'Marketing',ver:'v1.1',eff:'2025-09-01',exp:'2026-08-31',ret:'3 years',fields:'plan_name, benefits_summary, county',history:[
+    {ver:'v1.1',eff:'09 01,2025',by:'Marketing',changes:'Updated benefits table for 2026 plans',approver:'Compliance Lead'},
+    {ver:'v1.0',eff:'08 15,2025',by:'Marketing',changes:'Initial AEP 2026 flyer design',approver:'Compliance Lead'}
+  ]},
+  'Commission Statement':{cat:'Finance',ver:'v2.0',eff:'2026-01-01',exp:'2026-12-31',ret:'7 years',fields:'agent_name, period, total_amount, details',history:[
+    {ver:'v2.0',eff:'01 01,2026',by:'Finance Dept',changes:'Added override tier breakdown and YTD totals',approver:'Pending'},
+    {ver:'v1.0',eff:'01 01,2025',by:'Finance Dept',changes:'Initial commission statement template',approver:'CFO'}
+  ]}
+};
+
+function openTemplateEdit(name){
+  var t=tplData[name]; if(!t){showToast('Template not found','error');return;}
+  document.getElementById('editErr').style.display='none';
+  document.getElementById('editTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px"></i>Edit: '+name;
+  document.getElementById('edName').value=name;
+  document.getElementById('edCategory').value=t.cat;
+  document.getElementById('edVersion').value=t.ver;
+  document.getElementById('edEffDate').value=t.eff;
+  document.getElementById('edExpDate').value=t.exp||'';
+  document.getElementById('edRetention').value=t.ret;
+  document.getElementById('edFields').value=t.fields;
+  document.getElementById('edChanges').value='';
+  document.getElementById('edApproval').value='Draft';
+  document.getElementById('editModal').classList.add('open');
+}
+
+function previewDocument(name){
+  var t=tplData[name];
+  var catIcon=t&&t.cat==='Finance'?'fa-file-invoice-dollar':'fa-file-pdf';
+  var statusHtml='';
+  if(t&&t.exp){
+    var today=new Date();
+    var expDate=new Date(t.exp+'T00:00:00');
+    statusHtml=expDate>=today?'<span class=\"badge bg-success\">Active</span>':'<span class=\"badge bg-danger\">Inactive (Expired)</span>';
+  }
+  var html='<div style=\"background:#f8f9fa;border:1px solid #e0e0e0;border-radius:10px;padding:20px;text-align:center\">'
+    +'<i class=\"fas '+catIcon+'\" style=\"font-size:48px;color:#c62828;margin-bottom:12px\"></i>'
+    +'<h5 style=\"margin:0 0 4px;color:#1a237e\">'+name+'</h5>'
+    +'<div style=\"font-size:12px;color:#5f6368;margin-bottom:12px\">Version: '+(t?t.ver:'—')+' | Category: '+(t?t.cat:'—')+'</div>'
+    +(statusHtml?'<div style=\"margin-bottom:12px\">'+statusHtml+'</div>':'')
+    +'<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;font-size:13px;margin-top:16px\">'
+    +'<div><span style=\"color:#5f6368\">Effective:</span> <strong>'+(t?t.eff:'—')+'</strong></div>'
+    +'<div><span style=\"color:#5f6368\">Expiry:</span> <strong>'+(t&&t.exp?t.exp:'—')+'</strong></div>'
+    +'<div><span style=\"color:#5f6368\">Retention:</span> <strong>'+(t?t.ret:'—')+'</strong></div>'
+    +'<div><span style=\"color:#5f6368\">Dynamic Fields:</span> <strong>'+(t?t.fields:'—')+'</strong></div>'
+    +'</div>'
+    +'<div style=\"margin-top:20px;padding:16px;background:#fff;border:1px dashed #bdbdbd;border-radius:8px\">'
+    +'<i class=\"fas fa-file-pdf\" style=\"font-size:32px;color:#e57373;margin-bottom:8px\"></i>'
+    +'<div style=\"font-size:12px;color:#5f6368\">Document preview would render here</div>'
+    +'<div style=\"font-size:11px;color:#9e9e9e;margin-top:4px\">(PDF viewer integration required for production)</div>'
+    +'</div>'
+    +'<button class=\"btn-pr btn-sm\" style=\"margin-top:16px\" onclick=\"downloadDocument(\''+name.replace(/'/g,"\\\\'")+'\');\"><i class=\"fas fa-download\" style=\"margin-right:6px\"></i>Download Template</button>'
+    +'</div>';
+  document.getElementById('histTitle').innerHTML='<i class="fas fa-eye" style="margin-right:8px"></i>Preview: '+name;
+  document.getElementById('histContent').innerHTML=html;
+  document.getElementById('historyModal').classList.add('open');
+}
+
+function downloadDocument(name){
+  showToast('Downloading "'+name+'" template...','info');
+  setTimeout(function(){showToast('"'+name+'" downloaded successfully.','success');},1200);
+}
+
+function saveTemplateEdit(){
+  var errors=[];
+  var effDate=document.getElementById('edEffDate').value;
+  var expDate=document.getElementById('edExpDate').value;
+  var changes=document.getElementById('edChanges').value.trim();
+  if(!effDate) errors.push('Effective Date is required.');
+  if(!expDate) errors.push('Expiry Date is required.');
+  if(effDate && expDate && expDate<=effDate) errors.push('Expiry Date must be after Effective Date.');
+  if(!changes) errors.push('Change Description is required.');
+  var err=document.getElementById('editErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';return;
+  }
+  err.style.display='none';
+  var name=document.getElementById('edName').value;
+  showToast('Template "'+name+'" updated successfully.','success');
+  document.getElementById('editModal').classList.remove('open');
+}
+
+function prefillTemplateEdit(){
+  document.getElementById('edEffDate').value='2026-07-01';
+  document.getElementById('edExpDate').value='2027-06-30';
+  document.getElementById('edChanges').value='Updated template language per 2026 CMS model compliance requirements. Added new disclosure paragraph and revised member-facing terminology.';
+  document.getElementById('edRetention').value='7 years';
+  document.getElementById('edApproval').value='Pending';
+  showToast('Form prefilled with sample data.','info');
+}
+
+function showTemplateHistory(name){
+  var t=tplData[name]; if(!t){showToast('Template not found','error');return;}
+  document.getElementById('histTitle').innerHTML='<i class="fas fa-history" style="margin-right:8px"></i>Version History: '+name;
+  var html='<table class="tbl" id="tblExport2"><thead><tr><th>Version</th><th>Effective</th><th>Uploaded By</th><th>Changes</th><th>Approved By</th><th></th></tr></thead><tbody>';
+  t.history.forEach(function(h,i){
+    html+='<tr'+(i===0?' style="background:#e8f5e9"':'')+'><td><strong>'+h.ver+(i===0?' (current)':'')+'</strong></td><td>'+h.eff+'</td><td>'+h.by+'</td><td>'+h.changes+'</td><td>'+(h.approver==='Pending'?'<span class="bdg b-amber">Pending</span>':h.approver)+'</td><td><button class="btn-ol btn-sm" onclick="showToast(\'Downloading '+h.ver+'...\',\'info\')"><i class="fas fa-download"></i></button></td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('histContent').innerHTML=html;
+  document.getElementById('historyModal').classList.add('open');
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+function filterTemplates(){
+  var name=document.getElementById('fDocName').value.toLowerCase();
+  var cat=document.getElementById('fCategory').value;
+  var fromDate=document.getElementById('fFromDate').value;
+  var toDate=document.getElementById('fToDate').value;
+  var approval=document.getElementById('fApproval').value;
+  var rows=document.querySelectorAll('#tplTable tbody tr');
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    if(!cells.length) return;
+    var rowName=cells[0]?cells[0].textContent.toLowerCase():'';
+    var rowCat=cells[1]?cells[1].textContent.trim():'';
+    var rowDate=cells[3]?cells[3].textContent.trim():'';
+    var rowApproval=cells[4]?cells[4].textContent.trim():'';
+    var show=true;
+    if(name && rowName.indexOf(name)===-1) show=false;
+    if(cat && rowCat!==cat) show=false;
+    if(fromDate||toDate){
+      var d=new Date(rowDate);
+      if(fromDate && d<new Date(fromDate)) show=false;
+      if(toDate && d>new Date(toDate)) show=false;
+    }
+    if(approval==='Approved' && rowApproval.indexOf('Approved')===-1) show=false;
+    if(approval==='Pending' && rowApproval.indexOf('Pending')===-1) show=false;
+    row.style.display=show?'':'none';
+  });
+}
+function resetDocFilters(){
+  document.getElementById('fDocName').value='';
+  document.getElementById('fCategory').value='';
+  document.getElementById('fFromDate').value='';
+  document.getElementById('fToDate').value='';
+  document.getElementById('fApproval').value='';
+  filterTemplates();
+}
+
+function openAddTemplate(){
+  document.getElementById('addErr').style.display='none';
+  ['addName','addVersion','addFields','addChanges'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('addCategory').value='';
+  document.getElementById('addRetention').value='';
+  document.getElementById('addEffDate').value='';
+  document.getElementById('addExpDate').value='';
+  document.getElementById('addApproval').value='Draft';
+  document.getElementById('addModal').classList.add('open');
+}
+function prefillAddTemplate(){
+  document.getElementById('addName').value='Member Welcome Kit Letter';
+  document.getElementById('addCategory').value='Enrollment';
+  document.getElementById('addVersion').value='v1.0';
+  document.getElementById('addEffDate').value='2026-07-01';
+  document.getElementById('addExpDate').value='2027-06-30';
+  document.getElementById('addRetention').value='10 years';
+  document.getElementById('addFields').value='member_name, plan_name, effective_date, pcp_name';
+  document.getElementById('addChanges').value='Initial version of Welcome Kit letter sent to newly enrolled members.';
+  document.getElementById('addApproval').value='Pending';
+  showToast('Form prefilled with sample data.','info');
+}
+function saveAddTemplate(){
+  var errors=[];
+  var name=document.getElementById('addName').value.trim();
+  var cat=document.getElementById('addCategory').value;
+  var ver=document.getElementById('addVersion').value.trim();
+  var effDate=document.getElementById('addEffDate').value;
+  var expDate=document.getElementById('addExpDate').value;
+  var ret=document.getElementById('addRetention').value;
+  var changes=document.getElementById('addChanges').value.trim();
+  if(!name) errors.push('Template Name is required.');
+  if(!cat) errors.push('Category is required.');
+  if(!ver) errors.push('Version is required.');
+  if(!effDate) errors.push('Effective Date is required.');
+  if(!expDate) errors.push('Expiry Date is required.');
+  if(effDate && expDate && expDate<=effDate) errors.push('Expiry Date must be after Effective Date.');
+  if(!ret) errors.push('Retention is required.');
+  if(!changes) errors.push('Change Description is required.');
+  var err=document.getElementById('addErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';return;
+  }
+  err.style.display='none';
+  showToast('Template "'+name+'" created successfully.','success');
+  document.getElementById('addModal').classList.remove('open');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

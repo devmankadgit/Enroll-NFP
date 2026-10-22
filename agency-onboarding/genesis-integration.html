@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Genesis Integration | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-shield" style="margin-right:8px;opacity:.8"></i>Admin Portal</div></div>
+  <div class="sb-nav">
+    <a href="../admin/dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agency Onboarding</div>
+    <a href="review-queue.html"><i class="fas fa-clipboard-check"></i>Review Queue</a>
+    <a href="tfn-mapping.html"><i class="fas fa-phone"></i>TFN Mapping</a>
+    <a href="genesis-integration.html" class="active"><i class="fas fa-plug"></i>Genesis</a>
+    <a href="incentive-tracking.html"><i class="fas fa-gift"></i>Incentives</a>  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">AW</div><div><div class="sb-u-name">Amy White</div><div class="sb-u-role">System Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Genesis Call Center Integration</h4><ol class="breadcrumb-bar"><li>Inbound Call Webhook, Data Mapping & Lead Auto-Creation</li></ol></div>
+  </div>
+
+  <div class="page">
+    <!-- Connection Status -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-plug"></i></div><div><div class="stat-label">Connection</div><div class="stat-val" style="color:#1b5e20">Active ?</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-exchange-alt"></i></div><div><div class="stat-label">Calls Today</div><div class="stat-val">47</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">Leads Created</div><div class="stat-val">12</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Errors (24h)</div><div class="stat-val">0</div></div></div></div>
+    </div>
+
+    <!-- Webhook Config -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-cog" style="margin-right:8px;color:#0d47a1"></i>Webhook Configuration</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Webhook Endpoint URL</label><input type="text" value="https://api.goldkidney.com/v1/genesis/inbound-call" readonly style="background:#f5f5f5;font-family:monospace;font-size:12px"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Authentication Method</label>
+            <select><option selected>HMAC-SHA256 (shared secret)</option><option>Bearer Token</option><option>Basic Auth</option></select>
+          </div>
+          <div class="fg"><label>Shared Secret</label><input type="password" value="••••••••••••••••" style="max-width:300px"> <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')">Regenerate</button></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Retry Policy</label>
+            <select><option selected>3 retries with exponential backoff</option><option>No retry</option><option>5 retries</option></select>
+          </div>
+          <div class="fg"><label>Timeout (ms)</label><input type="number" value="5000" style="max-width:120px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Mapping -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-random" style="margin-right:8px;color:#4a148c"></i>Call Data Field Mapping</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','genesis-integration_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Genesis Field</th><th>?</th><th>Gold Kidney Field</th><th>Required</th><th>Transform</th></tr></thead>
+          <tbody>
+            <tr><td><code>caller_phone</code></td><td>?</td><td>lead.phone</td><td><span class="bdg b-green">Yes</span></td><td>Format: (XXX) XXX-XXXX</td></tr>
+            <tr><td><code>caller_name</code></td><td>?</td><td>lead.full_name</td><td><span class="bdg b-green">Yes</span></td><td>Split ? first_name + last_name</td></tr>
+            <tr><td><code>tfn_called</code></td><td>?</td><td>lead.campaign_id</td><td><span class="bdg b-green">Yes</span></td><td>Lookup via TFN mapping table</td></tr>
+            <tr><td><code>call_timestamp</code></td><td>?</td><td>lead.created_at</td><td><span class="bdg b-green">Yes</span></td><td>UTC ? EST conversion</td></tr>
+            <tr><td><code>call_duration</code></td><td>?</td><td>lead.call_duration_sec</td><td>No</td><td>Seconds (integer)</td></tr>
+            <tr><td><code>call_recording_url</code></td><td>?</td><td>lead.recording_url</td><td>No</td><td>Validated URL</td></tr>
+            <tr><td><code>disposition</code></td><td>?</td><td>lead.status</td><td>No</td><td>Map: "interested"?Interested, "callback"?Follow-up, "not_interested"?Closed</td></tr>
+            <tr><td><code>agent_ext</code></td><td>?</td><td>lead.assigned_agent_id</td><td>No</td><td>Lookup agent by extension</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Auto-Creation Rules -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-magic" style="margin-right:8px;color:#00695c"></i>Lead Auto-Creation Rules</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div style="margin-bottom:8px"><label><input type="checkbox" checked> Auto-create lead record for every inbound call = 30 seconds</label></div>
+        <div style="margin-bottom:8px"><label><input type="checkbox" checked> Deduplicate by phone number (merge if existing lead found)</label></div>
+        <div style="margin-bottom:8px"><label><input type="checkbox" checked> Auto-assign to agent based on TFN routing rules</label></div>
+        <div style="margin-bottom:8px"><label><input type="checkbox"> Create lead even if disposition = "wrong_number" or "spam"</label></div>
+        <div style="margin-bottom:8px"><label><input type="checkbox" checked> Send notification to assigned agent on new lead</label></div>
+      </div>
+    </div>
+
+    <!-- Recent Webhooks -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-list" style="margin-right:8px;color:#5f6368"></i>Recent Webhook Events (last 10)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','genesis-integration_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport2" class="tbl">
+          <thead><tr><th>Time</th><th>TFN Called</th><th>Caller</th><th>Duration</th><th>Lead Created</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>10:18 AM</td><td>(800) 555-0103</td><td>(305) 555-8821</td><td>4:22</td><td>LD-2026-4891</td><td><span class="bdg b-green">? Success</span></td></tr>
+            <tr><td>10:05 AM</td><td>(800) 555-0101</td><td>(786) 555-3344</td><td>1:45</td><td>LD-2026-4890</td><td><span class="bdg b-green">? Success</span></td></tr>
+            <tr><td>9:52 AM</td><td>(800) 555-0103</td><td>(954) 555-7712</td><td>0:18</td><td></td><td><span style="color:#5f6368;font-size:11px">Skipped (&lt;30s)</span></td></tr>
+            <tr><td>9:41 AM</td><td>(800) 555-0101</td><td>(305) 555-1199</td><td>6:10</td><td>LD-2026-4889</td><td><span class="bdg b-green">? Success</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+##### SIDEBAR variant used by 17 pages: activation-queue.html, agent-lifecycle.html, agent-lookup.html, ahip-renewals.html, case-review.html, commission-inquiries.html, compliance-holds.html, dashboard.html, invitations.html, member-inquiry.html, nipr-alerts.html, onboarding-queue.html, override-approvals.html, reports.html, sla-tracker.html, state-appointments.html, support-cases.html
+- Dashboard [dashboard.html]
+- Support Cases 34 [support-cases.html]
+## Agent Support
+- Agent Lookup [agent-lookup.html]
+- Agent Lifecycle [agent-lifecycle.html]
+- Onboarding Queue 12 [onboarding-queue.html]
+- Activation Status [activation-queue.html]
+- Invitations [invitations.html]
+## Member & Enrollment
+- Member Inquiry [member-inquiry.html]
+## Compliance & Licensing
+- NIPR Alerts 5 [nipr-alerts.html]
+- AHIP Renewals [ahip-renewals.html]
+- State Appointments [state-appointments.html]
+- Compliance Holds [compliance-holds.html]
+- Override Requests 3 [override-approvals.html]
+## Operations & SLA
+- Commission Inquiries [commission-inquiries.html]
+- SLA Tracker [sla-tracker.html]
+- Reports [reports.html]
+
+=== /broker-support/activation-queue.html | Activation Status | Broker Support
+ACTIVE NAV: Activation Status
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Activation Status | BC: 
+KPIs: Awaiting Activation=4 ; Activated MTD=18 ; Avg Time to Activate=1.2 days ; Activated YTD=87
+CARDS/SECTIONS: Awaiting Activation by Admin — All Gates Passed || Recently Activated (Last 7 Days)
+TABLE1 (4 rows) cols: Agent | NPN | Agency / Level | States | Gates Completed | Onboarding Started | Ready Since | Status
+   row1: Patricia Nguyen 5521833 Southwest Medicare (GA) FL 8/8 05 20,2026 06 07,2026 Pending Admin
+TABLE2 (3 rows) cols: Agent | NPN | Agency | Activated On | Activated By | Status
+   row1: Sarah Chen 7719022 National Benefits (SGA) 06 08,2026 System Admin Active
+BADGES: 4 ready | Pending Admin | Active
+
+=== /broker-support/agent-lifecycle.html | Agent Lifecycle | Broker Support
+ACTIVE NAV: Agent Lifecycle
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Agent Lifecycle | BC: 
+KPIs: Active Agents=342 ; Suspended=8 ; Reinstatement Requests=2 ; Terminated MTD=3
+CARDS/SECTIONS: Recent Status Changes || Active Suspensions || Reinstatement Pipeline
+TABLE1 (11 rows) cols: Agent | NPN | Agency | Previous Status | New Status | Reason | Date | SLA | 
+   row1: Kevin Patel 7823410 Southwest Medicare Active Suspended FL license expired 06 02,2026 Overdue Review
+TABLE2 (5 rows) cols: Agent | Reason | Since | Days | 
+   row1: Sarah Kim AHIP expired Jan 15 160 Review
+TABLE3 (2 rows) cols: Agent | Original Reason | Resolution | Status | 
+   row1: Richard Evans License expired License renewed Jun 5 Verifying Verify
+SELECTS: [All Statuses, Active, Suspended, Terminated, Pending Reinstatement, Inactive] [All Reasons, License Expiration, AHIP Non-Renewal, Compliance Violation, Voluntary, Agent Request] [Last 30 Days, Last 7 Days, Last 90 Days, This Year]
+PLACEHOLDERS: Search by agent name, NPN, or agency...
+BUTTONS: Review | Term Review | Process | Verify | Details | Track
+MODALS/DRAWERS: lcModal:Agent Lifecycle Detail
+BADGES: 24 events this month | Active | Suspended | Pending Reinstatement | Terminated | Onboarding | 8 agents | 2 pending | Verifying | Pending AHIP
+
+=== /broker-support/agent-lookup.html | Agent Lookup | Broker Support
+ACTIVE NAV: Agent Lookup
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Agent Lookup | BC: 
+CARDS/SECTIONS: Search Results
+TABLE1 (6 rows) cols: Agent | NPN | Email | Agency | States | Status | AHIP | License | 
+   row1: James Martinez 8823441 j.martinez@email.com Premier Insurance (FMO) FL, GA Active Profile
+FORM LABELS: Agent Name | NPN | Agency | State | Status
+SELECTS: [All Agencies, Premier Insurance (FMO), National Benefits (SGA), Southwest Medicare (GA), Alliance Health (MGA)] [All States, FL, GA, CA, TX] [All Statuses, Active, Onboarding, Compliance Hold, Terminated]
+PLACEHOLDERS: Name... | NPN...
+BUTTONS: Search | Profile | Case
+MODALS/DRAWERS: profileModal:Agent Profile ; caseModal:Onboarding Case
+BADGES: 342 agents | Active | Compliance Hold | Onboarding
+
+=== /broker-support/ahip-renewals.html | AHIP Renewals | Broker Support
+ACTIVE NAV: AHIP Renewals
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: AHIP Renewals & Validation | BC: 
+KPIs: Current Year Valid=298 ; Pending Manual Review=8 ; Expired / Not Renewed=12 ; Renewal Reminders Sent=24
+CARDS/SECTIONS: AHIP Certification Tracker
+TABLE1 (8 rows) cols: Agent | NPN | Cert Year | Source | Completion Date | Score | Status | Expiry | 
+   row1: Sarah Kim 9912388 2025 API 10 12,2024 94% Expired 12 31,2025 Remind
+SELECTS: [All Statuses, Valid, Pending Review, Expired, Reminder Sent] [All Sources, API Verified, Manual Upload] [All Expiry, Expiring in 7 days, Expiring in 30 days, Expiring in 60 days, Already Expired]
+PLACEHOLDERS: Search by agent name or NPN...
+BUTTONS: Remind | Review | View
+MODALS/DRAWERS: ahipModal:AHIP Certificate
+BADGES: Expired | Pending Review | Valid
+
+=== /broker-support/case-review.html | Case Review | Broker Support
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Case Review — James Lee | BC: Onboarding Queue CASE-2026-0891
+CARDS/SECTIONS: Onboarding Gates || Uploaded Documents || Reviewer Comments || Admin Actions
+PLACEHOLDERS: Add a reviewer comment... (min 10 characters)
+BUTTONS: View History | Add Comment | View | Prefill | Override: Mark Gate as Passed | Re-trigger NIPR License Check | Re-run Background Check | Send Agent Reminder Email | Withdraw Case
+MODALS/DRAWERS: notifyModal:Notify Agent ; overrideModal:Manual Override — Gate Bypass ; docModal:Document ; docModalTitle: ; docModalStatus: ; docModalDate: ; docModalNotes: ; docModalFilename:
+BADGES: Pending Review | Document Upload (W-9) | 3 attempts | Rejected | Accepted
+
+=== /broker-support/commission-inquiries.html | Commission Inquiries | Broker Support
+ACTIVE NAV: Commission Inquiries
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Commission Inquiries | BC: 
+KPIs: Open Inquiries=6 ; Avg Resolution=1.8 days ; Resolved MTD=18 ; Escalated to Finance=2
+CARDS/SECTIONS: Commission Inquiry Queue || Inquiries by Category || Resolution Summary
+TABLE1 (6 rows) cols: Inquiry ID | Agent | NPN | Category | Description | Amount | Status | Created | SLA | 
+   row1: COM-2026-0112 James Martinez 8823441 Missing May cycle payment not received — 42 active members $4,200 In Progress Jun 7 1 day left Review
+SELECTS: [All Statuses, Open, In Progress, Awaiting Finance, Awaiting Agent, Resolved] [All Categories, Missing Payment, Payment Amount, Tier Dispute, Override Question, ACH / Routing, Commission Statement] [All Periods, Current Cycle, Last Cycle, Last 3 Months]
+PLACEHOLDERS: Search by agent name, NPN, or inquiry ID...
+BUTTONS: Review | Track | Follow Up
+MODALS/DRAWERS: comModal:Commission Inquiry
+BADGES: 6 open | Missing | In Progress | Tier | Open | Statement | Override | Awaiting Finance | ACH | Awaiting Agent
+
+=== /broker-support/compliance-holds.html | Compliance Holds | Broker Support
+ACTIVE NAV: Compliance Holds
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Compliance Holds | BC: 
+KPIs: Active Holds=28 ; License-Related=14 ; AHIP / Training=9 ; Lifted This Week=5
+CARDS/SECTIONS: Active Compliance Holds
+TABLE1 (5 rows) cols: Agent | NPN | Reason | Hold Since | Duration | Action Required | 
+   row1: Kevin Patel 7823410 License Expired 06 02,2026 7 days Renew FL license via state portal Contact Lift
+SELECTS: [All Reasons, License Expired, License Revoked, AHIP Expired, Training Incomplete, Background Check Failed, E&O Lapsed] [All Durations, < 7 days, 7-30 days, > 30 days]
+PLACEHOLDERS: Search by agent, NPN...
+BUTTONS: Contact | Lift | Details
+MODALS/DRAWERS: holdModal:Compliance Hold
+BADGES: License Expired | License Revoked | AHIP Expired | Training Incomplete | E&O Lapsed
+
+=== /broker-support/dashboard.html | Broker Support Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Broker Support Dashboard | BC: 
+KPIs: Onboarding Queue=12 ; Enrollment Cases=8 ; Agent Lifecycle=6 ; NIPR Alerts=5 ; Commission Inquiries=6 ; SLA Compliance=94% ; Support Tickets=14 ; Awaiting Activation=4
+CARDS/SECTIONS: Welcome back, Maria || Pending Inquiries || Recent Activity || Quick Links || Enrollment Pipeline || SLA Summary || Recent Notifications
+TABLE1 (10 rows) cols: Priority | Inquiry | Agent / Case | Category | 
+   row1: Urgent Agent license expired — agency requesting reinstatement path Kevin Patel (NPN: 7823410) Compliance View Status
+BUTTONS: View All Support Cases (34) | View Onboarding Status (12) | View Enrollment Cases (8) | View Commission Inquiries (6) | Member Inquiry Lookup | Agent / Case Lookup | View SLA Tracker
+BADGES: 20 items | Urgent | High | Normal | Low | Responded | Status | 8 unread
+LINKS: onboarding-queue.html support-cases.html agent-lifecycle.html nipr-alerts.html commission-inquiries.html sla-tracker.html activation-queue.html compliance-holds.html ahip-renewals.html override-approvals.html state-appointments.html member-inquiry.html
+
+=== /broker-support/invitations.html | Invitation Management | Broker Support
+ACTIVE NAV: Invitations
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Invitation Management | BC: 
+KPIs: Sent This Month=34 ; Pending Response=8 ; Accepted=24 ; Expired / Declined=2
+CARDS/SECTIONS: Recent Invitations
+TABLE1 (6 rows) cols: Sent Date | Agent / Email | Type | Agency | Status | Expires | 
+   row1: Jun 9 thomas.wright@email.com NPN: 8890123 New Onboarding Premier Insurance (FMO) Accepted — View Case
+SELECTS: [All Types, New Onboarding, Recertification] [All Statuses, Pending, Accepted, Expired, Declined]
+PLACEHOLDERS: Search by agent name, email, or NPN...
+BUTTONS: View Case
+MODALS/DRAWERS: newInvModal:Send New Invitation ; viewCaseModal:Invitation Case Detail
+BADGES: New Onboarding | Accepted | Pending | Recertification | Expired
+
+=== /broker-support/member-inquiry.html | Member Inquiry | Broker Support
+ACTIVE NAV: Member Inquiry
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Member Inquiry | BC: 
+CARDS/SECTIONS: Search Results || Members by Plan || Quick Actions
+TABLE1 (10 rows) cols: Member | Member ID | MBI | Plan | Agent | Status | Enrolled | PCP | 
+   row1: Martha Johnson GK-2026-00441 1EG4-TE5-MK72 Gold Kidney C-SNP Lisa Wang Active 01 01,2026 Dr. Sarah Miller View
+FORM LABELS: Member Name / ID | Agent | Plan | Status
+SELECTS: [All Plans, Gold Kidney MA, Gold Kidney D-SNP, Gold Kidney C-SNP] [All Statuses, Active, Pending, Disenrolled]
+PLACEHOLDERS: Name, Member ID, or MBI... | Agent name...
+BUTTONS: Search | View | Verify Enrollment Status | Check Eligibility | View / Reissue ID Card | View Enrollment History | Create Enrollment Support Case
+MODALS/DRAWERS: memModal:Member Detail
+BADGES: 1,247 members | Active | Pending | Disenrollment Pending | Pending SEP | Disenrolled
+
+=== /broker-support/nipr-alerts.html | NIPR Alerts | Broker Support
+ACTIVE NAV: NIPR Alerts 5
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: NIPR License Alerts | BC: 
+KPIs: Critical Alerts=2 ; Expiring Soon=3 ; Last NIPR Sync=2h ago ; Active Licenses=312
+CARDS/SECTIONS: Active NIPR Alerts
+TABLE1 (5 rows) cols: Severity | Agent | NPN | State | Alert Type | Details | Received | Status | 
+   row1: Critical Kevin Patel 7823410 FL License Expired FL Health license expired 06 01,2026. Agent auto-placed on compliance hold. Jun 2 Unprocessed Process
+SELECTS: [All Severities, Critical, Warning, Info] [All States, Florida, Georgia, Texas, California] [All Action Status, Unprocessed, In Progress, Resolved]
+PLACEHOLDERS: Search by agent or NPN...
+BUTTONS: Process | Remind | View
+MODALS/DRAWERS: niprModal:NIPR Alert
+BADGES: 5 pending | Critical | Unprocessed | In Progress | Warning | Info | Resolved
+
+=== /broker-support/onboarding-queue.html | Onboarding Queue | Broker Support
+ACTIVE NAV: Onboarding Queue 12
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Onboarding Queue | BC: 
+TABLE1 (8 rows) cols: Case ID | Agent Name | NPN | Current Gate | Issue | Attempts | SLA Due | Priority | Actions
+   row1: CASE-2026-0891 James Lee 8834521 Document Upload W-9 entity mismatch — 3rd resubmission 3 Overdue Urgent Review
+SELECTS: [All Statuses, Pending Review, Document Issue, Background Check, Awaiting Activation] [All Priorities, Urgent, High, Normal] [All Gate Types, Registration, AHIP / Training, Licensing / NIPR, Document Upload, Background Check, Contract Execution]
+PLACEHOLDERS: Search by name, NPN, or case ID...
+BADGES: Document Upload | Urgent | Background Check | High | AHIP Exam | All Gates Passed | Ready | NIPR Verification | Normal | Contract Execution
+LINKS: case-review.html activation-queue.html
+
+=== /broker-support/override-approvals.html | Override Approvals | Broker Support
+ACTIVE NAV: Override Requests 3
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Override Approvals | BC: 
+CARDS/SECTIONS: Pending Override Requests || Recently Processed Overrides
+TABLE1 (3 rows) cols: Request ID | Agent | Override Type | Reason | Current Attempts | Requested By | Date | 
+   row1: OVR-301 Angela Torres NPN: 6651209 Exam Retake Agent failed training exam 4 times. Technical issues reported during attempt 3. Requesting 5th attempt. 4/4 (max reached) System Auto-Alert Jun 8 Approve Deny
+TABLE2 (4 rows) cols: Request ID | Agent | Type | Decision | Decided By | Date | Notes
+   row1: OVR-295 Mark Wilson (NPN: 3312789) Exam Retake Approved Maria Johnson Jun 6 Granted 5th attempt — verified technical issue on attempt 2
+BUTTONS: Approve | Deny
+MODALS/DRAWERS: ovrModal:Override Request
+BADGES: 3 pending | Exam Retake | Gate Override | BG Check Override | Approved | Denied
+
+=== /broker-support/reports.html | Reports | Broker Support
+ACTIVE NAV: Reports
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Reports & Analytics | BC: 
+CARDS/SECTIONS: Quick Metrics — This Month || Gate Drop-off Analysis (Last 90 Days)
+
+=== /broker-support/sla-tracker.html | SLA Tracker | Broker Support
+ACTIVE NAV: SLA Tracker
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: SLA Tracker | BC: 
+KPIs: Overall SLA Compliance=94% ; Avg First Response=1.2 hrs ; Avg Resolution Time=6.4 hrs ; SLA Breaches MTD=4
+CARDS/SECTIONS: SLA Performance by Category || Recent SLA Breaches || Aging Cases (At Risk) || Team SLA Performance
+TABLE1 (7 rows) cols: Category | SLA Target | Total Cases | Met SLA | Breached | Compliance | Avg Response | Avg Resolution | Trend
+   row1: Agent Onboarding 24 hrs 45 44 1 98% 0.8 hrs 12.4 hrs
+TABLE2 (4 rows) cols: Case | Category | Target | Actual | Over By | Root Cause
+   row1: COM-2026-0098 Commission 48 hrs 62 hrs +14 hrs Finance escalation delay
+TABLE3 (6 rows) cols: Case | Category | Age | SLA Left | Assigned To | 
+   row1: ENR-2026-0445 Enrollment 18 hrs 4 hrs Maria Johnson Expedite
+TABLE4 (4 rows) cols: Team Member | Cases Handled | Resolved | Avg Response | Avg Resolution | SLA Met | Compliance
+   row1: Maria Johnson 48 42 0.9 hrs 5.2 hrs 41 98%
+BUTTONS: Expedite | Monitor | Follow Up
+MODALS/DRAWERS: slaModal:Case Detail
+BADGES: 4 this month | 6 cases
+
+=== /broker-support/state-appointments.html | State Appointments | Broker Support
+ACTIVE NAV: State Appointments
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: State Appointments | BC: 
+KPIs: Active Appointments=486 ; Pending Approval=12 ; Rejected=3 ; Submitted MTD=18
+CARDS/SECTIONS: State Appointment Tracker
+TABLE1 (6 rows) cols: Agent | NPN | State | LOA | Submitted | Status | Notes | 
+   row1: David Chen 4478122 TX Health 06 04,2026 Rejected Missing E&O documentation Re-submit
+SELECTS: [All States, Florida, Georgia, Texas, California] [All Statuses, Active, Pending, Rejected, Terminated]
+PLACEHOLDERS: Search by agent or NPN...
+BUTTONS: Re-submit | Check | View
+MODALS/DRAWERS: apptModal:Appointment Detail
+BADGES: Rejected | Pending | Active
+
+=== /broker-support/support-cases.html | Support Cases | Broker Support
+ACTIVE NAV: Support Cases 34
+USER: MJ Maria Johnson Broker Support Lead Org-Wide Visibility
+HEADER: Support Cases | BC: 
+KPIs: Open Cases=34 ; Awaiting Response=12 ; Resolved Today=9 ; SLA At Risk=3 ; SLA Compliance=94%
+CARDS/SECTIONS: All Support Cases || Needs Your Response || Cases by Agency || Cases by Category
+TABLE1 (12 rows) cols: Case ID | Category | Agency | Agent | Subject | Status | Priority | SLA | Last Updated | 
+   row1: SC-2026-0501 Commission Premier Insurance James Martinez May cycle payment not received — 42 active members In Progress Urgent 2 hrs left 30 min ago Reply
+TABLE2 (5 rows) cols: Case | Category | Agency | Waiting Since | SLA | 
+   row1: SC-2026-0501 Commission Premier Insurance 30 min 2 hrs Reply
+SELECTS: [All Statuses, New, In Progress, Awaiting Agency, Awaiting Finance, Awaiting Compliance, Resolved, Closed] [All Priorities, Urgent, High, Medium, Low] [All Agencies, Premier Insurance (FMO), National Benefits (SGA), Southwest Medicare (GA), Alliance Health (MGA)] [All Assignees, Maria Johnson, Carlos Rivera, Sarah Park, David Kim, Unassigned]
+PLACEHOLDERS: Search by case ID, agent name, NPN, or keyword...
+BUTTONS: All (34) | Onboarding (8) | Enrollment (7) | Compliance (6) | Commission (5) | Agent Lifecycle (4) | General (4) | Reply | View
+MODALS/DRAWERS: caseModal:Case SC-2026-0501 ; newTicketModal:Create Support Ticket
+BADGES: 34 open | 9 resolved today | In Progress | Urgent | New | High | Medium | Awaiting Agency | Low | 12 awaiting

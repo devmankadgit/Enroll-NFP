@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Broker Support — Agent Lifecycle Management -->
+<title>Agent Lifecycle | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html" class="active"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Agent Lifecycle</h4><p style="font-size:12px;color:#5f6368;margin:0">Manage agent status changes — suspensions, terminations, reinstatements, and ongoing support</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Agent Lifecycle')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPI Summary -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div>
+        <div><div class="stat-label">Active Agents</div><div class="stat-val">342</div><div class="stat-sub"><i class="fas fa-arrow-up" style="color:#2e7d32"></i> 18 activated MTD</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-pause-circle"></i></div>
+        <div><div class="stat-label">Suspended</div><div class="stat-val">8</div><div class="stat-sub">3 pending review</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-undo"></i></div>
+        <div><div class="stat-label">Reinstatement Requests</div><div class="stat-val">2</div><div class="stat-sub">1 pending compliance</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-times"></i></div>
+        <div><div class="stat-label">Terminated MTD</div><div class="stat-val">3</div><div class="stat-sub">1 voluntary, 2 cause</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fStatus"><option>All Statuses</option><option>Active</option><option>Suspended</option><option>Terminated</option><option>Pending Reinstatement</option><option>Inactive</option></select>
+      <select id="fReason"><option>All Reasons</option><option>License Expiration</option><option>AHIP Non-Renewal</option><option>Compliance Violation</option><option>Voluntary</option><option>Agent Request</option></select>
+      <select id="fTimeframe"><option>Last 30 Days</option><option>Last 7 Days</option><option>Last 90 Days</option><option>This Year</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent name, NPN, or agency..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:200px">
+    </div>
+
+    <!-- Agent Lifecycle Events Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-exchange-alt" style="color:#0277bd;margin-right:8px"></i>Recent Status Changes</h6><span class="badge" style="background:#e3f2fd;color:#0277bd">24 events this month</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>Previous Status</th><th>New Status</th><th>Reason</th><th>Date</th><th>SLA</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Kevin Patel</td><td>7823410</td><td>Southwest Medicare</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td>FL license expired</td><td>06 02,2026</td><td><span style="color:#c62828;font-weight:600">Overdue</span></td><td><button class="btn-pr btn-sm" onclick="showLcDetail('review-kevin')">Review</button></td></tr>
+            <tr><td style="font-weight:600">Sarah Kim</td><td>9912388</td><td>Alliance Health</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td>AHIP expired 160 days</td><td>01 15,2026</td><td><span style="color:#c62828;font-weight:600">Escalated</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('review-sarah')">Term Review</button></td></tr>
+            <tr><td style="font-weight:600">Thomas Lee</td><td>6629010</td><td>Premier Insurance</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td>FL license expired</td><td>06 08,2026</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showLcDetail('process-thomas')">Process</button></td></tr>
+            <tr><td style="font-weight:600">Richard Evans</td><td>5518904</td><td>National Benefits</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Pending Reinstatement</span></td><td>License renewed — awaiting verification</td><td>06 07,2026</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showLcDetail('verify-richard')">Verify</button></td></tr>
+            <tr><td style="font-weight:600">Amanda Garcia</td><td>5590812</td><td>Premier Insurance</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>License renewed &amp; verified</td><td>06 05,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-amanda')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Mark Wilson</td><td>3312789</td><td>Southwest Medicare</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Terminated</span></td><td>Voluntary — career change</td><td>06 03,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-mark')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Jennifer Adams</td><td>4421098</td><td>Alliance Health</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Terminated</span></td><td>Compliance violation — unauthorized marketing</td><td>05 28,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-jennifer')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Daniel Park</td><td>7789211</td><td>National Benefits</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Suspended</span></td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>AHIP recertified</td><td>05 25,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-daniel')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Carlos Rodriguez</td><td>8812455</td><td>Premier Insurance</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Terminated</span></td><td>For cause — SOA exam fraud</td><td>05 20,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-carlos')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Patricia Nguyen</td><td>6678333</td><td>Southwest Medicare</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Onboarding</span></td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>All gates passed — activated</td><td>06 09,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-patricia')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Robert Martinez</td><td>9934567</td><td>Alliance Health</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Onboarding</span></td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td>All gates passed — activated</td><td>06 08,2026</td><td><span style="color:#2e7d32">Met</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('details-robert')">Details</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Two-Column: Suspension Queue + Reinstatement Pipeline -->
+    <div class="row g-3" style="margin-top:16px">
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-pause-circle" style="color:#e65100;margin-right:8px"></i>Active Suspensions</h6><span class="badge" style="background:#fff3e0;color:#e65100">8 agents</span></div>
+          <div class="card-body" style="padding:0;overflow-x:auto">
+            <table class="table table-hover mb-0" style="font-size:12px" data-no-paginate>
+              <thead><tr><th>Agent</th><th>Reason</th><th>Since</th><th>Days</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:600">Sarah Kim</td><td>AHIP expired</td><td>Jan 15</td><td><span style="color:#c62828;font-weight:600">160</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('review-sarah')">Review</button></td></tr>
+                <tr><td style="font-weight:600">Kevin Patel</td><td>License expired FL</td><td>Jun 2</td><td><span style="color:#e65100;font-weight:600">7</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('review-kevin')">Review</button></td></tr>
+                <tr><td style="font-weight:600">Thomas Lee</td><td>License expired FL</td><td>Jun 8</td><td><span style="color:#0277bd">1</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('process-thomas')">Review</button></td></tr>
+                <tr><td style="font-weight:600">Lisa Chang</td><td>E&O lapse</td><td>May 15</td><td><span style="color:#e65100;font-weight:600">25</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('review-lisa')">Review</button></td></tr>
+                <tr><td style="font-weight:600">Brian Foster</td><td>Background issue</td><td>May 20</td><td><span style="color:#e65100;font-weight:600">20</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('review-brian')">Review</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-undo" style="color:#0277bd;margin-right:8px"></i>Reinstatement Pipeline</h6><span class="badge" style="background:#e3f2fd;color:#0277bd">2 pending</span></div>
+          <div class="card-body" style="padding:0;overflow-x:auto">
+            <table class="table table-hover mb-0" style="font-size:12px" data-no-paginate>
+              <thead><tr><th>Agent</th><th>Original Reason</th><th>Resolution</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:600">Richard Evans</td><td>License expired</td><td>License renewed Jun 5</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Verifying</span></td><td><button class="btn-pr btn-sm" onclick="showLcDetail('verify-richard')">Verify</button></td></tr>
+                <tr><td style="font-weight:600">Nancy Wright</td><td>AHIP expired</td><td>Recertification submitted</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Pending AHIP</span></td><td><button class="btn-ol btn-sm" onclick="showLcDetail('track-nancy')">Track</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lifecycle Detail Modal -->
+<div id="lcModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-user-shield" style="color:#0277bd;margin-right:8px"></i><span id="lcTitle">Agent Lifecycle Detail</span></h6>
+      <button onclick="closeLcModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="lcAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="lcNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agency</div><div id="lcAgency" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Current Status</div><div id="lcStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Reason / Event Detail</div>
+        <div id="lcReason" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Event Date</div><div id="lcDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">SLA Status</div><div id="lcSLA" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Assigned To</div><div id="lcAssigned" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#e3f2fd;border-radius:8px;padding:14px;border-left:4px solid #0277bd">
+        <div style="font-size:11px;font-weight:700;color:#0277bd;text-transform:uppercase;margin-bottom:6px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Action Required</div>
+        <div id="lcAction" style="font-size:13px;line-height:1.6;color:#333">—</div>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeLcModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Lifecycle detail data
+var lcData={
+  'review-kevin':{agent:'Kevin Patel',npn:'7823410',agency:'Southwest Medicare (GA)',status:'<span style="color:#e65100"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Suspended</span>',reason:'FL Health License (2-15) expired 06 01,2026. Agent was notified via email on May 15 (15-day warning), May 25 (final warning), and Jun 1 (suspension notice). Book of business: 18 members (frozen). Agency (Southwest Medicare) notified Jun 2. Agent must renew FL license and submit proof to resume selling.',date:'06 02,2026',sla:'<span style="color:#c62828">Overdue — 7 days</span>',assigned:'Maria Johnson',action:'Pending license renewal from agent. Follow up with agency if no action by Jun 15. If unresolved by Jun 30, escalate to termination review. Admin performs reactivation once license confirmed.'},
+  'review-sarah':{agent:'Sarah Kim',npn:'9912388',agency:'Alliance Health (MGA)',status:'<span style="color:#e65100"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Suspended — Escalated</span>',reason:'AHIP 2025 certification expired 12 31,2025 — now 160+ days overdue. Agent notified multiple times (Jan 5, Jan 20, Feb 10, Mar 1, Apr 1, May 1). Agent has not responded since Feb 15. Book of business: 22 members (frozen). Agency recommends termination review.',date:'01 15,2026',sla:'<span style="color:#c62828">Escalated to Admin</span>',assigned:'Carlos Rivera',action:'Agency has recommended termination. Await Admin decision. If terminated, book of business (22 members) will be reassigned per hierarchy rules. No action required from Broker Support — monitoring only.'},
+  'process-thomas':{agent:'Thomas Lee',npn:'6629010',agency:'Premier Insurance (FMO)',status:'<span style="color:#e65100"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Suspended</span>',reason:'FL Health License expired 06 07,2026. System auto-suspended Jun 8. Agent contacted same day — says renewal is in progress with FL DOI. Expected completion within 5 business days.',date:'06 08,2026',sla:'<span style="color:#2e7d32">On Track (SLA: 14 days)</span>',assigned:'Maria Johnson',action:'Agent aware and actively renewing. Monitor for license renewal confirmation via NIPR feed. If not resolved by Jun 22, send follow-up reminder. Admin will reactivate once NIPR confirms valid license.'},
+  'verify-richard':{agent:'Richard Evans',npn:'5518904',agency:'National Benefits (SGA)',status:'<span style="color:#0277bd"><i class="fas fa-undo" style="margin-right:4px"></i>Pending Reinstatement</span>',reason:'Agent was suspended for FL license expiration on 05 10,2026. Agent renewed license Jun 5 — NIPR feed confirmed Jun 6. Reinstatement request submitted by agency Jun 7. Awaiting Admin verification and reactivation.',date:'06 07,2026',sla:'<span style="color:#2e7d32">On Track (SLA: 3 business days)</span>',assigned:'Sarah Park',action:'NIPR verification complete. Forwarded to System Admin for reactivation. Expected reactivation by Jun 10. No action required from Broker Support — tracking for agency.'},
+  'track-nancy':{agent:'Nancy Wright',npn:'4490122',agency:'National Benefits (SGA)',status:'<span style="color:#0277bd"><i class="fas fa-clock" style="margin-right:4px"></i>Pending AHIP Recertification</span>',reason:'Agent suspended Feb 1 for AHIP expiration. Agent submitted AHIP 2026 recertification exam Jun 5. Awaiting score confirmation from AHIP vendor (24-48 hr turnaround).',date:'06 05,2026',sla:'<span style="color:#2e7d32">On Track</span>',assigned:'David Kim',action:'Awaiting AHIP score confirmation from vendor. Once score confirmed, Admin will update compliance status and reactivate. Typically 24-48 hrs from exam completion.'},
+  'details-amanda':{agent:'Amanda Garcia',npn:'5590812',agency:'Premier Insurance (FMO)',status:'<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active (Reinstated)</span>',reason:'Agent was suspended May 20 for FL license expiration. Agent renewed license May 30. NIPR confirmed Jun 3. Admin reactivated Jun 5. Full selling privileges restored. Book of business (24 members) unfrozen.',date:'06 05,2026',sla:'<span style="color:#2e7d32">Met — 2 business days</span>',assigned:'Maria Johnson',action:'Completed. No further action required. Agent is active with full privileges.'},
+  'details-mark':{agent:'Mark Wilson',npn:'3312789',agency:'Southwest Medicare (GA)',status:'<span style="color:#c62828"><i class="fas fa-user-times" style="margin-right:4px"></i>Terminated (Voluntary)</span>',reason:'Agent submitted voluntary resignation Jun 1 citing career change. Effective Jun 3. Book of business (15 members) reassigned to upline agency per hierarchy rules. Final commission payment processed Jun 5. All credentials deactivated.',date:'06 03,2026',sla:'<span style="color:#2e7d32">Met — same day</span>',assigned:'Carlos Rivera',action:'Completed. Termination finalized. Book reassigned. Agent may reapply after 12 months per policy.'},
+  'details-jennifer':{agent:'Jennifer Adams',npn:'4421098',agency:'Alliance Health (MGA)',status:'<span style="color:#c62828"><i class="fas fa-user-times" style="margin-right:4px"></i>Terminated (For Cause)</span>',reason:'Terminated May 28 for unauthorized marketing materials distributed to members. Compliance investigation completed May 25. Agent violated Gold Kidney marketing compliance guidelines (Section 4.2). CMS notification filed. Book of business (31 members) reassigned to agency pool.',date:'05 28,2026',sla:'<span style="color:#2e7d32">Met</span>',assigned:'Carlos Rivera',action:'Completed. For-cause termination — not eligible for reinstatement. CMS notification filed. All access revoked.'},
+  'details-daniel':{agent:'Daniel Park',npn:'7789211',agency:'National Benefits (SGA)',status:'<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active (Reinstated)</span>',reason:'Agent was suspended Jan 5 for AHIP expiration. Recertified AHIP May 20 (score: 92%). Admin reactivated May 25. Full selling privileges restored.',date:'05 25,2026',sla:'<span style="color:#2e7d32">Met</span>',assigned:'Sarah Park',action:'Completed. Agent active with current AHIP 2026 certification.'},
+  'details-patricia':{agent:'Patricia Nguyen',npn:'6678333',agency:'Southwest Medicare (GA)',status:'<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active (New)</span>',reason:'Completed all onboarding gates Jun 8. Admin activated Jun 9. Agent now has full selling authority in FL.',date:'06 09,2026',sla:'<span style="color:#2e7d32">Met — 1 business day</span>',assigned:'System',action:'Completed. New agent fully activated.'},
+  'details-robert':{agent:'Robert Martinez',npn:'9934567',agency:'Alliance Health (MGA)',status:'<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active (New)</span>',reason:'Completed all onboarding gates Jun 7. Admin activated Jun 8. Agent now has full selling authority in FL, TX.',date:'06 08,2026',sla:'<span style="color:#2e7d32">Met — 1 business day</span>',assigned:'System',action:'Completed. New agent fully activated.'},
+  'details-carlos':{agent:'Carlos Rodriguez',npn:'8812455',agency:'Premier Insurance (FMO)',status:'<span style="color:#c62828"><i class="fas fa-user-times" style="margin-right:4px"></i>Terminated (For Cause)</span>',reason:'Terminated May 20 for SOA exam fraud. Investigation found agent completed SOA attestations without member presence on 3 occasions. CMS notification filed. Potential OIG referral. Book of business (27 members) reassigned.',date:'05 20,2026',sla:'<span style="color:#2e7d32">Met</span>',assigned:'Carlos Rivera',action:'Completed. For-cause termination — not eligible for reinstatement. Under CMS review.'},
+  'review-lisa':{agent:'Lisa Chang',npn:'5501234',agency:'National Benefits (SGA)',status:'<span style="color:#e65100"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Suspended</span>',reason:'E&O insurance policy lapsed 05 15,2026. Agent notified May 10 (5-day warning). Suspension applied May 16. Agent says renewal in progress with carrier.',date:'05 15,2026',sla:'<span style="color:#e65100">25 days — follow-up needed</span>',assigned:'David Kim',action:'Agent claims E&O renewal in progress. Request proof of coverage. If not provided by Jun 15, escalate to termination review.'},
+  'review-brian':{agent:'Brian Foster',npn:'6678901',agency:'Southwest Medicare (GA)',status:'<span style="color:#e65100"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Suspended</span>',reason:'Background check revalidation returned inconclusive result May 20. Agent notified. Additional documentation requested. Awaiting vendor re-check.',date:'05 20,2026',sla:'<span style="color:#e65100">20 days — pending vendor</span>',assigned:'Sarah Park',action:'Awaiting background check vendor re-check. Vendor SLA: 10 business days. Follow up with vendor if no result by Jun 12.'}
+};
+
+function showLcDetail(key){
+  var d=lcData[key];if(!d)return;
+  document.getElementById('lcTitle').textContent=d.agent+' — Lifecycle Detail';
+  document.getElementById('lcAgent').textContent=d.agent;
+  document.getElementById('lcNPN').textContent=d.npn;
+  document.getElementById('lcAgency').textContent=d.agency;
+  document.getElementById('lcStatus').innerHTML=d.status;
+  document.getElementById('lcReason').textContent=d.reason;
+  document.getElementById('lcDate').textContent=d.date;
+  document.getElementById('lcSLA').innerHTML=d.sla;
+  document.getElementById('lcAssigned').textContent=d.assigned;
+  document.getElementById('lcAction').textContent=d.action;
+  document.getElementById('lcModal').style.display='flex';
+}
+function closeLcModal(){document.getElementById('lcModal').style.display='none';}
+document.getElementById('lcModal').addEventListener('click',function(e){if(e.target===this)closeLcModal();});
+
+// Table filtering
+var lifecycleRows=document.querySelectorAll('.card-body table:not([data-no-paginate]) tbody tr');
+function applyFilters(){
+  var status=document.getElementById('fStatus').value;
+  var reason=document.getElementById('fReason').value;
+  var search=document.getElementById('fSearch').value.trim().toLowerCase();
+  var visible=0;
+  lifecycleRows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var newStatus=cells[4]?cells[4].textContent.trim():'';
+    var reasonText=cells[5]?cells[5].textContent.trim().toLowerCase():'';
+    var rowText=row.textContent.toLowerCase();
+    var show=true;
+    if(status!=='All Statuses'){
+      if(status==='Active' && newStatus!=='Active') show=false;
+      if(status==='Suspended' && newStatus!=='Suspended') show=false;
+      if(status==='Terminated' && newStatus!=='Terminated') show=false;
+      if(status==='Pending Reinstatement' && newStatus.indexOf('Reinstatement')<0) show=false;
+      if(status==='Inactive' && newStatus!=='Inactive') show=false;
+    }
+    if(reason!=='All Reasons'){
+      if(reason==='License Expiration' && reasonText.indexOf('license')<0) show=false;
+      if(reason==='AHIP Non-Renewal' && reasonText.indexOf('ahip')<0) show=false;
+      if(reason==='Compliance Violation' && reasonText.indexOf('violation')<0 && reasonText.indexOf('fraud')<0 && reasonText.indexOf('unauthorized')<0) show=false;
+      if(reason==='Voluntary' && reasonText.indexOf('voluntary')<0) show=false;
+      if(reason==='Agent Request' && reasonText.indexOf('request')<0) show=false;
+    }
+    if(search && rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  showToast(visible+' event'+(visible!==1?'s':'')+' shown','info');
+}
+document.getElementById('fStatus').addEventListener('change',applyFilters);
+document.getElementById('fReason').addEventListener('change',applyFilters);
+document.getElementById('fTimeframe').addEventListener('change',applyFilters);
+document.getElementById('fSearch').addEventListener('input',applyFilters);
+</script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book of Business Ledger | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.eligibility-chip{font-size:11px;padding:2px 8px;border-radius:12px;font-weight:500;white-space:nowrap}
+.elig-ok{background:#e8f5e9;color:#1b5e20}
+.elig-hold{background:#fff8e1;color:#e65100}
+.elig-lic{background:#fce4ec;color:#880e4f}
+.ledger-row td{padding:8px 12px;font-size:12.5px;background:#fafbfc}
+.expand-row td{padding:0}
+.expand-inner{padding:16px;background:#f4f6f8;border-top:2px solid #e8eaed}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Book of Business Ledger</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Book of Business</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpExport('BoB Ledger')"><i class="fas fa-download"></i>Export CSV</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16" style="margin-bottom:16px"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+      <span>BoB records are created when an enrollment application is <strong>submitted</strong> (not when CMS approves). The <strong>Application Date</strong> is the reference date for all agent eligibility checks. Entries with status <em>Active</em> generate monthly commission entries in the calculation engine.</span></div>
+
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-users"></i></div><div><div class="stat-label">Active Members</div><div class="stat-val">487</div><div class="stat-sub text-muted">Generating commission</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Eligibility On Hold</div><div class="stat-val">23</div><div class="stat-sub text-muted">Pending Finance review</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">CMS Rejected</div><div class="stat-val">8</div><div class="stat-sub text-muted">Zero-commission records</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Disenrolled</div><div class="stat-val">34</div><div class="stat-sub text-muted">Chargeback review</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending CMS</div><div class="stat-val">12</div><div class="stat-sub text-muted">Awaiting confirmation</div></div></div></div>
+    </div>
+
+    <div class="filter-bar mb16">
+      <label>Agent Search</label>
+      <input type="text" id="fAgent" placeholder="NPN or Name..." oninput="applyFilters()">
+      <label>BoB Status</label>
+      <select id="fBobStatus" onchange="applyFilters()">
+        <option value="">All</option><option>Active</option><option>Pending CMS</option>
+        <option>CMS Rejected</option><option>Disenrolled</option><option>Compliance Hold</option>
+      </select>
+      <label>Payment Status</label>
+      <select id="fPayStatus" onchange="applyFilters()">
+        <option value="">All</option><option>Paid</option><option>Calculated</option><option>On Hold</option><option>Chargeback</option><option>Skipped</option>
+      </select>
+      <label>Eligibility</label>
+      <select id="fElig" onchange="applyFilters()">
+        <option value="">All</option><option>Eligible</option><option>On Hold</option><option>On Hold - Appointment</option><option>On Hold - Address Gap</option>
+      </select>
+      <label>Enr. State</label>
+      <select id="fState" onchange="applyFilters()">
+        <option value="">All</option><option>FL</option><option>TX</option><option>GA</option><option>NC</option><option>AZ</option>
+      </select>
+      <label>Comm. Type</label>
+      <select id="fCommType" onchange="applyFilters()">
+        <option value="">All</option><option>Initial</option><option>Renewal</option><option>HRA</option><option>Healthy Visit</option><option>Chargeback</option>
+      </select>
+            <label>Date Range</label>
+      <input type="date" id="fDateFrom" value="2026-01-01" style="font-size:13px" onchange="applyFilters()">
+      <span style="font-size:12px;align-self:center">to</span>
+      <input type="date" id="fDateTo" value="2026-05-29" style="font-size:13px" onchange="applyFilters()">
+      <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i>Filter</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Agent Summary Grid -->
+    <div class="card mb16">
+      <div class="card-hdr">
+        <h5><i class="fas fa-users" style="margin-right:8px;color:#004d40"></i>Agent Summary</h5>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('agentSummaryTbl','bob-ledger_AgentSummary')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export</button>
+      </div>
+      <div class="table-wrap">
+        <table id="agentSummaryTbl" class="tbl" style="font-size:12.5px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Enrollments</th><th>Active</th><th>On Hold</th><th>Total Commission</th><th>Paid</th><th>Pending</th><th></th></tr></thead>
+          <tbody id="agentSummaryTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-book-open" style="margin-right:8px;color:#004d40"></i>BoB Records <span id="recordCount" class="text-muted text-sm" style="font-weight:400"></span></h5>
+        <button id="backToSummaryBtn" class="btn-ol btn-sm" style="display:none;border-color:#0d47a1;color:#0d47a1" onclick="backToSummary()"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Agent Summary</button>
+        <span class="text-muted text-sm">Click <strong>View Ledger</strong> to see commission entries for a member. Ledger entries are immutable after batch approval; corrections require an Adjustment entry.</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','bob-ledger_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>BoB ID</th><th>Agent NPN / Name</th><th>Member / MBI</th><th>Plan / State</th><th>Application Date</th><th>Eff Date</th><th>Term Date</th><th>BoB Status</th><th>Eligibility</th><th>Actions</th></tr></thead>
+          <tbody id="bobTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Finance Discrepancy Queue -->
+    <div class="card mb16">
+      <div class="card-hdr" style="background:#fff8e1">
+        <h5><i class="fas fa-flag" style="margin-right:8px;color:#e65100"></i>Finance Discrepancy Queue <span class="bdg b-amber" style="margin-left:8px">3 Flagged</span></h5>
+        <a href="reconciliation.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i>Full Reconciliation</a>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','bob-ledger_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="al-warn" style="margin:0 0 0"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Entries flagged during eligibility or duplicate checks. <strong>Validation:</strong> "Application date cannot be in the future." — any BoB record with an application date after today is held and surfaced here.</span></div>
+      <div class="table-wrap">
+        <table id="tblExport2" class="tbl" style="font-size:12.5px">
+          <thead><tr><th>BoB ID</th><th>Agent</th><th>Member</th><th>Flag Reason</th><th>Hold Type</th><th>Detected</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr style="background:#fff8e1">
+              <td><code>BOB-003</code></td><td>Kevin Nguyen</td><td>Charles Davis</td>
+              <td>Agent license expired on Application Date</td>
+              <td><span class="bdg b-red" style="font-size:11px">On Hold - License</span></td>
+              <td>2026-01-02</td>
+              <td><button class="btn-ol btn-sm" onclick="openHold('BOB-003')"><i class="fas fa-eye"></i>Review Hold</button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td><code>BOB-008</code></td><td>Angela Torres</td><td>Sandra Ray</td>
+              <td>Agent appointment not active in enrollment state (FL)</td>
+              <td><span class="bdg b-red" style="font-size:11px">On Hold - Appointment</span></td>
+              <td>2026-04-15</td>
+              <td><button class="btn-ol btn-sm" onclick="showToastGlobal('Appointment verification workflow launched.','info')"><i class="fas fa-calendar-check"></i>Verify</button></td>
+            </tr>
+            <tr style="background:#ffebee">
+              <td><code>BOB-009</code></td><td>Mark Brown</td><td>James Owens</td>
+              <td>Member mailing address state does not match enrollment state</td>
+              <td><span class="bdg b-amber" style="font-size:11px">On Hold - Address Gap</span></td>
+              <td>2026-05-20</td>
+              <td><button class="btn-ol btn-sm" onclick="showToastGlobal('Address gap review opened for BOB-009.','warn')"><i class="fas fa-map-marker-alt"></i>Review</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== LEDGER DETAIL MODAL ===== -->
+<div class="modal-overlay" id="ledgerModal">
+  <div class="modal-box" style="max-width:1000px">
+    <div class="modal-hdr">
+      <h5 id="ledgerTitle"></h5>
+      <button class="modal-close" onclick="closeModal('ledgerModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="ledgerBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('ledgerModal')">Close</button>
+      <button class="btn-ol" onclick="nfpExport('Ledger Entries')"><i class="fas fa-download"></i>Export Entries</button>
+      <button class="btn-pr" onclick="openAdjustmentModal()"><i class="fas fa-plus"></i>Add Adjustment Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADJUSTMENT ENTRY MODAL ===== -->
+<div class="modal-overlay" id="adjustmentModal">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-exchange-alt" style="color:#1565c0;margin-right:8px"></i>Add Adjustment Entry</h5>
+      <button class="modal-close" onclick="closeModal('adjustmentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Adjustment Type</label><select id="adjType" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"><option>Credit</option><option>Debit</option><option>Rate Correction</option><option>Chargeback Reversal</option></select></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Amount ($)</label><input type="number" id="adjAmount" placeholder="0.00" step="0.01" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Payment Cycle</label><select id="adjCycle" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"><option>Jun 2026</option><option>Jul 2026</option><option>Aug 2026</option></select></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Effective Date</label><input type="date" id="adjDate" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+        <div style="grid-column:1/-1"><label style="font-size:11px;font-weight:600;color:#5f6368">Reason / Justification</label><textarea id="adjReason" rows="3" placeholder="Provide justification for this adjustment..." style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;resize:vertical"></textarea></div>
+        <div style="grid-column:1/-1"><label style="font-size:11px;font-weight:600;color:#5f6368">Supporting Document (optional)</label><input type="file" id="adjDoc" style="font-size:12px"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('adjustmentModal')">Cancel</button>
+      <button class="btn-pr" onclick="submitAdjustment()"><i class="fas fa-check"></i>Submit Adjustment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BOB RECORD DETAIL MODAL ===== -->
+<div class="modal-overlay" id="bobDetailModal">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr">
+      <h5 id="bobDetailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('bobDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="bobDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('bobDetailModal')">Close</button>
+      <button class="btn-pr" onclick="closeModal('bobDetailModal');openLedgerFromDetail()"><i class="fas fa-list"></i>View Ledger Entries</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOLD RESOLUTION MODAL ===== -->
+<div class="modal-overlay" id="holdModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr">
+      <h5 id="holdTitle"><i class="fas fa-flag" style="color:#e65100;margin-right:8px"></i>Eligibility Hold — Finance Review</h5>
+      <button class="modal-close" onclick="closeModal('holdModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="holdBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('holdModal')">Cancel</button>
+      <button class="btn-danger" onclick="rejectHold()"><i class="fas fa-ban"></i>Reject Payment</button>
+      <button class="btn-pr" onclick="resolveHold()"><i class="fas fa-check"></i>Release &amp; Approve Payment</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let currentBobId = null;
+
+const bobRecords = [
+  { id:'BOB-001', agentNPN:'8823441', agentName:'James Martinez', memberMBI:'1EG4-TE5-MK72',
+    memberName:'Robert Thompson', planCode:'GK-ESRD-001', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'FL', appDate:'2025-11-15', reqEffDate:'2026-01-01', actualEffDate:'2026-01-01', termDate:null,
+    bobStatus:'Active', eligStatus:'Eligible', holdReason:null,
+    commTypes:['Initial','Renewal'],
+    ledger:[
+      {id:'LED-001-01',cycle:'2026-01',type:'Initial',effDate:'2026-01-01',baseRate:694.00,prorated:false,proMonths:null,calcBase:694.00,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:100.00},{level:'FMO',org:'Southeast Benefits FMO',amount:135.00}],
+        total:929.00,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-001-02',cycle:'2026-02',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:45.00},{level:'FMO',org:'Southeast Benefits FMO',amount:135.00}],
+        total:208.92,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-001-03',cycle:'2026-03',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:45.00},{level:'FMO',org:'Southeast Benefits FMO',amount:135.00}],
+        total:208.92,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-001-04',cycle:'2026-04',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:45.00},{level:'FMO',org:'Southeast Benefits FMO',amount:135.00}],
+        total:208.92,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-001-05',cycle:'2026-05',type:'HRA',effDate:'2026-01-01',baseRate:25.00,prorated:false,proMonths:null,calcBase:25.00,
+        overrides:[],total:25.00,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-001-06',cycle:'2026-06',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:45.00},{level:'FMO',org:'Southeast Benefits FMO',amount:135.00}],
+        total:208.92,configVer:'RC-2026-01',stateRate:false,status:'Calculated'}
+    ]
+  },
+  { id:'BOB-002', agentNPN:'7719022', agentName:'Sarah Chen', memberMBI:'2HF5-TK8-NL93',
+    memberName:'Linda Williams', planCode:'GK-CKD-003', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'TX', appDate:'2026-02-10', reqEffDate:'2026-03-01', actualEffDate:'2026-03-01', termDate:null,
+    bobStatus:'Active', eligStatus:'Eligible', holdReason:null,
+    commTypes:['Initial','Renewal','Healthy Visit'],
+    ledger:[
+      {id:'LED-002-01',cycle:'2026-03',type:'Initial',effDate:'2026-03-01',baseRate:694.00,prorated:false,proMonths:null,calcBase:694.00,
+        overrides:[{level:'GA',org:'Premier Health Group',amount:100.00}],total:794.00,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-002-02',cycle:'2026-04',type:'Renewal',effDate:'2026-03-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Premier Health Group',amount:45.00}],total:73.92,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-002-03',cycle:'2026-05',type:'Healthy Visit',effDate:'2026-03-01',baseRate:275.00,prorated:false,proMonths:null,calcBase:275.00,
+        overrides:[],total:275.00,configVer:'RC-2026-01',stateRate:false,status:'Paid'},
+      {id:'LED-002-04',cycle:'2026-06',type:'Renewal',effDate:'2026-03-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[{level:'GA',org:'Premier Health Group',amount:45.00}],total:73.92,configVer:'RC-2026-01',stateRate:false,status:'Calculated'}
+    ]
+  },
+  { id:'BOB-003', agentNPN:'9912345', agentName:'Kevin Nguyen', memberMBI:'3JG6-PQ2-MR41',
+    memberName:'Charles Davis', planCode:'GK-ESRD-001', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'GA', appDate:'2025-12-01', reqEffDate:'2026-01-01', actualEffDate:'2026-01-01', termDate:null,
+    bobStatus:'Active', eligStatus:'On Hold - License', holdReason:'Agent license expired in GA on 2025-11-30. Application date: 2025-12-01. License must be active on application date.',
+    commTypes:['Initial','Renewal'],
+    ledger:[
+      {id:'LED-003-01',cycle:'2026-01',type:'Initial',effDate:'2026-01-01',baseRate:694.00,prorated:false,proMonths:null,calcBase:694.00,
+        overrides:[],total:694.00,configVer:'RC-2026-01',stateRate:false,status:'On Hold - License'},
+      {id:'LED-003-02',cycle:'2026-02',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[],total:28.92,configVer:'RC-2026-01',stateRate:false,status:'On Hold - License'},
+      {id:'LED-003-03',cycle:'2026-03',type:'Renewal',effDate:'2026-01-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[],total:28.92,configVer:'RC-2026-01',stateRate:false,status:'On Hold - License'}
+    ]
+  },
+  { id:'BOB-004', agentNPN:'5521833', agentName:'Mark Brown', memberMBI:'4KH7-SR3-NP52',
+    memberName:'Patricia Johnson', planCode:'GK-CKD-003', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'NC', appDate:'2026-01-20', reqEffDate:'2026-02-01', actualEffDate:null, termDate:null,
+    bobStatus:'CMS Rejected', eligStatus:'Eligible', holdReason:null,
+    commTypes:[],
+    ledger:[
+      {id:'LED-004-01',cycle:'2026-02',type:'Initial',effDate:null,baseRate:694.00,prorated:false,proMonths:null,calcBase:0.00,
+        overrides:[],total:0.00,configVer:'RC-2026-01',stateRate:false,status:'Skipped - CMS Rejected'}
+    ]
+  },
+  { id:'BOB-005', agentNPN:'8823441', agentName:'James Martinez', memberMBI:'5LI8-UT4-QR63',
+    memberName:'Dorothy Miller', planCode:'GK-ESRD-001', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'FL', appDate:'2025-10-15', reqEffDate:'2026-01-01', actualEffDate:'2026-01-01', termDate:'2026-01-31',
+    bobStatus:'Disenrolled', eligStatus:'Eligible', holdReason:null,
+    commTypes:['Chargeback'],
+    ledger:[
+      {id:'LED-005-01',cycle:'2026-01',type:'Initial',effDate:'2026-01-01',baseRate:694.00,prorated:false,proMonths:null,calcBase:694.00,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:100.00}],total:794.00,configVer:'RC-2026-01',stateRate:false,status:'Chargeback'},
+      {id:'LED-005-CB',cycle:'2026-02',type:'Chargeback',effDate:'2026-01-31',baseRate:-694.00,prorated:false,proMonths:null,calcBase:-694.00,
+        overrides:[{level:'GA',org:'Acme Insurance Group',amount:-100.00}],total:-794.00,configVer:'RC-2026-01',stateRate:false,status:'Paid'}
+    ]
+  },
+  { id:'BOB-006', agentNPN:'6643201', agentName:'Angela Torres', memberMBI:'6MJ9-VW5-ST74',
+    memberName:'George Wilson', planCode:'GK-ESRD-001', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'AZ', appDate:'2026-03-05', reqEffDate:'2026-04-01', actualEffDate:'2026-04-01', termDate:null,
+    bobStatus:'Active', eligStatus:'On Hold - Banking', holdReason:'Agent has no ACH banking details on file. Commission on hold until banking details are added.',
+    commTypes:['Initial','Renewal'],
+    ledger:[
+      {id:'LED-006-01',cycle:'2026-04',type:'Initial',effDate:'2026-04-01',baseRate:694.00,prorated:false,proMonths:null,calcBase:694.00,
+        overrides:[],total:694.00,configVer:'RC-2026-01',stateRate:false,status:'On Hold - Banking'},
+      {id:'LED-006-02',cycle:'2026-05',type:'Renewal',effDate:'2026-04-01',baseRate:28.92,prorated:false,proMonths:null,calcBase:28.92,
+        overrides:[],total:28.92,configVer:'RC-2026-01',stateRate:false,status:'On Hold - Banking'}
+    ]
+  },
+  { id:'BOB-007', agentNPN:'7719022', agentName:'Sarah Chen', memberMBI:'7NK0-XY6-UV85',
+    memberName:'Helen Anderson', planCode:'GK-CKD-003', planYear:'2026', carrier:'Gold Kidney Health Plan',
+    state:'TX', appDate:'2026-04-15', reqEffDate:'2026-05-01', actualEffDate:'2026-05-01', termDate:null,
+    bobStatus:'Pending CMS', eligStatus:'Eligible', holdReason:null,
+    commTypes:[],
+    ledger:[]
+  }
+];
+
+function bobStatusBadge(s){
+  const m={'Active':'b-green','Pending CMS':'b-blue','CMS Rejected':'b-red','Disenrolled':'b-grey','Compliance Hold':'b-orange'};
+  return `<span class="bdg ${m[s]||'b-grey'}">${s}</span>`;
+}
+function eligBadge(s, reason){
+  if(s==='Eligible') return `<span class="eligibility-chip elig-ok"><i class="fas fa-check" style="margin-right:3px"></i>Eligible</span>`;
+  const icon = s.includes('License')?'fas fa-id-card':s.includes('Banking')?'fas fa-university':s.includes('NPN')?'fas fa-user-times':s.includes('Appointment')?'fas fa-calendar-times':s.includes('Address')?'fas fa-map-marker-alt':'fas fa-exclamation-circle';
+  return `<span class="eligibility-chip elig-hold" title="${reason||s}"><i class="${icon}" style="margin-right:3px"></i>${s}</span>`;
+}
+function ledgerStatusBadge(s){
+  const m={'Paid':'b-green','Calculated':'b-blue','On Hold - License':'b-red','On Hold - Banking':'b-amber',
+    'On Hold - NPN':'b-red','On Hold - Appointment':'b-red','On Hold - Address Gap':'b-amber','Skipped - CMS Rejected':'b-grey','Skipped - Chargeback':'b-orange','Chargeback':'b-orange','Accrued':'b-teal','Error':'b-red'};
+  return `<span class="bdg ${m[s]||'b-grey'}" style="font-size:11px">${s}</span>`;
+}
+
+function renderTable(list){
+  document.getElementById('recordCount').textContent = `— ${list.length} record${list.length!==1?'s':''}`;
+  document.getElementById('bobTbody').innerHTML = list.map(r=>{
+    const isOnHold = r.eligStatus!=='Eligible';
+    return `<tr style="${r.bobStatus==='CMS Rejected'||r.bobStatus==='Disenrolled'?'opacity:.7':''}">
+      <td><code style="font-size:12px">${r.id}</code></td>
+      <td><div style="font-size:13px;font-weight:600">${r.agentName}</div><div style="font-size:11px;color:#80868b">NPN: ${r.agentNPN}</div></td>
+      <td><div style="font-size:13px;font-weight:600">${r.memberName}</div><div style="font-size:11px;color:#80868b">MBI: ${r.memberMBI}</div></td>
+      <td><div style="font-size:12.5px">${r.planCode}</div><div style="font-size:11px;color:#80868b">${r.state} — ${r.planYear}</div></td>
+      <td><div style="font-size:12.5px">${r.appDate}</div><div style="font-size:11px;color:#0d47a1">Eligibility ref date</div></td>
+      <td>${r.actualEffDate||'<span class="text-muted">Pending</span>'}</td>
+      <td>${r.termDate?`<span style="color:#c62828">${r.termDate}</span>`:'<span class="text-muted">—</span>'}</td>
+      <td>${bobStatusBadge(r.bobStatus)}</td>
+      <td>
+        ${eligBadge(r.eligStatus, r.holdReason)}
+        ${isOnHold?`<br><button class="btn-ol btn-sm" style="margin-top:4px;font-size:11px" onclick="openHold('${r.id}')"><i class="fas fa-flag"></i>Review Hold</button>`:''}
+      </td>
+      <td><div class="dflex g8">
+        <button class="btn-ol btn-sm" onclick="openBobDetail('${r.id}')"><i class="fas fa-info-circle"></i>Details</button>
+        <button class="btn-pr btn-sm" onclick="openLedger('${r.id}')"><i class="fas fa-list"></i>Ledger (${r.ledger.length})</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function applyFilters(){
+  const agent=(document.getElementById('fAgent').value||'').toLowerCase();
+  const bs=document.getElementById('fBobStatus').value;
+  const ps=document.getElementById('fPayStatus').value;
+  const el=document.getElementById('fElig').value;
+  const st=document.getElementById('fState').value;
+  const ct=document.getElementById('fCommType').value;
+  const dateFrom=document.getElementById('fDateFrom').value;
+  const dateTo=document.getElementById('fDateTo').value;
+  const filtered = bobRecords.filter(r=>{
+    if(agent && !r.agentName.toLowerCase().includes(agent) && !r.agentNPN.includes(agent) && !r.memberName.toLowerCase().includes(agent)) return false;
+    if(bs && r.bobStatus!==bs) return false;
+    if(ps){
+      const hasStatus = r.ledger.some(e=>{
+        if(ps==='Paid') return e.status==='Paid';
+        if(ps==='Calculated') return e.status==='Calculated';
+        if(ps==='On Hold') return e.status.startsWith('On Hold');
+        if(ps==='Chargeback') return e.status==='Chargeback';
+        if(ps==='Skipped') return e.status.startsWith('Skipped');
+        return false;
+      });
+      if(!hasStatus) return false;
+    }
+    if(el){
+      if(el==='Eligible' && r.eligStatus!=='Eligible') return false;
+      if(el==='On Hold' && r.eligStatus==='Eligible') return false;
+      if(el!=='Eligible' && el!=='On Hold' && r.eligStatus!==el) return false;
+    }
+    if(st && r.state!==st) return false;
+    if(ct && !r.commTypes.includes(ct)) return false;
+    if(dateFrom && r.appDate < dateFrom) return false;
+    if(dateTo && r.appDate > dateTo) return false;
+    return true;
+  });
+  renderTable(filtered);
+  renderAgentSummary(filtered);
+}
+function resetFilters(){
+  ['fAgent'].forEach(id=>document.getElementById(id).value='');
+  ['fBobStatus','fPayStatus','fElig','fState','fCommType'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fDateFrom').value='2026-01-01';
+  document.getElementById('fDateTo').value='2026-05-29';
+  renderTable(bobRecords);
+  renderAgentSummary(bobRecords);
+}
+
+function openLedger(id){
+  currentBobId = id;
+  const r = bobRecords.find(x=>x.id===id); if(!r) return;
+  document.getElementById('ledgerTitle').innerHTML =
+    `<i class="fas fa-list" style="color:#004d40;margin-right:8px"></i>Ledger — ${r.memberName} (${r.memberMBI}) &nbsp;<span style="font-size:12px;color:#80868b">Agent: ${r.agentName} — ${r.agentNPN}</span>`;
+
+  const noLedger = r.ledger.length===0
+    ? `<div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>No ledger entries yet. Member is <strong>${r.bobStatus}</strong>. Commission entries will be generated on the next calculation engine run.</span></div>`
+    : '';
+
+  const ledgerRows = r.ledger.map(e=>{
+    // --- Classification / Proration note (US-6.4) ---
+    let classNote = '';
+    if(e.type==='Initial'){
+      const em = e.effDate ? parseInt(e.effDate.split('-')[1]) : 1;
+      const months = 13 - em;
+      const proAmt = (e.baseRate * months / 12);
+      const yr = e.effDate ? e.effDate.split('-')[0] : '2026';
+      classNote = `<div style="background:#e8f5e9;border-radius:5px;padding:5px 8px;margin-top:5px;font-size:10.5px;color:#1b5e20;line-height:1.6">
+        <strong>Classification:</strong> Initial — New Enrollment &middot; CY${yr}<br>
+        Annual Rate: \$${e.baseRate.toFixed(2)} &middot; Eff: ${e.effDate||'—'} &middot; Months in Plan Year: ${months}/12<br>
+        <strong>Prorated: \$${e.baseRate.toFixed(2)} &times; ${months}/12 = \$${proAmt.toFixed(2)}</strong>
+      </div>`;
+    } else if(e.type==='Renewal'){
+      classNote = `<div style="background:#e3f2fd;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#0d47a1">Renewal &mdash; PMPM Rate: \$${e.baseRate.toFixed(2)} &times; 1 month = \$${e.baseRate.toFixed(2)}</div>`;
+    } else if(e.type==='HRA'){
+      classNote = `<div style="background:#f3e5f5;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#7b1fa2">HRA Incentive &mdash; One-time per member per plan year</div>`;
+    } else if(e.type==='Healthy Visit'){
+      classNote = `<div style="background:#fff8e1;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#e65100">Healthy Visit &mdash; C-SNP condition-based incentive</div>`;
+    } else if(e.type==='Chargeback'){
+      classNote = `<div style="background:#ffebee;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#c62828">Chargeback &mdash; Initial commission recouped (Rapid Disenrollment)</div>`;
+    }
+    // --- Override Cascade with roll-up (US-6.5) ---
+    const HIERARCHY = ['GA','MGA','FMO'];
+    const presentLevels = e.overrides.map(o=>o.level);
+    const isIncentiveType = ['HRA','Healthy Visit','Chargeback'].includes(e.type);
+    let ovrHtml;
+    if(e.overrides.length){
+      ovrHtml = e.overrides.map(o=>{
+        const rollupFlag = o.rollup===true;
+        return `<div style="font-size:11.5px;color:${rollupFlag?'#0d47a1':'#5f6368'};margin-bottom:2px">
+          ${rollupFlag?'<i class="fas fa-arrow-circle-up" style="color:#0d47a1;margin-right:3px"></i>':''}
+          <strong>${o.level}:</strong> \$${o.amount.toFixed(2)}
+          <span style="color:#9e9e9e;font-size:10.5px">(${o.org})</span>
+          ${rollupFlag?'<span style="font-size:10px;color:#0d47a1;font-weight:700">&nbsp;[Roll-up]</span>':''}
+        </div>`;
+      }).join('');
+      if(!isIncentiveType){
+        HIERARCHY.filter(l=>!presentLevels.includes(l)).forEach(l=>{
+          ovrHtml += `<div style="font-size:10.5px;color:#bdbdbd"><i class="fas fa-minus" style="margin-right:3px"></i>${l}: absent</div>`;
+        });
+      }
+    } else {
+      ovrHtml = `<span class="text-muted" style="font-size:11.5px">&mdash;</span>`;
+      if(!isIncentiveType && (e.type==='Initial'||e.type==='Renewal')){
+        ovrHtml += HIERARCHY.map(l=>`<div style="font-size:10.5px;color:#bdbdbd"><i class="fas fa-minus" style="margin-right:3px"></i>${l}: no override on file</div>`).join('');
+      }
+    }
+    const amtColor = e.total<0?'color:#c62828':'color:#1b5e20';
+    return `<tr class="ledger-row">
+      <td><code style="font-size:11px">${e.id}</code></td>
+      <td>${e.cycle}</td>
+      <td><span class="bdg ${e.type==='Initial'?'b-blue':e.type==='Renewal'?'b-teal':e.type==='HRA'?'b-purple':e.type==='Healthy Visit'?'b-orange':e.type==='Chargeback'?'b-red':'b-grey'}" style="font-size:11px">${e.type}</span>${classNote}</td>
+      <td>${e.effDate||'—'}</td>
+      <td>\$${Math.abs(e.baseRate).toFixed(2)}${e.prorated?` <span style="font-size:10px;color:#e65100">(${e.proMonths}mo)</span>`:''}</td>
+      <td>${e.stateRate?'<span style="color:#7b1fa2;font-size:11px"><i class="fas fa-check"></i> State</span>':'<span class="text-muted" style="font-size:11px">Carrier</span>'}</td>
+      <td>\$${Math.abs(e.calcBase).toFixed(2)}</td>
+      <td>${ovrHtml}</td>
+      <td style="font-size:11.5px">${e.overrides&&e.overrides.length?'<code>'+e.overrides.map(o=>'NPN:'+((o.orgNPN)||'&#8212;')).join(', ')+'</code>':'<em class="text-muted">N/A</em>'}</td>
+      <td style="font-size:11.5px">${e.overrideMax!==undefined?'$'+e.overrideMax.toFixed(2):'&#8212;'}</td>
+      <td><strong style="${amtColor}">\$${e.total.toFixed(2)}</strong></td>
+      <td><code style="font-size:10px">${e.configVer}</code></td>
+      <td>${ledgerStatusBadge(e.status)}</td>
+    </tr>`;
+  }).join('');
+
+  const totals = r.ledger.reduce((acc,e)=>{
+    if(e.type==='Initial') acc.initial+=e.total;
+    else if(e.type==='Renewal') acc.renewal+=e.total;
+    else if(e.type==='HRA'||e.type==='Healthy Visit') acc.incentive+=e.total;
+    else if(e.type==='Chargeback') acc.chargeback+=e.total;
+    return acc;
+  },{initial:0,renewal:0,incentive:0,chargeback:0});
+
+  const firstInitial = r.ledger.find(e=>e.type==='Initial');
+  const classifSummary = firstInitial ? (()=>{
+    const em = firstInitial.effDate ? parseInt(firstInitial.effDate.split('-')[1]) : 1;
+    const months = 13 - em;
+    const proAmt = (firstInitial.baseRate * months / 12);
+    const basis = em === 1 ? 'New Enrollment — CY2026' : `Rollover / Mid-Year — CY${firstInitial.effDate.split('-')[0]}`;
+    return `<div style="background:#f1f8e9;border:1px solid #a5d6a7;border-radius:8px;padding:12px 16px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:#1b5e20;text-transform:uppercase;margin-bottom:8px"><i class="fas fa-tag" style="margin-right:6px"></i>US-6.4 Classification &amp; Proration Summary</div>
+      <div class="row-grid" style="gap:8px">
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Classification Basis</div><div style="font-weight:600;font-size:13px">${basis}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Annual Base Rate</div><div style="font-weight:600;font-size:13px">\$${firstInitial.baseRate.toFixed(2)}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Effective Date</div><div style="font-weight:600;font-size:13px">${firstInitial.effDate||'?'}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Months in Plan Year</div><div style="font-weight:600;font-size:13px">${months}/12</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368">Prorated Commission</div><div style="font-weight:700;font-size:15px;color:#1b5e20">\$${firstInitial.baseRate.toFixed(2)} × ${months}/12 = \$${proAmt.toFixed(2)}</div></div>
+      </div>
+    </div>`;
+  })() : '';
+  document.getElementById('ledgerBody').innerHTML = `
+    <div class="row-grid" style="margin-bottom:14px;gap:10px">
+      <div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:10px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Total Initial</div><div style="font-size:16px;font-weight:700;color:#1b5e20">$${totals.initial.toFixed(2)}</div></div>
+      <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9"><div style="font-size:11px;color:#5f6368">Total Renewal</div><div style="font-size:16px;font-weight:700;color:#0d47a1">$${totals.renewal.toFixed(2)}</div></div>
+      <div class="col-1" style="background:#f3e5f5;border-radius:8px;padding:10px;border:1px solid #ce93d8"><div style="font-size:11px;color:#5f6368">Incentives (HRA+Visit)</div><div style="font-size:16px;font-weight:700;color:#4a148c">$${totals.incentive.toFixed(2)}</div></div>
+      <div class="col-1" style="background:${totals.chargeback<0?'#ffebee':'#f1f3f4'};border-radius:8px;padding:10px;border:1px solid ${totals.chargeback<0?'#ef9a9a':'#e8eaed'}"><div style="font-size:11px;color:#5f6368">Chargebacks</div><div style="font-size:16px;font-weight:700;color:${totals.chargeback<0?'#c62828':'#5f6368'}">$${totals.chargeback.toFixed(2)}</div></div>
+      <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:10px;border:1px solid #ffe082"><div style="font-size:11px;color:#5f6368">Net Total</div><div style="font-size:16px;font-weight:700;color:#e65100">$${(totals.initial+totals.renewal+totals.incentive+totals.chargeback).toFixed(2)}</div></div>
+    </div>
+    ${noLedger}
+    ${classifSummary}
+    ${r.ledger.length?`
+    <div class="table-wrap">
+      <div class="card-hdr" style="justify-content:flex-end"><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','bob-ledger_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','bob-ledger_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <table id="tblExport3" class="tbl">
+        <thead><tr><th>Entry ID</th><th>Cycle</th><th>Type</th><th>Eff Date</th><th>Base Rate</th><th>Rate Used</th><th>Calc Base</th><th>Override Breakdown</th><th>Override: Org NPN</th><th>Override Max</th><th>Total Payable</th><th>Config Ver</th><th>Status</th></tr></thead>
+        <tbody>${ledgerRows}</tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#80868b;margin-top:8px"><i class="fas fa-lock" style="margin-right:4px"></i>Ledger entries with status <strong>Paid</strong> are immutable. Corrections must be submitted as Adjustment entries linked to the original.</div>`:''}
+  `;
+  showModal('ledgerModal');
+}
+
+function openLedgerFromDetail(){ openLedger(currentBobId); }
+
+function openAdjustmentModal(){
+  document.getElementById('adjAmount').value='';
+  document.getElementById('adjReason').value='';
+  document.getElementById('adjDate').value=new Date().toISOString().split('T')[0];
+  document.getElementById('adjustmentModal').style.display='flex';
+}
+
+function submitAdjustment(){
+  var amt=document.getElementById('adjAmount').value;
+  var reason=document.getElementById('adjReason').value;
+  if(!amt||parseFloat(amt)===0){showToastGlobal('Please enter a valid adjustment amount.','error');return;}
+  if(!reason||reason.length<10){showToastGlobal('Please provide a justification (min 10 characters).','error');return;}
+  closeModal('adjustmentModal');
+  showToastGlobal('Adjustment entry submitted for approval. Reference: ADJ-2026-'+Math.floor(1000+Math.random()*9000),'success');
+}
+
+function openBobDetail(id){
+  currentBobId = id;
+  const r = bobRecords.find(x=>x.id===id); if(!r) return;
+  document.getElementById('bobDetailTitle').innerHTML = `<i class="fas fa-user" style="color:#004d40;margin-right:8px"></i>BoB Record — ${r.id}`;
+  document.getElementById('bobDetailBody').innerHTML = `
+    <div class="row-grid" style="gap:10px;margin-bottom:16px">
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div style="font-weight:600">${r.agentName}</div><div style="font-size:12px;color:#80868b">NPN: ${r.agentNPN}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Member</div><div style="font-weight:600">${r.memberName}</div><div style="font-size:12px;color:#80868b">MBI: ${r.memberMBI}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">BoB Status</div><div style="margin-top:4px">${bobStatusBadge(r.bobStatus)}</div></div>
+      <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Eligibility</div><div style="margin-top:4px">${eligBadge(r.eligStatus, r.holdReason)}</div></div>
+    </div>
+    <table id="tblExport4" class="tbl" style="margin-bottom:12px">
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Plan Code / Year</td><td>${r.planCode} — ${r.planYear}</td></tr>
+        <tr><td>Carrier</td><td>${r.carrier}</td></tr>
+        <tr><td>Enrollment State</td><td>${r.state}</td></tr>
+        <tr><td style="color:#0d47a1;font-weight:600">Application Date (eligibility ref)</td><td><strong style="color:#0d47a1">${r.appDate}</strong> — agent license/appointment validated against this date</td></tr>
+        <tr><td>Requested Effective Date</td><td>${r.reqEffDate}</td></tr>
+        <tr><td>CMS Confirmed Effective Date</td><td>${r.actualEffDate||'<span class="bdg b-amber">Pending CMS</span>'}</td></tr>
+        <tr><td>Term Date</td><td>${r.termDate?`<span style="color:#c62828">${r.termDate}</span>`:'<span class="text-muted">—</span>'}</td></tr>
+        <tr><td>Commission Types</td><td>${r.commTypes.length?r.commTypes.map(t=>`<span class="chip">${t}</span>`).join(''):'<span class="text-muted">None ? no eligible commission events</span>'}</td></tr>
+        ${r.holdReason?`<tr style="background:#fff8e1"><td style="color:#e65100">Hold Reason</td><td style="color:#e65100">${r.holdReason}</td></tr>`:''}<tr><td>Adjustment Reference</td><td>${r.adjustmentRef||'<span class="text-muted">&#8212;</span>'}}</td></tr>
+      </tbody>
+    </table>
+    ${r.actualEffDate&&r.termDate&&r.actualEffDate===r.termDate?`<div class="al-warn"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Zero-Commission Record:</strong> Actual Effective Date equals Term Date. Commission calculation generates $0.00 for this member. Record retained for audit trail.</span></div>`:''}
+  `;
+  showModal('bobDetailModal');
+}
+
+function openHold(id){
+  const r = bobRecords.find(x=>x.id===id); if(!r) return;
+  currentBobId = id;
+  document.getElementById('holdBody').innerHTML = `
+    <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i>
+      <span><strong>Hold Reason:</strong> ${r.holdReason}</span></div>
+    <div class="al-info" style="margin-bottom:12px"><i class="fas fa-list-ol" style="flex-shrink:0"></i><span><strong>Two-Step Eligibility Check:</strong> (1) License active on Application Date? ${r.eligStatus.includes('License')?'<span style="color:#c62828;font-weight:600">FAIL</span>':'<span style="color:#1b5e20">PASS</span>'} &nbsp; (2) Appointment active in enrollment state? ${r.eligStatus.includes('Appointment')?'<span style="color:#c62828;font-weight:600">FAIL &mdash; Appointment Hold</span>':'<span style="color:#1b5e20">PASS</span>'}</span></div>
+    <p style="font-size:13.5px;margin-bottom:12px">Member: <strong>${r.memberName}</strong> — Agent: <strong>${r.agentName} (${r.agentNPN})</strong></p>
+    <p style="font-size:13px;color:#5f6368;margin-bottom:14px">As Finance, you can release this hold to approve payment, or reject the payment. All decisions are audit-logged.</p>
+    <div class="fg"><label>Finance Review Notes <span class="req">*</span></label><textarea id="holdNotes" rows="3" placeholder="Document your review finding and decision rationale..."></textarea></div>
+  `;
+  showModal('holdModal');
+}
+function resolveHold(){
+  const notes = document.getElementById('holdNotes').value.trim();
+  if(!notes){showToastGlobal('Review notes are required before releasing hold.','warn');return;}
+  const r = bobRecords.find(x=>x.id===currentBobId);
+  if(r){ r.eligStatus='Eligible'; r.holdReason=null; r.ledger.forEach(e=>{if(e.status.startsWith('On Hold'))e.status='Calculated';}); }
+  closeModal('holdModal'); renderTable(bobRecords);
+  showToastGlobal(`Hold released for ${r?r.memberName:'member'}. Ledger entries set to Calculated.`,'success');
+}
+function rejectHold(){
+  const notes = document.getElementById('holdNotes').value.trim();
+  if(!notes){showToastGlobal('Review notes are required.','warn');return;}
+  closeModal('holdModal');
+  showToastGlobal(`Payment rejected for BoB ${currentBobId}. Entry marked as rejected in discrepancy queue.`,'warn');
+}
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToastGlobal(msg, type='info'){
+  if(typeof showToast==='function'){showToast(msg,type==='warn'?'warning':type);return;}
+  const t=document.getElementById('nfp-toast-container')||document.body;
+  const d=document.createElement('div');
+  const c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};
+  d.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]||'#0d47a1'};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px;margin-bottom:8px">${msg}</div>`;
+  t.appendChild(d); setTimeout(()=>d.remove(),3800);
+}
+function nfpExport(label){ showToastGlobal(`${label} export started. File will download shortly.`,'info'); }
+
+// Actual enrollment counts from bob-members.html (full BoB data per agent)
+const AGENT_TOTAL_ENROLLMENTS = {'8823441':25,'7719022':25,'9912345':22,'5521833':20,'6643201':22};
+
+function renderAgentSummary(list){
+  const agents = {};
+  list.forEach(r=>{
+    if(!agents[r.agentNPN]) agents[r.agentNPN] = {name:r.agentName, npn:r.agentNPN, enrollments:0, active:0, onHold:0, totalComm:0, paid:0, pending:0};
+    const a = agents[r.agentNPN];
+    a.enrollments++;
+    if(r.bobStatus==='Active') a.active++;
+    if(r.eligStatus!=='Eligible') a.onHold++;
+    r.ledger.forEach(e=>{
+      a.totalComm += e.total;
+      if(e.status==='Paid') a.paid += e.total;
+      else a.pending += e.total;
+    });
+  });
+  document.getElementById('agentSummaryTbody').innerHTML = Object.values(agents).map(a=>{
+    const totalEnr = AGENT_TOTAL_ENROLLMENTS[a.npn] || a.enrollments;
+    return `<tr>
+    <td style="font-weight:600">${a.name}</td>
+    <td><code>${a.npn}</code></td>
+    <td><a href="bob-members.html?agent=${a.npn}" style="font-weight:700;color:#0d47a1;text-decoration:underline">${totalEnr}</a></td>
+    <td style="color:#1b5e20;font-weight:600">${a.active}</td>
+    <td style="color:${a.onHold?'#e65100':'#5f6368'};font-weight:${a.onHold?'700':'400'}">${a.onHold}</td>
+    <td style="font-weight:700">$${a.totalComm.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
+    <td style="color:#1b5e20">$${a.paid.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
+    <td style="color:#0d47a1">$${a.pending.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
+    <td><button class="btn-ol btn-sm" onclick="window.location.href='bob-members.html?agent=${a.npn}'"><i class="fas fa-users"></i>View Members</button></td>
+  </tr>`;}).join('');
+}
+
+function drillToAgent(npn){
+  window.location.href = 'bob-members.html?agent=' + npn;
+}
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
+renderTable(bobRecords);
+renderAgentSummary(bobRecords);
+
+// Redirect legacy ?agent= param to new member listing page
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var agentNpn = params.get('agent');
+  if(agentNpn) window.location.href = 'bob-members.html?agent=' + agentNpn;
+})();
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

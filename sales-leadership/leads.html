@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>View & Assign Leads | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}
+.lead-check{width:16px;height:16px;cursor:pointer}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html" class="active"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div><div style="font-size:9px;color:#ce93d8;margin-top:2px"><i class="fas fa-eye" style="margin-right:3px"></i>Org-Wide Read Access</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#4a148c;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>View &amp; Assign Leads</h4>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="openAssignModal()"><i class="fas fa-user-tag"></i> Assign Selected</button>
+      <button class="btn-ol btn-sm" onclick="openAddLeadModal()"><i class="fas fa-plus"></i> Add Lead</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Leads')"><i class="fas fa-download"></i> Export</button>
+      <a href="../auth-carrier/login.html" class="btn-ol btn-sm" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPI Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-address-book"></i></div><div><div class="stat-label">Total Leads</div><div class="stat-val">5,032</div><div class="stat-sub text-muted">Last 30 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Unassigned</div><div class="stat-val">412</div><div class="stat-sub" style="color:#c62828">Need assignment</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-phone"></i></div><div><div class="stat-label">Contacted</div><div class="stat-val">3,623</div><div class="stat-sub text-muted">72% contact rate</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Converted</div><div class="stat-val">1,247</div><div class="stat-sub" style="color:#2e7d32">24.8% conversion</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-clock"></i></div><div><div class="stat-label">Avg Response Time</div><div class="stat-val">2.4h</div><div class="stat-sub text-muted">First contact</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <select id="fStatus" onchange="filterLeads()">
+        <option value="">All Status</option><option value="New">New</option><option value="Contacted">Contacted</option><option value="App Started">App Started</option><option value="Enrolled">Enrolled</option><option value="Lost">Lost</option><option value="Unassigned">Unassigned</option>
+      </select>
+      <select id="fSource" onchange="filterLeads()">
+        <option value="">All Sources</option><option value="Digital">Digital</option><option value="TFN">TFN (Phone)</option><option value="Referral">Referral</option><option value="Event">Event</option><option value="Vendor">Vendor</option>
+      </select>
+      <select id="fAgency" onchange="filterLeads()">
+        <option value="">All Agencies</option><option value="Premier">Premier Insurance</option><option value="National">National Benefits</option><option value="Alliance">Alliance Health</option><option value="Southwest">Southwest Medicare</option><option value="Pacific">Pacific Health</option><option value="Sunshine">Sunshine Health</option><option value="Southeast">Southeast Benefits</option><option value="Golden State">Golden State Medicare</option><option value="Unassigned">Unassigned</option>
+      </select>
+      <select id="fState" onchange="filterLeads()">
+        <option value="">All States</option><option value="FL">Florida</option><option value="TX">Texas</option><option value="GA">Georgia</option><option value="CA">California</option><option value="AZ">Arizona</option>
+      </select>
+      <input type="text" id="fSearch" placeholder="Search lead name, phone..." style="width:170px" oninput="filterLeads()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- Leads Table -->
+    <div class="card" id="assign">
+      <div class="card-hdr"><h5><i class="fas fa-address-book" style="color:#4a148c;margin-right:8px"></i>All Leads <span id="leadCount" style="font-size:12px;color:#5f6368;font-weight:400">(showing 15 of 5,032)</span></h5>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="selectAll()"><i class="fas fa-check-double"></i> Select All</button>
+          <button class="btn-ol btn-sm" onclick="deselectAll()"><i class="fas fa-minus"></i> Deselect</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="leadsTable">
+          <thead><tr><th style="width:30px"><input type="checkbox" id="checkAll" onchange="toggleAll(this)" class="lead-check"></th><th>Lead Name</th><th>Phone</th><th>State</th><th>Source</th><th>Campaign</th><th>Status</th><th>Assigned To</th><th>Agency</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="leadsTbody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Assign Lead Modal -->
+<div id="assignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:480px;max-width:94vw;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-user-tag" style="color:#4a148c;margin-right:8px"></i>Assign Leads</h5>
+      <button class="btn-ol btn-sm" onclick="closeAssignModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="margin-bottom:14px;padding:10px;background:#ede7f6;border-radius:8px;font-size:12px">
+        <i class="fas fa-info-circle" style="color:#4a148c;margin-right:6px"></i><strong id="selectedCount">0</strong> lead(s) selected for assignment
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Assign To Agent</label>
+        <select id="assignAgent" style="width:100%;padding:8px 12px;border:1px solid #e0e3e7;border-radius:6px;font-size:13px">
+          <option value="">Select Agent...</option>
+          <option value="James Martinez">James Martinez (8823441) � Premier Insurance</option>
+          <option value="Sarah Chen">Sarah Chen (7719022) � National Benefits</option>
+          <option value="Kevin Nguyen">Kevin Nguyen (3398712) � Alliance Health</option>
+          <option value="Patricia Lee">Patricia Lee (6654321) � Premier Insurance</option>
+          <option value="Mark Brown">Mark Brown (2938475) � Southwest Medicare</option>
+          <option value="Michael Thompson">Michael Thompson (4412876) � Pacific Health</option>
+          <option value="Angela Torres">Angela Torres (6643201) � National Benefits</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Assignment Priority</label>
+        <select id="assignPriority" style="width:100%;padding:8px 12px;border:1px solid #e0e3e7;border-radius:6px;font-size:13px">
+          <option>Normal</option><option>High � Contact within 2 hours</option><option>Urgent � Contact immediately</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Notes (optional)</label>
+        <textarea id="assignNotes" rows="2" style="width:100%;padding:8px 12px;border:1px solid #e0e3e7;border-radius:6px;font-size:13px;resize:vertical" placeholder="Add assignment notes..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn-ol btn-sm" onclick="closeAssignModal()">Cancel</button>
+        <button class="btn-pr btn-sm" onclick="assignLeads()"><i class="fas fa-check" style="margin-right:4px"></i>Assign Leads</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Lead Modal -->
+<div id="addLeadModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:520px;max-width:94vw;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-plus-circle" style="color:#4a148c;margin-right:8px"></i>Add New Lead</h5>
+      <button class="btn-ol btn-sm" onclick="closeAddLeadModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">First Name <span style="color:#c62828">*</span></label><input type="text" id="addFirst" class="form-control" style="font-size:13px" placeholder="First name"></div>
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Last Name <span style="color:#c62828">*</span></label><input type="text" id="addLast" class="form-control" style="font-size:13px" placeholder="Last name"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Phone <span style="color:#c62828">*</span></label><input type="tel" id="addPhone" class="form-control" style="font-size:13px" placeholder="(555) 123-4567"></div>
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Email</label><input type="email" id="addEmail" class="form-control" style="font-size:13px" placeholder="email@example.com"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">State <span style="color:#c62828">*</span></label>
+          <select id="addState" class="form-control" style="font-size:13px"><option value="">Select...</option><option>FL</option><option>TX</option><option>GA</option><option>CA</option><option>AZ</option><option>OK</option><option>NV</option></select>
+        </div>
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Source <span style="color:#c62828">*</span></label>
+          <select id="addSource" class="form-control" style="font-size:13px"><option value="">Select...</option><option>Digital</option><option>TFN</option><option>Referral</option><option>Event</option><option>Vendor</option><option>Manual</option></select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Campaign</label>
+          <select id="addCampaign" class="form-control" style="font-size:13px"><option value="">None</option><option>Spring OEP Digital</option><option>Medicare TFN Campaign</option><option>Referral Partner Program</option><option>Community Events</option></select>
+        </div>
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Assign To</label>
+          <select id="addAssign" class="form-control" style="font-size:13px"><option value="">Unassigned</option><option>James Martinez</option><option>Sarah Chen</option><option>Kevin Nguyen</option><option>Patricia Lee</option><option>Mark Brown</option></select>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Notes</label>
+        <textarea id="addNotes" rows="2" class="form-control" style="font-size:13px;resize:vertical" placeholder="Additional information about the lead..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn-ol btn-sm" onclick="closeAddLeadModal()">Cancel</button>
+        <button class="btn-pr btn-sm" onclick="addLead()"><i class="fas fa-plus" style="margin-right:4px"></i>Add Lead</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agency Drill-Down Modal -->
+<div id="agencyDrillModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:600px;max-width:94vw;box-shadow:0 12px 40px rgba(0,0,0,.2);max-height:80vh;display:flex;flex-direction:column">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-building" style="color:#4a148c;margin-right:8px"></i><span id="drillAgencyTitle">Agency Agents</span></h5>
+      <button class="btn-ol btn-sm" onclick="closeAgencyDrill()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px;overflow-y:auto" id="drillAgencyBody"></div>
+  </div>
+</div>
+
+<!-- Lead Drill-Down Modal -->
+<div id="leadDrillModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:560px;max-width:94vw;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-user" style="color:#4a148c;margin-right:8px"></i><span id="drillLeadTitle">Lead Details</span></h5>
+      <button class="btn-ol btn-sm" onclick="closeLeadDrill()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px" id="drillLeadBody"></div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var LEADS = [
+  {name:'Frank Johnson',phone:'(305) 555-0142',state:'FL',source:'Digital',campaign:'Spring OEP Digital',status:'New',agent:'Unassigned',agency:'�',date:'Aug 1'},
+  {name:'Dorothy Lane',phone:'(214) 555-0198',state:'TX',source:'TFN',campaign:'Medicare TFN Campaign',status:'New',agent:'Unassigned',agency:'�',date:'Aug 1'},
+  {name:'Paul Anderson',phone:'(404) 555-0267',state:'GA',source:'Digital',campaign:'Spring OEP Digital',status:'New',agent:'Unassigned',agency:'�',date:'Jul 31'},
+  {name:'James Lee',phone:'(510) 555-0334',state:'CA',source:'TFN',campaign:'Medicare TFN Campaign',status:'New',agent:'Unassigned',agency:'�',date:'Jul 31'},
+  {name:'Susan Miller',phone:'(813) 555-0421',state:'FL',source:'Event',campaign:'Community Events',status:'Contacted',agent:'Carlos Diaz',agency:'Sunshine Health',date:'Jul 30'},
+  {name:'Mary Davis',phone:'(941) 555-0189',state:'FL',source:'TFN',campaign:'Medicare TFN Campaign',status:'New',agent:'Unassigned',agency:'�',date:'Jul 30'},
+  {name:'William Chen',phone:'(602) 555-0278',state:'AZ',source:'Digital',campaign:'Spring OEP Digital',status:'Contacted',agent:'Michael Thompson',agency:'Pacific Health',date:'Jul 29'},
+  {name:'Alice Cooper',phone:'(832) 555-0145',state:'TX',source:'Digital',campaign:'Spring OEP Digital',status:'App Started',agent:'Sarah Chen',agency:'National Benefits',date:'Jul 29'},
+  {name:'George Harris',phone:'(817) 555-0312',state:'TX',source:'Event',campaign:'Community Events',status:'Contacted',agent:'Kevin Park',agency:'National Benefits',date:'Jul 28'},
+  {name:'Robert Wilson',phone:'(561) 555-0456',state:'FL',source:'Referral',campaign:'Referral Partner Program',status:'Enrolled',agent:'David Kim',agency:'Premier Insurance',date:'Jul 28'},
+  {name:'Nancy Collins',phone:'(770) 555-0523',state:'GA',source:'Referral',campaign:'Referral Partner Program',status:'Enrolled',agent:'Mark Brown',agency:'Southwest Medicare',date:'Jul 26'},
+  {name:'Betty Moore',phone:'(469) 555-0667',state:'TX',source:'Digital',campaign:'Spring OEP Digital',status:'Contacted',agent:'Kevin Nguyen',agency:'Alliance Health',date:'Jul 26'},
+  {name:'Thomas White',phone:'(305) 555-0734',state:'FL',source:'Vendor',campaign:'�',status:'Lost',agent:'James Martinez',agency:'Premier Insurance',date:'Jul 25'},
+  {name:'Linda Garcia',phone:'(714) 555-0891',state:'CA',source:'Digital',campaign:'Spring OEP Digital',status:'App Started',agent:'Angela Torres',agency:'National Benefits',date:'Jul 24'},
+  {name:'Richard Taylor',phone:'(813) 555-0948',state:'FL',source:'TFN',campaign:'Medicare TFN Campaign',status:'Contacted',agent:'Patricia Lee',agency:'Premier Insurance',date:'Jul 23'}
+];
+
+function renderLeads(){
+  var html='';
+  LEADS.forEach(function(l,i){
+    var sc={'New':'#0277bd','Contacted':'#e65100','App Started':'#4a148c','Enrolled':'#2e7d32','Lost':'#757575','Unassigned':'#c62828'};
+    var s=l.agent==='Unassigned'?'Unassigned':l.status;
+    var color=sc[s]||'#5f6368';
+    html+='<tr data-status="'+(l.agent==='Unassigned'?'Unassigned':l.status)+'" data-source="'+l.source+'" data-agency="'+l.agency+'" data-state="'+l.state+'">'
+      +'<td><input type="checkbox" class="lead-check" data-idx="'+i+'"></td>'
+      +'<td style="font-weight:600"><a href="#" onclick="drillLead('+i+');return false" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View lead details">'+l.name+'</a></td>'
+      +'<td style="font-size:12px">'+l.phone+'</td>'
+      +'<td>'+l.state+'</td>'
+      +'<td><span style="font-size:11px">'+l.source+'</span></td>'
+      +'<td style="font-size:11px">'+l.campaign+'</td>'
+      +'<td><span class="bdg" style="background:'+color+'22;color:'+color+'">'+s+'</span></td>'
+      +'<td style="font-size:12px">'+(l.agent==='Unassigned'?'<span style="color:#c62828;font-weight:600">Unassigned</span>':l.agent)+'</td>'
+      +'<td style="font-size:11px">'+(l.agency==='�'?'�':'<a href="agencies.html?search='+encodeURIComponent(l.agency)+'" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agency on Agencies page">'+l.agency+'</a>')+'</td>'
+      +'<td style="font-size:11px">'+l.date+'</td>'
+      +'<td><div class="dflex g4">'
+      +'<button class="btn-ol btn-sm" onclick="assignSingle('+i+')" title="Assign"><i class="fas fa-user-tag"></i></button>'
+      +'<button class="btn-ol btn-sm" onclick="drillLead('+i+')" title="View"><i class="fas fa-eye"></i></button>'
+      +'</div></td></tr>';
+  });
+  document.getElementById('leadsTbody').innerHTML=html;
+}
+
+function filterLeads(){
+  var status=document.getElementById('fStatus').value;
+  var source=document.getElementById('fSource').value;
+  var agency=document.getElementById('fAgency').value;
+  var state=document.getElementById('fState').value;
+  var search=document.getElementById('fSearch').value.toLowerCase();
+  var shown=0;
+  document.querySelectorAll('#leadsTbody tr').forEach(function(r){
+    var rStatus=r.getAttribute('data-status')||'';
+    var rSource=r.getAttribute('data-source')||'';
+    var rAgency=r.getAttribute('data-agency')||'';
+    var rState=r.getAttribute('data-state')||'';
+    var text=r.textContent.toLowerCase();
+    var show=true;
+    if(status && rStatus!==status) show=false;
+    if(source && rSource!==source) show=false;
+    if(agency==='Unassigned' && rStatus!=='Unassigned') show=false;
+    else if(agency && agency!=='Unassigned' && rAgency.indexOf(agency)<0) show=false;
+    if(state && rState!==state) show=false;
+    if(search && text.indexOf(search)<0) show=false;
+    r.style.display=show?'':'none';
+    if(show) shown++;
+  });
+  document.getElementById('leadCount').textContent='(showing '+shown+' of 5,032)';
+}
+
+function clearFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fSource').value='';
+  document.getElementById('fAgency').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fSearch').value='';
+  filterLeads();
+}
+
+function getSelectedCount(){
+  return document.querySelectorAll('#leadsTbody input.lead-check:checked').length;
+}
+
+function toggleAll(el){
+  document.querySelectorAll('#leadsTbody input.lead-check').forEach(function(c){
+    if(c.closest('tr').style.display!=='none') c.checked=el.checked;
+  });
+}
+function selectAll(){ document.querySelectorAll('#leadsTbody input.lead-check').forEach(function(c){ if(c.closest('tr').style.display!=='none') c.checked=true; }); }
+function deselectAll(){ document.querySelectorAll('#leadsTbody input.lead-check').forEach(function(c){ c.checked=false; }); document.getElementById('checkAll').checked=false; }
+
+function openAssignModal(){
+  var count=getSelectedCount();
+  if(count===0){ showToast('Please select at least one lead to assign.','warn'); return; }
+  document.getElementById('selectedCount').textContent=count;
+  document.getElementById('assignModal').style.display='flex';
+}
+function closeAssignModal(){ document.getElementById('assignModal').style.display='none'; }
+
+function assignSingle(idx){
+  deselectAll();
+  document.querySelector('#leadsTbody input.lead-check[data-idx="'+idx+'"]').checked=true;
+  document.getElementById('selectedCount').textContent='1';
+  document.getElementById('assignModal').style.display='flex';
+}
+
+function assignLeads(){
+  var agent=document.getElementById('assignAgent').value;
+  if(!agent){ showToast('Please select an agent to assign leads to.','warn'); return; }
+  var count=getSelectedCount();
+  closeAssignModal();
+  showToast(count+' lead(s) assigned to '+agent+'. Agent notified.','success');
+  deselectAll();
+}
+
+function openAddLeadModal(){ document.getElementById('addLeadModal').style.display='flex'; }
+function closeAddLeadModal(){ document.getElementById('addLeadModal').style.display='none'; }
+
+function addLead(){
+  var first=document.getElementById('addFirst').value.trim();
+  var last=document.getElementById('addLast').value.trim();
+  var phone=document.getElementById('addPhone').value.trim();
+  var state=document.getElementById('addState').value;
+  var source=document.getElementById('addSource').value;
+  if(!first||!last){ showToast('First name and last name are required.','warn'); return; }
+  if(!phone){ showToast('Phone number is required.','warn'); return; }
+  if(!state){ showToast('State is required.','warn'); return; }
+  if(!source){ showToast('Lead source is required.','warn'); return; }
+  closeAddLeadModal();
+  showToast('Lead "'+first+' '+last+'" added successfully. '+(document.getElementById('addAssign').value?'Assigned to '+document.getElementById('addAssign').value+'.':'Placed in unassigned queue.'),'success');
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';setTimeout(function(){t.style.display='none';},4000);
+}
+function nfpExport(l){showToast(l+' export started.','info');}
+
+// Agency drill-down data
+var AGENCY_AGENTS={
+  'Premier Insurance':[
+    {name:'James Martinez',npn:'8823441',status:'Active',leads:42,enrolled:18,phone:'(305) 555-1001'},
+    {name:'Patricia Lee',npn:'6654321',status:'Active',leads:35,enrolled:14,phone:'(561) 555-1002'},
+    {name:'David Kim',npn:'5543210',status:'Active',leads:28,enrolled:11,phone:'(941) 555-1003'}
+  ],
+  'National Benefits':[
+    {name:'Sarah Chen',npn:'7719022',status:'Active',leads:38,enrolled:16,phone:'(832) 555-2001'},
+    {name:'Angela Torres',npn:'6643201',status:'Active',leads:31,enrolled:12,phone:'(714) 555-2002'},
+    {name:'Kevin Park',npn:'4498321',status:'Active',leads:27,enrolled:9,phone:'(469) 555-2003'},
+    {name:'George Harris',npn:'3312456',status:'Probation',leads:14,enrolled:4,phone:'(817) 555-2004'}
+  ],
+  'Alliance Health':[
+    {name:'Kevin Nguyen',npn:'3398712',status:'Active',leads:33,enrolled:13,phone:'(602) 555-3001'},
+    {name:'Lisa Wang',npn:'2287654',status:'Active',leads:22,enrolled:8,phone:'(480) 555-3002'}
+  ],
+  'Southwest Medicare':[
+    {name:'Mark Brown',npn:'2938475',status:'Active',leads:29,enrolled:10,phone:'(770) 555-4001'},
+    {name:'Carlos Ruiz',npn:'1876543',status:'Active',leads:19,enrolled:7,phone:'(404) 555-4002'}
+  ],
+  'Pacific Health':[
+    {name:'Michael Thompson',npn:'4412876',status:'Active',leads:36,enrolled:15,phone:'(510) 555-5001'},
+    {name:'Jennifer Patel',npn:'3321098',status:'Active',leads:24,enrolled:9,phone:'(650) 555-5002'}
+  ],
+  'Sunshine Health':[
+    {name:'Carlos Diaz',npn:'5567890',status:'Active',leads:26,enrolled:10,phone:'(813) 555-6001'},
+    {name:'Maria Santos',npn:'4456789',status:'Active',leads:20,enrolled:7,phone:'(954) 555-6002'}
+  ]
+};
+
+function drillAgency(agency){
+  var agents=AGENCY_AGENTS[agency]||[];
+  document.getElementById('drillAgencyTitle').textContent=agency+' � Agents ('+agents.length+')';
+  var html='<table class="tbl" style="font-size:12px"><thead><tr><th>Agent Name</th><th>NPN</th><th>Status</th><th>Leads</th><th>Enrolled</th><th>Phone</th></tr></thead><tbody>';
+  agents.forEach(function(a){
+    var sc=a.status==='Active'?'#2e7d32':'#e65100';
+    html+='<tr><td style="font-weight:600">'+a.name+'</td><td>'+a.npn+'</td><td><span class="bdg" style="background:'+sc+'22;color:'+sc+'">'+a.status+'</span></td><td>'+a.leads+'</td><td>'+a.enrolled+'</td><td>'+a.phone+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  if(!agents.length) html='<div style="text-align:center;color:#5f6368;padding:24px"><i class="fas fa-info-circle" style="margin-right:6px"></i>No agents found for this agency.</div>';
+  document.getElementById('drillAgencyBody').innerHTML=html;
+  document.getElementById('agencyDrillModal').style.display='flex';
+}
+function closeAgencyDrill(){document.getElementById('agencyDrillModal').style.display='none';}
+document.getElementById('agencyDrillModal').addEventListener('click',function(e){if(e.target===this)closeAgencyDrill();});
+
+function drillLead(idx){
+  var l=LEADS[idx];
+  document.getElementById('drillLeadTitle').textContent=l.name+' � Lead Details';
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px">';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Full Name</div><div style="font-weight:600">'+l.name+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Phone</div><div>'+l.phone+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">State</div><div>'+l.state+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Lead Source</div><div>'+l.source+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Campaign</div><div>'+l.campaign+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Status</div><div style="font-weight:600">'+l.status+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Assigned Agent</div><div>'+(l.agent==='Unassigned'?'<span style="color:#c62828">Unassigned</span>':l.agent)+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Agency</div><div>'+l.agency+'</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Date Received</div><div>'+l.date+', 2026</div></div>';
+  html+='<div><div style="font-size:11px;color:#5f6368;margin-bottom:2px">Lead ID</div><div style="font-family:monospace">#LD-'+(10000+idx)+'</div></div>';
+  html+='</div>';
+  html+='<div style="margin-top:16px;padding-top:14px;border-top:1px solid #e8eaed"><div style="font-size:11px;color:#5f6368;margin-bottom:6px">Activity Timeline</div>';
+  html+='<div style="font-size:12px;line-height:2"><i class="fas fa-circle" style="font-size:6px;color:#4a148c;margin-right:6px"></i>Lead received � '+l.date+'<br>';
+  if(l.agent!=='Unassigned') html+='<i class="fas fa-circle" style="font-size:6px;color:#2e7d32;margin-right:6px"></i>Assigned to '+l.agent+'<br>';
+  if(l.status==='Contacted'||l.status==='App Started'||l.status==='Enrolled') html+='<i class="fas fa-circle" style="font-size:6px;color:#0277bd;margin-right:6px"></i>First contact made<br>';
+  if(l.status==='App Started'||l.status==='Enrolled') html+='<i class="fas fa-circle" style="font-size:6px;color:#e65100;margin-right:6px"></i>Application started<br>';
+  if(l.status==='Enrolled') html+='<i class="fas fa-circle" style="font-size:6px;color:#2e7d32;margin-right:6px"></i>Enrolled successfully<br>';
+  html+='</div></div>';
+  document.getElementById('drillLeadBody').innerHTML=html;
+  document.getElementById('leadDrillModal').style.display='flex';
+}
+function closeLeadDrill(){document.getElementById('leadDrillModal').style.display='none';}
+document.getElementById('leadDrillModal').addEventListener('click',function(e){if(e.target===this)closeLeadDrill();});
+
+// Init
+renderLeads();
+
+// Pre-select agency from URL query param
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var agency = params.get('agency');
+  if(agency){
+    var sel = document.getElementById('fAgency');
+    for(var i=0;i<sel.options.length;i++){
+      if(sel.options[i].value === agency){
+        sel.selectedIndex=i;
+        filterLeads();
+        break;
+      }
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Downline Book of Business | Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}
+.agent-group-hdr{background:#fff3e0;border-left:4px solid #e65100;padding:10px 16px;font-weight:700;font-size:13px;color:#e65100;display:flex;align-items:center;justify-content:space-between}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html" class="active"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4 id="bobTitle">My Downline Business</h4></div>
+    <input type="text" class="tb-search" placeholder="Search members?">
+    <button class="btn-ol btn-sm" onclick="nfpExport('Data')"><i class="fas fa-layer-group"></i>Group by Agent</button>
+    <button class="btn-ol btn-sm"><i class="fas fa-download"></i>Export</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+
+    <!-- ------------------------------------------ -->
+    <!-- SECTION: My Book of Business (Agency)     -->
+    <!-- ------------------------------------------ -->
+    <div id="section-mybob" style="display:none">
+      <div class="row-grid" style="margin-bottom:16px">
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Members</div><div class="stat-val">18</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active</div><div class="stat-val">15</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-times"></i></div><div><div class="stat-label">Termed</div><div class="stat-val">3</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Chronic Verified</div><div class="stat-val">13</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#283593"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">New Members MTD</div><div class="stat-val">4</div><div class="stat-sub">Jul 2026</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#f57f17"><i class="fas fa-sync-alt"></i></div><div><div class="stat-label">Renewals Due</div><div class="stat-val">6</div><div class="stat-sub">Next 90 days</div></div></div></div>
+      </div>
+      <div class="filter-bar" style="margin-bottom:14px">
+        <label>Plan:</label>
+        <select id="mybob-plan" onchange="filterMyBob()"><option value="">All Plans</option><option value="H1234-001">H1234-001</option><option value="H1234-002">H1234-002</option><option value="H1234-003">H1234-003</option><option value="H1234-004">H1234-004</option></select>
+        <label>Year:</label>
+        <select id="mybob-year" onchange="filterMyBob()"><option value="">All Years</option><option value="2026">2026</option><option value="2025">2025</option></select>
+        <label>Chronic:</label>
+        <select id="mybob-chronic" onchange="filterMyBob()"><option value="">All</option><option value="Yes">Verified</option><option value="Pending">Pending</option><option value="No">Not Verified</option></select>
+        <button class="btn-ol btn-sm" onclick="filterMyBob()"><i class="fas fa-filter"></i>Apply</button>
+        <button class="btn-ol btn-sm" onclick="resetMyBobFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+      <div class="card">
+        <div class="card-hdr">
+          <h5><i class="fas fa-id-card" style="margin-right:8px;color:#e65100"></i>Agency Book of Business ? HealthFirst Distribution</h5>
+          <button class="btn-ol btn-sm" onclick="exportMyBob()"><i class="fas fa-download"></i>Export CSV</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','bob_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div id="mybobNoResults" style="display:none;text-align:center;color:#666;padding:16px">No members match the selected filters.</div>
+        <div class="table-wrap">
+          <table id="tblExport1" class="tbl">
+            <thead>
+              <tr><th>Member ID</th><th>MBI</th><th>First Name</th><th>Last Name</th><th>Phone</th><th>Effective Date</th><th>Termination Date</th><th>Contract</th><th>Plan</th><th>Mem Year</th><th>Chronic Condition Verified</th><th>HRA Status<br><small style="font-weight:400;color:#2e7d32">($25 incentive)</small></th><th>Healthy Visit<br><small style="font-weight:400;color:#2e7d32">($50 incentive)</small></th><th>PCP</th></tr>
+            </thead>
+            <tbody id="mybobBody">
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100201</code></td><td><code>1EG4-TE5-MK72</code></td><td>Dorothy</td><td class="text-bold">Henderson</td><td>(305) 555-0172</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Rivera, Maria</td></tr>
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100202</code></td><td><code>2RK7-QA3-NP41</code></td><td>Robert</td><td class="text-bold">Nguyen</td><td>(305) 555-0184</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Patel, Raj</td></tr>
+              <tr data-plan="H1234-002" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100203</code></td><td><code>3TF9-BJ8-WL63</code></td><td>Maria</td><td class="text-bold">Gonzalez</td><td>(786) 555-0291</td><td>02 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Chen, Wei</td></tr>
+              <tr data-plan="H1234-003" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100204</code></td><td><code>4WX2-PL5-SK84</code></td><td>Patricia</td><td class="text-bold">Johnson</td><td>(305) 555-0345</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Johnson, Mark</td></tr>
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+                <td><code>MEM-100205</code></td><td><code>5AB1-MN9-QR05</code></td><td>William</td><td class="text-bold">Scott</td><td>(954) 555-0412</td><td>04 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Rivera, Maria</td></tr>
+              <tr data-plan="H1234-002" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100206</code></td><td><code>6CD3-WX7-TU26</code></td><td>Elizabeth</td><td class="text-bold">Young</td><td>(305) 555-0518</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Patel, Raj</td></tr>
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+                <td><code>MEM-100207</code></td><td><code>7EF5-YZ1-VW47</code></td><td>Raymond</td><td class="text-bold">Cruz</td><td>(786) 555-0633</td><td>05 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Williams, Anne</td></tr>
+              <tr data-plan="H1234-003" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100208</code></td><td><code>8GH7-AB3-XY68</code></td><td>Frank</td><td class="text-bold">Reynolds</td><td>(305) 555-0741</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-red">Overdue ($25 at risk)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Chen, Wei</td></tr>
+              <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+                <td><code>MEM-100209</code></td><td><code>9IJ9-CD5-ZA89</code></td><td>Linda</td><td class="text-bold">Martinez</td><td>(954) 555-0856</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Johnson, Mark</td></tr>
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+                <td><code>MEM-100210</code></td><td><code>1KL1-EF7-BC10</code></td><td>Kenneth</td><td class="text-bold">White</td><td>(305) 555-0963</td><td>03 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Rivera, Maria</td></tr>
+              <tr data-plan="H1234-002" data-year="2025" data-chronic="Yes">
+                <td><code>MEM-100211</code></td><td><code>2MN3-GH9-DE31</code></td><td>Susan</td><td class="text-bold">Davis</td><td>(786) 555-1074</td><td>01 01,2025</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Patel, Raj</td></tr>
+              <tr data-plan="H1234-001" data-year="2025" data-chronic="Yes">
+                <td><code>MEM-100212</code></td><td><code>3OP5-IJ1-FG52</code></td><td>Paul</td><td class="text-bold">Anderson</td><td>(305) 555-1185</td><td>07 01,2025</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Williams, Anne</td></tr>
+              <tr data-plan="H1234-003" data-year="2025" data-chronic="Yes">
+                <td><code>MEM-100213</code></td><td><code>4QR7-KL3-HI73</code></td><td>Barbara</td><td class="text-bold">Wilson</td><td>(954) 555-1296</td><td>01 01,2025</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Chen, Wei</td></tr>
+              <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+                <td><code>MEM-100214</code></td><td><code>5ST9-MN5-JK94</code></td><td>Richard</td><td class="text-bold">Thompson</td><td>(305) 555-1402</td><td>02 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+              <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Rivera, Maria</td></tr>
+              <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+                <td><code>MEM-100215</code></td><td><code>6UV1-OP7-LM15</code></td><td>Carol</td><td class="text-bold">Brown</td><td>(786) 555-1518</td><td>05 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+              <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Patel, Raj</td></tr>
+              <tr data-plan="H1234-001" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+                <td><code>MEM-100216</code></td><td><code>7WX3-QR9-NO36</code></td><td>Thomas</td><td class="text-bold">Jackson</td><td>(305) 555-1629</td><td>01 01,2025</td><td style="color:#c62828;font-weight:600">03 31,2026</td><td>H1234</td><td>H1234-001</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Johnson, Mark</td></tr>
+              <tr data-plan="H1234-002" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+                <td><code>MEM-100217</code></td><td><code>8YZ5-ST1-PQ57</code></td><td>Nancy</td><td class="text-bold">Lee</td><td>(954) 555-1730</td><td>04 01,2025</td><td style="color:#c62828;font-weight:600">05 31,2026</td><td>H1234</td><td>H1234-002</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Williams, Anne</td></tr>
+              <tr data-plan="H1234-003" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+                <td><code>MEM-100218</code></td><td><code>9AB7-UV3-RS78</code></td><td>James</td><td class="text-bold">Peterson</td><td>(305) 555-1841</td><td>01 01,2025</td><td style="color:#c62828;font-weight:600">04 30,2026</td><td>H1234</td><td>H1234-003</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+              <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Chen, Wei</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /section-mybob -->
+
+    <!-- ------------------------------------------ -->
+    <!-- SECTION: My Downline Business             -->
+    <!-- ------------------------------------------ -->
+    <div id="section-downline">
+    <div class="filter-bar">
+      <label>Agent:</label>
+      <select id="bobFilterAgent" onchange="filterAgencyBob()"><option value="">All Agents</option><option>James Martinez</option><option>Sarah Chen</option><option>Michael Torres</option><option>Diana Foster</option></select>
+      <label>Plan:</label>
+      <select id="bobFilterPlan" onchange="filterAgencyBob()"><option value="">All Plans</option><option>H1234-001</option><option>H1234-002</option><option>H1234-003</option><option>H1234-004</option></select>
+      <label>Year:</label>
+      <select id="bobFilterYear" onchange="filterAgencyBob()"><option value="">All Years</option><option>2026</option><option>2025</option></select>
+      <label>Chronic:</label>
+      <select id="bobFilterChronic" onchange="filterAgencyBob()"><option value="">All</option><option>Yes</option><option>Pending</option><option>No</option></select>
+    </div>
+
+    <div class="card">
+      <div id="bobNoResults" style="display:none;text-align:center;color:#666;padding:16px">No members match the selected filters.</div>
+
+      <!-- James Martinez group -->
+      <div class="agent-group-hdr">
+        <span><i class="fas fa-user-tie" style="margin-right:8px"></i>James Martinez ? NPN 8823441 &nbsp;|&nbsp; 7 Members</span>
+        <span class="text-sm" style="font-weight:400;color:#5f6368">FL ? GA</span>
+      </div>
+      <div class="table-wrap">
+      <div class="card-hdr" style="justify-content:flex-end"><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','bob_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <table id="tblExport2" class="tbl">
+          <thead>
+            <tr><th>Member ID</th><th>MBI</th><th>First Name</th><th>Last Name</th><th>Phone</th><th>Effective Date</th><th>Termination Date</th><th>Contract</th><th>Plan</th><th>Mem Year</th><th>Chronic Condition Verified</th><th>HRA Status<br><small style="font-weight:400;color:#2e7d32">($25 incentive)</small></th><th>Healthy Visit<br><small style="font-weight:400;color:#2e7d32">($50 incentive)</small></th><th>PCP</th></tr>
+          </thead>
+          <tbody>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200301</code></td><td><code>1EG4-TE5-MK72</code></td><td>Dorothy</td><td class="text-bold">Henderson</td><td>(305) 555-0172</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Rivera, Maria</td></tr>
+            <tr data-plan="H1234-002" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200302</code></td><td><code>2RK7-QA3-JL84</code></td><td>Robert</td><td class="text-bold">Nguyen</td><td>(305) 555-0293</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Patel, Raj</td></tr>
+            <tr data-plan="H1234-003" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200303</code></td><td><code>3TF9-BJ8-PM91</code></td><td>Maria</td><td class="text-bold">Gonzalez</td><td>(786) 555-0341</td><td>02 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Chen, Wei</td></tr>
+            <tr data-plan="H1234-003" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200304</code></td><td><code>4WX2-PL5-ST63</code></td><td>Patricia</td><td class="text-bold">Johnson</td><td>(305) 555-0478</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Johnson, Mark</td></tr>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200305</code></td><td><code>5AB1-MN9-UV84</code></td><td>William</td><td class="text-bold">Scott</td><td>(954) 555-0512</td><td>04 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Rivera, Maria</td></tr>
+            <tr data-plan="H1234-002" data-year="2025" data-chronic="Yes">
+              <td><code>MEM-200306</code></td><td><code>6CD3-WX7-WX95</code></td><td>Elizabeth</td><td class="text-bold">Young</td><td>(305) 555-0689</td><td>01 01,2025</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Williams, Anne</td></tr>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200307</code></td><td><code>7EF5-YZ1-YZ06</code></td><td>Raymond</td><td class="text-bold">Cruz</td><td>(786) 555-0745</td><td>05 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Patel, Raj</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Sarah Chen group -->
+      <div class="agent-group-hdr" style="border-top:1px solid #f1f3f4">
+        <span><i class="fas fa-user-tie" style="margin-right:8px"></i>Sarah Chen ? NPN 7712309 &nbsp;|&nbsp; 6 Members</span>
+        <span class="text-sm" style="font-weight:400;color:#5f6368">FL ? GA ? TX</span>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport3" class="tbl">
+          <thead>
+            <tr><th>Member ID</th><th>MBI</th><th>First Name</th><th>Last Name</th><th>Phone</th><th>Effective Date</th><th>Termination Date</th><th>Contract</th><th>Plan</th><th>Mem Year</th><th>Chronic Condition Verified</th><th>HRA Status<br><small style="font-weight:400;color:#2e7d32">($25 incentive)</small></th><th>Healthy Visit<br><small style="font-weight:400;color:#2e7d32">($50 incentive)</small></th><th>PCP</th></tr>
+          </thead>
+          <tbody>
+            <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+              <td><code>MEM-200401</code></td><td><code>8GH7-AB3-QR55</code></td><td>Charles</td><td class="text-bold">Williams</td><td>(305) 555-0821</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+            <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Chen, Wei</td></tr>
+            <tr data-plan="H1234-002" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200402</code></td><td><code>9IJ9-CD5-TR22</code></td><td>Alice</td><td class="text-bold">Cooper</td><td>(786) 555-0934</td><td>06 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Johnson, Mark</td></tr>
+            <tr data-plan="H1234-003" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200403</code></td><td><code>1KL1-EF7-UV43</code></td><td>James</td><td class="text-bold">Baker</td><td>(713) 555-1048</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Rivera, Maria</td></tr>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200404</code></td><td><code>2MN3-GH9-WX64</code></td><td>Sandra</td><td class="text-bold">Adams</td><td>(305) 555-1152</td><td>05 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-grey">Not Scheduled ($50)</span></td><td>Dr. Williams, Anne</td></tr>
+            <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+              <td><code>MEM-200405</code></td><td><code>3OP5-IJ1-YZ85</code></td><td>Kevin</td><td class="text-bold">Hall</td><td>(404) 555-1267</td><td>03 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+            <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Patel, Raj</td></tr>
+            <tr data-plan="H1234-001" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+              <td><code>MEM-200406</code></td><td><code>4QR7-KL3-AB12</code></td><td>Angela</td><td class="text-bold">Turner</td><td>(305) 555-1378</td><td>07 01,2025</td><td style="color:#c62828;font-weight:600">04 30,2026</td><td>H1234</td><td>H1234-001</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Chen, Wei</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Michael Torres group -->
+      <div class="agent-group-hdr" style="border-top:1px solid #f1f3f4">
+        <span><i class="fas fa-user-tie" style="margin-right:8px"></i>Michael Torres ? NPN 9934221 &nbsp;|&nbsp; 5 Members</span>
+        <span class="text-sm" style="font-weight:400;color:#5f6368">TX ? FL</span>
+      </div>
+      <div class="table-wrap">
+      <div class="card-hdr" style="justify-content:flex-end"><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','bob_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <table id="tblExport4" class="tbl">
+          <thead>
+            <tr><th>Member ID</th><th>MBI</th><th>First Name</th><th>Last Name</th><th>Phone</th><th>Effective Date</th><th>Termination Date</th><th>Contract</th><th>Plan</th><th>Mem Year</th><th>Chronic Condition Verified</th><th>HRA Status<br><small style="font-weight:400;color:#2e7d32">($25 incentive)</small></th><th>Healthy Visit<br><small style="font-weight:400;color:#2e7d32">($50 incentive)</small></th><th>PCP</th></tr>
+          </thead>
+          <tbody>
+            <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+              <td><code>MEM-200501</code></td><td><code>5ST9-MN5-WX44</code></td><td>George</td><td class="text-bold">Harris</td><td>(713) 555-1489</td><td>06 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+            <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Johnson, Mark</td></tr>
+            <tr data-plan="H1234-002" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200502</code></td><td><code>6UV1-OP7-YZ55</code></td><td>Donald</td><td class="text-bold">Mitchell</td><td>(713) 555-1594</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Rivera, Maria</td></tr>
+            <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+              <td><code>MEM-200503</code></td><td><code>7WX3-QR9-AB66</code></td><td>Betty</td><td class="text-bold">Perez</td><td>(305) 555-1702</td><td>06 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+            <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Williams, Anne</td></tr>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200504</code></td><td><code>8YZ5-ST1-CD77</code></td><td>Clarence</td><td class="text-bold">Simmons</td><td>(713) 555-1813</td><td>02 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Patel, Raj</td></tr>
+            <tr data-plan="H1234-001" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+              <td><code>MEM-200505</code></td><td><code>9AB7-UV3-EF99</code></td><td>Harold</td><td class="text-bold">Morgan</td><td>(713) 555-1924</td><td>01 01,2025</td><td style="color:#c62828;font-weight:600">02 28,2026</td><td>H1234</td><td>H1234-001</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Chen, Wei</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Diana Foster group -->
+      <div class="agent-group-hdr" style="border-top:1px solid #f1f3f4">
+        <span><i class="fas fa-user-tie" style="margin-right:8px"></i>Diana Foster ? NPN 6645312 &nbsp;|&nbsp; 5 Members</span>
+        <span class="text-sm" style="font-weight:400;color:#5f6368">TX ? FL</span>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport5" class="tbl">
+          <thead>
+            <tr><th>Member ID</th><th>MBI</th><th>First Name</th><th>Last Name</th><th>Phone</th><th>Effective Date</th><th>Termination Date</th><th>Contract</th><th>Plan</th><th>Mem Year</th><th>Chronic Condition Verified</th><th>HRA Status<br><small style="font-weight:400;color:#2e7d32">($25 incentive)</small></th><th>Healthy Visit<br><small style="font-weight:400;color:#2e7d32">($50 incentive)</small></th><th>PCP</th></tr>
+          </thead>
+          <tbody>
+            <tr data-plan="H1234-001" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200601</code></td><td><code>1CD2-WX4-EF88</code></td><td>Mark</td><td class="text-bold">Taylor</td><td>(713) 555-2035</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-001</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Johnson, Mark</td></tr>
+            <tr data-plan="H1234-002" data-year="2026" data-chronic="Pending">
+              <td><code>MEM-200602</code></td><td><code>2EF4-YZ6-GH09</code></td><td>Lisa</td><td class="text-bold">Robinson</td><td>(713) 555-2146</td><td>02 01,2026</td><td>?</td><td>H1234</td><td>H1234-002</td><td>2026</td><td><span class="bdg b-amber">Pending</span></td>
+            <td><span class="bdg b-amber">Pending ($25)</span></td><td><span class="bdg b-amber">Scheduled ($50 pending)</span></td><td>Dr. Rivera, Maria</td></tr>
+            <tr data-plan="H1234-004" data-year="2026" data-chronic="No">
+              <td><code>MEM-200603</code></td><td><code>3GH6-AB8-IJ20</code></td><td>Kevin</td><td class="text-bold">Walker</td><td>(305) 555-2257</td><td>03 01,2026</td><td>?</td><td>H1234</td><td>H1234-004</td><td>2026</td><td><span class="bdg b-grey">N/A</span></td>
+            <td><span class="bdg b-grey">N/A</span></td><td><span class="bdg b-grey">Not Scheduled</span></td><td>Dr. Williams, Anne</td></tr>
+            <tr data-plan="H1234-003" data-year="2026" data-chronic="Yes">
+              <td><code>MEM-200604</code></td><td><code>4IJ8-CD1-KL31</code></td><td>Phyllis</td><td class="text-bold">Turner</td><td>(713) 555-2368</td><td>01 01,2026</td><td>?</td><td>H1234</td><td>H1234-003</td><td>2026</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Patel, Raj</td></tr>
+            <tr data-plan="H1234-002" data-year="2025" data-chronic="Yes" style="background:#fce4ec">
+              <td><code>MEM-200605</code></td><td><code>5KL1-EF3-MN42</code></td><td>Ruth</td><td class="text-bold">Campbell</td><td>(713) 555-2479</td><td>04 01,2025</td><td style="color:#c62828;font-weight:600">05 31,2026</td><td>H1234</td><td>H1234-002</td><td>2025</td><td><span class="bdg b-green">Yes</span></td>
+            <td><span class="bdg b-green">Complete <strong>$25</strong></span></td><td><span class="bdg b-green">Complete <strong>$50</strong></span></td><td>Dr. Chen, Wei</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /card -->
+    </div><!-- /section-downline -->
+  </div><!-- /page -->
+</div><!-- /main -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Member Profile Modal -->
+<div class="modal-overlay" id="memberProfileModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-circle" style="margin-right:8px;color:#e65100"></i><span id="mpName">Member Profile</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>MBI:</strong> <span id="mpMBI"></span></p>
+          <p><strong>Plan:</strong> <span id="mpPlan"></span></p>
+          <p><strong>Effective Date:</strong> <span id="mpEff"></span></p>
+          <p><strong>State:</strong> <span id="mpState"></span></p>
+          <p><strong>Monthly Commission:</strong> <span id="mpComm"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>HRA Status:</strong> <span id="mpHRA"></span></p>
+          <p><strong>HIPAA / Enrollment:</strong> <span id="mpHIPAA"></span></p>
+          <p><strong>Risk / Recert Status:</strong> <span id="mpRisk"></span></p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button></div>
+  </div>
+</div>
+
+<script>
+function showBobSection(section) {
+  var mybob = document.getElementById('section-mybob');
+  var downline = document.getElementById('section-downline');
+  var sbnM = document.getElementById('sbn-mybob');
+  var sbnD = document.getElementById('sbn-downline');
+  var title = document.getElementById('bobTitle');
+  if (section === 'mybob') {
+    mybob.style.display = ''; downline.style.display = 'none';
+    sbnM.classList.add('active'); sbnD.classList.remove('active');
+    if (title) title.textContent = 'My Book of Business';
+  } else {
+    downline.style.display = ''; mybob.style.display = 'none';
+    sbnD.classList.add('active'); sbnM.classList.remove('active');
+    if (title) title.textContent = 'My Downline Business';
+  }
+}
+
+function filterMyBob() {
+  var plan = document.getElementById('mybob-plan').value;
+  var year = document.getElementById('mybob-year').value;
+  var chronic = document.getElementById('mybob-chronic').value;
+  var rows = document.querySelectorAll('#mybobBody tr');
+  var noResults = document.getElementById('mybobNoResults');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var rp = row.dataset.plan || '';
+    var ry = row.dataset.year || '';
+    var rc = row.dataset.chronic || '';
+    var show = (!plan || rp === plan) && (!year || ry === year) && (!chronic || rc === chronic);
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (noResults) noResults.style.display = visible ? 'none' : '';
+  if (typeof showToast === 'function') showToast(visible + ' member(s) match the filters', 'success');
+}
+
+function resetMyBobFilters() {
+  document.getElementById('mybob-plan').value = '';
+  document.getElementById('mybob-year').value = '';
+  document.getElementById('mybob-chronic').value = '';
+  document.querySelectorAll('#mybobBody tr').forEach(function(r){ r.style.display = ''; });
+  var nr = document.getElementById('mybobNoResults'); if (nr) nr.style.display = 'none';
+  if (typeof showToast === 'function') showToast('Filters cleared', 'success');
+}
+
+function exportMyBob() {
+  var rows = [['Member ID','MBI','First Name','Last Name','Phone','Effective Date','Termination Date','Contract','Plan','Mem Year','Chronic Condition Verified','HRA Status','Healthy Visit','PCP']];
+  document.querySelectorAll('#mybobBody tr').forEach(function(row) {
+    if (row.style.display === 'none') return;
+    var cells = row.querySelectorAll('td');
+    if (cells.length >= 14) rows.push(Array.from(cells).slice(0,14).map(function(c){ return c.textContent.trim(); }));
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'agency-book-of-business.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  if (typeof showToast === 'function') showToast('Book of Business exported', 'success');
+}
+
+function viewMemberProfile(name, mbi, plan, eff, state, hra, hipaa, risk, comm) {
+  document.getElementById('mpName').textContent = name;
+  document.getElementById('mpMBI').textContent = mbi;
+  document.getElementById('mpPlan').textContent = plan;
+  document.getElementById('mpEff').textContent = eff;
+  document.getElementById('mpState').textContent = state;
+  document.getElementById('mpComm').textContent = comm;
+  document.getElementById('mpHRA').textContent = hra;
+  document.getElementById('mpHIPAA').textContent = hipaa;
+  document.getElementById('mpRisk').textContent = risk;
+  document.getElementById('memberProfileModal').style.display = 'flex';
+}
+
+function filterAgencyBob() {
+  function norm(text) {
+    return (text || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  var selectedAgent = norm(document.getElementById('bobFilterAgent').value);
+  var selectedPlan = document.getElementById('bobFilterPlan').value;
+  var selectedYear = document.getElementById('bobFilterYear').value;
+  var selectedChronic = document.getElementById('bobFilterChronic').value;
+  var groupHeaders = document.querySelectorAll('.card .agent-group-hdr');
+  var noResults = document.getElementById('bobNoResults');
+  var hasVisibleRows = false;
+
+  groupHeaders.forEach(function(header) {
+    var wrap = header.nextElementSibling;
+    if (!wrap || !wrap.classList.contains('table-wrap')) return;
+
+    var headerText = norm(header.textContent);
+    var agentName = norm(headerText.split('?')[0]);
+    var rows = wrap.querySelectorAll('tbody tr');
+    var visibleInGroup = 0;
+
+    rows.forEach(function(row) {
+      var rp = row.dataset.plan || '';
+      var ry = row.dataset.year || '';
+      var rc = row.dataset.chronic || '';
+
+      var agentMatch = selectedAgent === 'all agents' || agentName.indexOf(selectedAgent) > -1;
+      var planMatch = !selectedPlan || rp === selectedPlan;
+      var yearMatch = !selectedYear || ry === selectedYear;
+      var chronicMatch = !selectedChronic || rc === selectedChronic;
+
+      var showRow = agentMatch && planMatch && yearMatch && chronicMatch;
+      row.style.display = showRow ? '' : 'none';
+      if (showRow) visibleInGroup++;
+    });
+
+    var showGroup = visibleInGroup > 0;
+    header.style.display = showGroup ? 'flex' : 'none';
+    wrap.style.display = showGroup ? '' : 'none';
+    if (showGroup) hasVisibleRows = true;
+  });
+
+  if (noResults) noResults.style.display = hasVisibleRows ? 'none' : '';
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  var urlParams = new URLSearchParams(window.location.search);
+  var tabParam = urlParams.get('tab');
+  if (tabParam === 'mybob') {
+    showBobSection('mybob');
+  } else {
+    showBobSection('downline');
+    filterAgencyBob();
+  }
+});
+</script>
+</body>
+</html>
+
+

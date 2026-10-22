@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan Catalog | Carrier Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html" class="active"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Plan Catalog Management</h4></div>
+    <button class="btn-pr btn-sm" onclick="openPlanModal()"><i class="fas fa-plus"></i>Add Plan</button>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="filter-bar" style="margin-bottom:14px">
+      <label>Plan Name:</label>
+      <input type="text" id="fPlanName" class="tb-search" placeholder="Search plan name..." oninput="filterPlansTable()" style="min-width:180px">
+      <label>Plan Type:</label>
+      <select id="fPlanType" onchange="filterPlansTable()">
+        <option value="">All Types</option>
+        <option value="HMO">HMO</option>
+        <option value="PPO">PPO</option>
+        <option value="PFFS">PFFS</option>
+      </select>
+      <label>Plan Year:</label>
+      <select id="fPlanYear" onchange="filterPlansTable()">
+        <option value="">All Years</option>
+        <option value="2026" selected>2026</option>
+        <option value="2027">2027</option>
+        <option value="2025">2025</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="resetPlanFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><h5>Active Plans  Gold Kidney Health Plan  CY2026</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('','plan-catalog_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <!-- Legends -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:10px 16px;background:#fafafa;border-bottom:1px solid #f1f3f4;font-size:11px;color:#5f6368">
+        <span style="font-weight:700;color:#37474f;margin-right:4px">Status:</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="bdg b-green">Active</span> Live and enrollable in current plan year</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="bdg b-amber">Draft</span> Configuration in progress — not yet published</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="bdg b-grey">Terminated</span> Closed — no new enrollments</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:14px">
+          <span style="font-weight:700;color:#37474f;margin-right:2px">Plan Type:</span>
+          <span><span class="bdg b-purple">C-SNP (ESRD)</span> End-Stage Renal Disease</span>
+          <span><span class="bdg b-blue">C-SNP (CKD)</span> Chronic Kidney Disease</span>
+          <span><span class="bdg b-teal">C-SNP (CHF/DM)</span> Heart / Diabetes</span>
+          <span><span class="bdg b-grey">HMO</span> Standard Medicare Advantage</span>
+        </span>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead>
+            <tr><th>Plan Name</th><th>Plan ID</th><th>Plan Year</th><th>Effective Date</th><th>Term Date</th><th>Type</th><th>SNP Type</th><th>Premium</th><th>States</th><th>Members</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-bold">StarPlus ESRD SNP 2026</td>
+              <td><code>GK-ESRD-2026</code></td>
+              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-size:11px">2026-01-01</td>
+              <td style="font-size:11px">2026-12-31</td>
+              <td>HMO</td>
+              <td><span class="bdg b-purple">C-SNP (ESRD)</span></td>
+              <td>$0.00</td>
+              <td>FL, GA</td>
+              <td>412</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>
+                <div class="dflex g6">
+                  
+                  <button class="btn-ol btn-sm" onclick="openPlanModal('GK-ESRD-2026')"><i class="fas fa-edit"></i>Edit</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-bold">KidneyCare CKD SNP 2026</td>
+              <td><code>GK-CKD-2026</code></td>
+              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-size:11px">2026-01-01</td>
+              <td style="font-size:11px">2026-12-31</td>
+              <td>HMO</td>
+              <td><span class="bdg b-blue">C-SNP (CKD)</span></td>
+              <td>$0.00</td>
+              <td>FL, GA</td>
+              <td>331</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openPlanModal('GK-CKD-2026')"><i class="fas fa-edit"></i>Edit</button></div></td>
+            </tr>
+            <tr>
+              <td class="text-bold">HeartCare Heart &amp; Diabetes SNP 2026</td>
+              <td><code>GK-HD-2026</code></td>
+              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-size:11px">2026-01-01</td>
+              <td style="font-size:11px">2026-12-31</td>
+              <td>HMO</td>
+              <td><span class="bdg b-teal">C-SNP (CHF/CVD)</span></td>
+              <td>$14.50</td>
+              <td>FL, GA</td>
+              <td>298</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openPlanModal('GK-HD-2026')"><i class="fas fa-edit"></i>Edit</button></div></td>
+            </tr>
+            <tr>
+              <td class="text-bold">BrightChoice HMO 2026</td>
+              <td><code>GK-HMO-2026</code></td>
+              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-size:11px">2026-01-01</td>
+              <td style="font-size:11px">2026-12-31</td>
+              <td>HMO</td>
+              <td></td>
+              <td>$24.00</td>
+              <td>FL, GA, TX</td>
+              <td>524</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openPlanModal('GK-HMO-2026')"><i class="fas fa-edit"></i>Edit</button></div></td>
+            </tr>
+            <tr>
+              <td class="text-bold">DiabetesCare SNP 2026</td>
+              <td><code>GK-DM-2026</code></td>
+              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-size:11px">2026-01-01</td>
+              <td style="font-size:11px">2026-12-31</td>
+              <td>HMO</td>
+              <td><span class="bdg b-teal">C-SNP (DM)</span></td>
+              <td>$0.00</td>
+              <td>TX</td>
+              <td>282</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><div class="dflex g6"><button class="btn-ol btn-sm" onclick="openPlanModal('GK-DM-2026')"><i class="fas fa-edit"></i>Edit</button></div></td>
+            </tr>
+            <tr style="opacity:.5">
+              <td class="text-bold">StarPlus ESRD SNP 2027 <span class="bdg b-amber" style="font-size:10px">DRAFT</span></td>
+              <td><code>GK-ESRD-2027</code></td>
+              <td style="font-weight:700;color:#1a237e">2027</td>
+              <td style="font-size:11px">2027-01-01</td>
+              <td style="font-size:11px">2027-12-31</td>
+              <td>HMO</td>
+              <td><span class="bdg b-purple">C-SNP (ESRD)</span></td>
+              <td>TBD</td>
+              <td>FL, GA</td>
+              <td></td>
+              <td><span class="bdg b-grey">Draft</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openPlanModal('GK-ESRD-2027')"><i class="fas fa-edit"></i>Configure</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Plan Detail Modal -->
+<div class="modal fade" id="planDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header" style="border-bottom:1px solid #e8eaed;padding:18px 20px">
+        <h5 style="margin:0;font-size:15px;font-weight:600">StarPlus ESRD SNP 2026 ? Plan Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:13px">
+          <div><div class="text-muted text-sm">Plan ID</div><div class="text-bold"><code>GK-ESRD-2026</code></div></div>
+          <div><div class="text-muted text-sm">Plan Type</div><div class="text-bold">HMO-SNP (C-SNP)</div></div>
+          <div><div class="text-muted text-sm">Qualifying Condition</div><div class="text-bold">ESRD</div></div>
+          <div><div class="text-muted text-sm">Monthly Premium</div><div class="text-bold" style="color:#2e7d32">$0.00</div></div>
+          <div><div class="text-muted text-sm">Available States</div><div class="text-bold">FL, GA</div></div>
+          <div><div class="text-muted text-sm">Plan Year</div><div class="text-bold">2026</div></div>
+          <div><div class="text-muted text-sm">Active Members</div><div class="text-bold">412</div></div>
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:1px solid #e8eaed;padding:14px 20px">
+        <button class="btn-ol" data-bs-dismiss="modal">Close</button>
+        <button class="btn-pr" onclick="bootstrap.Modal.getInstance(document.getElementById('planDetailModal')).hide();openPlanModal('GK-ESRD-2026')"><i class="fas fa-edit"></i>Edit Plan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add / Edit Plan Modal -->
+<div id="planModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:720px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="planModalTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-clipboard-list" style="margin-right:8px"></i>Add Plan</h6>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn-ol btn-sm" onclick="prefillPlan()" style="color:#1a237e;font-size:12px"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+        <button onclick="closePlanModal()" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+      </div>
+    </div>
+    <div id="planModalErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;display:none;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Plan Name <span style="color:#c62828">*</span></label><input id="pName" placeholder="e.g. StarPlus ESRD SNP 2027"></div>
+        <div class="fg"><label>Plan ID <span style="color:#c62828">*</span></label><input id="pId" placeholder="GK-ESRD-2027"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Plan Type <span style="color:#c62828">*</span></label>
+          <select id="pType"><option value="">Select</option><option>HMO</option><option>PPO</option><option>HMO-POS</option><option>PFFS</option></select>
+        </div>
+        <div class="fg"><label>SNP Type</label>
+          <select id="pSnpType"><option value="">None (Standard MA)</option><option value="C-SNP (ESRD)">C-SNP (ESRD)</option><option value="C-SNP (CKD)">C-SNP (CKD)</option><option value="C-SNP (CHF/CVD)">C-SNP (CHF/CVD)</option><option value="C-SNP (DM)">C-SNP (Diabetes)</option><option value="D-SNP">D-SNP (Dual Eligible)</option><option value="I-SNP">I-SNP (Institutional)</option></select>
+        </div>
+        <div class="fg"><label>Plan Year <span style="color:#c62828">*</span></label>
+          <select id="pYear"><option value="">Select</option><option>2024</option><option>2025</option><option>2026</option><option>2027</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Monthly Premium ($) <span style="color:#c62828">*</span></label><input id="pPremium" type="number" min="0" step="0.01" placeholder="0.00"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Available States <span style="color:#c62828">*</span></label>
+          <div id="pStates" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="FL"> FL</label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="GA"> GA</label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="TX"> TX</label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="AZ"> AZ</label>
+          </div>
+        </div>
+        <div class="fg"><label>Status <span style="color:#c62828">*</span></label>
+          <select id="pStatus"><option value="Active">Active</option><option value="Draft">Draft</option><option value="Inactive">Inactive</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:1"><label>Effective Date <span style="color:#c62828">*</span></label><input id="pEffDate" type="date"></div>
+        <div class="fg" style="flex:1"><label>Term Date</label><input id="pTermDate" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:1"><label>Plan Description</label><textarea id="pDesc" rows="2" style="width:100%;border:1px solid #e0e3e7;border-radius:9px;padding:10px 14px;font-size:13px" placeholder="Brief plan description for agent-facing materials..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closePlanModal()">Cancel</button>
+      <button class="btn-pr" onclick="savePlan()"><i class="fas fa-save"></i>Save Plan</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Plan data store
+var plans = [
+  {id:'GK-ESRD-2026',name:'StarPlus ESRD SNP 2026',type:'HMO',snp:'C-SNP (ESRD)',year:'2026',premium:0,moop:3400,drugDed:0,states:['FL','GA'],status:'Active',contract:'H5678',pbp:'001',segment:'000',effDate:'2026-01-01',termDate:'2026-12-31',desc:'Chronic SNP for End-Stage Renal Disease members with comprehensive dialysis coverage.'},
+  {id:'GK-CKD-2026',name:'KidneyCare CKD SNP 2026',type:'HMO',snp:'C-SNP (CKD)',year:'2026',premium:0,moop:3400,drugDed:0,states:['FL','GA'],status:'Active',contract:'H5678',pbp:'002',segment:'000',effDate:'2026-01-01',termDate:'2026-12-31',desc:'Chronic SNP for Chronic Kidney Disease stages 3-5.'},
+  {id:'GK-HD-2026',name:'HeartCare Heart & Diabetes SNP 2026',type:'HMO',snp:'C-SNP (CHF/CVD)',year:'2026',premium:14.50,moop:3900,drugDed:0,states:['FL','GA'],status:'Active',contract:'H5678',pbp:'003',segment:'000',effDate:'2026-01-01',termDate:'2026-12-31',desc:'Chronic SNP for Heart Failure and Cardiovascular Disease.'},
+  {id:'GK-HMO-2026',name:'BrightChoice HMO 2026',type:'HMO',snp:'',year:'2026',premium:24.00,moop:4200,drugDed:0,states:['FL','GA','TX'],status:'Active',contract:'H5678',pbp:'004',segment:'000',effDate:'2026-01-01',termDate:'2026-12-31',desc:'Standard Medicare Advantage HMO plan.'},
+  {id:'GK-DM-2026',name:'DiabetesCare SNP 2026',type:'HMO',snp:'C-SNP (DM)',year:'2026',premium:0,moop:3400,drugDed:0,states:['TX'],status:'Active',contract:'H5678',pbp:'005',segment:'000',effDate:'2026-01-01',termDate:'2026-12-31',desc:'Chronic SNP for Diabetes Mellitus Type I and II.'},
+  {id:'GK-ESRD-2027',name:'StarPlus ESRD SNP 2027',type:'HMO',snp:'C-SNP (ESRD)',year:'2027',premium:0,moop:0,drugDed:0,states:['FL','GA'],status:'Draft',contract:'',pbp:'',segment:'',effDate:'2027-01-01',termDate:'2027-12-31',desc:''}
+];
+var editingPlanId = null;
+
+function openPlanModal(planId) {
+  editingPlanId = planId || null;
+  document.getElementById('planModalErr').style.display = 'none';
+  document.getElementById('planModalTitle').innerHTML = planId
+    ? '<i class="fas fa-edit" style="margin-right:8px;color:#1a237e"></i>Edit Plan'
+    : '<i class="fas fa-clipboard-list" style="margin-right:8px;color:#1a237e"></i>Add Plan';
+
+  if (planId) {
+    var p = plans.find(function(x){return x.id === planId;});
+    if (!p) return;
+    document.getElementById('pName').value = p.name;
+    document.getElementById('pId').value = p.id;
+    document.getElementById('pType').value = p.type;
+    document.getElementById('pSnpType').value = p.snp;
+    document.getElementById('pYear').value = p.year;
+    document.getElementById('pPremium').value = p.premium;
+    document.getElementById('pStatus').value = p.status;
+    document.getElementById('pEffDate').value = p.effDate || '';
+    document.getElementById('pTermDate').value = p.termDate || '';
+    document.getElementById('pDesc').value = p.desc || '';
+    document.querySelectorAll('#pStates input').forEach(function(cb){cb.checked = p.states.includes(cb.value);});
+  } else {
+    // Clear all fields
+    ['pName','pId','pDesc'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('pPremium').value='';
+    document.getElementById('pType').value = '';
+    document.getElementById('pSnpType').value = '';
+    document.getElementById('pYear').value = '';
+    document.getElementById('pStatus').value = 'Active';
+    document.getElementById('pEffDate').value = '';
+    document.getElementById('pTermDate').value = '';
+    document.querySelectorAll('#pStates input').forEach(function(cb){cb.checked=false;});
+  }
+  document.getElementById('planModal').classList.add('open');
+}
+
+function closePlanModal() {
+  document.getElementById('planModal').classList.remove('open');
+  editingPlanId = null;
+}
+
+function prefillPlan() {
+  document.getElementById('pName').value = 'RenalCare D-SNP 2027';
+  document.getElementById('pId').value = 'GK-DSNP-2027';
+  document.getElementById('pType').value = 'HMO';
+  document.getElementById('pSnpType').value = 'D-SNP';
+  document.getElementById('pYear').value = '2027';
+  document.getElementById('pPremium').value = '0';
+  document.getElementById('pStatus').value = 'Draft';
+  document.getElementById('pEffDate').value = '2027-01-01';
+  document.getElementById('pTermDate').value = '2027-12-31';
+  document.getElementById('pDesc').value = 'Dual-eligible SNP for members qualifying for both Medicare and Medicaid with kidney-related conditions.';
+  document.querySelectorAll('#pStates input').forEach(function(cb){cb.checked=(cb.value==='FL'||cb.value==='GA');});
+  showToast('Plan form prefilled with sample data','success');
+}
+
+function savePlan() {
+  var err = document.getElementById('planModalErr');
+  var errors = [];
+  var name = document.getElementById('pName').value.trim();
+  var planId = document.getElementById('pId').value.trim();
+  var type = document.getElementById('pType').value;
+  var year = document.getElementById('pYear').value;
+  var premium = document.getElementById('pPremium').value;
+  var effDate = document.getElementById('pEffDate').value;
+  var states = Array.from(document.querySelectorAll('#pStates input:checked')).map(function(cb){return cb.value;});
+  var status = document.getElementById('pStatus').value;
+
+  if (!name) errors.push('Plan Name is required.');
+  if (!planId) errors.push('Plan ID is required.');
+  else if (!editingPlanId && plans.find(function(p){return p.id === planId;})) errors.push('This Plan ID already exists.');
+  if (!type) errors.push('Plan Type is required.');
+  if (!year) errors.push('Plan Year is required.');
+  if (premium === '' || premium === null) errors.push('Monthly Premium is required (enter 0 for $0 premium plans).');
+  if (!effDate) errors.push('Effective Date is required.');
+  if (states.length === 0) errors.push('At least one state must be selected.');
+  if (!status) errors.push('Status is required.');
+
+  if (errors.length) {
+    err.innerHTML = '<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix the following:</strong><ul style="margin:4px 0 0;padding-left:16px">' + errors.map(function(e){return '<li>'+e+'</li>';}).join('') + '</ul></div>';
+    err.style.display = 'flex';
+    err.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  err.style.display = 'none';
+
+  if (editingPlanId) {
+    showToast('Plan "' + name + '" updated successfully.','success');
+  } else {
+    showToast('Plan "' + name + '" created successfully.','success');
+  }
+  closePlanModal();
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+
+function filterPlansTable() {
+  var name = document.getElementById('fPlanName').value.toLowerCase();
+  var type = document.getElementById('fPlanType').value;
+  var year = document.getElementById('fPlanYear').value;
+  var rows = document.querySelectorAll('.tbl tbody tr');
+  rows.forEach(function(row) {
+    var planName = (row.cells[0] && row.cells[0].textContent || '').toLowerCase();
+    var planType = (row.cells[5] && row.cells[5].textContent || '').trim();
+    var planYear = (row.cells[2] && row.cells[2].textContent || '').trim();
+    var show = true;
+    if (name && planName.indexOf(name) === -1) show = false;
+    if (type && planType !== type) show = false;
+    if (year && planYear !== year) show = false;
+    row.style.display = show ? '' : 'none';
+  });
+}
+function resetPlanFilters() {
+  document.getElementById('fPlanName').value = '';
+  document.getElementById('fPlanType').value = '';
+  document.getElementById('fPlanYear').value = '';
+  filterPlansTable();
+}
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

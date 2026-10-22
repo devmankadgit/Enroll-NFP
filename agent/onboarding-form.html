@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Onboarding Form | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+/* Override step-bar for 9 steps */
+.step-bar{display:flex;align-items:flex-start;gap:0;margin-bottom:24px;overflow-x:auto;padding-bottom:4px}
+.step-item{display:flex;flex-direction:column;align-items:center;flex:1;min-width:70px;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:15px;left:calc(50% + 15px);right:calc(-50% + 15px);height:2px;background:#e8eaed;z-index:0}
+.step-item:not(:last-child).done::after{background:#4caf50}
+.step-circle{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;z-index:1;background:#e8eaed;color:#9aa0a6;border:2px solid #e8eaed}
+.step-circle.done{background:#4caf50;color:#fff;border-color:#4caf50}
+.step-circle.active{background:#0d47a1;color:#fff;border-color:#0d47a1}
+.step-label{font-size:10px;margin-top:5px;text-align:center;color:#9aa0a6;line-height:1.3}
+.step-label.active{color:#0d47a1;font-weight:700}
+.step-label.done{color:#2e7d32}
+.form-sect{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.form-sect h6{font-weight:700;font-size:12px;color:#0d47a1;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:14px}
+.npn-validate{display:flex;gap:8px}
+.npn-status{font-size:12px;padding:6px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:6px}
+.npn-status.ok{background:#e8f5e9;color:#2e7d32}
+.npn-status.checking{background:#fff8e1;color:#f57f17}
+.state-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.state-check-item{border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;transition:all .15s}
+.state-check-item:hover{border-color:#0d47a1}
+.state-check-item input[type=checkbox]{accent-color:#0d47a1}
+.state-check-item.selected{border-color:#0d47a1;background:#e8f0fe}
+.lob-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.lob-item{border:1px solid #e8eaed;border-radius:8px;padding:12px;cursor:pointer;font-size:12px;transition:all .15s}
+.lob-item.selected{border-color:#0d47a1;background:#e8f0fe}
+.lob-item .lob-name{font-weight:700;margin-bottom:3px}
+.lob-item .lob-desc{color:#5f6368}
+.upload-zone{border:2px dashed #dadce0;border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;color:#9aa0a6}
+.upload-zone:hover{border-color:#0d47a1;color:#0d47a1}
+.upload-zone.uploaded{border-color:#4caf50;background:#f1f8f1;color:#2e7d32}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">AR</div><div><div class="sb-u-name">Alex Rivera</div><div class="sb-u-role">Pending Activation</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Agent Onboarding Form</h4>
+      <ol class="breadcrumb-bar"><li><a href="onboarding.html">Onboarding</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Digital Onboarding Form</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpSave('Progress saved. You can resume from this screen later.')"><i class="fas fa-save"></i>Save &amp; Resume Later</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Complete all 9 steps to activate your agent account. You can save progress and return at any time. <strong>Invited by:</strong> HealthFirst Distribution Agency (AGY-001) ? Invitation expires 05 25,2026.</span></div>
+
+    <!-- Step Bar -->
+    <div class="step-bar" id="stepBar">
+      <div class="step-item" data-step="1">
+        <div class="step-circle active">1</div>
+        <div class="step-label active">Invitation</div>
+      </div>
+      <div class="step-item" data-step="2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Personal Info</div>
+      </div>
+      <div class="step-item" data-step="3">
+        <div class="step-circle">3</div>
+        <div class="step-label">NPN &amp; License</div>
+      </div>
+      <div class="step-item" data-step="4">
+        <div class="step-circle">4</div>
+        <div class="step-label">State Selections</div>
+      </div>
+      <div class="step-item" data-step="5">
+        <div class="step-circle">5</div>
+        <div class="step-label">Lines of Business</div>
+      </div>
+      <div class="step-item" data-step="6">
+        <div class="step-circle">6</div>
+        <div class="step-label">AHIP Cert</div>
+      </div>
+      <div class="step-item" data-step="7">
+        <div class="step-circle">7</div>
+        <div class="step-label">Tax / W-9</div>
+      </div>
+      <div class="step-item" data-step="8">
+        <div class="step-circle">8</div>
+        <div class="step-label">Payment Prefs</div>
+      </div>
+      <div class="step-item" data-step="9">
+        <div class="step-circle">9</div>
+        <div class="step-label">Review &amp; Submit</div>
+      </div>
+    </div>
+
+    <!-- Step Navigation Buttons (inside page) -->
+    <div id="stepNav" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding:10px 14px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
+      <button id="btnPrevStep" class="btn-ol btn-sm" onclick="prevStep()" disabled><i class="fas fa-arrow-left" style="margin-right:4px"></i>Previous Step</button>
+      <span id="stepIndicator" style="font-size:12px;font-weight:600;color:#0d47a1">Step 1 of 9 ? Invitation & Registration</span>
+      <button id="btnNextStep" class="btn-pr btn-sm" onclick="nextStep()">Next Step<i class="fas fa-arrow-right" style="margin-left:4px"></i></button>
+    </div>
+
+    <!-- -- STEP 1: Invitation & Registration -- -->
+    <div id="step1" class="form-sect step-panel">
+      <h6>Step 1 ? Invitation &amp; Registration</h6>
+      <div class="al-success" style="margin-bottom:14px"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>Invitation Accepted.</strong> You accepted the onboarding invitation from HealthFirst Distribution Agency on 04 28,2026.</span></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px 16px;font-size:13px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><span class="text-muted">Invited By:</span> <strong>HealthFirst Distribution (GA)</strong></div>
+          <div><span class="text-muted">Invitation Date:</span> <strong>04 25,2026</strong></div>
+          <div><span class="text-muted">Accepted On:</span> <strong>04 28,2026</strong></div>
+          <div><span class="text-muted">Case ID:</span> <strong>OB-2026-0441</strong></div>
+          <div><span class="text-muted">Invited Role:</span> <strong>Agent / Broker</strong></div>
+          <div><span class="text-muted">Expiration:</span> <strong>05 25,2026</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <a href="#" onclick="downloadPDF('Invitation_Letter_AlexRivera.pdf');return false" class="btn-ol btn-sm"><i class="fas fa-file-pdf" style="margin-right:4px;color:#c62828"></i>Download Invitation Letter (PDF)</a>
+      </div>
+    </div>
+
+    <!-- -- STEP 2: Personal & Business Information -- -->
+    <div id="step2" class="form-sect step-panel" style="display:none">
+      <h6>Step 2 ? Personal &amp; Business Information</h6>
+      <div class="form-row">
+        <div class="fg"><label>Legal First Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="Alex"></div>
+        <div class="fg"><label>Legal Last Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="Rivera"></div>
+        <div class="fg"><label>Date of Birth <span style="color:#c62828">*</span></label><input type="date" class="form-control form-control-sm" value="1988-07-14"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Business / Agency Name (if applicable)</label><input type="text" class="form-control form-control-sm" placeholder="Leave blank for individual agent"></div>
+        <div class="fg"><label>Email Address <span style="color:#c62828">*</span></label><input type="email" class="form-control form-control-sm" value="alex.rivera@agentmail.com"></div>
+        <div class="fg"><label>Phone Number <span style="color:#c62828">*</span></label><input type="tel" class="form-control form-control-sm" value="(305) 555-0144"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Business Address <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="842 SW 8th Street, Suite 105"></div>
+        <div class="fg"><label>City</label><input type="text" class="form-control form-control-sm" value="Miami"></div>
+        <div class="fg" style="flex:0 0 80px"><label>State</label><select class="form-select form-select-sm"><option selected>FL</option><option>GA</option><option>TX</option></select></div>
+        <div class="fg" style="flex:0 0 100px"><label>ZIP</label><input type="text" class="form-control form-control-sm" value="33130"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>SMS Opt-In</label>
+          <div class="dflex ai-center g8 mt6">
+            <input type="checkbox" id="smsOptin" checked style="accent-color:#0d47a1;width:16px;height:16px">
+            <label for="smsOptin" style="font-size:12px;color:#3c4043;font-weight:400">I consent to receive SMS notifications from Gold Kidney Health Plan regarding onboarding updates, renewals, and compliance reminders. Message &amp; data rates may apply.</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -- STEP 3: NPN & License Verification -- -->
+    <div id="step3" class="form-sect step-panel" style="display:none">
+      <h6>Step 3 ? NPN &amp; License Pre-Validation</h6>
+      <div class="al-info mb12" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Your NPN is validated for format (8?10 numeric digits), then verified against NIPR. If NIPR is unavailable, you may proceed and a manual review will be conducted.</span></div>
+      <div class="form-row">
+        <div class="fg" style="max-width:300px">
+          <label>National Producer Number (NPN) <span style="color:#c62828">*</span></label>
+          <div class="npn-validate">
+            <input type="text" class="form-control form-control-sm" id="npnInput" value="6601234" placeholder="8?10 digit NPN" oninput="clearNpnValidation()">
+            <button class="btn-pr btn-sm" onclick="validateNPN()"><i class="fas fa-search"></i>Validate</button>
+          </div>
+          <div id="npnError" style="display:none;font-size:11px;color:#c62828;margin-top:4px"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i><span id="npnErrorMsg"></span></div>
+        </div>
+        <div class="fg" style="align-self:flex-end">
+          <div id="npnResult" class="npn-status ok" style="display:none">
+            <i class="fas fa-check-circle"></i>NPN 6601234 ? Valid format ? NIPR record found ? Name: Alex Rivera ? <strong style="color:#2e7d32">No duplicate found</strong>
+          </div>
+          <div id="npnChecking" class="npn-status checking" style="display:none">
+            <i class="fas fa-spinner fa-spin"></i>Validating NPN against NIPR...
+          </div>
+        </div>
+      </div>
+      <!-- NPN Deduplication Detection -->
+      <div id="npnDedup" style="display:none;margin-top:12px;padding:12px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <i class="fas fa-exclamation-triangle" style="color:#e65100;font-size:18px"></i>
+          <strong style="color:#e65100">Duplicate NPN Detected</strong>
+        </div>
+        <p style="margin:0 0 8px;font-size:13px">This NPN already exists in the system. An agent with this NPN was found:</p>
+        <table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:12px">
+          <tr style="background:#fff8e1"><td style="padding:4px 8px;border:1px solid #ffe082"><strong>NPN</strong></td><td style="padding:4px 8px;border:1px solid #ffe082">8823441</td></tr>
+          <tr><td style="padding:4px 8px;border:1px solid #ffe082"><strong>Name</strong></td><td style="padding:4px 8px;border:1px solid #ffe082">John Smith</td></tr>
+          <tr style="background:#fff8e1"><td style="padding:4px 8px;border:1px solid #ffe082"><strong>Current Status</strong></td><td style="padding:4px 8px;border:1px solid #ffe082"><span style="background:#f44336;color:white;padding:2px 6px;border-radius:4px;font-size:11px">Terminated</span> (since 03 15,2026)</td></tr>
+          <tr><td style="padding:4px 8px;border:1px solid #ffe082"><strong>Previous Agency</strong></td><td style="padding:4px 8px;border:1px solid #ffe082">Pacific Health Group (FMO)</td></tr>
+          <tr style="background:#fff8e1"><td style="padding:4px 8px;border:1px solid #ffe082"><strong>Termination Reason</strong></td><td style="padding:4px 8px;border:1px solid #ffe082">Voluntary - Agent moved to new agency</td></tr>
+        </table>
+        <div style="font-size:12px;margin-bottom:8px;color:#5d4037"><i class="fas fa-info-circle"></i> Options:</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-ol btn-sm" style="border-color:#2e7d32;color:#2e7d32" onclick="nfpSubmit('Reactivation request submitted. Compliance will review this case.')"><i class="fas fa-redo"></i> Request Reactivation</button>
+          <button class="btn-ol btn-sm" onclick="nfpAction('Escalated to admin for manual duplicate review.','info')"><i class="fas fa-user-shield"></i> Escalate to Admin</button>
+          <button class="btn-ol btn-sm" style="border-color:#757575;color:#757575" onclick="nfpAction('Contact your upline or admin for assistance with this NPN.','info')"><i class="fas fa-phone"></i> Contact Support</button>
+        </div>
+      </div>
+      <!-- NIPR Unavailable Fallback -->
+      <div id="npnFallback" style="display:none;margin-top:12px;padding:12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <i class="fas fa-info-circle" style="color:#1565c0;font-size:18px"></i>
+          <strong style="color:#1565c0">NIPR Service Temporarily Unavailable</strong>
+        </div>
+        <p style="margin:0 0 8px;font-size:13px">We are unable to verify your NPN against NIPR at this time. You may proceed with onboarding. A manual verification will be conducted by our Compliance team within 24 hours.</p>
+        <button class="btn-pr btn-sm" onclick="nfpAction('Proceeding without NIPR verification. Manual review will be triggered.','info')"><i class="fas fa-arrow-right"></i> Proceed Without Verification</button>
+      </div>
+    </div>
+
+    <!-- -- STEP 4: State Selections -- -->
+    <div id="step4" class="form-sect step-panel" style="display:none">
+      <h6>Step 4 ? State Selections &amp; License Verification</h6>
+      <div class="text-sm text-muted mb8">Select the states where you intend to sell. Only states where Gold Kidney Health Plan offers plans and where you hold (or expect to hold) a valid Medicare Advantage license are shown. <strong>License verification via NIPR is required before proceeding.</strong></div>
+      <div class="state-check-grid" id="stateGrid">
+        <label class="state-check-item selected" data-state="FL" onclick="this.classList.toggle('selected');resetVerification()">
+          <input type="checkbox" checked> Florida (FL)
+        </label>
+        <label class="state-check-item" data-state="GA" onclick="this.classList.toggle('selected');resetVerification()">
+          <input type="checkbox"> Georgia (GA)
+        </label>
+        <label class="state-check-item" data-state="TX" onclick="this.classList.toggle('selected');resetVerification()">
+          <input type="checkbox"> Texas (TX)
+        </label>
+      </div>
+
+      <!-- Verify Button -->
+      <div style="margin-top:12px;margin-bottom:12px">
+        <button class="btn-pr btn-sm" id="btnVerifyLicense" onclick="verifyStateLicenses()"><i class="fas fa-shield-alt" style="margin-right:4px"></i>Verify State Licenses (NIPR)</button>
+        <span id="verifySpinner" style="display:none;margin-left:8px;font-size:12px;color:#e65100"><i class="fas fa-spinner fa-spin"></i> Checking NIPR...</span>
+      </div>
+
+      <!-- Verification Results -->
+      <div id="licenseResults" style="display:none">
+        <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-clipboard-check" style="margin-right:4px;color:#0d47a1"></i>License Verification Results</div>
+        <table id="licenseResultsTable" style="width:100%;font-size:12px;border-collapse:collapse;border:1px solid #e8eaed;border-radius:8px;overflow:hidden">
+          <thead><tr style="background:#f1f3f4"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">State</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">License Type</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Status</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">Details</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Action</th></tr></thead>
+          <tbody id="licenseResultsBody"></tbody>
+        </table>
+
+        <!-- Summary -->
+        <div id="licenseSummary" style="margin-top:10px;padding:10px 12px;border-radius:6px;font-size:12px"></div>
+
+        <!-- Failure handling -->
+        <div id="licenseFailActions" style="display:none;margin-top:12px;padding:12px;background:#fff5f5;border:1px solid #ffcdd2;border-radius:8px">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+            <i class="fas fa-exclamation-triangle" style="color:#c62828"></i>
+            <strong style="font-size:12px;color:#c62828">Action Required for Failed State(s)</strong>
+          </div>
+          <p style="font-size:12px;margin:0 0 8px;color:#333">License verification failed for one or more states. You may:<br>
+          &bull; <strong>Deselect</strong> the failing state(s) above and click "Re-verify" to proceed with valid states only<br>
+          &bull; <strong>Request Admin Override</strong> if you believe this is an error (justification required)<br>
+          &bull; <strong>Raise a Support Ticket</strong> to escalate to Broker Support for assistance</p>
+          <div class="dflex g8" style="flex-wrap:wrap">
+            <button class="btn-ol btn-sm" onclick="verifyStateLicenses()"><i class="fas fa-redo" style="margin-right:4px"></i>Re-Verify Selected States</button>
+            <button class="btn-ol btn-sm" style="border-color:#e65100;color:#e65100" onclick="document.getElementById('adminOverrideSection').style.display='block';this.style.display='none'"><i class="fas fa-user-shield" style="margin-right:4px"></i>Request Admin Override</button>
+            <button class="btn-ol btn-sm" style="border-color:#0d47a1;color:#0d47a1" onclick="document.getElementById('supportTicketSection').style.display='block'"><i class="fas fa-headset" style="margin-right:4px"></i>Raise Support Ticket</button>
+          </div>
+        </div>
+
+        <!-- Support Ticket Escalation (PO-08) -->
+        <div id="supportTicketSection" style="display:none;margin-top:12px;padding:14px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+            <i class="fas fa-headset" style="color:#0d47a1;font-size:16px"></i>
+            <strong style="font-size:12px;color:#0d47a1">Escalate to Broker Support</strong>
+          </div>
+          <div class="form-row">
+            <div class="fg" style="flex:2">
+              <label>Describe the Issue <span style="color:#c62828">*</span></label>
+              <textarea id="ticketDescription" class="form-control form-control-sm" rows="3" placeholder="Describe the license verification issue you're experiencing (e.g., license is active on GA DOI website but NIPR shows expired)..."></textarea>
+            </div>
+            <div class="fg">
+              <label>Priority</label>
+              <select class="form-select form-select-sm">
+                <option>Normal</option>
+                <option selected>High ? Blocking Onboarding</option>
+                <option>Urgent ? Compliance Deadline</option>
+              </select>
+              <label style="margin-top:8px">Attach Evidence (optional)</label>
+              <input type="file" class="form-control form-control-sm" style="font-size:11px">
+            </div>
+          </div>
+          <div class="dflex g8" style="margin-top:10px">
+            <button class="btn-pr btn-sm" onclick="submitSupportTicket()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit Ticket</button>
+            <button class="btn-ol btn-sm" onclick="document.getElementById('supportTicketSection').style.display='none'">Cancel</button>
+          </div>
+          <!-- Submitted ticket confirmation -->
+          <div id="ticketConfirmation" style="display:none;margin-top:10px;padding:10px;background:#fff;border:1px solid #c8e6c9;border-radius:6px">
+            <div style="font-size:12px;color:#2e7d32;font-weight:600"><i class="fas fa-check-circle" style="margin-right:4px"></i>Support Ticket Created</div>
+            <div style="font-size:11px;color:#333;margin-top:4px">
+              <strong>Ticket ID:</strong> SUP-2026-0891 &nbsp;|&nbsp; <strong>Assigned to:</strong> Broker Support Team<br>
+              <strong>Expected Response:</strong> Within 4 business hours &nbsp;|&nbsp; <strong>Status:</strong> <span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:9px">Open</span><br>
+              You'll receive email/SMS notifications when the support team responds. You may continue with other verified states in the meantime.
+            </div>
+          </div>
+        </div>
+
+        <!-- License Check Attempt History (PO-08) -->
+        <div id="attemptHistory" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #e8eaed;border-radius:6px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <div style="font-size:11px;font-weight:700;color:#333"><i class="fas fa-history" style="margin-right:4px;color:#0d47a1"></i>Verification Attempt History</div>
+            <span style="font-size:10px;color:#9e9e9e">All attempts logged for compliance</span>
+          </div>
+          <table style="width:100%;font-size:10px;border-collapse:collapse">
+            <thead><tr style="background:#f1f3f4"><th style="padding:4px 6px;text-align:left;border-bottom:1px solid #e8eaed">Attempt</th><th style="padding:4px 6px;text-align:left;border-bottom:1px solid #e8eaed">Timestamp</th><th style="padding:4px 6px;text-align:left;border-bottom:1px solid #e8eaed">States Checked</th><th style="padding:4px 6px;text-align:center;border-bottom:1px solid #e8eaed">Outcome</th><th style="padding:4px 6px;text-align:left;border-bottom:1px solid #e8eaed">Notes</th></tr></thead>
+            <tbody id="attemptHistoryBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- State Appointment Processing (PO-09) -->
+      <div id="appointmentSection" style="display:none;margin-top:16px;padding:14px 16px;background:#fff;border:1px solid #e8eaed;border-radius:10px">
+        <h6 style="font-size:12px;font-weight:700;color:#0d47a1;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:12px"><i class="fas fa-stamp" style="margin-right:6px"></i>State Appointment Processing (DOI)</h6>
+        <div class="al-info mb12" style="font-size:11px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Once licensing and background checks are confirmed, state appointment requests are submitted to NIPR for each verified state. Appointment formally authorizes you to sell Medicare Advantage products in that state. <strong>Enrollment is blocked in any state without an active appointment.</strong></span></div>
+
+        <table style="width:100%;font-size:12px;border-collapse:collapse;border:1px solid #e8eaed;border-radius:8px;overflow:hidden">
+          <thead><tr style="background:#f1f3f4"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">State</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">License Status</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Appointment Status</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">Effective Date</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">Expiry</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Enrollment</th></tr></thead>
+          <tbody>
+            <tr style="background:#f1f8f1">
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed"><strong>Florida (FL)</strong></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg b-green" style="font-size:10px">Active</span></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:10px"><i class="fas fa-check-circle" style="margin-right:3px"></i>Active</span></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed">06 01,2026</td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed">12 31,2026</td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span style="color:#2e7d32;font-weight:600;font-size:11px"><i class="fas fa-check"></i> Allowed</span></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed"><strong>Texas (TX)</strong></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg b-green" style="font-size:10px">Active</span></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:10px"><i class="fas fa-clock" style="margin-right:3px"></i>Pending DOI</span></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed"><em style="color:#9e9e9e">Pending</em></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed"><em style="color:#9e9e9e">Pending</em></td>
+              <td style="padding:8px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span style="color:#c62828;font-weight:600;font-size:11px"><i class="fas fa-ban"></i> Blocked</span></td>
+            </tr>
+            <tr style="background:#fff5f5">
+              <td style="padding:8px 10px">
+                <strong>Georgia (GA)</strong>
+              </td>
+              <td style="padding:8px 10px;text-align:center"><span class="bdg b-red" style="font-size:10px">Failed</span></td>
+              <td style="padding:8px 10px;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Submitted</span></td>
+              <td style="padding:8px 10px">?</td>
+              <td style="padding:8px 10px">?</td>
+              <td style="padding:8px 10px;text-align:center"><span style="color:#c62828;font-weight:600;font-size:11px"><i class="fas fa-ban"></i> Blocked</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Appointment Status Legend -->
+        <div style="margin-top:10px;padding:8px 10px;background:#f8f9fa;border-radius:6px;font-size:10px;display:flex;flex-wrap:wrap;gap:12px">
+          <span><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:9px">Submitted</span> Request sent to NIPR</span>
+          <span><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:9px">Pending DOI</span> Awaiting DOI response</span>
+          <span><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:9px">Active</span> Appointment confirmed</span>
+          <span><span class="bdg" style="background:#fff3cd;color:#856404;font-size:9px">Lapsed</span> Expired, renewal needed</span>
+          <span><span class="bdg" style="background:#fce4ec;color:#c62828;font-size:9px">Terminated</span> Appointment ended</span>
+        </div>
+
+        <!-- Renewal Reminders -->
+        <div style="margin-top:10px;padding:8px 10px;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;font-size:11px;display:flex;align-items:center;gap:6px">
+          <i class="fas fa-bell" style="color:#e65100"></i>
+          <span><strong>Renewal Reminder:</strong> FL appointment expires 12 31,2026. Automatic renewal notice will be sent 60 days prior (11 01,2026). Lapsed appointments block enrollment in that state only.</span>
+        </div>
+
+        <!-- Enrollment Blocking Note -->
+        <div class="al-warn mt8" style="font-size:11px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>Enrollment Blocking:</strong> Attempting to enroll a member in TX or GA will display a blocking error until appointment is Active. Lapsed appointment in one state does NOT affect other states.</span></div>
+      </div>
+
+      <!-- Admin Override Section -->
+      <div id="adminOverrideSection" style="display:none;margin-top:12px;padding:14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+          <i class="fas fa-user-shield" style="color:#e65100;font-size:16px"></i>
+          <strong style="font-size:12px;color:#e65100">Admin Override Request</strong>
+        </div>
+        <div class="al-info mb12" style="font-size:11px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Admin overrides are available for documented exceptional circumstances (e.g., NIPR API unavailability, data error in third-party system). Overrides for genuinely invalid/expired licenses are not appropriate. <strong>Dual-approval</strong> required for license overrides. Each item requires separate approval.</span></div>
+        <div class="form-row">
+          <div class="fg" style="flex:2">
+            <label>Justification <span style="color:#c62828">*</span> <span style="font-size:10px;color:#757575">(minimum 50 characters)</span></label>
+            <textarea id="overrideJustification" class="form-control form-control-sm" rows="3" placeholder="Explain why an override is needed (e.g., NIPR shows error but license is valid per DOI website, or NIPR API returned timeout)..." oninput="document.getElementById('overrideCharCount').textContent=this.value.length+' / 50 min'"></textarea>
+            <span id="overrideCharCount" style="font-size:10px;color:#9e9e9e">0 / 50 min</span>
+          </div>
+          <div class="fg">
+            <label>State(s) Requesting Override</label>
+            <input type="text" class="form-control form-control-sm" id="overrideStates" value="GA" readonly style="background:#f8f9fa">
+            <div style="margin-top:6px;font-size:10px;color:#757575"><i class="fas fa-lock" style="margin-right:3px"></i>Dual-approval: 2 authorized admins must independently approve</div>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:8px">
+          <div class="fg">
+            <label>Override Expiry Date <span style="color:#c62828">*</span></label>
+            <input type="date" class="form-control form-control-sm" value="2026-08-27">
+            <span style="font-size:10px;color:#757575">Re-verification required after this date</span>
+          </div>
+          <div class="fg">
+            <label>Supporting Document (optional)</label>
+            <input type="file" class="form-control form-control-sm" style="font-size:11px">
+          </div>
+        </div>
+        <div class="dflex g8" style="margin-top:10px">
+          <button class="btn-pr btn-sm" onclick="submitOverrideRequest()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit Override Request</button>
+          <button class="btn-ol btn-sm" onclick="document.getElementById('adminOverrideSection').style.display='none'">Cancel</button>
+        </div>
+        <!-- Override audit trail sample -->
+        <div id="overrideAuditTrail" style="display:none;margin-top:12px;padding:10px;background:#fff;border:1px solid #e8eaed;border-radius:6px">
+          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px"><i class="fas fa-file-alt" style="margin-right:4px;color:#0d47a1"></i>Override Audit Trail</div>
+          <table style="width:100%;font-size:10px;border-collapse:collapse">
+            <tr style="background:#f8f9fa"><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Requested By:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">Alex Rivera (Agent) ? 05 27,2026 11:30 AM</td></tr>
+            <tr><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>State:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">Georgia (GA) ? License Type: Health & Accident</td></tr>
+            <tr style="background:#f8f9fa"><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Justification:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">NIPR API returned timeout error. GA DOI website confirms active license #LIC-GA-55821 valid through Dec 2026. Screenshot attached.</td></tr>
+            <tr><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Approver 1:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:9px">APPROVED</span> ? Sarah Johnson (Compliance Mgr) ? 05 27,2026 1:15 PM</td></tr>
+            <tr style="background:#f8f9fa"><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Approver 2:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:9px">PENDING</span> ? Awaiting second approval</td></tr>
+            <tr><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Override Expiry:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">08 27,2026 ? auto re-verification scheduled</td></tr>
+            <tr style="background:#f8f9fa"><td style="padding:4px 6px"><strong>Status:</strong></td><td style="padding:4px 6px"><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:9px">PENDING DUAL APPROVAL (1 of 2)</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- NIPR Unavailable Fallback -->
+      <div id="niprUnavailable" style="display:none;margin-top:12px;padding:12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+          <i class="fas fa-info-circle" style="color:#1565c0;font-size:16px"></i>
+          <strong style="font-size:12px;color:#1565c0">NIPR Integration Unavailable</strong>
+        </div>
+        <p style="font-size:12px;margin:0 0 8px;color:#333">The NIPR license verification service is currently unavailable. You may proceed with onboarding ? a manual admin review will be triggered. Alternatively, request an admin override with supporting documentation.</p>
+        <div class="dflex g8">
+          <button class="btn-pr btn-sm" onclick="bypassNIPR()"><i class="fas fa-arrow-right" style="margin-right:4px"></i>Proceed (Manual Review)</button>
+          <button class="btn-ol btn-sm" style="border-color:#e65100;color:#e65100" onclick="document.getElementById('adminOverrideSection').style.display='block'"><i class="fas fa-user-shield" style="margin-right:4px"></i>Request Override</button>
+        </div>
+      </div>
+
+      <!-- Verification Audit Log -->
+      <div id="verificationLog" style="display:none;margin-top:12px;padding:10px 12px;background:#f8f9fa;border-radius:6px;border:1px solid #e8eaed">
+        <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px"><i class="fas fa-server" style="margin-right:4px;color:#757575"></i>API Response Log</div>
+        <div id="verificationLogEntries" style="font-family:monospace;font-size:10px;color:#5f6368;max-height:120px;overflow-y:auto"></div>
+      </div>
+
+      <div class="al-warn mt12" style="font-size:12px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>You cannot sell in a state until license verification passes or an approved admin override is in place. A failure for one state does NOT block other verified states.</span></div>
+    </div>
+
+    <!-- -- STEP 5: Lines of Business -- -->
+    <div id="step5" class="form-sect step-panel" style="display:none">
+      <h6>Step 5 ? Lines of Business</h6>
+      <div class="text-sm text-muted mb8">Select all plan types you are applying to sell for Gold Kidney Health Plan.</div>
+      <div class="lob-grid">
+        <div class="lob-item selected" onclick="this.classList.toggle('selected')">
+          <div class="lob-name">Medicare Advantage (MA-Only)</div>
+          <div class="lob-desc">HMO plans without drug coverage</div>
+        </div>
+        <div class="lob-item selected" onclick="this.classList.toggle('selected')">
+          <div class="lob-name">Medicare Advantage + PDP (MAPD)</div>
+          <div class="lob-desc">HMO plans with Part D drug coverage</div>
+        </div>
+        <div class="lob-item selected" onclick="this.classList.toggle('selected')">
+          <div class="lob-name">Chronic SNP ? ESRD (C-SNP)</div>
+          <div class="lob-desc">StarPlus ESRD SNP 2026 ? requires additional training</div>
+        </div>
+        <div class="lob-item selected" onclick="this.classList.toggle('selected')">
+          <div class="lob-name">Chronic SNP ? CKD / H&amp;D (C-SNP)</div>
+          <div class="lob-desc">KidneyCare CKD SNP &amp; HeartCare H&amp;D SNP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -- STEP 6: AHIP Certification -- -->
+    <div id="step6" class="form-sect step-panel" style="display:none">
+      <h6>Step 6 ? AHIP Certification (FWA / Medicare Training)</h6>
+      <div class="text-sm text-muted mb12">A current-year AHIP Medicare &amp; Fraud, Waste, and Abuse (FWA) training certificate is required. Your NPN will be used to auto-fetch from AHIP's database. If unavailable, upload your certificate manually.</div>
+      <div class="form-row" style="align-items:flex-end">
+        <div class="fg" style="max-width:200px">
+          <label>AHIP Certificate Year</label>
+          <select class="form-select form-select-sm"><option selected>CY2026</option><option>CY2025</option></select>
+        </div>
+        <div class="fg" style="max-width:220px">
+          <label>Completion Date</label>
+          <input type="date" class="form-control form-control-sm" value="2026-01-08">
+        </div>
+        <div class="fg" style="max-width:150px">
+          <label>Score (%)</label>
+          <input type="number" class="form-control form-control-sm" value="88" min="75" max="100">
+        </div>
+        <div class="fg">
+          <button class="btn-ol btn-sm" style="margin-top:20px" onclick="document.getElementById('ahipStatus').style.display='flex'"><i class="fas fa-sync"></i>Auto-Fetch from AHIP</button>
+        </div>
+      </div>
+      <div id="ahipStatus" class="npn-status ok mt8" style="display:none"><i class="fas fa-check-circle"></i>AHIP record found for NPN 6601234 ? CY2026 ? Score: 88% ? Auto-populated</div>
+      <div class="mt12">
+        <label class="text-sm text-bold">Or Upload Certificate Manually</label>
+        <div class="upload-zone mt6" onclick="this.classList.add('uploaded');this.innerHTML='<i class=\'fas fa-check-circle\' style=\'font-size:20px;margin-bottom:6px\'></i><br>AHIP_Certificate_AlexRivera_CY2026.pdf uploaded'">
+          <i class="fas fa-cloud-upload-alt" style="font-size:24px;margin-bottom:8px;display:block"></i>
+          Drag &amp; drop or click to upload AHIP Certificate (PDF)<br><span style="font-size:11px;color:#b0b8c1">Max 5MB ? PDF only</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- -- STEP 7: Tax / W-9 -- -->
+    <div id="step7" class="form-sect step-panel" style="display:none">
+      <h6>Step 7 ? Tax Information (W-9)</h6>
+      <div class="form-row">
+        <div class="fg">
+          <label>Entity Type <span style="color:#c62828">*</span></label>
+          <select class="form-select form-select-sm">
+            <option selected>Individual / Sole Proprietor</option>
+            <option>LLC ? Single Member</option>
+            <option>LLC ? Multi-Member / Partnership</option>
+            <option>Corporation (C-Corp / S-Corp)</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>TIN Type <span style="color:#c62828">*</span></label>
+          <select class="form-select form-select-sm"><option selected>SSN</option><option>EIN</option></select>
+        </div>
+        <div class="fg">
+          <label>SSN / EIN <span style="color:#c62828">*</span></label>
+          <input type="text" class="form-control form-control-sm" placeholder="e.g. ***-**-####" value="***-**-4492">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Name on Tax Return <span style="color:#c62828">*</span></label>
+          <input type="text" class="form-control form-control-sm" value="Alex Rivera">
+        </div>
+        <div class="fg" style="flex:2">
+          <label>Mailing Address (if different from business address)</label>
+          <input type="text" class="form-control form-control-sm" placeholder="Leave blank if same as business address">
+        </div>
+      </div>
+      <div class="mt12">
+        <label class="text-sm text-bold">Upload Signed W-9 Form</label>
+        <div class="upload-zone mt6" onclick="this.classList.add('uploaded');this.innerHTML='<i class=\'fas fa-check-circle\' style=\'font-size:20px;margin-bottom:6px\'></i><br>W9_AlexRivera_Signed.pdf uploaded'">
+          <i class="fas fa-file-alt" style="font-size:24px;margin-bottom:8px;display:block"></i>
+          Drag &amp; drop or click to upload signed W-9 (PDF)<br><span style="font-size:11px;color:#b0b8c1">Max 5MB ? PDF only ? <a href="#" onclick="event.stopPropagation();downloadPDF('W9_Blank_Form.pdf');return false" style="color:#0d47a1">Download blank W-9 form</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- -- STEP 8: Payment Preferences -- -->
+    <div id="step8" class="form-sect step-panel" style="display:none">
+      <h6>Step 8 ? Commission Payment Preferences</h6>
+      <div class="form-row" style="margin-bottom:12px">
+        <div class="fg">
+          <label>Payment Method <span style="color:#c62828">*</span></label>
+          <div class="dflex g12 mt6">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="ach" checked style="accent-color:#0d47a1" onchange="togglePayMethod()">ACH Direct Deposit</label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="check" style="accent-color:#0d47a1" onchange="togglePayMethod()">Physical Check</label>
+          </div>
+        </div>
+      </div>
+      <div id="checkFields" style="display:none;padding:12px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed;margin-bottom:12px">
+        <div class="al-info" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Physical checks will be mailed to your business address on record. No banking details required. Processing may take 7?10 business days after commission calculation.</span></div>
+        <div class="form-row" style="margin-top:10px">
+          <div class="fg"><label>Payee Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="Alex Rivera"></div>
+          <div class="fg" style="flex:2"><label>Mailing Address (if different from business address)</label><input type="text" class="form-control form-control-sm" placeholder="Leave blank to use business address on file"></div>
+        </div>
+      </div>
+      <div id="achFields">
+        <div class="form-row">
+          <div class="fg"><label>Bank Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="Chase Bank"></div>
+          <div class="fg"><label>Account Holder Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="Alex Rivera"></div>
+          <div class="fg"><label>Account Type</label><select class="form-select form-select-sm"><option selected>Checking</option><option>Savings</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Routing Number <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="021000021" maxlength="9"></div>
+          <div class="fg"><label>Account Number <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" placeholder="Enter account number"></div>
+          <div class="fg"><label>Confirm Account Number <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" placeholder="Re-enter account number"></div>
+        </div>
+        <div class="mt12">
+          <label class="text-sm text-bold">Upload Voided Check or Bank Verification Letter <span style="color:#c62828">*</span></label>
+          <div class="upload-zone mt6" onclick="this.classList.add('uploaded');this.innerHTML='<i class=\'fas fa-check-circle\' style=\'font-size:20px;margin-bottom:6px\'></i><br>VoidedCheck_AlexRivera.pdf uploaded'">
+            <i class="fas fa-university" style="font-size:24px;margin-bottom:8px;display:block"></i>
+            Upload voided check (front) or bank-issued verification letter<br><span style="font-size:11px;color:#b0b8c1">Max 5MB ? PDF, JPG, or PNG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -- STEP 9: Review & Submit -- -->
+    <div id="step9" class="form-sect step-panel" style="display:none">
+      <h6>Step 9 ? Review &amp; Submit</h6>
+      <div class="al-info mb12"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Please review all information before submitting. Once submitted, a Gold Kidney Broker Support representative will review your application within <strong>2 business days</strong>. You will receive email and SMS (if opted in) updates at each step.</span></div>
+
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px 16px;font-size:13px;margin-bottom:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><span class="text-muted">Name:</span> <strong>Alex Rivera</strong></div>
+          <div><span class="text-muted">NPN:</span> <strong>6601234</strong></div>
+          <div><span class="text-muted">Email:</span> <strong>alex.rivera@agentmail.com</strong></div>
+          <div><span class="text-muted">Phone:</span> <strong>(305) 555-0144</strong></div>
+          <div><span class="text-muted">States:</span> <strong>FL</strong></div>
+          <div><span class="text-muted">Plans:</span> <strong>MA, MAPD, ESRD SNP, CKD SNP, H&amp;D SNP</strong></div>
+          <div><span class="text-muted">AHIP:</span> <strong>CY2026 ? Score 88%</strong></div>
+          <div><span class="text-muted">Payment:</span> <strong>ACH ? Chase Bank</strong></div>
+          <div><span class="text-muted">Entity Type:</span> <strong>Individual / Sole Proprietor</strong></div>
+          <div><span class="text-muted">TIN:</span> <strong>SSN ? ***-**-4492</strong></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer">
+          <input type="checkbox" id="attestChk" style="accent-color:#0d47a1;margin-top:2px;flex-shrink:0">
+          <span>I certify that all information provided is accurate and complete to the best of my knowledge. I understand that providing false information may result in immediate termination of this application and any resulting contract. I agree to comply with all CMS regulations, carrier policies, and applicable state laws governing the sale of Medicare Advantage products.</span>
+        </label>
+      </div>
+
+      <div class="dflex g8" style="justify-content:flex-end">
+        <button class="btn-ol" onclick="nfpSave('Draft')"><i class="fas fa-save"></i>Save Draft</button>
+        <button class="btn-pr" onclick="submitOnboarding()"><i class="fas fa-paper-plane"></i>Submit Onboarding Application</button>
+      </div>
+    </div>
+
+    <!-- -- FINAL: Onboarding Status (shown after submit) -- -->
+    <div id="stepFinal" class="form-sect step-panel" style="display:none">
+      <h6><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Onboarding Application Submitted</h6>
+      <div class="al-success" style="margin-bottom:16px"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>Congratulations!</strong> Your onboarding application has been submitted successfully. A Broker Support representative will review your application within <strong>2 business days</strong>.</span></div>
+
+      <div style="background:#f8f9fa;border-radius:10px;padding:18px 20px;margin-bottom:16px">
+        <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;border:none;padding:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Agent Onboarding Status</h6>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
+          <div><span class="text-muted">Agent Name:</span> <strong>Alex Rivera</strong></div>
+          <div><span class="text-muted">NPN:</span> <strong>6601234</strong></div>
+          <div><span class="text-muted">Application ID:</span> <strong>OB-2026-0441</strong></div>
+          <div><span class="text-muted">Status:</span> <span class="badge bg-warning text-dark">Under Review</span></div>
+          <div><span class="text-muted">Submitted On:</span> <strong id="submitDate">?</strong></div>
+          <div><span class="text-muted">Expected Activation:</span> <strong>Within 2 business days</strong></div>
+          <div><span class="text-muted">Invited By:</span> <strong>HealthFirst Distribution (GA)</strong></div>
+          <div><span class="text-muted">Case ID:</span> <strong>OB-2026-0441</strong></div>
+          <div><span class="text-muted">States Applied:</span> <strong>FL</strong></div>
+          <div><span class="text-muted">Plans:</span> <strong>MA, MAPD, ESRD SNP, CKD SNP</strong></div>
+          <div><span class="text-muted">AHIP:</span> <strong>CY2026 ? Score 88%</strong></div>
+          <div><span class="text-muted">Payment:</span> <strong>ACH ? Chase Bank</strong></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;margin-bottom:16px">
+        <h6 style="font-size:12px;font-weight:700;color:#333;margin-bottom:10px;border:none;padding:0"><i class="fas fa-tasks" style="margin-right:6px;color:#0d47a1"></i>Steps Completed</h6>
+        <table style="width:100%;font-size:12px;border-collapse:collapse">
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 1 ? Invitation & Registration</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 2 ? Personal & Business Info</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 3 ? NPN & License Verification</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 4 ? State Selections</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 5 ? Lines of Business</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 6 ? AHIP Certification</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 7 ? Tax / W-9</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 8 ? Payment Preferences</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
+          <tr style="background:#e8f5e9"><td style="padding:6px 10px"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 9 ? Review & Submit</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Submitted</td></tr>
+        </table>
+      </div>
+
+      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#0d47a1">
+        <i class="fas fa-clock" style="margin-right:6px"></i><strong>What Happens Next:</strong>
+        <ul style="margin:6px 0 0 16px;padding:0">
+          <li>NIPR license verification will begin automatically for FL</li>
+          <li>AHIP certification validated against national database</li>
+          <li>Background check initiated (typically 1-2 days)</li>
+          <li>Contract execution email sent for e-signature</li>
+          <li>Once all gates pass ? Account activated ? "Ready to Sell"</li>
+        </ul>
+      </div>
+
+      <div class="dflex g8">
+        <a href="#" onclick="downloadPDF('Onboarding_Application_AlexRivera.pdf');return false" class="btn-ol btn-sm"><i class="fas fa-file-pdf" style="margin-right:4px;color:#c62828"></i>Download Application (PDF)</a>
+        <a href="onboarding.html" class="btn-pr btn-sm"><i class="fas fa-chart-line" style="margin-right:4px"></i>View Onboarding Status</a>
+      </div>
+
+      <!-- Reviewer Workflow: Query / Response Panel -->
+      <div style="margin-top:20px;border-top:1px solid #e8eaed;padding-top:16px">
+        <h6 style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:12px;border:none;padding:0"><i class="fas fa-comments" style="margin-right:6px"></i>Reviewer Communication & Compliance Checks</h6>
+        <div class="al-info mb12" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Broker Support / Compliance team reviews your application. If queries arise, you'll be notified and can respond here without restarting the form.</span></div>
+
+        <!-- Automated Checks Status -->
+        <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-robot" style="margin-right:4px;color:#0d47a1"></i>Automated Verification Results</div>
+          <table style="width:100%;font-size:11px;border-collapse:collapse">
+            <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:4px"></i>NIPR License Lookup (FL)</td><td style="text-align:right;color:#2e7d32;font-weight:600">Verified</td></tr>
+            <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:4px"></i>AHIP CY2026 Certification</td><td style="text-align:right;color:#2e7d32;font-weight:600">Confirmed (Score 88%)</td></tr>
+            <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-clock" style="color:#e65100;margin-right:4px"></i>Background Check (IBR)</td><td style="text-align:right;color:#e65100;font-weight:600">In Progress</td></tr>
+            <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:4px"></i>NPN Deduplication</td><td style="text-align:right;color:#2e7d32;font-weight:600">No Conflicts</td></tr>
+            <tr><td style="padding:4px 8px"><i class="fas fa-hourglass-half" style="color:#757575;margin-right:4px"></i>DOI State Appointment (FL)</td><td style="text-align:right;color:#757575;font-weight:600">Pending</td></tr>
+          </table>
+        </div>
+
+        <!-- Reviewer Messages -->
+        <div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden;margin-bottom:12px">
+          <div style="background:#f1f3f4;padding:8px 12px;font-size:11px;font-weight:700;color:#333;border-bottom:1px solid #e8eaed"><i class="fas fa-history" style="margin-right:4px"></i>Communication History</div>
+          <div style="padding:12px;max-height:200px;overflow-y:auto">
+            <!-- Query from Reviewer -->
+            <div style="margin-bottom:12px;padding:10px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:11px;font-weight:700;color:#e65100"><i class="fas fa-user-shield" style="margin-right:4px"></i>Maria Chen ? Broker Support</span>
+                <span style="font-size:10px;color:#9e9e9e">05 27,2026 9:15 AM</span>
+              </div>
+              <div style="font-size:12px;color:#333">Hi Alex, your W-9 upload appears to be unsigned. Could you please re-upload a signed copy? This is required before we can process your contracting paperwork.</div>
+              <div style="margin-top:6px"><span class="bdg" style="background:#fff3cd;color:#856404;font-size:10px">Action Required: W-9 Re-Upload</span></div>
+            </div>
+            <!-- Agent Response -->
+            <div style="margin-bottom:12px;padding:10px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:11px;font-weight:700;color:#2e7d32"><i class="fas fa-user" style="margin-right:4px"></i>Alex Rivera ? Agent</span>
+                <span style="font-size:10px;color:#9e9e9e">05 27,2026 10:42 AM</span>
+              </div>
+              <div style="font-size:12px;color:#333">Apologies! I've re-uploaded the signed W-9. Please let me know if there's anything else needed.</div>
+              <div style="margin-top:6px"><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:10px"><i class="fas fa-paperclip" style="margin-right:3px"></i>W9_AlexRivera_Signed_v2.pdf attached</span></div>
+            </div>
+            <!-- Reviewer Follow-up -->
+            <div style="padding:10px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:11px;font-weight:700;color:#0d47a1"><i class="fas fa-user-shield" style="margin-right:4px"></i>Maria Chen ? Broker Support</span>
+                <span style="font-size:10px;color:#9e9e9e">05 27,2026 11:05 AM</span>
+              </div>
+              <div style="font-size:12px;color:#333">Signed W-9 received and verified. All documentation is now in order. Your application will proceed to final compliance review. No further action needed from you at this time.</div>
+              <div style="margin-top:6px"><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:10px"><i class="fas fa-check" style="margin-right:3px"></i>Query Resolved</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reply Box -->
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:10px">
+          <textarea placeholder="Type a response to the reviewer..." style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:8px 10px;font-size:12px;resize:vertical;min-height:60px"></textarea>
+          <div class="dflex g8" style="margin-top:8px;justify-content:space-between">
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#5f6368;cursor:pointer">
+              <i class="fas fa-paperclip"></i>Attach Document
+              <input type="file" style="display:none">
+            </label>
+            <button class="btn-pr btn-sm" onclick="showToast('Response sent to Broker Support reviewer.','success')"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Response</button>
+          </div>
+        </div>
+
+        <!-- Reviewer Decision Section -->
+        <div style="margin-top:14px;padding:12px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <i class="fas fa-gavel" style="color:#2e7d32;font-size:16px"></i>
+            <strong style="font-size:12px;color:#2e7d32">Reviewer Decision: APPROVED</strong>
+            <span style="font-size:10px;color:#757575;margin-left:auto">05 27,2026 2:30 PM ? Maria Chen</span>
+          </div>
+          <div style="font-size:12px;color:#333">All compliance checks passed. Agent profile created. Contracting process initiated. State License Verification (NIPR) triggered for FL.</div>
+        </div>
+      </div>
+
+      <!-- New Selling State: Post-Activation Partial Re-Certification -->
+      <div style="margin-top:20px;border-top:1px solid #e8eaed;padding-top:16px">
+        <h6 style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:10px;border:none;padding:0"><i class="fas fa-map-marked-alt" style="margin-right:6px"></i>Add New Selling State (Post-Activation)</h6>
+        <div class="al-info mb12" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Already-active agents can add new states. Only state-specific steps are required ? national checks (AHIP, background, W-9, payment) are <strong>NOT</strong> repeated.</span></div>
+        <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:8px">Targeted Re-Certification Workflow for New State:</div>
+          <table style="width:100%;font-size:11px;border-collapse:collapse">
+            <tr style="background:#e3f2fd"><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Step</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Requirement</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600;text-align:center">Status</td></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">1. NIPR License Verification</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">Valid state license for new state (GA)</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:10px">Pending</span></td></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">2. DOI State Appointment</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">Department of Insurance appointment for GA</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Started</span></td></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">3. Product Training</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">GA-specific plan training (if new plan types)</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Started</span></td></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">4. Certification Exam</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">State-specific product certification exam</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Started</span></td></tr>
+            <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4" colspan="2"><i class="fas fa-forward" style="color:#2e7d32;margin-right:4px"></i><em>Skipped:</em> AHIP (already valid CY2026), Background Check, W-9, Payment Prefs, Personal Info</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center;color:#2e7d32;font-weight:600">Already Complete</td></tr>
+          </table>
+        </div>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="showToast('New state (GA) re-certification workflow initiated. You will be notified when NIPR verification completes.','success')"><i class="fas fa-plus" style="margin-right:4px"></i>Request: Add Georgia (GA)</button>
+          <button class="btn-ol btn-sm" style="opacity:0.5" disabled><i class="fas fa-plus" style="margin-right:4px"></i>Request: Add Texas (TX)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// -------------------------------------------------------
+// ONBOARDING STEP WIZARD
+// -------------------------------------------------------
+var currentStep = 1;
+var totalSteps = 9;
+var stepLabels = ['','Invitation & Registration','Personal & Business Info','NPN & License Verification','State Selections','Lines of Business','AHIP Certification','Tax / W-9','Payment Preferences','Review & Submit'];
+
+// Disable all form inputs in a step panel
+function disableStepInputs(stepNum) {
+  var panel = document.getElementById('step' + stepNum);
+  if (!panel) return;
+  panel.querySelectorAll('input, select, textarea, button:not(.btn-ol)').forEach(function(el) {
+    el.disabled = true;
+    el.style.opacity = '0.6';
+    el.style.pointerEvents = 'none';
+  });
+  panel.style.opacity = '0.85';
+  panel.style.borderColor = '#c8e6c9';
+  panel.style.background = '#fafffe';
+}
+
+// Re-enable all form inputs in a step panel
+function enableStepInputs(stepNum) {
+  var panel = document.getElementById('step' + stepNum);
+  if (!panel) return;
+  panel.querySelectorAll('input, select, textarea, button').forEach(function(el) {
+    el.disabled = false;
+    el.style.opacity = '';
+    el.style.pointerEvents = '';
+  });
+  panel.style.opacity = '';
+  panel.style.borderColor = '';
+  panel.style.background = '';
+}
+
+function goToStep(step) {
+  // Hide all step panels
+  document.querySelectorAll('.step-panel').forEach(function(p){ p.style.display = 'none'; });
+
+  // Show target step
+  var targetId = step <= totalSteps ? 'step' + step : 'stepFinal';
+  var target = document.getElementById(targetId);
+  if (target) target.style.display = 'block';
+
+  // Disable inputs in all completed (previous) steps, enable current step
+  for (var i = 1; i <= totalSteps; i++) {
+    if (i < step) {
+      disableStepInputs(i);
+    } else {
+      enableStepInputs(i);
+    }
+  }
+
+  // Update step bar
+  var items = document.querySelectorAll('.step-bar .step-item');
+  items.forEach(function(item, idx) {
+    var circle = item.querySelector('.step-circle');
+    var label = item.querySelector('.step-label');
+    var stepNum = idx + 1;
+    circle.className = 'step-circle';
+    label.className = 'step-label';
+    item.classList.remove('done');
+
+    if (stepNum < step) {
+      // Completed steps
+      item.classList.add('done');
+      circle.classList.add('done');
+      circle.innerHTML = '<i class="fas fa-check" style="font-size:10px"></i>';
+      label.classList.add('done');
+    } else if (stepNum === step) {
+      // Current step
+      circle.classList.add('active');
+      circle.textContent = stepNum;
+      label.classList.add('active');
+    } else {
+      // Future steps
+      circle.textContent = stepNum;
+    }
+  });
+
+  // Update navigation buttons
+  var prevBtn = document.getElementById('btnPrevStep');
+  var nextBtn = document.getElementById('btnNextStep');
+  var indicator = document.getElementById('stepIndicator');
+  var navNum = document.getElementById('navStepNum');
+  var bottomBar = document.getElementById('bottomNav');
+  var bottomPrev = document.getElementById('btnBottomPrev');
+  var bottomNext = document.getElementById('btnBottomNext');
+
+  prevBtn.disabled = (step <= 1);
+  if (bottomPrev) bottomPrev.disabled = (step <= 1);
+
+  if (step > totalSteps) {
+    // Final status screen ? hide navigation
+    nextBtn.style.display = 'none';
+    prevBtn.style.display = 'none';
+    indicator.textContent = 'Onboarding Complete ? Application Submitted';
+    document.getElementById('stepNav').style.background = '#e8f5e9';
+    if (bottomBar) bottomBar.style.display = 'none';
+  } else {
+    nextBtn.style.display = '';
+    prevBtn.style.display = '';
+    indicator.textContent = 'Step ' + step + ' of ' + totalSteps + ' ? ' + stepLabels[step];
+    document.getElementById('stepNav').style.background = '#f8f9fa';
+    if (bottomBar) bottomBar.style.display = '';
+    if (step === totalSteps) {
+      nextBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit';
+      nextBtn.onclick = function(){ submitOnboarding(); };
+      if (bottomNext) {
+        bottomNext.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit';
+        bottomNext.onclick = function(){ submitOnboarding(); };
+      }
+    } else {
+      nextBtn.innerHTML = 'Next Step<i class="fas fa-arrow-right" style="margin-left:4px"></i>';
+      nextBtn.onclick = function(){ nextStep(); };
+      if (bottomNext) {
+        bottomNext.innerHTML = 'Next<i class="fas fa-arrow-right" style="margin-left:6px"></i>';
+        bottomNext.onclick = function(){ nextStep(); };
+      }
+    }
+  }
+  if (navNum) navNum.textContent = step <= totalSteps ? step : '?';
+
+  currentStep = step;
+  window.scrollTo(0, 0);
+}
+
+function nextStep() {
+  // Validate current step before progressing
+  var errors = validateStep(currentStep);
+  if (errors.length > 0) {
+    showToast(errors[0], 'error');
+    return;
+  }
+  if (currentStep < totalSteps) {
+    goToStep(currentStep + 1);
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    goToStep(currentStep - 1);
+  }
+}
+
+// Step validation ? returns array of error messages (empty = valid)
+function validateStep(step) {
+  var errors = [];
+  if (step === 2) {
+    var panel = document.getElementById('step2');
+    var firstName = panel.querySelector('input[type=text]');
+    if (firstName && !firstName.value.trim()) errors.push('Legal First Name is required.');
+    var email = panel.querySelector('input[type=email]');
+    if (email && !email.value.trim()) errors.push('Email Address is required.');
+    var phone = panel.querySelector('input[type=tel]');
+    if (phone && !phone.value.trim()) errors.push('Phone Number is required.');
+  }
+  if (step === 3) {
+    var npnInput = document.getElementById('npnInput');
+    var npnResult = document.getElementById('npnResult');
+    if (!npnInput.value.trim()) {
+      errors.push('NPN is required. Please enter your National Producer Number.');
+    } else if (!npnValidated) {
+      errors.push('Please validate your NPN before proceeding to the next step.');
+    }
+  }
+  if (step === 4) {
+    var checked = document.querySelectorAll('#step4 .state-check-item.selected');
+    if (checked.length === 0) errors.push('Please select at least one state where you intend to sell.');
+    else if (!licenseVerified) errors.push('Please verify your state licenses (NIPR) before proceeding. Click "Verify State Licenses".');
+  }
+  if (step === 5) {
+    var lobs = document.querySelectorAll('#step5 .lob-item.selected');
+    if (lobs.length === 0) errors.push('Please select at least one Line of Business.');
+  }
+  if (step === 7) {
+    var tinInput = document.querySelector('#step7 input[placeholder*="***"]');
+    if (tinInput && !tinInput.value.trim()) errors.push('SSN / EIN is required for W-9.');
+  }
+  if (step === 8) {
+    var achRadio = document.querySelector('input[name=payMethod][value=ach]');
+    if (achRadio && achRadio.checked) {
+      var bank = document.querySelector('#achFields input[type=text]');
+      if (bank && !bank.value.trim()) errors.push('Bank Name is required for ACH.');
+    }
+  }
+  return errors;
+}
+
+// NPN Pre-Validation
+var npnValidated = true; // pre-filled demo data is valid
+
+// US-1.16: NPN Registry  status-aware duplicate check
+var OBF_NPN_REGISTRY = {
+  '8823441':  { status:'Active',     name:'James Martinez',    org:'HealthFirst Distribution' },
+  '7745123':  { status:'Active',     name:'Sarah Williams',    org:'National FMO' },
+  '6612890':  { status:'Pending',    name:'Carlos Rivera',     org:'Coastal Medicare Partners' },
+  '12345678': { status:'Terminated', name:'Patricia Thompson', org:'Pacific Health Distributors' },
+  '99887766': { status:'Pending',    name:'Michael Chen',      org:'HealthFirst Distribution' }
+};
+
+function clearNpnValidation() {
+  npnValidated = false;
+  document.getElementById('npnResult').style.display = 'none';
+  document.getElementById('npnError').style.display = 'none';
+  document.getElementById('npnChecking').style.display = 'none';
+  document.getElementById('npnDedup').style.display = 'none';
+  document.getElementById('npnFallback').style.display = 'none';
+}
+
+function validateNPN() {
+  var input = document.getElementById('npnInput');
+  var errorDiv = document.getElementById('npnError');
+  var errorMsg = document.getElementById('npnErrorMsg');
+  var resultDiv = document.getElementById('npnResult');
+  var checkingDiv = document.getElementById('npnChecking');
+  var val = input.value.trim();
+
+  // Hide previous results
+  resultDiv.style.display = 'none';
+  errorDiv.style.display = 'none';
+  checkingDiv.style.display = 'none';
+  npnValidated = false;
+
+  // 1. Check not empty
+  if (!val) {
+    errorMsg.textContent = 'NPN is required. Please enter your National Producer Number.';
+    errorDiv.style.display = 'block';
+    input.style.borderColor = '#c62828';
+    return;
+  }
+  // 2. Check numeric only (no non-numeric characters)
+  if (!/^\d+$/.test(val)) {
+    errorMsg.textContent = 'NPN must contain only numeric digits. Remove any letters, spaces, or special characters.';
+    errorDiv.style.display = 'block';
+    input.style.borderColor = '#c62828';
+    return;
+  }
+  // 3. Check length 8?10 digits
+  if (val.length < 8 || val.length > 10) {
+    errorMsg.textContent = 'NPN must be 8?10 digits long. You entered ' + val.length + ' digits.';
+    errorDiv.style.display = 'block';
+    input.style.borderColor = '#c62828';
+    return;
+  }
+
+  // Pre-validation passed ? show checking state, then simulate NIPR lookup
+  input.style.borderColor = '';
+  checkingDiv.style.display = 'flex';
+
+  // US-1.16: Status-aware NPN duplicate check + simulated NIPR lookup
+  setTimeout(function() {
+    checkingDiv.style.display = 'none';
+    var rec = OBF_NPN_REGISTRY[val];
+    if(rec){
+      if(rec.status === 'Active'){
+        errorMsg.textContent = 'An active agent with this NPN already exists in the system. Please contact Broker Support.';
+        errorDiv.style.display = 'block'; input.style.borderColor = '#c62828'; npnValidated = false;
+        console.log('[AUDIT] NPN Dup Check | NPN:'+val+' | Status:Active | Source:onboarding-form');
+        return;
+      } else if(rec.status === 'Pending'){
+        errorMsg.textContent = 'An onboarding case for this NPN is already in progress. Please contact Broker Support.';
+        errorDiv.style.display = 'block'; input.style.borderColor = '#c62828'; npnValidated = false;
+        console.log('[AUDIT] NPN Dup Check | NPN:'+val+' | Status:Pending | Source:onboarding-form');
+        return;
+      } else if(rec.status === 'Terminated'){
+        var dd=document.getElementById('npnDedup');
+        if(dd){dd.querySelector('p').textContent='A terminated agent record exists for NPN '+val+'. Admin must confirm before proceeding.';dd.style.display='block';}
+        resultDiv.innerHTML='<i class="fas fa-exclamation-triangle" style="color:#e65100"></i><span style="margin-left:6px;color:#e65100">Terminated record found. Admin confirmation required.</span>';
+        resultDiv.style.display='flex'; npnValidated=true;
+        console.log('[AUDIT] NPN Dup Check | NPN:'+val+' | Status:Terminated | Source:onboarding-form');
+        return;
+      }
+    }
+    resultDiv.innerHTML='<i class="fas fa-check-circle"></i>NPN '+val+'  Valid format  NIPR record found  <strong style="color:#2e7d32">No duplicate found</strong>';
+    resultDiv.style.display='flex'; npnValidated=true;
+    console.log('[AUDIT] NPN Dup Check | NPN:'+val+' | Status:Available | Source:onboarding-form');
+  }, 1500);
+}
+
+// Payment Method Toggle
+function togglePayMethod() {
+  var achRadio = document.querySelector('input[name=payMethod][value=ach]');
+  var achFields = document.getElementById('achFields');
+  var checkFields = document.getElementById('checkFields');
+  if (achRadio.checked) {
+    achFields.style.display = '';
+    checkFields.style.display = 'none';
+  } else {
+    achFields.style.display = 'none';
+    checkFields.style.display = '';
+  }
+}
+
+// -------------------------------------------------------
+// STATE LICENSE VERIFICATION (PO-07)
+// -------------------------------------------------------
+var licenseVerified = false;
+var verifiedStates = [];
+
+// Simulated NIPR verification data
+var niprData = {
+  'FL': {status:'active', licType:'Health & Accident / Life', expiry:'12 31,2026', covers_ma:true},
+  'GA': {status:'expired', licType:'Health & Accident', expiry:'01 15,2026', covers_ma:true, reason:'License expired 01 15,2026. Renewal not on file with GA DOI.'},
+  'TX': {status:'active', licType:'Health & Accident / Life', expiry:'03 10,2027', covers_ma:true}
+};
+
+function resetVerification() {
+  licenseVerified = false;
+  verifiedStates = [];
+  document.getElementById('licenseResults').style.display = 'none';
+  document.getElementById('licenseFailActions').style.display = 'none';
+}
+
+function verifyStateLicenses() {
+  var selected = [];
+  document.querySelectorAll('#stateGrid .state-check-item.selected').forEach(function(item) {
+    selected.push(item.getAttribute('data-state'));
+  });
+
+  if (selected.length === 0) {
+    showToast('Please select at least one state to verify.', 'error');
+    return;
+  }
+
+  // Show spinner
+  document.getElementById('verifySpinner').style.display = 'inline';
+  document.getElementById('btnVerifyLicense').disabled = true;
+  document.getElementById('licenseResults').style.display = 'none';
+
+  // Simulate NIPR API call (2s delay)
+  setTimeout(function() {
+    document.getElementById('verifySpinner').style.display = 'none';
+    document.getElementById('btnVerifyLicense').disabled = false;
+    renderLicenseResults(selected);
+  }, 2000);
+}
+
+function renderLicenseResults(states) {
+  var tbody = document.getElementById('licenseResultsBody');
+  var logDiv = document.getElementById('verificationLogEntries');
+  var summary = document.getElementById('licenseSummary');
+  var failDiv = document.getElementById('licenseFailActions');
+  tbody.innerHTML = '';
+  logDiv.innerHTML = '';
+  verifiedStates = [];
+  var hasFailure = false;
+  var timestamp = new Date().toLocaleString();
+
+  states.forEach(function(st) {
+    var data = niprData[st] || {status:'unavailable', reason:'NIPR returned no data for this state.'};
+    var passed = data.status === 'active' && data.covers_ma;
+    var row = document.createElement('tr');
+
+    if (passed) {
+      verifiedStates.push(st);
+      row.style.background = '#f1f8f1';
+      row.innerHTML = '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed"><strong>' + st + '</strong></td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed">' + data.licType + '</td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg b-green" style="font-size:10px"><i class="fas fa-check-circle" style="margin-right:3px"></i>Verified</span></td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-size:11px">Active ? Covers MA ? Expires ' + data.expiry + '</td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;text-align:center;font-size:11px;color:#2e7d32"><i class="fas fa-check"></i> Passed</td>';
+    } else {
+      hasFailure = true;
+      row.style.background = '#fff5f5';
+      var reason = data.reason || 'License not valid for Medicare Advantage products.';
+      row.innerHTML = '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed"><strong>' + st + '</strong></td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed">' + (data.licType || '?') + '</td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;text-align:center"><span class="bdg b-red" style="font-size:10px"><i class="fas fa-times-circle" style="margin-right:3px"></i>Failed</span></td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-size:11px;color:#c62828">' + reason + '</td>' +
+        '<td style="padding:6px 10px;border-bottom:1px solid #e8eaed;text-align:center"><button class="btn-ol btn-sm" style="font-size:10px;border-color:#c62828;color:#c62828" onclick="deselectState(\'' + st + '\')"><i class="fas fa-times"></i> Deselect</button></td>';
+    }
+    tbody.appendChild(row);
+
+    // Log entry
+    logDiv.innerHTML += '[' + timestamp + '] NIPR API ? State: ' + st + ' | Status: ' + data.status + ' | Type: ' + (data.licType||'N/A') + ' | MA Coverage: ' + (data.covers_ma?'Yes':'No') + ' | Result: ' + (passed?'PASS':'FAIL') + '\n';
+  });
+
+  // Summary
+  if (hasFailure) {
+    summary.style.background = '#fff5f5';
+    summary.style.border = '1px solid #ffcdd2';
+    summary.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#c62828;margin-right:6px"></i><strong>' + verifiedStates.length + ' of ' + states.length + '</strong> states passed verification. Failed states must be deselected or an admin override requested to proceed.';
+    failDiv.style.display = 'block';
+    licenseVerified = false;
+    logAttempt(states, 'fail', verifiedStates.length + '/' + states.length + ' passed. Failed: ' + states.filter(function(s){return verifiedStates.indexOf(s)===-1}).join(', '));
+  } else {
+    summary.style.background = '#e8f5e9';
+    summary.style.border = '1px solid #c8e6c9';
+    summary.innerHTML = '<i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i><strong>All ' + states.length + ' selected state(s) passed</strong> NIPR license verification. You may proceed to the next step.';
+    failDiv.style.display = 'none';
+    licenseVerified = true;
+    logAttempt(states, 'pass', 'All states verified. Appointment processing triggered.');
+    // Show appointment section (PO-09)
+    document.getElementById('appointmentSection').style.display = 'block';
+  }
+
+  document.getElementById('licenseResults').style.display = 'block';
+  document.getElementById('verificationLog').style.display = 'block';
+}
+
+function deselectState(state) {
+  var items = document.querySelectorAll('#stateGrid .state-check-item');
+  items.forEach(function(item) {
+    if (item.getAttribute('data-state') === state) {
+      item.classList.remove('selected');
+      item.querySelector('input[type=checkbox]').checked = false;
+      item.style.opacity = '0.5';
+      item.style.pointerEvents = 'none';
+      item.insertAdjacentHTML('beforeend', '<span style="display:block;font-size:9px;color:#c62828;margin-top:2px"><i class="fas fa-ban"></i> Failed</span>');
+    }
+  });
+  showToast(state + ' deselected. Click "Re-Verify" to check remaining states.', 'info');
+}
+
+function submitOverrideRequest() {
+  var justification = document.getElementById('overrideJustification').value.trim();
+  if (justification.length < 50) {
+    showToast('Justification must be at least 50 characters. Currently: ' + justification.length + ' characters.', 'error');
+    return;
+  }
+  document.getElementById('overrideAuditTrail').style.display = 'block';
+  showToast('Admin override request submitted for GA. Awaiting dual-approval (2 authorized admins required).', 'success');
+}
+
+function bypassNIPR() {
+  licenseVerified = true;
+  document.getElementById('niprUnavailable').style.display = 'none';
+  var summary = document.getElementById('licenseSummary');
+  summary.style.display = 'block';
+  summary.style.background = '#e3f2fd';
+  summary.style.border = '1px solid #90caf9';
+  summary.innerHTML = '<i class="fas fa-info-circle" style="color:#0d47a1;margin-right:6px"></i>NIPR unavailable ? proceeding with manual review. Admin will verify licenses within 24 hours. You may continue to the next step.';
+  document.getElementById('licenseResults').style.display = 'block';
+  showToast('Proceeding without NIPR. Manual admin review will be triggered.', 'info');
+}
+
+// Support Ticket Submission (PO-08)
+function submitSupportTicket() {
+  var desc = document.getElementById('ticketDescription').value.trim();
+  if (!desc) {
+    showToast('Please describe the issue before submitting the ticket.', 'error');
+    return;
+  }
+  document.getElementById('ticketConfirmation').style.display = 'block';
+  showToast('Support ticket SUP-2026-0891 created. Broker Support will respond within 4 hours.', 'success');
+}
+
+// Attempt History Tracking (PO-08)
+var attemptCount = 0;
+
+function logAttempt(states, outcome, notes) {
+  attemptCount++;
+  var tbody = document.getElementById('attemptHistoryBody');
+  var row = document.createElement('tr');
+  row.style.background = attemptCount % 2 === 0 ? '#f8f9fa' : '#fff';
+  var ts = new Date().toLocaleString();
+  var outcomeHtml = outcome === 'pass'
+    ? '<span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:9px">ALL PASS</span>'
+    : '<span class="bdg" style="background:#fce4ec;color:#c62828;font-size:9px">PARTIAL FAIL</span>';
+  row.innerHTML = '<td style="padding:4px 6px;border-bottom:1px solid #e8eaed">#' + attemptCount + '</td>' +
+    '<td style="padding:4px 6px;border-bottom:1px solid #e8eaed">' + ts + '</td>' +
+    '<td style="padding:4px 6px;border-bottom:1px solid #e8eaed">' + states.join(', ') + '</td>' +
+    '<td style="padding:4px 6px;border-bottom:1px solid #e8eaed;text-align:center">' + outcomeHtml + '</td>' +
+    '<td style="padding:4px 6px;border-bottom:1px solid #e8eaed">' + notes + '</td>';
+  tbody.appendChild(row);
+  document.getElementById('attemptHistory').style.display = 'block';
+}
+
+function submitOnboarding() {
+  var attestChk = document.getElementById('attestChk');
+  if (attestChk && !attestChk.checked) {
+    showToast('Please check the attestation checkbox before submitting.', 'error');
+    return;
+  }
+  // Set submit date
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+  var submitDateEl = document.getElementById('submitDate');
+  if (submitDateEl) submitDateEl.textContent = dateStr;
+
+  goToStep(totalSteps + 1); // Show final status
+  showToast('Onboarding application submitted successfully! Application ID: OB-2026-0441', 'success');
+}
+
+// PDF Download function (generates sample PDF with data)
+function downloadPDF(filename) {
+  // Create a sample PDF-like content as a Blob
+  var content = '=== GOLD KIDNEY HEALTH PLAN ===\n';
+  content += 'Agent Onboarding Document\n';
+  content += '========================================\n\n';
+  content += 'Document: ' + filename + '\n';
+  content += 'Generated: ' + new Date().toLocaleString() + '\n\n';
+  content += '--- AGENT INFORMATION ---\n';
+  content += 'Name: Alex Rivera\n';
+  content += 'NPN: 6601234\n';
+  content += 'Email: alex.rivera@agentmail.com\n';
+  content += 'Phone: (305) 555-0144\n';
+  content += 'Address: 842 SW 8th Street, Suite 105, Miami, FL 33130\n\n';
+  content += '--- ONBOARDING DETAILS ---\n';
+  content += 'Case ID: OB-2026-0441\n';
+  content += 'Invited By: HealthFirst Distribution (GA-001)\n';
+  content += 'Invitation Date: 04 25,2026\n';
+  content += 'Accepted Date: 04 28,2026\n';
+  content += 'States Applied: FL\n';
+  content += 'Lines of Business: MA, MAPD, ESRD SNP, CKD SNP, H&D SNP\n\n';
+  content += '--- CERTIFICATIONS ---\n';
+  content += 'AHIP: CY2026 - Score 88% - Valid\n';
+  content += 'State License: FL - Active\n\n';
+  content += '--- TAX INFORMATION ---\n';
+  content += 'Entity Type: Individual / Sole Proprietor\n';
+  content += 'TIN Type: SSN\n';
+  content += 'TIN: ***-**-4492\n\n';
+  content += '--- PAYMENT PREFERENCES ---\n';
+  content += 'Method: ACH Direct Deposit\n';
+  content += 'Bank: Chase Bank\n';
+  content += 'Account: Checking - ****4521\n';
+  content += 'Routing: 021000021\n\n';
+  content += '--- COMMISSION STRUCTURE ---\n';
+  content += 'MA HMO/PPO Initial: $600 per enrollment\n';
+  content += 'MA HMO/PPO Renewal: $300 per renewal\n';
+  content += 'PDP Initial: $100 per enrollment\n';
+  content += 'PDP Renewal: $50 per renewal\n\n';
+  content += '========================================\n';
+  content += 'Gold Kidney Health Plan, Inc. (R)\n';
+  content += 'This document is for onboarding purposes only.\n';
+  content += 'Generated by the Gold Kidney Agent Portal.\n';
+
+  var blob = new Blob([content], { type: 'application/pdf' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Downloading: ' + filename, 'success');
+}
+
+// Initialize: show Step 1
+goToStep(1);
+</script>
+</body>
+</html>

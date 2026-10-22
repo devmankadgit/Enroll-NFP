@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>State Reporting | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.toggle-sw{position:relative;display:inline-block;width:44px;height:24px}
+.toggle-sw input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#bdbdbd;border-radius:24px;transition:.3s}
+.toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+input:checked+.toggle-slider{background:#004d40}
+input:checked+.toggle-slider:before{transform:translateX(20px)}
+.rate-input{width:80px;border:1px solid #e0e0e0;border-radius:6px;padding:4px 8px;font-size:13px;text-align:right}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html" class="active"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Multi-State Payment Management &amp; State Reporting</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>State Reporting</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="exportStateCSV()"><i class="fas fa-file-csv"></i>Export CSV</button>
+      <button class="btn-pr btn-sm" onclick="generateStateReport()"><i class="fas fa-chart-bar"></i>Generate Report</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+      <span><strong>State Derivation Rule:</strong> Enrollment state is derived from the member's county + plan code at the time of enrollment via the CMS plan directory. This field is <strong>immutable</strong> once the ledger entry is created. All commission line items carry a state sub-ledger entry for state-level reporting, withholding, and regulatory compliance.</span></div>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'tabConfig')"><i class="fas fa-cog" style="margin-right:5px"></i>State Configuration</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabReport')"><i class="fas fa-chart-bar" style="margin-right:5px"></i>State Commission Report</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabAudit')"><i class="fas fa-history" style="margin-right:5px"></i>Config Audit Log</button>
+    </div>
+
+    <!-- ====== STATE CONFIG ====== -->
+    <div id="tabConfig" class="tab-pane active">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-cog" style="margin-right:8px;color:#004d40"></i>State Configuration — Plan Year 2026</h5>
+          <button class="btn-pr btn-sm" onclick="saveStateConfig()"><i class="fas fa-save"></i>Save Changes</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','state-reporting_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="al-info" style="padding:8px 14px;margin:0 0 12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Add a new state by clicking the "Add State" button. All changes are audit-logged. Withholding rate must be between 0 and 100. Changes apply to the next payment cycle.</span></div>
+        <div class="table-wrap">
+          <table id="tblExport1" class="tbl">
+            <thead><tr><th>State Code</th><th>State Name</th><th>Reporting Enabled</th><th>Withholding Rate %</th><th>Reporting Note</th><th>Status</th><th>Last Modified By</th><th>Last Modified At</th></tr></thead>
+            <tbody id="stateConfigTbody"></tbody>
+          </table>
+        </div>
+        <div style="padding:12px 16px;border-top:1px solid #e8eaed">
+          <button class="btn-ol btn-sm" onclick="addState()"><i class="fas fa-plus"></i>Add State</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== STATE COMMISSION REPORT ====== -->
+    <div id="tabReport" class="tab-pane">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:8px;color:#5f6368"></i>Report Filters</h5></div>
+        <div class="filter-bar" style="padding:12px 16px">
+          <label>Payment Cycle <span class="req">*</span></label>
+          <select id="fCycle">
+            <option value="">— Select —</option>
+            <option value="2026-05">May 2026</option><option value="2026-04">April 2026</option><option value="2026-03">March 2026</option>
+          </select>
+          <label>State</label>
+          <select id="fState" multiple style="height:auto">
+            <option value="FL" selected>Florida (FL)</option><option value="AZ">Arizona (AZ)</option><option value="TX">Texas (TX)</option>
+          </select>
+          <label>Commission Type</label>
+          <select id="fCommType">
+            <option value="">All</option><option>Initial</option><option>Renewal</option><option>HRA</option><option>Healthy Visit</option><option>Chargeback</option>
+          </select>
+          <label>Producer NPN</label>
+          <input type="text" id="fProducerNPN" placeholder="Optional...">
+          <button class="btn-pr btn-sm" onclick="generateStateReport()"><i class="fas fa-chart-bar"></i>Generate</button>
+          <button class="btn-ol btn-sm" onclick="exportStateCSV()"><i class="fas fa-file-csv"></i>Export CSV</button>
+        </div>
+      </div>
+      <div id="stateReportResults" style="display:none">
+        <div class="card">
+          <div class="card-hdr"><h5 id="stateReportTitle"></h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','state-reporting_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table id="tblExport2" class="tbl">
+              <thead><tr><th>Producer NPN</th><th>Producer Name</th><th>State</th><th>Commission Type</th><th>Enrollment Count</th><th>Gross Commission</th><th>Chargebacks Deducted</th><th>State Withholding</th><th>Net Commission</th><th>Batch ID</th></tr></thead>
+              <tbody id="stateReportTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== AUDIT LOG ====== -->
+    <div id="tabAudit" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>State Configuration Audit Log</h5>
+          <button class="btn-ol btn-sm" onclick="exportStateCSV()"><i class="fas fa-download"></i>Export</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','state-reporting_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport3" class="tbl">
+            <thead><tr><th>Timestamp</th><th>State</th><th>Field</th><th>Old Value</th><th>New Value</th><th>Changed By</th></tr></thead>
+            <tbody id="stateAuditTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const stateConfigs = [
+  {code:'FL',name:'Florida',reportingEnabled:true,withholdingRate:0,note:'Primary operating state. All commission types reportable.',status:'Active',modifiedBy:'System',modifiedAt:'2026-01-01'},
+  {code:'AZ',name:'Arizona',reportingEnabled:true,withholdingRate:0,note:'Secondary state — added Plan Year 2026.',status:'Active',modifiedBy:'David Park',modifiedAt:'2026-01-15'},
+  {code:'TX',name:'Texas',reportingEnabled:true,withholdingRate:0,note:'',status:'Active',modifiedBy:'David Park',modifiedAt:'2026-03-01'},
+];
+const stateReportData = [
+  {npn:'8823441',producer:'James Martinez',state:'FL',type:'Renewal',count:5,gross:144.60,chargebacks:0,withholding:0,net:144.60,batch:'BATCH-2026-05'},
+  {npn:'8823441',producer:'James Martinez',state:'FL',type:'HRA',count:1,gross:25.00,chargebacks:0,withholding:0,net:25.00,batch:'BATCH-2026-05'},
+  {npn:'8823441',producer:'James Martinez',state:'FL',type:'Healthy Visit',count:2,gross:650.00,chargebacks:0,withholding:0,net:650.00,batch:'BATCH-2026-05'},
+  {npn:'7719022',producer:'Sarah Chen',state:'FL',type:'Initial',count:2,gross:1388.00,chargebacks:0,withholding:0,net:1388.00,batch:'BATCH-2026-05'},
+  {npn:'7719022',producer:'Sarah Chen',state:'AZ',type:'Initial',count:1,gross:694.00,chargebacks:0,withholding:0,net:694.00,batch:'BATCH-2026-05'},
+  {npn:'9912345',producer:'Kevin Nguyen',state:'TX',type:'Renewal',count:4,gross:115.68,chargebacks:0,withholding:0,net:115.68,batch:'BATCH-2026-05'},
+  {npn:'5521833',producer:'Mark Brown',state:'FL',type:'Initial',count:2,gross:882.36,chargebacks:246.12,withholding:0,net:636.24,batch:'BATCH-2026-05'},
+];
+const stateAudit = [
+  {ts:'2026-03-01 09:15',state:'TX',field:'Status',old:'(new)',newVal:'Active',by:'David Park'},
+  {ts:'2026-01-15 10:22',state:'AZ',field:'Reporting Note',old:'',newVal:'Secondary state — added Plan Year 2026.',by:'David Park'},
+  {ts:'2026-01-01 00:00',state:'FL',field:'Status',old:'(init)',newVal:'Active',by:'System'},
+];
+
+function renderStateConfig(){
+  document.getElementById('stateConfigTbody').innerHTML=stateConfigs.map((s,i)=>`<tr>
+    <td><strong>${s.code}</strong></td><td>${s.name}</td>
+    <td><label class="toggle-sw"><input type="checkbox" id="sreport_${i}" ${s.reportingEnabled?'checked':''} onchange="toggleStateReport(${i},this)"><span class="toggle-slider"></span></label></td>
+    <td><input class="rate-input" type="number" id="swrate_${i}" min="0" max="100" step="0.01" value="${s.withholdingRate}" oninput="validateWithholding(${i},this)"> %</td>
+    <td><input style="width:100%;font-size:12.5px;border:1px solid #e0e0e0;border-radius:6px;padding:4px 8px" id="snote_${i}" value="${s.note}"></td>
+    <td><span class="bdg ${s.status==='Active'?'b-green':'b-grey'}" style="font-size:11px">${s.status}</span></td>
+    <td style="font-size:12px">${s.modifiedBy}</td>
+    <td style="font-size:12px">${s.modifiedAt}</td>
+  </tr>`).join('');
+}
+function toggleStateReport(i,cb){stateConfigs[i].reportingEnabled=cb.checked; stateAudit.unshift({ts:'05 29,2026 '+new Date().toTimeString().slice(0,5),state:stateConfigs[i].code,field:'Reporting Enabled',old:(!cb.checked).toString(),newVal:cb.checked.toString(),by:'David Park'}); renderStateAudit();}
+function validateWithholding(i,input){const v=parseFloat(input.value);if(isNaN(v)||v<0||v>100){input.style.borderColor='#c62828';showToast('Withholding rate must be between 0 and 100.','warn');return;}input.style.borderColor='#e0e0e0';}
+function saveStateConfig(){
+  stateConfigs.forEach((s,i)=>{
+    const newRate=parseFloat(document.getElementById('swrate_'+i).value)||0;
+    const newNote=document.getElementById('snote_'+i).value;
+    if(newRate!==s.withholdingRate){stateAudit.unshift({ts:'05 29,2026 '+new Date().toTimeString().slice(0,5),state:s.code,field:'Withholding Rate',old:s.withholdingRate+'%',newVal:newRate+'%',by:'David Park'}); s.withholdingRate=newRate;}
+    if(newNote!==s.note){stateAudit.unshift({ts:'05 29,2026 '+new Date().toTimeString().slice(0,5),state:s.code,field:'Reporting Note',old:s.note,newVal:newNote,by:'David Park'}); s.note=newNote;}
+    s.modifiedBy='David Park'; s.modifiedAt='2026-05-29';
+  });
+  renderStateAudit(); showToast('State configuration changes saved and audit-logged.','success');
+}
+function addState(){
+  const code=prompt('Enter 2-letter state code (e.g., CA):');
+  if(!code||code.length!==2){if(code!==null)showToast('State code must be exactly 2 letters.','warn');return;}
+  const name=prompt('Enter state name:');
+  if(!name){return;}
+  stateConfigs.push({code:code.toUpperCase(),name,reportingEnabled:true,withholdingRate:0,note:'',status:'Active',modifiedBy:'David Park',modifiedAt:'2026-05-29'});
+  renderStateConfig(); showToast(`State ${code.toUpperCase()} (${name}) added. State-level reporting active for the next payment cycle.`,'success');
+}
+function generateStateReport(){
+  const cycle=document.getElementById('fCycle').value;
+  if(!cycle){showToast('Please select a payment cycle.','warn');return;}
+  const ct=document.getElementById('fCommType').value;
+  const npn=(document.getElementById('fProducerNPN').value||'').trim();
+  const filtered=stateReportData.filter(r=>{
+    if(ct&&r.type!==ct) return false;
+    if(npn&&!r.npn.includes(npn)&&!r.producer.toLowerCase().includes(npn.toLowerCase())) return false;
+    return true;
+  });
+  document.getElementById('stateReportTitle').textContent=`State Commission Report — ${cycle} (${filtered.length} rows)`;
+  document.getElementById('stateReportTbody').innerHTML=filtered.map(r=>`<tr>
+    <td><code style="font-size:11px">${r.npn}</code></td><td>${r.producer}</td><td><strong>${r.state}</strong></td>
+    <td><span class="bdg b-blue" style="font-size:11px">${r.type}</span></td>
+    <td>${r.count}</td><td>$${r.gross.toFixed(2)}</td>
+    <td>${r.chargebacks>0?`<span style="color:#c62828">($${r.chargebacks.toFixed(2)})</span>`:'$0.00'}</td>
+    <td>${r.withholding>0?`($${r.withholding.toFixed(2)})`:'$0.00'}</td>
+    <td style="font-weight:700;color:#1b5e20">$${r.net.toFixed(2)}</td>
+    <td><code style="font-size:11px">${r.batch}</code></td>
+  </tr>`).join('');
+  document.getElementById('stateReportResults').style.display='block';
+}
+function renderStateAudit(){
+  document.getElementById('stateAuditTbody').innerHTML=stateAudit.map(a=>`<tr>
+    <td style="font-size:12px">${a.ts}</td><td><strong>${a.state}</strong></td>
+    <td style="font-size:12.5px">${a.field}</td>
+    <td style="color:#c62828;font-size:12px">${a.old||'—'}</td>
+    <td style="color:#1b5e20;font-size:12px">${a.newVal}</td>
+    <td style="font-size:12px">${a.by}</td>
+  </tr>`).join('');
+}
+function exportStateCSV(){
+  const cycle=document.getElementById('fCycle')?document.getElementById('fCycle').value:'';
+  showToast(`State Commission Report CSV exported${cycle?' for cycle '+cycle:''}. Includes all state sub-ledger entries with enrollment state field.`,'success');
+}
+
+function switchTab(btn,paneId){btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');btn.closest('.page').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById(paneId).classList.add('active');}
+function showToast(msg,type='info'){const t=document.getElementById('toast');const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;t.style.display='block';setTimeout(()=>t.style.display='none',5000);}
+
+renderStateConfig(); renderStateAudit();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

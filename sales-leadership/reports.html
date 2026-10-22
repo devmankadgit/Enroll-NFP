@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scheduled Reports | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}
+.badge-active{background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.badge-paused{background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html" class="active"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Scheduled Reports</h4></div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="showToast('New report schedule dialog — coming soon','info')"><i class="fas fa-plus"></i>New Schedule</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-file-alt"></i></div><div><div class="stat-label">Active Schedules</div><div class="stat-val">8</div><div class="stat-sub">Running on time</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-pause-circle"></i></div><div><div class="stat-label">Paused</div><div class="stat-val">2</div><div class="stat-sub">Manually paused</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Delivered This Week</div><div class="stat-val">14</div><div class="stat-sub">All successful</div></div></div></div>
+    </div>
+
+    <!-- Scheduled Reports Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-calendar-alt" style="color:#4a148c;margin-right:8px"></i>Report Schedules</h6></div>
+      <div class="table-wrap">
+        <table class="table table-hover" style="font-size:13px">
+          <thead><tr><th>Report Name</th><th>Frequency</th><th>Format</th><th>Recipients</th><th>Next Run</th><th>Last Delivered</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600">Weekly Enrollment Summary</td><td>Weekly (Mon 7am)</td><td>PDF + Excel</td><td>VP Sales, CMO</td>
+              <td>06 16,2026</td><td>06 09,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Monthly Commission Report</td><td>Monthly (1st)</td><td>Excel</td><td>VP Sales, Finance</td>
+              <td>07 01,2026</td><td>06 01,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Daily Lead Distribution</td><td>Daily (8am)</td><td>CSV</td><td>Sales Ops</td>
+              <td>06 10,2026</td><td>06 09,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Top Producer Leaderboard</td><td>Weekly (Fri 5pm)</td><td>PDF</td><td>All Agency Admins</td>
+              <td>06 13,2026</td><td>06 06,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Agent Network Health</td><td>Weekly (Mon 9am)</td><td>PDF</td><td>VP Sales</td>
+              <td>06 16,2026</td><td>06 09,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Compliance Hold Summary</td><td>Daily (9am)</td><td>Excel</td><td>Compliance, VP Sales</td>
+              <td>06 10,2026</td><td>06 09,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Campaign ROI Report</td><td>Bi-weekly</td><td>PDF + Excel</td><td>Marketing, VP Sales</td>
+              <td>06 20,2026</td><td>06 06,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Quarterly Cost Analysis</td><td>Quarterly</td><td>PDF</td><td>CFO, VP Sales</td>
+              <td>07 01,2026</td><td>04 01,2026</td><td><span class="badge-active">Active</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Report paused','warning')">Pause</button></td>
+            </tr>
+            <tr style="background:#fffde7">
+              <td style="font-weight:600">Geographic Expansion Briefing</td><td>Monthly (15th)</td><td>PDF</td><td>Strategy Team</td>
+              <td>—</td><td>05 15,2026</td><td><span class="badge-paused">Paused</span></td>
+              <td><button class="btn-pr btn-sm" onclick="showToast('Report resumed','success')">Resume</button></td>
+            </tr>
+            <tr style="background:#fffde7">
+              <td style="font-weight:600">Patient Activation Audit</td><td>Monthly (5th)</td><td>Excel</td><td>Compliance</td>
+              <td>—</td><td>05 05,2026</td><td><span class="badge-paused">Paused</span></td>
+              <td><button class="btn-pr btn-sm" onclick="showToast('Report resumed','success')">Resume</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

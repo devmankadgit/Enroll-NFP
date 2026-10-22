@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — Compliance Holds -->
+<title>Compliance Holds | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html" class="active"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Compliance Holds</h4><p style="font-size:12px;color:#5f6368;margin:0">Agents currently blocked from selling due to compliance failures</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Compliance Holds')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-ban"></i></div>
+        <div><div class="stat-label">Active Holds</div><div class="stat-val">28</div><div class="stat-sub">Agents blocked from selling</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-id-card"></i></div>
+        <div><div class="stat-label">License-Related</div><div class="stat-val">14</div><div class="stat-sub">Expired or revoked NIPR</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-certificate"></i></div>
+        <div><div class="stat-label">AHIP / Training</div><div class="stat-val">9</div><div class="stat-sub">Cert expired or not renewed</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-undo"></i></div>
+        <div><div class="stat-label">Lifted This Week</div><div class="stat-val">5</div><div class="stat-sub">Agents restored to active</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fReason"><option>All Reasons</option><option>License Expired</option><option>License Revoked</option><option>AHIP Expired</option><option>Training Incomplete</option><option>Background Check Failed</option><option>E&O Lapsed</option></select>
+      <select id="fDuration"><option>All Durations</option><option>< 7 days</option><option>7-30 days</option><option>> 30 days</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent, NPN..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:180px">
+    </div>
+
+    <!-- Holds Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-ban" style="color:#c62828;margin-right:8px"></i>Active Compliance Holds</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" id="holdsTable" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Reason</th><th>Hold Since</th><th>Duration</th><th>Action Required</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Kevin Patel</td><td>7823410</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">License Expired</span></td><td>06 02,2026</td><td style="color:#c62828;font-weight:600">7 days</td><td>Renew FL license via state portal</td><td><button class="btn-ol btn-sm" onclick="showContact('Kevin Patel','7823410','License Expired','06 02,2026','7 days','Renew FL license via state portal','kevin.patel@email.com','(305) 555-0142','FL Health license expired 06 01,2026. Agent was notified via automated email on Jun 2. Follow-up call attempted Jun 5 — no answer. Agent must renew through FL DOI portal and upload confirmation.')">Contact</button> <button class="btn-pr btn-sm" onclick="showLift('Kevin Patel','7823410','License Expired','06 02,2026','7 days')">Lift</button></td></tr>
+            <tr><td style="font-weight:600">Thomas Lee</td><td>2234567</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">License Revoked</span></td><td>06 07,2026</td><td>2 days</td><td>State board review — pending investigation</td><td><button class="btn-ol btn-sm" onclick="showDetails('Thomas Lee','2234567','License Revoked','06 07,2026','2 days','State board review — pending investigation','FL state board revoked Health license effective Jun 5. Reason: Failure to meet CE requirements (0 of 24 hours completed in renewal period). Agent\'s selling authority suspended immediately. Cannot be lifted until FL DOI reinstates. Compliance team monitoring.')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Sarah Kim</td><td>9912388</td><td><span class="badge" style="background:#ede7f6;color:#4a148c">AHIP Expired</span></td><td>01 01,2026</td><td style="color:#c62828;font-weight:600">160 days</td><td>Complete CY2026 AHIP certification</td><td><button class="btn-ol btn-sm" onclick="showContact('Sarah Kim','9912388','AHIP Expired','01 01,2026','160 days','Complete CY2026 AHIP certification','sarah.kim@email.com','(404) 555-0198','AHIP FWA certification expired 12 31,2025. Agent has not completed 2026 renewal. Multiple reminders sent (Jan 15, Feb 15, Mar 15, Apr 15, May 15). Agent unresponsive. Consider escalation to agency admin.')">Contact</button></td></tr>
+            <tr><td style="font-weight:600">Carlos Reyes</td><td>1123456</td><td><span class="badge" style="background:#ede7f6;color:#4a148c">Training Incomplete</span></td><td>05 15,2026</td><td>25 days</td><td>Complete Gold Kidney product training</td><td><button class="btn-ol btn-sm" onclick="showDetails('Carlos Reyes','1123456','Training Incomplete','05 15,2026','25 days','Complete Gold Kidney product training','Agent completed AHIP but has not finished plan-specific Gold Kidney MAPD product training module. Training assigned May 1, due May 14. Hold applied May 15. Agent contacted May 20 — stated personal emergency. Extension requested but not yet approved.')">Details</button></td></tr>
+            <tr><td style="font-weight:600">Diana Foster</td><td>9987654</td><td><span class="badge" style="background:#fff3e0;color:#e65100">E&O Lapsed</span></td><td>06 01,2026</td><td>8 days</td><td>Upload renewed E&O certificate</td><td><button class="btn-ol btn-sm" onclick="showContact('Diana Foster','9987654','E&O Lapsed','06 01,2026','8 days','Upload renewed E&O certificate','diana.foster@email.com','(713) 555-0176','E&O insurance policy lapsed 05 31,2026. Agent notified Jun 1. Agent replied Jun 3 stating renewal is in progress with insurer. New certificate expected by Jun 10. Follow up if not received.')">Contact</button> <button class="btn-pr btn-sm" onclick="showLift('Diana Foster','9987654','E&O Lapsed','06 01,2026','8 days')">Lift</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hold Detail Modal -->
+<div id="holdModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-ban" style="color:#c62828;margin-right:8px"></i><span id="hmTitle">Compliance Hold</span></h6>
+      <button onclick="closeHoldModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="hmAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="hmNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Hold Reason</div><div id="hmReason" style="font-size:13px;font-weight:600;color:#c62828;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Hold Since</div><div id="hmSince" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Duration</div><div id="hmDuration" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Action Required</div><div id="hmAction" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div id="hmContactInfo" style="display:none;background:#e3f2fd;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px">
+        <div style="font-weight:600;margin-bottom:6px"><i class="fas fa-address-book" style="margin-right:6px;color:#0277bd"></i>Contact Information</div>
+        <div>Email: <span id="hmEmail" style="font-weight:600">—</span></div>
+        <div style="margin-top:4px">Phone: <span id="hmPhone" style="font-weight:600">—</span></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Case History & Notes</div>
+        <div id="hmNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div id="hmActions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeHoldModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var rows=document.querySelectorAll('#holdsTable tbody tr');
+var fReason=document.getElementById('fReason');
+var fDuration=document.getElementById('fDuration');
+var fSearch=document.getElementById('fSearch');
+
+function applyFilters(){
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var reasonText=cells[2]?cells[2].textContent.trim():'';
+    var durationText=cells[4]?cells[4].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var search=fSearch.value.trim().toLowerCase();
+    var show=true;
+    if(fReason.value!=='All Reasons'&&reasonText.indexOf(fReason.value)<0) show=false;
+    if(search&&rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+  });
+  showToast('Filters applied','info');
+}
+fReason.addEventListener('change',applyFilters);
+fDuration.addEventListener('change',applyFilters);
+fSearch.addEventListener('input',applyFilters);
+
+function openHoldModal(agent,npn,reason,since,duration,action){
+  document.getElementById('hmAgent').textContent=agent;
+  document.getElementById('hmNPN').textContent=npn;
+  document.getElementById('hmReason').textContent=reason;
+  document.getElementById('hmSince').textContent=since;
+  document.getElementById('hmDuration').textContent=duration;
+  document.getElementById('hmAction').textContent=action;
+  document.getElementById('holdModal').style.display='flex';
+}
+function closeHoldModal(){document.getElementById('holdModal').style.display='none';}
+document.getElementById('holdModal').addEventListener('click',function(e){if(e.target===this)closeHoldModal();});
+
+function showDetails(agent,npn,reason,since,duration,action,notes){
+  openHoldModal(agent,npn,reason,since,duration,action);
+  document.getElementById('hmTitle').textContent='Hold Details — '+agent;
+  document.getElementById('hmContactInfo').style.display='none';
+  document.getElementById('hmNotes').textContent=notes;
+  document.getElementById('hmActions').innerHTML='<button class="btn-ol btn-sm" onclick="showToast(\'Escalated to compliance manager\',\'warning\')"><i class="fas fa-arrow-up" style="margin-right:4px"></i>Escalate</button><button class="btn-ol btn-sm" onclick="showToast(\'Audit log opened\',\'info\')"><i class="fas fa-history" style="margin-right:4px"></i>View Audit Log</button>';
+}
+function showContact(agent,npn,reason,since,duration,action,email,phone,notes){
+  openHoldModal(agent,npn,reason,since,duration,action);
+  document.getElementById('hmTitle').textContent='Contact Agent — '+agent;
+  document.getElementById('hmContactInfo').style.display='block';
+  document.getElementById('hmEmail').textContent=email;
+  document.getElementById('hmPhone').textContent=phone;
+  document.getElementById('hmNotes').textContent=notes;
+  document.getElementById('hmActions').innerHTML='<button class="btn-pr btn-sm" onclick="showToast(\'Email sent to '+email+'\',\'success\')"><i class="fas fa-envelope" style="margin-right:4px"></i>Send Email</button><button class="btn-ol btn-sm" onclick="showToast(\'Phone number copied\',\'info\')"><i class="fas fa-phone" style="margin-right:4px"></i>Copy Phone</button><button class="btn-ol btn-sm" onclick="showToast(\'Reminder scheduled\',\'info\')"><i class="fas fa-clock" style="margin-right:4px"></i>Schedule Follow-up</button>';
+}
+function showLift(agent,npn,reason,since,duration){
+  openHoldModal(agent,npn,reason,since,duration,'Hold removal requires System Admin action');
+  document.getElementById('hmTitle').textContent='Hold Details — '+agent;
+  document.getElementById('hmContactInfo').style.display='none';
+  document.getElementById('hmNotes').textContent='This compliance hold ('+reason+') must be resolved before the agent can resume selling. Hold removal and reactivation is performed by System Admin after compliance verification.';
+  document.getElementById('hmActions').innerHTML='<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 14px;width:100%;margin-bottom:8px;font-size:12px"><i class="fas fa-info-circle" style="color:#0277bd;margin-right:6px"></i><strong>Note:</strong> Hold removal and reactivation is managed by System Admin.</div><button class="btn-ol btn-sm" onclick="closeHoldModal()">Close</button>';
+}
+</script>
+</body>
+</html>

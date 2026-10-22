@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Sales Leadership Top Producers (US-6.16) -->
+<title>Top Producers | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html" class="active"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div><div style="font-size:9px;color:#ce93d8;margin-top:2px"><i class="fas fa-eye" style="margin-right:3px"></i>Org-Wide Read Access</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Top Producers</h4><p style="font-size:12px;color:#5f6368;margin:0">Ranked by enrollment volume and commission earnings</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Top Producers')"><i class="fas fa-download"></i>Export CSV</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Top Producers PDF')"><i class="fas fa-file-pdf"></i>Export PDF</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Filters -->
+    <div class="filter-bar">
+      <select><option>All States</option><option>Florida</option><option>Georgia</option><option>Texas</option><option>California</option></select>
+      <select><option>All Plan Types</option><option>MAPD</option><option>MA-Only</option><option>C-SNP</option><option>D-SNP</option></select>
+      <select><option>CY 2026 YTD</option><option>Last 30 Days</option><option>Last 90 Days</option><option>Q1 2026</option><option>Q2 2026</option></select>
+      <select><option>All Agency Levels</option><option>SFMO / NFMO</option><option>FMO</option><option>SGA / MGA</option><option>GA / Individual</option></select>
+    </div>
+
+    <!-- Producers Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-trophy" style="color:#e65100;margin-right:8px"></i>Top Producers by Enrollment Volume &amp; Commission Earnings</h6><span class="badge" style="background:#ede7f6;color:#4a148c">Top 15</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>#</th><th>Agent</th><th>NPN</th><th>Agency / Level</th><th>States</th><th>Enrollments</th><th>Commission Earned</th><th>HRA %</th><th>Conv Rate</th></tr></thead>
+          <tbody>
+            <tr><td><span style="background:#ffd54f;color:#5d4037;font-weight:700;padding:2px 7px;border-radius:12px">1</span></td><td style="font-weight:600">James Martinez</td><td>8823441</td><td>Premier Insurance (FMO)</td><td>FL, GA</td><td style="font-weight:700;color:#4a148c">87</td><td>$12,480</td><td>78%</td><td style="color:#2e7d32;font-weight:600">31.2%</td></tr>
+            <tr><td><span style="background:#e0e0e0;color:#424242;font-weight:700;padding:2px 7px;border-radius:12px">2</span></td><td style="font-weight:600">Sarah Chen</td><td>7719022</td><td>National Benefits (SGA)</td><td>CA, TX</td><td style="font-weight:700;color:#4a148c">72</td><td>$10,340</td><td>82%</td><td style="color:#2e7d32;font-weight:600">28.4%</td></tr>
+            <tr><td><span style="background:#ffcc80;color:#5d4037;font-weight:700;padding:2px 7px;border-radius:12px">3</span></td><td style="font-weight:600">Kevin Nguyen</td><td>9912345</td><td>Alliance Health (MGA)</td><td>TX</td><td style="font-weight:700;color:#4a148c">65</td><td>$9,880</td><td>71%</td><td>24.1%</td></tr>
+            <tr><td>4</td><td style="font-weight:600">Patricia Lee</td><td>5521833</td><td>Southwest Medicare (GA)</td><td>FL</td><td style="font-weight:700">58</td><td>$8,120</td><td>86%</td><td style="color:#2e7d32;font-weight:600">26.7%</td></tr>
+            <tr><td>5</td><td style="font-weight:600">Mark Brown</td><td>6612987</td><td>Direct (Individual)</td><td>GA</td><td style="font-weight:700">51</td><td>$7,650</td><td>92%</td><td style="color:#2e7d32;font-weight:600">33.8%</td></tr>
+            <tr><td>6</td><td style="font-weight:600">Angela Torres</td><td>4428901</td><td>Premier Insurance (FMO)</td><td>FL</td><td style="font-weight:700">48</td><td>$6,920</td><td>75%</td><td>22.5%</td></tr>
+            <tr><td>7</td><td style="font-weight:600">David Chen</td><td>4478122</td><td>Pacific Health (SGA)</td><td>CA</td><td style="font-weight:700">45</td><td>$6,480</td><td>68%</td><td>21.3%</td></tr>
+            <tr><td>8</td><td style="font-weight:600">Lisa Park</td><td>3356090</td><td>National Benefits (SGA)</td><td>TX, GA</td><td style="font-weight:700">42</td><td>$6,010</td><td>80%</td><td>19.8%</td></tr>
+            <tr><td>9</td><td style="font-weight:600">Robert Martinez</td><td>4432887</td><td>Alliance Health (MGA)</td><td>TX</td><td style="font-weight:700">39</td><td>$5,620</td><td>74%</td><td>18.6%</td></tr>
+            <tr><td>10</td><td style="font-weight:600">Karen Davis</td><td>2247891</td><td>Direct (Individual)</td><td>FL, GA</td><td style="font-weight:700">36</td><td>$5,180</td><td>89%</td><td style="color:#2e7d32;font-weight:600">27.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="row g-3" style="margin-top:16px">
+      <div class="col-md-3">
+        <div class="card"><div class="card-body" style="padding:16px;text-align:center">
+          <div style="font-size:24px;font-weight:700;color:#4a148c">543</div>
+          <div style="font-size:12px;color:#5f6368">Top 10 Enrollments</div>
+          <div style="font-size:11px;color:#2e7d32;margin-top:4px">43.5% of total MTD</div>
+        </div></div>
+      </div>
+      <div class="col-md-3">
+        <div class="card"><div class="card-body" style="padding:16px;text-align:center">
+          <div style="font-size:24px;font-weight:700;color:#2e7d32">$78,680</div>
+          <div style="font-size:12px;color:#5f6368">Top 10 Commission</div>
+          <div style="font-size:11px;color:#5f6368;margin-top:4px">$144.90 avg per enrollment</div>
+        </div></div>
+      </div>
+      <div class="col-md-3">
+        <div class="card"><div class="card-body" style="padding:16px;text-align:center">
+          <div style="font-size:24px;font-weight:700;color:#e65100">79.5%</div>
+          <div style="font-size:12px;color:#5f6368">Avg HRA Completion</div>
+          <div style="font-size:11px;color:#5f6368;margin-top:4px">Top 10 producers</div>
+        </div></div>
+      </div>
+      <div class="col-md-3">
+        <div class="card"><div class="card-body" style="padding:16px;text-align:center">
+          <div style="font-size:24px;font-weight:700;color:#0277bd">25.4%</div>
+          <div style="font-size:12px;color:#5f6368">Avg Conversion Rate</div>
+          <div style="font-size:11px;color:#2e7d32;margin-top:4px">+3.2pp above org average</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var rows = document.querySelectorAll('.table tbody tr');
+var filters = document.querySelectorAll('.filter-bar select');
+
+function applyFilters(){
+  var state = filters[0].value;
+  var level = filters[3].value;
+  rows.forEach(function(row){
+    var cells = row.querySelectorAll('td');
+    var stateCell = cells[4]?cells[4].textContent:'';
+    var agencyCell = cells[3]?cells[3].textContent:'';
+    var show = true;
+    if(state!=='All States'){
+      var stateMap={'Florida':'FL','Georgia':'GA','Texas':'TX','California':'CA'};
+      if(stateCell.indexOf(stateMap[state]||'')<0) show=false;
+    }
+    if(level!=='All Agency Levels'){
+      if(level==='FMO' && agencyCell.indexOf('FMO')<0) show=false;
+      if(level==='SGA / MGA' && agencyCell.indexOf('SGA')<0 && agencyCell.indexOf('MGA')<0) show=false;
+      if(level==='GA / Individual' && agencyCell.indexOf('(GA)')<0 && agencyCell.indexOf('Individual')<0) show=false;
+      if(level==='SFMO / NFMO' && agencyCell.indexOf('SFMO')<0 && agencyCell.indexOf('NFMO')<0) show=false;
+    }
+    row.style.display = show?'':'none';
+  });
+  showToast('Filters applied','info');
+}
+filters.forEach(function(f){f.addEventListener('change', applyFilters);});
+</script>
+</body>
+</html>

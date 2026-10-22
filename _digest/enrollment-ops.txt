@@ -1,0 +1,130 @@
+##### SIDEBAR variant used by 8 pages: audit-trail.html, compliance-tracker.html, csnp-review.html, dashboard.html, document-repository.html, id-cards.html, oec-intake.html, processing-hub.html
+- Dashboard [dashboard.html]
+## Enrollment Processing
+- Processing Hub [processing-hub.html]
+- OEC Intake Hub [oec-intake.html]
+- C-SNP Review [csnp-review.html]
+- 7-Day Compliance [compliance-tracker.html]
+## Member Services
+- Document Repository [document-repository.html]
+- ID Cards [id-cards.html]
+- Audit Trail [audit-trail.html]
+
+=== /enrollment-ops/audit-trail.html | Enrollment Audit Trail | Gold Kidney
+ACTIVE NAV: Audit Trail
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Enrollment Audit Trail | BC: Enrollment Ops Audit Trail
+KPIs: Total Audit Events=2,847 ; Enrollment Actions=1,204 ; Compliance Flags=23 ; PHI Access Events=156
+CARDS/SECTIONS: Audit Events
+TABLE1 (10 rows) cols: Timestamp | Enrollment ID | Action | Member | User | Source | Details
+   row1: 06 18,2026 09:14 AM ENR-2026-05231 CMS Submitted ****-****-JK89 System Agent Portal
+SELECTS: [All Action Types, Enrollment Created, Enrollment Submitted, CMS Submitted, CMS Accepted, CMS Rejected, Enrollment Resubmitted, Enrollment Cancelled, Disenrollment, SOA Signed, SOA Expired, BEQ Check,...] [All Sources, Agent Portal, DTC (Web), SFTP Batch, Manual Entry] [All Users, James Martinez, Sarah Chen, Rachel Wong, System]
+PLACEHOLDERS: Search Enrollment ID, MBI, Member Name...
+BUTTONS: Search | Previous | 1 | 2 | 3 | Next
+
+=== /enrollment-ops/compliance-tracker.html | 7-Day CMS Compliance Tracker | Enrollment Ops
+ACTIVE NAV: 7-Day Compliance
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: OEC Submission & 7-Day CMS Compliance Tracker | BC: 
+ALERT: CMS Requirement: Enrollment applications must be submitted within 7 calendar days of application signature date. At-Risk alerts at Day 5 (configurable). Compliance Breach escalatio
+ALERT: Effective Date Lifecycle: Agent enters a Requested Effective Date (always 1st of month). On CMS acceptance, a Confirmed Effective Date is returned and used for all downstream commi
+KPIs: Safe (0-4 days)=32 ; At Risk (5-6 days)=8 ; Breached (7+ days)=2 ; Submitted (ATN Received)=156
+CARDS/SECTIONS: 7-Day Compliance Tracker
+TABLE1 (6 rows) cols: Application ID | Member Name | Agent NPN | App Signature Date | Days Elapsed | CMS Submission | Application Tracking Number | Status | Risk Level | Actions
+   row1: APP-2026-1247 Linda Park 8823441 05 20,2026 5 Pending Submission At Risk
+FORM LABELS: Risk Level: | Status: | Agent: | Days: | App Date:
+SELECTS: [All, Safe, At Risk, Breached] [All, Pending Submission, Submitted - Pending ATN, CMS Rejected, CMS Accepted] [All Agents, James Martinez (8823441), Sarah Chen (7714200)]
+PLACEHOLDERS: Min | Max
+BUTTONS: Filter | Reset | Export to Excel
+MODALS/DRAWERS: commentModal:Comments ; rejModal:CMS Rejection Detail
+BADGES: Pending Submission | CMS Rejected | Submitted - Pending CMS | CMS Accepted | Submitted - Pending ATN
+
+=== /enrollment-ops/csnp-review.html | C-SNP Review | Gold Kidney Enrollment Ops
+ACTIVE NAV: C-SNP Review
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: C-SNP Verification Review | BC: C-SNP Documentation Review & Annual Re-Verification
+ALERT: C-SNP Eligibility: Members must have a qualifying chronic condition (CKD Stage 3+, ESRD, Diabetes w/ CKD, Cardiovascular w/ CKD). Documentation must include: physician attestation,
+KPIs: Pending Initial Review=5 ; Re-Verification Due=8 ; Approved (MTD)=22 ; Rejected (MTD)=3
+CARDS/SECTIONS: New C-SNP Submissions (5) || Annual Re-Verification Queue (8)
+TABLE1 (5 rows) cols: Member | Condition | Documentation Type | Submitted | Agent | eGFR Value | Status | Actions
+   row1: Dorothy Henderson DOB: 03/15/1958 — MBI: 1EG4-TE5-MK72 ESRD Dialysis Records + Physician Attestation 05 22,2026 J. Martinez (8823441) < 15 Pending Review
+TABLE2 (4 rows) cols: Member | Condition | Plan Anniversary | Re-Verify By | Days Remaining | Last Verification | Status | Actions
+   row1: Helen Morris MBI: 9AB1-CD2-EF34 ESRD 05 31,2026 05 31,2026 OVERDUE 06 01,2025 Overdue — Flag
+FORM LABELS: Condition: | Status: | Agent:
+SELECTS: [All, ESRD, CKD, Diabetes + CKD, Cardiovascular + CKD] [All, Pending Review, Needs More Info, Approved, Rejected]
+PLACEHOLDERS: Search NPN...
+BUTTONS: Apply | Reset | Export to Excel
+MODALS/DRAWERS: commentModal:Comments ; rejectModal:Reject C-SNP Submission ; docModal:C-SNP Documentation Viewer ; docModalTitle: ; reverifyModal:Initiate Annual Re-Verification
+BADGES: ESRD | Pending Review | CKD Stage 4 | Diabetes + CKD | CKD Stage 3b | Needs More Info | Cardiovascular + CKD | Within 60 days of anniversary | OVERDUE | Overdue — Flag | CKD Stage 3a | 30-day alert | Not Started | Docs Requested | 60-day alert
+
+=== /enrollment-ops/dashboard.html | Enrollment Ops Dashboard | Gold Kidney
+ACTIVE NAV: Dashboard
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Enrollment Operations Dashboard | BC: 
+KPIs: Enrollments in Queue=28 ; 7-Day Compliance Flags=3 ; Rejection Queue=2 ; CMS Compliance Rate=92% ; Intake Health=Good ; PQAT Overdue=4
+CARDS/SECTIONS: Enrollment Status Pipeline
+MODALS/DRAWERS: enrollModal:Enrollment Detail
+CHARTS: 4 canvas line,doughnut,bar
+
+=== /enrollment-ops/document-repository.html | Document Repository | Enrollment Ops
+ACTIVE NAV: Document Repository
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Document Repository | BC: 
+KPIs: Total Documents=42 ; SOA Documents=14 ; Pending Auto-File=2 ; Retention Protected=42
+CARDS/SECTIONS: Document Search || All Documents
+TABLE1 (18 rows) cols: Doc ID | Document Type | Member Name | MBI | Agent NPN | Enrollment Ref | Filed At | Effective Date | Ver | Filing Trigger | Status
+   row1: DOC-2026-0291 Enrollment Application Frank Johnson ***-**-CD89 8823441 ENR-2026-00541 05 23,2026 01 01,2027 1 OEC Sent Active
+FORM LABELS: Member Name (partial) | Member MBI (exact) | Agent NPN | Document Type | Filed At — From | Filed At — To | Enrollment Reference ID
+SELECTS: [All Types, SOA, Enrollment Application, C-SNP Verification, PQAT Record, CMS Acknowledgment]
+PLACEHOLDERS: e.g., Johnson | 1AB2-CD3-EF45 | 8823441 | ENR-2026-00541
+BUTTONS: Search Documents | Clear Filters | Export to Excel | ← Prev | Next →
+MODALS/DRAWERS: docDetailPanel:Document Details ; docPanelBg: ; uploadModal:Upload Paper SOA
+BADGES: Enrollment Application | Active | C-SNP Verification | Under Review | SOA | PQAT Record | CMS Acknowledgment
+
+=== /enrollment-ops/id-cards.html | Member ID Card Management | Gold Kidney Enrollment Ops
+ACTIVE NAV: ID Cards
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Member ID Card Management | BC: ID Card Generation, Delivery & Replacement
+ALERT: Auto-Generation Trigger: Member ID cards are automatically generated when enrollment status reaches CMS Accepted . Digital delivery is sent to the member's email on file within 24 
+KPIs: Generated Today=4 ; Pending Mail=7 ; Digital Downloads (7d)=22 ; Replacement Requests=3
+CARDS/SECTIONS: ID Card Generation Queue || Replacement Card Requests
+TABLE1 (4 rows) cols: Member | MBI (Masked) | Plan | Effective Date | CMS Accepted | Card Status | Digital Delivery | Actions
+   row1: Dorothy Henderson ***-**-MK72 ESRD Platinum 06 01,2026 05 02,2026 Generated Sent âœ“
+TABLE2 (3 rows) cols: Member | Requested | Reason | Requested By | Status | Actions
+   row1: Dorothy Henderson 05 20,2026 Lost card Member (self-service) Mailed May 24
+FORM LABELS: Card Status: | Plan: | Member:
+SELECTS: [All, Generated, Pending Mail, Generating, Pending CMS] [All, ESRD Platinum, CKD SNP Gold, CKD SNP Silver]
+PLACEHOLDERS: Search name...
+BUTTONS: Apply | Reset | Export to Excel | New Request
+MODALS/DRAWERS: commentModal:Comments
+BADGES: Generated | Sent âœ“ | Pending Mail | Pending | Mailed May 24 | Processing | Pending Review
+
+=== /enrollment-ops/oec-intake.html | OEC Intake Hub | Enrollment Ops
+ACTIVE NAV: OEC Intake Hub
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Multi-Source OEC Intake Hub | BC: 
+KPIs: Total in Queue= ; Validated= ; Errors= ; Submitted to CMS Today=
+CARDS/SECTIONS: Enrollment Detail
+TABLE1 (12 rows) cols:  | Source | Received Date | Member Name | MBI | Agent NPN | Plan | Status | Actions
+   row1: Portal 03/31/2026 Margaret Thompson ***-**-4821 19384756 CKD SNP Validated
+TABS: All | Portal Direct | Sunfire | Connecture | GoHealth | Manual Upload
+SELECTS: [All Sources, Portal Direct, Sunfire, Connecture, GoHealth, Manual Upload] [All Statuses, Received, Processing, Validated, Error, Submitted to CMS]
+PLACEHOLDERS: Search Agent NPN...
+BUTTONS: All | Portal Direct | Sunfire | Connecture | GoHealth | Manual Upload | Apply | Clear | ×
+MODALS/DRAWERS: enrollDetailModal:Enrollment Detail
+BADGES: Validated | Received | Error | Submitted | Processing
+
+=== /enrollment-ops/processing-hub.html | Enrollment Processing Hub | Enrollment Ops
+ACTIVE NAV: Processing Hub
+USER: RW Rachel Wong Enrollment Ops Manager
+HEADER: Multi-Source OEC Intake & Centralized Processing Hub | BC: 
+KPIs: Total Pending=47 ; At Risk (Day 5+)=8 ; CMS Rejected=3 ; Submitted Today=12
+CARDS/SECTIONS: Intake Sources || Enrollment Applications (47 pending)
+TABLE1 (5 rows) cols: Application ID | Member Name | Source | Plan | Effective Date | App Date | Status | Days | Assigned To | Actions
+   row1: APP-2026-1247 Linda Park Broker ESRD C-SNP Gold 01 01,2027 May 20 Pending CMS 5 Rachel Wong
+FORM LABELS: Source: | Status: | Agent: | Plan Year: | State:
+SELECTS: [All Sources, Broker-Assisted, DTC, OEC Vendor SFTP, Manual Entry] [All Statuses, Draft, Submitted, Pending CMS, CMS Accepted, CMS Rejected, Duplicate] [All Agents, James Martinez, Sarah Chen] [All, 2026, 2027] [All, FL, GA, TX]
+PLACEHOLDERS: Search name, App ID...
+BUTTONS: Apply | Reset | Export to Excel | ← Prev | Next →
+MODALS/DRAWERS: detailPanel:Application Details ; panelBackdrop: ; dupModal:Resolve Duplicate Enrollment ; overrideModal:Manual Eligibility Override ; assignModal:Assign Work Item ; escalateModal:Escalate Processing Issue ; rejectResolveModal:Resolve CMS Rejection ; docReviewModal:Document Review ; commentModal:Add Comment
+BADGES: Broker | Pending CMS | DTC | CMS Accepted | CMS Rejected | SFTP | Duplicate Detected | Submitted
