@@ -1,1761 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/shadcn-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#0f6a62}
-/* Step wizard */
-.ob-layout{display:block}
-.ob-steps-panel{display:none}
-.ob-step-bar{display:flex;flex-direction:column;gap:0;padding:0;position:relative}
-.ob-step-bar::before{content:'';position:absolute;left:19px;top:18px;bottom:18px;width:2px;background:rgba(255,255,255,.12);border-radius:1px}
-.ob-step{display:flex;align-items:center;gap:12px;position:relative;cursor:pointer;padding:10px 12px 10px 8px;border:none;border-radius:0;transition:all .2s;background:transparent;z-index:1}
-.ob-step:hover{background:rgba(255,255,255,.05)}
-.ob-step.disabled{cursor:not-allowed;opacity:.3;background:transparent}
-.ob-step.disabled:hover{background:transparent}
-.ob-step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:rgba(255,255,255,.08);color:rgba(255,255,255,.4);flex-shrink:0;border:2px solid rgba(255,255,255,.15);transition:all .2s}
-.ob-step.done .ob-step-num{background:#43a047;color:#fff;border-color:#43a047}
-.ob-step.done .ob-step-num::after{content:'\\f00c';font-family:'Font Awesome 6 Free';font-weight:900;font-size:9px}
-.ob-step.done .ob-step-num span{display:none}
-.ob-step.active .ob-step-num{background:#fff;color:#0f6a62;border-color:#fff;font-weight:800;box-shadow:0 0 8px rgba(255,255,255,.3)}
-.ob-step-label{font-size:11px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.3;letter-spacing:.2px;transition:all .2s}
-.ob-step.done .ob-step-label{color:rgba(255,255,255,.7)}
-.ob-step.active .ob-step-label{color:#fff;font-weight:600}
-.ob-step.active{background:linear-gradient(90deg,rgba(40,172,149,.12),transparent);border-right:3px solid #28ac95}
-/* Sections */
-.ob-section{display:none}
-.ob-section.active{display:block}
-.ob-form-section{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:16px 18px;margin-bottom:12px}
-.ob-form-section h6{font-size:12px;font-weight:700;color:#0f6a62;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.form-row.three{grid-template-columns:1fr 1fr 1fr}
-.form-row.four{grid-template-columns:1fr 1fr 1fr 1fr}
-.form-row.one{grid-template-columns:1fr}
-.fg{display:flex;flex-direction:column;gap:3px}
-.fg label{font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.3px}
-.fg label .req{color:#c62828}
-.fg input,.fg select,.fg textarea{padding:7px 10px;border:1px solid #dadce0;border-radius:5px;font-size:12px;background:#fff}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#0f6a62;outline:none;box-shadow:0 0 0 2px rgba(15,106,98,.08)}
-.fg .field-err{border-color:#c62828 !important;background:#fff8f8}
-.fg .err-msg{font-size:10px;color:#c62828;margin-top:2px;display:none}
-.fg .err-msg.show{display:block}
-.upload-zone{border:2px dashed #bdbdbd;border-radius:8px;padding:16px;text-align:center;font-size:12px;color:#757575;cursor:pointer;transition:border-color .2s;background:#fff}
-.upload-zone:hover{border-color:#0f6a62;background:#f6fbfa}
-.upload-zone input[type=file]{display:none}
-.upload-zone.has-file{border-color:#2e7d32;border-style:solid;background:#f1f8e9;color:#1b5e20}
-.step-nav{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #f1f3f4}
-.state-checkbox{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;cursor:pointer;margin:3px;transition:all .15s}
-.state-checkbox:hover{border-color:#0f6a62;background:#f0f8f6}
-.state-checkbox input:checked ~ span{font-weight:600;color:#0f6a62}
-.lob-checkbox{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;cursor:pointer;margin:3px;transition:all .15s}
-.lob-checkbox:hover{border-color:#0f6a62;background:#f0f8f6}
-.module-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;background:#fff}
-.module-item .m-num{width:28px;height:28px;border-radius:50%;background:#e8f5f2;color:#0f6a62;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.module-item.unlocked .m-num{background:#0f6a62;color:#fff}
-.q-option-label{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;cursor:pointer;font-size:13px;margin-bottom:8px;transition:all .15s}
-.q-option-label:hover{border-color:#0f6a62;background:#f0f8f6}
-.q-option-label input[type=radio]:checked ~ .q-text{font-weight:600;color:#0f6a62}
-.attest-box{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:12px;line-height:1.7;color:#1b5e20}
-/* Draft step badge */
-.ob-step.draft .ob-step-num{background:#e65100;color:#fff;border-color:#e65100}
-.ob-step.draft .ob-step-label{color:#ffcc80}
-.ob-step.draft:not(:last-child)::after{background:#ffe0cc}
-/* W-9 draft banner */
-.w9-draft-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin-bottom:14px;font-size:12px;color:#e65100}
-.w9-draft-saved{display:none;align-items:center;gap:8px;padding:8px 12px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;margin-top:8px;font-size:11px;color:#1b5e20;font-weight:600}
-/* W-9 incomplete warning on contract step */
-.w9-block-banner{display:none;align-items:flex-start;gap:10px;padding:14px 16px;background:#ffebee;border:1px solid #ffcdd2;border-radius:8px;margin-bottom:16px;font-size:12px;color:#b71c1c}
-/* Disabled validate buttons with hover tooltip */
-.validate-wrap{position:relative;display:inline-flex}
-.validate-wrap::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#424242;color:#fff;font-size:10px;font-weight:500;padding:4px 9px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;letter-spacing:.2px}
-.validate-wrap:hover::after{opacity:1}
-.btn-validate{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:600;border:1.5px solid #bdbdbd;border-radius:6px;background:#f5f5f5;color:#9e9e9e;cursor:not-allowed;pointer-events:none;line-height:1.4}
-.btn-validate i{font-size:11px}
-/* Exam segment progress tracker */
-.seg-progress{display:flex;align-items:flex-start;gap:0;margin-bottom:20px}
-.seg-prog-cell{display:flex;flex-direction:column;align-items:center;flex:1}
-.seg-dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:#e8eaed;color:#5f6368;border:2px solid #dadce0;transition:all .2s}
-.seg-dot.active{background:#0f6a62;color:#fff;border-color:#0f6a62;box-shadow:0 0 0 4px rgba(15,106,98,.12)}
-.seg-dot.done{background:#1b5e20;color:#fff;border-color:#1b5e20}
-.seg-dot-label{font-size:9px;color:#5f6368;margin-top:4px;text-align:center;line-height:1.3}
-.seg-connector-wrap{flex:1;display:flex;align-items:center;padding-top:17px}
-.seg-connector{height:3px;width:100%;background:#e8eaed;border-radius:2px;transition:background .3s}
-.seg-connector.done{background:#1b5e20}
-.flow-card{background:linear-gradient(135deg,#e8f5f2 0%,#f6fbfa 100%);border:1px solid #cdebe4;border-radius:10px;padding:14px 16px;margin-bottom:14px}
-.flow-card h6{margin:0 0 8px 0;font-size:12px;font-weight:700;color:#0f6a62;text-transform:uppercase;letter-spacing:.4px}
-.flow-list{margin:0;padding-left:18px;font-size:12px;color:#37474f;line-height:1.7}
-.flow-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.flow-note{display:none;margin-top:8px;padding:8px 10px;border-radius:6px;background:#fff8e1;border:1px solid #ffe082;font-size:11px;color:#795548}
-@media(max-width:1100px){
-  .ob-layout{display:block}
-}
+  /* One continuous Enrollaxis light theme across sidebar + flow */
+  .progress-box {
+    padding: 0.85rem 0.9rem;
+    background: var(--accent);
+    border: 1px solid #c9ebe3;
+    border-radius: 0.65rem;
+    margin-bottom: 0.9rem;
+  }
+  .progress-box .label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--primary);
+    margin-bottom: 0.35rem;
+  }
+  .progress-box .value { font-size: 0.75rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
+  .progress-box .ui-progress { margin-top: 0.55rem; background: #d2e8e2; height: 0.4rem; }
+  .progress-box .ui-progress-bar { background: var(--primary); }
+  .sidebar-exit {
+    margin-top: 0.85rem;
+    color: var(--muted-foreground) !important;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .sidebar-exit:hover { color: var(--primary) !important; background: var(--accent); }
+  .seg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+  @media (max-width: 800px) { .seg-grid { grid-template-columns: 1fr 1fr; } }
+  .seg-tile {
+    text-align: center;
+    padding: 0.65rem 0.4rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    cursor: pointer;
+    font-size: 0.6875rem;
+  }
+  .seg-tile strong { display: block; font-size: 0.875rem; margin: 0.2rem 0; }
+  .seg-tile.done { border-color: #a6dace; background: var(--accent); }
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .summary-cell {
+    padding: 0.65rem 0.75rem;
+    background: var(--muted);
+    border-radius: calc(var(--radius) - 4px);
+    font-size: 0.75rem;
+  }
+  .summary-cell .k { font-size: 0.625rem; color: var(--muted-foreground); margin-bottom: 0.15rem; }
+  .summary-cell .v { font-weight: 600; }
+  .contract-scroll {
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    height: 180px;
+    overflow-y: auto;
+    padding: 0.875rem 1rem;
+    font-size: 0.6875rem;
+    line-height: 1.8;
+    color: #424242;
+    background: #fafafa;
+    margin-bottom: 0.75rem;
+  }
+  .success-hero { text-align: center; padding: 2rem 1rem; }
+  .success-icon {
+    width: 4.5rem; height: 4.5rem; border-radius: 9999px;
+    background: var(--accent); color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem; font-size: 2rem;
+  }
+  .ui-topbar h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+  }
+  .ui-topbar .subtitle {
+    margin: 0.2rem 0 0;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .ui-card { border-color: #d7e3e0; box-shadow: 0 1px 2px rgba(10,31,30,.04); }
+  .ui-card-content > .ui-alert { margin-bottom: 1rem; }
+  .ui-card-content > .ui-alert:last-child { margin-bottom: 0; }
+  .ui-topbar h1 { font-family: var(--font-heading); }
+  .ui-chip { margin: 0; font-family: var(--font-body); }
 </style>
 </head>
 <body>
-<nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-id-card-alt" style="margin-right:8px;opacity:.8"></i>Agent Onboarding</div></div>
-  <div class="sb-nav" style="padding-top:8px">
-    <div style="padding:12px 16px;background:rgba(255,255,255,.07);border-radius:8px;margin-bottom:12px">
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Onboarding Progress</div>
-      <div style="font-size:12px;color:#fff;font-weight:600" id="sb-step-label">Step 1 of 8</div>
-      <div style="height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:8px;overflow:hidden"><div id="sb-prog-fill" style="height:100%;background:#28ac95;border-radius:2px;width:12.5%;transition:width .4s"></div></div>
+<div class="ui-shell">
+  <aside class="ui-sidebar">
+    <div class="ui-sidebar-brand">
+      <img class="ui-sidebar-logo" src="../assets/brand/enrollaxis-logo-full.png" alt="Enrollaxis">
     </div>
-    <div class="ob-step-bar" id="obStepBar" style="margin-bottom:16px">
-      <div class="ob-step active" id="bar0" onclick="obGoTo(0)"><div class="ob-step-num">1</div><div class="ob-step-label">Invitation &amp; Registration</div></div>
-      <div class="ob-step" id="bar1" onclick="obGoTo(1)"><div class="ob-step-num">2</div><div class="ob-step-label">Personal &amp; Business Info</div></div>
-      <div class="ob-step" id="bar2" onclick="obGoTo(2)"><div class="ob-step-num">3</div><div class="ob-step-label">W-9 &amp; Tax / Payment</div></div>
-      <div class="ob-step" id="bar3" onclick="obGoTo(3)"><div class="ob-step-num">4</div><div class="ob-step-label">AHIP &amp; License Verification</div></div>
-      <div class="ob-step" id="bar4" onclick="obGoTo(4)"><div class="ob-step-num">5</div><div class="ob-step-label">Training &amp; Certification</div></div>
-      <div class="ob-step" id="bar5" onclick="obGoTo(5)"><div class="ob-step-num">6</div><div class="ob-step-label">Background Check</div></div>
-      <div class="ob-step" id="bar6" onclick="obGoTo(6)"><div class="ob-step-num">7</div><div class="ob-step-label">Contract Execution</div></div>
-      <div class="ob-step" id="bar7" onclick="obGoTo(7)"><div class="ob-step-num">8</div><div class="ob-step-label">Ready to Sell</div></div>
-    </div>
-    <a href="../auth/login.html" onclick="saveDraftAndExit(event,'../auth/login.html')" style="opacity:.7;margin-top:4px"><i class="fas fa-sign-out-alt"></i>Save &amp; Exit</a>
-  </div>
-  <div class="sb-foot">
-    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">NPN 8823441 &mdash; Onboarding</div></div></div>
-  </div>
-</nav>
-
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div>
-      <h4>Agent Onboarding</h4>
-      <ol class="breadcrumb-bar"><li>Producer Onboarding &mdash; Invitation through Ready to Sell</li></ol>
-    </div>
-    <a href="../auth/login.html" onclick="saveDraftAndExit(event,'../auth/login.html')" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
-  </div>
-
-  <div class="page">
-    <div>
-
-    <!-- ============================================================ -->
-    <!-- STEP 1: Invitation & Registration -->
-    <!-- ============================================================ -->
-    <div class="ob-section active card" id="obStep0">
-      <div class="card-hdr"><h5><i class="fas fa-envelope-open-text" style="margin-right:8px;color:#0f6a62"></i>Step 1: Invitation &amp; Registration</h5><button class="btn-ol btn-sm" onclick="prefillStep(0,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Draft saved badge (shown when step was skipped) -->
-        <div class="w9-draft-saved" id="draftBadge0"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
-        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Each NPN can only be registered once.</span></div>
-        <div class="ob-form-section">
-          <h6>Invitation Details</h6>
-          <div class="form-row three">
-            <div class="fg"><label>Invitation Type <span class="req">*</span></label>
-              <select id="inviteType" disabled style="background:#f1f3f4;color:#9e9e9e;cursor:not-allowed">
-                <option value="">Ã¢â‚¬â€ Select Ã¢â‚¬â€</option>
-                <option selected>Agency-Driven (FMO Invitation)</option>
-                <option>Carrier / Payer Initiated</option>
-                <option>Self-Registration (Public Link)</option>
-              </select>
-              <span class="err-msg" id="err_inviteType">Please select an invitation type.</span>
-            </div>
-            <div class="fg"><label>Invite Code / Token <span class="req">*</span></label>
-              <input type="text" id="inviteToken" placeholder="e.g. EA-INV-2026-XXXX" value="EA-INV-2026-0847" disabled style="background:#f1f3f4;color:#9e9e9e;cursor:not-allowed">
-              <span class="err-msg" id="err_inviteToken">Please enter your invitation code.</span>
-            </div>
-            <div class="fg"><label>Invited By (Agency / FMO Name)</label>
-              <input type="text" id="invitedBy" placeholder="e.g. Sunshine Insurance Group" value="HealthFirst Distribution" disabled style="background:#f1f3f4;color:#9e9e9e;cursor:not-allowed">
-            </div>
-          </div>
-
-        </div>
-        <div class="ob-form-section">
-          <h6>NPN Pre-Validation</h6>
-          <div class="form-row">
-            <div class="fg"><label>National Producer Number (NPN) <span class="req">*</span></label>
-              <input type="text" id="regNPN" placeholder="Please enter your NPN number" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-              <span class="err-msg" id="err_regNPN">Please enter a valid NPN number.</span>
-            </div>
-            <div class="fg" style="justify-content:flex-end">
-              <button class="btn-ol btn-sm" style="margin-top:18px" onclick="validateNPN()"><i class="fas fa-search"></i>Validate NPN</button>
-            </div>
-          </div>
-          <div id="npnResult" style="display:none;padding:10px 12px;background:#f1f8e9;border:1px solid #c8e6c9;border-radius:6px;font-size:11px;color:#1b5e20">
-            <i class="fas fa-check-circle" style="margin-right:4px"></i><strong>NPN Validated</strong>
-          </div>
-        </div>
-        <div style="font-size:11px;color:#5f6368;padding:8px 12px;background:#fff3e0;border:1px solid #ffe082;border-radius:6px">
-          <i class="fas fa-exclamation-triangle" style="color:#e65100;margin-right:4px"></i>Duplicate NPN submissions are blocked and trigger an admin alert.
-        </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="skipStep(0)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" onclick="obNext(0)"><i class="fas fa-arrow-right"></i>Next: Personal Details</button>
+    <nav class="ui-sidebar-nav">
+      <div class="progress-box">
+        <div class="label">Onboarding Progress</div>
+        <div class="value" id="sb-step-label">Step 1 of 8</div>
+        <div class="ui-progress"><div class="ui-progress-bar" id="sb-prog-fill" style="width:12.5%"></div></div>
+      </div>
+      <div class="ui-step-list" id="obStepBar">
+        <button type="button" class="ui-step-item active" id="bar0" onclick="obGoTo(0)"><span class="ui-step-num">1</span>Invitation &amp; Registration</button>
+        <button type="button" class="ui-step-item" id="bar1" onclick="obGoTo(1)"><span class="ui-step-num">2</span>Personal &amp; Business Info</button>
+        <button type="button" class="ui-step-item" id="bar2" onclick="obGoTo(2)"><span class="ui-step-num">3</span>W-9 &amp; Tax / Payment</button>
+        <button type="button" class="ui-step-item" id="bar3" onclick="obGoTo(3)"><span class="ui-step-num">4</span>AHIP &amp; License Verification</button>
+        <button type="button" class="ui-step-item" id="bar4" onclick="obGoTo(4)"><span class="ui-step-num">5</span>Training &amp; Certification</button>
+        <button type="button" class="ui-step-item" id="bar5" onclick="obGoTo(5)"><span class="ui-step-num">6</span>Background Check</button>
+        <button type="button" class="ui-step-item" id="bar6" onclick="obGoTo(6)"><span class="ui-step-num">7</span>Contract Execution</button>
+        <button type="button" class="ui-step-item" id="bar7" onclick="obGoTo(7)"><span class="ui-step-num">8</span>Ready to Sell</button>
+      </div>
+      <a href="../auth/login.html" class="ui-btn ui-btn-ghost ui-btn-sm sidebar-exit" onclick="return confirm('Save draft and exit?')">
+        <i class="fas fa-sign-out-alt"></i> Save &amp; Exit
+      </a>
+    </nav>
+    <div class="ui-sidebar-foot">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <div class="ui-avatar">JM</div>
+        <div>
+          <div class="name">James Martinez</div>
+          <div class="meta">NPN 8823441 — Onboarding</div>
         </div>
       </div>
     </div>
+  </aside>
 
-    <!-- ============================================================ -->
-    <!-- STEP 2: Personal & Business Information -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep1">
-      <div class="card-hdr"><h5><i class="fas fa-user" style="margin-right:8px;color:#0f6a62"></i>Step 2: Personal &amp; Business Information</h5><button class="btn-ol btn-sm" onclick="prefillStep(1,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Draft saved badge (shown when step was skipped) -->
-        <div class="w9-draft-saved" id="draftBadge1"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
-        <div class="ob-form-section">
-          <h6>Personal Information</h6>
-          <div class="form-row three">
-            <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="piFirst" placeholder="First name"><span class="err-msg" id="err_piFirst">Required.</span></div>
-            <div class="fg"><label>Middle Name</label><input type="text" id="piMI" placeholder="Middle name" maxlength="2"></div>
-            <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="piLast" placeholder="Last name"><span class="err-msg" id="err_piLast">Required.</span></div>
+  <div class="ui-main">
+    <header class="ui-topbar">
+      <div>
+        <h1>Agent Onboarding</h1>
+        <p class="subtitle">Producer Onboarding — Invitation through Ready to Sell</p>
+      </div>
+      <a href="../auth/login.html" class="ui-btn ui-btn-ghost ui-btn-icon" title="Logout" style="color:var(--primary)"><i class="fas fa-sign-out-alt"></i></a>
+    </header>
+
+    <main class="ui-page">
+
+      <!-- STEP 1 -->
+      <section class="ob-section active ui-card" id="obStep0">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-envelope-open-text" style="color:var(--primary);margin-right:0.5rem"></i>Step 1: Invitation &amp; Registration</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(0)"><i class="fas fa-magic"></i> Prefill Data</button>
+        </div>
+        <div class="ui-card-content">
+          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem"><i class="fas fa-info-circle"></i><div>Each NPN can only be registered once.</div></div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">Invitation Details</h3>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field">
+                <label class="ui-label" for="inviteType">Invitation Type <span class="req">*</span></label>
+                <select class="ui-select" id="inviteType" disabled>
+                  <option>Agency-Driven (FMO Invitation)</option>
+                  <option>Carrier / Payer Initiated</option>
+                  <option>Self-Registration (Public Link)</option>
+                </select>
+              </div>
+              <div class="ui-field">
+                <label class="ui-label" for="inviteToken">Invite Code / Token <span class="req">*</span></label>
+                <input class="ui-input" id="inviteToken" value="EA-INV-2026-0847" disabled>
+              </div>
+              <div class="ui-field">
+                <label class="ui-label" for="invitedBy">Invited By (Agency / FMO Name)</label>
+                <input class="ui-input" id="invitedBy" value="HealthFirst Distribution" disabled>
+              </div>
+            </div>
           </div>
-          <div class="form-row three">
-            <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date" id="piDOB"><span class="err-msg" id="err_piDOB">Required.</span></div>
-            <div class="fg"><label>SSN / EIN <span class="req">*</span></label><input type="text" id="piSSN" placeholder="XXX-XX-XXXX"><span class="err-msg" id="err_piSSN">Required.</span></div>
-            <div class="fg"><label>Phone Number <span class="req">*</span></label><input type="tel" id="piPhone" placeholder="(555) 000-0000"><span class="err-msg" id="err_piPhone">Required.</span></div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">NPN Pre-Validation</h3>
+            <div class="ui-field">
+              <label class="ui-label" for="regNPN">National Producer Number (NPN) <span class="req">*</span></label>
+              <div class="ui-control-row">
+                <input class="ui-input" id="regNPN" placeholder="Please enter your NPN number" maxlength="10" inputmode="numeric">
+                <button type="button" class="ui-btn ui-btn-outline" onclick="validateNPN()"><i class="fas fa-search"></i> Validate NPN</button>
+              </div>
+              <span class="ui-field-error" id="err_regNPN">Please enter a valid NPN number.</span>
+            </div>
+            <div class="ui-alert ui-alert-success" id="npnResult" style="display:none;margin-top:0.75rem"><i class="fas fa-check-circle"></i><div><strong>NPN Validated</strong></div></div>
           </div>
-          <div class="form-row two">
-            <div class="fg"><label>Business Street <span class="req">*</span></label><input type="text" id="piBizStreet" placeholder="Street address"><span class="err-msg" id="err_piBizStreet">Required.</span></div>
-            <div class="fg"><label>Business Suite</label><input type="text" id="piBizSuite" placeholder="Suite / Apt / Unit"></div>
+          <div class="ui-alert ui-alert-warning"><i class="fas fa-exclamation-triangle"></i><div>Duplicate NPN submissions are blocked and trigger an admin alert.</div></div>
+        </div>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(0)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(0)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Personal Details</button>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="ob-section ui-card" id="obStep1">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-user" style="color:var(--primary);margin-right:0.5rem"></i>Step 2: Personal &amp; Business Information</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(1)"><i class="fas fa-magic"></i> Prefill Data</button>
+        </div>
+        <div class="ui-card-content">
+          <div class="ui-section">
+            <h3 class="ui-section-title">Personal Information</h3>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field"><label class="ui-label" for="piFirst">First Name <span class="req">*</span></label><input class="ui-input" id="piFirst" placeholder="First name"></div>
+              <div class="ui-field"><label class="ui-label" for="piMI">Middle Name</label><input class="ui-input" id="piMI" placeholder="MI" maxlength="2"></div>
+              <div class="ui-field"><label class="ui-label" for="piLast">Last Name <span class="req">*</span></label><input class="ui-input" id="piLast" placeholder="Last name"></div>
+            </div>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field"><label class="ui-label" for="piDOB">Date of Birth <span class="req">*</span></label><input class="ui-input" id="piDOB" type="date"></div>
+              <div class="ui-field"><label class="ui-label" for="piSSN">SSN / EIN <span class="req">*</span></label><input class="ui-input" id="piSSN" placeholder="XXX-XX-XXXX"></div>
+              <div class="ui-field"><label class="ui-label" for="piPhone">Phone Number <span class="req">*</span></label><input class="ui-input" id="piPhone" type="tel" placeholder="(555) 000-0000"></div>
+            </div>
+            <div class="ui-form-grid cols-2">
+              <div class="ui-field"><label class="ui-label" for="piBizStreet">Business Street <span class="req">*</span></label><input class="ui-input" id="piBizStreet" placeholder="Street address"></div>
+              <div class="ui-field"><label class="ui-label" for="piBizSuite">Business Suite</label><input class="ui-input" id="piBizSuite" placeholder="Suite / Apt"></div>
+            </div>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field"><label class="ui-label" for="piBizZip">Business ZIP <span class="req">*</span></label><input class="ui-input" id="piBizZip" maxlength="5" inputmode="numeric" placeholder="ZIP Code"></div>
+              <div class="ui-field"><label class="ui-label" for="piBizCity">Business City <span class="req">*</span></label><input class="ui-input" id="piBizCity" placeholder="Auto-filled from ZIP"></div>
+              <div class="ui-field"><label class="ui-label" for="piBizState">Business State <span class="req">*</span></label><input class="ui-input" id="piBizState" placeholder="Auto-filled from ZIP"></div>
+            </div>
+            <div class="ui-consent-panel">
+              <h3 class="ui-section-title">Communication Consent</h3>
+              <label class="ui-check-row" for="piSMS">
+                <input type="checkbox" id="piSMS">
+                <span>I consent to receive SMS/text notifications regarding my application, licensing status, and commission updates.</span>
+              </label>
+              <label class="ui-check-row" for="piEmailConsent">
+                <input type="checkbox" id="piEmailConsent">
+                <span>I consent to receive email notifications regarding training, compliance updates, and enrollment activity.</span>
+              </label>
+            </div>
           </div>
-          <div class="form-row three">
-            <div class="fg"><label>Business ZIP <span class="req">*</span></label><input type="text" id="piBizZip" placeholder="ZIP Code" maxlength="5" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5);autoFillBusinessLocationFromZip(this.value)"><span class="err-msg" id="err_piBizZip">Required.</span></div>
-            <div class="fg"><label>Business City <span class="req">*</span></label><input type="text" id="piBizCity" placeholder="Auto-filled from ZIP"><span class="err-msg" id="err_piBizCity">Required.</span></div>
-            <div class="fg"><label>Business State <span class="req">*</span></label><input type="text" id="piBizState" placeholder="Auto-filled from ZIP"><span class="err-msg" id="err_piBizState">Required.</span></div>
+        </div>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(1)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(1)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(1)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: W-9 &amp; Payment</button>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="ob-section ui-card" id="obStep2">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-file-invoice-dollar" style="color:var(--primary);margin-right:0.5rem"></i>Step 3: W-9 Tax Details &amp; Payment Preferences</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(2)"><i class="fas fa-magic"></i> Prefill Data</button>
+        </div>
+        <div class="ui-card-content">
+          <div class="ui-alert ui-alert-warning" style="margin-bottom:0.75rem">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <div class="ui-alert-title">W-9 &amp; Payment Details Required for Final Submission</div>
+              You can save progress and complete these details later. Final submission is blocked until W-9 and payment fields are complete.
+            </div>
           </div>
-          <div class="form-row one">
-            <div class="fg">
-              <label>Communication Consent</label>
-              <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                  <input type="checkbox" id="piSMS" value="yes" style="margin-top:2px;flex-shrink:0;width:15px;height:15px">
-                  <label for="piSMS" style="font-weight:400;font-size:12px;text-transform:none;letter-spacing:0;color:#3c4043;cursor:pointer;margin:0;line-height:1.5">I consent to receive SMS/text notifications regarding my application, licensing status, and commission updates.</label>
+          <div class="ui-section">
+            <h3 class="ui-section-title">W-9 Tax Information</h3>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field">
+                <label class="ui-label" for="taxEntity">Tax Entity Type <span class="req">*</span></label>
+                <select class="ui-select" id="taxEntity">
+                  <option value="" disabled selected>Select Entity Type</option>
+                  <option>Individual / Sole Proprietor</option>
+                  <option>LLC (Single Member)</option>
+                  <option>Corporation</option>
+                  <option>Partnership</option>
+                </select>
+              </div>
+              <div class="ui-field"><label class="ui-label" for="taxTIN">Taxpayer ID (TIN/EIN) <span class="req">*</span></label><input class="ui-input" id="taxTIN" placeholder="XXX-XX-XXXX"></div>
+              <div class="ui-field"><label class="ui-label" for="taxName">Tax Name (as on return) <span class="req">*</span></label><input class="ui-input" id="taxName" placeholder="Full legal name"></div>
+            </div>
+            <div class="ui-field">
+              <label class="ui-label">Upload W-9 Form (PDF) <span class="req">*</span></label>
+              <label class="ui-upload" id="w9UploadZone">
+                <i class="fas fa-cloud-upload-alt" style="font-size:1.25rem"></i>
+                Click to upload W-9 PDF<br><span style="font-size:0.625rem">Max 5 MB</span>
+                <input type="file" id="w9File" accept=".pdf" onchange="handleUpload(this,'w9UploadZone')">
+              </label>
+            </div>
+          </div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">Commission Payment Preferences</h3>
+            <div class="ui-chip-row">
+              <label class="ui-chip"><input type="radio" name="payMethod" id="payACH" value="ach" onchange="togglePayFields()"> ACH Direct Deposit</label>
+              <label class="ui-chip"><input type="radio" name="payMethod" id="payCheck" value="check" onchange="togglePayFields()"> Physical Check</label>
+            </div>
+            <div id="achFields">
+              <div class="ui-form-grid cols-3">
+                <div class="ui-field"><label class="ui-label" for="bankName">Bank Name</label><input class="ui-input" id="bankName" placeholder="e.g. Chase Bank"></div>
+                <div class="ui-field"><label class="ui-label" for="bankRouting">Routing Number</label><input class="ui-input" id="bankRouting" placeholder="9-digit ABA"></div>
+                <div class="ui-field"><label class="ui-label" for="bankAcct">Account Number</label><input class="ui-input" id="bankAcct" placeholder="Account number"></div>
+              </div>
+              <div class="ui-form-grid cols-2">
+                <div class="ui-field">
+                  <label class="ui-label" for="bankAcctType">Account Type</label>
+                  <select class="ui-select" id="bankAcctType"><option value="" disabled selected>Select Account Type</option><option>Checking</option><option>Savings</option></select>
                 </div>
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                  <input type="checkbox" id="piEmailConsent" value="yes" style="margin-top:2px;flex-shrink:0;width:15px;height:15px">
-                  <label for="piEmailConsent" style="font-weight:400;font-size:12px;text-transform:none;letter-spacing:0;color:#3c4043;cursor:pointer;margin:0;line-height:1.5">I consent to receive email notifications regarding training, compliance updates, and enrollment activity.</label>
+                <div class="ui-field">
+                  <label class="ui-label">Upload Voided Check / Bank Letter</label>
+                  <label class="ui-upload" id="voidUploadZone" style="padding:0.5rem">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload void check or bank letter
+                    <input type="file" id="voidFile" accept=".pdf,.jpg,.png" onchange="handleUpload(this,'voidUploadZone')">
+                  </label>
                 </div>
               </div>
             </div>
+            <div id="checkFields" style="display:none">
+              <div class="ui-field"><label class="ui-label" for="checkAddr">Check Mailing Address <span class="req">*</span></label><input class="ui-input" id="checkAddr" placeholder="Street, City, State, ZIP"></div>
+            </div>
           </div>
         </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="obBack(1)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-ol" onclick="skipStep(1)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" onclick="obNext(1)"><i class="fas fa-arrow-right"></i>Next: W-9 &amp; Payment</button>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(2)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(2)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(2)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Save &amp; Continue</button>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ============================================================ -->
-    <!-- STEP 3: W-9 & Payment Preferences -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep2">
-      <div class="card-hdr"><h5><i class="fas fa-file-invoice-dollar" style="margin-right:8px;color:#0f6a62"></i>Step 3: W-9 Tax Details &amp; Payment Preferences</h5><button class="btn-ol btn-sm" onclick="prefillStep(2,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- W-9 Skip/Draft Banner -->
-        <div class="w9-draft-banner">
-          <i class="fas fa-exclamation-triangle" style="flex-shrink:0;margin-top:1px"></i>
-          <div>
-            <div style="font-weight:700;margin-bottom:3px">W-9 &amp; Payment Details Required for Final Submission</div>
-            <div style="color:#795548">You can save your progress and complete these details later. However, <strong>final submission will be blocked</strong> until all W-9 tax and payment fields are completed.</div>
-          </div>
+      <!-- STEP 4 -->
+      <section class="ob-section ui-card" id="obStep3">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-certificate" style="color:var(--primary);margin-right:0.5rem"></i>Step 4: AHIP, State Selection &amp; License</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(3)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
-        <!-- Draft saved indicator (shown after skipping) -->
-        <div class="w9-draft-saved" id="draftBadge2">
-          <i class="fas fa-save"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.
-        </div>
-        <div class="ob-form-section">
-          <h6>W-9 Tax Information</h6>
-          <div class="form-row three">
-            <div class="fg"><label>Tax Entity Type <span class="req">*</span></label>
-              <select id="taxEntity"><option value="" disabled selected> Select Entity Type</option><option>Individual / Sole Proprietor</option><option>LLC (Single Member)</option><option>Corporation</option><option>Partnership</option></select>
-              <span class="err-msg" id="err_taxEntity">Required.</span>
+        <div class="ui-card-content">
+          <div class="ui-section">
+            <h3 class="ui-section-title">AHIP Medicare Certification</h3>
+            <div class="ui-form-grid cols-3">
+              <div class="ui-field"><label class="ui-label" for="ahipCert">AHIP Certificate # <span class="req">*</span></label><input class="ui-input" id="ahipCert" placeholder="e.g. AH2026-XXXXX"></div>
+              <div class="ui-field"><label class="ui-label" for="ahipDate">Completion Date <span class="req">*</span></label><input class="ui-input" id="ahipDate" type="date"></div>
+              <div class="ui-field"><label class="ui-label" for="ahipExpiry">Valid Through</label><input class="ui-input" id="ahipExpiry" type="date"></div>
             </div>
-            <div class="fg"><label>Taxpayer ID (TIN/EIN) <span class="req">*</span></label><input type="text" id="taxTIN" placeholder="XXX-XX-XXXX"><span class="err-msg" id="err_taxTIN">Required.</span></div>
-            <div class="fg"><label>Tax Name (as on return) <span class="req">*</span></label><input type="text" id="taxName" placeholder="Full legal name"><span class="err-msg" id="err_taxName">Required.</span></div>
+            <div class="ui-field">
+              <label class="ui-label">Upload AHIP Certificate (optional)</label>
+              <label class="ui-upload" id="ahipUploadZone" style="padding:0.5rem">
+                <i class="fas fa-cloud-upload-alt"></i> Upload certificate PDF
+                <input type="file" id="ahipFile" accept=".pdf" onchange="handleUpload(this,'ahipUploadZone')">
+              </label>
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:0.5rem">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires live AHIP registry integration"><i class="fas fa-shield-alt"></i> Validate AHIP</button>
+            </div>
           </div>
-          <div class="fg" style="margin-bottom:10px"><label>Upload W-9 Form (PDF) <span class="req">*</span></label>
-            <label class="upload-zone" id="w9UploadZone" onclick="document.getElementById('w9File').click()">
-              <i class="fas fa-cloud-upload-alt" style="font-size:20px;margin-bottom:4px"></i><br>Click to upload W-9 PDF<br><span style="font-size:10px">Max 5 MB</span>
-              <input type="file" id="w9File" accept=".pdf" onchange="handleUpload('w9File','w9UploadZone','w9Label')">
-            </label>
-            <span id="w9Label" style="font-size:10px;color:#1b5e20;display:none"></span>
-            <span class="err-msg" id="err_w9">Please upload your W-9.</span>
+          <div class="ui-section">
+            <h3 class="ui-section-title">State Selection / Selling Territories</h3>
+            <p style="font-size:0.75rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
+            <div id="stateCheckboxes">
+              <label class="ui-chip"><input type="checkbox" value="FL"> Florida</label>
+              <label class="ui-chip"><input type="checkbox" value="TX"> Texas</label>
+              <label class="ui-chip"><input type="checkbox" value="GA"> Georgia</label>
+              <label class="ui-chip"><input type="checkbox" value="CA"> California</label>
+              <label class="ui-chip"><input type="checkbox" value="NY"> New York</label>
+              <label class="ui-chip"><input type="checkbox" value="AZ"> Arizona</label>
+              <label class="ui-chip"><input type="checkbox" value="NC"> North Carolina</label>
+              <label class="ui-chip"><input type="checkbox" value="IL"> Illinois</label>
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:0.75rem">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires NIPR integration"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
+            </div>
           </div>
         </div>
-        <div class="ob-form-section">
-          <h6>Commission Payment Preferences</h6>
-          <div style="display:flex;gap:12px;margin-bottom:14px">
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 14px;border:2px solid #dadce0;border-radius:6px;cursor:pointer">
-              <input type="radio" name="payMethod" id="payACH" value="ach" onchange="togglePayFields()"> ACH Direct Deposit
-            </label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 14px;border:2px solid #dadce0;border-radius:6px;cursor:pointer">
-              <input type="radio" name="payMethod" id="payCheck" value="check" onchange="togglePayFields()"> Physical Check
-            </label>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(3)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(3)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(3)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Training</button>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="ob-section ui-card" id="obStep4">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-graduation-cap" style="color:var(--primary);margin-right:0.5rem"></i>Step 5: Training &amp; Certification</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(4)"><i class="fas fa-magic"></i> Prefill Data</button>
+        </div>
+        <div class="ui-card-content">
+          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
+            <i class="fas fa-info-circle"></i>
+            <div>Complete all 4 training segments. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
           </div>
-          <div id="achFields">
-            <div class="form-row three">
-              <div class="fg"><label>Bank Name</label><input type="text" id="bankName" placeholder="e.g. Chase Bank"></div>
-              <div class="fg"><label>Routing Number</label><input type="text" id="bankRouting" placeholder="9-digit ABA number"></div>
-              <div class="fg"><label>Account Number</label><input type="text" id="bankAcct" placeholder="Account number"></div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">Training Progress Dashboard</h3>
+            <div class="seg-grid" id="progressDashboard">
+              <div class="seg-tile" data-seg="0" onclick="markSeg(0)"><div>Seg A — Video</div><strong id="dashPctA">0%</strong><div id="dashStatusA">Not completed</div></div>
+              <div class="seg-tile" data-seg="1" onclick="markSeg(1)"><div>Seg B — Training</div><strong id="dashPctB">0%</strong><div id="dashStatusB">Not completed</div></div>
+              <div class="seg-tile" data-seg="2" onclick="markSeg(2)"><div>Seg C — PDF</div><strong id="dashPctC">0%</strong><div id="dashStatusC">Not completed</div></div>
+              <div class="seg-tile" data-seg="3" onclick="markSeg(3)"><div>Seg D — MCQ</div><strong id="dashPctD">0%</strong><div id="dashStatusD">Not completed</div></div>
+              <div class="seg-tile" style="cursor:default;background:var(--accent);border-color:#a6dace"><div style="color:var(--primary);font-weight:600">Total</div><strong id="dashPctTotal" style="color:var(--primary)">0%</strong><div id="overallProgLabel">0 of 4 complete</div></div>
             </div>
-            <div class="form-row">
-              <div class="fg"><label>Account Type</label><select id="bankAcctType"><option value="" disabled selected> Select Account Type</option><option>Checking</option><option>Savings</option></select></div>
-              <div class="fg"><label>Upload Voided Check / Bank Letter</label>
-                <label class="upload-zone" style="padding:8px 12px" onclick="document.getElementById('voidFile').click()">
-                  <i class="fas fa-cloud-upload-alt"></i> Upload void check or bank letter
-                  <input type="file" id="voidFile" accept=".pdf,.jpg,.png" onchange="handleUpload('voidFile','','voidLabel')">
-                </label>
-                <span id="voidLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
+            <div class="ui-progress" style="margin-top:0.75rem"><div class="ui-progress-bar" id="overallProgBar" style="width:0%"></div></div>
+            <p style="font-size:0.6875rem;color:var(--muted-foreground);margin:0.5rem 0 0">Prototype: click a segment tile to mark it complete.</p>
+          </div>
+        </div>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(4)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(4)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(4)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Background Check</button>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="ob-section ui-card" id="obStep5">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-user-secret" style="color:var(--primary);margin-right:0.5rem"></i>Step 6: Background &amp; Sanctions Check</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(5)"><i class="fas fa-magic"></i> Prefill Data</button>
+        </div>
+        <div class="ui-card-content">
+          <div class="ui-alert ui-alert-warning" style="margin-bottom:0.75rem">
+            <i class="fas fa-info-circle"></i>
+            <div>Background check is completed through a trusted vendor portal. EnrollAxis does <strong>not</strong> collect or store your SSN or government ID.</div>
+          </div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">Authorization &amp; Consent</h3>
+            <div class="ui-alert ui-alert-success">
+              <label class="ui-check-row">
+                <input type="checkbox" id="bgConsent">
+                <span>I authorize the health plan to initiate a background check through its designated vendor. I understand I will complete identity verification on the vendor's secure portal.</span>
+              </label>
+            </div>
+          </div>
+          <div class="ui-section" id="bgInvitePanel">
+            <h3 class="ui-section-title">Send to Background Check Vendor</h3>
+            <div class="ui-card" style="box-shadow:none;background:var(--accent)">
+              <div class="ui-card-content">
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+                  <div class="ui-avatar" style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:var(--primary)"><i class="fas fa-shield-alt"></i></div>
+                  <div>
+                    <div style="font-weight:600;font-size:0.8125rem">Sterling Talent Solutions</div>
+                    <div style="font-size:0.6875rem;color:var(--muted-foreground)">Accredited background screening vendor</div>
+                  </div>
+                </div>
+                <div class="ui-field" style="margin-bottom:0.75rem">
+                  <input class="ui-input" id="bgVendorEmail" value="agent@example.com" disabled>
+                  <span style="font-size:0.625rem;color:var(--muted-foreground)"><i class="fas fa-info-circle"></i> Email from your registration. Contact agency admin to update.</span>
+                </div>
+                <button type="button" class="ui-btn ui-btn-block" id="bgSendBtn" onclick="sendBgInvitation()"><i class="fas fa-paper-plane"></i> Send Background Check Invitation</button>
               </div>
             </div>
           </div>
-          <div id="checkFields" style="display:none">
-            <div class="form-row">
-              <div class="fg"><label>Check Mailing Address <span class="req">*</span></label><input type="text" id="checkAddr" placeholder="Street, City, State, ZIP"></div>
-            </div>
-          </div>
-          <span class="err-msg show" id="err_payMethod" style="display:none;font-size:10px;color:#c62828">Please select a payment method.</span>
-        </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="obBack(2)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-ol" id="w9SkipBtn" onclick="skipStep(2)" style="border-color:#e65100;color:#e65100" title="Save as draft and complete W-9 later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" id="w9NextBtn" onclick="obNext(2)"><i class="fas fa-arrow-right"></i>Save &amp; Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- STEP 4: AHIP + State Selection + NIPR -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep3">
-      <div class="card-hdr"><h5><i class="fas fa-certificate" style="margin-right:8px;color:#0f6a62"></i>Step 4: AHIP Certification, State Selection &amp; License Verification</h5><button class="btn-ol btn-sm" onclick="prefillStep(3,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Draft saved badge (shown when step was skipped) -->
-        <div class="w9-draft-saved" id="draftBadge3"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
-        <div class="ob-form-section">
-          <h6>AHIP Medicare Certification</h6>
-          <div class="form-row three">
-            <div class="fg"><label>AHIP Certificate # <span class="req">*</span></label><input type="text" id="ahipCert" placeholder="e.g. AH2026-XXXXX"><span class="err-msg" id="err_ahipCert">Required.</span></div>
-            <div class="fg"><label>Completion Date <span class="req">*</span></label><input type="date" id="ahipDate"><span class="err-msg" id="err_ahipDate">Required.</span></div>
-            <div class="fg"><label>Valid Through</label><input type="date" id="ahipExpiry" placeholder="Auto-calculated (1 year)"></div>
-          </div>
-          <div class="fg" style="margin-bottom:6px"><label>Upload AHIP Certificate (optional if auto-verified)</label>
-            <label class="upload-zone" style="padding:8px 12px" onclick="document.getElementById('ahipFile').click()">
-              <i class="fas fa-cloud-upload-alt"></i> Upload certificate PDF
-              <input type="file" id="ahipFile" accept=".pdf" onchange="handleUpload('ahipFile','','ahipLabel')">
-            </label>
-            <span id="ahipLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
-          </div>
-          <div style="display:flex;justify-content:flex-end;margin-top:4px">
-            <span class="validate-wrap" data-tip="Validate AHIP Ã¢â‚¬â€ requires live AHIP registry integration">
-              <button class="btn-validate" disabled><i class="fas fa-shield-alt"></i>Validate AHIP</button>
-            </span>
-          </div>
-        </div>
-        <div class="ob-form-section">
-          <h6>State Selection, Selling Territories</h6>
-          <p style="font-size:11px;color:#5f6368;margin-bottom:10px">Select states where you hold (or will hold) an active license and where EnrollAxis has available plans.</p>
-          <div id="stateCheckboxes">
-            <label class="state-checkbox"><input type="checkbox" value="FL" data-label="Florida" onchange="updateStates()"> <span>Florida</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="TX" data-label="Texas" onchange="updateStates()"> <span>Texas</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="GA" data-label="Georgia" onchange="updateStates()"> <span>Georgia</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="CA" data-label="California" onchange="updateStates()"> <span>California</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="NY" data-label="New York" onchange="updateStates()"> <span>New York</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="AZ" data-label="Arizona" onchange="updateStates()"> <span>Arizona</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="NC" data-label="North Carolina" onchange="updateStates()"> <span>North Carolina</span></label>
-            <label class="state-checkbox"><input type="checkbox" value="IL" data-label="Illinois" onchange="updateStates()"> <span>Illinois</span></label>
-          </div>
-          <span class="err-msg" id="err_states" style="margin-top:6px">Please select at least one state.</span>
-          <!-- Per-state license detail cards rendered by updateStates() -->
-          <div id="stateLicenseDetails" style="margin-top:14px;display:flex;flex-direction:column;gap:12px"></div>
-          <div style="display:flex;justify-content:flex-end;margin-top:10px">
-            <span class="validate-wrap" data-tip="Validate License &amp; State Appointment Ã¢â‚¬â€ requires NIPR integration">
-              <button class="btn-validate" disabled><i class="fas fa-id-badge"></i>Validate License &amp; State Appointment</button>
-            </span>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="obBack(3)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-ol" onclick="skipStep(3)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" onclick="obNext(3)"><i class="fas fa-arrow-right"></i>Next: Training</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- STEP 5: Training & Certification -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep4">
-      <div class="card-hdr"><h5><i class="fas fa-graduation-cap" style="margin-right:8px;color:#0f6a62"></i>Step 5: Training &amp; Certification</h5><button class="btn-ol btn-sm" onclick="prefillStep(4,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Draft saved badge (shown when step was skipped) -->
-        <div class="w9-draft-saved" id="draftBadge4"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
-        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Complete all 4 training segments. Each segment unlocks its own exam upon completion. Pass score: <strong>85%</strong> overall average. Maximum <strong>4</strong> attempts per segment.</span></div>
-
-        <!-- Overall Progress Dashboard -->
-        <div class="ob-form-section" id="step5DashboardSection">
-          <h6>Training Progress Dashboard</h6>
-          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:11px;margin-bottom:16px" id="progressDashboard">
-            <div id="dashSegTab0" onclick="openSegmentScreen(0)" style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed;cursor:pointer;transition:all .2s">
-              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg A &mdash; Video</div>
-              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctA">0%</div>
-              <div style="font-size:9px;color:#9e9e9e" id="dashTimeA">&mdash;</div>
-              <div style="font-size:9px;color:#9e9e9e;margin-top:2px" id="dashStatusA">Not completed</div>
-            </div>
-            <div id="dashSegTab1" onclick="openSegmentScreen(1)" style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed;cursor:pointer;transition:all .2s">
-              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg B &mdash; Training</div>
-              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctB">0%</div>
-              <div style="font-size:9px;color:#9e9e9e" id="dashTimeB">&mdash;</div>
-              <div style="font-size:9px;color:#9e9e9e;margin-top:2px" id="dashStatusB">Not completed</div>
-            </div>
-            <div id="dashSegTab2" onclick="openSegmentScreen(2)" style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed;cursor:pointer;transition:all .2s">
-              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg C &mdash; PDF</div>
-              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctC">0%</div>
-              <div style="font-size:9px;color:#9e9e9e" id="dashTimeC">&mdash;</div>
-              <div style="font-size:9px;color:#9e9e9e;margin-top:2px" id="dashStatusC">Not completed</div>
-            </div>
-            <div id="dashSegTab3" onclick="openSegmentScreen(3)" style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed;cursor:pointer;transition:all .2s">
-              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg D &mdash; MCQ</div>
-              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctD">0%</div>
-              <div style="font-size:9px;color:#9e9e9e" id="dashTimeD">&mdash;</div>
-              <div style="font-size:9px;color:#9e9e9e;margin-top:2px" id="dashStatusD">Not completed</div>
-            </div>
-            <div style="text-align:center;padding:10px 6px;background:#e8f5f2;border-radius:8px;border:1px solid #a6dace">
-              <div style="font-size:9px;color:#0f6a62;margin-bottom:2px;font-weight:600">Total</div>
-              <div style="font-size:14px;font-weight:700;color:#0f6a62" id="dashPctTotal">0%</div>
-              <div style="font-size:9px;color:#0f6a62" id="dashTimeTotal">&mdash;</div>
-            </div>
-          </div>
-          <!-- Overall progress bar -->
-          <div style="background:#e8eaed;border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px">
-            <div id="overallProgBar" style="height:100%;width:0%;background:linear-gradient(90deg,#0f6a62,#147966);border-radius:6px;transition:width .5s ease"></div>
-          </div>
-          <div style="font-size:10px;color:#5f6368;text-align:right" id="overallProgLabel">0 of 4 segments complete</div>
-        </div>
-
-        <!-- Per-segment Exam Panels -->
-        <div class="ob-form-section" id="examSection" style="display:none">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
-            <button class="btn-ol btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
-            <h6 style="margin:0">Certification Exams</h6>
-            <button class="btn-pr btn-sm" id="nextSegTopBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:11px;margin-bottom:16px">
-            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Pass Score</div><div style="font-weight:700">85% avg</div></div>
-            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Total Questions</div><div style="font-weight:700">20 (4 &times; 5)</div></div>
-            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Segments</div><div style="font-weight:700">4</div></div>
-            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Max Attempts</div><div style="font-weight:700">4 per seg</div></div>
-          </div>
-          <!-- Segment exam panels -->
-          <div id="examSeg0" class="exam-seg" style="display:none"></div>
-          <div id="examSeg1" class="exam-seg" style="display:none"></div>
-          <div id="examSeg2" class="exam-seg" style="display:none"></div>
-          <div id="examSeg3" class="exam-seg" style="display:none"></div>
-          <!-- Unanswered warning -->
-          <div id="unansweredWarn" style="display:none;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin:12px 0;font-size:12px;color:#e65100">
-            <i class="fas fa-exclamation-triangle" style="flex-shrink:0;margin-top:2px"></i>
-            <div style="flex:1">
-              <div style="font-weight:700;margin-bottom:4px"><span id="unansweredCount">0</span> question(s) not answered (<span id="unansweredList"></span>).</div>
-              <div>Would you like to go back and review before submitting?</div>
-              <div style="display:flex;gap:8px;margin-top:8px">
-                <button class="btn-ol btn-sm" onclick="dismissUnansweredWarn()"><i class="fas fa-arrow-left"></i>Go Back &amp; Review</button>
-                <button class="btn-pr btn-sm" onclick="submitSegmentForce()"><i class="fas fa-check"></i>Submit Anyway</button>
-              </div>
-            </div>
-          </div>
-          <!-- Consolidated result (shown after all 4 segments) -->
-          <div id="examConsolidatedResult" style="display:none"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid #e8eaed">
-            <button class="btn-ol btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
-            <button class="btn-pr btn-sm" id="nextSegBottomBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
-          </div>
-        </div>
-        <div class="step-nav" id="step5Nav">
-          <button class="btn-ol" onclick="obBack(4)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-ol" onclick="skipStep(4)" style="border-color:#e65100;color:#e65100" title="Save draft and complete training later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" id="step5Next" onclick="obNext(4)" style="display:none"><i class="fas fa-arrow-right"></i>Next: Background Check</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- STEP 6: Background Check -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep5">
-      <div class="card-hdr"><h5><i class="fas fa-user-secret" style="margin-right:8px;color:#0f6a62"></i>Step 6: Background &amp; Sanctions Check</h5><button class="btn-ol btn-sm" onclick="prefillStep(5,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Draft saved badge (shown when step was skipped) -->
-        <div class="w9-draft-saved" id="draftBadge5"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
-        <div class="al-info mb16" style="background:#fff8e1;border-color:#ffe082"><i class="fas fa-info-circle" style="flex-shrink:0;color:#e65100"></i><span>Your background check is completed through our trusted vendor portal. EnrollAxis does <strong>not</strong> collect or store your SSN or government ID — all sensitive verification is handled securely by the vendor.</span></div>
-
-        <!-- Authorization Consent -->
-        <div class="ob-form-section">
-          <h6>Authorization &amp; Consent</h6>
-          <div style="padding:12px 14px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:6px;font-size:11px;color:#1b5e20">
-            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-weight:400;text-transform:none;letter-spacing:0">
-              <input type="checkbox" id="bgConsent" style="margin-top:2px;flex-shrink:0;width:15px;height:15px">
-              <span>I authorize the health plan to initiate a background check through its designated vendor. I understand I will complete identity verification directly on the vendor&apos;s secure portal and that results will be shared with the health plan. This check is required for agent activation.</span>
-            </label>
-            <span class="err-msg" id="err_bgConsent" style="margin-top:6px">You must authorize the background check to proceed.</span>
-          </div>
-        </div>
-
-        <!-- Vendor Invitation Panel -->
-        <div class="ob-form-section" id="bgInvitePanel">
-          <h6>Send to Background Check Vendor</h6>
-          <div style="border:1px solid #cdebe4;border-radius:8px;padding:16px;background:#f0f8f6">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-              <div style="width:40px;height:40px;border-radius:8px;background:#0f6a62;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <i class="fas fa-shield-alt" style="color:#fff;font-size:16px"></i>
-              </div>
+          <div class="ui-section" id="bgStatusPanel" style="display:none">
+            <h3 class="ui-section-title">Verification Status</h3>
+            <div class="ui-alert ui-alert-warning">
+              <i class="fas fa-hourglass-half"></i>
               <div>
-                <div style="font-weight:600;font-size:13px">Sterling Talent Solutions</div>
-                <div style="font-size:11px;color:#5f6368">Accredited background screening vendor</div>
-              </div>
-            </div>
-            <div class="fg" style="margin-bottom:12px">
-              <input type="text" id="bgVendorEmail" value="agent@example.com" disabled style="background:#f1f3f4;color:#5f6368;cursor:not-allowed">
-              <div style="font-size:10px;color:#5f6368;margin-top:4px"><i class="fas fa-info-circle" style="margin-right:3px"></i>This is the email address from your registration. Contact your agency admin to update it.</div>
-            </div>
-            <button class="btn-pr" id="bgSendBtn" onclick="sendBgInvitation()" style="width:100%;justify-content:center">
-              <i class="fas fa-paper-plane"></i>Send Background Check Invitation
-            </button>
-          </div>
-          <span class="err-msg" id="err_bgInvite" style="margin-top:6px">Please send the background check invitation before proceeding.</span>
-        </div>
-
-        <!-- Status Panel (shown after invitation sent) -->
-        <div class="ob-form-section" id="bgStatusPanel" style="display:none">
-          <h6>Verification Status</h6>
-          <div style="border:1px solid #c8e6c9;border-radius:8px;padding:16px;background:#f1f8e9">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <i class="fas fa-hourglass-half" style="color:#f57c00;font-size:18px"></i>
-              <div>
-                <div style="font-weight:600;font-size:13px;color:#e65100">Invitation Sent &mdash; Awaiting Vendor Completion</div>
-                <div style="font-size:11px;color:#5f6368">Sent: <span id="bgInviteTimestamp"></span></div>
-              </div>
-              <button onclick="resendBgInvitation()" style="margin-left:auto;background:none;border:1px solid #0f6a62;color:#0f6a62;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer"><i class="fas fa-redo" style="margin-right:4px"></i>Resend</button>
-            </div>
-            <div style="font-size:11px;color:#5f6368;line-height:1.6;border-top:1px solid #dcedc8;padding-top:10px">
-              <i class="fas fa-envelope" style="margin-right:5px;color:#0f6a62"></i>An email has been sent from <strong>Sterling Talent Solutions</strong> to your registered address.<br>
-              Complete the verification steps on their secure portal. Results will be returned to EnrollAxis automatically via API.
-            </div>
-          </div>
-
-          <!-- Manual Fallback (collapsible) -->
-          <div style="margin-top:12px;border:1px dashed #bdbdbd;border-radius:6px;overflow:hidden">
-            <button onclick="toggleBgFallback()" style="width:100%;background:#fafafa;border:none;padding:10px 14px;text-align:left;font-size:11px;color:#5f6368;cursor:pointer;display:flex;align-items:center;gap:8px">
-              <i class="fas fa-upload" style="color:#9e9e9e"></i><span>Manual Result Upload (Ops Fallback — use only if API result is not received)</span>
-              <i class="fas fa-chevron-down" id="bgFallbackChevron" style="margin-left:auto;color:#9e9e9e"></i>
-            </button>
-            <div id="bgFallbackPanel" style="display:none;padding:14px;background:#fff;border-top:1px dashed #e0e0e0">
-              <div style="font-size:11px;color:#e65100;margin-bottom:10px"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>For Ops Admin use only. Upload the vendor-issued result report and record the outcome.</div>
-              <div class="form-row">
-                <div class="fg"><label>Result</label>
-                  <select id="bgManualResult"><option value="" disabled selected>Select outcome</option><option value="clear">Clear &mdash; Approved</option><option value="review">Requires Manual Review</option><option value="fail">Adverse &mdash; Not Approved</option></select>
-                </div>
-                <div class="fg"><label>Result Date</label><input type="date" id="bgManualDate"></div>
-              </div>
-              <div class="fg" style="margin-top:4px"><label>Upload Result Report (PDF)</label>
-                <label class="upload-zone" style="padding:10px" onclick="document.getElementById('bgResultFile').click()">
-                  <i class="fas fa-file-pdf" style="font-size:16px"></i> Click to upload result PDF<br><span style="font-size:10px">Max 5 MB</span>
-                  <input type="file" id="bgResultFile" accept=".pdf" onchange="handleUpload('bgResultFile','','bgResultLabel')">
-                </label>
-                <span id="bgResultLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
+                <div class="ui-alert-title">Invitation Sent — Awaiting Vendor Completion</div>
+                Sent: <span id="bgInviteTimestamp"></span>
               </div>
             </div>
           </div>
         </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="obBack(5)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-ol" onclick="skipStep(5)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
-          <button class="btn-pr" onclick="obNext(5)"><i class="fas fa-arrow-right"></i>Next: Contract</button>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(5)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(5)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
+          <button type="button" class="ui-btn" onclick="obNext(5)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Contract</button>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ============================================================ -->
-    <!-- STEP 7: Contract Execution -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep6">
-      <div class="card-hdr"><h5><i class="fas fa-file-signature" style="margin-right:8px;color:#0f6a62"></i>Step 7: Contract Execution</h5><button class="btn-ol btn-sm" onclick="prefillStep(6,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
-      <div class="card-body">
-        <!-- Incomplete steps blocking banner (shown when any prior step is incomplete) -->
-        <div class="w9-block-banner" id="blockBanner">
-          <i class="fas fa-lock" style="flex-shrink:0;font-size:18px;margin-top:2px"></i>
-          <div>
-            <div style="font-weight:700;margin-bottom:6px">Cannot Submit &mdash; Incomplete Steps Must Be Completed First</div>
-            <div style="margin-bottom:6px">The following steps are incomplete. Click a step to go back and complete it before submitting:</div>
-            <ul id="blockBannerList" style="margin:4px 0 0 0;padding-left:18px;line-height:2.2"></ul>
-          </div>
+      <!-- STEP 7 -->
+      <section class="ob-section ui-card" id="obStep6">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-file-signature" style="color:var(--primary);margin-right:0.5rem"></i>Step 7: Contract Execution</h2>
+          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(6)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
-        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Review and digitally sign your Agent Contracting Agreement. The contract is specific to your selected states and lines of business.</span></div>
-        <div class="ob-form-section">
-          <h6>Contract Summary</h6>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px">
-            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Contract Type</div><div style="font-weight:600">Agent Contracting Agreement CY2026</div></div>
-            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Version</div><div style="font-weight:600">v3.2</div></div>
-            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Lines of Business</div><div style="font-weight:600">As selected in Step 4</div></div>
-            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Selling States</div><div style="font-weight:600">As selected in Step 4</div></div>
+        <div class="ui-card-content">
+          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
+            <i class="fas fa-info-circle"></i>
+            <div>Review and digitally sign your Agent Contracting Agreement.</div>
           </div>
-          <div style="border:1px solid #e8eaed;border-radius:8px;height:180px;overflow-y:auto;padding:14px 16px;font-size:11px;color:#424242;line-height:1.8;background:#fafafa;margin-bottom:12px">
-            <strong>AGENT CONTRACTING AGREEMENT</strong><br><br>
-            This agreement is entered into between EnrollAxis, Inc. ("Carrier") and the agent identified during registration ("Agent").<br><br>
-            <strong>1. Appointment.</strong> Carrier appoints Agent to solicit applications for Carrier's Medicare Advantage plans in the selected territories, subject to the terms of this agreement and applicable state and federal law.<br><br>
-            <strong>2. Compliance.</strong> Agent agrees to comply with all CMS marketing guidelines, HIPAA requirements, and applicable state regulations. Agent shall not engage in misleading, deceptive, or coercive sales practices.<br><br>
-            <strong>3. Commissions.</strong> Carrier shall pay Agent commissions per the current commission schedule. Commission rates are subject to change with 30 days written notice.<br><br>
-            <strong>4. Term &amp; Termination.</strong> This agreement commences upon countersignature and remains in effect unless terminated by either party with 30 days written notice. Carrier may terminate immediately for cause including compliance violations.<br><br>
-            <strong>5. Confidentiality.</strong> Agent shall maintain strict confidentiality of all member, carrier, and proprietary information.<br><br>
-            <em>[Full agreement continues Ã¢â‚¬â€ scroll to read complete terms before signing]</em>
-          </div>
-          <div class="attest-box">
-            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
-              <input type="checkbox" id="contractRead" style="margin-top:2px;flex-shrink:0">
-              <span>I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document.</span>
-            </label>
-            <span class="err-msg" id="err_contractRead">You must agree to the contract terms.</span>
-          </div>
-          <div class="ob-form-section" style="margin-top:10px">
-            <h6>Electronic Signature</h6>
-            <div class="form-row">
-              <div class="fg"><label>Type Your Full Legal Name to Sign <span class="req">*</span></label><input type="text" id="eSigName" placeholder="Full legal name"><span class="err-msg" id="err_eSigName">Required.</span></div>
-              <div class="fg"><label>Date</label><input type="date" id="eSigDate"></div>
+          <div class="ui-section">
+            <h3 class="ui-section-title">Contract Summary</h3>
+            <div class="summary-grid" style="margin-bottom:0.75rem">
+              <div class="summary-cell"><div class="k">Contract Type</div><div class="v">Agent Contracting Agreement CY2026</div></div>
+              <div class="summary-cell"><div class="k">Version</div><div class="v">v3.2</div></div>
+              <div class="summary-cell"><div class="k">Lines of Business</div><div class="v">As selected in Step 4</div></div>
+              <div class="summary-cell"><div class="k">Selling States</div><div class="v">As selected in Step 4</div></div>
             </div>
-            <div style="font-size:10px;color:#757575;margin-top:4px"><i class="fas fa-lock" style="margin-right:3px"></i>Your typed signature is legally binding and equivalent to a handwritten signature under the E-SIGN Act.</div>
+            <div class="contract-scroll">
+              <strong>AGENT CONTRACTING AGREEMENT</strong><br><br>
+              This agreement is entered into between EnrollAxis, Inc. ("Carrier") and the agent identified during registration ("Agent").<br><br>
+              <strong>1. Appointment.</strong> Carrier appoints Agent to solicit applications for Carrier's Medicare Advantage plans in the selected territories.<br><br>
+              <strong>2. Compliance.</strong> Agent agrees to comply with all CMS marketing guidelines, HIPAA requirements, and applicable state regulations.<br><br>
+              <strong>3. Commissions.</strong> Carrier shall pay Agent commissions per the current commission schedule.<br><br>
+              <strong>4. Term &amp; Termination.</strong> This agreement remains in effect unless terminated by either party with 30 days written notice.<br><br>
+              <strong>5. Confidentiality.</strong> Agent shall maintain strict confidentiality of all member, carrier, and proprietary information.<br><br>
+              <em>[Full agreement continues — scroll to read complete terms before signing]</em>
+            </div>
+            <div class="ui-alert ui-alert-success" style="margin-bottom:0.75rem">
+              <label class="ui-check-row">
+                <input type="checkbox" id="contractRead">
+                <span>I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document.</span>
+              </label>
+            </div>
+            <h3 class="ui-section-title">Electronic Signature</h3>
+            <div class="ui-form-grid cols-2">
+              <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name"></div>
+              <div class="ui-field"><label class="ui-label" for="eSigDate">Date</label><input class="ui-input" id="eSigDate" type="date"></div>
+            </div>
+            <p style="font-size:0.625rem;color:var(--muted-foreground);margin:0.35rem 0 0"><i class="fas fa-lock"></i> Typed signature is legally binding under the E-SIGN Act.</p>
           </div>
         </div>
-        <div class="step-nav">
-          <button class="btn-ol" onclick="obBack(6)"><i class="fas fa-arrow-left"></i>Back</button>
-          <button class="btn-pr" onclick="obNext(6)"><i class="fas fa-check"></i>Submit &amp; Finalize</button>
+        <div class="ui-card-footer">
+          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(6)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button type="button" class="ui-btn" onclick="obNext(6)" style="margin-left:auto"><i class="fas fa-check"></i> Submit &amp; Finalize</button>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ============================================================ -->
-    <!-- STEP 8: Ready to Sell (Confirmation) -->
-    <!-- ============================================================ -->
-    <div class="ob-section card" id="obStep7">
-      <div class="card-hdr"><h5><i class="fas fa-check-circle" style="margin-right:8px;color:#1b5e20"></i>Step 8: Submission Complete (Pending Admin Approval)</h5></div>
-      <div class="card-body" style="text-align:center;padding:32px">
-        <div style="width:72px;height:72px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:#1b5e20"><i class="fas fa-check"></i></div>
-        <h4 style="color:#1b5e20;margin-bottom:8px">Onboarding Application Submitted!</h4>
-        <p style="color:#5f6368;font-size:13px;max-width:520px;margin:0 auto 20px">Your onboarding application has been submitted. Training completion does not auto-activate your profile. A payer admin/case manager must complete an explicit review and approval before your status changes to <strong>Active/Ready to Sell</strong>. You will receive an email notification after approval.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:400px;margin:0 auto 24px;font-size:12px;text-align:left">
-          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Case ID</div><div style="font-weight:700" id="caseID">OB-2026-0001</div></div>
-          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Status</div><div style="font-weight:700;color:#4527a0">Pending Admin Approval</div></div>
-          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Submitted</div><div style="font-weight:700" id="submitDate"></div></div>
-          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Estimated Review</div><div style="font-weight:700">3&ndash;5 Business Days</div></div>
+      <!-- STEP 8 -->
+      <section class="ob-section ui-card" id="obStep7">
+        <div class="ui-card-header">
+          <h2 class="ui-card-title"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:0.5rem"></i>Step 8: Submission Complete</h2>
         </div>
-        <div style="font-size:12px;color:#5f6368;margin-bottom:20px">Questions? Contact Broker Support: <a href="mailto:brokersupport@EnrollAxis.com" style="color:#0f6a62">brokersupport@EnrollAxis.com</a> | (800) 555-GOLD ext. 2</div>
-        <a href="dashboard.html" class="btn-pr"><i class="fas fa-tachometer-alt"></i>Go to Dashboard</a>
-      </div>
-    </div>
+        <div class="ui-card-content">
+          <div class="success-hero">
+            <div class="success-icon"><i class="fas fa-check"></i></div>
+            <h3 style="color:#1b5e20;margin:0 0 0.5rem">Onboarding Application Submitted!</h3>
+            <p style="color:var(--muted-foreground);font-size:0.8125rem;max-width:32rem;margin:0 auto 1.25rem">
+              Your application is pending payer admin review. You will receive an email after approval before status changes to <strong>Active / Ready to Sell</strong>.
+            </p>
+            <div class="summary-grid" style="max-width:25rem;margin:0 auto 1.25rem;text-align:left">
+              <div class="summary-cell"><div class="k">Case ID</div><div class="v" id="caseID">OB-2026-0001</div></div>
+              <div class="summary-cell"><div class="k">Status</div><div class="v"><span class="ui-badge ui-badge-secondary">Pending Admin Approval</span></div></div>
+              <div class="summary-cell"><div class="k">Submitted</div><div class="v" id="submitDate"></div></div>
+              <div class="summary-cell"><div class="k">Estimated Review</div><div class="v">3–5 Business Days</div></div>
+            </div>
+            <p style="font-size:0.75rem;color:var(--muted-foreground);margin-bottom:1.25rem">
+              Questions? <a href="mailto:brokersupport@EnrollAxis.com">brokersupport@EnrollAxis.com</a> | (800) 555-GOLD ext. 2
+            </p>
+            <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+          </div>
+        </div>
+      </section>
 
+    </main>
+
+    <footer class="ui-page-footer">
+      Last Updated: 05.28.2026 &nbsp;|&nbsp; Copyright © 2026 EnrollAxis
+    </footer>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-function prefillStep(step,btn){
-  function setVal(id,v){var el=document.getElementById(id);if(el){el.value=v;}}
-  function setCheck(id,v){var el=document.getElementById(id);if(el){el.checked=v;}}
-  if(step===0){
-    setVal('inviteType','Agency-Driven (FMO Invitation)');
-    setVal('inviteToken','EA-INV-2026-0847');
-    setVal('invitedBy','HealthFirst Distribution');
-    setVal('regNPN','88234410');
-  } else if(step===1){
-    setVal('piFirst','James');
-    setVal('piMI','R');
-    setVal('piLast','Martinez');
-    setVal('piDOB','1985-03-12');
-    setVal('piSSN','***-**-4589');
-    setVal('piPhone','(786) 555-0147');
-    setVal('piAgency','HealthFirst Distribution Agency');
-    setVal('piSMS','Yes \u2014 Consent for SMS notifications');
-    setVal('piBizStreet','1801 NW 9th Ave');
-    setVal('piBizSuite','Suite 210');
-    setVal('piBizCity','Miami');
-    setVal('piBizState','FL');
-    setVal('piBizZip','33136');
-  } else if(step===2){
-    setVal('taxEntity','Individual / Sole Proprietor');
-    setVal('taxTIN','***-**-4589');
-    setVal('taxName','James R Martinez');
-    var achRadio=document.getElementById('payACH');
-    var checkRadio=document.getElementById('payCheck');
-    if(checkRadio) checkRadio.checked=false;
-    if(achRadio){achRadio.checked=true;if(typeof togglePayFields==='function')togglePayFields();}
-    setVal('bankName','Chase Bank');
-    setVal('bankRouting','021000021');
-    setVal('bankAcct','****7832');
-    setVal('bankAcctType','Checking');
-    var w9InputPrefill=document.getElementById('w9File');
-    if(w9InputPrefill){
-      if(!w9InputPrefill.dataset) w9InputPrefill.dataset={};
-      w9InputPrefill.dataset.prefillUploaded='true';
-    }
-    var w9Zone=document.getElementById('w9UploadZone');
-    if(w9Zone) w9Zone.classList.add('has-file');
-    var w9Label=document.getElementById('w9Label');
-    if(w9Label){ w9Label.textContent='\u2713 W9_Prefilled.pdf'; w9Label.style.display='block'; }
-    var w9Err=document.getElementById('err_w9');
-    if(w9Err) w9Err.style.display='none';
-  } else if(step===3){
-    setVal('ahipCert','AHIP-2026-JM-88234');
-    setVal('ahipDate','2026-01-15');
-    var checks=document.querySelectorAll('#stateCheckboxes input[type=checkbox]');
-    if(checks.length>=2){checks[0].checked=true;checks[1].checked=true;}
-    if(typeof updateStates==='function') updateStates();
-    // Prefill per-state license details for selected states
-    setTimeout(function(){
-      var selStates=document.querySelectorAll('#stateCheckboxes input:checked');
-      var sampleNums={FL:'FL-AG-102938',TX:'TX-AG-857291'};
-      selStates.forEach(function(c){
-        var st=c.value;
-        var numEl=document.getElementById('licNum_'+st);
-        var effEl=document.getElementById('licEff_'+st);
-        var expEl=document.getElementById('licExp_'+st);
-        if(numEl) numEl.value=sampleNums[st]||st+'-AG-000001';
-        if(effEl) effEl.value='2024-01-01';
-        if(expEl) expEl.value='2026-12-31';
-        var lobChecks=document.querySelectorAll('.state-lic-card[data-state="'+st+'"] .lob-checkbox input[type=checkbox]');
-        lobChecks.forEach(function(lb){ lb.checked=true; });
-      });
-    },100);
-  } else if(step===4){
-    // Training step - simulate all 4 segments complete with times
-    var labels=['A','B','C','D'];
-    var fakeTimes=[3200,4100,3500,2800];
-    for(var si=0;si<4;si++){
-      modComplete[si]=true;
-      modTimes[si]=fakeTimes[si];
-      modStartTimes[si]=Date.now()-fakeTimes[si];
-      modsDone=(modsDone<4)?si+1:4;
-      var stEl=document.getElementById('mod'+(si+1)+'Status');
-      if(stEl) stEl.innerHTML='<span style="color:#1b5e20;font-weight:600"><i class="fas fa-check-circle"></i> Complete</span>';
-      var tEl=document.getElementById('mod'+(si+1)+'Time');
-      var s2=Math.round(fakeTimes[si]/1000);
-      var ts=s2>=60?Math.floor(s2/60)+'m '+(s2%60)+'s':s2+'s';
-      if(tEl) tEl.innerHTML='<i class="fas fa-clock"></i> '+ts;
-      var b2=document.getElementById('mod'+(si+1)+'Btn');
-      if(b2) b2.style.display='none';
-      var pb=document.getElementById('progBar'+labels[si]);
-      if(pb) pb.style.width='100%';
-      var pl=document.getElementById('progLabel'+labels[si]);
-      if(pl) pl.textContent='100%';
-      document.getElementById('dashPct'+labels[si]).textContent='100%';
-      document.getElementById('dashPct'+labels[si]).style.color='#1b5e20';
-      document.getElementById('dashTime'+labels[si]).textContent=ts;
-    }
-    modsDone=4;
-    document.getElementById('overallProgBar').style.width='100%';
-    document.getElementById('overallProgLabel').textContent='4 of 4 segments complete';
-    document.getElementById('dashPctTotal').textContent='100%';
-    var totalMs2=fakeTimes.reduce(function(a,b){return a+b;},0);
-    var ts2=Math.round(totalMs2/1000);
-    document.getElementById('dashTimeTotal').textContent=(ts2>=60?Math.floor(ts2/60)+'m '+(ts2%60)+'s':ts2+'s');
-    document.getElementById('examSection').style.display='block';
-    for(var xi=0;xi<4;xi++){
-      showSegmentExam(xi);
-      // Auto-select correct answers
-      var seg=examSegData[xi];
-      for(var qi=0;qi<5;qi++){
-        var radios=document.querySelectorAll('input[name="seg'+xi+'q'+qi+'"]');
-        if(radios.length) radios[seg.questions[qi].ans].checked=true;
-      }
-      // Submit with perfect score
-      examStartTimes[xi]=Date.now()-2000;
-      doSubmitSegment(xi);
-    }
-    examPassed=true;
-    var step5Next=document.getElementById('step5Next');
-    if(step5Next) step5Next.style.display='inline-flex';
-  } else if(step===5){
-    setCheck('bgConsent',true);
-    setTimeout(function(){ sendBgInvitation(true); }, 200);
-  } else if(step===6){
-    setCheck('contractRead',true);
-    setVal('eSigName','James R Martinez');
-    setVal('eSigDate',new Date().toISOString().split('T')[0]);
-  }
-  if(btn){
-    btn.innerHTML='<i class="fas fa-check"></i>Prefilled';
-    btn.style.background='#e8f5e9';btn.style.borderColor='#2e7d32';btn.style.color='#1b5e20';
-    setTimeout(function(){btn.innerHTML='<i class="fas fa-magic"></i>Prefill Data';btn.style.background='#fff3e0';btn.style.borderColor='#fb8c00';btn.style.color='#e65100';},2000);
-  }
-  if(typeof showToast==='function') showToast('Step '+(step+1)+' prefilled','success');
-}
-</script>
-<script>
-var currentStep = 0;
-var totalSteps = 8;
-var modsDone = 0;
-var examPassed = false;
-var npnPrevalidated = false;
-var npnFormatLookupPassed = false;
-var npnLookupWarned = false;
-var ONBOARDING_DRAFT_KEY = 'ea_agent_onboarding_draft_v1';
-
-// Per-step draft tracking: true if step was skipped without completing all required fields
-var stepDrafts = [false, false, false, false, false, false]; // indices 0Ã¢â‚¬â€œ5
-
-var STEP_NAMES = [
-  'Step 1: Invitation &amp; Registration',
-  'Step 2: Personal &amp; Business Information',
-  'Step 3: W-9 Tax Details &amp; Payment',
-  'Step 4: AHIP Certification &amp; License',
-  'Step 5: Training &amp; Certification',
-  'Step 6: Background &amp; Sanctions Check'
-];
-
-function autoFillBusinessLocationFromZip(zip) {
-  if(!zip || zip.length !== 5) return;
-  var cityEl = document.getElementById('piBizCity');
-  var stateEl = document.getElementById('piBizState');
-  fetch('https://api.zippopotam.us/us/' + zip)
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(data){
-      if(!data || !data.places || !data.places.length) return;
-      var place = data.places[0];
-      if(cityEl) cityEl.value = place['place name'] || '';
-      if(stateEl) stateEl.value = place['state abbreviation'] || '';
-    })
-    .catch(function(){});
-}
-
-function isStepComplete(n) {
-  function hasVal(id) { var el = document.getElementById(id); return !!(el && el.value && el.value.trim()); }
-  function hasFile(id) { var el = document.getElementById(id); return !!(el && el.files && el.files.length); }
-  if(n===0) {
-    // inviteType and inviteToken are system-populated (disabled) — only validate NPN
-    if(!hasVal('regNPN')) return false;
-    var npn = document.getElementById('regNPN');
-    if(!(npn && /^\d{7,10}$/.test(npn.value.trim()))) return false;
-    return !!(npnPrevalidated && npn.dataset && npn.dataset.validatedNpn === npn.value.trim());
-  }
-  if(n===1) return hasVal('piFirst') && hasVal('piLast') && hasVal('piDOB') && hasVal('piSSN') && hasVal('piPhone') && hasVal('piBizStreet') && hasVal('piBizCity') && hasVal('piBizState') && hasVal('piBizZip');
-  if(n===2) {
-    if(!hasVal('taxEntity') || !hasVal('taxTIN') || !hasVal('taxName')) return false;
-    var w9Input = document.getElementById('w9File');
-    var w9Prefilled = !!(w9Input && w9Input.dataset && w9Input.dataset.prefillUploaded === 'true');
-    if(!hasFile('w9File') && !w9Prefilled) return false;
-    var ach = document.getElementById('payACH');
-    var check = document.getElementById('payCheck');
-    var achSelected = !!(ach && ach.checked);
-    var checkSelected = !!(check && check.checked);
-    if(!achSelected && !checkSelected) return false;
-    if(achSelected) {
-      return hasVal('bankName') && hasVal('bankRouting') && hasVal('bankAcct') && hasVal('bankAcctType');
-    }
-    return hasVal('checkAddr');
-  }
-  if(n===3) {
-    if(!hasVal('ahipCert') || !hasVal('ahipDate')) return false;
-    var checked3 = document.querySelectorAll('#stateCheckboxes input:checked');
-    if(!checked3.length) return false;
-    var licOk = true;
-    checked3.forEach(function(c) {
-      var st = c.value;
-      if(!hasVal('licNum_'+st) || !hasVal('licEff_'+st) || !hasVal('licExp_'+st)) licOk = false;
-      if(!document.querySelectorAll('.state-lic-card[data-state="'+st+'"] .lob-checkbox input:checked').length) licOk = false;
-    });
-    return licOk;
-  }
-  if(n===4) {
-    return modsDone === 4 && examPassed === true;
-  }
-  if(n===5) {
-    var bgConsent = document.getElementById('bgConsent');
-    return !!(bgConsent && bgConsent.checked) && bgInviteSent;
-  }
-  if(n===6) {
-    var contractRead = document.getElementById('contractRead');
-    return !!(contractRead && contractRead.checked) && hasVal('eSigName');
-  }
-  return true;
-}
-
-function canOpenFinalStep() {
-  for(var i=0;i<=6;i++){
-    if(i < stepDrafts.length && stepDrafts[i]) return false;
-    if(!isStepComplete(i)) return false;
-  }
-  return true;
-}
-
-function skipStep(n) {
-  stepDrafts[n] = true;
-  var badge = document.getElementById('draftBadge' + n);
-  if(badge) badge.style.display = 'flex';
-  saveOnboardingDraft(false);
-  if(typeof showToast==='function') showToast('Step '+(n+1)+' saved as draft','info');
-  obGoTo(n + 1);
-}
-
-function obGoTo(n) {
-  if(n === 7 && !canOpenFinalStep()){
-    if(typeof showToast==='function') showToast('Complete Steps 1-7 before opening Step 8','warning');
-    n = 6;
-  }
-  document.querySelectorAll('.ob-section').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('obStep' + n).classList.add('active');
-  var finalUnlocked = canOpenFinalStep();
-  for(var i=0; i<totalSteps; i++){
-    var bar = document.getElementById('bar'+i);
-    bar.classList.remove('active','done','draft','disabled');
-    var num = bar.querySelector('.ob-step-num');
-    var stepIsComplete = isStepComplete(i) && !(i < stepDrafts.length && stepDrafts[i]);
-    if(i === 7 && !finalUnlocked) {
-      bar.classList.add('disabled');
-      num.innerHTML = '8';
-      continue;
-    }
-    if(i < n){
-      if(stepIsComplete){
-        bar.classList.add('done');
-        num.innerHTML = '<i class="fas fa-check"></i>';
-      } else if(i < stepDrafts.length && stepDrafts[i]) {
-        bar.classList.add('draft');
-        num.innerHTML = '<i class="fas fa-pencil-alt" style="font-size:10px"></i>';
-      } else {
-        num.innerHTML = (i+1);
-      }
-    } else if(i === n){
-      bar.classList.add('active');
-      num.innerHTML = (i+1);
-    } else {
-      num.innerHTML = (i+1);
-    }
-  }
-  // Show/build block banner when arriving at contract step (n=6)
-  if(n === 6){
-    var incompleteIdxs = [0,1,2,3,4,5].filter(function(i){ return stepDrafts[i] || !isStepComplete(i); });
-    var blockBanner = document.getElementById('blockBanner');
-    if(blockBanner){
-      if(incompleteIdxs.length > 0){
-        var listHtml = incompleteIdxs.map(function(i){
-          return '<li><a href="javascript:obGoTo('+i+')" style="color:#b71c1c;font-weight:600;text-decoration:underline">' + STEP_NAMES[i] + '</a></li>';
-        }).join('');
-        document.getElementById('blockBannerList').innerHTML = listHtml;
-        blockBanner.style.display = 'flex';
-      } else {
-        blockBanner.style.display = 'none';
-      }
-    }
-  }
-  // Update sidebar progress
-  var sbLabel = document.getElementById('sb-step-label');
-  var sbFill = document.getElementById('sb-prog-fill');
-  if(sbLabel) sbLabel.textContent = 'Step ' + (n+1) + ' of ' + totalSteps;
-  if(sbFill) sbFill.style.width = ((n+1)/totalSteps*100) + '%';
-  currentStep = n;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function validateStep(n) {
-  var ok = true;
-  function req(id, errId) {
-    var el = document.getElementById(id);
-    var err = document.getElementById(errId);
-    if(!el) return;
-    var val = el.value ? el.value.trim() : '';
-    if(!val) { el.classList.add('field-err'); err && (err.style.display='block'); ok=false; }
-    else { el.classList.remove('field-err'); err && (err.style.display='none'); }
-  }
-  function reqChk(id, errId) {
-    var el = document.getElementById(id);
-    var err = document.getElementById(errId);
-    if(!el) return;
-    if(!el.checked) { err && (err.style.display='block'); ok=false; }
-    else { err && (err.style.display='none'); }
-  }
-  if(n===0){
-    // inviteType and inviteToken are system-populated (disabled) — skip validation
-    req('regNPN','err_regNPN');
-    var npnEl = document.getElementById('regNPN');
-    if(npnEl && npnEl.value && !/^\d{7,10}$/.test(npnEl.value.trim())){
-      npnEl.classList.add('field-err');
-      var npnErr = document.getElementById('err_regNPN');
-      if(npnErr) npnErr.textContent = 'NPN must be 7 to 10 numeric digits.';
-      document.getElementById('err_regNPN').style.display='block';
-      ok=false;
-    } else if(npnEl && npnEl.value && !npnPrevalidated) {
-      // Force explicit pre-validation click before proceeding to next step.
-      npnEl.classList.add('field-err');
-      var preErr = document.getElementById('err_regNPN');
-      if(preErr){
-        preErr.textContent = 'Please click Validate NPN before continuing.';
-        preErr.style.display = 'block';
-      }
-      ok = false;
-    }
-  } else if(n===1){
-    req('piFirst','err_piFirst'); req('piLast','err_piLast'); req('piDOB','err_piDOB');
-    req('piSSN','err_piSSN'); req('piPhone','err_piPhone');
-    req('piBizStreet','err_piBizStreet'); req('piBizCity','err_piBizCity'); req('piBizState','err_piBizState'); req('piBizZip','err_piBizZip');
-  } else if(n===2){
-    // W-9 step: non-blocking Ã¢â‚¬â€ allow navigation regardless. Draft state set by obNext.
-  } else if(n===3){
-    req('ahipCert','err_ahipCert'); req('ahipDate','err_ahipDate');
-    var states = document.querySelectorAll('#stateCheckboxes input:checked');
-    var stErr = document.getElementById('err_states');
-    if(!states.length){ stErr && (stErr.style.display='block'); ok=false; }
-    else { stErr && (stErr.style.display='none'); }
-    // Validate per-state license fields
-    states.forEach(function(c) {
-      var st = c.value;
-      req('licNum_'+st, 'err_licNum_'+st);
-      req('licEff_'+st, 'err_licEff_'+st);
-      req('licExp_'+st, 'err_licExp_'+st);
-      var lobChecked = document.querySelectorAll('.state-lic-card[data-state="'+st+'"] .lob-checkbox input:checked');
-      var lobErr = document.getElementById('err_lob_' + st);
-      if(!lobChecked.length){ lobErr && (lobErr.style.display='block'); ok=false; }
-      else { lobErr && (lobErr.style.display='none'); }
-    });
-  } else if(n===4){
-    // Training step: non-blocking — allow navigation regardless
-  } else if(n===5){
-    reqChk('bgConsent','err_bgConsent');
-    if(!bgInviteSent) {
-      var invErr = document.getElementById('err_bgInvite');
-      if(invErr) invErr.style.display = 'block';
-      ok = false;
-    }
-  } else if(n===6){
-    // Block final submit if any prior step is incomplete
-    var incompleteIdxs = [0,1,2,3,4,5].filter(function(i){ return stepDrafts[i] || !isStepComplete(i); });
-    if(incompleteIdxs.length > 0){
-      var listHtml = incompleteIdxs.map(function(i){
-        return '<li><a href="javascript:obGoTo('+i+')" style="color:#b71c1c;font-weight:600;text-decoration:underline">' + STEP_NAMES[i] + '</a></li>';
-      }).join('');
-      document.getElementById('blockBannerList').innerHTML = listHtml;
-      var blockBanner = document.getElementById('blockBanner');
-      if(blockBanner){ blockBanner.style.display='flex'; blockBanner.scrollIntoView({behavior:'smooth',block:'start'}); }
-      ok = false;
-    }
-    reqChk('contractRead','err_contractRead');
-    req('eSigName','err_eSigName');
-  }
-  return ok;
-}
-
-function obNext(n) {
-  if(n===0){
-    var npnNow = document.getElementById('regNPN');
-    // Reset validation state when the NPN was edited without re-validation.
-    if(npnNow && npnNow.dataset && npnNow.dataset.validatedNpn !== npnNow.value.trim()){
-      npnPrevalidated = false;
-      npnFormatLookupPassed = false;
-      npnLookupWarned = false;
-      var npnResReset = document.getElementById('npnResult');
-      if(npnResReset) npnResReset.style.display = 'none';
-    }
-  }
-  if(!validateStep(n)) return;
-  // Update draft state: mark complete if all fields filled, draft if not
-  if(n < stepDrafts.length){
-    var complete = isStepComplete(n);
-    stepDrafts[n] = !complete;
-    var badge = document.getElementById('draftBadge' + n);
-    if(badge) badge.style.display = complete ? 'none' : 'flex';
-  }
-  if(n===6){
-    if(!canOpenFinalStep()) return;
-    document.getElementById('submitDate').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    document.getElementById('caseID').textContent = 'OB-2026-' + Math.floor(1000+Math.random()*9000);
-    clearOnboardingDraft(false);
-  } else {
-    saveOnboardingDraft(false);
-  }
-  obGoTo(n+1);
-}
-
-function obBack(n) { obGoTo(n-1); }
-
-function runFormatLevelNpnLookup(npn) {
-  // Best-effort format-level lookup simulation for prototype flow.
-  // If a service is connected later, replace this logic with API integration.
-  if(typeof window.npnFormatLookupServiceAvailable === 'undefined' || window.npnFormatLookupServiceAvailable === null) {
-    window.npnFormatLookupServiceAvailable = false;
-  }
-  if(!window.npnFormatLookupServiceAvailable) {
-    return { status: 'unavailable', exists: null };
-  }
-  // Demo rule: NPNs ending with 0 are treated as not found.
-  if(/0$/.test(npn)) {
-    return { status: 'ok', exists: false };
-  }
-  return { status: 'ok', exists: true };
-}
-
-function runNiprNpnLookup(npn) {
-  // Best-effort NIPR lookup simulation for prototype flow.
-  if(typeof window.niprLookupServiceAvailable === 'undefined' || window.niprLookupServiceAvailable === null) {
-    window.niprLookupServiceAvailable = false;
-  }
-  if(!window.niprLookupServiceAvailable) {
-    return { status: 'unavailable', found: null };
-  }
-  // Demo rule: NPNs ending with 9 return no result.
-  if(/9$/.test(npn)) {
-    return { status: 'ok', found: false };
-  }
-  return { status: 'ok', found: true };
-}
-
-function validateNPN() {
-  var npnEl = document.getElementById('regNPN');
-  var npn = npnEl ? npnEl.value.trim() : '';
-  var errEl = document.getElementById('err_regNPN');
-  var resEl = document.getElementById('npnResult');
-
-  npnPrevalidated = false;
-  npnFormatLookupPassed = false;
-  npnLookupWarned = false;
-
-  if(!npn || !/^\d{7,10}$/.test(npn)) {
-    if(npnEl) npnEl.classList.add('field-err');
-    if(errEl){
-      errEl.textContent = 'NPN must be 7 to 10 numeric digits.';
-      errEl.style.display = 'block';
-    }
-    if(resEl) resEl.style.display = 'none';
-    return;
-  }
-
-  // 1) Pre-validation passed.
-  npnPrevalidated = true;
-
-  // 2) Optional format-level lookup (may invoke if available).
-  var fmtLookup = runFormatLevelNpnLookup(npn);
-  if(fmtLookup.status === 'ok' && fmtLookup.exists === false){
-    npnPrevalidated = false;
-    npnFormatLookupPassed = false;
-    if(npnEl) npnEl.classList.add('field-err');
-    if(errEl){
-      errEl.textContent = 'NPN format lookup could not confirm this NPN. Please correct and re-enter.';
-      errEl.style.display = 'block';
-    }
-    if(resEl) resEl.style.display = 'none';
-    return;
-  }
-  npnFormatLookupPassed = true;
-
-  // 3) Best-effort NIPR NPN lookup (non-blocking).
-  var niprLookup = runNiprNpnLookup(npn);
-  if(niprLookup.status === 'unavailable' || (niprLookup.status === 'ok' && niprLookup.found === false)){
-    npnLookupWarned = true;
-    if(typeof showToast === 'function'){
-      showToast('NIPR lookup unavailable or no result. You can continue onboarding and verification will be completed during review.','info');
-    }
-  }
-
-  if(resEl) resEl.style.display = 'block';
-  if(errEl) errEl.style.display = 'none';
-  if(npnEl){
-    npnEl.classList.remove('field-err');
-    if(!npnEl.dataset) npnEl.dataset = {};
-    npnEl.dataset.validatedNpn = npn;
-  }
-  saveOnboardingDraft(false);
-}
-
-function handleUpload(inputId, zoneId, labelId) {
-  var input = document.getElementById(inputId);
-  if(!input || !input.files.length) return;
-  if(inputId === 'w9File'){
-    if(!input.dataset) input.dataset = {};
-    input.dataset.prefillUploaded = 'false';
-  }
-  var fname = input.files[0].name;
-  if(zoneId) { var z = document.getElementById(zoneId); if(z) z.classList.add('has-file'); }
-  if(labelId) { var lb = document.getElementById(labelId); if(lb){ lb.textContent = '\u2713 ' + fname; lb.style.display='block'; } }
-}
-
-function togglePayFields() {
-  var ach = document.getElementById('payACH');
-  document.getElementById('achFields').style.display = ach.checked ? 'block' : 'none';
-  document.getElementById('checkFields').style.display = ach.checked ? 'none' : 'block';
-  document.getElementById('err_payMethod').style.display = 'none';
-}
-
-var bgInviteSent = false;
-
-function sendBgInvitation(silent) {
-  var consent = document.getElementById('bgConsent');
-  if (!consent || !consent.checked) {
-    var cErr = document.getElementById('err_bgConsent');
-    if (cErr) cErr.style.display = 'block';
-    if (!silent) { if(typeof showToast==='function') showToast('Please authorize the background check first','error'); }
-    return;
-  }
-  bgInviteSent = true;
-  var invErr = document.getElementById('err_bgInvite');
-  if (invErr) invErr.style.display = 'none';
-  var ts = new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  var tsEl = document.getElementById('bgInviteTimestamp');
-  if (tsEl) tsEl.textContent = ts;
-  var invPanel = document.getElementById('bgInvitePanel');
-  var statusPanel = document.getElementById('bgStatusPanel');
-  if (invPanel) invPanel.style.display = 'none';
-  if (statusPanel) statusPanel.style.display = 'block';
-  if (!silent && typeof showToast==='function') showToast('Invitation sent to Sterling Talent Solutions','success');
-}
-
-function resendBgInvitation() {
-  var ts = new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  var tsEl = document.getElementById('bgInviteTimestamp');
-  if (tsEl) tsEl.textContent = ts + ' (resent)';
-  if(typeof showToast==='function') showToast('Invitation resent to Sterling Talent Solutions','info');
-  saveOnboardingDraft(false);
-}
-
-function setDraftFlowNote(msg) {
-  var note = document.getElementById('draftFlowNote');
-  if(!note) return;
-  if(!msg) { note.style.display = 'none'; note.textContent = ''; return; }
-  note.textContent = msg;
-  note.style.display = 'block';
-}
-
-function updateDraftButtons(hasDraft) {
-  var resumeBtn = document.getElementById('resumeDraftBtn');
-  var clearBtn = document.getElementById('clearDraftBtn');
-  if(resumeBtn) resumeBtn.style.display = hasDraft ? 'inline-flex' : 'none';
-  if(clearBtn) clearBtn.style.display = hasDraft ? 'inline-flex' : 'none';
-}
-
-function collectOnboardingDraft() {
-  var data = {
-    currentStep: currentStep,
-    stepDrafts: stepDrafts,
-    bgInviteSent: bgInviteSent,
-    npnPrevalidated: npnPrevalidated,
-    npnFormatLookupPassed: npnFormatLookupPassed,
-    npnLookupWarned: npnLookupWarned,
-    fields: {},
-    savedAt: new Date().toISOString()
-  };
-  var fields = document.querySelectorAll('input[id], select[id], textarea[id]');
-  fields.forEach(function(el){
-    if(!el || !el.id) return;
-    if(el.type === 'file') return;
-    if(el.type === 'checkbox' || el.type === 'radio') data.fields[el.id] = !!el.checked;
-    else data.fields[el.id] = el.value;
-  });
-  return data;
-}
-
-function applyFieldValueById(id, value) {
-  var el = document.getElementById(id);
-  if(!el) return;
-  if(el.type === 'checkbox' || el.type === 'radio') el.checked = !!value;
-  else if(typeof value !== 'undefined' && value !== null) el.value = value;
-}
-
-function saveOnboardingDraft(showToastMsg) {
-  try {
-    var payload = collectOnboardingDraft();
-    localStorage.setItem(ONBOARDING_DRAFT_KEY, JSON.stringify(payload));
-    updateDraftButtons(true);
-    var stamp = new Date(payload.savedAt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
-    setDraftFlowNote('Draft saved locally on this device at ' + stamp + '.');
-    if(showToastMsg && typeof showToast==='function') showToast('Onboarding draft saved','success');
-  } catch (e) {
-    if(showToastMsg && typeof showToast==='function') showToast('Unable to save draft on this browser','error');
-  }
-}
-
-function resumeOnboardingDraft() {
-  var raw = localStorage.getItem(ONBOARDING_DRAFT_KEY);
-  if(!raw){
-    setDraftFlowNote('No saved draft found.');
-    updateDraftButtons(false);
-    return;
-  }
-  var data;
-  try { data = JSON.parse(raw); } catch(e) {
-    setDraftFlowNote('Saved draft is invalid and could not be restored.');
-    return;
-  }
-  if(!data || !data.fields){
-    setDraftFlowNote('Saved draft is invalid and could not be restored.');
-    return;
-  }
-  Object.keys(data.fields).forEach(function(id){ applyFieldValueById(id, data.fields[id]); });
-  updateStates();
-  Object.keys(data.fields).forEach(function(id){ applyFieldValueById(id, data.fields[id]); });
-  togglePayFields();
-
-  if(Array.isArray(data.stepDrafts)) stepDrafts = data.stepDrafts;
-  bgInviteSent = !!data.bgInviteSent;
-  npnPrevalidated = !!data.npnPrevalidated;
-  npnFormatLookupPassed = !!data.npnFormatLookupPassed;
-  npnLookupWarned = !!data.npnLookupWarned;
-
-  var regNpn = document.getElementById('regNPN');
-  if(regNpn && npnPrevalidated){
-    if(!regNpn.dataset) regNpn.dataset = {};
-    regNpn.dataset.validatedNpn = regNpn.value.trim();
-  }
-
-  var goto = (typeof data.currentStep === 'number' && data.currentStep >= 0 && data.currentStep < totalSteps) ? data.currentStep : 0;
-  obGoTo(goto);
-  updateDraftButtons(true);
-
-  var stamp = data.savedAt ? new Date(data.savedAt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : 'an earlier time';
-  setDraftFlowNote('Draft resumed from ' + stamp + '.');
-  if(typeof showToast==='function') showToast('Draft resumed successfully','success');
-}
-
-function clearOnboardingDraft(showToastMsg) {
-  localStorage.removeItem(ONBOARDING_DRAFT_KEY);
-  updateDraftButtons(false);
-  setDraftFlowNote('');
-  if(showToastMsg && typeof showToast==='function') showToast('Saved draft cleared','info');
-}
-
-function saveDraftAndExit(evt, href) {
-  if(evt) evt.preventDefault();
-  saveOnboardingDraft(false);
-  var stamp = new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  setDraftFlowNote('Progress saved. Redirecting to login at ' + stamp + '.');
-  setTimeout(function(){ window.location.href = href || '../auth/login.html'; }, 120);
-}
-
-function initOnboardingDraft() {
-  var hasDraft = !!localStorage.getItem(ONBOARDING_DRAFT_KEY);
-  updateDraftButtons(hasDraft);
-  if(hasDraft) {
-    setDraftFlowNote('Saved draft found on this browser.');
-  }
-}
-
-function toggleBgFallback() {
-  var panel = document.getElementById('bgFallbackPanel');
-  var chevron = document.getElementById('bgFallbackChevron');
-  if (!panel) return;
-  var open = panel.style.display !== 'none';
-  panel.style.display = open ? 'none' : 'block';
-  if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
-}
-
-function updateStates() {
-  var container = document.getElementById('stateLicenseDetails');
-  if (!container) return;
-  var checked = document.querySelectorAll('#stateCheckboxes input[type=checkbox]:checked');
-  // Remove cards for unchecked states
-  var existing = container.querySelectorAll('.state-lic-card');
-  existing.forEach(function(card) {
-    var st = card.getAttribute('data-state');
-    var still = false;
-    checked.forEach(function(c) { if (c.value === st) still = true; });
-    if (!still) card.remove();
-  });
-  // Add cards for newly checked states
-  checked.forEach(function(chk) {
-    var st = chk.value;
-    var label = chk.getAttribute('data-label') || st;
-    if (container.querySelector('.state-lic-card[data-state="' + st + '"]')) return;
-    var card = document.createElement('div');
-    card.className = 'state-lic-card';
-    card.setAttribute('data-state', st);
-    card.style.cssText = 'border:1px solid #cdebe4;border-radius:8px;padding:14px 16px;background:#f0f8f6';
-    card.innerHTML = '<div style="font-size:12px;font-weight:600;color:#0f6a62;margin-bottom:10px"><i class="fas fa-map-marker-alt" style="margin-right:6px"></i>' + label + ' (' + st + ') &mdash; License Details</div>'
-      + '<div class="form-row three" style="gap:10px">'
-      + '<div class="fg"><label>License Number <span class="req">*</span></label><input type="text" id="licNum_' + st + '" placeholder="e.g. ' + st + '-AG-000000"><span class="err-msg" id="err_licNum_' + st + '">Required.</span></div>'
-      + '<div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="licEff_' + st + '"><span class="err-msg" id="err_licEff_' + st + '">Required.</span></div>'
-      + '<div class="fg"><label>Expiry Date <span class="req">*</span></label><input type="date" id="licExp_' + st + '"><span class="err-msg" id="err_licExp_' + st + '">Required.</span></div>'
-      + '</div>'
-      + '<div style="margin-top:10px">'
-      + '<div style="font-size:11px;font-weight:600;color:#37474f;margin-bottom:6px">Line(s) of Business for ' + label + ' <span class="req">*</span></div>'
-      + '<label class="lob-checkbox"><input type="checkbox" id="lob_' + st + '_MA" value="MA"> <span>Medicare Advantage (MA)</span></label>'
-      + '<label class="lob-checkbox"><input type="checkbox" id="lob_' + st + '_CSNP_ESRD" value="CSNP-ESRD"> <span>C-SNP (ESRD)</span></label>'
-      + '<label class="lob-checkbox"><input type="checkbox" id="lob_' + st + '_CSNP_CKD" value="CSNP-CKD"> <span>C-SNP (CKD)</span></label>'
-      + '<label class="lob-checkbox"><input type="checkbox" id="lob_' + st + '_MAPD" value="MAPD"> <span>MAPD</span></label>'
-      + '<label class="lob-checkbox"><input type="checkbox" id="lob_' + st + '_PDP" value="PDP"> <span>Part D (PDP)</span></label>'
-      + '<span class="err-msg" id="err_lob_' + st + '">Please select at least one line of business for ' + st + '.</span>'
-      + '</div>'
-      + '<div class="fg" style="margin-top:8px"><label>License Document (PDF/JPG)</label>'
-      + '<label class="upload-zone" id="licZone_' + st + '" onclick="document.getElementById(\'licFile_' + st + '\').click()" style="padding:10px;min-height:48px">'
-      + '<i class="fas fa-cloud-upload-alt"></i> Click to upload license document<br><span style="font-size:10px">Max 5 MB &mdash; PDF, JPG, PNG</span>'
-      + '<input type="file" id="licFile_' + st + '" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUpload(\'licFile_' + st + '\',\'licZone_' + st + '\',\'licLbl_' + st + '\')">'
-      + '</label>'
-      + '<span id="licLbl_' + st + '" style="font-size:10px;color:#1b5e20;display:none"></span></div>';
-    container.appendChild(card);
-  });
-}
-
-function startModule(num) {
-  var labels = ['A','B','C','D'];
-  var colors = ['#0f6a62','#1b5e20','#6a1b9a','#e65100'];
-  var modEl = document.getElementById('mod'+(num+1));
-  var statusEl = document.getElementById('mod'+(num+1)+'Status');
-  var timeEl = document.getElementById('mod'+(num+1)+'Time');
-  var btn = document.getElementById('mod'+(num+1)+'Btn');
-  var progBar = document.getElementById('progBar'+labels[num]);
-  var progLabel = document.getElementById('progLabel'+labels[num]);
-
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> In Progress';
-  statusEl.innerHTML = '<span style="color:'+colors[num]+';font-weight:600"><i class="fas fa-spinner fa-spin"></i> In Progress</span>';
-
-  var segStartTime = Date.now();
-  modStartTimes[num] = segStartTime;
-
-  // Simulate progress over ~3 seconds (demo mode)
-  var progress = 0;
-  var interval = setInterval(function(){
-    progress += Math.random() * 15 + 5;
-    if(progress >= 100) progress = 100;
-    progBar.style.width = Math.round(progress) + '%';
-    progLabel.textContent = Math.round(progress) + '%';
-    document.getElementById('dashPct'+labels[num]).textContent = Math.round(progress) + '%';
-    document.getElementById('dashPct'+labels[num]).style.color = colors[num];
-    if(progress >= 100){
-      clearInterval(interval);
-      completeModule(num);
-    }
-  }, 400);
-}
-
-function completeModule(num) {
-  var labels = ['A','B','C','D'];
-  var statusEl = document.getElementById('mod'+(num+1)+'Status');
-  var timeEl = document.getElementById('mod'+(num+1)+'Time');
-  var btn = document.getElementById('mod'+(num+1)+'Btn');
-
-  var elapsed = Date.now() - modStartTimes[num];
-  var secs = Math.round(elapsed / 1000);
-  var timeStr = secs >= 60 ? Math.floor(secs/60) + 'm ' + (secs%60) + 's' : secs + 's';
-  modTimes[num] = elapsed;
-
-  statusEl.innerHTML = '<span style="color:#1b5e20;font-weight:600"><i class="fas fa-check-circle"></i> Complete</span>';
-  timeEl.innerHTML = '<i class="fas fa-clock"></i> ' + timeStr;
-  btn.style.display = 'none';
-  modsDone++;
-  modComplete[num] = true;
-
-  document.getElementById('dashTime'+labels[num]).textContent = timeStr;
-  document.getElementById('dashPct'+labels[num]).textContent = '100%';
-  document.getElementById('dashPct'+labels[num]).style.color = '#1b5e20';
-
-  var overallPct = Math.round((modsDone / 4) * 100);
-  document.getElementById('overallProgBar').style.width = overallPct + '%';
-  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments complete';
-  document.getElementById('dashPctTotal').textContent = overallPct + '%';
-
-  var totalMs = modTimes.reduce(function(a,b){return a+b;},0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs/60) + 'm ' + (totalSecs%60) + 's' : totalSecs + 's';
-  document.getElementById('dashTimeTotal').textContent = totalStr;
-
-  document.getElementById('examSection').style.display = 'block';
-  updateExamSegmentButtons();
-  showSegmentExam(num);
-
-  if(typeof showToast==='function') showToast('Segment '+labels[num]+' training complete! Exam unlocked.','success');
-}
-
-function showSegmentExam(idx) {
-  selectExamSegment(idx);
-}
-
-
-// -- Segmented Exam Engine --
-var examSegData = [
-  {
-    id:'A', label:'Video-Based', icon:'fa-video', accentBg:'#e8f5f2', accentColor:'#0f6a62',
-    material:'<div style="background:#002624;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;color:#fff;font-size:11px"><i class="fas fa-video" style="font-size:28px;margin-bottom:8px;display:block;color:#a6dace"></i><div style="font-weight:600;margin-bottom:6px">EnrollAxis 2026 &mdash; C-SNP Product Overview</div><div style="opacity:.7;font-size:10px;margin-bottom:10px">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button class="btn-pr btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i>Play Video</button></div>',
-    questions:[
-      {q:"What is the primary target population for EnrollAxis's C-SNP plans?",opts:["Patients with diabetes only","Patients with ESRD or Chronic Kidney Disease (CKD)","All Medicare-eligible beneficiaries over 65","Patients with congestive heart failure"],ans:1},
-      {q:"Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?",opts:["Medicare Supplement (Medigap)","Part D Prescription Drug Plan","Medicare Advantage (Part C)","Medicare Savings Account (MSA)"],ans:2},
-      {q:"What does ESRD stand for?",opts:["Extended Systematic Renal Disorder","Early Stage Renal Deficiency","End Stage Renal Disease","Emergency Surgical Renal Diagnosis"],ans:2},
-      {q:"EnrollAxis's C-SNP plans target members with which qualifying condition?",opts:["COPD and asthma","HIV/AIDS","Diabetes mellitus only","Chronic Kidney Disease (CKD) or End-Stage Renal Disease (ESRD)"],ans:3},
-      {q:"Which federal agency oversees and regulates Medicare Advantage plans?",opts:["Food and Drug Administration (FDA)","Centers for Medicare &amp; Medicaid Services (CMS)","Centers for Disease Control (CDC)","Office of Inspector General (OIG)"],ans:1}
-    ]
-  },
-  {
-    id:'B', label:'Training Material', icon:'fa-book', accentBg:'#e8f5e9', accentColor:'#1b5e20',
-    material:'<div style="padding:12px 14px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:16px;font-size:11px;line-height:1.9;max-height:130px;overflow-y:auto"><strong>Training Excerpt &mdash; Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 &ndash; Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
-    questions:[
-      {q:"The Annual Enrollment Period (AEP) for Medicare Advantage runs from:",opts:["January 1 &ndash; March 31","October 15 &ndash; December 7","November 1 &ndash; December 15","September 1 &ndash; October 31"],ans:1},
-      {q:"ICEP stands for:",opts:["Interim Coverage Eligibility Period","Individual Coverage Enrollment Plan","Initial Coverage Election Period","Initial Carrier Election Period"],ans:2},
-      {q:"A Scope of Appointment (SOA) must be obtained at least how many hours before a Medicare sales appointment?",opts:["24 hours","36 hours","48 hours","72 hours"],ans:2},
-      {q:"Under CMS marketing guidelines, agents are PROHIBITED from:",opts:["Providing members with plan Summary of Benefits","Discussing plan premium amounts","Offering gifts or incentives valued over $15","Scheduling a follow-up appointment"],ans:2},
-      {q:"A Special Enrollment Period (SEP) may be triggered by:",opts:["Annual calendar date only","A qualifying life event such as moving out of a plan's service area","A plan's premium increase","Agent request to the carrier"],ans:1}
-    ]
-  },
-  {
-    id:'C', label:'PDF Review', icon:'fa-file-pdf', accentBg:'#ede7f6', accentColor:'#6a1b9a',
-    material:'<div style="padding:12px 14px;background:#faf5ff;border:1px solid #ce93d8;border-radius:8px;margin-bottom:16px;font-size:11px;line-height:1.9"><i class="fas fa-file-pdf" style="color:#6a1b9a;margin-right:5px"></i><strong>C-SNP Product Guide &mdash; Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
-    questions:[
-      {q:"To enroll in a C-SNP plan, a beneficiary must have:",opts:["Medicare Part A only","Medicare Parts A and B AND the qualifying chronic condition","An active Medigap plan","Part D enrollment in effect"],ans:1},
-      {q:"The PQAT questionnaire is used to:",opts:["Verify agent licensing credentials","Assess clinical appropriateness of the C-SNP plan for the member","Calculate a member's estimated annual premium","Determine the copay structure for the plan"],ans:1},
-      {q:"CKD stands for:",opts:["Comprehensive Kidney Diagnosis","Critical Kidney Deficiency","Chronic Kidney Disease","Cellular Kidney Disorder"],ans:2},
-      {q:"Under HIPAA, an agent's primary obligation is to:",opts:["Share member PHI with the member's spouse upon verbal request","Submit member diagnosis records to the state annually","Report any PHI breaches to the carrier and affected member promptly","Store member records on personal devices for easy access"],ans:2},
-      {q:"The Plan Recommendation Engine helps agents:",opts:["File claims on behalf of enrolled members","Match members to the most clinically appropriate plan based on their chronic conditions","Calculate a member's out-of-pocket maximum","Verify the member's NPI number"],ans:1}
-    ]
-  },
-  {
-    id:'D', label:'General MCQ', icon:'fa-list-ul', accentBg:'#fff3e0', accentColor:'#e65100',
-    material:'',
-    questions:[
-      {q:"What does MAPD stand for?",opts:["Medicare Advantage Prescription Drug Plan","Medicare Approved Provider Directory","Managed Advantage Plan with Disability","Medicare Agency Partnership Division"],ans:0},
-      {q:"Which enrollment period allows MA plan members to switch plans from January 1 &ndash; March 31?",opts:["Annual Enrollment Period (AEP)","Initial Coverage Election Period (ICEP)","Open Enrollment Period (OEP)","Special Enrollment Period (SEP)"],ans:2},
-      {q:"An agent's National Producer Number (NPN) is managed through:",opts:["Centers for Medicare &amp; Medicaid Services (CMS)","The state department of insurance","National Insurance Producer Registry (NIPR)","The appointing carrier"],ans:2},
-      {q:"Medicare Part D primarily covers:",opts:["Inpatient hospital stays","Outpatient physician services","Prescription drug costs","Long-term custodial care"],ans:2},
-      {q:"The maximum number of certification exam attempts allowed in this onboarding is:",opts:["2 attempts","3 attempts","4 attempts","Unlimited attempts"],ans:2}
-    ]
-  }
-];
-
-var currentSeg = 0;
-var segScores  = [-1,-1,-1,-1];
-var segAttempts = [0,0,0,0];
-var pendingSubmitSeg = -1;
-var modStartTimes = [0,0,0,0];
-var modTimes = [0,0,0,0];
-var modComplete = [false,false,false,false];
-var examStartTimes = [0,0,0,0];
-var examTimes = [0,0,0,0];
-var activeTrainingSeg = 0;
-var activeExamSeg = 0;
-
-function openSegmentScreen(idx) {
-  activeTrainingSeg = idx;
-  activeExamSeg = idx;
-  var dash = document.getElementById('step5DashboardSection');
-  var nav = document.getElementById('step5Nav');
-  var exam = document.getElementById('examSection');
-  if(dash) dash.style.display = 'none';
-  if(nav) nav.style.display = 'none';
-  if(exam) exam.style.display = 'block';
-  selectExamSegment(idx);
-  examStartTimes[idx] = Date.now();
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function closeSegmentScreen() {
-  var dash = document.getElementById('step5DashboardSection');
-  var nav = document.getElementById('step5Nav');
-  var exam = document.getElementById('examSection');
-  var warn = document.getElementById('unansweredWarn');
-  if(dash) dash.style.display = 'block';
-  if(nav) nav.style.display = 'flex';
-  if(exam) exam.style.display = 'none';
-  if(warn) warn.style.display = 'none';
-}
-
-function goNextSegment() {
-  var next = (activeExamSeg + 1) % 4;
-  openSegmentScreen(next);
-}
-
-function selectTrainingSegment(idx) {
-  openSegmentScreen(idx);
-}
-
-function updateExamSegmentButtons() {
-  for (var i = 0; i < 4; i++) {
-    var btn = document.getElementById('dashSegTab' + i);
-    if (!btn) continue;
-    btn.style.opacity = '1';
-    btn.style.cursor = 'pointer';
-    if (i === activeTrainingSeg) {
-      btn.style.background = '#e8f5f2';
-      btn.style.borderColor = '#a6dace';
-      btn.style.boxShadow = 'inset 0 0 0 1px #0f6a62';
-    }
-  }
-}
-
-function selectExamSegment(idx) {
-  activeTrainingSeg = idx;
-  activeExamSeg = idx;
-  for (var i = 0; i < 4; i++) {
-    var panel = document.getElementById('examSeg' + i);
-    if (panel) panel.style.display = i === idx ? 'block' : 'none';
-  }
-  var activePanel = document.getElementById('examSeg' + idx);
-  if (activePanel && !activePanel.innerHTML.trim()) buildSegPanel(idx);
-  updateExamSegmentButtons();
-}
-
-function buildSegPanel(idx) {
-  var s = examSegData[idx];
-  var ab = s.accentBg, ac = s.accentColor;
-  var html = '<div style="background:'+ab+';border-left:3px solid '+ac+';padding:10px 14px;border-radius:6px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:'+ac+'"><i class="fas '+s.icon+'"></i> Segment '+s.id+' Exam &mdash; '+s.label+'<span style="margin-left:auto;font-size:10px;font-weight:400;color:#5f6368">5 Questions &bull; Pass: 60%</span></div>';
-  if(s.material) html += s.material;
-  html += '<div class="seg-questions" id="segQ'+idx+'">';
-  for(var qi=0;qi<5;qi++){
-    var q=s.questions[qi], nm='seg'+idx+'q'+qi;
-    html += '<div style="margin-bottom:14px;padding:12px 14px;border:1px solid #e8eaed;border-radius:8px;background:#fff"><div style="font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:flex-start;gap:7px"><span style="min-width:22px;height:22px;border-radius:50%;background:'+ab+';color:'+ac+';font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">'+(qi+1)+'</span>'+q.q+'</div>';
-    for(var oi=0;oi<q.opts.length;oi++){
-      html += '<label class="q-option-label"><input type="radio" name="'+nm+'" value="'+oi+'"> <span class="q-text">'+q.opts[oi]+'</span></label>';
-    }
-    html += '</div>';
-  }
-  html += '</div>';
-  html += '<div class="seg-submit-row" style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="btn-pr" onclick="submitSegment('+idx+')"><i class="fas fa-check"></i> Submit Segment '+s.id+' Exam</button></div>';
-  html += '<div id="segScore'+idx+'" style="display:none;margin-top:14px"></div>';
-  document.getElementById('examSeg'+idx).innerHTML = html;
-  examStartTimes[idx] = Date.now();
-}
-
-function submitSegment(idx) {
-  var missing = [];
-  for(var i=0;i<5;i++){ if(!document.querySelector('input[name="seg'+idx+'q'+i+'"]:checked')) missing.push(i+1); }
-  if(missing.length){
-    pendingSubmitSeg = idx;
-    document.getElementById('unansweredCount').textContent = missing.length;
-    document.getElementById('unansweredList').textContent  = missing.map(function(n){return'Q'+n;}).join(', ');
-    var w = document.getElementById('unansweredWarn');
-    w.style.display = 'flex';
-    w.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
-  doSubmitSegment(idx);
-}
-
-function dismissUnansweredWarn() {
-  document.getElementById('unansweredWarn').style.display = 'none';
-  pendingSubmitSeg = -1;
-}
-
-function submitSegmentForce() {
-  document.getElementById('unansweredWarn').style.display = 'none';
-  doSubmitSegment(pendingSubmitSeg);
-  pendingSubmitSeg = -1;
-}
-
-function doSubmitSegment(idx) {
-  var s = examSegData[idx], correct = 0;
-  segAttempts[idx]++;
-  for(var i=0;i<5;i++){
-    var sel = document.querySelector('input[name="seg'+idx+'q'+i+'"]:checked');
-    if(sel && parseInt(sel.value)===s.questions[i].ans) correct++;
-  }
-  var pct = Math.round((correct/5)*100);
-  segScores[idx] = pct;
-
-  var examElapsed = Date.now() - examStartTimes[idx];
-  examTimes[idx] = examElapsed;
-  modTimes[idx] = examElapsed;
-  var examSecs = Math.round(examElapsed / 1000);
-  var examTimeStr = examSecs >= 60 ? Math.floor(examSecs/60) + 'm ' + (examSecs%60) + 's' : examSecs + 's';
-
-  var sp = document.getElementById('examSeg'+idx);
-  sp.querySelector('.seg-questions').style.display   = 'none';
-  sp.querySelector('.seg-submit-row').style.display  = 'none';
-
-  var pass = pct >= 60;
-  var retryHtml = '';
-  if(!pass && segAttempts[idx] < 4){
-    retryHtml = '<div style="text-align:center;margin-top:8px"><button class="btn-ol btn-sm" onclick="retrySegExam('+idx+')"><i class="fas fa-redo"></i> Retry (Attempt '+(segAttempts[idx]+1)+' of 4)</button></div>';
-  } else if(!pass){
-    retryHtml = '<div style="text-align:center;color:#c62828;font-weight:600;font-size:10px;margin-top:6px"><i class="fas fa-ban"></i> Max attempts reached for Segment '+s.id+'</div>';
-  }
-
-  document.getElementById('segScore'+idx).innerHTML =
-    '<div style="padding:12px 14px;border-radius:8px;text-align:center;background:'+(pass?'#e8f5e9':'#fff8e1')+';border:1px solid '+(pass?'#c8e6c9':'#ffe082')+';font-size:12px;color:'+(pass?'#1b5e20':'#e65100')+'">'+
-    '<i class="fas '+(pass?'fa-check-circle':'fa-exclamation-circle')+'"></i> <strong>Segment '+s.id+' Exam</strong> &mdash; Score: '+correct+'/5 ('+pct+'%) &nbsp;|&nbsp; Time: '+examTimeStr+
-    '</div>' + retryHtml;
-  document.getElementById('segScore'+idx).style.display = 'block';
-
-  var labels = ['A','B','C','D'];
-  var names = ['Video','Training','PDF','MCQ'];
-  var label = labels[idx];
-  var statusEl = document.getElementById('dashStatus' + label);
-  var pctEl = document.getElementById('dashPct' + label);
-  var timeEl = document.getElementById('dashTime' + label);
-
-  if(pctEl){
-    pctEl.textContent = pct + '%';
-    pctEl.style.color = pass ? '#1b5e20' : '#e65100';
-  }
-  if(timeEl) timeEl.textContent = examTimeStr;
-  if(statusEl){
-    statusEl.textContent = pass ? ('Segment ' + label + ' - ' + names[idx] + ' Completed') : ('Segment ' + label + ' Needs Retry');
-    statusEl.style.color = pass ? '#1b5e20' : '#c62828';
-  }
-
-  if(pass && !modComplete[idx]) {
-    modComplete[idx] = true;
-    modsDone++;
-  }
-
-  var sumScores = 0;
-  for(var si=0;si<4;si++){
-    sumScores += segScores[si] >= 0 ? segScores[si] : 0;
-  }
-  var overallPct = Math.round(sumScores / 4);
-  document.getElementById('overallProgBar').style.width = overallPct + '%';
-  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments completed';
-  document.getElementById('dashPctTotal').textContent = overallPct + '%';
-
-  var totalMs = modTimes.reduce(function(a,b){return a+b;},0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs/60) + 'm ' + (totalSecs%60) + 's' : totalSecs + 's';
-  document.getElementById('dashTimeTotal').textContent = totalStr;
-
-  if(modsDone === 4) {
-    document.getElementById('step5Next').style.display = 'inline-flex';
-  }
-
-  closeSegmentScreen();
-
-  checkAllComplete();
-}
-
-function retrySegExam(idx) {
-  var panel = document.getElementById('examSeg'+idx);
-  panel.innerHTML = '';
-  buildSegPanel(idx);
-}
-
-function checkAllComplete() {
-  var allPassed = segScores.every(function(s){ return s >= 60; });
-  if(allPassed) showConsolidatedResult();
-}
-
-function showConsolidatedResult() {
-  var total = segScores.reduce(function(a,b){return a+b;},0);
-  var avg   = Math.round(total/4);
-  var pass  = avg >= 85;
-  examPassed = pass;
-  var segMeta = [['A','Video'],['B','Training'],['C','PDF'],['D','MCQ']];
-
-  var totalMs = modTimes.reduce(function(a,b){return a+b;},0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs/60) + 'm ' + (totalSecs%60) + 's' : totalSecs + 's';
-
-  var grid = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;font-size:11px">';
-  for(var i=0;i<4;i++){
-    var sc = segScores[i]>=60;
-    var segSecs = Math.round(modTimes[i]/1000);
-    var segTimeStr = segSecs >= 60 ? Math.floor(segSecs/60) + 'm ' + (segSecs%60) + 's' : segSecs + 's';
-    grid += '<div style="text-align:center;padding:10px 6px;border-radius:8px;background:'+(sc?'#e8f5e9':'#fce4ec')+';border:1px solid '+(sc?'#c8e6c9':'#ef9a9a')+'"><div style="font-size:9px;color:#5f6368;margin-bottom:3px">Seg '+segMeta[i][0]+' &mdash; '+segMeta[i][1]+'</div><div style="font-size:14px;font-weight:700;color:'+(sc?'#1b5e20':'#c62828')+'">'+segScores[i]+'%</div><div style="font-size:9px;color:#5f6368;margin-top:2px"><i class="fas fa-clock"></i> '+segTimeStr+'</div></div>';
-  }
-  grid += '</div>';
-  var banner = '<div style="text-align:center;padding:18px;border-radius:10px;background:'+(pass?'#e8f5e9':'#fce4ec')+';border:1px solid '+(pass?'#c8e6c9':'#ef9a9a')+';margin-bottom:14px"><i class="fas '+(pass?'fa-award':'fa-times-circle')+'" style="font-size:34px;color:'+(pass?'#1b5e20':'#c62828')+';margin-bottom:8px;display:block"></i><div style="font-size:15px;font-weight:700;color:'+(pass?'#1b5e20':'#c62828')+';">'+(pass?'Certification Passed!':'Did Not Pass &mdash; 85% Average Required')+'</div><div style="font-size:12px;margin-top:4px;color:#5f6368">Overall Score: <strong>'+avg+'%</strong> &nbsp;|&nbsp; Total Time: <strong>'+totalStr+'</strong></div></div>';
-
-  if(pass) document.getElementById('step5Next').style.display = 'inline-flex';
-
-  var el = document.getElementById('examConsolidatedResult');
-  el.innerHTML = banner + grid;
-  el.style.display = 'block';
-  el.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-updateExamSegmentButtons();
-initOnboardingDraft();
-</script>
-
-<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 05 28,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
-</footer>
 <script src="../assets/nfp-actions.js"></script>
+<script>
+(function () {
+  var current = 0;
+  var total = 8;
+  var drafts = {};
+  var segDone = [false, false, false, false];
+  var labels = [
+    'Invitation & Registration',
+    'Personal & Business Info',
+    'W-9 & Tax / Payment',
+    'AHIP & License Verification',
+    'Training & Certification',
+    'Background Check',
+    'Contract Execution',
+    'Ready to Sell'
+  ];
+
+  function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
+  function setCheck(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; }
+
+  window.obGoTo = function (n) {
+    if (n < 0 || n >= total) return;
+    document.querySelectorAll('.ob-section').forEach(function (s) { s.classList.remove('active'); });
+    document.getElementById('obStep' + n).classList.add('active');
+    for (var i = 0; i < total; i++) {
+      var bar = document.getElementById('bar' + i);
+      bar.classList.remove('active', 'done', 'draft');
+      if (i < n) bar.classList.add(drafts[i] ? 'draft' : 'done');
+      if (i === n) bar.classList.add('active');
+    }
+    current = n;
+    document.getElementById('sb-step-label').textContent = 'Step ' + (n + 1) + ' of ' + total;
+    document.getElementById('sb-prog-fill').style.width = (((n + 1) / total) * 100) + '%';
+    window.scrollTo(0, 0);
+  };
+
+  window.obNext = function (n) {
+    if (n === 0) {
+      var npn = document.getElementById('regNPN').value.trim();
+      if (!npn) {
+        document.getElementById('err_regNPN').classList.add('show');
+        return;
+      }
+      document.getElementById('err_regNPN').classList.remove('show');
+    }
+    if (n === 6) {
+      if (!document.getElementById('contractRead').checked || !document.getElementById('eSigName').value.trim()) {
+        if (typeof showToast === 'function') showToast('Please agree to the contract and type your legal name.', 'info');
+        return;
+      }
+      document.getElementById('submitDate').textContent = new Date().toLocaleDateString();
+    }
+    drafts[n] = false;
+    obGoTo(n + 1);
+  };
+
+  window.obBack = function (n) { obGoTo(n - 1); };
+
+  window.skipStep = function (n) {
+    drafts[n] = true;
+    obGoTo(n + 1);
+  };
+
+  window.validateNPN = function () {
+    var npn = document.getElementById('regNPN').value.trim();
+    if (!npn || npn.length < 5) {
+      document.getElementById('err_regNPN').classList.add('show');
+      return;
+    }
+    document.getElementById('err_regNPN').classList.remove('show');
+    document.getElementById('npnResult').style.display = 'flex';
+  };
+
+  window.togglePayFields = function () {
+    var check = document.getElementById('payCheck').checked;
+    document.getElementById('achFields').style.display = check ? 'none' : 'block';
+    document.getElementById('checkFields').style.display = check ? 'block' : 'none';
+  };
+
+  window.handleUpload = function (input, zoneId) {
+    var zone = document.getElementById(zoneId);
+    if (input.files && input.files[0]) zone.classList.add('has-file');
+  };
+
+  window.sendBgInvitation = function () {
+    if (!document.getElementById('bgConsent').checked) {
+      if (typeof showToast === 'function') showToast('Please authorize the background check first.', 'info');
+      return;
+    }
+    document.getElementById('bgInviteTimestamp').textContent = new Date().toLocaleString();
+    document.getElementById('bgStatusPanel').style.display = 'block';
+    if (typeof showToast === 'function') showToast('Background check invitation sent.', 'info');
+  };
+
+  window.markSeg = function (i) {
+    segDone[i] = true;
+    var letters = ['A', 'B', 'C', 'D'];
+    document.getElementById('dashPct' + letters[i]).textContent = '100%';
+    document.getElementById('dashStatus' + letters[i]).textContent = 'Complete';
+    document.querySelector('.seg-tile[data-seg="' + i + '"]').classList.add('done');
+    var done = segDone.filter(Boolean).length;
+    var pct = (done / 4) * 100;
+    document.getElementById('dashPctTotal').textContent = Math.round(pct) + '%';
+    document.getElementById('overallProgBar').style.width = pct + '%';
+    document.getElementById('overallProgLabel').textContent = done + ' of 4 complete';
+  };
+
+  window.prefillStep = function (step) {
+    if (step === 0) {
+      setVal('regNPN', '88234410');
+      document.getElementById('npnResult').style.display = 'flex';
+    } else if (step === 1) {
+      setVal('piFirst', 'James'); setVal('piMI', 'R'); setVal('piLast', 'Martinez');
+      setVal('piDOB', '1985-03-12'); setVal('piSSN', '***-**-4589'); setVal('piPhone', '(786) 555-0147');
+      setVal('piBizStreet', '1801 NW 9th Ave'); setVal('piBizSuite', 'Suite 210');
+      setVal('piBizZip', '33136'); setVal('piBizCity', 'Miami'); setVal('piBizState', 'FL');
+      setCheck('piSMS', true); setCheck('piEmailConsent', true);
+    } else if (step === 2) {
+      setVal('taxEntity', 'Individual / Sole Proprietor');
+      setVal('taxTIN', '***-**-4589'); setVal('taxName', 'James R Martinez');
+      setCheck('payACH', true); togglePayFields();
+      setVal('bankName', 'Chase Bank'); setVal('bankRouting', '021000021');
+      setVal('bankAcct', '****7832'); setVal('bankAcctType', 'Checking');
+      document.getElementById('w9UploadZone').classList.add('has-file');
+    } else if (step === 3) {
+      setVal('ahipCert', 'AH2026-88421'); setVal('ahipDate', '2026-01-15'); setVal('ahipExpiry', '2027-01-15');
+      document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
+    } else if (step === 4) {
+      for (var i = 0; i < 4; i++) markSeg(i);
+    } else if (step === 5) {
+      setCheck('bgConsent', true); sendBgInvitation();
+    } else if (step === 6) {
+      setCheck('contractRead', true);
+      setVal('eSigName', 'James R Martinez');
+      setVal('eSigDate', new Date().toISOString().slice(0, 10));
+    }
+  };
+
+  document.getElementById('regNPN').addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  });
+})();
+</script>
 </body>
 </html>

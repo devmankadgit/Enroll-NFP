@@ -1,0 +1,31 @@
+---
+description: Use shadcn-style HTML components for all UI work in this prototype
+alwaysApply: true
+---
+
+# shadcn HTML components only
+
+This repo is a **static HTML prototype**. Do not introduce React/Vite for UI. Build every screen and control with the shared shadcn-inspired kit.
+
+## Required
+
+- Use `assets/shadcn-ui.css` and classes like `ui-btn`, `ui-input`, `ui-select`, `ui-card`, `ui-label`, `ui-field`, `ui-alert`, `ui-badge`, `ui-chip`, `ui-check-row`, `ui-progress`, `ui-upload`, `ui-sidebar`, `ui-topbar`.
+- Match patterns from [ui.shadcn.com](https://ui.shadcn.com/) (Button, Input, Card, Select, Alert, Checkbox, Progress, Badge, etc.) as plain HTML.
+- Keep EnrollAxis teal tokens already defined in `shadcn-ui.css` (`--primary`, `--brand-*`).
+
+## Do not
+
+- Add Bootstrap, Material, or new one-off component CSS for screens.
+- Scaffold React/Next/Vite apps for UI changes.
+- Inline large ad-hoc form styles when a `ui-*` class already exists — extend `shadcn-ui.css` instead.
+
+## Example
+
+```html
+<div class="ui-field">
+  <label class="ui-label" for="email">Email</label>
+  <input class="ui-input" id="email" type="email">
+</div>
+<button type="button" class="ui-btn">Continue</button>
+<button type="button" class="ui-btn ui-btn-outline">Cancel</button>
+```

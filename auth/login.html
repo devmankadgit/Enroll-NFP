@@ -4,119 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sign In | EnrollAxis</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/shadcn-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#002624 0%,#085a55 55%,#147966 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-.wrap{display:flex;max-width:900px;width:100%;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.left{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);padding:48px 40px;flex:1;color:#fff;display:flex;flex-direction:column;justify-content:space-between}
-.left h2{font-size:26px;font-weight:800;margin-bottom:10px}
-.left p{font-size:14px;opacity:.8;line-height:1.6;margin-bottom:24px}
-.features{list-style:none;padding:0}
-.features li{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:13px;opacity:.85}
-.features li i{margin-top:2px;font-size:14px;color:#a6dace;flex-shrink:0}
-.left-foot{font-size:11px;opacity:.5;margin-top:32px}
-.right{background:#fff;padding:48px 40px;width:380px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center}
-.brand{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:28px}
-.brand-ic{width:40px;height:40px;background:#fff;border:1px solid #cdebe4;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px}
-.brand-name{font-size:13px;font-weight:600;color:#002624;line-height:1.3}
-.brand-name span{display:block;font-weight:400;color:#80868b;font-size:11px}
-.right h3{font-size:20px;font-weight:700;color:#002624;margin-bottom:5px}
-.sub{font-size:13px;color:#80868b;margin-bottom:22px}
-.fg{margin-bottom:13px}
-.fg label{display:block;font-size:12px;font-weight:600;color:#5f6368;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.fg .iw{position:relative}
-.fg .iw i{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#9aa0a6;font-size:14px}
-.fg input,.fg select{width:100%;border:1px solid #e0e3e7;border-radius:9px;padding:10px 36px 10px 14px;font-size:14px;color:#3c4043;outline:none}
-.fg input:focus,.fg select:focus{border-color:#0f6a62;box-shadow:0 0 0 3px rgba(15,106,98,.1)}
-.fg select{padding-right:14px}
-.forgot{text-align:right;font-size:12px;margin-top:4px}
-.forgot a{color:#0f6a62;text-decoration:none}
-.btn-login{width:100%;background:#0f6a62;color:#fff;border:none;border-radius:9px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
-.btn-login:hover{background:#147966}
-.divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:#9aa0a6;font-size:12px}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e8eaed}
-
-.hipaa{background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:10px 12px;font-size:11.5px;color:#0f6a62;display:flex;align-items:flex-start;gap:8px;margin-top:16px}
-.demo-note{background:#f8f9fa;border-radius:8px;padding:10px 12px;font-size:12px;color:#5f6368;margin-bottom:14px;border:1px solid #e8eaed}
-.demo-note a{color:#0f6a62}
-@media(max-width:640px){.left{display:none}.right{width:100%;border-radius:20px;padding:36px 24px}}
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 55%, var(--brand-teal) 100%);
+  }
+  .login-shell {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+  }
+  .login-hero {
+    flex: 1;
+    padding: 3rem 2.5rem;
+    color: #fff;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .login-hero h1 { margin: 0 0 0.6rem; font-size: 1.625rem; font-weight: 800; letter-spacing: -0.02em; }
+  .login-hero > p { margin: 0 0 1.5rem; font-size: 0.875rem; opacity: .85; line-height: 1.6; }
+  .feature-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
+  .feature-list li { display: flex; gap: 0.65rem; font-size: 0.8125rem; opacity: .9; align-items: flex-start; }
+  .feature-list i { color: #a6dace; margin-top: 0.15rem; flex-shrink: 0; }
+  .login-hero-foot { font-size: 0.6875rem; opacity: .5; margin-top: 2rem; }
+  .login-panel {
+    width: 380px;
+    flex-shrink: 0;
+    background: var(--card);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .brand-block { margin-bottom: 1.75rem; }
+  .brand-block img { height: 1.875rem; width: auto; }
+  .brand-block span { display: block; margin-top: 0.35rem; font-size: 0.6875rem; color: var(--muted-foreground); }
+  .login-panel h2 { margin: 0 0 0.3rem; font-size: 1.25rem; font-weight: 700; color: var(--brand-deep); }
+  .login-panel .sub { margin: 0 0 1.35rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+  .forgot-row { text-align: right; margin: -0.25rem 0 0.75rem; }
+  .portal-links { text-align: center; margin-top: 1rem; padding-top: 0.875rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted-foreground); }
+  .site-footer {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 2rem;
+    text-align: center;
+    color: rgba(255,255,255,.75);
+    font-size: 0.75rem;
+    padding: 1rem;
+  }
+  .site-footer strong { display: block; color: #fff; margin-bottom: 0.25rem; }
+  @media (max-width: 640px) {
+    .login-hero { display: none; }
+    .login-panel { width: 100%; border-radius: 1.25rem; padding: 2.25rem 1.5rem; }
+    .login-shell { border-radius: 1.25rem; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="left">
-    <div>
-      <h2>EnrollAxis</h2>
-      <p>Agent &amp; Agency Portal — your complete platform for Medicare enrollment, commission tracking, and member management.</p>
-      <ul class="features">
-        <li><i class="fas fa-check-circle"></i><span>End-to-end enrollment from lead capture to CMS OEC submission — all in one place.</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Real-time commission tracking with transparent ledger, incentive calculation, and payment history.</span></li>
-        <li><i class="fas fa-check-circle"></i><span>HIPAA-compliant member profiles with PHI masking, minimum-necessary access controls, and full audit trail.</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Automated 7-day CMS compliance alerts with At Risk and Breach escalation to Enrollment Ops.</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Proactive action item dashboard aggregating HRA, Healthy Visit, PQAT, C-SNP, and lead tasks.</span></li>
-        <li><i class="fas fa-check-circle"></i><span>Multi-portal access for agents, agencies, finance, enrollment ops, compliance, and members.</span></li>
-      </ul>
+  <div class="login-shell">
+    <aside class="login-hero">
+      <div>
+        <h1>EnrollAxis</h1>
+        <p>Agent &amp; Agency Portal — your complete platform for Medicare enrollment, commission tracking, and member management.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check-circle"></i><span>End-to-end enrollment from lead capture to CMS OEC submission — all in one place.</span></li>
+          <li><i class="fas fa-check-circle"></i><span>Real-time commission tracking with transparent ledger, incentive calculation, and payment history.</span></li>
+          <li><i class="fas fa-check-circle"></i><span>HIPAA-compliant member profiles with PHI masking, minimum-necessary access controls, and full audit trail.</span></li>
+          <li><i class="fas fa-check-circle"></i><span>Automated 7-day CMS compliance alerts with At Risk and Breach escalation to Enrollment Ops.</span></li>
+          <li><i class="fas fa-check-circle"></i><span>Proactive action item dashboard aggregating HRA, Healthy Visit, PQAT, C-SNP, and lead tasks.</span></li>
+          <li><i class="fas fa-check-circle"></i><span>Multi-portal access for agents, agencies, finance, enrollment ops, compliance, and members.</span></li>
+        </ul>
+      </div>
+      <div class="login-hero-foot">— 2026 EnrollAxis. All rights reserved.</div>
+    </aside>
+
+    <div class="login-panel">
+      <div class="brand-block">
+        <img src="../assets/brand/enrollaxis-logo.svg" alt="EnrollAxis">
+        <span>Agent &amp; Agency Portal</span>
+      </div>
+
+      <h2>Sign In</h2>
+      <p class="sub">Enter your credentials to access your portal</p>
+
+      <div class="ui-field" style="margin-bottom:0.85rem">
+        <label class="ui-label" for="email">Email Address</label>
+        <div class="ui-input-wrap">
+          <input class="ui-input" id="email" type="email" value="james.martinez@healthfirst.com" autocomplete="username">
+          <span class="ui-input-icon"><i class="fas fa-envelope"></i></span>
+        </div>
+      </div>
+
+      <div class="ui-field" style="margin-bottom:0.85rem">
+        <label class="ui-label" for="password">Password</label>
+        <div class="ui-input-wrap">
+          <input class="ui-input" id="password" type="password" value="••••••••••" autocomplete="current-password">
+          <button type="button" class="ui-input-icon ui-clickable" id="togglePw" aria-label="Show password"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+
+      <div class="ui-field" style="margin-bottom:0.5rem">
+        <label class="ui-label" for="portalSelect">Portal Access</label>
+        <select class="ui-select" id="portalSelect">
+          <option value="../agency-admin/dashboard.html">Agency Admin</option>
+          <option value="../agent/onboarding.html">Agent Onboarding</option>
+          <option value="../agent/dashboard.html">Agent</option>
+        </select>
+      </div>
+
+      <div class="forgot-row">
+        <button type="button" class="ui-btn ui-btn-link ui-btn-sm" onclick="showToast && showToast('Password reset link sent to your email address','info')">Forgot password?</button>
+      </div>
+
+      <button type="button" class="ui-btn ui-btn-block" onclick="loginRoute()">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+
+      <div class="portal-links">
+        Other portals:
+        <a href="../auth-carrier/login.html">Payer</a>
+        &nbsp;|&nbsp;
+        <a href="../auth-member/login.html">Member</a>
+      </div>
+
+      <div class="ui-alert ui-alert-info" style="margin-top:1rem">
+        <i class="fas fa-shield-alt"></i>
+        <div>This system contains PHI. Unauthorized access is prohibited under HIPAA. All access is logged and monitored.</div>
+      </div>
     </div>
-    <div class="left-foot">— 2026 EnrollAxis. All rights reserved.</div>
   </div>
 
-  <div class="right">
-    <div class="brand">
-      <img src="../assets/brand/enrollaxis-logo.svg" alt="EnrollAxis" height="30"><div class="brand-name"><span>Agent &amp; Agency Portal</span></div>
-    </div>
-    <h3>Sign In</h3>
-    <p class="sub">Enter your credentials to access your portal</p>
+  <footer class="site-footer">
+    <strong>EnrollAxis, Inc.®</strong>
+    <div>Enrollment in EnrollAxis depends on contract renewal.</div>
+    <div style="opacity:.7;margin-top:0.25rem">Last Updated: 03 31, 2026 &nbsp;|&nbsp; Copyright © 2026 EnrollAxis</div>
+  </footer>
 
-    <div class="fg">
-      <label>Email Address</label>
-      <div class="iw"><input type="email" value="james.martinez@healthfirst.com"><i class="fas fa-envelope"></i></div>
-    </div>
-    <div class="fg">
-      <label>Password</label>
-      <div class="iw"><input type="password" value="••••••••••"><i class="fas fa-eye"></i></div>
-    </div>
-    <div class="fg">
-      <label>Portal Access</label>
-      <select id="portalSelect">
-        <option value="../agency-admin/dashboard.html">Agency Admin</option>
-        <option value="../agent/onboarding.html">Agent Onboarding</option>
-        <option value="../agent/dashboard.html">Agent</option>
-      </select>
-    </div>
-    <div class="forgot"><a href="#" onclick="showToast('Password reset link sent to your email address','info');return false;">Forgot password?</a></div>
-
-    <button class="btn-login" onclick="loginRoute()">
-      <i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Sign In
-    </button>
-
-
-    <script>
+  <script src="../assets/nfp-actions.js"></script>
+  <script>
     function loginRoute() {
       var sel = document.getElementById('portalSelect');
       location.href = sel.value;
     }
-    </script>
-
-    <div style="text-align:center;margin-top:16px;padding-top:14px;border-top:1px solid #e8eaed">
-       <span style="font-size:12px;color:#80868b">Other portals: <a href="../auth-carrier/login.html" style="color:#0f6a62">Payer</a> &nbsp;|&nbsp; <a href="../auth-member/login.html" style="color:#0f6a62">Member</a></span>
-    </div>
-
-    <div class="hipaa">
-      <i class="fas fa-shield-alt" style="flex-shrink:0;margin-top:1px"></i>
-      <span>This system contains PHI. Unauthorized access is prohibited under HIPAA. All access is logged and monitored.</span>
-    </div>
-  </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Footer -->
-<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;width:100%;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
-</footer>
-<script src="../assets/nfp-actions.js"></script>
+    document.getElementById('togglePw').addEventListener('click', function () {
+      var input = document.getElementById('password');
+      var icon = this.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    });
+  </script>
 </body>
 </html>
