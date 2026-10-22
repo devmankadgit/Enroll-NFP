@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Commission Rate Configuration | Gold Kidney Finance</title>
+<title>Commission Rate Configuration | EnrollAxis Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
@@ -22,7 +22,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Commission Processing</div>
@@ -55,7 +55,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div>
       <h4>Commission Rate Configuration</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Rate Configuration</li></ol>
     </div>
@@ -82,7 +82,7 @@
       </select>
       <label>Carrier</label>
       <select id="fCarrier" onchange="applyFilters()">
-        <option value="">All Carriers</option><option>Gold Kidney Health Plan</option>
+        <option value="">All Carriers</option><option>EnrollAxis</option>
       </select>
       <label>Status</label>
       <select id="fStatus" onchange="applyFilters()">
@@ -130,7 +130,7 @@
           <div class="fg"><label>Plan Year <span class="req">*</span></label>
             <select id="cfgPlanYear" required><option value="">Select...</option><option>2026</option><option>2027</option><option>2028</option></select></div>
           <div class="fg"><label>Carrier <span class="req">*</span></label>
-            <select id="cfgCarrier" required><option value="">Select...</option><option>Gold Kidney Health Plan</option></select></div>
+            <select id="cfgCarrier" required><option value="">Select...</option><option>EnrollAxis</option></select></div>
           <div class="fg"><label>Effective Date <span class="req">*</span></label>
             <input type="date" id="cfgEffDate" required onchange="checkMidYear()"></div>
         </div>
@@ -270,7 +270,7 @@ const CURRENT_USER = 'David Park';
 let pendingApproveId = null, pendingRejectId = null, editingId = null;
 
 const configs = [
-  { id:'RC-2026-01', planYear:'2026', carrier:'Gold Kidney Health Plan', effectiveDate:'2026-01-01', status:'Active',
+  { id:'RC-2026-01', planYear:'2026', carrier:'EnrollAxis', effectiveDate:'2026-01-01', status:'Active',
     submittedBy:'Sarah Chen', approvedBy:'David Park', approvedDate:'01 02,2026',
     changeNotes:'CY2026 base rates per CMS annual guidance.',
     baseInitial:694.00, baseRenewal:28.92, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
@@ -284,7 +284,7 @@ const configs = [
       {date:'12 20,2025 9:00 AM',user:'Sarah Chen',action:'Created Draft',detail:'New CY2026 config created.'}
     ]
   },
-  { id:'RC-2027-01', planYear:'2027', carrier:'Gold Kidney Health Plan', effectiveDate:'2027-01-01', status:'Pending Approval',
+  { id:'RC-2027-01', planYear:'2027', carrier:'EnrollAxis', effectiveDate:'2027-01-01', status:'Pending Approval',
     submittedBy:'David Park', approvedBy:null, approvedDate:null,
     changeNotes:'CY2027 rate update per CMS preliminary guidance. Base initial +$18.00, renewal +$0.83/mo.',
     baseInitial:712.00, baseRenewal:29.75, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
@@ -297,7 +297,7 @@ const configs = [
       {date:'05 15,2026 11:00 AM',user:'David Park',action:'Created Draft',detail:'New CY2027 config created.'}
     ]
   },
-  { id:'RC-2026-MYC', planYear:'2026', carrier:'Gold Kidney Health Plan', effectiveDate:'2026-07-01', status:'Draft',
+  { id:'RC-2026-MYC', planYear:'2026', carrier:'EnrollAxis', effectiveDate:'2026-07-01', status:'Draft',
     submittedBy:'Lisa Rodriguez', approvedBy:null, approvedDate:null,
     changeNotes:'Mid-year correction for Florida state-specific CMS limit adjustment.',
     baseInitial:694.00, baseRenewal:28.92, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
@@ -309,7 +309,7 @@ const configs = [
       {date:'05 25,2026 4:00 PM',user:'Lisa Rodriguez',action:'Created Draft',detail:'Mid-year FL state rate correction.'}
     ]
   },
-  { id:'RC-2025-01', planYear:'2025', carrier:'Gold Kidney Health Plan', effectiveDate:'2025-01-01', status:'Archived',
+  { id:'RC-2025-01', planYear:'2025', carrier:'EnrollAxis', effectiveDate:'2025-01-01', status:'Archived',
     submittedBy:'Sarah Chen', approvedBy:'Lisa Rodriguez', approvedDate:'01 03,2025',
     changeNotes:'CY2025 base rates.',
     baseInitial:651.00, baseRenewal:27.13, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
@@ -547,7 +547,7 @@ function saveAndSubmit(){
 
 function prefillConfig(){
   document.getElementById('cfgPlanYear').value = '2027';
-  document.getElementById('cfgCarrier').value = 'Gold Kidney Health Plan';
+  document.getElementById('cfgCarrier').value = 'EnrollAxis';
   document.getElementById('cfgEffDate').value = '2027-01-01';
   document.getElementById('cfgBaseInitial').value = '720.00';
   document.getElementById('cfgBaseRenewal').value = '30.50';
@@ -783,9 +783,9 @@ renderTable(configs);
 
 <!-- Footer -->
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script src="../assets/nfp-actions.js"></script>
 </body>

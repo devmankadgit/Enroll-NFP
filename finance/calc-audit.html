@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Calc Audit Trail | Gold Kidney Finance</title>
+<title>Calc Audit Trail | EnrollAxis Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
@@ -24,7 +24,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Commission Processing</div>
@@ -57,7 +57,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div>
       <h4>Commission Calculation Audit Trail</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Calc Audit Trail</li></ol>
     </div>
@@ -106,7 +106,7 @@
           <label style="font-size:12.5px;font-weight:600;white-space:nowrap">Carrier</label>
           <select id="fCarrier" style="border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px;min-width:160px">
             <option value="">All Carriers</option>
-            <option value="GKHP">Gold Kidney (GKHP)</option>
+            <option value="EAX">EnrollAxis (EAX)</option>
             <option value="Humana">Humana</option>
             <option value="UnitedHealth">UnitedHealth</option>
             <option value="Aetna">Aetna</option>
@@ -172,7 +172,7 @@
 const auditRecords=[
   {
     id:'AUD-2026-01841',runId:'RUN-2026-05-29-A',event:'Renewal Commission Calc',npn:'8823441',agent:'James Martinez',enrollId:'ENR-2026-0041',mbi:'1C2C3DA4EF5',planYear:'2026',configVer:'v3.1.2',state:'FL',
-    inputs:{enrollmentYear:2,commTier:'Renewal',pmpm:28.92,planType:'HMO-MAPD-002',carrierCode:'GKHP',memberCnt:5},
+    inputs:{enrollmentYear:2,commTier:'Renewal',pmpm:28.92,planType:'HMO-MAPD-002',carrierCode:'EAX',memberCnt:5},
     rules:['Rule R-041: Tier=Renewal ? PMPM rate=$28.92 — member_months','Rule R-102: State FL ? 0% withholding','Rule R-005: No active chargeback offsets'],
     outputs:{grossComm:144.60,chargebackOffset:0,stateWithholding:0,netComm:144.60},
     meta:{calcTS:'2026-05-29 01:42:15',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal ESRD'},
@@ -180,7 +180,7 @@ const auditRecords=[
   },
   {
     id:'AUD-2026-01840',runId:'RUN-2026-05-29-A',event:'Initial Commission Calc',npn:'7719022',agent:'Sarah Chen',enrollId:'ENR-2026-0148',mbi:'9F8G7HJ6KL5',planYear:'2026',configVer:'v3.1.2',state:'FL',
-    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'GKHP',memberCnt:1},
+    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'EAX',memberCnt:1},
     rules:['Rule R-001: Tier=Initial ? flat fee $694.00','Rule R-102: State FL ? 0% withholding','Rule R-003: SEP AEP — AEP enrollment ? full Initial fee'],
     outputs:{grossComm:694.00,chargebackOffset:0,stateWithholding:0,netComm:694.00},
     meta:{calcTS:'2026-05-29 01:41:57',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'1 — Initial Non-ESRD'},
@@ -188,7 +188,7 @@ const auditRecords=[
   },
   {
     id:'AUD-2026-01830',runId:'RUN-2026-05-29-A',event:'Chargeback Calc',npn:'5521833',agent:'Mark Brown',enrollId:'ENR-2026-0092',mbi:'2M3N4PQ5RS6',planYear:'2026',configVer:'v3.1.2',state:'FL',
-    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'GKHP',memberCnt:1,chargebackReason:'Rapid Disenrollment < 90 days'},
+    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'EAX',memberCnt:1,chargebackReason:'Rapid Disenrollment < 90 days'},
     rules:['Rule R-201: Chargeback triggered — Rapid Disenrollment','Rule R-202: Chargeback amount = 100% of Initial fee paid ($246.12)','Rule R-203: Agent carried forward balance — partial offset applied'],
     outputs:{grossComm:-246.12,chargebackOffset:246.12,stateWithholding:0,netComm:-246.12},
     meta:{calcTS:'2026-05-29 01:40:12',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'1 — Initial Non-ESRD'},
@@ -196,7 +196,7 @@ const auditRecords=[
   },
   {
     id:'AUD-2026-01712',runId:'RUN-2026-04-17-A',event:'HRA Commission Calc',npn:'8823441',agent:'James Martinez',enrollId:'ENR-2026-0041',mbi:'1C2C3DA4EF5',planYear:'2026',configVer:'v3.1.1',state:'FL',
-    inputs:{enrollmentYear:2,commTier:'Renewal',hraCompleted:true,planType:'HMO-MAPD-002',carrierCode:'GKHP'},
+    inputs:{enrollmentYear:2,commTier:'Renewal',hraCompleted:true,planType:'HMO-MAPD-002',carrierCode:'EAX'},
     rules:['Rule R-301: HRA Completion verified — CMS attestation on file','Rule R-302: HRA fee $25.00 — one per member per plan year','Rule R-102: State FL ? 0% withholding'],
     outputs:{grossComm:25.00,chargebackOffset:0,stateWithholding:0,netComm:25.00},
     meta:{calcTS:'2026-04-17 02:11:33',batchId:'BATCH-2026-04',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal ESRD'},
@@ -204,7 +204,7 @@ const auditRecords=[
   },
   {
     id:'AUD-2026-01541',runId:'RUN-2026-03-20-A',event:'Renewal Commission Calc',npn:'9912345',agent:'Kevin Nguyen',enrollId:'ENR-2026-0201',mbi:'7T8U9VW0XY1',planYear:'2026',configVer:'v3.1.0',state:'TX',
-    inputs:{enrollmentYear:3,commTier:'Lifetime',pmpm:28.92,planType:'HMO-MAPD-003',carrierCode:'GKHP',memberCnt:4},
+    inputs:{enrollmentYear:3,commTier:'Lifetime',pmpm:28.92,planType:'HMO-MAPD-003',carrierCode:'EAX',memberCnt:4},
     rules:['Rule R-041: Tier auto-elevated to Lifetime at Enrollment Year 3','Rule R-043: Lifetime PMPM = same rate as Renewal ($28.92) — Lifetime designation for compliance reporting only','Rule R-104: State TX ? 0% withholding'],
     outputs:{grossComm:115.68,chargebackOffset:0,stateWithholding:0,netComm:115.68},
     meta:{calcTS:'2026-03-20 01:53:01',batchId:'BATCH-2026-03',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal Non-ESRD, Year 3+'},
@@ -330,9 +330,9 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 renderAuditTable(auditRecords);
 </script>
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 </body>
 </html>

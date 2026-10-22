@@ -38,19 +38,19 @@
 - Genesis [genesis-integration.html]
 - Incentives [incentive-tracking.html]
 
-=== /agency-onboarding/add-agent.html | Add Agent to Agency | Gold Kidney Admin
+=== /agency-onboarding/add-agent.html | Add Agent to Agency | EnrollAxis Admin
 ACTIVE NAV: Add Agent
 USER: AW Amy White System Admin
 HEADER: Add Agent to Agency | BC: NPN Search & Agency Assignment
 ALERT: NPN lookup validates against NIPR database. Agent must have active FL Health + Life license and completed AHIP certification for current plan year.
 CARDS/SECTIONS: Step 1: Search Agent by NPN || NPN Found: 8823441 || Step 2: Assign to Agency || Pre-Assignment Checklist
 FORM LABELS: National Producer Number (NPN) * | Target Agency * | Agent Role within Agency * | Commission Tier | Effective Date * | Territory Assignment | Training Requirement
-SELECTS: [Select agency..., AGY-2026-0048 — Sunshine Senior Benefits, LLC, AGY-2026-0001 — National Medicare Partners, AGY-2026-0012 — Southeast Senior Group] [Select..., Producing Agent, Agency Admin (Manager), Supervising Agent] [Inherit from agency (Tier A — Standard), Override: Tier B — Preferred, Override: Tier C — Elite] [Same as agency (Miami-Dade, Broward), Custom — select below] [Standard (AHIP + Gold Kidney Carrier), Waived (previously completed)]
+SELECTS: [Select agency..., AGY-2026-0048 — Sunshine Senior Benefits, LLC, AGY-2026-0001 — National Medicare Partners, AGY-2026-0012 — Southeast Senior Group] [Select..., Producing Agent, Agency Admin (Manager), Supervising Agent] [Inherit from agency (Tier A — Standard), Override: Tier B — Preferred, Override: Tier C — Elite] [Same as agency (Miami-Dade, Broward), Custom — select below] [Standard (AHIP + EnrollAxis Carrier), Waived (previously completed)]
 PLACEHOLDERS: Enter 7-10 digit NPN...
 BUTTONS: Lookup NPN | Add Agent to Agency
 BADGES: Ready to Contract
 
-=== /agency-onboarding/agency-admin-setup.html | Agency Admin Portal Setup | Gold Kidney Admin
+=== /agency-onboarding/agency-admin-setup.html | Agency Admin Portal Setup | EnrollAxis Admin
 ACTIVE NAV: Portal Setup
 USER: AW Amy White System Admin
 HEADER: Agency Admin Portal Setup | BC: Account Provisioning, Permissions & Branding
@@ -63,7 +63,7 @@ SELECTS: [AGY-2026-0048 — Sunshine Senior Benefits, LLC, AGY-2026-0001 — Nat
 PLACEHOLDERS: Welcome to Sunshine Senior Benefits agent portal...
 BUTTONS: Export to Excel | Provision Agency Admin Portal
 
-=== /agency-onboarding/create-agency.html | Create Agency Record | Gold Kidney Admin
+=== /agency-onboarding/create-agency.html | Create Agency Record | EnrollAxis Admin
 ACTIVE NAV: Create Agency
 USER: AW Amy White System Admin
 HEADER: Create Agency Record | BC: Hierarchy Assignment & Territory Configuration
@@ -74,24 +74,24 @@ SELECTS: [Select..., Level 1 — Master General Agency (MGA), Level 2 — Genera
 PLACEHOLDERS: Optional — name of upline manager
 BUTTONS: Create Agency Record
 
-=== /agency-onboarding/direct-contracting.html | Direct Agent Contracting | Gold Kidney Admin
+=== /agency-onboarding/direct-contracting.html | Direct Agent Contracting | EnrollAxis Admin
 ACTIVE NAV: Direct Contract
 USER: AW Amy White System Admin
 HEADER: Direct Agent Contracting | BC: No-Agency Hierarchy — Direct Contract with Plan
-ALERT: Direct Contracting: For independent agents who do not operate under an agency. Agent contracts directly with Gold Kidney Health Plan. No override is paid upline. Agent receives ful
+ALERT: Direct Contracting: For independent agents who do not operate under an agency. Agent contracts directly with EnrollAxis. No override is paid upline. Agent receives ful
 CARDS/SECTIONS: Agent Lookup || Direct Contract Configuration || Credentialing Requirements
 FORM LABELS: NPN * | Agent Name | NPN | Hierarchy Position * | Reports To | Commission Tier * | Override Paid Upline | Territory | Contract Effective Date *
-SELECTS: [Direct-to-Plan (no agency)] [Gold Kidney Internal Sales (default), Regional Director — South FL] [Tier A — Standard ($601 initial / $301 renewal), Tier B — Preferred ($650 / $325)] [Miami-Dade, Broward, Palm Beach]
+SELECTS: [Direct-to-Plan (no agency)] [EnrollAxis Internal Sales (default), Regional Director — South FL] [Tier A — Standard ($601 initial / $301 renewal), Tier B — Preferred ($650 / $325)] [Miami-Dade, Broward, Palm Beach]
 PLACEHOLDERS: Enter NPN...
 BUTTONS: Lookup | Create Direct Contract
 
-=== /agency-onboarding/genesis-integration.html | Genesis Integration | Gold Kidney Admin
+=== /agency-onboarding/genesis-integration.html | Genesis Integration | EnrollAxis Admin
 ACTIVE NAV: Genesis
 USER: AW Amy White System Admin
 HEADER: Genesis Call Center Integration | BC: Inbound Call Webhook, Data Mapping & Lead Auto-Creation
 KPIs: Connection=Active ? ; Calls Today=47 ; Leads Created=12 ; Errors (24h)=0
 CARDS/SECTIONS: Webhook Configuration || Call Data Field Mapping || Lead Auto-Creation Rules || Recent Webhook Events (last 10)
-TABLE1 (8 rows) cols: Genesis Field | ? | Gold Kidney Field | Required | Transform
+TABLE1 (8 rows) cols: Genesis Field | ? | EnrollAxis Field | Required | Transform
    row1: caller_phone ? lead.phone Yes Format: (XXX) XXX-XXXX
 TABLE2 (4 rows) cols: Time | TFN Called | Caller | Duration | Lead Created | Status
    row1: 10:18 AM (800) 555-0103 (305) 555-8821 4:22 LD-2026-4891 ? Success
@@ -100,7 +100,7 @@ SELECTS: [HMAC-SHA256 (shared secret), Bearer Token, Basic Auth] [3 retries with
 BUTTONS: Regenerate | Export to Excel
 BADGES: Yes | ? Success
 
-=== /agency-onboarding/incentive-tracking.html | Internal Incentive Tracking | Gold Kidney Admin
+=== /agency-onboarding/incentive-tracking.html | Internal Incentive Tracking | EnrollAxis Admin
 ACTIVE NAV: Incentives
 USER: AW Amy White System Admin
 HEADER: Internal Incentive Tracking | BC: Incentive Rules, Earnings Calculation & Payroll Export
@@ -116,16 +116,16 @@ SELECTS: [May 2026 (current), April 2026, March 2026] [ADP Payroll CSV, Paychex 
 BUTTONS: Add Rule | Export to Excel | Generate Payroll Export | Preview
 BADGES: Active | Seasonal | At cap ($2K)
 
-=== /agency-onboarding/intake-form.html | Agency Intake Application | Gold Kidney Health Plan
+=== /agency-onboarding/intake-form.html | Agency Intake Application | EnrollAxis
 HEADINGS: Agency Partnership Application
 ALERT: Agency Intake Form: Public-facing submission form for new agency partnerships. Required fields: Company legal name, DBA, EIN, W9 upload, primary contact, state licenses, and E&O in
 CARDS/SECTIONS: 1. Company Information || 2. Primary Contact (Agency Principal) || 3. Licensing & E&O Insurance || 4. Required Documents || 5. Attestation & Agreement
-FORM LABELS: Legal Entity Name * | DBA (if different) | EIN (Tax ID) * | Entity Type * | Address 1 * | Address 2 | ZIP * | City * | State * | County | Years in Business * | Total Licensed Agents | First Name * | Last Name * | Title * | Email * | Phone * | NPN (if agent) | FL Agency License Number * | License Expiration * | E&O Insurance Carrier * | E&O Policy Number * | E&O Expiration * | Coverage Amount * | W-9 Form * | FL Agency License Copy * | E&O Certificate of Insurance * | Articles of Organization (optional) | I attest that all information provided is true and accurate. * | I agree that all agents operating under this agency will complete Gold Kidney AHIP + carrier-specific training before selling. * | I acknowledge that agency approval does not guarantee agent contracting and each agent must pass individual credentialing. * | I agree to maintain E&O coverage naming Gold Kidney Health Plan as certificate holder for the duration of the contract. * | Electronic Signature (Type Full Name) * | Date
+FORM LABELS: Legal Entity Name * | DBA (if different) | EIN (Tax ID) * | Entity Type * | Address 1 * | Address 2 | ZIP * | City * | State * | County | Years in Business * | Total Licensed Agents | First Name * | Last Name * | Title * | Email * | Phone * | NPN (if agent) | FL Agency License Number * | License Expiration * | E&O Insurance Carrier * | E&O Policy Number * | E&O Expiration * | Coverage Amount * | W-9 Form * | FL Agency License Copy * | E&O Certificate of Insurance * | Articles of Organization (optional) | I attest that all information provided is true and accurate. * | I agree that all agents operating under this agency will complete EnrollAxis AHIP + carrier-specific training before selling. * | I acknowledge that agency approval does not guarantee agent contracting and each agent must pass individual credentialing. * | I agree to maintain E&O coverage naming EnrollAxis as certificate holder for the duration of the contract. * | Electronic Signature (Type Full Name) * | Date
 SELECTS: [Select..., LLC, Corporation (S-Corp), Corporation (C-Corp), Partnership, Sole Proprietorship] [$1M / $1M, $1M / $3M, $2M / $2M, Other]
 PLACEHOLDERS: ABC Insurance Group, LLC | ABC Senior Benefits | XX-XXXXXXX | Street address | Suite, Floor, Unit | 33101 | Auto-filled from ZIP | 5 | 12 | President / Managing Partner | principal@abcinsurance.com | (305) 555-0100 | Optional | L123456 | Hartford / Chubb / etc. | John A. Smith
 BUTTONS: Submit Agency Application
 
-=== /agency-onboarding/review-queue.html | Agency Review Queue | Gold Kidney Admin
+=== /agency-onboarding/review-queue.html | Agency Review Queue | EnrollAxis Admin
 ACTIVE NAV: Review Queue
 USER: AW Amy White System Admin
 HEADER: Agency Application Review Queue | BC: Approve / Reject / Request More Info
@@ -139,7 +139,7 @@ PLACEHOLDERS: Enter review notes...
 BUTTONS: Export to Excel | Review | Follow Up | W-9 | License | E&O Cert | Approve | Request Info | Reject
 BADGES: 3/3 | Pending | 1/3 | Info Requested
 
-=== /agency-onboarding/tfn-mapping.html | TFN-to-Campaign Mapping | Gold Kidney Admin
+=== /agency-onboarding/tfn-mapping.html | TFN-to-Campaign Mapping | EnrollAxis Admin
 ACTIVE NAV: TFN Mapping
 USER: AW Amy White System Admin
 HEADER: TFN-to-Campaign Mapping | BC: Toll-Free Number Pool, Routing Rules & Call Attribution

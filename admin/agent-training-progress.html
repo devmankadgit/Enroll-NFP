@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Agent Training Progress | Gold Kidney Admin Portal</title>
+<title>Agent Training Progress | EnrollAxis Admin Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -17,7 +17,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -61,7 +61,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Agent Training Progress</h4><ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="training-admin.html">Training</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Agent Training Progress</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div><h4>Agent Training Progress</h4><ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="training-admin.html">Training</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Agent Training Progress</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
@@ -81,7 +81,7 @@
       <label>Package:</label>
       <select id="filterPkg" onchange="filterProgress()">
         <option value="">All Packages</option>
-        <option selected>Gold Kidney 2026 Product Training</option>
+        <option selected>EnrollAxis 2026 Product Training</option>
         <option>AEP 2027 Certification</option>
         <option>Compliance &amp; CMS Guidelines</option>
       </select>
@@ -105,7 +105,7 @@
 
     <!-- Completion Dashboard -->
     <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#1b5e20"></i>Completion Dashboard: Gold Kidney 2026 Product Training</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agent-training-progress_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#1b5e20"></i>Completion Dashboard: EnrollAxis 2026 Product Training</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agent-training-progress_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
       <div class="table-wrap">
         <table class="tbl" id="tblExport1">
           <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>Assigned Date</th><th>Start Date</th><th>Due Date</th><th>End Date</th><th>Module 1</th><th>Module 2</th><th>Module 3</th><th>Quiz</th><th>Attempts</th><th>Pass/Fail</th><th>Status</th><th>Ready to Sell</th><th>Actions</th></tr></thead>
@@ -165,9 +165,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 06 12,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 12,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script src="../assets/nfp-actions.js"></script>
 <script>
@@ -228,7 +228,7 @@ function downloadCert(name, npn, score, completedDate){
   doc.setFont('helvetica','bold');
   doc.setFontSize(14);
   doc.setTextColor(198,40,40);
-  doc.text('GOLD KIDNEY HEALTH PLAN, INC.',148.5,32,{align:'center'});
+  doc.text('ENROLLAXIS, INC.',148.5,32,{align:'center'});
   doc.setFontSize(10);
   doc.setTextColor(100);
   doc.text('Product Training Certification',148.5,39,{align:'center'});
@@ -257,7 +257,7 @@ function downloadCert(name, npn, score, completedDate){
   doc.setFontSize(16);
   doc.setFont('helvetica','bold');
   doc.setTextColor(26,35,126);
-  doc.text('Gold Kidney 2026 Product Training',148.5,124,{align:'center'});
+  doc.text('EnrollAxis 2026 Product Training',148.5,124,{align:'center'});
   doc.setFontSize(11);
   doc.setFont('helvetica','normal');
   doc.setTextColor(80);
@@ -280,7 +280,7 @@ function downloadCert(name, npn, score, completedDate){
   doc.text('Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),212,179,{align:'center'});
   doc.setFontSize(8);
   doc.setTextColor(150);
-  doc.text('Gold Kidney Health Plan, Inc. | This certificate is electronically generated and valid without a physical signature.',148.5,192,{align:'center'});
+  doc.text('EnrollAxis, Inc. | This certificate is electronically generated and valid without a physical signature.',148.5,192,{align:'center'});
   // Save
   doc.save('Certificate_'+name.replace(/\s/g,'_')+'_NPN_'+npn+'.pdf');
   showToast('Certificate PDF downloaded for '+name+' (NPN '+npn+')','success');

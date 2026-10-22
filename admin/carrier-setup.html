@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Carrier Profile Management | Gold Kidney Admin</title>
+<title>Carrier Profile Management | EnrollAxis Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -55,7 +55,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div>
       <h4>Carrier Profile Management</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Carrier Profile Management</li></ol>
     </div>
@@ -70,7 +70,7 @@
         <table class="tbl" id="tblExport1">
           <thead><tr><th>Carrier Name</th><th>Carrier ID</th><th>Products/Plans</th><th>States</th><th>Status</th><th>Carrier Admin</th><th>Actions</th></tr></thead>
           <tbody>
-            <tr><td><strong>Gold Kidney Health Plan</strong></td><td>EAHP-001</td><td>12</td><td>FL, TX, CA, NY</td><td><span class="badge bg-success">Active</span></td><td>Sandra Adams</td><td><button class="btn-ol btn-sm" onclick="configureCarrier('Gold Kidney Health Plan')"><i class="fas fa-cog"></i> Configure</button></td></tr>
+            <tr><td><strong>EnrollAxis</strong></td><td>EAHP-001</td><td>12</td><td>FL, TX, CA, NY</td><td><span class="badge bg-success">Active</span></td><td>Sandra Adams</td><td><button class="btn-ol btn-sm" onclick="configureCarrier('EnrollAxis')"><i class="fas fa-cog"></i> Configure</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -98,18 +98,18 @@
         <table class="tbl" id="plansTable">
           <thead><tr><th>CMS Contract</th><th>PBP ID</th><th>Plan Name</th><th>Plan Type</th><th>Plan Year</th><th>Service Area</th><th>Effective Date</th><th>Term Date</th><th>Enrollment</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="plansBody">
-            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL, TX, CA, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>1,842</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2026</td><td>FL, CA</td><td>01 01,2026</td><td>12 31,2026</td><td>956</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>003</td><td><strong>Gold Kidney Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2026</td><td>TX, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>624</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-003','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>004</td><td><strong>Gold Kidney Value (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>413</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-004','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-004','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>001</td><td><strong>Gold Kidney Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>287</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>002</td><td><strong>Gold Kidney Dual Plus (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>CA</td><td>01 01,2026</td><td>12 31,2026</td><td>196</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2025</td><td>FL, TX, CA, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>1,650</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2025</td><td>FL, CA</td><td>01 01,2025</td><td>12 31,2025</td><td>870</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>003</td><td><strong>Gold Kidney Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2025</td><td>TX, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>540</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
-            <tr data-contract="H1235" data-year="2025" data-status="Expired"><td>H1235</td><td>001</td><td><strong>Gold Kidney Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2025</td><td>FL</td><td>01 01,2025</td><td>12 31,2025</td><td>215</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2027</td><td>FL, TX, CA, NY, GA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
-            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2027</td><td>FL, CA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>001</td><td><strong>EnrollAxis Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL, TX, CA, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>1,842</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>002</td><td><strong>EnrollAxis Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2026</td><td>FL, CA</td><td>01 01,2026</td><td>12 31,2026</td><td>956</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>003</td><td><strong>EnrollAxis Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2026</td><td>TX, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>624</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-003','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>004</td><td><strong>EnrollAxis Value (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>413</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-004','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-004','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>001</td><td><strong>EnrollAxis Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>287</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>002</td><td><strong>EnrollAxis Dual Plus (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>CA</td><td>01 01,2026</td><td>12 31,2026</td><td>196</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>001</td><td><strong>EnrollAxis Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2025</td><td>FL, TX, CA, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>1,650</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>002</td><td><strong>EnrollAxis Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2025</td><td>FL, CA</td><td>01 01,2025</td><td>12 31,2025</td><td>870</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>003</td><td><strong>EnrollAxis Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2025</td><td>TX, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>540</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2025" data-status="Expired"><td>H1235</td><td>001</td><td><strong>EnrollAxis Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2025</td><td>FL</td><td>01 01,2025</td><td>12 31,2025</td><td>215</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>001</td><td><strong>EnrollAxis Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2027</td><td>FL, TX, CA, NY, GA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>002</td><td><strong>EnrollAxis Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2027</td><td>FL, CA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -117,11 +117,11 @@
 
     <!-- Carrier Detail -->
     <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-id-card" style="margin-right:8px;color:#002624"></i>Carrier Profile &mdash; Gold Kidney Health Plan</h5><div class="dflex g8"><button class="btn-pr btn-sm" onclick="saveCarrier('Gold Kidney Health Plan')"><i class="fas fa-save"></i>Save</button></div></div>
+      <div class="card-hdr"><h5><i class="fas fa-id-card" style="margin-right:8px;color:#002624"></i>Carrier Profile &mdash; EnrollAxis</h5><div class="dflex g8"><button class="btn-pr btn-sm" onclick="saveCarrier('EnrollAxis')"><i class="fas fa-save"></i>Save</button></div></div>
       <div class="card-body">
         <div class="row-grid">
           <div class="col-2">
-            <div class="mb-3"><label class="form-label">Legal Name</label><input type="text" class="form-control" value="Gold Kidney Health Plan, Inc."></div>
+            <div class="mb-3"><label class="form-label">Legal Name</label><input type="text" class="form-control" value="EnrollAxis, Inc."></div>
             <div class="mb-3"><label class="form-label">Carrier ID</label><input type="text" class="form-control" value="EAHP-001" readonly></div>
             <div class="mb-3"><label class="form-label">CMS Contract Number(s)</label><input type="text" class="form-control" value="H1234, H1235"></div>
             <div class="mb-3"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="ops@enrollaxis.com"></div>
@@ -208,13 +208,13 @@
 <div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
 <!-- Footer -->
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script>
 var carrierData={
-  'Gold Kidney Health Plan':{id:'EAHP-001',contract:'H1234, H1235',states:'FL, TX, CA, NY',years:'2025, 2026',email:'ops@enrollaxis.com',phone:'(800) 555-0100',admin:'Sandra Adams',status:'Active',isolation:'Enforced',plans:'12 Active Plans',agents:'342 Active Agents'}
+  'EnrollAxis':{id:'EAHP-001',contract:'H1234, H1235',states:'FL, TX, CA, NY',years:'2025, 2026',email:'ops@enrollaxis.com',phone:'(800) 555-0100',admin:'Sandra Adams',status:'Active',isolation:'Enforced',plans:'12 Active Plans',agents:'342 Active Agents'}
 };
 
 function openOnboardModal(){
@@ -319,12 +319,12 @@ function filterPlans(){
 
 function viewPlanDetail(planId,year){
   var planInfo={
-    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY',enr26:1842,enr25:1650},
-    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA',enr26:956,enr25:870},
-    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY',enr26:624,enr25:540},
-    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL',enr26:413,enr25:0},
-    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL',enr26:287,enr25:215},
-    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA',enr26:196,enr25:0}
+    'H1234-001':{name:'EnrollAxis Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY',enr26:1842,enr25:1650},
+    'H1234-002':{name:'EnrollAxis Select (HMO-POS)',type:'HMO-POS',area:'FL, CA',enr26:956,enr25:870},
+    'H1234-003':{name:'EnrollAxis Essential (PPO)',type:'PPO',area:'TX, NY',enr26:624,enr25:540},
+    'H1234-004':{name:'EnrollAxis Value (HMO)',type:'HMO',area:'FL',enr26:413,enr25:0},
+    'H1235-001':{name:'EnrollAxis Dual Complete (D-SNP)',type:'D-SNP',area:'FL',enr26:287,enr25:215},
+    'H1235-002':{name:'EnrollAxis Dual Plus (D-SNP)',type:'D-SNP',area:'CA',enr26:196,enr25:0}
   };
   var p=planInfo[planId]||{name:planId,type:'—',area:'—',enr26:0,enr25:0};
   var enr=year==='2026'?p.enr26:year==='2025'?p.enr25:'—';
@@ -357,12 +357,12 @@ function viewPlanDetail(planId,year){
 
 function editPlan(planId,year){
   var planInfo={
-    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
-    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
-    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY'},
-    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL'},
-    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
-    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
+    'H1234-001':{name:'EnrollAxis Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
+    'H1234-002':{name:'EnrollAxis Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
+    'H1234-003':{name:'EnrollAxis Essential (PPO)',type:'PPO',area:'TX, NY'},
+    'H1234-004':{name:'EnrollAxis Value (HMO)',type:'HMO',area:'FL'},
+    'H1235-001':{name:'EnrollAxis Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
+    'H1235-002':{name:'EnrollAxis Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
   };
   var p=planInfo[planId]||{name:'',type:'',area:''};
   var parts=planId.split('-');
@@ -379,12 +379,12 @@ function editPlan(planId,year){
 
 function prefillEditPlan(planId,year){
   var planInfo={
-    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
-    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
-    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY'},
-    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL'},
-    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
-    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
+    'H1234-001':{name:'EnrollAxis Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
+    'H1234-002':{name:'EnrollAxis Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
+    'H1234-003':{name:'EnrollAxis Essential (PPO)',type:'PPO',area:'TX, NY'},
+    'H1234-004':{name:'EnrollAxis Value (HMO)',type:'HMO',area:'FL'},
+    'H1235-001':{name:'EnrollAxis Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
+    'H1235-002':{name:'EnrollAxis Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
   };
   var p=planInfo[planId]||{name:'',type:'',area:''};
   document.getElementById('epName').value=p.name;

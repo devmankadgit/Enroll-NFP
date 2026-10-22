@@ -1,5 +1,5 @@
 /**
- * Gold Kidney NFP — Shared Button Actions & Navigation
+ * EnrollAxis NFP — Shared Button Actions & Navigation
  * Provides working button behaviors for the non-functional prototype
  */
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Notifications Config | Gold Kidney Admin Portal</title>
+<title>Notifications Config | EnrollAxis Admin Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
@@ -17,7 +17,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -61,7 +61,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Notification Configuration</h4><ol class="breadcrumb-bar"><li>Template Management &amp; Delivery Rules</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div><h4>Notification Configuration</h4><ol class="breadcrumb-bar"><li>Template Management &amp; Delivery Rules</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
@@ -254,12 +254,12 @@ function enhanceTemplateGridMetadata(){
 }
 
 var templates=[
-  {name:'Lead Assigned',category:'Lead',channels:['Portal','Email'],mandatory:'No',trigger:'When a new lead is assigned to an agent',subject:'New Lead Assigned: {{lead_name}}',body:'Hi {{agent_name}},\n\nA new lead has been assigned to you.\n\nLead: {{lead_name}}\nPhone: {{lead_phone}}\nSource: {{lead_source}}\n\nPlease contact within 24 hours.\n\n? Gold Kidney Health Plan'},
-  {name:'Enrollment CMS Accepted',category:'Enrollment',channels:['Portal','Email'],mandatory:'No',trigger:'When CMS confirms enrollment acceptance',subject:'Enrollment Accepted: {{member_name}} ? {{plan_name}}',body:'Hi {{agent_name}},\n\nGreat news! The enrollment for {{member_name}} has been accepted by CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\nMember ID: {{member_id}}\n\nCommission will appear in the next payment cycle.\n\n? Gold Kidney Health Plan'},
-  {name:'Commission Payment Processed',category:'Commission',channels:['Portal','Email'],mandatory:'No',trigger:'When a commission payment batch is processed',subject:'Commission Payment: ${{amount}} Deposited',body:'Hi {{agent_name}},\n\nYour commission payment of ${{amount}} has been processed.\n\nPayment Date: {{payment_date}}\nMethod: {{payment_method}}\nBatch ID: {{batch_id}}\n\nView details in your Commission Dashboard.\n\n? Gold Kidney Health Plan'},
-  {name:'HRA Due Reminder',category:'Action Item',channels:['Portal','Email','SMS'],mandatory:'No',trigger:'When HRA completion deadline approaches (7 days, 3 days)',subject:'Action Required: HRA Due for {{member_name}}',body:'Hi {{agent_name}},\n\nThe Health Risk Assessment for {{member_name}} is due by {{due_date}}.\n\nMember: {{member_name}}\nPlan: {{plan_name}}\nDeadline: {{due_date}}\n\nPlease schedule and complete the HRA to ensure compliance.\n\n? Gold Kidney Health Plan'},
-  {name:'AHIP Certification Expiry',category:'Compliance',channels:['Portal','Email'],mandatory:'Yes',trigger:'When AHIP certification is within 30 days of expiry',subject:'URGENT: AHIP Certification Expiring ? Action Required',body:'{{agent_name}},\n\nYour AHIP certification expires on {{expiry_date}}. You must renew before this date to maintain your active agent status.\n\nFailure to renew will result in:\n- Suspension of selling privileges\n- Removal from active campaign assignments\n- Hold on pending commission payments\n\nRenew now at: https://ahip.org/renew\n\n? Gold Kidney Compliance Team'},
-  {name:'Account Security Alert',category:'Security',channels:['Portal','Email','SMS'],mandatory:'Yes',trigger:'When suspicious login activity or password change is detected',subject:'Security Alert: Unusual Activity on Your Account',body:'{{agent_name}},\n\nWe detected unusual activity on your Gold Kidney portal account:\n\nEvent: {{security_event}}\nTime: {{event_time}}\nIP Address: {{ip_address}}\nLocation: {{location}}\n\nIf this was you, no action is needed. If not, reset your password immediately and contact IT Security.\n\n? Gold Kidney Security Team'}
+  {name:'Lead Assigned',category:'Lead',channels:['Portal','Email'],mandatory:'No',trigger:'When a new lead is assigned to an agent',subject:'New Lead Assigned: {{lead_name}}',body:'Hi {{agent_name}},\n\nA new lead has been assigned to you.\n\nLead: {{lead_name}}\nPhone: {{lead_phone}}\nSource: {{lead_source}}\n\nPlease contact within 24 hours.\n\n? EnrollAxis'},
+  {name:'Enrollment CMS Accepted',category:'Enrollment',channels:['Portal','Email'],mandatory:'No',trigger:'When CMS confirms enrollment acceptance',subject:'Enrollment Accepted: {{member_name}} ? {{plan_name}}',body:'Hi {{agent_name}},\n\nGreat news! The enrollment for {{member_name}} has been accepted by CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\nMember ID: {{member_id}}\n\nCommission will appear in the next payment cycle.\n\n? EnrollAxis'},
+  {name:'Commission Payment Processed',category:'Commission',channels:['Portal','Email'],mandatory:'No',trigger:'When a commission payment batch is processed',subject:'Commission Payment: ${{amount}} Deposited',body:'Hi {{agent_name}},\n\nYour commission payment of ${{amount}} has been processed.\n\nPayment Date: {{payment_date}}\nMethod: {{payment_method}}\nBatch ID: {{batch_id}}\n\nView details in your Commission Dashboard.\n\n? EnrollAxis'},
+  {name:'HRA Due Reminder',category:'Action Item',channels:['Portal','Email','SMS'],mandatory:'No',trigger:'When HRA completion deadline approaches (7 days, 3 days)',subject:'Action Required: HRA Due for {{member_name}}',body:'Hi {{agent_name}},\n\nThe Health Risk Assessment for {{member_name}} is due by {{due_date}}.\n\nMember: {{member_name}}\nPlan: {{plan_name}}\nDeadline: {{due_date}}\n\nPlease schedule and complete the HRA to ensure compliance.\n\n? EnrollAxis'},
+  {name:'AHIP Certification Expiry',category:'Compliance',channels:['Portal','Email'],mandatory:'Yes',trigger:'When AHIP certification is within 30 days of expiry',subject:'URGENT: AHIP Certification Expiring ? Action Required',body:'{{agent_name}},\n\nYour AHIP certification expires on {{expiry_date}}. You must renew before this date to maintain your active agent status.\n\nFailure to renew will result in:\n- Suspension of selling privileges\n- Removal from active campaign assignments\n- Hold on pending commission payments\n\nRenew now at: https://ahip.org/renew\n\n? EnrollAxis Compliance Team'},
+  {name:'Account Security Alert',category:'Security',channels:['Portal','Email','SMS'],mandatory:'Yes',trigger:'When suspicious login activity or password change is detected',subject:'Security Alert: Unusual Activity on Your Account',body:'{{agent_name}},\n\nWe detected unusual activity on your EnrollAxis portal account:\n\nEvent: {{security_event}}\nTime: {{event_time}}\nIP Address: {{ip_address}}\nLocation: {{location}}\n\nIf this was you, no action is needed. If not, reset your password immediately and contact IT Security.\n\n? EnrollAxis Security Team'}
 ];
 function openTemplateModal(){
   document.getElementById('tplErr').style.display='none';
@@ -283,7 +283,7 @@ function prefillTemplate(){
   document.getElementById('tMandatory').value='No';
   document.getElementById('tTrigger').value='When an enrollment application is submitted to CMS';
   document.getElementById('tSubject').value='Enrollment Submitted: {{member_name}} ? {{plan_name}}';
-  document.getElementById('tBody').value='Hi {{agent_name}},\n\nThe enrollment application for {{member_name}} has been successfully submitted to CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\n\nYou will be notified once CMS confirms acceptance. Track status in your Enrollment Dashboard.\n\n? Gold Kidney Health Plan';
+  document.getElementById('tBody').value='Hi {{agent_name}},\n\nThe enrollment application for {{member_name}} has been successfully submitted to CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\n\nYou will be notified once CMS confirms acceptance. Track status in your Enrollment Dashboard.\n\n? EnrollAxis';
   document.getElementById('tStatus').value='Active';
   showToast('Template form prefilled with sample data','success');
 }
@@ -397,9 +397,9 @@ function toggleRule(el) {
 </script>
 
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script src="../assets/nfp-actions.js"></script>
 </body>

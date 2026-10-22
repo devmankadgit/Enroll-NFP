@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -54,7 +54,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Commission Rules &amp; Rate Configuration</h4></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.svg" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div><h4>Commission Rules &amp; Rate Configuration</h4></div>
     <input type="text" class="tb-search" placeholder="Search rules, agents, configs...">
     <a href="notifications-config.html" class="tb-btn"><i class="fas fa-bell"></i></a>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
@@ -75,7 +75,7 @@
     <div id="tab-rates">
       <div class="card mb16">
         <div class="card-hdr">
-          <h5><i class="fas fa-sliders-h" style="margin-right:8px;color:#002624"></i>Active Rate Configuration — CY2026 (Gold Kidney Health Plan)</h5>
+          <h5><i class="fas fa-sliders-h" style="margin-right:8px;color:#002624"></i>Active Rate Configuration — CY2026 (EnrollAxis)</h5>
           <div class="dflex g8">
             <span class="bdg b-green">Active</span>
             <span class="bdg b-blue">Config v2026.3 — Effective 01 01,2026</span>
@@ -359,7 +359,7 @@
         <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Creates a new plan-year configuration version in <strong>Pending Approval</strong> status. Dual-approval is required before activation.</span></div>
         <div class="form-row">
           <div class="fg"><label>Plan Year <span class="req">*</span></label><input type="number" id="addCfgPlanYear" min="2026" max="2035" placeholder="e.g. 2028"></div>
-          <div class="fg"><label>Carrier <span class="req">*</span></label><select id="addCfgCarrier"><option selected>Gold Kidney Health Plan</option></select></div>
+          <div class="fg"><label>Carrier <span class="req">*</span></label><select id="addCfgCarrier"><option selected>EnrollAxis</option></select></div>
           <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="addCfgEffectiveDate"></div>
         </div>
         <div class="form-row">
@@ -518,7 +518,7 @@
         <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Changes require dual-approval. You cannot approve your own changes. Mid-year corrections need justification (min 20 chars).</span></div>
         <div class="form-row">
           <div class="fg"><label>Plan Year <span class="req">*</span></label><select><option>2026</option><option selected>2027</option></select></div>
-          <div class="fg"><label>Carrier <span class="req">*</span></label><select><option>Gold Kidney Health Plan</option></select></div>
+          <div class="fg"><label>Carrier <span class="req">*</span></label><select><option>EnrollAxis</option></select></div>
           <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" value="2027-01-01"></div>
         </div>
         <div class="form-row">
@@ -640,7 +640,7 @@ function clearAddConfigValidation(){
 function openAddYearConfig(){
   clearAddConfigValidation();
   document.getElementById('addCfgPlanYear').value='';
-  document.getElementById('addCfgCarrier').value='Gold Kidney Health Plan';
+  document.getElementById('addCfgCarrier').value='EnrollAxis';
   document.getElementById('addCfgEffectiveDate').value='';
   document.getElementById('addCfgBaseInitial').value='';
   document.getElementById('addCfgBaseRenewal').value='';
@@ -668,7 +668,7 @@ function prefillAddYearConfig(){
   document.getElementById('addCfgDispute').value='120';
   document.getElementById('addCfgCutoff').value='15';
   document.getElementById('addCfgProcessing').value='17';
-  document.getElementById('addCfgNotes').value='Annual CY2028 configuration aligned to CMS compensation updates and market competitiveness for Gold Kidney distribution channels.';
+  document.getElementById('addCfgNotes').value='Annual CY2028 configuration aligned to CMS compensation updates and market competitiveness for EnrollAxis distribution channels.';
   document.getElementById('addCfgAck').checked=true;
   clearAddConfigValidation();
   if(typeof showToast==='function') showToast('Form prefilled with sample new-year configuration data.','info');
@@ -887,7 +887,7 @@ function prefillEditConfig(){
   inputs.forEach(function(inp,i){if(vals[i]!==undefined) inp.value=vals[i];});
   var selects=body.querySelectorAll('select');
   if(selects[0]) selects[0].value='2027';
-  if(selects[1]) selects[1].value='Gold Kidney Health Plan';
+  if(selects[1]) selects[1].value='EnrollAxis';
   var dateInput=body.querySelector('input[type=date]');
   if(dateInput) dateInput.value='2027-01-01';
   var ta=body.querySelector('textarea');
@@ -1010,9 +1010,9 @@ function viewVersion(ver){
 </script>
 
 <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
-  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
-  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
-  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  <div style="font-weight:700;margin-bottom:4px">EnrollAxis, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in EnrollAxis depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script src="../assets/nfp-actions.js"></script>
 </body>
