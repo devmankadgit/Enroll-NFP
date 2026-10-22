@@ -7,26 +7,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .inv-tab{padding:9px 22px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
-.inv-tab:hover{background:#f1f3f4;color:#1a237e}
-.inv-tab.active{background:#e8eaf6;color:#1a237e}
-.inv-tab .tbadge{background:#1a237e;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
+.inv-tab:hover{background:#f1f3f4;color:#002624}
+.inv-tab.active{background:#e6efee;color:#002624}
+.inv-tab .tbadge{background:#002624;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
 .kpi-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
 .kpi-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.kpi-val{font-size:26px;font-weight:800;color:#1a237e;line-height:1}
+.kpi-val{font-size:26px;font-weight:800;color:#002624;line-height:1}
 .kpi-lbl{font-size:11px;color:#5f6368;margin-top:2px}
 .kpi-sub{font-size:10px;color:#5f6368;margin-top:3px}
 .status-badge{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
 .sb-draft{background:#f1f3f4;color:#5f6368}
-.sb-sent{background:#e3f2fd;color:#0d47a1}
+.sb-sent{background:#e8f5f2;color:#0f6a62}
 .sb-opened{background:#fff8e1;color:#e65100}
 .sb-accepted{background:#e8f5e9;color:#1b5e20}
 .sb-expired{background:#fce4ec;color:#b71c1c}
 .sb-cancelled{background:#f1f3f4;color:#5f6368}
 .sb-rejected{background:#fce4ec;color:#880e4f}
 .inv-form-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:24px}
-.inv-form-card h6{font-size:14px;font-weight:700;color:#1a237e;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.inv-form-card h6{font-size:14px;font-weight:700;color:#002624;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .form-section{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:16px;margin-bottom:14px}
 .form-section-title{font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .char-count{font-size:11px;color:#5f6368;text-align:right;margin-top:3px}
@@ -34,7 +34,7 @@
 .inv-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:2px;background:#e8eaed}
 .inv-tl-item{position:relative;margin-bottom:14px}
 .inv-tl-dot{position:absolute;left:-20px;width:14px;height:14px;border-radius:50%;border:2px solid;top:3px;background:#fff}
-.inv-tl-dot.active{border-color:#1a237e;background:#1a237e}
+.inv-tl-dot.active{border-color:#002624;background:#002624}
 .inv-tl-dot.done{border-color:#1b5e20;background:#1b5e20}
 .inv-tl-dot.warn{border-color:#e65100;background:#e65100}
 .inv-tl-dot.err{border-color:#b71c1c;background:#b71c1c}
@@ -42,18 +42,18 @@
 .dup-warn{display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:7px 10px;font-size:11px;color:#e65100;margin-top:5px}
 .dup-err{display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:7px 10px;font-size:11px;color:#b71c1c;margin-top:5px}
 .npn-ok{display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:7px 10px;font-size:11px;color:#1b5e20;margin-top:5px}
-.bulk-bar{background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:8px 14px;display:none;align-items:center;gap:12px;margin-bottom:10px;font-size:12px}
-.preview-card{background:#f8f9fa;border:1px dashed #9fa8da;border-radius:8px;padding:14px;font-size:12px}
+.bulk-bar{background:#e6efee;border:1px solid #a6dace;border-radius:8px;padding:8px 14px;display:none;align-items:center;gap:12px;margin-bottom:10px;font-size:12px}
+.preview-card{background:#f8f9fa;border:1px dashed #a6dace;border-radius:8px;padding:14px;font-size:12px}
 .bulk-help{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;font-size:11px;color:#5f6368;margin-top:8px}
-.bulk-result{display:none;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 12px;font-size:12px;color:#0d47a1;margin-top:10px;white-space:pre-line}
+.bulk-result{display:none;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:10px 12px;font-size:12px;color:#0f6a62;margin-top:10px;white-space:pre-line}
 .kpi-row{display:grid;gap:14px}
 .data-table{width:100%;border-collapse:collapse;font-size:13px}
 .data-table thead{background:#f8f9fa}
 .data-table th,.data-table td{padding:10px 12px;border-bottom:1px solid #f1f3f4;text-align:left}
-.data-table tbody tr:hover{background:#f8f9ff}
+.data-table tbody tr:hover{background:#f6fbfa}
 .inv-err{border-color:#ef9a9a!important;background:#fff5f5!important}
-.tbl-action-btn{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:#1a237e;transition:all .15s}
-.tbl-action-btn:hover{background:#e8eaf6;border-color:#9fa8da}
+.tbl-action-btn{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:#002624;transition:all .15s}
+.tbl-action-btn:hover{background:#e6efee;border-color:#a6dace}
 .tbl-action-btn.danger{color:#c62828;border-color:#ef9a9a}
 .tbl-action-btn.danger:hover{background:#fce4ec}
 </style>
@@ -109,7 +109,7 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
-    <h4 style="margin:0;color:#1a237e;font-size:16px"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Agent Invitations</h4>
+    <h4 style="margin:0;color:#002624;font-size:16px"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Agent Invitations</h4>
     <div style="font-size:11px;color:#5f6368">Send &amp; Track Contracting Invitations</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
@@ -132,7 +132,7 @@
   <!-- FORM -->
   <div class="fg" style="flex:1.4">
     <div class="inv-form-card">
-      <h6><i class="fas fa-envelope-open-text" style="color:#1a237e"></i>New Contracting Invitation</h6>
+      <h6><i class="fas fa-envelope-open-text" style="color:#002624"></i>New Contracting Invitation</h6>
       <div id="invFormAlert" style="display:none;margin-bottom:12px"></div>
 
       <!-- Recipient Section -->
@@ -232,7 +232,7 @@
       </div>
 
       <div style="display:flex;gap:10px;justify-content:space-between">
-        <button class="btn-ol" onclick="prefillSendInvitation()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+        <button class="btn-ol" onclick="prefillSendInvitation()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
         <div style="display:flex;gap:10px">
           <button class="btn-ol" onclick="resetInviteForm()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
           <button class="btn-pr" id="sendInviteBtn" onclick="sendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Invitation</button>
@@ -244,11 +244,11 @@
   <!-- PREVIEW PANEL -->
   <div class="fg" style="flex:1">
     <div class="inv-form-card" style="position:sticky;top:80px">
-      <h6><i class="fas fa-eye" style="color:#1a237e"></i>Invitation Preview</h6>
+      <h6><i class="fas fa-eye" style="color:#002624"></i>Invitation Preview</h6>
       <div id="invPreview" class="preview-card">
-        <div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#c5cae9"></i>Fill in the form to preview the invitation email</div>
+        <div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#cdebe4"></i>Fill in the form to preview the invitation email</div>
       </div>
-      <div style="margin-top:12px;padding:10px;background:#e8eaf6;border-radius:8px;font-size:11px;color:#3949ab">
+      <div style="margin-top:12px;padding:10px;background:#e6efee;border-radius:8px;font-size:11px;color:#085a55">
         <i class="fas fa-link" style="margin-right:4px"></i><strong>Token Link:</strong> The invitation will contain a unique, single-use tokenized link that expires after the configured hours. Each resend creates a new token and invalidates the previous.
       </div>
     </div>
@@ -262,7 +262,7 @@
   <!-- KPI TILES -->
   <div class="kpi-row" style="margin-bottom:20px;grid-template-columns:repeat(5,1fr)">
     <div class="kpi-card">
-      <div class="kpi-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-paper-plane"></i></div>
+      <div class="kpi-icon" style="background:#e6efee;color:#002624"><i class="fas fa-paper-plane"></i></div>
       <div><div class="kpi-val" id="kpiSent">18</div><div class="kpi-lbl">Total Sent</div><div class="kpi-sub">Last 30 days</div></div>
     </div>
     <div class="kpi-card">
@@ -313,7 +313,7 @@
           <option>HealthFirst Distribution</option><option>Coastal Medicare Partners</option><option>SunBridge Medicare</option>
         </select>
       </div>
-      <button class="btn-ol btn-sm" onclick="prefillDashboardFilters()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Filters</button>
+      <button class="btn-ol btn-sm" onclick="prefillDashboardFilters()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Filters</button>
       <button class="btn-ol btn-sm" onclick="resetInvFilters()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
       <button class="btn-pr btn-sm" onclick="exportInvCSV()"><i class="fas fa-file-csv" style="margin-right:4px"></i>Export CSV</button>
     </div>
@@ -321,7 +321,7 @@
 
   <!-- BULK ACTIONS BAR -->
   <div class="bulk-bar" id="invBulkBar">
-    <div><i class="fas fa-check-square" style="color:#1a237e;margin-right:5px"></i><strong id="invBulkCount">0</strong> selected</div>
+    <div><i class="fas fa-check-square" style="color:#002624;margin-right:5px"></i><strong id="invBulkCount">0</strong> selected</div>
     <select id="invBulkAction" class="form-control form-control-sm" style="width:auto;min-width:160px">
       <option value="">? Bulk Action ?</option>
       <option value="resend">Resend Selected</option>
@@ -415,7 +415,7 @@
   </div>
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol" onclick="prefillQuickSend()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill</button>
+  <button class="btn-ol" onclick="prefillQuickSend()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill</button>
   <div style="display:flex;gap:8px">
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" onclick="quickSendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send</button>
@@ -549,16 +549,16 @@ function buildInvitePreview(){
   var msg = (document.getElementById('invMessage').value||'').trim();
   var role = document.getElementById('invRole').value;
   var preview = document.getElementById('invPreview');
-  if(!first&&!last&&!email){preview.innerHTML='<div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#c5cae9"></i>Fill in the form to preview the invitation email</div>';return;}
+  if(!first&&!last&&!email){preview.innerHTML='<div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#cdebe4"></i>Fill in the form to preview the invitation email</div>';return;}
   var recipientName = (first+' '+last).trim()||'[Recipient Name]';
   var expiryDate = new Date(Date.now()+expiry*3600000);
   var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
   preview.innerHTML = '<div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden">'
-    +'<div style="background:#1a237e;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">Gold Kidney Health Plan ? Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
+    +'<div style="background:#002624;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">Gold Kidney Health Plan ? Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
     +'<div style="padding:16px;font-size:12px;color:#333">'
     +'<div style="margin-bottom:10px">Dear <strong>'+recipientName+'</strong>,</div>'
     +'<div style="margin-bottom:8px">You have been invited to join the <strong>Gold Kidney Health Plan</strong> producer network as a <strong>'+role+'</strong>.</div>'
-    +(msg?'<div style="background:#f8f9fa;border-left:3px solid #1a237e;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+msg+'</div>':'')
+    +(msg?'<div style="background:#f8f9fa;border-left:3px solid #002624;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+msg+'</div>':'')
     +'<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:12px">'
     +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368;width:120px">Hierarchy Level:</td><td style="padding:5px;font-weight:600">'+(level||'?')+'</td></tr>'
     +'<tr><td style="padding:5px;color:#5f6368">Upline Org:</td><td style="padding:5px;font-weight:600">'+orgText+'</td></tr>'
@@ -566,7 +566,7 @@ function buildInvitePreview(){
     +'<tr><td style="padding:5px;color:#5f6368">Invited By:</td><td style="padding:5px">'+INVITER.name+'</td></tr>'
     +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Expires:</td><td style="padding:5px;color:#e65100;font-weight:600">'+expiryDate.toLocaleString()+'</td></tr>'
     +'</table>'
-    +'<div style="text-align:center;margin-bottom:12px"><a style="display:inline-block;background:#1a237e;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px" href="../auth/invite-accept.html?token='+token+'">Accept Invitation &amp; Begin Contracting</a></div>'
+    +'<div style="text-align:center;margin-bottom:12px"><a style="display:inline-block;background:#002624;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px" href="../auth/invite-accept.html?token='+token+'">Accept Invitation &amp; Begin Contracting</a></div>'
     +'<div style="font-size:10px;color:#9e9e9e;text-align:center">This is a single-use, time-limited link. Do not share it.<br>Token: '+token+'</div>'
     +'</div></div>';
 }
@@ -899,7 +899,7 @@ function renderInvitationsTable(data){
       +'<td style="font-weight:600;white-space:nowrap">'+inv.firstName+' '+inv.lastName+'</td>'
       +'<td style="font-size:11px">'+inv.email+'</td>'
       +'<td>'+npnHtml+'</td>'
-      +'<td><span style="font-size:11px;background:#e8eaf6;color:#1a237e;padding:2px 8px;border-radius:8px;font-weight:600">'+inv.level+'</span></td>'
+      +'<td><span style="font-size:11px;background:#e6efee;color:#002624;padding:2px 8px;border-radius:8px;font-weight:600">'+inv.level+'</span></td>'
       +'<td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis">'+inv.uplineOrg+'</td>'
       +'<td style="font-size:11px;white-space:nowrap">'+inv.sentDate+'</td>'
       +'<td><span class="status-badge '+statusClass+'"><i class="fas '+statusIcon+'" style="font-size:9px"></i> '+inv.status+'</span></td>'
@@ -1000,10 +1000,10 @@ function viewInvDetail(id){
     +'<div><div style="font-size:11px;color:#5f6368">Plan Year</div><div style="font-size:12px">'+inv.planYear+'</div></div>'
     +'<div><div style="font-size:11px;color:#5f6368">Expiry Date</div><div style="font-size:12px;color:#e65100">'+inv.expiryDate+'</div></div>'
     +'<div><div style="font-size:11px;color:#5f6368">Sent By</div><div style="font-size:12px">'+inv.sentBy+'</div></div>'
-    +(inv.onboardingCase?'<div><div style="font-size:11px;color:#5f6368">Onboarding Case</div><a href="../agency-admin/onboarding-cases.html" style="font-size:12px;color:#1a237e;font-weight:700">'+inv.onboardingCase+' <i class="fas fa-external-link-alt" style="font-size:9px"></i></a></div>':'')
+    +(inv.onboardingCase?'<div><div style="font-size:11px;color:#5f6368">Onboarding Case</div><a href="../agency-admin/onboarding-cases.html" style="font-size:12px;color:#002624;font-weight:700">'+inv.onboardingCase+' <i class="fas fa-external-link-alt" style="font-size:9px"></i></a></div>':'')
     +(inv.message?'<div style="grid-column:span 2"><div style="font-size:11px;color:#5f6368">Personal Message</div><div style="font-size:12px;font-style:italic;color:#5f6368">'+inv.message+'</div></div>':'')
     +'</div>'
-    +'<div style="border-top:1px solid #f1f3f4;padding-top:12px"><div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:8px"><i class="fas fa-history" style="margin-right:5px"></i>Status Timeline</div>'+tlHtml+'</div>';
+    +'<div style="border-top:1px solid #f1f3f4;padding-top:12px"><div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:8px"><i class="fas fa-history" style="margin-right:5px"></i>Status Timeline</div>'+tlHtml+'</div>';
   document.getElementById('invDetailContent').innerHTML=content;
   document.getElementById('invDetailTitle').innerHTML='<i class="fas fa-envelope" style="margin-right:8px"></i>'+inv.firstName+' '+inv.lastName+' &mdash; Invitation Detail';
   document.getElementById('invDetailModal').style.display='flex';
@@ -1094,8 +1094,8 @@ function exportInvCSV(){
 /* Utilities */
 function showInvAlert(zone,msg,type){
   if(!zone)return;
-  var c={danger:'#fce4ec',warning:'#fff8e1',success:'#e8f5e9',info:'#e3f2fd'};
-  var b={danger:'#ef9a9a',warning:'#ffe082',success:'#a5d6a7',info:'#90caf9'};
+  var c={danger:'#fce4ec',warning:'#fff8e1',success:'#e8f5e9',info:'#e8f5f2'};
+  var b={danger:'#ef9a9a',warning:'#ffe082',success:'#a5d6a7',info:'#a6dace'};
   var ic={danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',success:'fa-check-circle',info:'fa-info-circle'};
   zone.innerHTML='<div style="background:'+c[type]+';border:1px solid '+b[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+ic[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
   zone.style.display='block';
@@ -1103,7 +1103,7 @@ function showInvAlert(zone,msg,type){
 }
 
 function showInvToast(msg,type){
-  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#e65100',info:'#0d47a1'};
+  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#e65100',info:'#0f6a62'};
   var t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:28px;right:24px;background:'+(colors[type]||colors.info)+';color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px';
   t.innerHTML='<i class="fas '+(type==='success'?'fa-check-circle':'fa-info-circle')+'" style="margin-right:6px"></i>'+msg;

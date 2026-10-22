@@ -7,30 +7,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px}
+body{background:linear-gradient(135deg,#002624 0%,#04403D 50%,#147966 100%);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px}
 .inv-card{background:#fff;border-radius:16px;padding:0;max-width:640px;width:100%;box-shadow:0 8px 48px rgba(0,0,0,.22)}
-.inv-card-header{background:linear-gradient(135deg,#1a237e,#1565c0);border-radius:16px 16px 0 0;padding:24px 32px;color:#fff}
+.inv-card-header{background:linear-gradient(135deg,#002624,#147966);border-radius:16px 16px 0 0;padding:24px 32px;color:#fff}
 .inv-card-body{padding:28px 32px}
 .inv-card-footer{padding:16px 32px 24px;border-top:1px solid #f1f3f4}
 .locked-field{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:10px}
 .locked-icon{color:#9e9e9e;font-size:12px}
 .locked-label{font-size:11px;color:#5f6368;margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-.locked-value{font-size:14px;font-weight:700;color:#1a237e}
+.locked-value{font-size:14px;font-weight:700;color:#002624}
 .step-indicator{display:flex;gap:0;margin-bottom:24px}
 .step-dot{flex:1;text-align:center;position:relative}
 .step-dot::before{content:'';position:absolute;top:14px;left:50%;right:-50%;height:2px;background:#e8eaed;z-index:0}
 .step-dot:last-child::before{display:none}
 .step-circle{width:28px;height:28px;border-radius:50%;border:2px solid #e8eaed;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 4px;position:relative;z-index:1;color:#9e9e9e}
-.step-circle.active{background:#1a237e;border-color:#1a237e;color:#fff}
+.step-circle.active{background:#002624;border-color:#002624;color:#fff}
 .step-circle.done{background:#1b5e20;border-color:#1b5e20;color:#fff}
 .step-label{font-size:10px;color:#9e9e9e;font-weight:600}
-.step-label.active{color:#1a237e}
+.step-label.active{color:#002624}
 .step-label.done{color:#1b5e20}
 .error-state{text-align:center;padding:40px 32px}
 .form-step{display:none}
 .form-step.active{display:block}
 .audit-log-entry{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;font-size:11px;color:#5f6368;margin-bottom:6px;display:flex;align-items:flex-start;gap:8px}
-.inv-by-banner{background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.inv-by-banner{background:#e6efee;border:1px solid #a6dace;border-radius:8px;padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 </style>
 </head>
 <body>
@@ -56,7 +56,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
       <i class="fas fa-info-circle" style="margin-right:6px"></i>
       If you believe this is an error, ask your upline admin to resend the invitation from the <strong>Agent Invitations</strong> screen.
     </div>
-    <a href="login.html" style="display:inline-block;background:#1a237e;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Go to Login</a>
+    <a href="login.html" style="display:inline-block;background:#002624;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Go to Login</a>
   </div>
 
   <!-- MAIN REGISTRATION FORM -->
@@ -75,10 +75,10 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
       <div class="form-step active" id="step1">
         <!-- Invited By Banner -->
         <div class="inv-by-banner">
-          <div style="width:36px;height:36px;background:#1a237e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0"><i class="fas fa-user-tie"></i></div>
+          <div style="width:36px;height:36px;background:#002624;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0"><i class="fas fa-user-tie"></i></div>
           <div>
             <div style="font-size:11px;color:#5f6368;font-weight:600">INVITED BY</div>
-            <div id="invitedByName" style="font-size:14px;font-weight:700;color:#1a237e">Sandra Adams</div>
+            <div id="invitedByName" style="font-size:14px;font-weight:700;color:#002624">Sandra Adams</div>
             <div id="invitedByOrg" style="font-size:11px;color:#5f6368">National FMO (SFMO-2024-001)</div>
           </div>
         </div>
@@ -132,7 +132,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
 
       <!-- STEP 2: Personal Information -->
       <div class="form-step" id="step2">
-        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</div>
+        <div style="font-weight:700;font-size:13px;color:#002624;margin-bottom:16px"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
           <div><label style="font-size:12px;font-weight:600">First Name <span class="req">*</span></label>
             <input id="regFirstName" class="form-control" placeholder="First name"></div>
@@ -160,7 +160,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
 
       <!-- STEP 3: Licensing -->
       <div class="form-step" id="step3">
-        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-id-badge" style="margin-right:6px"></i>Licensing &amp; Credentials</div>
+        <div style="font-weight:700;font-size:13px;color:#002624;margin-bottom:16px"><i class="fas fa-id-badge" style="margin-right:6px"></i>Licensing &amp; Credentials</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
           <div><label style="font-size:12px;font-weight:600">NPN (National Producer Number) <span class="req">*</span></label>
             <input id="regNPN" class="form-control" maxlength="10" placeholder="8-10 digits" oninput="validateRegNPN()" onblur="checkRegNPNDuplicate()">
@@ -185,19 +185,19 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
 
       <!-- STEP 4: Review & Submit -->
       <div class="form-step" id="step4">
-        <div style="font-weight:700;font-size:13px;color:#1a237e;margin-bottom:16px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Review &amp; Confirm</div>
+        <div style="font-weight:700;font-size:13px;color:#002624;margin-bottom:16px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Review &amp; Confirm</div>
         <div id="step4Summary"></div>
 
-        <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:14px;margin-bottom:14px">
-          <div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:8px"><i class="fas fa-shield-alt" style="margin-right:5px"></i>Audit Trail — Events Logged for this Invitation</div>
-          <div class="audit-log-entry"><i class="fas fa-link" style="color:#1a237e;margin-top:1px"></i><div><strong>Link Opened</strong> — Invitation link was accessed. Status updated from <em>Sent</em> to <em>Opened</em>.<br><span style="color:#9e9e9e">Today at approx. page load time</span></div></div>
+        <div style="background:#e6efee;border:1px solid #a6dace;border-radius:8px;padding:14px;margin-bottom:14px">
+          <div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:8px"><i class="fas fa-shield-alt" style="margin-right:5px"></i>Audit Trail — Events Logged for this Invitation</div>
+          <div class="audit-log-entry"><i class="fas fa-link" style="color:#002624;margin-top:1px"></i><div><strong>Link Opened</strong> — Invitation link was accessed. Status updated from <em>Sent</em> to <em>Opened</em>.<br><span style="color:#9e9e9e">Today at approx. page load time</span></div></div>
           <div class="audit-log-entry"><i class="fas fa-edit" style="color:#e65100;margin-top:1px"></i><div><strong>Form Started</strong> — Agent began filling out registration form. Invitation remains valid until expiry.<br><span style="color:#9e9e9e">Today</span></div></div>
           <div class="audit-log-entry" id="auditSubmitEntry" style="display:none"><i class="fas fa-check-circle" style="color:#1b5e20;margin-top:1px"></i><div><strong>Form Submitted</strong> — Registration complete. Invitation status updated from <em>Opened</em> to <em>Accepted</em>. Onboarding case created.<br><span style="color:#9e9e9e">Pending submission</span></div></div>
         </div>
 
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:13px;cursor:pointer;margin-bottom:14px">
           <input type="checkbox" id="regConsent" style="margin-top:3px">
-          <span>I confirm that the information provided is accurate and I agree to the <a href="#" style="color:#1a237e">Terms of Contracting</a>. I understand that my hierarchy placement (<strong id="confirmLevel">Agent/Broker</strong> under <strong id="confirmOrg">HealthFirst Distribution</strong>) was pre-set by my upline and cannot be modified.</span>
+          <span>I confirm that the information provided is accurate and I agree to the <a href="#" style="color:#002624">Terms of Contracting</a>. I understand that my hierarchy placement (<strong id="confirmLevel">Agent/Broker</strong> under <strong id="confirmOrg">HealthFirst Distribution</strong>) was pre-set by my upline and cannot be modified.</span>
         </label>
         <div id="step4Alert" style="display:none;margin-top:8px"></div>
       </div>
@@ -225,8 +225,8 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1565c0 100%);min-
       <h5 style="color:#1b5e20;margin-bottom:8px">Registration Complete!</h5>
       <p style="color:#5f6368;font-size:14px;margin-bottom:16px">Your contracting invitation has been accepted. An onboarding case has been created and your hierarchy placement is confirmed.</p>
       <div id="successDetails" style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:14px;text-align:left;font-size:12px;margin-bottom:20px"></div>
-      <a href="../agent/onboarding.html" style="display:inline-block;background:#1a237e;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;margin-right:10px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>View Onboarding Case</a>
-      <a href="login.html" style="display:inline-block;background:#fff;color:#1a237e;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;border:1px solid #9fa8da"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Sign In</a>
+      <a href="../agent/onboarding.html" style="display:inline-block;background:#002624;color:#fff;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;margin-right:10px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>View Onboarding Case</a>
+      <a href="login.html" style="display:inline-block;background:#fff;color:#002624;padding:10px 24px;border-radius:8px;font-weight:700;text-decoration:none;border:1px solid #a6dace"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Sign In</a>
     </div>
 
     <div class="inv-card-footer">
@@ -452,13 +452,13 @@ function buildStep4Summary(){
     +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">NPN</div><div style="font-weight:700">'+document.getElementById('regNPN').value+'</div></div>'
     +'<div><div style="color:#5f6368;font-size:11px;font-weight:600">Licensed States</div><div>'+(document.getElementById('regStates').value||'—')+'</div></div>'
     +'</div>'
-    +'<div style="background:#e8eaf6;border-radius:8px;padding:12px;font-size:12px;margin-bottom:0">'
-    +'<div style="font-weight:700;color:#1a237e;margin-bottom:8px"><i class="fas fa-lock" style="margin-right:5px"></i>Hierarchy Placement (Pre-Configured — Read Only)</div>'
+    +'<div style="background:#e6efee;border-radius:8px;padding:12px;font-size:12px;margin-bottom:0">'
+    +'<div style="font-weight:700;color:#002624;margin-bottom:8px"><i class="fas fa-lock" style="margin-right:5px"></i>Hierarchy Placement (Pre-Configured — Read Only)</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><div style="color:#5f6368;font-size:11px">Hierarchy Level</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedLevel').textContent+'</div></div>'
-    +'<div><div style="color:#5f6368;font-size:11px">Upline Organization</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedUplineOrg').textContent+'</div></div>'
-    +'<div><div style="color:#5f6368;font-size:11px">Plan Year</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedPlanYear').textContent+'</div></div>'
-    +'<div><div style="color:#5f6368;font-size:11px">Role Type</div><div style="font-weight:700;color:#1a237e">'+document.getElementById('lockedRole').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Hierarchy Level</div><div style="font-weight:700;color:#002624">'+document.getElementById('lockedLevel').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Upline Organization</div><div style="font-weight:700;color:#002624">'+document.getElementById('lockedUplineOrg').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Plan Year</div><div style="font-weight:700;color:#002624">'+document.getElementById('lockedPlanYear').textContent+'</div></div>'
+    +'<div><div style="color:#5f6368;font-size:11px">Role Type</div><div style="font-weight:700;color:#002624">'+document.getElementById('lockedRole').textContent+'</div></div>'
     +'<div><div style="color:#5f6368;font-size:11px">Invited By</div><div>'+document.getElementById('invitedByName').textContent+'</div></div>'
     +'</div></div>';
   document.getElementById('step4Summary').innerHTML = html;
@@ -487,7 +487,7 @@ function submitRegistration(){
     // US-1.17: Case created with status On Hold - Hierarchy Issue
     if(CURRENT_INVITE) CURRENT_INVITE.status = 'Accepted';
     var holdHtml = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px">'
-      +'<div><div style="color:#5f6368;font-size:11px">Case ID</div><div style="font-weight:700;color:#1a237e">'+caseId+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Case ID</div><div style="font-weight:700;color:#002624">'+caseId+'</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Case Status</div><div style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:8px;font-weight:700;font-size:11px;display:inline-block">On Hold — Hierarchy Issue</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Agent Name</div><div style="font-weight:700">'+document.getElementById('regFirstName').value+' '+document.getElementById('regLastName').value+'</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Upline Org</div><div>'+uplineOrg+'</div></div>'
@@ -506,7 +506,7 @@ function submitRegistration(){
     document.getElementById('successDetails').innerHTML =
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">'
       +'<div><div style="color:#5f6368;font-size:11px">Name</div><div style="font-weight:700">'+document.getElementById('regFirstName').value+' '+document.getElementById('regLastName').value+'</div></div>'
-      +'<div><div style="color:#5f6368;font-size:11px">Onboarding Case</div><div style="font-weight:700;color:#1a237e">'+caseId+'</div></div>'
+      +'<div><div style="color:#5f6368;font-size:11px">Onboarding Case</div><div style="font-weight:700;color:#002624">'+caseId+'</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Hierarchy Level</div><div style="font-weight:700">'+document.getElementById('lockedLevel').textContent+'</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Upline Organization</div><div style="font-weight:700">'+document.getElementById('lockedUplineOrg').textContent+'</div></div>'
       +'<div><div style="color:#5f6368;font-size:11px">Plan Year</div><div style="font-weight:700">'+document.getElementById('lockedPlanYear').textContent+'</div></div>'

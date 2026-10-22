@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+<style>:root{--sb:#002624} .modal-overlay.open{display:flex}</style>
 </head>
 <body>
 <nav class="sidebar">
@@ -54,14 +54,14 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Training Package Management</h4><ol class="breadcrumb-bar"><li>Publish, Clone &amp; Manage Training Packages</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Training Package Management</h4><ol class="breadcrumb-bar"><li>Publish, Clone &amp; Manage Training Packages</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
   <div class="page">
     <!-- Summary -->
     <div class="row-grid" style="margin-bottom:16px">
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-book"></i></div><div><div class="stat-label">Active Packages</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-book"></i></div><div><div class="stat-label">Active Packages</div><div class="stat-val">4</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Total Completions</div><div class="stat-val">312</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">In Progress</div><div class="stat-val">28</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Overdue</div><div class="stat-val">5</div></div></div></div>
@@ -69,7 +69,7 @@
 
     <!-- Packages Table -->
     <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-book" style="margin-right:8px;color:#0d47a1"></i>Training Packages</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblTrainingPkgs','Training_Packages')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-hdr"><h5><i class="fas fa-book" style="margin-right:8px;color:#0f6a62"></i>Training Packages</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblTrainingPkgs','Training_Packages')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
       <div class="table-wrap">
         <table class="tbl" id="tblTrainingPkgs">
           <thead><tr><th>Package Name</th><th>Status</th><th>Modules</th><th>Required For</th><th>Deadline</th><th>Completion Rate</th><th>Actions</th></tr></thead>
@@ -80,7 +80,7 @@
               <td>5 modules + exam</td>
               <td>All Agents</td>
               <td>09 30,2026</td>
-              <td><div style="width:100px;height:6px;background:#e0e0e0;border-radius:3px;display:inline-block;vertical-align:middle"><div style="width:15%;height:100%;background:#0d47a1;border-radius:3px"></div></div> 15%</td>
+              <td><div style="width:100px;height:6px;background:#e0e0e0;border-radius:3px;display:inline-block;vertical-align:middle"><div style="width:15%;height:100%;background:#0f6a62;border-radius:3px"></div></div> 15%</td>
               <td><button class="btn-ol btn-sm" onclick="togglePkgStatus(this,'AEP 2027 Certification')" style="color:#c62828;border-color:#ef9a9a"><i class="fas fa-ban"></i> Deactivate</button> <button class="btn-ol btn-sm" onclick="clonePackage('AEP 2027 Certification')">Clone</button> <button class="btn-ol btn-sm" onclick="editPackage('AEP 2027 Certification')">Edit</button></td>
             </tr>
             <tr>
@@ -125,12 +125,12 @@
 <div id="cloneModal" class="modal-overlay">
   <div class="modal-box" style="max-width:500px">
     <div class="modal-hdr">
-      <h6 style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-clone" style="margin-right:8px"></i>Clone Training Package</h6>
+      <h6 style="margin:0;font-weight:700;color:#002624"><i class="fas fa-clone" style="margin-right:8px"></i>Clone Training Package</h6>
       <button onclick="document.getElementById('cloneModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
     </div>
     <div class="modal-body" style="padding:20px">
-      <div style="background:#e8eaf6;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12.5px">
-        <i class="fas fa-info-circle" style="color:#1a237e;margin-right:6px"></i>Cloning <strong id="clonePkgName">—</strong>. All modules, questions, and settings will be copied to the new package.
+      <div style="background:#e6efee;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12.5px">
+        <i class="fas fa-info-circle" style="color:#002624;margin-right:6px"></i>Cloning <strong id="clonePkgName">—</strong>. All modules, questions, and settings will be copied to the new package.
       </div>
       <div class="form-row">
         <div class="fg" style="flex:2"><label>New Package Name <span style="color:#c62828">*</span></label><input id="cloneNewName" placeholder="e.g. AEP 2028 Certification"></div>
@@ -151,13 +151,13 @@
 <div id="pkgModal" class="modal-overlay">
   <div class="modal-box" style="max-width:860px;max-height:92vh;overflow-y:auto">
     <div class="modal-hdr">
-      <h6 id="pkgModalTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-plus-circle" style="margin-right:8px"></i>Create Training Package</h6>
+      <h6 id="pkgModalTitle" style="margin:0;font-weight:700;color:#002624"><i class="fas fa-plus-circle" style="margin-right:8px"></i>Create Training Package</h6>
       <button onclick="document.getElementById('pkgModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
     </div>
     <div id="pkgErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
     <div class="modal-body" style="padding:20px">
       <!-- Basic Info -->
-      <div style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px"><i class="fas fa-info-circle" style="margin-right:6px"></i>Package Details</div>
+      <div style="font-size:12px;font-weight:700;color:#002624;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px"><i class="fas fa-info-circle" style="margin-right:6px"></i>Package Details</div>
       <div class="form-row"><div class="fg" style="flex:2"><label>Package Name <span style="color:#c62828">*</span></label><input id="pkgName" placeholder="e.g. AEP 2027 Certification"></div><div class="fg"><label>Status</label><select id="pkgStatus"><option>Draft</option><option>Published</option></select></div></div>
       <div class="form-row"><div class="fg" style="flex:2"><label>Description</label><textarea id="pkgDesc" rows="2" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px" placeholder="Brief description of training content..."></textarea></div></div>
       <div class="form-row"><div class="fg"><label>Required For <span style="color:#c62828">*</span></label><select id="pkgRequired"><option value="">Select audience</option><option>All Agents</option><option>New Agents Only</option><option>FMO/SGA Agents</option><option>Specific Agencies</option></select></div><div class="fg"><label>Deadline <span style="color:#c62828">*</span></label><input id="pkgDeadline" type="date"></div></div>
@@ -165,7 +165,7 @@
 
       <!-- Module Generation -->
       <div style="border-top:1px solid #e8eaed;margin:20px 0 16px;padding-top:16px">
-        <div style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px"><i class="fas fa-layer-group" style="margin-right:6px"></i>Modules &amp; Questions</div>
+        <div style="font-size:12px;font-weight:700;color:#002624;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px"><i class="fas fa-layer-group" style="margin-right:6px"></i>Modules &amp; Questions</div>
         <div class="form-row" style="align-items:flex-end">
           <div class="fg"><label>Number of Modules <span style="color:#c62828">*</span></label><input id="pkgModules" type="number" min="1" max="20" placeholder="e.g. 5" value=""></div>
           <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-pr btn-sm" onclick="generateModuleSections()"><i class="fas fa-cogs" style="margin-right:4px"></i>Generate Sections</button></div>
@@ -177,7 +177,7 @@
       <div id="pkgModuleSections"></div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol btn-sm" onclick="prefillPackage()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <button class="btn-ol btn-sm" onclick="prefillPackage()" style="color:#002624"><i class="fas fa-magic"></i> Prefill</button>
       <div class="dflex g8">
         <button class="btn-ol" onclick="document.getElementById('pkgModal').classList.remove('open')">Cancel</button>
         <button class="btn-ol" onclick="saveAsDraft()" style="color:#e65100;border-color:#ffcc80"><i class="fas fa-file-alt"></i> Save as Draft</button>
@@ -328,8 +328,8 @@ function renderModuleSections(){
   pkgModuleData.forEach(function(mod,idx){
     var qCount=mod.questions.length;
     html+='<div class="pkg-mod-section" style="border:1px solid #e0e0e0;border-radius:10px;margin-bottom:14px;overflow:hidden">';
-    html+='<div onclick="toggleModSection('+idx+')" style="background:#f5f7ff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8eaed">';
-    html+='<div style="display:flex;align-items:center;gap:10px"><i class="fas fa-chevron-down" id="modChev'+idx+'" style="font-size:10px;color:#1a237e;transition:transform .2s"></i><span style="font-weight:600;color:#1a237e;font-size:13px">Module '+(idx+1)+'</span><span style="color:#5f6368;font-size:12px" id="modNameDisp'+idx+'">'+mod.name+'</span></div>';
+    html+='<div onclick="toggleModSection('+idx+')" style="background:#f6fbfa;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8eaed">';
+    html+='<div style="display:flex;align-items:center;gap:10px"><i class="fas fa-chevron-down" id="modChev'+idx+'" style="font-size:10px;color:#002624;transition:transform .2s"></i><span style="font-weight:600;color:#002624;font-size:13px">Module '+(idx+1)+'</span><span style="color:#5f6368;font-size:12px" id="modNameDisp'+idx+'">'+mod.name+'</span></div>';
     html+='<span class="bdg '+(qCount>0?'b-green':'b-amber')+'" style="font-size:10px">'+qCount+' question'+(qCount!==1?'s':'')+'</span>';
     html+='</div>';
     html+='<div id="modBody'+idx+'" style="padding:14px 16px;display:none">';
@@ -342,7 +342,7 @@ function renderModuleSections(){
       mod.questions.forEach(function(q,qi){
         html+='<div style="background:#f9f9f9;border:1px solid #eee;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:12px">';
         html+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
-        html+='<div><strong style="color:#0d47a1">Q'+(qi+1)+'.</strong> '+q.q+'</div>';
+        html+='<div><strong style="color:#0f6a62">Q'+(qi+1)+'.</strong> '+q.q+'</div>';
         html+='<button class="btn-ol btn-sm" style="font-size:10px;color:#c62828;flex-shrink:0;margin-left:8px" onclick="removeModQuestion('+idx+','+qi+')"><i class="fas fa-trash"></i></button>';
         html+='</div>';
         html+='<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:8px">';
@@ -363,8 +363,8 @@ function renderModuleSections(){
     }
     html+='</div>';
     // Add question form
-    html+='<div style="background:#f8f9ff;border:1px solid #e8eaed;border-radius:8px;padding:12px 14px;margin-top:10px">';
-    html+='<div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:8px"><i class="fas fa-plus-circle" style="margin-right:4px"></i>Add Question to Module '+(idx+1)+'</div>';
+    html+='<div style="background:#f6fbfa;border:1px solid #e8eaed;border-radius:8px;padding:12px 14px;margin-top:10px">';
+    html+='<div style="font-size:11px;font-weight:700;color:#0f6a62;margin-bottom:8px"><i class="fas fa-plus-circle" style="margin-right:4px"></i>Add Question to Module '+(idx+1)+'</div>';
     html+='<div class="fg" style="margin-bottom:8px"><input id="mq'+idx+'_text" placeholder="Enter question text..." style="width:100%;border:1px solid #ddd;border-radius:5px;padding:7px 10px;font-size:12px"></div>';
     html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">';
     html+='<input id="mq'+idx+'_a" placeholder="Option A *" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
@@ -504,11 +504,11 @@ function prefillManualComplete(){
   showToast('Manual completion form prefilled with sample data.','info');
 }
 
-function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
 
 document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});</script>
 
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

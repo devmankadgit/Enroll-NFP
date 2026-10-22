@@ -53,7 +53,7 @@
     <div class="row-grid" style="margin-bottom:16px">
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-building"></i></div><div><div class="stat-label">Total Agencies</div><div class="stat-val">18</div><div class="stat-sub text-muted">Active contracted agencies</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Total Agents</div><div class="stat-val">342</div><div class="stat-sub text-muted">Across all agencies</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-address-book"></i></div><div><div class="stat-label">Leads Assigned</div><div class="stat-val">4,218</div><div class="stat-sub text-muted">Last 30 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#147966"><i class="fas fa-address-book"></i></div><div><div class="stat-label">Leads Assigned</div><div class="stat-val">4,218</div><div class="stat-sub text-muted">Last 30 days</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-users"></i></div><div><div class="stat-label">Members Enrolled</div><div class="stat-val">8,412</div><div class="stat-sub text-muted">YTD total</div></div></div></div>
     </div>
 
@@ -89,7 +89,7 @@
             </tr>
             <tr data-level="SGA" data-state="CA,TX,AZ" data-status="Active" onclick="openAgencyDetail(1)" style="cursor:pointer">
               <td style="font-weight:600"><a href="active-agents.html?agency=National+Benefits+Group" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View agents for this agency">National Benefits Group</a></td>
-              <td><span class="bdg" style="background:#e3f2fd;color:#0277bd">SGA</span></td>
+              <td><span class="bdg" style="background:#e8f5f2;color:#147966">SGA</span></td>
               <td>CA, TX, AZ</td><td style="font-weight:600">62</td><td><a href="leads.html?agency=National" onclick="event.stopPropagation()" style="color:#4a148c;text-decoration:none;border-bottom:1px dashed #4a148c" title="View leads for this agency">980</a></td><td style="font-weight:700;color:#4a148c">2,134</td>
               <td><span style="color:#2e7d32;font-weight:600">22.3%</span></td>
               <td><span class="bdg b-green">Active</span></td>
@@ -229,7 +229,7 @@ function openAgencyDetail(idx){
   html += '<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:700;color:#4a148c;margin-bottom:8px"><i class="fas fa-address-book" style="margin-right:6px"></i>Recent Leads Assigned ('+a.leads+' total last 30d)</div>'
     +'<table style="width:100%;font-size:12px;border-collapse:collapse"><thead><tr style="background:#f8f9fa"><th style="padding:6px 8px;text-align:left">Lead</th><th style="padding:6px 8px">Source</th><th style="padding:6px 8px">Status</th><th style="padding:6px 8px">Assigned To</th><th style="padding:6px 8px">Date</th></tr></thead><tbody>';
   a.recentLeads.forEach(function(l){
-    var sc = l.status==='Enrolled'?'#2e7d32':l.status==='New'?'#0277bd':l.status==='Contacted'?'#e65100':'#4a148c';
+    var sc = l.status==='Enrolled'?'#2e7d32':l.status==='New'?'#147966':l.status==='Contacted'?'#e65100':'#4a148c';
     html += '<tr style="border-bottom:1px solid #f1f3f4"><td style="padding:6px 8px;font-weight:600">'+l.name+'</td><td style="padding:6px 8px">'+l.source+'</td><td style="padding:6px 8px"><span class="bdg" style="background:'+sc+'22;color:'+sc+'">'+l.status+'</span></td><td style="padding:6px 8px;font-size:11px">'+(l.assigned==='Unassigned'?'<span style="color:#c62828;font-weight:600">Unassigned</span>':l.assigned)+'</td><td style="padding:6px 8px;font-size:11px">'+l.date+'</td></tr>';
   });
   html += '</tbody></table></div>';
@@ -276,8 +276,8 @@ function clearFilters(){
 
 function showToast(msg,type){
   var t=document.getElementById('toast');
-  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100'};
-  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  var c={'success':'#1b5e20','info':'#0f6a62','warn':'#e65100'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
   t.style.display='block';setTimeout(function(){t.style.display='none';},4000);
 }
 function nfpExport(l){showToast(l+' export started.','info');}

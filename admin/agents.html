@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .ag-status{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
 .ags-active{background:#e8f5e9;color:#1b5e20}
 .ags-pending{background:#fff3e0;color:#e65100}
@@ -19,8 +19,8 @@
 .ags-rejected{background:#f1f3f4;color:#5f6368}
 /* Profile modal tabs */
 .pm-tab{background:none;border:none;padding:10px 16px;font-size:12px;font-weight:600;color:#5f6368;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.pm-tab:hover{color:#1a237e}
-.pm-tab.active{color:#1a237e;border-bottom-color:#1a237e}
+.pm-tab:hover{color:#002624}
+.pm-tab.active{color:#002624;border-bottom-color:#002624}
 .pm-section{display:none}
 .pm-section.active{display:block}
 .pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
@@ -28,12 +28,12 @@
 .pm-field{background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px}
 .pm-field .lbl{font-size:10px;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
 .pm-field .val{font-size:12px;font-weight:600;color:#202124}
-.pm-sec-hdr{font-size:11px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.pm-sec-hdr{font-size:11px;font-weight:700;color:#002624;text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
 .doc-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;background:#fff}
 .doc-item .doc-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
 .cert-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px}
 .kpi-mini{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:12px 16px;text-align:center}
-.kpi-mini .val{font-size:24px;font-weight:800;color:#1a237e}
+.kpi-mini .val{font-size:24px;font-weight:800;color:#002624}
 .kpi-mini .lbl{font-size:11px;color:#5f6368;margin-top:2px}
 </style>
 </head>
@@ -85,7 +85,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Agent Management</h4>
       <ol class="breadcrumb-bar"><li>All Agents &mdash; Personal, License, Contract, Certifications, Documents &amp; Status</li></ol>
     </div>
@@ -136,7 +136,7 @@
     <!-- Agent Table -->
     <div class="card">
       <div class="card-hdr" style="justify-content:space-between">
-        <h5><i class="fas fa-id-card" style="margin-right:6px;color:#1a237e"></i>Agent Roster</h5>
+        <h5><i class="fas fa-id-card" style="margin-right:6px;color:#002624"></i>Agent Roster</h5>
         <span id="agentCount" style="font-size:12px;color:#5f6368"></span>
         <button class="btn-ol btn-sm" onclick="exportTableToExcel('','agents_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
       </div>
@@ -445,10 +445,10 @@ function actionBtns(a){
     html+='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px;color:#c62828;border-color:#c62828" onclick="openAction(\''+a.id+'\',\'suspend\')"><i class="fas fa-ban"></i> Suspend</button>';
   }
   if(a.status==='On Hold'||a.status==='Suspended'){
-    html+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#0d47a1" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
+    html+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#0f6a62" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
   }
   if(a.status==='Inactive'){
-    html+='<button class="btn-pr btn-sm" style="font-size:10px;background:#0d47a1" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-undo"></i> Reactivate</button>';
+    html+='<button class="btn-pr btn-sm" style="font-size:10px;background:#0f6a62" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-undo"></i> Reactivate</button>';
   }
   return html;
 }
@@ -535,7 +535,7 @@ function openProfile(id){
     ab+='<button class="btn-ol btn-sm" style="font-size:11px;color:#c62828;border-color:#c62828" onclick="closeProfileAndAction(\''+a.id+'\',\'suspend\')"><i class="fas fa-ban"></i> Suspend</button>';
   }
   if(a.status==='On Hold'||a.status==='Suspended'||a.status==='Inactive'){
-    ab+='<button class="btn-pr btn-sm" style="font-size:11px;background:#0d47a1" onclick="closeProfileAndAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
+    ab+='<button class="btn-pr btn-sm" style="font-size:11px;background:#0f6a62" onclick="closeProfileAndAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
   }
   document.getElementById('profileActionBtns').innerHTML=ab;
 
@@ -554,8 +554,8 @@ function openProfile(id){
   if(a.licenses.length){
     a.licenses.forEach(function(lic){
       var lclr=lic.status==='Active'?'#1b5e20':lic.status==='Expired'?'#b71c1c':'#e65100';
-      l+='<div style="background:#f3f8ff;border:1px solid #bbdefb;border-radius:8px;padding:12px 14px;margin-bottom:10px">';
-      l+='<div style="font-weight:700;font-size:12px;color:#0d47a1;margin-bottom:8px"><i class="fas fa-map-marker-alt" style="margin-right:5px"></i>'+lic.state+'</div>';
+      l+='<div style="background:#f0f8f6;border:1px solid #cdebe4;border-radius:8px;padding:12px 14px;margin-bottom:10px">';
+      l+='<div style="font-weight:700;font-size:12px;color:#0f6a62;margin-bottom:8px"><i class="fas fa-map-marker-alt" style="margin-right:5px"></i>'+lic.state+'</div>';
       l+='<div class="pm-grid three">'+f('License Number',lic.num)+f('License Type',lic.type)+f('Status','<span style="color:'+lclr+';font-weight:700">'+lic.status+'</span>')+'</div>';
       l+='<div class="pm-grid">'+f('Effective Date',lic.eff)+f('Expiry Date',lic.exp)+'</div>';
       l+='<div style="font-size:11px;color:#5f6368;margin-top:4px">Lines of Business: <strong>'+lic.lobs.join(', ')+'</strong></div></div>';
@@ -587,7 +587,7 @@ function openProfile(id){
   if(a.docs.length){
     a.docs.forEach(function(doc){
       var dclr=iconMap[doc.status]||'#9e9e9e';
-      d+='<div class="doc-item"><div class="doc-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-file-pdf"></i></div>';
+      d+='<div class="doc-item"><div class="doc-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-file-pdf"></i></div>';
       d+='<div style="flex:1"><div style="font-weight:600;font-size:12px">'+doc.name+'</div>';
       d+='<div style="font-size:11px;color:#5f6368">'+doc.type+(doc.uploaded?' &nbsp;|&nbsp; Uploaded: '+doc.uploaded:'')+'</div></div>';
       d+='<span style="color:'+dclr+';font-size:11px;font-weight:600">'+doc.status+'</span></div>';
@@ -598,7 +598,7 @@ function openProfile(id){
   var h='<div class="pm-sec-hdr"><i class="fas fa-history"></i>Status History</div>';
   a.history.forEach(function(entry){
     h+='<div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:9px 12px;font-size:11px;margin-bottom:6px;display:flex;gap:10px">';
-    h+='<i class="fas fa-circle" style="font-size:6px;margin-top:4px;color:#1a237e;flex-shrink:0"></i>';
+    h+='<i class="fas fa-circle" style="font-size:6px;margin-top:4px;color:#002624;flex-shrink:0"></i>';
     h+='<div><div style="font-weight:700;color:#202124;margin-bottom:2px">'+entry.from+' → '+entry.to+'</div>';
     h+='<div style="color:#5f6368">'+entry.note+'</div>';
     h+='<div style="font-size:10px;color:#9e9e9e;margin-top:2px">'+entry.ts+' &nbsp;['+entry.by+']</div></div></div>';
@@ -628,7 +628,7 @@ var ACTION_LABELS={
   readytosell:{title:'Mark Ready to Sell',color:'#1b5e20',bg:'#e8f5e9',bdr:'#c8e6c9', icon:'fa-star',          msg:'Agent status will be confirmed as <strong>Ready to Sell</strong>.',   btnTxt:'Confirm', btnBg:'#1b5e20', req:false},
   reject:   {title:'Reject Agent',      color:'#b71c1c', bg:'#fce4ec', bdr:'#ef9a9a', icon:'fa-times-circle',  msg:'Agent will be <strong>Rejected</strong>. Notes required.',             btnTxt:'Reject',  btnBg:'#b71c1c', req:true},
   suspend:  {title:'Suspend Agent',     color:'#c62828', bg:'#fce4ec', bdr:'#ef9a9a', icon:'fa-ban',           msg:'Agent will be <strong>Suspended</strong>. Reason required.',           btnTxt:'Suspend', btnBg:'#c62828', req:true},
-  activate: {title:'Activate Agent',    color:'#0d47a1', bg:'#e3f2fd', bdr:'#90caf9', icon:'fa-check-circle',  msg:'Agent will be set back to <strong>Active</strong>.',                   btnTxt:'Activate',btnBg:'#0d47a1', req:false}
+  activate: {title:'Activate Agent',    color:'#0f6a62', bg:'#e8f5f2', bdr:'#a6dace', icon:'fa-check-circle',  msg:'Agent will be set back to <strong>Active</strong>.',                   btnTxt:'Activate',btnBg:'#0f6a62', req:false}
 };
 
 function openAction(id, action){
@@ -677,7 +677,7 @@ function showToast(msg,color){
 
 renderAgents();
 </script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.7">Copyright &copy; 2026 Gold Kidney Health Plan</div>
 </footer>

@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e}
+<style>:root{--sb:#002624}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9998;justify-content:center;align-items:center}
 .modal-overlay.open{display:flex}
 .modal-box{background:#fff;border-radius:12px;width:600px;max-width:92vw;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.25)}
@@ -60,7 +60,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>User Management</h4><ol class="breadcrumb-bar"><li>Create, Deactivate, Reset, Bulk Actions &amp; Auto-Provisioning</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>User Management</h4><ol class="breadcrumb-bar"><li>Create, Deactivate, Reset, Bulk Actions &amp; Auto-Provisioning</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
@@ -69,7 +69,7 @@
     <div class="row-grid" style="margin-bottom:16px">
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active Users</div><div class="stat-val">142</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Deactivated</div><div class="stat-val">18</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Pending Provisioning</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Pending Provisioning</div><div class="stat-val">3</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-key"></i></div><div><div class="stat-label">Password Resets (7d)</div><div class="stat-val">7</div></div></div></div>
     </div>
 
@@ -107,7 +107,7 @@
 <!-- Create User Modal Popup -->
 <div class="modal-overlay" id="create-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal-box">
-    <div class="card-hdr" style="background:#e3f2fd"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#0d47a1"></i>Create New User</h5><button class="btn-ol btn-sm" onclick="document.getElementById('create-modal').classList.remove('open')" style="margin-left:auto"><i class="fas fa-times"></i></button></div>
+    <div class="card-hdr" style="background:#e8f5f2"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#0f6a62"></i>Create New User</h5><button class="btn-ol btn-sm" onclick="document.getElementById('create-modal').classList.remove('open')" style="margin-left:auto"><i class="fas fa-times"></i></button></div>
     <div class="card-body" style="font-size:13px">
       <div class="form-row">
         <div class="fg"><label>First Name <span style="color:#c62828">*</span></label><input type="text" id="cuFirst" class="form-control form-control-sm" placeholder="John"></div>
@@ -123,7 +123,7 @@
         <div class="fg"><label>Provisioning Method</label><select id="cuProvision"><option>Manual — Send welcome email with temp password</option><option>Auto-Provision from onboarding pipeline</option><option>SSO — Link to existing identity provider</option></select></div>
       </div>
       <div style="display:flex;gap:10px;margin-top:12px;justify-content:space-between">
-        <button class="btn-ol btn-sm" onclick="prefillCreateUser()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+        <button class="btn-ol btn-sm" onclick="prefillCreateUser()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
         <div class="dflex g8">
           <button class="btn-ol btn-sm" onclick="document.getElementById('create-modal').classList.remove('open')">Cancel</button>
           <button class="btn-pr btn-sm" onclick="createUser()"><i class="fas fa-user-plus" style="margin-right:4px"></i>Create User</button>
@@ -153,7 +153,7 @@
           <div class="fg"><label>Created</label><input type="text" id="euCreated" class="form-control form-control-sm" readonly style="background:#f5f5f5"></div>
         </div>
         <div style="display:flex;gap:10px;margin-top:8px;justify-content:space-between">
-          <button class="btn-ol btn-sm" onclick="prefillEditUser()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+          <button class="btn-ol btn-sm" onclick="prefillEditUser()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
           <div class="dflex g8">
             <button class="btn-ol btn-sm" onclick="document.getElementById('edit-modal').style.display='none'">Cancel</button>
             <button class="btn-pr btn-sm" onclick="saveEditUser()"><i class="fas fa-save" style="margin-right:4px"></i>Save Changes</button>
@@ -182,7 +182,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

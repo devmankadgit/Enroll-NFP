@@ -56,7 +56,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Commission Book of Business Ledger</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Book of Business</li></ol>
     </div>
@@ -73,7 +73,7 @@
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Eligibility On Hold</div><div class="stat-val">23</div><div class="stat-sub text-muted">Pending Finance review</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">CMS Rejected</div><div class="stat-val">8</div><div class="stat-sub text-muted">Zero-commission records</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Disenrolled</div><div class="stat-val">34</div><div class="stat-sub text-muted">Chargeback review</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending CMS</div><div class="stat-val">12</div><div class="stat-sub text-muted">Awaiting confirmation</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending CMS</div><div class="stat-val">12</div><div class="stat-sub text-muted">Awaiting confirmation</div></div></div></div>
     </div>
 
     <div class="filter-bar mb16">
@@ -125,7 +125,7 @@
     <div class="card">
       <div class="card-hdr">
         <h5><i class="fas fa-book-open" style="margin-right:8px;color:#004d40"></i>BoB Records <span id="recordCount" class="text-muted text-sm" style="font-weight:400"></span></h5>
-        <button id="backToSummaryBtn" class="btn-ol btn-sm" style="display:none;border-color:#0d47a1;color:#0d47a1" onclick="backToSummary()"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Agent Summary</button>
+        <button id="backToSummaryBtn" class="btn-ol btn-sm" style="display:none;border-color:#0f6a62;color:#0f6a62" onclick="backToSummary()"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Agent Summary</button>
         <span class="text-muted text-sm">Click <strong>View Ledger</strong> to see commission entries for a member. Ledger entries are immutable after batch approval; corrections require an Adjustment entry.</span>
         <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','bob-ledger_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
       </div>
@@ -196,7 +196,7 @@
 <div class="modal-overlay" id="adjustmentModal">
   <div class="modal-box" style="max-width:560px">
     <div class="modal-hdr">
-      <h5><i class="fas fa-exchange-alt" style="color:#1565c0;margin-right:8px"></i>Add Adjustment Entry</h5>
+      <h5><i class="fas fa-exchange-alt" style="color:#147966;margin-right:8px"></i>Add Adjustment Entry</h5>
       <button class="modal-close" onclick="closeModal('adjustmentModal')">&times;</button>
     </div>
     <div class="modal-body">
@@ -374,7 +374,7 @@ function renderTable(list){
       <td><div style="font-size:13px;font-weight:600">${r.agentName}</div><div style="font-size:11px;color:#80868b">NPN: ${r.agentNPN}</div></td>
       <td><div style="font-size:13px;font-weight:600">${r.memberName}</div><div style="font-size:11px;color:#80868b">MBI: ${r.memberMBI}</div></td>
       <td><div style="font-size:12.5px">${r.planCode}</div><div style="font-size:11px;color:#80868b">${r.state} — ${r.planYear}</div></td>
-      <td><div style="font-size:12.5px">${r.appDate}</div><div style="font-size:11px;color:#0d47a1">Eligibility ref date</div></td>
+      <td><div style="font-size:12.5px">${r.appDate}</div><div style="font-size:11px;color:#0f6a62">Eligibility ref date</div></td>
       <td>${r.actualEffDate||'<span class="text-muted">Pending</span>'}</td>
       <td>${r.termDate?`<span style="color:#c62828">${r.termDate}</span>`:'<span class="text-muted">—</span>'}</td>
       <td>${bobStatusBadge(r.bobStatus)}</td>
@@ -460,7 +460,7 @@ function openLedger(id){
         <strong>Prorated: \$${e.baseRate.toFixed(2)} &times; ${months}/12 = \$${proAmt.toFixed(2)}</strong>
       </div>`;
     } else if(e.type==='Renewal'){
-      classNote = `<div style="background:#e3f2fd;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#0d47a1">Renewal &mdash; PMPM Rate: \$${e.baseRate.toFixed(2)} &times; 1 month = \$${e.baseRate.toFixed(2)}</div>`;
+      classNote = `<div style="background:#e8f5f2;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#0f6a62">Renewal &mdash; PMPM Rate: \$${e.baseRate.toFixed(2)} &times; 1 month = \$${e.baseRate.toFixed(2)}</div>`;
     } else if(e.type==='HRA'){
       classNote = `<div style="background:#f3e5f5;border-radius:5px;padding:4px 8px;margin-top:4px;font-size:10.5px;color:#7b1fa2">HRA Incentive &mdash; One-time per member per plan year</div>`;
     } else if(e.type==='Healthy Visit'){
@@ -476,11 +476,11 @@ function openLedger(id){
     if(e.overrides.length){
       ovrHtml = e.overrides.map(o=>{
         const rollupFlag = o.rollup===true;
-        return `<div style="font-size:11.5px;color:${rollupFlag?'#0d47a1':'#5f6368'};margin-bottom:2px">
-          ${rollupFlag?'<i class="fas fa-arrow-circle-up" style="color:#0d47a1;margin-right:3px"></i>':''}
+        return `<div style="font-size:11.5px;color:${rollupFlag?'#0f6a62':'#5f6368'};margin-bottom:2px">
+          ${rollupFlag?'<i class="fas fa-arrow-circle-up" style="color:#0f6a62;margin-right:3px"></i>':''}
           <strong>${o.level}:</strong> \$${o.amount.toFixed(2)}
           <span style="color:#9e9e9e;font-size:10.5px">(${o.org})</span>
-          ${rollupFlag?'<span style="font-size:10px;color:#0d47a1;font-weight:700">&nbsp;[Roll-up]</span>':''}
+          ${rollupFlag?'<span style="font-size:10px;color:#0f6a62;font-weight:700">&nbsp;[Roll-up]</span>':''}
         </div>`;
       }).join('');
       if(!isIncentiveType){
@@ -540,7 +540,7 @@ function openLedger(id){
   document.getElementById('ledgerBody').innerHTML = `
     <div class="row-grid" style="margin-bottom:14px;gap:10px">
       <div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:10px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Total Initial</div><div style="font-size:16px;font-weight:700;color:#1b5e20">$${totals.initial.toFixed(2)}</div></div>
-      <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9"><div style="font-size:11px;color:#5f6368">Total Renewal</div><div style="font-size:16px;font-weight:700;color:#0d47a1">$${totals.renewal.toFixed(2)}</div></div>
+      <div class="col-1" style="background:#e8f5f2;border-radius:8px;padding:10px;border:1px solid #a6dace"><div style="font-size:11px;color:#5f6368">Total Renewal</div><div style="font-size:16px;font-weight:700;color:#0f6a62">$${totals.renewal.toFixed(2)}</div></div>
       <div class="col-1" style="background:#f3e5f5;border-radius:8px;padding:10px;border:1px solid #ce93d8"><div style="font-size:11px;color:#5f6368">Incentives (HRA+Visit)</div><div style="font-size:16px;font-weight:700;color:#4a148c">$${totals.incentive.toFixed(2)}</div></div>
       <div class="col-1" style="background:${totals.chargeback<0?'#ffebee':'#f1f3f4'};border-radius:8px;padding:10px;border:1px solid ${totals.chargeback<0?'#ef9a9a':'#e8eaed'}"><div style="font-size:11px;color:#5f6368">Chargebacks</div><div style="font-size:16px;font-weight:700;color:${totals.chargeback<0?'#c62828':'#5f6368'}">$${totals.chargeback.toFixed(2)}</div></div>
       <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:10px;border:1px solid #ffe082"><div style="font-size:11px;color:#5f6368">Net Total</div><div style="font-size:16px;font-weight:700;color:#e65100">$${(totals.initial+totals.renewal+totals.incentive+totals.chargeback).toFixed(2)}</div></div>
@@ -595,7 +595,7 @@ function openBobDetail(id){
         <tr><td>Plan Code / Year</td><td>${r.planCode} — ${r.planYear}</td></tr>
         <tr><td>Carrier</td><td>${r.carrier}</td></tr>
         <tr><td>Enrollment State</td><td>${r.state}</td></tr>
-        <tr><td style="color:#0d47a1;font-weight:600">Application Date (eligibility ref)</td><td><strong style="color:#0d47a1">${r.appDate}</strong> — agent license/appointment validated against this date</td></tr>
+        <tr><td style="color:#0f6a62;font-weight:600">Application Date (eligibility ref)</td><td><strong style="color:#0f6a62">${r.appDate}</strong> — agent license/appointment validated against this date</td></tr>
         <tr><td>Requested Effective Date</td><td>${r.reqEffDate}</td></tr>
         <tr><td>CMS Confirmed Effective Date</td><td>${r.actualEffDate||'<span class="bdg b-amber">Pending CMS</span>'}</td></tr>
         <tr><td>Term Date</td><td>${r.termDate?`<span style="color:#c62828">${r.termDate}</span>`:'<span class="text-muted">—</span>'}</td></tr>
@@ -642,8 +642,8 @@ function showToastGlobal(msg, type='info'){
   if(typeof showToast==='function'){showToast(msg,type==='warn'?'warning':type);return;}
   const t=document.getElementById('nfp-toast-container')||document.body;
   const d=document.createElement('div');
-  const c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};
-  d.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]||'#0d47a1'};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px;margin-bottom:8px">${msg}</div>`;
+  const c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0f6a62','error':'#c62828'};
+  d.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]||'#0f6a62'};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px;margin-bottom:8px">${msg}</div>`;
   t.appendChild(d); setTimeout(()=>d.remove(),3800);
 }
 function nfpExport(label){ showToastGlobal(`${label} export started. File will download shortly.`,'info'); }
@@ -670,12 +670,12 @@ function renderAgentSummary(list){
     return `<tr>
     <td style="font-weight:600">${a.name}</td>
     <td><code>${a.npn}</code></td>
-    <td><a href="bob-members.html?agent=${a.npn}" style="font-weight:700;color:#0d47a1;text-decoration:underline">${totalEnr}</a></td>
+    <td><a href="bob-members.html?agent=${a.npn}" style="font-weight:700;color:#0f6a62;text-decoration:underline">${totalEnr}</a></td>
     <td style="color:#1b5e20;font-weight:600">${a.active}</td>
     <td style="color:${a.onHold?'#e65100':'#5f6368'};font-weight:${a.onHold?'700':'400'}">${a.onHold}</td>
     <td style="font-weight:700">$${a.totalComm.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
     <td style="color:#1b5e20">$${a.paid.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
-    <td style="color:#0d47a1">$${a.pending.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
+    <td style="color:#0f6a62">$${a.pending.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
     <td><button class="btn-ol btn-sm" onclick="window.location.href='bob-members.html?agent=${a.npn}'"><i class="fas fa-users"></i>View Members</button></td>
   </tr>`;}).join('');
 }
@@ -696,7 +696,7 @@ renderAgentSummary(bobRecords);
 })();
 </script>
 <!-- Footer -->
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

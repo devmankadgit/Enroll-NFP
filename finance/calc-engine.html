@@ -10,11 +10,11 @@
 :root{--sb:#2e7d32}
 .engine-status{border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:16px;border:2px solid}
 .engine-idle{background:#e8f5e9;border-color:#a5d6a7}
-.engine-running{background:#e3f2fd;border-color:#90caf9;animation:pulse 1.5s infinite}
+.engine-running{background:#e8f5f2;border-color:#a6dace;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
 .engine-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .engine-idle .engine-icon{background:#1b5e20;color:#fff}
-.engine-running .engine-icon{background:#0d47a1;color:#fff}
+.engine-running .engine-icon{background:#0f6a62;color:#fff}
 </style>
 </head>
 <body>
@@ -51,7 +51,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Commission Calculation Engine</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Calculation Engine</li></ol>
     </div>
@@ -69,7 +69,7 @@
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Next Scheduled Run</div>
-        <div style="font-size:15px;font-weight:700;color:#1a1a2e">08 15,2026</div>
+        <div style="font-size:15px;font-weight:700;color:#002624">08 15,2026</div>
         <div style="font-size:11px;color:#80868b">Cutoff: Aug 14 &bull; Pay date: Aug 17</div>
       </div>
     </div>
@@ -78,7 +78,7 @@
     <div class="row-grid" style="margin-bottom:16px">
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Last Run Processed</div><div class="stat-val">1,247</div><div class="stat-sub text-muted">07 15,2026 &mdash; RUN-2026-018</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Error Queue</div><div class="stat-val">4</div><div class="stat-sub" style="color:#c62828">Require Finance review</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Calculated (Jul)</div><div class="stat-val">$91,204</div><div class="stat-sub text-muted">Pending batch release</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Calculated (Jul)</div><div class="stat-val">$91,204</div><div class="stat-sub text-muted">Pending batch release</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Avg Run Duration</div><div class="stat-val">4.2 min</div><div class="stat-sub text-muted">1,200+ records/run</div></div></div></div>
     </div>
 
@@ -401,7 +401,7 @@ function showRunDetail(id){
     +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Config</div><div style="font-weight:600;font-family:monospace;font-size:12px">'+r.config+'</div></div>'
     +'</div>';
   html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px">'
-    +'<div style="text-align:center;padding:10px;background:#e3f2fd;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#0d47a1">'+r.breakdown.initial+'</div><div style="font-size:10px;color:#5f6368">Initial</div></div>'
+    +'<div style="text-align:center;padding:10px;background:#e8f5f2;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#0f6a62">'+r.breakdown.initial+'</div><div style="font-size:10px;color:#5f6368">Initial</div></div>'
     +'<div style="text-align:center;padding:10px;background:#e8f5e9;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#2e7d32">'+r.breakdown.renewal+'</div><div style="font-size:10px;color:#5f6368">Renewal</div></div>'
     +'<div style="text-align:center;padding:10px;background:#f3e5f5;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#6a1b9a">'+r.breakdown.hra+'</div><div style="font-size:10px;color:#5f6368">HRA</div></div>'
     +'<div style="text-align:center;padding:10px;background:#fff3e0;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#e65100">'+r.breakdown.healthyVisit+'</div><div style="font-size:10px;color:#5f6368">Healthy Visit</div></div>'
@@ -440,14 +440,14 @@ function showModal(id){ document.getElementById(id).style.display='flex'; }
 function closeModal(id){ document.getElementById(id).style.display='none'; }
 function showToastGlobal(msg, type){
   var t=document.getElementById('toast');
-  var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
-  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px">'+msg+'</div>';
+  var c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px">'+msg+'</div>';
   t.style.display='block'; setTimeout(function(){t.style.display='none'},4000);
 }
 function nfpExport(label){ showToastGlobal(label+' export started.','info'); }
 document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; })});
 </script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 08 03,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

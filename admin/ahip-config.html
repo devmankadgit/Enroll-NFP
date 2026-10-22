@@ -7,34 +7,34 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .health-banner{border-radius:10px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px}
 .hb-active{background:#e8f5e9;border:1px solid #a5d6a7}
 .hb-degraded{background:#fff8e1;border:1px solid #ffe082}
 .hb-down{background:#fce4ec;border:1px solid #ef9a9a}
 .status-badge{padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
 .sb-active{background:#e8f5e9;color:#1b5e20}.sb-degraded{background:#fff8e1;color:#e65100}.sb-down{background:#fce4ec;color:#b71c1c}.sb-manual{background:#f3e5f5;color:#4a148c}
-.int-section-hdr{font-size:13px;font-weight:700;color:#1a237e;margin:18px 0 12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;gap:7px}
+.int-section-hdr{font-size:13px;font-weight:700;color:#002624;margin:18px 0 12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;gap:7px}
 .field-group{margin-bottom:14px}
 .field-group label{font-size:12px;font-weight:600;margin-bottom:4px;display:block}
 .field-group .form-control{font-size:13px}
 .secret-wrap{display:flex;gap:6px;align-items:center}
 .show-hide-btn{background:#f1f3f4;border:1px solid #e0e0e0;border-radius:6px;width:32px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#5f6368;flex-shrink:0;transition:background .15s}
-.show-hide-btn:hover{background:#e3f2fd;color:#0d47a1}
+.show-hide-btn:hover{background:#e8f5f2;color:#0f6a62}
 .validate-err{font-size:11px;color:#b71c1c;margin-top:3px;display:none}
 .test-result{border-radius:8px;padding:10px 14px;font-size:12px;margin-top:10px;display:none}
 .tr-success{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
 .tr-fail{background:#fce4ec;border:1px solid #ef9a9a;color:#b71c1c}
-.tr-testing{background:#e3f2fd;border:1px solid #90caf9;color:#0d47a1}
+.tr-testing{background:#e8f5f2;border:1px solid #a6dace;color:#0f6a62}
 .toggle-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .toggle-switch{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0}
 .toggle-switch input{opacity:0;width:0;height:0}
 .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:24px;transition:.3s}
 .toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-.toggle-switch input:checked + .toggle-slider{background:#1a237e}
+.toggle-switch input:checked + .toggle-slider{background:#002624}
 .toggle-switch input:checked + .toggle-slider:before{transform:translateX(20px)}
 .reminder-chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.reminder-chip{background:#e3f2fd;color:#0d47a1;border:1px solid #90caf9;border-radius:16px;padding:4px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
+.reminder-chip{background:#e8f5f2;color:#0f6a62;border:1px solid #a6dace;border-radius:16px;padding:4px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
 .reminder-chip .rm-del{cursor:pointer;color:#9e9e9e;font-size:10px;padding:0 2px}
 .reminder-chip .rm-del:hover{color:#b71c1c}
 .fallback-banner{background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:10px 14px;font-size:12px;color:#4a148c;display:none}
@@ -88,7 +88,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>AHIP Certification Integration Configuration</h4>
       <ol class="breadcrumb-bar"><li>API Credentials &nbsp;|&nbsp; Certificate Validity &nbsp;|&nbsp; Renewal Reminders &nbsp;|&nbsp; Course Delivery &nbsp;|&nbsp; Auto-Fallback</li></ol>
     </div>
@@ -121,7 +121,7 @@
 
     <div class="card">
       <div class="card-hdr">
-        <h5><i class="fas fa-certificate" style="margin-right:6px;color:#1a237e"></i>AHIP API Endpoint &amp; Credentials</h5>
+        <h5><i class="fas fa-certificate" style="margin-right:6px;color:#002624"></i>AHIP API Endpoint &amp; Credentials</h5>
         <span class="status-badge sb-active" id="intStatusBadge"><i class="fas fa-circle" style="font-size:8px"></i>Active</span>
       </div>
       <div style="padding:20px 24px">
@@ -187,7 +187,7 @@
     <!-- Certificate Validity -->
     <div class="card" style="margin-top:16px">
       <div class="card-hdr">
-        <h5><i class="fas fa-calendar-check" style="margin-right:6px;color:#1a237e"></i>Certificate Validity Period</h5>
+        <h5><i class="fas fa-calendar-check" style="margin-right:6px;color:#002624"></i>Certificate Validity Period</h5>
         <span style="font-size:11px;color:#9e9e9e">Applies to plan year 2026</span>
       </div>
       <div style="padding:20px 24px">
@@ -208,7 +208,7 @@
             <input class="form-control" id="ahipValidEnd" type="date" value="2026-12-31" oninput="validateDateRange()">
           </div>
         </div>
-        <div style="background:#e3f2fd;border-radius:8px;padding:10px 14px;font-size:12px;color:#0d47a1;display:flex;align-items:center;gap:8px">
+        <div style="background:#e8f5f2;border-radius:8px;padding:10px 14px;font-size:12px;color:#0f6a62;display:flex;align-items:center;gap:8px">
           <i class="fas fa-info-circle"></i>
           Certificates with issue dates outside this range will be flagged as <strong>Invalid</strong> for the 2026 plan year. AHIP certificates expire on <strong>December 31 each year</strong> per AHIP policy.
         </div>
@@ -218,7 +218,7 @@
     <!-- Renewal Reminder Schedule -->
     <div class="card" style="margin-top:16px">
       <div class="card-hdr">
-        <h5><i class="fas fa-bell" style="margin-right:6px;color:#1a237e"></i>Renewal Reminder Schedule</h5>
+        <h5><i class="fas fa-bell" style="margin-right:6px;color:#002624"></i>Renewal Reminder Schedule</h5>
         <span style="font-size:11px;color:#9e9e9e">Reminders sent to agent + direct upline admin via email, SMS &amp; portal</span>
       </div>
       <div style="padding:20px 24px">
@@ -257,7 +257,7 @@
             <option selected>Annual Recertification Reminder (Default)</option>
             <option>Custom AHIP Reminder Template</option>
           </select>
-          <div style="font-size:10px;color:#9e9e9e;margin-top:2px">Template configured in Notification Templates. <a href="notification-templates.html" style="color:#1a237e">Edit template &rarr;</a></div>
+          <div style="font-size:10px;color:#9e9e9e;margin-top:2px">Template configured in Notification Templates. <a href="notification-templates.html" style="color:#002624">Edit template &rarr;</a></div>
         </div>
       </div>
     </div>
@@ -265,7 +265,7 @@
     <!-- In-Portal Course Delivery -->
     <div class="card" style="margin-top:16px">
       <div class="card-hdr">
-        <h5><i class="fas fa-play-circle" style="margin-right:6px;color:#1a237e"></i>In-Portal AHIP Course Delivery</h5>
+        <h5><i class="fas fa-play-circle" style="margin-right:6px;color:#002624"></i>In-Portal AHIP Course Delivery</h5>
         <span style="font-size:11px;color:#9e9e9e;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:3px 10px"><i class="fas fa-flask" style="margin-right:4px"></i>Optional ? requires AHIP Course API scope</span>
       </div>
       <div style="padding:20px 24px">
@@ -315,7 +315,7 @@
     <!-- Config Audit Log -->
     <div class="card" style="margin-top:16px">
       <div class="card-hdr">
-        <h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Configuration Change Audit Log</h5>
+        <h5><i class="fas fa-history" style="margin-right:6px;color:#002624"></i>Configuration Change Audit Log</h5>
         <span style="font-size:11px;color:#9e9e9e"><i class="fas fa-lock" style="margin-right:3px;font-size:10px"></i>Credential values never logged</span>
         <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','ahip-config_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
       </div>

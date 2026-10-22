@@ -15,8 +15,8 @@
 .adj-row{background:#fff8e1}
 .hold-row{background:#fce4ec;opacity:.85}
 .method-badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
-.ach-ppd{background:#e3f2fd;color:#0d47a1}
-.ach-ccd{background:#e8eaf6;color:#283593}
+.ach-ppd{background:#e8f5f2;color:#0f6a62}
+.ach-ccd{background:#e6efee;color:#04403D}
 .check-badge{background:#fff8e1;color:#e65100}
 </style>
 </head>
@@ -55,7 +55,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Payment Batch Review</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Batch Review</li></ol>
     </div>
@@ -74,7 +74,7 @@
 
     <!-- Batch Summary Stats -->
     <div class="row-grid" style="margin-bottom:16px">
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-list-ol"></i></div><div><div class="stat-label">Total Payable Entries</div><div class="stat-val">7</div><div class="stat-sub text-muted">Excludes 1 On Hold</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-list-ol"></i></div><div><div class="stat-label">Total Payable Entries</div><div class="stat-val">7</div><div class="stat-sub text-muted">Excludes 1 On Hold</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Gross Payable</div><div class="stat-val">$9,121.27</div><div class="stat-sub text-muted">Before chargebacks</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-undo"></i></div><div><div class="stat-label">Chargeback Deductions</div><div class="stat-val" style="color:#c62828">-$463.17</div><div class="stat-sub text-muted">1 entry</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Net Payable</div><div class="stat-val" style="color:#1b5e20">$8,658.10</div><div class="stat-sub text-muted">Ready for payment</div></div></div></div>
@@ -87,14 +87,14 @@
       </div>
       <div class="card-body">
         <div class="row-grid" style="gap:10px">
-          <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9">
+          <div class="col-1" style="background:#e8f5f2;border-radius:8px;padding:12px;border:1px solid #a6dace">
             <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">ACH Individual (PPD)</div>
-            <div style="font-size:20px;font-weight:700;color:#0d47a1">5 entries</div>
+            <div style="font-size:20px;font-weight:700;color:#0f6a62">5 entries</div>
             <div style="font-size:13px;color:#1b5e20;font-weight:600">$5,403.15 net</div>
           </div>
-          <div class="col-1" style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da">
+          <div class="col-1" style="background:#e6efee;border-radius:8px;padding:12px;border:1px solid #a6dace">
             <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">ACH Agency (CCD)</div>
-            <div style="font-size:20px;font-weight:700;color:#283593">1 entry</div>
+            <div style="font-size:20px;font-weight:700;color:#04403D">1 entry</div>
             <div style="font-size:13px;color:#1b5e20;font-weight:600">$2,936.88 net</div>
           </div>
           <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:12px;border:1px solid #ffe082">
@@ -172,7 +172,7 @@
       <div class="al-warn" style="margin-top:8px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>This line item will be excluded from the current batch and placed in the Held Payments queue. Finance can release the hold for a future batch cycle.</span></div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillHold()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" style="color:#147966;border-color:#147966" onclick="prefillHold()"><i class="fas fa-fill-drip"></i> Prefill</button>
       <div class="dflex g8">
         <button class="btn-ol" onclick="closeModal('holdModal')">Cancel</button>
         <button class="btn-danger" onclick="confirmHold()"><i class="fas fa-hand-paper"></i>Place On Hold</button>
@@ -185,7 +185,7 @@
 <div class="modal-overlay" id="adjustModal">
   <div class="modal-box" style="max-width:540px">
     <div class="modal-hdr">
-      <h5><i class="fas fa-edit" style="color:#0d47a1;margin-right:8px"></i>Adjust Line Item Amount</h5>
+      <h5><i class="fas fa-edit" style="color:#0f6a62;margin-right:8px"></i>Adjust Line Item Amount</h5>
       <button class="modal-close" onclick="closeModal('adjustModal')">&times;</button>
     </div>
     <div class="modal-body">
@@ -215,7 +215,7 @@
       </div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillAdjust()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" style="color:#147966;border-color:#147966" onclick="prefillAdjust()"><i class="fas fa-fill-drip"></i> Prefill</button>
       <div class="dflex g8">
         <button class="btn-ol" onclick="closeModal('adjustModal')">Cancel</button>
         <button class="btn-pr" onclick="submitAdjustment()"><i class="fas fa-paper-plane"></i>Submit for Co-Approval</button>
@@ -237,7 +237,7 @@
       <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>By approving, you confirm the adjustment amount and reason are valid. This is logged under your name and timestamp.</span></div>
     </div>
     <div class="modal-foot">
-      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillCoApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" style="color:#147966;border-color:#147966" onclick="prefillCoApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
       <button class="btn-ol" onclick="closeModal('coApproveModal')">Cancel</button>
       <button class="btn-danger" onclick="coApproveReject()"><i class="fas fa-times"></i>Reject Adjustment</button>
       <button class="btn-pr" style="background:#1b5e20" onclick="coApproveApprove()"><i class="fas fa-check"></i>Approve Adjustment</button>
@@ -262,7 +262,7 @@
       <div class="fg"><label>Approval Notes (optional)</label><textarea id="batchApproveNotes" rows="2" placeholder="Final review notes..."></textarea></div>
     </div>
     <div class="modal-foot">
-      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillBatchApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" style="color:#147966;border-color:#147966" onclick="prefillBatchApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
       <button class="btn-ol" onclick="closeModal('batchApproveModal')">Cancel</button>
       <button class="btn-pr" style="background:#1b5e20" onclick="confirmBatchApproval()"><i class="fas fa-check-double"></i>Confirm Batch Approval</button>
     </div>
@@ -471,7 +471,7 @@ function openCoApprove(id){
   const li=lineItems.find(x=>x.id===id);
   document.getElementById('coApproveInfo').innerHTML=`
     <div><strong>${li.agentName}</strong> (NPN: ${li.npn})</div>
-    <div style="margin-top:6px"><strong>Original Net:</strong> $${li.adjustment.originalNet.toFixed(2)} &nbsp;|&nbsp; <strong>Proposed Net:</strong> <span style="color:#0d47a1;font-weight:700">$${li.adjustment.proposedNet.toFixed(2)}</span></div>
+    <div style="margin-top:6px"><strong>Original Net:</strong> $${li.adjustment.originalNet.toFixed(2)} &nbsp;|&nbsp; <strong>Proposed Net:</strong> <span style="color:#0f6a62;font-weight:700">$${li.adjustment.proposedNet.toFixed(2)}</span></div>
     <div style="margin-top:4px"><strong>Submitted by:</strong> ${li.adjustment.submittedBy} on ${li.adjustment.submittedAt}</div>
     <div style="margin-top:4px"><strong>Reason:</strong> ${li.adjustment.reason}</div>`;
   document.getElementById('coApproveNotes').value='';
@@ -531,7 +531,7 @@ function showModal(id){ document.getElementById(id).style.display='flex'; }
 function closeModal(id){ document.getElementById(id).style.display='none'; }
 function showToast(msg, type='info'){
   const t=document.getElementById('toast');
-  const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  const c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};
   t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;
   t.style.display='block'; setTimeout(()=>t.style.display='none',5000);
 }
@@ -540,7 +540,7 @@ function nfpExport(label){ showToast(`${label} export started.`,'info'); }
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
 renderTable(lineItems);
 </script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

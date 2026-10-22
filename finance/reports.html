@@ -54,7 +54,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Commission Reports &amp; Analytics</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Reports &amp; Analytics</li></ol>
     </div>
@@ -112,7 +112,7 @@
         </div>
         <div class="col-1">
           <div class="report-card" onclick="runReport('ach_check_mix')">
-            <h6><i class="fas fa-university" style="color:#0d47a1;margin-right:6px"></i>ACH vs. Check Payment Mix</h6>
+            <h6><i class="fas fa-university" style="color:#0f6a62;margin-right:6px"></i>ACH vs. Check Payment Mix</h6>
             <p>Monthly breakdown of payment count and amount by disbursement method. Trend over the last 12 months.</p>
             <div style="margin-top:8px"><button class="btn-pr btn-sm" onclick="event.stopPropagation();runReport('ach_check_mix')"><i class="fas fa-play"></i>Run</button> <button class="btn-ol btn-sm" onclick="event.stopPropagation();exportReport('ACH vs Check Mix')"><i class="fas fa-download"></i>Export</button></div>
           </div>
@@ -233,7 +233,7 @@
     <div id="tabProducer" class="tab-pane">
       <div class="card mb16">
         <div class="card-hdr">
-          <h5><i class="fas fa-user-tie" style="margin-right:8px;color:#0d47a1"></i>Producer-Facing Commission Report</h5>
+          <h5><i class="fas fa-user-tie" style="margin-right:8px;color:#0f6a62"></i>Producer-Facing Commission Report</h5>
           <div class="dflex g8">
             <button class="btn-ol btn-sm" onclick="exportProducerReport('excel')"><i class="fas fa-file-excel" style="color:#1b5e20"></i>Export Excel</button>
             <button class="btn-ol btn-sm" onclick="exportProducerReport('pdf')"><i class="fas fa-file-pdf" style="color:#c62828"></i>Export PDF</button>
@@ -283,14 +283,14 @@
       </div>
       <div class="card mb16">
         <div class="card-hdr">
-          <h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#0d47a1"></i>YTD Commission Summary by Type (2026)</h5>
+          <h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#0f6a62"></i>YTD Commission Summary by Type (2026)</h5>
           <div class="dflex g8">
             <button class="btn-ol btn-sm" onclick="exportProducerReport('excel')"><i class="fas fa-file-excel" style="color:#1b5e20"></i>Export Excel</button>
             <button class="btn-ol btn-sm" onclick="exportProducerReport('pdf')"><i class="fas fa-file-pdf" style="color:#c62828"></i>Export PDF</button>
           </div>
         </div>
         <div class="row-grid" style="gap:10px;margin-bottom:16px">
-          <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9"><div style="font-size:11px;color:#5f6368">Initial Commission</div><div style="font-size:18px;font-weight:700;color:#0d47a1">$147,460</div></div>
+          <div class="col-1" style="background:#e8f5f2;border-radius:8px;padding:10px;border:1px solid #a6dace"><div style="font-size:11px;color:#5f6368">Initial Commission</div><div style="font-size:18px;font-weight:700;color:#0f6a62">$147,460</div></div>
           <div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:10px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Renewal PMPM</div><div style="font-size:18px;font-weight:700;color:#1b5e20">$47,840</div></div>
           <div class="col-1" style="background:#f3e5f5;border-radius:8px;padding:10px;border:1px solid #ce93d8"><div style="font-size:11px;color:#5f6368">HRA Incentives</div><div style="font-size:18px;font-weight:700;color:#4a148c">$5,750</div></div>
           <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:10px;border:1px solid #ffe082"><div style="font-size:11px;color:#5f6368">Healthy Visit</div><div style="font-size:18px;font-weight:700;color:#e65100">$40,950</div></div>
@@ -367,7 +367,7 @@ function runForecast(){
     <td>${f.delta===null?'—':f.delta>=0?`<span style="color:#1b5e20">+$${f.delta.toFixed(2)}</span>`:`<span style="color:#c62828">$${f.delta.toFixed(2)}</span>`}</td>
   </tr>`).join('');
   if(window.fcChart) window.fcChart.destroy();
-  window.fcChart=new Chart(document.getElementById('forecastChart'),{type:'bar',data:{labels:forecastData.map(f=>f.month),datasets:[{label:'Total Projected',data:forecastData.map(f=>f.total),backgroundColor:'#004d40'},{label:'Renewal PMPM',data:forecastData.map(f=>f.renewal),backgroundColor:'#0d47a1'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
+  window.fcChart=new Chart(document.getElementById('forecastChart'),{type:'bar',data:{labels:forecastData.map(f=>f.month),datasets:[{label:'Total Projected',data:forecastData.map(f=>f.total),backgroundColor:'#004d40'},{label:'Renewal PMPM',data:forecastData.map(f=>f.renewal),backgroundColor:'#0f6a62'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
   showToast('Liability forecast generated based on current active BoB ('+forecastData.length+' months).','success');
 }
 
@@ -427,7 +427,7 @@ function runReport(type){
     </tbody></table>`;
   } else if(type==='ytd_summary'){
     body=`<div style="display:flex;gap:12px;margin-bottom:14px">
-      <div style="background:#e3f2fd;border-radius:8px;padding:10px 14px;flex:1;border:1px solid #90caf9"><div style="font-size:11px;color:#5f6368">Initial Commission</div><div style="font-size:16px;font-weight:700;color:#0d47a1">$147,460</div></div>
+      <div style="background:#e8f5f2;border-radius:8px;padding:10px 14px;flex:1;border:1px solid #a6dace"><div style="font-size:11px;color:#5f6368">Initial Commission</div><div style="font-size:16px;font-weight:700;color:#0f6a62">$147,460</div></div>
       <div style="background:#e8f5e9;border-radius:8px;padding:10px 14px;flex:1;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Renewal PMPM</div><div style="font-size:16px;font-weight:700;color:#1b5e20">$47,840</div></div>
       <div style="background:#f3e5f5;border-radius:8px;padding:10px 14px;flex:1;border:1px solid #ce93d8"><div style="font-size:11px;color:#5f6368">HRA Incentives</div><div style="font-size:16px;font-weight:700;color:#4a148c">$5,750</div></div>
       <div style="background:#fff8e1;border-radius:8px;padding:10px 14px;flex:1;border:1px solid #ffe082"><div style="font-size:11px;color:#5f6368">Healthy Visit</div><div style="font-size:16px;font-weight:700;color:#e65100">$40,950</div></div>
@@ -472,7 +472,7 @@ function runSalesReport(type){
   } else if(type==='paf_rate'){
     document.getElementById('salesTableHead').innerHTML='<tr><th>Agent</th><th>HRA Completions</th><th>HRA Completion %</th><th>Healthy Visit Completions</th><th>HV Completion %</th></tr>';
     document.getElementById('salesTableBody').innerHTML=`<tr><td>James Martinez</td><td>3</td><td><span class="bdg b-green" style="font-size:11px">75%</span></td><td>2</td><td><span class="bdg b-green" style="font-size:11px">50%</span></td></tr><tr><td>Sarah Chen</td><td>5</td><td><span class="bdg b-teal" style="font-size:11px">83%</span></td><td>3</td><td><span class="bdg b-green" style="font-size:11px">50%</span></td></tr><tr><td>Kevin Nguyen</td><td>4</td><td><span class="bdg b-green" style="font-size:11px">67%</span></td><td>1</td><td><span class="bdg b-amber" style="font-size:11px">17%</span></td></tr>`;
-    salesChartInst=new Chart(document.getElementById('salesChart'),{type:'bar',data:{labels:['James Martinez','Sarah Chen','Kevin Nguyen'],datasets:[{label:'HRA %',data:[75,83,67],backgroundColor:'#004d40'},{label:'HV %',data:[50,50,17],backgroundColor:'#0d47a1'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}});
+    salesChartInst=new Chart(document.getElementById('salesChart'),{type:'bar',data:{labels:['James Martinez','Sarah Chen','Kevin Nguyen'],datasets:[{label:'HRA %',data:[75,83,67],backgroundColor:'#004d40'},{label:'HV %',data:[50,50,17],backgroundColor:'#0f6a62'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}}});
   } else if(type==='cost_dist'){
     document.getElementById('salesTableHead').innerHTML='<tr><th>Month</th><th>Total Commission</th><th>Enrollments</th><th>Comm/Enrollment</th><th>vs Prev Month</th></tr>';
     document.getElementById('salesTableBody').innerHTML=['Jan 2026','Feb 2026','Mar 2026','Apr 2026','May 2026'].map((m,i)=>{const comm=[72550,68410,76330,81204,87169][i];const enr=[104,98,112,118,125][i];const cpe=(comm/enr);const prev=i>0?(([72550,68410,76330,81204,87169][i-1])/([104,98,112,118,125][i-1])):null;const delta=prev?cpe-prev:null;return `<tr><td>${m}</td><td>$${comm.toLocaleString()}</td><td>${enr}</td><td style="font-weight:700">$${cpe.toFixed(2)}</td><td>${delta===null?'\u2014':delta>=0?'<span style="color:#c62828">+$'+delta.toFixed(2)+'</span>':'<span style="color:#1b5e20">$'+delta.toFixed(2)+'</span>'}</td></tr>`;}).join('');
@@ -522,8 +522,8 @@ function showFilterBanner(summary){
   if(existing) existing.remove();
   var banner=document.createElement('div');
   banner.id='filterActiveBanner';
-  banner.style.cssText='background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px';
-  banner.innerHTML='<span><i class="fas fa-filter" style="color:#0d47a1;margin-right:8px"></i><strong>Active Filters:</strong> '+summary+'</span><button class="btn-ol btn-sm" onclick="resetFilters()" style="font-size:11px"><i class="fas fa-times"></i>Clear</button>';
+  banner.style.cssText='background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px';
+  banner.innerHTML='<span><i class="fas fa-filter" style="color:#0f6a62;margin-right:8px"></i><strong>Active Filters:</strong> '+summary+'</span><button class="btn-ol btn-sm" onclick="resetFilters()" style="font-size:11px"><i class="fas fa-times"></i>Clear</button>';
   var tabBtns=document.querySelector('.tab-btns');
   tabBtns.parentNode.insertBefore(banner,tabBtns);
 }
@@ -534,18 +534,18 @@ function removeFilterBanner(){
 function exportReport(label){showToast(label+' export started. Max 50,000 rows — if exceeded you will be prompted to narrow filters.','info');}
 
 function switchTab(btn,paneId){btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');btn.closest('.page').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById(paneId).classList.add('active');}
-function showToast(msg,type='info'){const t=document.getElementById('toast');const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;t.style.display='block';setTimeout(()=>t.style.display='none',5000);}
+function showToast(msg,type='info'){const t=document.getElementById('toast');const c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;t.style.display='block';setTimeout(()=>t.style.display='none',5000);}
 
 function exportFinanceReport(fmt){showToast('Finance report exported as '+fmt.toUpperCase()+'. Validation: If result exceeds 50,000 rows you will be prompted to narrow filters.','info');}
 function exportProducerReport(fmt){showToast('Producer report exported as '+fmt.toUpperCase()+'.','info');}
 // YTD Summary Chart
 setTimeout(function(){
   var ctx=document.getElementById('ytdSummaryChart');
-  if(ctx){new Chart(ctx,{type:'bar',data:{labels:['Initial','Renewal','HRA','Healthy Visit','Chargebacks'],datasets:[{label:'YTD Amount',data:[147460,47840,5750,40950,-1650],backgroundColor:['#0d47a1','#1b5e20','#4a148c','#e65100','#c62828']}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}}});}
+  if(ctx){new Chart(ctx,{type:'bar',data:{labels:['Initial','Renewal','HRA','Healthy Visit','Chargebacks'],datasets:[{label:'YTD Amount',data:[147460,47840,5750,40950,-1650],backgroundColor:['#0f6a62','#1b5e20','#4a148c','#e65100','#c62828']}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}}});}
 },500);
 renderVariance(); runForecast();
 </script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

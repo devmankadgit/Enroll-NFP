@@ -16,7 +16,7 @@
 .sla-amber{background:#fff8e1;color:#e65100;font-weight:600;font-size:11.5px;padding:3px 10px;border-radius:10px}
 .sla-red{background:#ffebee;color:#c62828;font-weight:600;font-size:11.5px;padding:3px 10px;border-radius:10px}
 .char-counter{font-size:11.5px;color:#80868b;text-align:right;margin-top:3px}
-.src-sys{background:#e3f2fd;color:#0d47a1;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.src-sys{background:#e8f5f2;color:#0f6a62;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
 .src-agent{background:#f3e5f5;color:#6a1b9a;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
 .held-badge{background:#ffcdd2;color:#b71c1c;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
 .esc-alert{background:#fff3e0;border:1px solid #ff9800;border-radius:8px;padding:8px 14px;font-size:12.5px;color:#e65100;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -57,7 +57,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Commission Dispute Queue</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Dispute Queue</li></ol>
     </div>
@@ -73,7 +73,7 @@
 
     <!-- Stats Row -->
     <div class="row-grid" style="margin-bottom:16px">
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-robot"></i></div><div><div class="stat-label">System Flags</div><div class="stat-val" id="flagCount">3</div><div class="stat-sub text-muted">Auto-detected discrepancies</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-robot"></i></div><div><div class="stat-label">System Flags</div><div class="stat-val" id="flagCount">3</div><div class="stat-sub text-muted">Auto-detected discrepancies</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-inbox"></i></div><div><div class="stat-label">Open Disputes</div><div class="stat-val" id="openCount">3</div><div class="stat-sub text-muted">Pending Finance review</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">SLA At Risk</div><div class="stat-val" id="slaWarnCount">1</div><div class="stat-sub text-muted">Within 5 days of breach</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">SLA Breached</div><div class="stat-val" id="slaBreach">1</div><div class="stat-sub text-muted">Immediate action required</div></div></div></div>
@@ -94,7 +94,7 @@
       <div class="al-info mb16" style="background:#e8f5e9;border:1px solid #a5d6a7"><i class="fas fa-home" style="flex-shrink:0;color:#1b5e20"></i>
         <span><strong>House Account Policy:</strong> Agentless enrollments (no broker NPN) are automatically classified as <strong>house accounts</strong>. No commission ledger is created and no dispute is triggered. Processing is clean with no errors. A dispute is <strong>only</strong> opened if a broker later claims ownership. Agents must contact <a href="https://goldkidney.com/get-contracted/" style="color:#004d40;font-weight:600" target="_blank">Gold Kidney Broker Support</a> for retroactive attribution corrections.</span></div>
       <div class="card">
-        <div class="card-hdr"><h5><i class="fas fa-robot" style="margin-right:8px;color:#0d47a1"></i>Automated Validation Flags &mdash; Payment Held</h5>
+        <div class="card-hdr"><h5><i class="fas fa-robot" style="margin-right:8px;color:#0f6a62"></i>Automated Validation Flags &mdash; Payment Held</h5>
           <div class="dflex g8">
             <select id="fFlagType" onchange="applyFlagFilter()" style="font-size:12.5px;border:1px solid #e0e0e0;border-radius:6px;padding:4px 8px">
               <option value="">All Flag Types</option>
@@ -303,7 +303,7 @@
       </div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillReview()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" style="color:#147966;border-color:#147966" onclick="prefillReview()"><i class="fas fa-fill-drip"></i> Prefill</button>
       <div class="dflex g8">
         <button class="btn-ol" onclick="closeModal('reviewModal')">Cancel</button>
         <button class="btn-pr" id="reviewSubmitBtn" onclick="submitReview()"><i class="fas fa-check"></i>Submit Decision</button>
@@ -403,7 +403,7 @@ function renderFlags(list){
 
 function openFlagDetail(id){
   var f=systemFlags.find(function(x){return x.id===id;});if(!f) return;
-  document.getElementById('detailTitle').innerHTML='<i class="fas fa-robot" style="color:#0d47a1;margin-right:8px"></i>'+f.id+' - System Flag Detail';
+  document.getElementById('detailTitle').innerHTML='<i class="fas fa-robot" style="color:#0f6a62;margin-right:8px"></i>'+f.id+' - System Flag Detail';
   document.getElementById('detailBody').innerHTML=
     '<div class="row-grid" style="gap:8px;margin-bottom:12px">'
     +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Enrollment Ref</div><div style="font-weight:600"><code>'+f.enrollRef+'</code></div></div>'
@@ -411,7 +411,7 @@ function openFlagDetail(id){
     +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Batch</div><div style="font-weight:600"><code>'+f.batch+'</code></div></div>'
     +'</div>'
     +'<div class="row-grid" style="gap:8px;margin-bottom:12px">'
-    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Validation Rule</div><div style="font-weight:600;color:#0d47a1">'+f.rule+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Validation Rule</div><div style="font-weight:600;color:#0f6a62">'+f.rule+'</div></div>'
     +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Payment Held</div><div style="font-size:16px;font-weight:700;color:#c62828">$'+f.paymentAmt.toFixed(2)+'</div></div>'
     +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Days Open</div><div style="font-weight:600">'+f.daysOpen+' '+slaBadge(f.slaStatus)+'</div></div>'
     +'</div>'
@@ -603,7 +603,7 @@ function closeModal(id){ document.getElementById(id).style.display='none'; }
 function showToast(msg, type){
   type=type||'info';
   var t=document.getElementById('toast');
-  var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  var c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};
   t.innerHTML='<div style="background:#fff;border-left:4px solid '+c[type]+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
   t.style.display='block'; setTimeout(function(){t.style.display='none';},5000);
 }
@@ -664,7 +664,7 @@ function clearSdForm(){
 }
 </script>
 <script src="../assets/nfp-actions.js"></script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

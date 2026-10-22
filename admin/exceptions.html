@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e}</style>
+<style>:root{--sb:#002624}</style>
 </head>
 <body>
 <nav class="sidebar">
@@ -54,7 +54,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Overrides & Exceptions Management</h4><ol class="breadcrumb-bar"><li>Override Request Form, Pending Queue &amp; Auto-Expiry</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Overrides & Exceptions Management</h4><ol class="breadcrumb-bar"><li>Override Request Form, Pending Queue &amp; Auto-Expiry</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
@@ -69,7 +69,7 @@
 
     <!-- Override Request Form -->
     <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-plus-circle" style="margin-right:8px;color:#0d47a1"></i>New Override Request</h5></div>
+      <div class="card-hdr"><h5><i class="fas fa-plus-circle" style="margin-right:8px;color:#0f6a62"></i>New Override Request</h5></div>
       <div class="card-body" style="font-size:13px">
         <div id="ovrAlertZone" style="display:none" class="mb-2"></div>
         <div class="form-row">
@@ -98,7 +98,7 @@
           <div class="fg"><label>Supporting Documentation</label><input type="file" accept=".pdf,.jpg,.png,.docx" class="form-control form-control-sm"></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:8px">
-          <button class="btn-ol btn-sm" onclick="prefillOverride()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+          <button class="btn-ol btn-sm" onclick="prefillOverride()" style="color:#147966;border-color:#147966"><i class="fas fa-fill-drip"></i> Prefill Data</button>
           <button class="btn-pr btn-sm" onclick="submitOverride()"><i class="fas fa-paper-plane"></i>Submit Override Request</button>
         </div>
       </div>
@@ -241,7 +241,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -249,8 +249,8 @@
 <script>
 function showAlert(zone, msg, type) {
   if(!zone) return;
-  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
-  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e8f5f2',success:'#e8f5e9'};
+  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#a6dace',success:'#a5d6a7'};
   var icons = {danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
   zone.innerHTML = '<div style="background:'+colors[type]+';border:1px solid '+borders[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+icons[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
   zone.style.display='block';
@@ -315,7 +315,7 @@ function viewDetails(id) {
       docs: 'Q1_Performance_Report.pdf',
       sla: '48 hours (due 05 25,2026)',
       activity: [
-        {time: '05 23,2026 10:14 AM', action: 'Request submitted by Agency Admin', icon: 'fa-paper-plane', color: '#0d47a1'},
+        {time: '05 23,2026 10:14 AM', action: 'Request submitted by Agency Admin', icon: 'fa-paper-plane', color: '#0f6a62'},
         {time: '05 23,2026 10:14 AM', action: 'Auto-assigned to Platform Admin queue', icon: 'fa-robot', color: '#5f6368'},
         {time: '05 23,2026 10:15 AM', action: 'SLA timer started - 48h review window', icon: 'fa-clock', color: '#e65100'}
       ]
@@ -353,7 +353,7 @@ justification: 'Agent has active E&O coverage with new carrier. Certificate tran
       docs: 'Member_Hospitalization_Notice.pdf',
       sla: '48 hours (due 05 23,2026)',
       activity: [
-        {time: '05 21,2026 3:22 PM', action: 'Request submitted by L. Rodriguez (Finance)', icon: 'fa-paper-plane', color: '#0d47a1'},
+        {time: '05 21,2026 3:22 PM', action: 'Request submitted by L. Rodriguez (Finance)', icon: 'fa-paper-plane', color: '#0f6a62'},
         {time: '05 21,2026 3:23 PM', action: 'Hospitalization documentation attached', icon: 'fa-paperclip', color: '#5f6368'},
         {time: '05 21,2026 3:23 PM', action: 'SLA timer started - 48h review window', icon: 'fa-clock', color: '#e65100'}
       ]
@@ -372,7 +372,7 @@ justification: 'Agent has active E&O coverage with new carrier. Certificate tran
       docs: 'None',
       sla: '48 hours (due 05 22,2026)',
       activity: [
-        {time: '05 20,2026 9:40 AM', action: 'Request submitted by Agency Admin', icon: 'fa-paper-plane', color: '#0d47a1'},
+        {time: '05 20,2026 9:40 AM', action: 'Request submitted by Agency Admin', icon: 'fa-paper-plane', color: '#0f6a62'},
         {time: '05 20,2026 9:41 AM', action: 'Auto-assigned to Platform Admin queue', icon: 'fa-robot', color: '#5f6368'},
         {time: '05 20,2026 9:41 AM', action: 'SLA timer started - 48h review window', icon: 'fa-clock', color: '#e65100'}
       ]
@@ -388,13 +388,13 @@ document.getElementById('detailModalTitle').innerHTML = '<i class="fas fa-file-a
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Agency</label><div>'+c.agency+'</div></div>';
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Requested By</label><div>'+c.requestedBy+'</div></div>';
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Submitted</label><div>'+c.date+'</div></div>';
-  html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Override Value</label><div style="font-weight:600;color:#1a237e">'+c.value+'</div></div>';
+  html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Override Value</label><div style="font-weight:600;color:#002624">'+c.value+'</div></div>';
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Expiry</label><div>'+c.expiry+'</div></div>';
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">Priority</label><div>'+(c.priority.includes('Urgent')?'<span style="color:#c62828;font-weight:600"><i class="fas fa-bolt" style="margin-right:4px"></i>'+c.priority+'</span>':c.priority)+'</div></div>';
   html += '<div><label style="font-size:11px;color:#5f6368;font-weight:600">SLA</label><div>'+c.sla+'</div></div>';
   html += '</div>';
   html += '<div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:12px;margin-bottom:16px"><label style="font-size:11px;color:#5f6368;font-weight:600;display:block;margin-bottom:4px">Justification</label><div>'+c.justification+'</div></div>';
-  html += '<div style="margin-bottom:16px"><label style="font-size:11px;color:#5f6368;font-weight:600">Supporting Documentation</label><div>'+(c.docs==='None'?'<span style="color:#9e9e9e">None attached</span>':'<a href="#" style="color:#1565c0" onclick="event.preventDefault();showToast(\'Opening '+c.docs+'...\',\'info\')"><i class="fas fa-paperclip" style="margin-right:4px"></i>'+c.docs+'</a>')+'</div></div>';
+  html += '<div style="margin-bottom:16px"><label style="font-size:11px;color:#5f6368;font-weight:600">Supporting Documentation</label><div>'+(c.docs==='None'?'<span style="color:#9e9e9e">None attached</span>':'<a href="#" style="color:#147966" onclick="event.preventDefault();showToast(\'Opening '+c.docs+'...\',\'info\')"><i class="fas fa-paperclip" style="margin-right:4px"></i>'+c.docs+'</a>')+'</div></div>';
   html += '<div style="border-top:1px solid #e8eaed;padding-top:12px"><label style="font-size:11px;color:#5f6368;font-weight:600;display:block;margin-bottom:8px"><i class="fas fa-history" style="margin-right:4px"></i>Activity Log</label>';
   c.activity.forEach(function(a){
     html += '<div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start"><i class="fas '+a.icon+'" style="color:'+a.color+';margin-top:2px;width:16px;text-align:center"></i><div><div style="font-size:11px;color:#5f6368">'+a.time+'</div><div>'+a.action+'</div></div></div>';

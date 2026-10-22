@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+<style>:root{--sb:#002624} .modal-overlay.open{display:flex}</style>
 </head>
 <body>
 <nav class="sidebar">
@@ -54,7 +54,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Plan Catalog Management</h4></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Plan Catalog Management</h4></div>
     <button class="btn-pr btn-sm" onclick="openPlanModal()"><i class="fas fa-plus"></i>Add Plan</button>
 
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
@@ -105,7 +105,7 @@
             <tr>
               <td class="text-bold">StarPlus ESRD SNP 2026</td>
               <td><code>GK-ESRD-2026</code></td>
-              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-weight:700;color:#002624">2026</td>
               <td style="font-size:11px">2026-01-01</td>
               <td style="font-size:11px">2026-12-31</td>
               <td>HMO</td>
@@ -124,7 +124,7 @@
             <tr>
               <td class="text-bold">KidneyCare CKD SNP 2026</td>
               <td><code>GK-CKD-2026</code></td>
-              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-weight:700;color:#002624">2026</td>
               <td style="font-size:11px">2026-01-01</td>
               <td style="font-size:11px">2026-12-31</td>
               <td>HMO</td>
@@ -138,7 +138,7 @@
             <tr>
               <td class="text-bold">HeartCare Heart &amp; Diabetes SNP 2026</td>
               <td><code>GK-HD-2026</code></td>
-              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-weight:700;color:#002624">2026</td>
               <td style="font-size:11px">2026-01-01</td>
               <td style="font-size:11px">2026-12-31</td>
               <td>HMO</td>
@@ -152,7 +152,7 @@
             <tr>
               <td class="text-bold">BrightChoice HMO 2026</td>
               <td><code>GK-HMO-2026</code></td>
-              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-weight:700;color:#002624">2026</td>
               <td style="font-size:11px">2026-01-01</td>
               <td style="font-size:11px">2026-12-31</td>
               <td>HMO</td>
@@ -166,7 +166,7 @@
             <tr>
               <td class="text-bold">DiabetesCare SNP 2026</td>
               <td><code>GK-DM-2026</code></td>
-              <td style="font-weight:700;color:#1a237e">2026</td>
+              <td style="font-weight:700;color:#002624">2026</td>
               <td style="font-size:11px">2026-01-01</td>
               <td style="font-size:11px">2026-12-31</td>
               <td>HMO</td>
@@ -180,7 +180,7 @@
             <tr style="opacity:.5">
               <td class="text-bold">StarPlus ESRD SNP 2027 <span class="bdg b-amber" style="font-size:10px">DRAFT</span></td>
               <td><code>GK-ESRD-2027</code></td>
-              <td style="font-weight:700;color:#1a237e">2027</td>
+              <td style="font-weight:700;color:#002624">2027</td>
               <td style="font-size:11px">2027-01-01</td>
               <td style="font-size:11px">2027-12-31</td>
               <td>HMO</td>
@@ -229,9 +229,9 @@
 <div id="planModal" class="modal-overlay">
   <div class="modal-box" style="max-width:720px;max-height:90vh;overflow-y:auto">
     <div class="modal-hdr">
-      <h6 id="planModalTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-clipboard-list" style="margin-right:8px"></i>Add Plan</h6>
+      <h6 id="planModalTitle" style="margin:0;font-weight:700;color:#002624"><i class="fas fa-clipboard-list" style="margin-right:8px"></i>Add Plan</h6>
       <div style="display:flex;align-items:center;gap:8px">
-        <button class="btn-ol btn-sm" onclick="prefillPlan()" style="color:#1a237e;font-size:12px"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+        <button class="btn-ol btn-sm" onclick="prefillPlan()" style="color:#002624;font-size:12px"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
         <button onclick="closePlanModal()" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
       </div>
     </div>
@@ -301,8 +301,8 @@ function openPlanModal(planId) {
   editingPlanId = planId || null;
   document.getElementById('planModalErr').style.display = 'none';
   document.getElementById('planModalTitle').innerHTML = planId
-    ? '<i class="fas fa-edit" style="margin-right:8px;color:#1a237e"></i>Edit Plan'
-    : '<i class="fas fa-clipboard-list" style="margin-right:8px;color:#1a237e"></i>Add Plan';
+    ? '<i class="fas fa-edit" style="margin-right:8px;color:#002624"></i>Edit Plan'
+    : '<i class="fas fa-clipboard-list" style="margin-right:8px;color:#002624"></i>Add Plan';
 
   if (planId) {
     var p = plans.find(function(x){return x.id === planId;});
@@ -391,7 +391,7 @@ function savePlan() {
   closePlanModal();
 }
 
-function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0f6a62','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
 
 // Close modal on overlay click
 document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
@@ -420,7 +420,7 @@ function resetPlanFilters() {
 }
 </script>
 <!-- Footer -->
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

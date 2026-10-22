@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .rule-card{border:1px solid #e0e0e0;border-radius:8px;padding:16px;margin-bottom:12px;position:relative}
 .rule-card.active-rule{border-left:4px solid #2e7d32}
 .rule-card.draft-rule{border-left:4px solid #ff9800}
@@ -16,13 +16,13 @@
 .rb-active{background:#e8f5e9;color:#2e7d32}
 .rb-draft{background:#fff3e0;color:#e65100}
 .rb-disabled{background:#f5f5f5;color:#757575}
-.sim-result{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px;font-size:13px;margin-top:12px}
+.sim-result{background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:12px;font-size:13px;margin-top:12px}
 .exec-log{font-size:12px;padding:6px 0;border-bottom:1px solid #f5f5f5;display:flex;gap:8px}
 .exec-log .timestamp{color:#757575;min-width:140px}
 .exec-log .action{font-weight:500}
 .tab-nav{display:flex;border-bottom:2px solid #e0e0e0;margin-bottom:16px}
 .tab-btn{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;color:#757575}
-.tab-btn.active{color:#1a237e;border-bottom-color:#1a237e}
+.tab-btn.active{color:#002624;border-bottom-color:#002624}
 </style>
 </head>
 <body>
@@ -72,7 +72,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Auto-Termination &amp; Compliance Rules</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Compliance Rules Engine</li></ol>
     </div>
@@ -98,7 +98,7 @@
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active Rules</div><div class="stat-val">5</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-flask"></i></div><div><div class="stat-label">Simulation Mode</div><div class="stat-val">1</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-robot"></i></div><div><div class="stat-label">Auto-Actions Today</div><div class="stat-val">3</div></div></div></div>
-        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-bell"></i></div><div><div class="stat-label">Warnings Sent Today</div><div class="stat-val">12</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#147966"><i class="fas fa-bell"></i></div><div><div class="stat-label">Warnings Sent Today</div><div class="stat-val">12</div></div></div></div>
       </div>
 
       <!-- Rule Cards -->
@@ -314,7 +314,7 @@
           <div class="exec-log"><span class="timestamp">May 25, 02:00:22</span><span class="action" style="color:#e65100">HOLD</span><span>Tom Lee (NPN 7789012)  Rule: AHIP Non-Renewal. AHIP expired May 19.</span></div>
           <div class="exec-log"><span class="timestamp">May 25, 02:00:18</span><span class="action" style="color:#616161">INACTIVE</span><span>Lisa Wang (NPN 2234561)  Rule: Inactivity. Last enrollment: 05 24,2025 (366 days ago).</span></div>
           <div class="exec-log"><span class="timestamp">May 25, 02:00:15</span><span class="action" style="color:#616161">INACTIVE</span><span>Robert Jones (NPN 8890123)  Rule: Inactivity. Last enrollment: 05 20,2025 (370 days ago).</span></div>
-          <div class="exec-log"><span class="timestamp">May 25, 02:00:12</span><span class="action" style="color:#1565c0">WARNING</span><span>14 agents — Rule: Various. Reminder emails dispatched (30-day, 14-day, 7-day notices).</span></div>
+          <div class="exec-log"><span class="timestamp">May 25, 02:00:12</span><span class="action" style="color:#147966">WARNING</span><span>14 agents — Rule: Various. Reminder emails dispatched (30-day, 14-day, 7-day notices).</span></div>
           <div class="exec-log"><span class="timestamp">May 25, 02:00:08</span><span class="action" style="color:#2e7d32">BGC SUBMIT</span><span>6 agents — Rule: BGC Re-Screen. Background check files submitted to IBR via SFTP.</span></div>
           <div class="exec-log"><span class="timestamp">May 25, 02:00:01</span><span class="action" style="color:#757575">EVALUATE</span><span>Engine started. Evaluating 487 active agents against 5 active rules.</span></div>
           <div class="exec-log"><span class="timestamp">May 24, 02:00:45</span><span class="action" style="color:#757575">NO ACTION</span><span>All 5 rules evaluated. No thresholds reached. 10 warning emails sent.</span></div>
@@ -393,7 +393,7 @@
       <div style="background:#f8f9fa;padding:12px;border-radius:6px;font-size:13px">
         <strong>Simulation Results:</strong>
         <div style="margin-top:8px">
-          <div style="padding:4px 0"><i class="fas fa-users" style="color:#1565c0;width:20px"></i> <strong>487</strong> total active agents evaluated</div>
+          <div style="padding:4px 0"><i class="fas fa-users" style="color:#147966;width:20px"></i> <strong>487</strong> total active agents evaluated</div>
           <div style="padding:4px 0"><i class="fas fa-exclamation-circle" style="color:#e65100;width:20px"></i> <strong>11</strong> agents currently match this rule</div>
           <div style="padding:4px 0"><i class="fas fa-hand-paper" style="color:#c62828;width:20px"></i> <strong>3</strong> would receive Compliance Hold action today</div>
           <div style="padding:4px 0"><i class="fas fa-bell" style="color:#f57f17;width:20px"></i> <strong>8</strong> would receive warning reminders</div>
@@ -407,7 +407,7 @@
   </div>
 </div>
 <!-- Footer -->
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>

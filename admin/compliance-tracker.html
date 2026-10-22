@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .risk-safe{background:#e8f5e9;color:#1b5e20;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
 .risk-at{background:#fff8e1;color:#e65100;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
 .risk-breach{background:#fce4ec;color:#c62828;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}
@@ -66,7 +66,7 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>OEC Submission &amp; 7-Day CMS Compliance Tracker</h4><ol class="breadcrumb-bar"><li></li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>OEC Submission &amp; 7-Day CMS Compliance Tracker</h4><ol class="breadcrumb-bar"><li></li></ol></div>
     <input type="text" class="tb-search" placeholder="Search Application ID, Member...">
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
@@ -81,7 +81,7 @@
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Safe (0-4 days)</div><div class="stat-val">32</div><div class="stat-sub">On track for submission</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">At Risk (5-6 days)</div><div class="stat-val">8</div><div class="stat-sub stat-dn">Supervisor alerted</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Breached (7+ days)</div><div class="stat-val">2</div><div class="stat-sub stat-dn">Compliance Manager escalated</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Submitted (ATN Received)</div><div class="stat-val">156</div><div class="stat-sub stat-up">This month</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Submitted (ATN Received)</div><div class="stat-val">156</div><div class="stat-sub stat-up">This month</div></div></div></div>
     </div>
 
     <!-- Filters -->
@@ -249,7 +249,7 @@
       </div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol" id="rsPrefillBtn" onclick="prefillResubmit()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" id="rsPrefillBtn" onclick="prefillResubmit()" style="color:#147966;border-color:#147966"><i class="fas fa-fill-drip"></i> Prefill</button>
       <div>
         <button class="btn-ol" onclick="document.getElementById('resubmitModal').classList.remove('open')">Cancel</button>
         <button id="rsSubmitBtn" class="btn-pr" onclick="confirmResubmit()"><i class="fas fa-paper-plane"></i>Resubmit to CMS</button>
@@ -291,7 +291,7 @@
 
 <div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -328,8 +328,8 @@ function prefillResubmit(){
   document.getElementById('rsNotes').value='Corrected MBI format from legacy format to CMS-compliant 11-character alphanumeric. Verified against member Medicare card. Address updated to match CMS records.';
   document.getElementById('rsPathway').value='direct';
   var err=document.getElementById('rsErr');
-  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing.</div>';
-  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0f6a62"></i><div style="color:#0f6a62">Form prefilled with sample data for testing.</div>';
+  err.style.display='flex';err.style.background='#e8f5f2';err.style.borderColor='#a6dace';
   setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
 }
 
@@ -409,8 +409,8 @@ function resetFilters(){
 
 function showToast(msg,type){
   var t=document.getElementById('toast');
-  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
-  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  var c={'success':'#1b5e20','info':'#0f6a62','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
   t.style.display='block';
   setTimeout(function(){t.style.display='none';},5000);
 }

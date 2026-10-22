@@ -23,13 +23,13 @@
 .filter-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;padding:12px 16px;background:#fff;border-radius:8px;border:1px solid #e0e0e0}
 .filter-bar select,.filter-bar input{font-size:13px;padding:6px 10px;border:1px solid #ccc;border-radius:6px}
 .badge-source{font-size:11px;padding:3px 8px;border-radius:12px;font-weight:600}
-.badge-portal{background:#e3f2fd;color:#1565c0}
+.badge-portal{background:#e8f5f2;color:#147966}
 .badge-sunfire{background:#fff3e0;color:#e65100}
 .badge-connecture{background:#e8f5e9;color:#2e7d32}
 .badge-gohealth{background:#fce4ec;color:#c62828}
 .badge-manual{background:#f3e5f5;color:#6a1b9a}
 .status-badge{font-size:11px;padding:3px 8px;border-radius:12px;font-weight:600}
-.status-received{background:#e3f2fd;color:#1565c0}
+.status-received{background:#e8f5f2;color:#147966}
 .status-processing{background:#fff8e1;color:#f57f17}
 .status-validated{background:#e8f5e9;color:#2e7d32}
 .status-error{background:#ffebee;color:#c62828}
@@ -37,7 +37,7 @@
 .batch-actions{display:flex;gap:10px;margin-bottom:16px}
 .batch-actions button{padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s}
 .btn-validate{background:#2e7d32;color:#fff}.btn-validate:hover{background:#1b5e20}
-.btn-submit-cms{background:#1565c0;color:#fff}.btn-submit-cms:hover{background:#0d47a1}
+.btn-submit-cms{background:#147966;color:#fff}.btn-submit-cms:hover{background:#0f6a62}
 table.intake-table{width:100%;border-collapse:collapse;font-size:13px}
 table.intake-table th{background:#f5f5f5;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid #e0e0e0}
 table.intake-table td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:middle}
@@ -63,7 +63,7 @@ table.intake-table tr:hover{background:#fafafa}
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Multi-Source OEC Intake Hub</h4></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Multi-Source OEC Intake Hub</h4></div>
     <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-sync"></i>Refresh</button>
     
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
@@ -73,7 +73,7 @@ table.intake-table tr:hover{background:#fafafa}
     <!-- Summary Stat Cards -->
     <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px">
       <div class="stat-card">
-        <div class="stat-num" style="color:#1565c0">12</div>
+        <div class="stat-num" style="color:#147966">12</div>
         <div class="stat-label"><i class="fas fa-inbox"></i> Total in Queue</div>
       </div>
       <div class="stat-card">
@@ -278,7 +278,7 @@ table.intake-table tr:hover{background:#fafafa}
       </table>
     </div>
 
-    <footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+    <footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
       <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
       <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
       <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -288,7 +288,7 @@ table.intake-table tr:hover{background:#fafafa}
     <div id="enrollDetailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.45);align-items:center;justify-content:center">
       <div style="background:#fff;border-radius:12px;width:560px;max-width:94vw;max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #eee">
-          <h5 style="margin:0;font-size:16px;font-weight:700"><i class="fas fa-file-alt" style="margin-right:8px;color:#1565c0"></i>Enrollment Detail</h5>
+          <h5 style="margin:0;font-size:16px;font-weight:700"><i class="fas fa-file-alt" style="margin-right:8px;color:#147966"></i>Enrollment Detail</h5>
           <button onclick="document.getElementById('enrollDetailModal').style.display='none'" style="border:none;background:none;font-size:20px;cursor:pointer;color:#666">&times;</button>
         </div>
         <div id="enrollDetailBody" style="padding:20px 24px"></div>
@@ -366,7 +366,7 @@ var ENROLL_DATA=[
 
 function viewEnrollment(idx){
   var d=ENROLL_DATA[idx];
-  var statusColors={Validated:'#2e7d32',Received:'#1565c0',Error:'#c62828',Submitted:'#6a1b9a',Processing:'#f57f17'};
+  var statusColors={Validated:'#2e7d32',Received:'#147966',Error:'#c62828',Submitted:'#6a1b9a',Processing:'#f57f17'};
   var html='<table style="width:100%;font-size:13px;border-collapse:collapse">';
   html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555;width:140px">Member</td><td style="padding:8px 12px">'+d.member+'</td></tr>';
   html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">MBI</td><td style="padding:8px 12px">'+d.mbi+'</td></tr>';
@@ -434,7 +434,7 @@ function renderCommentHistory(refId) {
   comments.forEach(function(c) {
     html += '<div style="padding:8px 0;border-bottom:1px solid #e8eaed;font-size:12px">' +
       '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
-      '<strong style="color:#0d47a1">' + c.user + '</strong>' +
+      '<strong style="color:#0f6a62">' + c.user + '</strong>' +
       '<span style="color:#80868b;font-size:10px">' + c.time + '</span></div>' +
       '<div style="color:#424242">' + c.text + '</div></div>';
   });

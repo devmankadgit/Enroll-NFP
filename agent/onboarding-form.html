@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#0d47a1}
+:root{--sb:#0f6a62}
 /* Override step-bar for 9 steps */
 .step-bar{display:flex;align-items:flex-start;gap:0;margin-bottom:24px;overflow-x:auto;padding-bottom:4px}
 .step-item{display:flex;flex-direction:column;align-items:center;flex:1;min-width:70px;position:relative}
@@ -15,28 +15,28 @@
 .step-item:not(:last-child).done::after{background:#4caf50}
 .step-circle{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;z-index:1;background:#e8eaed;color:#9aa0a6;border:2px solid #e8eaed}
 .step-circle.done{background:#4caf50;color:#fff;border-color:#4caf50}
-.step-circle.active{background:#0d47a1;color:#fff;border-color:#0d47a1}
+.step-circle.active{background:#0f6a62;color:#fff;border-color:#0f6a62}
 .step-label{font-size:10px;margin-top:5px;text-align:center;color:#9aa0a6;line-height:1.3}
-.step-label.active{color:#0d47a1;font-weight:700}
+.step-label.active{color:#0f6a62;font-weight:700}
 .step-label.done{color:#2e7d32}
 .form-sect{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:18px 20px;margin-bottom:16px}
-.form-sect h6{font-weight:700;font-size:12px;color:#0d47a1;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:14px}
+.form-sect h6{font-weight:700;font-size:12px;color:#0f6a62;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:14px}
 .npn-validate{display:flex;gap:8px}
 .npn-status{font-size:12px;padding:6px 10px;border-radius:6px;display:inline-flex;align-items:center;gap:6px}
 .npn-status.ok{background:#e8f5e9;color:#2e7d32}
 .npn-status.checking{background:#fff8e1;color:#f57f17}
 .state-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
 .state-check-item{border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;transition:all .15s}
-.state-check-item:hover{border-color:#0d47a1}
-.state-check-item input[type=checkbox]{accent-color:#0d47a1}
-.state-check-item.selected{border-color:#0d47a1;background:#e8f0fe}
+.state-check-item:hover{border-color:#0f6a62}
+.state-check-item input[type=checkbox]{accent-color:#0f6a62}
+.state-check-item.selected{border-color:#0f6a62;background:#e8f5f2}
 .lob-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .lob-item{border:1px solid #e8eaed;border-radius:8px;padding:12px;cursor:pointer;font-size:12px;transition:all .15s}
-.lob-item.selected{border-color:#0d47a1;background:#e8f0fe}
+.lob-item.selected{border-color:#0f6a62;background:#e8f5f2}
 .lob-item .lob-name{font-weight:700;margin-bottom:3px}
 .lob-item .lob-desc{color:#5f6368}
 .upload-zone{border:2px dashed #dadce0;border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;color:#9aa0a6}
-.upload-zone:hover{border-color:#0d47a1;color:#0d47a1}
+.upload-zone:hover{border-color:#0f6a62;color:#0f6a62}
 .upload-zone.uploaded{border-color:#4caf50;background:#f1f8f1;color:#2e7d32}
 </style>
 </head>
@@ -86,7 +86,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Agent Onboarding Form</h4>
       <ol class="breadcrumb-bar"><li><a href="onboarding.html">Onboarding</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Digital Onboarding Form</li></ol>
     </div>
@@ -141,7 +141,7 @@
     <!-- Step Navigation Buttons (inside page) -->
     <div id="stepNav" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding:10px 14px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
       <button id="btnPrevStep" class="btn-ol btn-sm" onclick="prevStep()" disabled><i class="fas fa-arrow-left" style="margin-right:4px"></i>Previous Step</button>
-      <span id="stepIndicator" style="font-size:12px;font-weight:600;color:#0d47a1">Step 1 of 9 ? Invitation & Registration</span>
+      <span id="stepIndicator" style="font-size:12px;font-weight:600;color:#0f6a62">Step 1 of 9 ? Invitation & Registration</span>
       <button id="btnNextStep" class="btn-pr btn-sm" onclick="nextStep()">Next Step<i class="fas fa-arrow-right" style="margin-left:4px"></i></button>
     </div>
 
@@ -187,7 +187,7 @@
         <div class="fg">
           <label>SMS Opt-In</label>
           <div class="dflex ai-center g8 mt6">
-            <input type="checkbox" id="smsOptin" checked style="accent-color:#0d47a1;width:16px;height:16px">
+            <input type="checkbox" id="smsOptin" checked style="accent-color:#0f6a62;width:16px;height:16px">
             <label for="smsOptin" style="font-size:12px;color:#3c4043;font-weight:400">I consent to receive SMS notifications from Gold Kidney Health Plan regarding onboarding updates, renewals, and compliance reminders. Message &amp; data rates may apply.</label>
           </div>
         </div>
@@ -238,10 +238,10 @@
         </div>
       </div>
       <!-- NIPR Unavailable Fallback -->
-      <div id="npnFallback" style="display:none;margin-top:12px;padding:12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+      <div id="npnFallback" style="display:none;margin-top:12px;padding:12px;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <i class="fas fa-info-circle" style="color:#1565c0;font-size:18px"></i>
-          <strong style="color:#1565c0">NIPR Service Temporarily Unavailable</strong>
+          <i class="fas fa-info-circle" style="color:#147966;font-size:18px"></i>
+          <strong style="color:#147966">NIPR Service Temporarily Unavailable</strong>
         </div>
         <p style="margin:0 0 8px;font-size:13px">We are unable to verify your NPN against NIPR at this time. You may proceed with onboarding. A manual verification will be conducted by our Compliance team within 24 hours.</p>
         <button class="btn-pr btn-sm" onclick="nfpAction('Proceeding without NIPR verification. Manual review will be triggered.','info')"><i class="fas fa-arrow-right"></i> Proceed Without Verification</button>
@@ -272,7 +272,7 @@
 
       <!-- Verification Results -->
       <div id="licenseResults" style="display:none">
-        <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-clipboard-check" style="margin-right:4px;color:#0d47a1"></i>License Verification Results</div>
+        <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-clipboard-check" style="margin-right:4px;color:#0f6a62"></i>License Verification Results</div>
         <table id="licenseResultsTable" style="width:100%;font-size:12px;border-collapse:collapse;border:1px solid #e8eaed;border-radius:8px;overflow:hidden">
           <thead><tr style="background:#f1f3f4"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">State</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">License Type</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Status</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #e8eaed">Details</th><th style="padding:8px 10px;text-align:center;border-bottom:1px solid #e8eaed">Action</th></tr></thead>
           <tbody id="licenseResultsBody"></tbody>
@@ -294,15 +294,15 @@
           <div class="dflex g8" style="flex-wrap:wrap">
             <button class="btn-ol btn-sm" onclick="verifyStateLicenses()"><i class="fas fa-redo" style="margin-right:4px"></i>Re-Verify Selected States</button>
             <button class="btn-ol btn-sm" style="border-color:#e65100;color:#e65100" onclick="document.getElementById('adminOverrideSection').style.display='block';this.style.display='none'"><i class="fas fa-user-shield" style="margin-right:4px"></i>Request Admin Override</button>
-            <button class="btn-ol btn-sm" style="border-color:#0d47a1;color:#0d47a1" onclick="document.getElementById('supportTicketSection').style.display='block'"><i class="fas fa-headset" style="margin-right:4px"></i>Raise Support Ticket</button>
+            <button class="btn-ol btn-sm" style="border-color:#0f6a62;color:#0f6a62" onclick="document.getElementById('supportTicketSection').style.display='block'"><i class="fas fa-headset" style="margin-right:4px"></i>Raise Support Ticket</button>
           </div>
         </div>
 
         <!-- Support Ticket Escalation (PO-08) -->
-        <div id="supportTicketSection" style="display:none;margin-top:12px;padding:14px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+        <div id="supportTicketSection" style="display:none;margin-top:12px;padding:14px;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
-            <i class="fas fa-headset" style="color:#0d47a1;font-size:16px"></i>
-            <strong style="font-size:12px;color:#0d47a1">Escalate to Broker Support</strong>
+            <i class="fas fa-headset" style="color:#0f6a62;font-size:16px"></i>
+            <strong style="font-size:12px;color:#0f6a62">Escalate to Broker Support</strong>
           </div>
           <div class="form-row">
             <div class="fg" style="flex:2">
@@ -329,7 +329,7 @@
             <div style="font-size:12px;color:#2e7d32;font-weight:600"><i class="fas fa-check-circle" style="margin-right:4px"></i>Support Ticket Created</div>
             <div style="font-size:11px;color:#333;margin-top:4px">
               <strong>Ticket ID:</strong> SUP-2026-0891 &nbsp;|&nbsp; <strong>Assigned to:</strong> Broker Support Team<br>
-              <strong>Expected Response:</strong> Within 4 business hours &nbsp;|&nbsp; <strong>Status:</strong> <span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:9px">Open</span><br>
+              <strong>Expected Response:</strong> Within 4 business hours &nbsp;|&nbsp; <strong>Status:</strong> <span class="bdg" style="background:#e8f5f2;color:#0f6a62;font-size:9px">Open</span><br>
               You'll receive email/SMS notifications when the support team responds. You may continue with other verified states in the meantime.
             </div>
           </div>
@@ -338,7 +338,7 @@
         <!-- License Check Attempt History (PO-08) -->
         <div id="attemptHistory" style="display:none;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid #e8eaed;border-radius:6px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <div style="font-size:11px;font-weight:700;color:#333"><i class="fas fa-history" style="margin-right:4px;color:#0d47a1"></i>Verification Attempt History</div>
+            <div style="font-size:11px;font-weight:700;color:#333"><i class="fas fa-history" style="margin-right:4px;color:#0f6a62"></i>Verification Attempt History</div>
             <span style="font-size:10px;color:#9e9e9e">All attempts logged for compliance</span>
           </div>
           <table style="width:100%;font-size:10px;border-collapse:collapse">
@@ -350,7 +350,7 @@
 
       <!-- State Appointment Processing (PO-09) -->
       <div id="appointmentSection" style="display:none;margin-top:16px;padding:14px 16px;background:#fff;border:1px solid #e8eaed;border-radius:10px">
-        <h6 style="font-size:12px;font-weight:700;color:#0d47a1;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:12px"><i class="fas fa-stamp" style="margin-right:6px"></i>State Appointment Processing (DOI)</h6>
+        <h6 style="font-size:12px;font-weight:700;color:#0f6a62;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e8eaed;padding-bottom:8px;margin-bottom:12px"><i class="fas fa-stamp" style="margin-right:6px"></i>State Appointment Processing (DOI)</h6>
         <div class="al-info mb12" style="font-size:11px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Once licensing and background checks are confirmed, state appointment requests are submitted to NIPR for each verified state. Appointment formally authorizes you to sell Medicare Advantage products in that state. <strong>Enrollment is blocked in any state without an active appointment.</strong></span></div>
 
         <table style="width:100%;font-size:12px;border-collapse:collapse;border:1px solid #e8eaed;border-radius:8px;overflow:hidden">
@@ -387,7 +387,7 @@
 
         <!-- Appointment Status Legend -->
         <div style="margin-top:10px;padding:8px 10px;background:#f8f9fa;border-radius:6px;font-size:10px;display:flex;flex-wrap:wrap;gap:12px">
-          <span><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:9px">Submitted</span> Request sent to NIPR</span>
+          <span><span class="bdg" style="background:#e8f5f2;color:#0f6a62;font-size:9px">Submitted</span> Request sent to NIPR</span>
           <span><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:9px">Pending DOI</span> Awaiting DOI response</span>
           <span><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:9px">Active</span> Appointment confirmed</span>
           <span><span class="bdg" style="background:#fff3cd;color:#856404;font-size:9px">Lapsed</span> Expired, renewal needed</span>
@@ -440,7 +440,7 @@
         </div>
         <!-- Override audit trail sample -->
         <div id="overrideAuditTrail" style="display:none;margin-top:12px;padding:10px;background:#fff;border:1px solid #e8eaed;border-radius:6px">
-          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px"><i class="fas fa-file-alt" style="margin-right:4px;color:#0d47a1"></i>Override Audit Trail</div>
+          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px"><i class="fas fa-file-alt" style="margin-right:4px;color:#0f6a62"></i>Override Audit Trail</div>
           <table style="width:100%;font-size:10px;border-collapse:collapse">
             <tr style="background:#f8f9fa"><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>Requested By:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">Alex Rivera (Agent) ? 05 27,2026 11:30 AM</td></tr>
             <tr><td style="padding:4px 6px;border-bottom:1px solid #e8eaed"><strong>State:</strong></td><td style="padding:4px 6px;border-bottom:1px solid #e8eaed">Georgia (GA) ? License Type: Health & Accident</td></tr>
@@ -454,10 +454,10 @@
       </div>
 
       <!-- NIPR Unavailable Fallback -->
-      <div id="niprUnavailable" style="display:none;margin-top:12px;padding:12px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+      <div id="niprUnavailable" style="display:none;margin-top:12px;padding:12px;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-          <i class="fas fa-info-circle" style="color:#1565c0;font-size:16px"></i>
-          <strong style="font-size:12px;color:#1565c0">NIPR Integration Unavailable</strong>
+          <i class="fas fa-info-circle" style="color:#147966;font-size:16px"></i>
+          <strong style="font-size:12px;color:#147966">NIPR Integration Unavailable</strong>
         </div>
         <p style="font-size:12px;margin:0 0 8px;color:#333">The NIPR license verification service is currently unavailable. You may proceed with onboarding ? a manual admin review will be triggered. Alternatively, request an admin override with supporting documentation.</p>
         <div class="dflex g8">
@@ -566,7 +566,7 @@
         <label class="text-sm text-bold">Upload Signed W-9 Form</label>
         <div class="upload-zone mt6" onclick="this.classList.add('uploaded');this.innerHTML='<i class=\'fas fa-check-circle\' style=\'font-size:20px;margin-bottom:6px\'></i><br>W9_AlexRivera_Signed.pdf uploaded'">
           <i class="fas fa-file-alt" style="font-size:24px;margin-bottom:8px;display:block"></i>
-          Drag &amp; drop or click to upload signed W-9 (PDF)<br><span style="font-size:11px;color:#b0b8c1">Max 5MB ? PDF only ? <a href="#" onclick="event.stopPropagation();downloadPDF('W9_Blank_Form.pdf');return false" style="color:#0d47a1">Download blank W-9 form</a></span>
+          Drag &amp; drop or click to upload signed W-9 (PDF)<br><span style="font-size:11px;color:#b0b8c1">Max 5MB ? PDF only ? <a href="#" onclick="event.stopPropagation();downloadPDF('W9_Blank_Form.pdf');return false" style="color:#0f6a62">Download blank W-9 form</a></span>
         </div>
       </div>
     </div>
@@ -578,8 +578,8 @@
         <div class="fg">
           <label>Payment Method <span style="color:#c62828">*</span></label>
           <div class="dflex g12 mt6">
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="ach" checked style="accent-color:#0d47a1" onchange="togglePayMethod()">ACH Direct Deposit</label>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="check" style="accent-color:#0d47a1" onchange="togglePayMethod()">Physical Check</label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="ach" checked style="accent-color:#0f6a62" onchange="togglePayMethod()">ACH Direct Deposit</label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="payMethod" value="check" style="accent-color:#0f6a62" onchange="togglePayMethod()">Physical Check</label>
           </div>
         </div>
       </div>
@@ -633,7 +633,7 @@
 
       <div style="margin-bottom:12px">
         <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer">
-          <input type="checkbox" id="attestChk" style="accent-color:#0d47a1;margin-top:2px;flex-shrink:0">
+          <input type="checkbox" id="attestChk" style="accent-color:#0f6a62;margin-top:2px;flex-shrink:0">
           <span>I certify that all information provided is accurate and complete to the best of my knowledge. I understand that providing false information may result in immediate termination of this application and any resulting contract. I agree to comply with all CMS regulations, carrier policies, and applicable state laws governing the sale of Medicare Advantage products.</span>
         </label>
       </div>
@@ -650,7 +650,7 @@
       <div class="al-success" style="margin-bottom:16px"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>Congratulations!</strong> Your onboarding application has been submitted successfully. A Broker Support representative will review your application within <strong>2 business days</strong>.</span></div>
 
       <div style="background:#f8f9fa;border-radius:10px;padding:18px 20px;margin-bottom:16px">
-        <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;border:none;padding:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Agent Onboarding Status</h6>
+        <h6 style="font-size:13px;font-weight:700;color:#002624;margin-bottom:12px;border:none;padding:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Agent Onboarding Status</h6>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
           <div><span class="text-muted">Agent Name:</span> <strong>Alex Rivera</strong></div>
           <div><span class="text-muted">NPN:</span> <strong>6601234</strong></div>
@@ -668,7 +668,7 @@
       </div>
 
       <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;margin-bottom:16px">
-        <h6 style="font-size:12px;font-weight:700;color:#333;margin-bottom:10px;border:none;padding:0"><i class="fas fa-tasks" style="margin-right:6px;color:#0d47a1"></i>Steps Completed</h6>
+        <h6 style="font-size:12px;font-weight:700;color:#333;margin-bottom:10px;border:none;padding:0"><i class="fas fa-tasks" style="margin-right:6px;color:#0f6a62"></i>Steps Completed</h6>
         <table style="width:100%;font-size:12px;border-collapse:collapse">
           <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 1 ? Invitation & Registration</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
           <tr style="background:#e8f5e9"><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Step 2 ? Personal & Business Info</td><td style="padding:6px 10px;text-align:right;color:#2e7d32;font-weight:600">Complete</td></tr>
@@ -682,7 +682,7 @@
         </table>
       </div>
 
-      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#0d47a1">
+      <div style="background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#0f6a62">
         <i class="fas fa-clock" style="margin-right:6px"></i><strong>What Happens Next:</strong>
         <ul style="margin:6px 0 0 16px;padding:0">
           <li>NIPR license verification will begin automatically for FL</li>
@@ -700,12 +700,12 @@
 
       <!-- Reviewer Workflow: Query / Response Panel -->
       <div style="margin-top:20px;border-top:1px solid #e8eaed;padding-top:16px">
-        <h6 style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:12px;border:none;padding:0"><i class="fas fa-comments" style="margin-right:6px"></i>Reviewer Communication & Compliance Checks</h6>
+        <h6 style="font-size:12px;font-weight:700;color:#002624;margin-bottom:12px;border:none;padding:0"><i class="fas fa-comments" style="margin-right:6px"></i>Reviewer Communication & Compliance Checks</h6>
         <div class="al-info mb12" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Broker Support / Compliance team reviews your application. If queries arise, you'll be notified and can respond here without restarting the form.</span></div>
 
         <!-- Automated Checks Status -->
         <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;margin-bottom:12px">
-          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-robot" style="margin-right:4px;color:#0d47a1"></i>Automated Verification Results</div>
+          <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-robot" style="margin-right:4px;color:#0f6a62"></i>Automated Verification Results</div>
           <table style="width:100%;font-size:11px;border-collapse:collapse">
             <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:4px"></i>NIPR License Lookup (FL)</td><td style="text-align:right;color:#2e7d32;font-weight:600">Verified</td></tr>
             <tr><td style="padding:4px 8px;border-bottom:1px solid #e8eaed"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:4px"></i>AHIP CY2026 Certification</td><td style="text-align:right;color:#2e7d32;font-weight:600">Confirmed (Score 88%)</td></tr>
@@ -738,13 +738,13 @@
               <div style="margin-top:6px"><span class="bdg" style="background:#e8f5e9;color:#2e7d32;font-size:10px"><i class="fas fa-paperclip" style="margin-right:3px"></i>W9_AlexRivera_Signed_v2.pdf attached</span></div>
             </div>
             <!-- Reviewer Follow-up -->
-            <div style="padding:10px;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px">
+            <div style="padding:10px;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px">
               <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:11px;font-weight:700;color:#0d47a1"><i class="fas fa-user-shield" style="margin-right:4px"></i>Maria Chen ? Broker Support</span>
+                <span style="font-size:11px;font-weight:700;color:#0f6a62"><i class="fas fa-user-shield" style="margin-right:4px"></i>Maria Chen ? Broker Support</span>
                 <span style="font-size:10px;color:#9e9e9e">05 27,2026 11:05 AM</span>
               </div>
               <div style="font-size:12px;color:#333">Signed W-9 received and verified. All documentation is now in order. Your application will proceed to final compliance review. No further action needed from you at this time.</div>
-              <div style="margin-top:6px"><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:10px"><i class="fas fa-check" style="margin-right:3px"></i>Query Resolved</span></div>
+              <div style="margin-top:6px"><span class="bdg" style="background:#e8f5f2;color:#0f6a62;font-size:10px"><i class="fas fa-check" style="margin-right:3px"></i>Query Resolved</span></div>
             </div>
           </div>
         </div>
@@ -774,12 +774,12 @@
 
       <!-- New Selling State: Post-Activation Partial Re-Certification -->
       <div style="margin-top:20px;border-top:1px solid #e8eaed;padding-top:16px">
-        <h6 style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:10px;border:none;padding:0"><i class="fas fa-map-marked-alt" style="margin-right:6px"></i>Add New Selling State (Post-Activation)</h6>
+        <h6 style="font-size:12px;font-weight:700;color:#002624;margin-bottom:10px;border:none;padding:0"><i class="fas fa-map-marked-alt" style="margin-right:6px"></i>Add New Selling State (Post-Activation)</h6>
         <div class="al-info mb12" style="font-size:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Already-active agents can add new states. Only state-specific steps are required ? national checks (AHIP, background, W-9, payment) are <strong>NOT</strong> repeated.</span></div>
         <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:12px">
           <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:8px">Targeted Re-Certification Workflow for New State:</div>
           <table style="width:100%;font-size:11px;border-collapse:collapse">
-            <tr style="background:#e3f2fd"><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Step</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Requirement</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600;text-align:center">Status</td></tr>
+            <tr style="background:#e8f5f2"><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Step</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600">Requirement</td><td style="padding:6px 10px;border-bottom:1px solid #e8eaed;font-weight:600;text-align:center">Status</td></tr>
             <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">1. NIPR License Verification</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">Valid state license for new state (GA)</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:10px">Pending</span></td></tr>
             <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">2. DOI State Appointment</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">Department of Insurance appointment for GA</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Started</span></td></tr>
             <tr><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">3. Product Training</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4">GA-specific plan training (if new plan types)</td><td style="padding:6px 10px;border-bottom:1px solid #f1f3f4;text-align:center"><span class="bdg" style="background:#f1f3f4;color:#757575;font-size:10px">Not Started</span></td></tr>
@@ -798,7 +798,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Footer -->
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -1235,9 +1235,9 @@ function bypassNIPR() {
   document.getElementById('niprUnavailable').style.display = 'none';
   var summary = document.getElementById('licenseSummary');
   summary.style.display = 'block';
-  summary.style.background = '#e3f2fd';
-  summary.style.border = '1px solid #90caf9';
-  summary.innerHTML = '<i class="fas fa-info-circle" style="color:#0d47a1;margin-right:6px"></i>NIPR unavailable ? proceeding with manual review. Admin will verify licenses within 24 hours. You may continue to the next step.';
+  summary.style.background = '#e8f5f2';
+  summary.style.border = '1px solid #a6dace';
+  summary.innerHTML = '<i class="fas fa-info-circle" style="color:#0f6a62;margin-right:6px"></i>NIPR unavailable ? proceeding with manual review. Admin will verify licenses within 24 hours. You may continue to the next step.';
   document.getElementById('licenseResults').style.display = 'block';
   showToast('Proceeding without NIPR. Manual admin review will be triggered.', 'info');
 }

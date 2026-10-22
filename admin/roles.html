@@ -6,13 +6,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e}.perm-grid{display:grid;grid-template-columns:200px repeat(8,1fr);gap:0;font-size:11px;border:1px solid #e8eaed;border-radius:6px;overflow:hidden}.perm-grid .ph{background:#f0f2f5;padding:8px;font-weight:700;text-align:center;border-bottom:1px solid #e8eaed}.perm-grid .pc{padding:6px 8px;border-bottom:1px solid #f1f3f4;text-align:center}.perm-grid .pl{padding:6px 8px;border-bottom:1px solid #f1f3f4;font-weight:500}
+<style>:root{--sb:#002624}.perm-grid{display:grid;grid-template-columns:200px repeat(8,1fr);gap:0;font-size:11px;border:1px solid #e8eaed;border-radius:6px;overflow:hidden}.perm-grid .ph{background:#f0f2f5;padding:8px;font-weight:700;text-align:center;border-bottom:1px solid #e8eaed}.perm-grid .pc{padding:6px 8px;border-bottom:1px solid #f1f3f4;text-align:center}.perm-grid .pl{padding:6px 8px;border-bottom:1px solid #f1f3f4;font-weight:500}
 /* Role Config Modal */
 .perm-matrix{border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;font-size:11px}
 .perm-matrix th{background:#f0f2f5;padding:7px 6px;text-align:center;font-weight:700;font-size:10px;white-space:nowrap}
 .perm-matrix td{padding:6px 8px;border-bottom:1px solid #f5f5f5;text-align:center}
 .perm-matrix tr td:first-child{text-align:left;font-weight:500;font-size:12px;padding-left:12px}
-.perm-matrix input[type=checkbox]{accent-color:#1a237e}
+.perm-matrix input[type=checkbox]{accent-color:#002624}
 </style>
 </head>
 <body>
@@ -61,14 +61,14 @@
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Roles & Permissions (RBAC)</h4><ol class="breadcrumb-bar"><li>RBAC Configuration, Sandbox Mode &amp; Role Simulation</li></ol></div>
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Roles & Permissions (RBAC)</h4><ol class="breadcrumb-bar"><li>RBAC Configuration, Sandbox Mode &amp; Role Simulation</li></ol></div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
 
   <div class="page">
     <!-- Roles Overview -->
     <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-user-shield" style="margin-right:8px;color:#1a237e"></i>System Roles (8)</h5><button class="btn-pr btn-sm" onclick="openRoleModal(null)"><i class="fas fa-plus"></i>Create Custom Role</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','roles_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-hdr"><h5><i class="fas fa-user-shield" style="margin-right:8px;color:#002624"></i>System Roles (8)</h5><button class="btn-pr btn-sm" onclick="openRoleModal(null)"><i class="fas fa-plus"></i>Create Custom Role</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','roles_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
       <div class="table-wrap">
         <table class="tbl" id="tblExport1">
           <thead><tr><th>Role</th><th>Description</th><th>Users</th><th>Type</th><th>Actions</th></tr></thead>
@@ -78,9 +78,9 @@
             <tr><td><span class="bdg b-teal"><i class="fas fa-clipboard-check"></i> Enrollment Ops</span></td><td>Internal staff processing enrollments, compliance tracking.</td><td>8</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Enrollment Ops')">View Permissions</button></td></tr>
             <tr><td><span class="bdg b-amber"><i class="fas fa-chart-line"></i> Finance</span></td><td>Commission batches, HRA review, payment processing.</td><td>5</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Finance')">View Permissions</button></td></tr>
             <tr><td><span class="bdg b-red"><i class="fas fa-shield-alt"></i> Compliance</span></td><td>Audit trail access, compliance holds, export.</td><td>4</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Compliance')">View Permissions</button></td></tr>
-            <tr><td><span class="bdg" style="background:#0277bd;color:#fff"><i class="fas fa-headset"></i> Broker Support</span></td><td>Onboarding queue management, NIPR alerts, override approvals, agent activation.</td><td>6</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Broker Support')">View Permissions</button></td></tr>
+            <tr><td><span class="bdg" style="background:#147966;color:#fff"><i class="fas fa-headset"></i> Broker Support</span></td><td>Onboarding queue management, NIPR alerts, override approvals, agent activation.</td><td>6</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Broker Support')">View Permissions</button></td></tr>
             <tr><td><span class="bdg" style="background:#4a148c;color:#fff"><i class="fas fa-chart-line"></i> Sales Leadership</span></td><td>Enrollment analytics, campaign ROI, top producer rankings, cost-of-distribution reporting.</td><td>4</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Sales Leadership')">View Permissions</button></td></tr>
-            <tr><td><span class="bdg" style="background:#1a237e;color:#fff"><i class="fas fa-crown"></i> Platform Admin</span></td><td>Full system access. User management, configuration, all modules.</td><td>3</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Platform Admin')">View Permissions</button></td></tr>
+            <tr><td><span class="bdg" style="background:#002624;color:#fff"><i class="fas fa-crown"></i> Platform Admin</span></td><td>Full system access. User management, configuration, all modules.</td><td>3</td><td>System</td><td><button class="btn-ol btn-sm" onclick="openRoleModal('Platform Admin')">View Permissions</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -111,7 +111,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -121,7 +121,7 @@
 <div class="modal-overlay" id="roleConfigModal" style="display:none">
   <div class="modal-box" style="max-width:900px;max-height:92vh;overflow-y:auto">
     <div class="modal-hdr">
-      <h5><i class="fas fa-user-shield" style="margin-right:8px;color:#1a237e"></i><span id="roleModalTitle">Role Configuration</span></h5>
+      <h5><i class="fas fa-user-shield" style="margin-right:8px;color:#002624"></i><span id="roleModalTitle">Role Configuration</span></h5>
       <button class="modal-close" onclick="closeRoleModal()">&times;</button>
     </div>
     <div class="modal-body" style="padding:20px">
@@ -131,7 +131,7 @@
         <div class="fg"><label>Status</label>
           <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
             <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
-              <input type="checkbox" id="rmStatusToggle" style="accent-color:#1a237e" onchange="document.getElementById('rmStatusLabel').textContent=this.checked?'Active':'Inactive'">
+              <input type="checkbox" id="rmStatusToggle" style="accent-color:#002624" onchange="document.getElementById('rmStatusLabel').textContent=this.checked?'Active':'Inactive'">
               <span id="rmStatusLabel" style="font-weight:700">Inactive</span>
             </label>
           </div>
@@ -149,7 +149,7 @@
       </div>
 
       <!-- Permission Matrix -->
-      <h6 style="font-weight:700;color:#1a237e;margin:16px 0 8px"><i class="fas fa-th" style="margin-right:6px"></i>Permission Matrix</h6>
+      <h6 style="font-weight:700;color:#002624;margin:16px 0 8px"><i class="fas fa-th" style="margin-right:6px"></i>Permission Matrix</h6>
       <div id="permErrBar" class="al-danger" style="display:none;margin-bottom:8px"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span id="permErrText"></span></div>
       <div style="overflow-x:auto">
         <table class="perm-matrix tbl" id="permMatrixTable">
@@ -157,10 +157,10 @@
           <tbody id="permMatrixBody"></tbody>
         </table>
       </div>
-      <div style="font-size:11px;color:#5f6368;margin-top:6px"><i class="fas fa-info-circle" style="margin-right:4px;color:#1a237e"></i>Note: Delete permission requires View and Edit to also be granted.</div>
+      <div style="font-size:11px;color:#5f6368;margin-top:6px"><i class="fas fa-info-circle" style="margin-right:4px;color:#002624"></i>Note: Delete permission requires View and Edit to also be granted.</div>
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <button class="btn-ol" onclick="prefillCustomRole()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+      <button class="btn-ol" onclick="prefillCustomRole()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
       <div style="display:flex;gap:8px">
         <button class="btn-ol" onclick="closeRoleModal()">Cancel</button>
         <button class="btn-ol" onclick="cloneCurrentRole()"><i class="fas fa-copy"></i> Clone Role</button>

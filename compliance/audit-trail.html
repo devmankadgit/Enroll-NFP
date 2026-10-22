@@ -10,25 +10,25 @@
 :root{--sb:#004d40}
 /* Audit Log */
 .al-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
-.al-ob{background:#e3f2fd;color:#0d47a1}
+.al-ob{background:#e8f5f2;color:#0f6a62}
 .al-vc{background:#e8f5e9;color:#1b5e20}
 .al-hc{background:#f3e5f5;color:#4a148c}
 .al-lc{background:#fff8e1;color:#e65100}
 .al-os{background:#fce4ec;color:#b71c1c}
 .al-role-co{background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
-.al-role-sa{background:#e3f2fd;color:#0d47a1;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
+.al-role-sa{background:#e8f5f2;color:#0f6a62;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
 .al-role-ag{background:#f3e5f5;color:#4a148c;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700}
-.json-panel{background:#1a1a2e;color:#e0e0e0;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:11px;margin-top:4px;overflow-x:auto;max-height:120px;overflow-y:auto}
-.json-panel .key{color:#64b5f6}
+.json-panel{background:#002624;color:#e0e0e0;border-radius:6px;padding:10px 14px;font-family:monospace;font-size:11px;margin-top:4px;overflow-x:auto;max-height:120px;overflow-y:auto}
+.json-panel .key{color:#28ac95}
 .json-panel .val{color:#a5d6a7}
 .json-panel .masked{color:#ef9a9a}
-.expand-btn{background:none;border:none;color:#1a237e;font-size:11px;cursor:pointer;padding:0;text-decoration:underline}
+.expand-btn{background:none;border:none;color:#002624;font-size:11px;cursor:pointer;padding:0;text-decoration:underline}
 .export-btn{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:none;transition:all .15s}
 .export-btn:disabled{opacity:.4;cursor:not-allowed}
 .export-csv{background:#1b5e20;color:#fff}
 .export-csv:hover:not(:disabled){background:#2e7d32}
-.export-xlsx{background:#0d47a1;color:#fff}
-.export-xlsx:hover:not(:disabled){background:#1565c0}
+.export-xlsx{background:#0f6a62;color:#fff}
+.export-xlsx:hover:not(:disabled){background:#147966}
 /* Analytics */
 .kpi-tile{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
 .kpi-tile .val{font-size:28px;font-weight:800;color:#004d40;line-height:1}
@@ -253,7 +253,7 @@
       <!-- 4 KPI Tiles -->
       <div class="row-grid" style="margin-bottom:16px" id="anKpiRow">
         <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#e8f5e9;color:#1b5e20;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-desktop"></i></div><div><div class="val" id="kpiTotalSessions">1,284</div><div class="lbl" style="font-size:11px;color:#5f6368">Total Sessions</div><div class="delta delta-up" id="deltaSession">+8% vs prior period</div></div></div></div>
-        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#e3f2fd;color:#0d47a1;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-users"></i></div><div><div class="val" id="kpiUniqueUsers">247</div><div class="lbl" style="font-size:11px;color:#5f6368">Unique Active Users</div><div class="delta delta-up" id="deltaUsers">+12% vs prior period</div></div></div></div>
+        <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#e8f5f2;color:#0f6a62;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-users"></i></div><div><div class="val" id="kpiUniqueUsers">247</div><div class="lbl" style="font-size:11px;color:#5f6368">Unique Active Users</div><div class="delta delta-up" id="deltaUsers">+12% vs prior period</div></div></div></div>
         <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#f3e5f5;color:#4a148c;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-clock"></i></div><div><div class="val" id="kpiAvgSession">14m 32s</div><div class="lbl" style="font-size:11px;color:#5f6368">Avg Session Duration</div><div class="delta delta-dn" id="deltaSession2">-3% vs prior period</div></div></div></div>
         <div class="col-1"><div class="kpi-tile"><div class="kpi-icon" style="background:#fff8e1;color:#e65100;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0"><i class="fas fa-star"></i></div><div><div class="val" id="kpiTopModule" style="font-size:18px">Onboarding</div><div class="lbl" style="font-size:11px;color:#5f6368">Most Accessed Module</div><div class="delta delta-up">38% of all visits</div></div></div></div>
       </div>
@@ -269,7 +269,7 @@
 
         <!-- Chart 2: Avg Time Spent Per Screen -->
         <div class="bar-chart-wrap">
-          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:12px"><i class="fas fa-hourglass-half" style="margin-right:6px;color:#0d47a1"></i>Avg Time Spent Per Screen <span style="font-size:10px;color:#9e9e9e;font-weight:400">(seconds)</span></div>
+          <div style="font-weight:700;font-size:13px;color:#333;margin-bottom:12px"><i class="fas fa-hourglass-half" style="margin-right:6px;color:#0f6a62"></i>Avg Time Spent Per Screen <span style="font-size:10px;color:#9e9e9e;font-weight:400">(seconds)</span></div>
           <div id="chart2"></div>
         </div>
 
@@ -501,7 +501,7 @@ function renderAuditTable(){
     var roleClass = roleMap[r.role]||'al-role-ag';
     var oldValHtml = r.oldVal ? '<button class="expand-btn" onclick="toggleJson(\'old-'+realIdx+'\')" title="View old value"><i class="fas fa-eye"></i></button><div id="old-'+realIdx+'" style="display:none">'+renderMaskedJson(r.oldVal)+'</div>' : '<span style="color:#bdbdbd">&mdash;</span>';
     var newValHtml = r.newVal ? '<button class="expand-btn" onclick="toggleJson(\'new-'+realIdx+'\')" title="View new value"><i class="fas fa-eye"></i></button><div id="new-'+realIdx+'" style="display:none">'+renderMaskedJson(r.newVal)+'</div>' : '<span style="color:#bdbdbd">&mdash;</span>';
-    var sessionCell = isAdmin ? '<td><a href="#" onclick="openAnalyticsForSession(\''+r.sessionId+'\')" style="font-family:monospace;font-size:10px;color:#0d47a1">'+r.sessionId+'</a></td>' : '';
+    var sessionCell = isAdmin ? '<td><a href="#" onclick="openAnalyticsForSession(\''+r.sessionId+'\')" style="font-family:monospace;font-size:10px;color:#0f6a62">'+r.sessionId+'</a></td>' : '';
 
     return '<tr style="cursor:pointer" onclick="openAuditDetail('+realIdx+')">'
       +'<td style="font-size:11px;font-family:monospace;white-space:nowrap">'+r.ts+'</td>'
@@ -587,14 +587,14 @@ function openAuditDetail(idx){
 
   // Related records
   if(r.relatedType && r.relatedId){
-    html += '<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:10px 12px;font-size:12px;margin-bottom:14px">'
-      +'<div style="font-weight:700;color:#0d47a1;margin-bottom:4px"><i class="fas fa-link" style="margin-right:5px"></i>Related Records</div>'
+    html += '<div style="background:#e8f5f2;border:1px solid #a6dace;border-radius:6px;padding:10px 12px;font-size:12px;margin-bottom:14px">'
+      +'<div style="font-weight:700;color:#0f6a62;margin-bottom:4px"><i class="fas fa-link" style="margin-right:5px"></i>Related Records</div>'
       +'<div>Type: <strong>'+r.relatedType+'</strong> &nbsp;|&nbsp; ID: <span style="font-family:monospace">'+r.relatedId+'</span></div></div>';
   }
 
   // Raw payload - Admin only
   if(isAdmin){
-    html += '<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:4px"><i class="fas fa-code" style="margin-right:5px"></i>Raw Event Payload <span style="font-weight:400;color:#9e9e9e">(Admin only)</span></div>'
+    html += '<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:#0f6a62;margin-bottom:4px"><i class="fas fa-code" style="margin-right:5px"></i>Raw Event Payload <span style="font-weight:400;color:#9e9e9e">(Admin only)</span></div>'
       +'<div class="json-panel">{"audit_id":"'+r.id+'","action_type":"'+r.action+'","entity_type":"'+r.entity+'","entity_id":"'+r.entityId+'","user_id":"'+r.user+'","session_id":"'+r.sessionId+'","timestamp_utc":"'+r.ts+'","old_value":'+( r.oldVal||'null')+',"new_value":'+(r.newVal||'null')+'}</div></div>';
   }
 
@@ -700,7 +700,7 @@ function renderChart2(){
   var maxV = Math.max.apply(null, data.map(function(d){return d.avgTime;}))||1;
   document.getElementById('chart2').innerHTML = data.map(function(d){
     var pct = Math.round(d.avgTime/maxV*100);
-    return '<div class="bar-row"><span class="bar-label" onclick="openDrillDown(\''+d.name+'\')" title="'+d.name+'">'+d.name+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:#0d47a1"></div></div><span class="bar-count">'+d.avgTime+'s</span></div>';
+    return '<div class="bar-row"><span class="bar-label" onclick="openDrillDown(\''+d.name+'\')" title="'+d.name+'">'+d.name+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:#0f6a62"></div></div><span class="bar-count">'+d.avgTime+'s</span></div>';
   }).join('');
 }
 
@@ -765,7 +765,7 @@ function renderLineChart(svgId, datasets, colors, labels){
 function renderChart4(){
   renderLineChart('chart4',
     [AN_LINE_DATA.admin, AN_LINE_DATA.agent, AN_LINE_DATA.compliance],
-    ['#0d47a1','#4a148c','#1b5e20'],
+    ['#0f6a62','#4a148c','#1b5e20'],
     ['Admin','Agent','Compliance']
   );
 }

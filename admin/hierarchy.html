@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 /* Tree */
 .tree-container{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px;overflow-y:auto;max-height:calc(100vh - 290px);position:sticky;top:0}
 .tree-node{position:relative;padding-left:24px;margin-bottom:0}
@@ -16,31 +16,31 @@
 .tree-node:last-child::before{bottom:18px}
 .tree-root{padding-left:0}.tree-root::before,.tree-root::after{display:none}
 .node-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .15s}
-.node-item:hover{background:#e8eaf6;border-color:#3949ab}
-.node-item.active-node{background:#e8eaf6;border-color:#1a237e;box-shadow:0 1px 4px rgba(26,35,126,.12)}
+.node-item:hover{background:#e6efee;border-color:#085a55}
+.node-item.active-node{background:#e6efee;border-color:#002624;box-shadow:0 1px 4px rgba(0,38,36,.12)}
 .node-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
 .node-name{font-weight:600;font-size:12px;color:#202124;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}
 .node-meta{font-size:11px;color:#5f6368}
 .node-badge{padding:3px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-left:auto}
 .node-toggle{width:18px;height:18px;border-radius:50%;border:1px solid #dadce0;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;flex-shrink:0}
 .hier-detail{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:18px}
-.hier-detail h6{font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px}
+.hier-detail h6{font-size:13px;font-weight:700;color:#002624;margin-bottom:12px}
 .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f3f4;font-size:12px}
 .detail-row:last-child{border-bottom:none}
 .detail-label{color:#5f6368}
 .detail-value{font-weight:600;color:#202124}
 .transfer-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;font-size:11px;border:1px solid #dadce0;background:#fff;cursor:pointer;transition:all .15s}
-.transfer-btn:hover{background:#e8eaf6;border-color:#1a237e;color:#1a237e}
+.transfer-btn:hover{background:#e6efee;border-color:#002624;color:#002624}
 .action-bar{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 /* Tabs */
 .hier-tabs{display:flex;gap:4px;margin-bottom:16px;background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:8px}
 .htab{padding:8px 18px;border:none;background:transparent;border-radius:7px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
-.htab:hover{background:#f1f3f4;color:#1a237e}
-.htab.active{background:#e8eaf6;color:#1a237e}
-.htab .tab-badge{background:#1a237e;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
+.htab:hover{background:#f1f3f4;color:#002624}
+.htab.active{background:#e6efee;color:#002624}
+.htab .tab-badge{background:#002624;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
 /* Level table row actions */
 .tbl-action-btn{padding:4px 10px;border:1px solid #dadce0;border-radius:5px;background:#fff;font-size:11px;cursor:pointer;transition:all .15s}
-.tbl-action-btn:hover{background:#e8eaf6;border-color:#1a237e;color:#1a237e}
+.tbl-action-btn:hover{background:#e6efee;border-color:#002624;color:#002624}
 .tbl-action-btn.danger:hover{background:#fce4ec;border-color:#c62828;color:#c62828}
 /* Plan year status badges */
 .py-active{background:#e8f5e9;color:#1b5e20;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600}
@@ -48,17 +48,17 @@
 .py-archived{background:#f1f3f4;color:#5f6368;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600}
 /* History timeline */
 .snap-row{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:12px 16px;margin-bottom:8px;font-size:12px}
-.snap-ver{width:28px;height:28px;border-radius:50%;background:#1a237e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.snap-ver{width:28px;height:28px;border-radius:50%;background:#002624;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 /* Toggle switch */
 .tog-wrap{display:flex;align-items:center;gap:8px}
 .tog{position:relative;width:40px;height:22px}
 .tog input{opacity:0;width:0;height:0}
 .tog-slider{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:22px;transition:.3s}
 .tog-slider::before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-.tog input:checked + .tog-slider{background:#1a237e}
+.tog input:checked + .tog-slider{background:#002624}
 .tog input:checked + .tog-slider::before{transform:translateX(18px)}
 /* View-as-of-date */
-.time-travel-bar{background:linear-gradient(135deg,#e8eaf6,#fff);border:1px solid #c5cae9;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.time-travel-bar{background:linear-gradient(135deg,#e6efee,#fff);border:1px solid #cdebe4;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -110,14 +110,14 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Producer Hierarchy</h4>
       <ol class="breadcrumb-bar"><li>Home</li><li style="margin:0 6px;opacity:.5">/</li><li>Hierarchy</li></ol>
     </div>
     <input type="text" id="topbarSearch" class="tb-search" placeholder="Search agent, NPN, agency..." oninput="liveSearch(this.value)">
     <button class="btn-pr btn-sm" onclick="document.getElementById('addNodeModal').style.display='flex'"><i class="fas fa-plus" style="margin-right:4px"></i>Add Agent</button>
     <button class="btn-pr btn-sm" onclick="document.getElementById('addAgencyModal').style.display='flex'" style="background:#00695c"><i class="fas fa-building" style="margin-right:4px"></i>Add Agency</button>
-    <button class="btn-pr btn-sm" style="background:#fff;color:#1a237e;border:1px solid #1a237e" onclick="document.getElementById('transferModal').style.display='flex'"><i class="fas fa-exchange-alt" style="margin-right:4px"></i>Transfer</button>
+    <button class="btn-pr btn-sm" style="background:#fff;color:#002624;border:1px solid #002624" onclick="document.getElementById('transferModal').style.display='flex'"><i class="fas fa-exchange-alt" style="margin-right:4px"></i>Transfer</button>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
   </div>
   <div class="page">
@@ -137,8 +137,8 @@
     <div id="tabOrgTree">
       <!-- Plan Year Selector -->
       <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <i class="fas fa-calendar-alt" style="color:#1a237e"></i>
-        <span style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px">Plan Year</span>
+        <i class="fas fa-calendar-alt" style="color:#002624"></i>
+        <span style="font-size:12px;font-weight:700;color:#002624;text-transform:uppercase;letter-spacing:.5px">Plan Year</span>
         <select id="planYearSelect" onchange="planYearChanged(this.value)" style="padding:6px 12px;border:1px solid #dadce0;border-radius:6px;font-size:13px;font-weight:600">
           <option value="2026" selected>2026 &mdash; Active</option>
           <option value="2027">2027 &mdash; Draft</option>
@@ -151,7 +151,7 @@
 
       <!-- Filters -->
       <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span style="font-size:12px;font-weight:700;color:#333"><i class="fas fa-filter" style="margin-right:6px;color:#1a237e"></i>Filter Tree:</span>
+        <span style="font-size:12px;font-weight:700;color:#333"><i class="fas fa-filter" style="margin-right:6px;color:#002624"></i>Filter Tree:</span>
         <select id="filterStatus" onchange="filterTree()" style="padding:6px 12px;border:1px solid #dadce0;border-radius:6px;font-size:12px">
           <option value="">All Status</option><option value="Active">Active</option><option value="Pending">Pending</option><option value="Suspended">Suspended</option><option value="Terminated">Terminated</option>
         </select>
@@ -171,8 +171,8 @@
         <button class="btn-ol btn-sm" onclick="exportHierarchyToExcel()" style="font-size:11px"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export Hierarchy with Upline</button>
       </div>
       <div class="row-grid" style="margin-bottom:16px">
-        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-building"></i></div><div><div class="stat-label">Total Entities</div><div class="stat-val">48</div><div class="stat-sub">SFMOs: 2 &bull; NMOs: 3 &bull; FMOs: 5 &bull; SGAs: 4 &bull; MGAs: 8 &bull; GAs: 12 &bull; Direct: 14</div></div></div></div>
-        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-user-tie"></i></div><div><div class="stat-label">Active Agents</div><div class="stat-val">143</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e6efee;color:#002624"><i class="fas fa-building"></i></div><div><div class="stat-label">Total Entities</div><div class="stat-val">48</div><div class="stat-sub">SFMOs: 2 &bull; NMOs: 3 &bull; FMOs: 5 &bull; SGAs: 4 &bull; MGAs: 8 &bull; GAs: 12 &bull; Direct: 14</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e6efee;color:#002624"><i class="fas fa-user-tie"></i></div><div><div class="stat-label">Active Agents</div><div class="stat-val">143</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exchange-alt"></i></div><div><div class="stat-label">Pending Transfers</div><div class="stat-val">3</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-layer-group"></i></div><div><div class="stat-label">Hierarchy Depth</div><div class="stat-val">7 Levels</div><div class="stat-sub">SFMO &rarr; NFMO &rarr; FMO &rarr; SGA &rarr; MGA &rarr; GA &rarr; Agent</div></div></div></div>
       </div>
@@ -181,7 +181,7 @@
         <!-- TREE -->
         <div class="tree-container" id="orgTreeContainer">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-            <h6 style="margin:0;font-size:13px;font-weight:700;color:#1a237e"><i class="fas fa-sitemap" style="margin-right:6px"></i>Organization Tree &mdash; Plan Year <span id="treeYearLabel">2026</span></h6>
+            <h6 style="margin:0;font-size:13px;font-weight:700;color:#002624"><i class="fas fa-sitemap" style="margin-right:6px"></i>Organization Tree &mdash; Plan Year <span id="treeYearLabel">2026</span></h6>
             <div style="display:flex;gap:6px">
               <button class="transfer-btn" onclick="expandAll()" style="font-size:10px"><i class="fas fa-expand-arrows-alt"></i> Expand All</button>
               <button class="transfer-btn" onclick="collapseAll()" style="font-size:10px"><i class="fas fa-compress-arrows-alt"></i> Collapse</button>
@@ -191,9 +191,9 @@
           <div class="tree-node tree-root">
             <div class="node-item active-node" onclick="showOrgDetail('root')">
               <div class="node-toggle" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></div>
-              <div class="node-icon" style="background:#1a237e;color:#fff"><i class="fas fa-building"></i></div>
+              <div class="node-icon" style="background:#002624;color:#fff"><i class="fas fa-building"></i></div>
               <div><div class="node-name">Gold Kidney Health Plan</div><div class="node-meta">Carrier &mdash; Root Level &mdash; Plan Year 2026</div></div>
-              <span class="node-badge" style="background:#e8eaf6;color:#1a237e">143 agents</span>
+              <span class="node-badge" style="background:#e6efee;color:#002624">143 agents</span>
             </div>
             <!-- SFMO 1 -->
             <div class="tree-node" data-level="SFMO" data-status="Active" data-state="FL TX">
@@ -215,7 +215,7 @@
                 <div class="tree-node" data-level="FMO" data-status="Active" data-state="FL TX">
                   <div class="node-item" onclick="showOrgDetail('fmo1')">
                     <div class="node-toggle" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></div>
-                    <div class="node-icon" style="background:#283593;color:#fff"><i class="fas fa-landmark"></i></div>
+                    <div class="node-icon" style="background:#04403D;color:#fff"><i class="fas fa-landmark"></i></div>
                     <div><div class="node-name">Medicare Solutions Group (FMO)</div><div class="node-meta">Field Marketing Org &mdash; Contract #FMO-2024-012 &mdash; Override: 8%</div></div>
                     <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                   </div>
@@ -223,7 +223,7 @@
                   <div class="tree-node" data-level="SGA" data-status="Active" data-state="FL">
                     <div class="node-item" onclick="showOrgDetail('sga1')">
                       <div class="node-toggle" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></div>
-                      <div class="node-icon" style="background:#1565c0;color:#fff"><i class="fas fa-user-friends"></i></div>
+                      <div class="node-icon" style="background:#147966;color:#fff"><i class="fas fa-user-friends"></i></div>
                       <div><div class="node-name">Florida Health Distributors (SGA)</div><div class="node-meta">Sub-General Agency &mdash; ID: SGA-3021 &mdash; Override: 5%</div></div>
                       <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                     </div>
@@ -231,7 +231,7 @@
                     <div class="tree-node" data-level="MGA" data-status="Active" data-state="FL">
                       <div class="node-item" onclick="showOrgDetail('mga1')">
                         <div class="node-toggle" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></div>
-                        <div class="node-icon" style="background:#0277bd;color:#fff"><i class="fas fa-users-cog"></i></div>
+                        <div class="node-icon" style="background:#147966;color:#fff"><i class="fas fa-users-cog"></i></div>
                         <div><div class="node-name">Premier Medicare Advisors (MGA)</div><div class="node-meta">Managing General Agency &mdash; ID: MGA-1042 &mdash; Override: 4%</div></div>
                         <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                       </div>
@@ -245,21 +245,21 @@
                         </div>
                         <div class="tree-node" data-level="Agent" data-status="Active" data-state="FL TX AZ">
                           <div class="node-item" onclick="showOrgDetail('agent1')">
-                            <div class="node-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-tie"></i></div>
+                            <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
                             <div><div class="node-name">James Martinez</div><div class="node-meta">Agent &mdash; NPN 8823441 &mdash; FL, TX, AZ &mdash; 24 members &mdash; <strong>$8,750 YTD</strong></div></div>
                             <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                           </div>
                         </div>
                         <div class="tree-node" data-level="Agent" data-status="Active" data-state="CA NV">
                           <div class="node-item" onclick="showOrgDetail('agent2')">
-                            <div class="node-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-tie"></i></div>
+                            <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
                             <div><div class="node-name">Sarah Williams</div><div class="node-meta">Agent &mdash; NPN 7745123 &mdash; CA, NV &mdash; 18 members &mdash; <strong>$6,230 YTD</strong></div></div>
                             <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                           </div>
                         </div>
                         <div class="tree-node" data-level="Agent" data-status="Probation" data-state="TX">
                           <div class="node-item" onclick="showOrgDetail('agent3')">
-                            <div class="node-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-tie"></i></div>
+                            <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
                             <div><div class="node-name">Michael Torres</div><div class="node-meta">Broker &mdash; NPN 6612890 &mdash; TX, OK &mdash; 11 members &mdash; <strong>$3,410 YTD</strong></div></div>
                             <span class="node-badge" style="background:#fff8e1;color:#e65100">Probation</span>
                           </div>
@@ -296,7 +296,7 @@
           <div class="hier-detail">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
               <h6 style="margin:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Node Details</h6>
-              <span style="font-size:10px;background:#e8eaf6;color:#1a237e;padding:3px 8px;border-radius:10px;font-weight:700"><i class="fas fa-shield-alt" style="font-size:9px;margin-right:3px"></i>System Admin View</span>
+              <span style="font-size:10px;background:#e6efee;color:#002624;padding:3px 8px;border-radius:10px;font-weight:700"><i class="fas fa-shield-alt" style="font-size:9px;margin-right:3px"></i>System Admin View</span>
             </div>
             <!-- Status Legend -->
             <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px;background:#f8f9fa;border-radius:6px;margin-bottom:10px;border:1px solid #e8eaed">
@@ -310,7 +310,7 @@
               <span style="background:#f1f3f4;color:#5f6368;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600" title="Terminated — Contract ended; no longer active in the hierarchy"><i class="fas fa-circle" style="font-size:7px;margin-right:3px"></i>Terminated</span>
             </div>
             <div id="orgDetailContent">
-              <div style="text-align:center;padding:28px 16px;color:#9e9e9e;font-size:13px"><i class="fas fa-mouse-pointer" style="font-size:24px;margin-bottom:10px;display:block;color:#c5cae9"></i>Click any node in the tree to view profile, status, key dates, and quick actions.</div>
+              <div style="text-align:center;padding:28px 16px;color:#9e9e9e;font-size:13px"><i class="fas fa-mouse-pointer" style="font-size:24px;margin-bottom:10px;display:block;color:#cdebe4"></i>Click any node in the tree to view profile, status, key dates, and quick actions.</div>
             </div>
           </div>
           <!-- BoB Roll-up Summary -->
@@ -349,7 +349,7 @@
     <div id="tabLevels" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div>
-          <h5 style="margin:0;color:#1a237e">Hierarchy Level Definitions</h5>
+          <h5 style="margin:0;color:#002624">Hierarchy Level Definitions</h5>
           <div style="font-size:12px;color:#5f6368;margin-top:3px">Define and manage the 7 standard hierarchy levels with parent-child pairing rules and BoB access scope</div>
         </div>
         <button class="btn-pr btn-sm" onclick="openLevelModal()"><i class="fas fa-plus" style="margin-right:4px"></i>Create Level</button>
@@ -357,9 +357,9 @@
 
       <!-- Level stats -->
       <div class="row-grid" style="margin-bottom:16px">
-        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-layer-group"></i></div><div><div class="stat-label">Total Levels</div><div class="stat-val">7</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e6efee;color:#002624"><i class="fas fa-layer-group"></i></div><div><div class="stat-label">Total Levels</div><div class="stat-val">7</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active Levels</div><div class="stat-val">7</div></div></div></div>
-        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-project-diagram"></i></div><div><div class="stat-label">With Downline</div><div class="stat-val">6</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-project-diagram"></i></div><div><div class="stat-label">With Downline</div><div class="stat-val">6</div></div></div></div>
         <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#880e4f"><i class="fas fa-user-tie"></i></div><div><div class="stat-label">Leaf Nodes</div><div class="stat-val">1</div><div class="stat-sub">Agent/Broker only</div></div></div></div>
       </div>
 
@@ -367,7 +367,7 @@
       <div id="levelAlertZone" style="display:none" class="mb16"></div>
 
       <div class="card">
-        <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#1a237e"></i>Hierarchy Levels <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Rank 1 = Top &bull; Rank 7 = Bottom &bull; Agent/Broker is always a leaf node (no downline)</small></h5></div>
+        <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#002624"></i>Hierarchy Levels <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Rank 1 = Top &bull; Rank 7 = Bottom &bull; Agent/Broker is always a leaf node (no downline)</small></h5></div>
         <div class="table-wrap">
           <table class="tbl" id="levelsTable">
             <thead>
@@ -382,7 +382,7 @@
 
       <!-- Parent-child pairing matrix -->
       <div class="card" style="margin-top:16px">
-        <div class="card-hdr"><h5><i class="fas fa-project-diagram" style="margin-right:8px;color:#1a237e"></i>Parent-Child Pairing Rules Matrix</h5></div>
+        <div class="card-hdr"><h5><i class="fas fa-project-diagram" style="margin-right:8px;color:#002624"></i>Parent-Child Pairing Rules Matrix</h5></div>
         <div class="card-body" style="font-size:12px">
           <div class="al-info" style="margin-bottom:12px"><i class="fas fa-info-circle"></i>&nbsp; This matrix shows which levels can be a parent of which child levels. A checkmark means the parent-child combination is valid. The system enforces this at org creation and transfer time.</div>
           <div style="overflow-x:auto">
@@ -417,7 +417,7 @@
     <div id="tabPlanYear" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div>
-          <h5 style="margin:0;color:#1a237e">Plan Year Configurations</h5>
+          <h5 style="margin:0;color:#002624">Plan Year Configurations</h5>
           <div style="font-size:12px;color:#5f6368;margin-top:3px">Manage hierarchy configurations per plan year. Only one config can be Active. Archived configs are read-only.</div>
         </div>
         <button class="btn-pr btn-sm" onclick="openNewPlanYearModal()"><i class="fas fa-plus" style="margin-right:4px"></i>New Plan Year Config</button>
@@ -428,7 +428,7 @@
       <div id="planYearAlertZone" style="display:none" class="mb16"></div>
 
       <div class="card">
-        <div class="card-hdr"><h5><i class="fas fa-calendar-alt" style="margin-right:8px;color:#1a237e"></i>Plan Year Configuration List</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','hierarchy_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-hdr"><h5><i class="fas fa-calendar-alt" style="margin-right:8px;color:#002624"></i>Plan Year Configuration List</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','hierarchy_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
         <div class="table-wrap">
           <table class="tbl" id="tblExport1">
             <thead>
@@ -493,7 +493,7 @@
     <div id="tabHistory" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div>
-          <h5 style="margin:0;color:#1a237e">Hierarchy Change History &amp; Snapshots</h5>
+          <h5 style="margin:0;color:#002624">Hierarchy Change History &amp; Snapshots</h5>
           <div style="font-size:12px;color:#5f6368;margin-top:3px">Immutable versioned snapshots of all hierarchy changes. Retained for 7 years minimum. No user can edit or delete snapshot records.</div>
         </div>
         <button class="btn-ol btn-sm" onclick="exportHistory()"><i class="fas fa-download" style="margin-right:4px"></i>Export History</button>
@@ -501,9 +501,9 @@
 
       <!-- Time Travel Bar -->
       <div class="time-travel-bar">
-        <i class="fas fa-clock" style="color:#1a237e;font-size:16px"></i>
-        <span style="font-weight:700;color:#1a237e;font-size:13px">View Hierarchy As Of Date:</span>
-        <input type="date" id="timeTravelDate" max="2026-05-27" style="padding:6px 12px;border:1px solid #c5cae9;border-radius:6px;font-size:13px">
+        <i class="fas fa-clock" style="color:#002624;font-size:16px"></i>
+        <span style="font-weight:700;color:#002624;font-size:13px">View Hierarchy As Of Date:</span>
+        <input type="date" id="timeTravelDate" max="2026-05-27" style="padding:6px 12px;border:1px solid #cdebe4;border-radius:6px;font-size:13px">
         <button class="btn-pr btn-sm" onclick="viewAsOfDate()"><i class="fas fa-search" style="margin-right:4px"></i>View Snapshot</button>
         <button class="btn-ol btn-sm" onclick="resetTimeTravelView()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset to Current</button>
         <span style="font-size:11px;color:#5f6368;margin-left:auto"><i class="fas fa-lock" style="margin-right:4px"></i>Snapshot records are immutable &mdash; 7-year retention policy enforced</span>
@@ -513,7 +513,7 @@
 
       <!-- History filters -->
       <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span style="font-size:12px;font-weight:700;color:#333"><i class="fas fa-filter" style="margin-right:6px;color:#1a237e"></i>Filter History:</span>
+        <span style="font-size:12px;font-weight:700;color:#333"><i class="fas fa-filter" style="margin-right:6px;color:#002624"></i>Filter History:</span>
         <select id="histFilterOrg" style="padding:6px 12px;border:1px solid #dadce0;border-radius:6px;font-size:12px">
           <option value="">All Organizations</option>
           <option value="James Martinez">James Martinez</option>
@@ -541,7 +541,7 @@
 
       <div class="card">
         <div class="card-hdr">
-          <h5><i class="fas fa-history" style="margin-right:8px;color:#1a237e"></i>Version History Log <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Showing all changes &mdash; immutable records</small></h5>
+          <h5><i class="fas fa-history" style="margin-right:8px;color:#002624"></i>Version History Log <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Showing all changes &mdash; immutable records</small></h5>
         </div>
         <div class="table-wrap">
           <table class="tbl" id="tblExport2">
@@ -647,7 +647,7 @@
     <div id="tabTransferQueue" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div>
-          <h5 style="margin:0;color:#1a237e">Hierarchy Transfer ? Dual-Approval Queue</h5>
+          <h5 style="margin:0;color:#002624">Hierarchy Transfer ? Dual-Approval Queue</h5>
           <div style="font-size:12px;color:#5f6368;margin-top:3px">Pending transfers require a <strong>second admin</strong> to approve. The initiating admin cannot approve their own transfer request.</div>
         </div>
       </div>
@@ -667,7 +667,7 @@
                 <td><code style="font-size:11px">TFR-2026-0041</code></td>
                 <td><strong>James Martinez</strong><div style="font-size:10px;color:#5f6368">NPN 8823441 &bull; Agent</div></td>
                 <td style="font-size:12px">HealthFirst Distribution (GA-2201)</td>
-                <td style="font-size:12px;color:#1a237e;font-weight:600">Coastal Medicare Partners (GA-2288)</td>
+                <td style="font-size:12px;color:#002624;font-weight:600">Coastal Medicare Partners (GA-2288)</td>
                 <td style="font-size:12px">06 01,2026</td>
                 <td style="font-size:12px">Sandra Adams<div style="font-size:10px;color:#9e9e9e">2026-05-15 14:32</div></td>
                 <td style="font-size:11px;max-width:140px">Agent requested transfer ? performance improvement plan</td>
@@ -683,7 +683,7 @@
                 <td><code style="font-size:11px">TFR-2026-0042</code></td>
                 <td><strong>Sarah Williams</strong><div style="font-size:10px;color:#5f6368">NPN 7745123 &bull; Agent</div></td>
                 <td style="font-size:12px">HealthFirst Distribution (GA-2201)</td>
-                <td style="font-size:12px;color:#1a237e;font-weight:600">Coastal Medicare Partners (GA-2288)</td>
+                <td style="font-size:12px;color:#002624;font-weight:600">Coastal Medicare Partners (GA-2288)</td>
                 <td style="font-size:12px">07 01,2026</td>
                 <td style="font-size:12px">Michael Chen<div style="font-size:10px;color:#9e9e9e">2026-05-20 10:15</div></td>
                 <td style="font-size:11px;max-width:140px">Regional rebalancing per Q3 plan</td>
@@ -705,18 +705,18 @@
     <div id="tabBulkImport" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div>
-          <h5 style="margin:0;color:#1a237e">Bulk Agent Import</h5>
+          <h5 style="margin:0;color:#002624">Bulk Agent Import</h5>
           <div style="font-size:12px;color:#5f6368;margin-top:3px">Upload a CSV file to bulk-import agents into the hierarchy. Errors will be reported per row.</div>
         </div>
         <a href="#" onclick="downloadCsvTemplate();return false;" class="btn-ol btn-sm"><i class="fas fa-download" style="margin-right:4px"></i>Download CSV Template</a>
       </div>
       <div class="al-info mb16" style="font-size:12px"><i class="fas fa-info-circle"></i>&nbsp; <strong>Required CSV columns:</strong> FirstName, LastName, NPN, Email, LicensedStates, ParentOrgID, PlanYear. Maximum 500 rows per upload. Duplicate NPN and circular hierarchy checks run automatically per row.</div>
       <div class="card" style="margin-bottom:16px">
-        <div class="card-hdr"><h5><i class="fas fa-upload" style="margin-right:6px;color:#1a237e"></i>Upload Agent CSV</h5></div>
+        <div class="card-hdr"><h5><i class="fas fa-upload" style="margin-right:6px;color:#002624"></i>Upload Agent CSV</h5></div>
         <div style="padding:20px 24px">
-          <div style="border:2px dashed #c5cae9;border-radius:10px;padding:32px;text-align:center;background:#f8f9ff;cursor:pointer" onclick="document.getElementById('bulkCsvInput').click()" id="dropZone">
-            <i class="fas fa-file-csv" style="font-size:32px;color:#1a237e;margin-bottom:10px;display:block"></i>
-            <div style="font-size:14px;font-weight:600;color:#1a237e;margin-bottom:4px">Click to upload or drag &amp; drop a CSV file</div>
+          <div style="border:2px dashed #cdebe4;border-radius:10px;padding:32px;text-align:center;background:#f6fbfa;cursor:pointer" onclick="document.getElementById('bulkCsvInput').click()" id="dropZone">
+            <i class="fas fa-file-csv" style="font-size:32px;color:#002624;margin-bottom:10px;display:block"></i>
+            <div style="font-size:14px;font-weight:600;color:#002624;margin-bottom:4px">Click to upload or drag &amp; drop a CSV file</div>
             <div style="font-size:12px;color:#9e9e9e">Supported format: .csv &bull; Max 500 rows &bull; Max 2MB</div>
             <div id="selectedFileName" style="font-size:13px;color:#1b5e20;margin-top:10px;font-weight:600;display:none"></div>
           </div>
@@ -789,7 +789,7 @@
   </div>
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol btn-sm" onclick="prefillAddAgent()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+  <button class="btn-ol btn-sm" onclick="prefillAddAgent()" style="color:#002624"><i class="fas fa-magic"></i> Prefill</button>
   <div class="dflex g8">
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" onclick="addNodeToTree()"><i class="fas fa-plus-circle"></i> Add Agent</button>
@@ -837,7 +837,7 @@
   </div>
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol btn-sm" onclick="prefillAddAgency()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+  <button class="btn-ol btn-sm" onclick="prefillAddAgency()" style="color:#002624"><i class="fas fa-magic"></i> Prefill</button>
   <div class="dflex g8">
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" onclick="addAgencyToTree()"><i class="fas fa-building"></i> Add Agency</button>
@@ -868,7 +868,7 @@
     </table>
     <div style="margin-top:8px;padding:8px;background:#fff5f5;border-radius:6px;font-size:11px;color:#5f6368">
       <i class="fas fa-info-circle" style="margin-right:4px"></i>Finance will be automatically notified. Enrollments with application dates <strong>before</strong> the transfer effective date continue using the <strong>original hierarchy</strong> override amounts. No automatic recalculation is triggered ? Finance must manually initiate any recalculation after review.
-      <div style="margin-top:6px"><a href="commission-config.html" style="color:#1a237e;font-weight:700;text-decoration:underline"><i class="fas fa-external-link-alt" style="margin-right:4px"></i>Review Open Batch in Commission Config</a></div>
+      <div style="margin-top:6px"><a href="commission-config.html" style="color:#002624;font-weight:700;text-decoration:underline"><i class="fas fa-external-link-alt" style="margin-right:4px"></i>Review Open Batch in Commission Config</a></div>
     </div>
   </div>
 
@@ -908,7 +908,7 @@
   <!-- Pre-Transfer Validation Results Panel -->
   <div id="preValidationPanel" style="display:none;border:1.5px solid #e0e0e0;border-radius:10px;margin-bottom:14px;overflow:hidden">
     <div style="background:#f8f9fa;padding:9px 14px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between">
-      <div style="font-weight:700;font-size:12px;color:#1a237e"><i class="fas fa-shield-alt" style="margin-right:6px"></i>Pre-Transfer Validation</div>
+      <div style="font-weight:700;font-size:12px;color:#002624"><i class="fas fa-shield-alt" style="margin-right:6px"></i>Pre-Transfer Validation</div>
       <div id="pvSummaryBadge" style="font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;background:#e8f5e9;color:#1b5e20">Running...</div>
     </div>
     <div id="pvResultsList" style="padding:0"></div>
@@ -928,7 +928,7 @@
     </table>
   </div>
   <div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:12px;font-size:12px">
-    <div style="font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-clipboard-list" style="margin-right:6px;color:#1a237e"></i>Audit Log Entry (auto-generated on approval)</div>
+    <div style="font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-clipboard-list" style="margin-right:6px;color:#002624"></i>Audit Log Entry (auto-generated on approval)</div>
     <table style="width:100%;font-size:11px;border-collapse:collapse">
       <tr><td style="padding:3px 0;color:#5f6368;width:40%">Change Type:</td><td>Hierarchy Transfer</td></tr>
       <tr><td style="padding:3px 0;color:#5f6368">Changed By:</td><td>Sandra Adams (Carrier Admin)</td></tr>
@@ -938,7 +938,7 @@
   </div>
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol btn-sm" onclick="prefillTransfer()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+  <button class="btn-ol btn-sm" onclick="prefillTransfer()" style="color:#002624"><i class="fas fa-magic"></i> Prefill</button>
   <div class="dflex g8">
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" id="transferSubmitBtn" onclick="submitTransfer()"><i class="fas fa-check-circle"></i> Submit Transfer</button>
@@ -993,7 +993,7 @@
   <input type="hidden" id="lvlEditId" value="">
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol" onclick="prefillLevel()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <button class="btn-ol" onclick="prefillLevel()" style="color:#147966;border-color:#147966"><i class="fas fa-fill-drip"></i> Prefill Data</button>
   <div>
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" onclick="saveLevel()"><i class="fas fa-save"></i> Save Level</button>
@@ -1027,7 +1027,7 @@
   </div>
 </div>
 <div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol" onclick="prefillPlanYear()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <button class="btn-ol" onclick="prefillPlanYear()" style="color:#147966;border-color:#147966"><i class="fas fa-fill-drip"></i> Prefill Data</button>
   <div>
     <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
     <button class="btn-pr" onclick="createPlanYearConfig()"><i class="fas fa-save"></i> Create Config</button>
@@ -1050,7 +1050,7 @@
 <!-- Snapshot Detail Modal -->
 <div class="modal-overlay" id="snapshotModal" style="display:none">
 <div class="modal-box" style="max-width:600px">
-<div class="modal-hdr"><h5 id="snapTitle"><i class="fas fa-history" style="margin-right:8px;color:#1a237e"></i>Snapshot Detail &mdash; Version #</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-hdr"><h5 id="snapTitle"><i class="fas fa-history" style="margin-right:8px;color:#002624"></i>Snapshot Detail &mdash; Version #</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
 <div class="modal-body">
   <div class="al-warn" style="font-size:12px;margin-bottom:14px"><i class="fas fa-lock"></i>&nbsp; <strong>Immutable Record.</strong> This snapshot cannot be edited or deleted by any user, including System Admin. Retained for 7 years minimum per compliance policy.</div>
   <div id="snapContent"></div>
@@ -1139,9 +1139,9 @@ function showFullProfile(id) {
       ['AHIP', org.ahipStatus], ['Onboarding', org.onboardingStatus], ['Compliance', org.complianceStatus], ['Plan Year', org.planYear]
     ].map(function(r){return '<tr><td style="padding:7px 10px;color:#5f6368;font-size:12px;width:140px;border-bottom:1px solid #f1f3f4">'+r[0]+'</td><td style="padding:7px 10px;font-size:12px;font-weight:600;border-bottom:1px solid #f1f3f4">'+r[1]+'</td></tr>';}).join('');
     var appRows = org.applications.map(function(a){
-      var ac=a.status==='Approved'?'#1b5e20':(a.status==='Pending Review'?'#1565c0':(a.status==='Suspended'?'#b71c1c':(a.status==='Rejected'?'#880e4f':'#5f6368')));
-      var ab=a.status==='Approved'?'#e8f5e9':(a.status==='Pending Review'?'#e3f2fd':(a.status==='Suspended'?'#fce4ec':(a.status==='Rejected'?'#fce4ec':'#f1f3f4')));
-      return '<tr><td style="padding:5px 8px;font-size:11px;font-weight:600;color:#0d47a1">'+a.id+'</td><td style="padding:5px 8px;font-size:11px">'+a.type+'</td><td style="padding:5px 8px"><span style="background:'+ab+';color:'+ac+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+a.status+'</span></td><td style="padding:5px 8px;font-size:10px;color:#5f6368">'+a.date+'</td></tr>';
+      var ac=a.status==='Approved'?'#1b5e20':(a.status==='Pending Review'?'#147966':(a.status==='Suspended'?'#b71c1c':(a.status==='Rejected'?'#880e4f':'#5f6368')));
+      var ab=a.status==='Approved'?'#e8f5e9':(a.status==='Pending Review'?'#e8f5f2':(a.status==='Suspended'?'#fce4ec':(a.status==='Rejected'?'#fce4ec':'#f1f3f4')));
+      return '<tr><td style="padding:5px 8px;font-size:11px;font-weight:600;color:#0f6a62">'+a.id+'</td><td style="padding:5px 8px;font-size:11px">'+a.type+'</td><td style="padding:5px 8px"><span style="background:'+ab+';color:'+ac+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+a.status+'</span></td><td style="padding:5px 8px;font-size:10px;color:#5f6368">'+a.date+'</td></tr>';
     }).join('');
     body.innerHTML = '<table style="width:100%;border-collapse:collapse">'+rows+'</table>'
       +'<div style="margin-top:14px"><div style="font-size:11px;font-weight:700;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Related Applications</div>'
@@ -1369,10 +1369,10 @@ function renderLevels() {
     var tr = document.createElement('tr');
     tr.innerHTML = '<td><span class="snap-ver" style="display:inline-flex">'+lvl.rank+'</span></td>'
       +'<td><strong>'+lvl.name+'</strong><div style="font-size:10px;color:#5f6368">'+lvl.desc+'</div></td>'
-      +'<td><code style="background:#e8eaf6;padding:2px 7px;border-radius:4px;font-size:11px">'+lvl.code+'</code></td>'
+      +'<td><code style="background:#e6efee;padding:2px 7px;border-radius:4px;font-size:11px">'+lvl.code+'</code></td>'
       +'<td style="text-align:center">'+(lvl.hasDownline?'<span style="color:#1b5e20;font-weight:700"><i class="fas fa-check-circle"></i> Yes</span>':'<span style="color:#c62828"><i class="fas fa-times-circle"></i> No</span>')+'</td>'
       +'<td style="font-size:11px">'+(lvl.validParents.length?lvl.validParents.join(', '):'<span style="color:#5f6368">None (Root)</span>')+'</td>'
-      +'<td><span style="font-size:11px;background:#e3f2fd;color:#0d47a1;padding:3px 8px;border-radius:12px">'+lvl.bobScope+'</span></td>'
+      +'<td><span style="font-size:11px;background:#e8f5f2;color:#0f6a62;padding:3px 8px;border-radius:12px">'+lvl.bobScope+'</span></td>'
       +'<td style="text-align:center;font-weight:700">'+lvl.activeOrgs+'</td>'
       +'<td>'+statusBadge+'</td>'
       +'<td style="white-space:nowrap">'
@@ -1652,7 +1652,7 @@ function viewSnapshot(ver) {
     'Org Created':'<span class="bdg b-purple">Org Created</span>',
     'Org Deactivated':'<span class="bdg b-red">Org Deactivated</span>'
   }[snap.type] || snap.type;
-  document.getElementById('snapTitle').innerHTML = '<i class="fas fa-history" style="margin-right:8px;color:#1a237e"></i>Snapshot Detail &mdash; Version #'+ver;
+  document.getElementById('snapTitle').innerHTML = '<i class="fas fa-history" style="margin-right:8px;color:#002624"></i>Snapshot Detail &mdash; Version #'+ver;
   var html = '<table style="width:100%;font-size:13px;border-collapse:collapse">'
     +'<tr><td style="padding:7px 0;color:#5f6368;width:160px">Version #:</td><td style="font-weight:700">'+ver+'</td></tr>'
     +'<tr><td style="padding:7px 0;color:#5f6368">Organization:</td><td>'+snap.org+(snap.npn?' <small style="color:#5f6368">(NPN '+snap.npn+')</small>':'')+'</td></tr>'
@@ -1763,10 +1763,10 @@ function showOrgDetail(id) {
   try{sessionStorage.setItem('hier_selected_node',id);}catch(e){}
   // Highlight selected node
   document.querySelectorAll('.node-item').forEach(function(n){n.style.background='';n.classList.remove('active-node');});
-  document.querySelectorAll('.node-item').forEach(function(n){if(n.getAttribute('onclick')&&n.getAttribute('onclick').indexOf("'"+id+"'")>-1){n.style.background='#e8eaf6';n.classList.add('active-node');}});
+  document.querySelectorAll('.node-item').forEach(function(n){if(n.getAttribute('onclick')&&n.getAttribute('onclick').indexOf("'"+id+"'")>-1){n.style.background='#e6efee';n.classList.add('active-node');}});
 
   if(!org){
-    panel.innerHTML='<div style="padding:8px 0;color:#5f6368;font-size:12px;text-align:center"><i class="fas fa-mouse-pointer" style="font-size:20px;display:block;margin-bottom:6px;color:#c5cae9"></i>Click any node to view profile, status, key dates, and quick actions.</div>';
+    panel.innerHTML='<div style="padding:8px 0;color:#5f6368;font-size:12px;text-align:center"><i class="fas fa-mouse-pointer" style="font-size:20px;display:block;margin-bottom:6px;color:#cdebe4"></i>Click any node to view profile, status, key dates, and quick actions.</div>';
     return;
   }
 
@@ -1781,10 +1781,10 @@ function showOrgDetail(id) {
     var compColor=org.complianceStatus==='Clear'?'#1b5e20':(org.complianceStatus==='Probation'?'#e65100':'#b71c1c');
     var compBg=org.complianceStatus==='Clear'?'#e8f5e9':(org.complianceStatus==='Probation'?'#fff3e0':'#fce4ec');
     var appRows=org.applications.map(function(a){
-      var ac=a.status==='Approved'?'#1b5e20':(a.status==='Pending Review'?'#1565c0':(a.status==='Suspended'?'#b71c1c':(a.status==='Rejected'?'#880e4f':'#5f6368')));
-      var ab=a.status==='Approved'?'#e8f5e9':(a.status==='Pending Review'?'#e3f2fd':(a.status==='Suspended'?'#fce4ec':(a.status==='Rejected'?'#fce4ec':'#f1f3f4')));
+      var ac=a.status==='Approved'?'#1b5e20':(a.status==='Pending Review'?'#147966':(a.status==='Suspended'?'#b71c1c':(a.status==='Rejected'?'#880e4f':'#5f6368')));
+      var ab=a.status==='Approved'?'#e8f5e9':(a.status==='Pending Review'?'#e8f5f2':(a.status==='Suspended'?'#fce4ec':(a.status==='Rejected'?'#fce4ec':'#f1f3f4')));
       return '<tr>'
-        +'<td style="padding:4px 6px;font-size:11px;font-weight:600;color:#0d47a1">'+a.id+'</td>'
+        +'<td style="padding:4px 6px;font-size:11px;font-weight:600;color:#0f6a62">'+a.id+'</td>'
         +'<td style="padding:4px 6px;font-size:11px">'+a.type+'</td>'
         +'<td style="padding:4px 6px"><span style="background:'+ab+';color:'+ac+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+a.status+'</span></td>'
         +'<td style="padding:4px 6px;font-size:10px;color:#5f6368">'+a.date+'</td>'
@@ -1794,29 +1794,29 @@ function showOrgDetail(id) {
       '<div>'
       // Header
       +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:6px">'
-      +'<div><div style="font-weight:700;color:#1a237e;font-size:13px">'+org.name+'</div>'
+      +'<div><div style="font-weight:700;color:#002624;font-size:13px">'+org.name+'</div>'
       +'<div style="font-size:11px;color:#5f6368;margin-top:1px">'+org.subType+' &mdash; NPN: <strong>'+org.npn+'</strong></div></div>'
       +'<span style="font-size:11px;background:'+statusBg+';color:'+statusColor+';padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap"><i class="fas fa-circle" style="font-size:7px;margin-right:4px"></i>'+org.status+'</span>'
       +'</div>'
       // Upline
-      +'<div style="font-size:11px;color:#5f6368;margin-bottom:10px"><i class="fas fa-sitemap" style="margin-right:4px;color:#9fa8da"></i>'+org.parent+'</div>'
+      +'<div style="font-size:11px;color:#5f6368;margin-bottom:10px"><i class="fas fa-sitemap" style="margin-right:4px;color:#a6dace"></i>'+org.parent+'</div>'
       // Effective & End Date
       +'<div style="display:flex;gap:12px;margin-bottom:12px;font-size:11px">'
-      +'<div><span style="color:#5f6368"><i class="fas fa-calendar-check" style="margin-right:4px;color:#9fa8da"></i>Effective:</span> <strong style="color:#1b5e20">'+(ORG_DATES[id]?ORG_DATES[id].effectiveDate:'N/A')+'</strong></div>'
-      +'<div><span style="color:#5f6368"><i class="fas fa-calendar-times" style="margin-right:4px;color:#9fa8da"></i>End:</span> <strong style="color:'+(ORG_DATES[id]&&ORG_DATES[id].endDate==='Ongoing'?'#1b5e20':'#e65100')+'">'+(ORG_DATES[id]?ORG_DATES[id].endDate:'N/A')+'</strong></div>'
+      +'<div><span style="color:#5f6368"><i class="fas fa-calendar-check" style="margin-right:4px;color:#a6dace"></i>Effective:</span> <strong style="color:#1b5e20">'+(ORG_DATES[id]?ORG_DATES[id].effectiveDate:'N/A')+'</strong></div>'
+      +'<div><span style="color:#5f6368"><i class="fas fa-calendar-times" style="margin-right:4px;color:#a6dace"></i>End:</span> <strong style="color:'+(ORG_DATES[id]&&ORG_DATES[id].endDate==='Ongoing'?'#1b5e20':'#e65100')+'">'+(ORG_DATES[id]?ORG_DATES[id].endDate:'N/A')+'</strong></div>'
       +'</div>'
       // KPI row
       +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">'
-      +'<div style="text-align:center;background:#f8f9fa;border-radius:6px;padding:8px 4px"><div style="font-size:16px;font-weight:700;color:#0d47a1">'+org.members+'</div><div style="font-size:10px;color:#5f6368">BoB Members</div></div>'
+      +'<div style="text-align:center;background:#f8f9fa;border-radius:6px;padding:8px 4px"><div style="font-size:16px;font-weight:700;color:#0f6a62">'+org.members+'</div><div style="font-size:10px;color:#5f6368">BoB Members</div></div>'
       +'<div style="text-align:center;background:#f8f9fa;border-radius:6px;padding:8px 4px"><div style="font-size:16px;font-weight:700;color:#1b5e20">$'+org.ytd.toLocaleString()+'</div><div style="font-size:10px;color:#5f6368">YTD Commission</div></div>'
       +'<div style="text-align:center;background:#f8f9fa;border-radius:6px;padding:8px 4px"><div style="font-size:14px;font-weight:700;color:#333">'+org.states+'</div><div style="font-size:10px;color:#5f6368">States</div></div>'
       +'</div>'
       // Status checklist
       +'<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-id-card" style="width:14px;margin-right:5px;color:#9fa8da"></i>License</span><span style="background:'+licBg+';color:'+licColor+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas '+licIcon+'" style="margin-right:3px"></i>'+org.licenseStatus+'</span></div>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-certificate" style="width:14px;margin-right:5px;color:#9fa8da"></i>AHIP</span><span style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-check-circle" style="margin-right:3px"></i>'+org.ahipStatus+'</span></div>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-clipboard-check" style="width:14px;margin-right:5px;color:#9fa8da"></i>Onboarding</span><span style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-check-circle" style="margin-right:3px"></i>'+org.onboardingStatus+'</span></div>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-shield-alt" style="width:14px;margin-right:5px;color:#9fa8da"></i>Compliance</span><span style="background:'+compBg+';color:'+compColor+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+org.complianceStatus+'</span></div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-id-card" style="width:14px;margin-right:5px;color:#a6dace"></i>License</span><span style="background:'+licBg+';color:'+licColor+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas '+licIcon+'" style="margin-right:3px"></i>'+org.licenseStatus+'</span></div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-certificate" style="width:14px;margin-right:5px;color:#a6dace"></i>AHIP</span><span style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-check-circle" style="margin-right:3px"></i>'+org.ahipStatus+'</span></div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-clipboard-check" style="width:14px;margin-right:5px;color:#a6dace"></i>Onboarding</span><span style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-check-circle" style="margin-right:3px"></i>'+org.onboardingStatus+'</span></div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#5f6368"><i class="fas fa-shield-alt" style="width:14px;margin-right:5px;color:#a6dace"></i>Compliance</span><span style="background:'+compBg+';color:'+compColor+';padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+org.complianceStatus+'</span></div>'
       +'</div>'
       // Related applications
       +'<div style="margin-bottom:12px">'
@@ -1827,8 +1827,8 @@ function showOrgDetail(id) {
       +'<div style="border-top:1px solid #f1f3f4;padding-top:10px">'
       +'<div style="font-size:11px;font-weight:700;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Quick Actions</div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
-      +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showFullProfile(currentNodeId)"><i class="fas fa-id-card" style="margin-right:4px;color:#1a237e"></i>Full Profile</button>'
-      +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showNodeEdit(currentNodeId)"><i class="fas fa-edit" style="margin-right:4px;color:#1a237e"></i>Edit</button>'
+      +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showFullProfile(currentNodeId)"><i class="fas fa-id-card" style="margin-right:4px;color:#002624"></i>Full Profile</button>'
+      +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showNodeEdit(currentNodeId)"><i class="fas fa-edit" style="margin-right:4px;color:#002624"></i>Edit</button>'
       +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showToast(\'Message sent to '+org.name+'.\',\'success\')"><i class="fas fa-envelope" style="margin-right:4px;color:#1b5e20"></i>Message</button>'
       +(org.complianceStatus==='Clear'
         ?'<button class="tbl-action-btn" style="justify-content:center;padding:7px;color:#b71c1c;border-color:#ef9a9a" onclick="showToast(\''+org.name+' placed on compliance hold.\',\'error\')"><i class="fas fa-pause-circle" style="margin-right:4px"></i>Place on Hold</button>'
@@ -1839,15 +1839,15 @@ function showOrgDetail(id) {
   }
 
   /* ---- ORG / AGENCY NODE ---- */
-  var levelColors={Carrier:'#e8eaf6',SFMO:'#e8eaf6',NFMO:'#e3f2fd',FMO:'#e0f2f1',SGA:'#f3e5f5',MGA:'#fff3e0',GA:'#e8f5e9',Agent:'#fce4ec'};
-  var levelTextColors={Carrier:'#1a237e',SFMO:'#1a237e',NFMO:'#0d47a1',FMO:'#004d40',SGA:'#4a148c',MGA:'#e65100',GA:'#1b5e20',Agent:'#880e4f'};
+  var levelColors={Carrier:'#e6efee',SFMO:'#e6efee',NFMO:'#e8f5f2',FMO:'#e0f2f1',SGA:'#f3e5f5',MGA:'#fff3e0',GA:'#e8f5e9',Agent:'#fce4ec'};
+  var levelTextColors={Carrier:'#002624',SFMO:'#002624',NFMO:'#0f6a62',FMO:'#004d40',SGA:'#4a148c',MGA:'#e65100',GA:'#1b5e20',Agent:'#880e4f'};
   var lc=levelColors[org.level]||'#f8f9fa';
   var ltc=levelTextColors[org.level]||'#333';
   var dates=ORG_DATES[id]||{effectiveDate:'N/A',endDate:'N/A'};
   var hasDownline=DOWNLINE_AGENTS[id]&&DOWNLINE_AGENTS[id].length>0;
   panel.innerHTML='<div>'
     +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px">'
-    +'<div><div style="font-weight:700;color:#1a237e;font-size:13px">'+org.name+'</div><div style="font-size:11px;color:#5f6368;margin-top:2px">'+org.id+'</div></div>'
+    +'<div><div style="font-weight:700;color:#002624;font-size:13px">'+org.name+'</div><div style="font-size:11px;color:#5f6368;margin-top:2px">'+org.id+'</div></div>'
     +'<span style="font-size:11px;background:'+statusBg+';color:'+statusColor+';padding:3px 10px;border-radius:12px;font-weight:700;white-space:nowrap"><i class="fas fa-circle" style="font-size:7px;margin-right:4px"></i>'+org.status+'</span></div>'
     +'<div style="display:flex;gap:8px;margin-bottom:12px">'
     +'<span style="background:'+lc+';color:'+ltc+';font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px">'+org.level+'</span>'
@@ -1858,7 +1858,7 @@ function showOrgDetail(id) {
     +'<tr><td style="padding:5px 0;color:#5f6368">Parent Org:</td><td style="font-size:11px;font-weight:600">'+org.parent+'</td></tr>'
     +'<tr><td style="padding:5px 0;color:#5f6368">Effective Date:</td><td style="font-weight:600;color:#1b5e20"><i class="fas fa-calendar-check" style="margin-right:4px;font-size:10px"></i>'+dates.effectiveDate+'</td></tr>'
     +'<tr><td style="padding:5px 0;color:#5f6368">End Date:</td><td style="font-weight:600;color:'+(dates.endDate==='Ongoing'?'#1b5e20':'#e65100')+'"><i class="fas fa-calendar-times" style="margin-right:4px;font-size:10px"></i>'+dates.endDate+'</td></tr>'
-    +'<tr><td style="padding:5px 0;color:#5f6368">Active Agents:</td><td>'+(hasDownline?'<a href="javascript:void(0)" onclick="toggleAgentDrilldown(\''+id+'\')" style="font-weight:700;color:#0d47a1;text-decoration:underline;cursor:pointer" title="Click to view agent list">'+org.agents+' <i class="fas fa-chevron-down" style="font-size:9px;margin-left:3px" id="drillIcon_'+id+'"></i></a>':'<span style="font-weight:700">'+org.agents+'</span>')+'</td></tr>'
+    +'<tr><td style="padding:5px 0;color:#5f6368">Active Agents:</td><td>'+(hasDownline?'<a href="javascript:void(0)" onclick="toggleAgentDrilldown(\''+id+'\')" style="font-weight:700;color:#0f6a62;text-decoration:underline;cursor:pointer" title="Click to view agent list">'+org.agents+' <i class="fas fa-chevron-down" style="font-size:9px;margin-left:3px" id="drillIcon_'+id+'"></i></a>':'<span style="font-weight:700">'+org.agents+'</span>')+'</td></tr>'
     +'<tr><td style="padding:5px 0;color:#5f6368">Downline Orgs:</td><td style="font-weight:700">'+(org.agents>5?Math.floor(org.agents/4):2)+'</td></tr>'
     +'<tr><td style="padding:5px 0;color:#5f6368">Members (BoB):</td><td style="font-weight:700">'+org.members.toLocaleString()+'</td></tr>'
     +'<tr><td style="padding:5px 0;color:#5f6368">States:</td><td>'+org.states+'</td></tr>'
@@ -1868,9 +1868,9 @@ function showOrgDetail(id) {
     +'<tr><td style="padding:5px 0;color:#5f6368">Plan Year:</td><td>'+org.planYear+' <span style="font-size:9px;background:#e8f5e9;color:#1b5e20;padding:1px 6px;border-radius:8px">Active</span></td></tr>'
     +'</table>'
     /* Agent Drill-down Section */
-    +'<div id="agentDrilldown_'+id+'" style="display:none;margin-top:12px;border:1.5px solid #c5cae9;border-radius:10px;overflow:hidden">'
-    +'<div style="background:#e8eaf6;padding:8px 12px;display:flex;align-items:center;justify-content:space-between">'
-    +'<span style="font-size:12px;font-weight:700;color:#1a237e"><i class="fas fa-users" style="margin-right:6px"></i>Agents under '+org.name+'</span>'
+    +'<div id="agentDrilldown_'+id+'" style="display:none;margin-top:12px;border:1.5px solid #cdebe4;border-radius:10px;overflow:hidden">'
+    +'<div style="background:#e6efee;padding:8px 12px;display:flex;align-items:center;justify-content:space-between">'
+    +'<span style="font-size:12px;font-weight:700;color:#002624"><i class="fas fa-users" style="margin-right:6px"></i>Agents under '+org.name+'</span>'
     +'<button class="btn-ol btn-sm" style="font-size:10px" onclick="exportDrilldownToExcel(\''+id+'\',\''+org.name.replace(/'/g,'')+'\')"><i class="fas fa-file-excel" style="margin-right:3px;color:#1b5e20"></i>Export</button>'
     +'</div>'
     +'<div id="agentDrilldownBody_'+id+'" style="max-height:240px;overflow-y:auto"></div>'
@@ -1878,8 +1878,8 @@ function showOrgDetail(id) {
     +'<div style="margin-top:14px;border-top:1px solid #f1f3f4;padding-top:10px">'
     +'<div style="font-size:11px;font-weight:700;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Quick Actions</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
-    +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showFullProfile(currentNodeId)"><i class="fas fa-id-card" style="margin-right:4px;color:#1a237e"></i>Full Profile</button>'
-    +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showNodeEdit(currentNodeId)"><i class="fas fa-edit" style="margin-right:4px;color:#1a237e"></i>Edit</button>'
+    +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showFullProfile(currentNodeId)"><i class="fas fa-id-card" style="margin-right:4px;color:#002624"></i>Full Profile</button>'
+    +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showNodeEdit(currentNodeId)"><i class="fas fa-edit" style="margin-right:4px;color:#002624"></i>Edit</button>'
     +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="document.getElementById(\'transferModal\').style.display=\'flex\'"><i class="fas fa-exchange-alt" style="margin-right:4px;color:#e65100"></i>Transfer</button>'
     +'<button class="tbl-action-btn" style="justify-content:center;padding:7px" onclick="showToast(\'Invitation sent to '+org.name+'.\',\'success\')"><i class="fas fa-paper-plane" style="margin-right:4px;color:#1b5e20"></i>Invite</button>'
     +'</div></div>'
@@ -2219,16 +2219,16 @@ function showTransferImpactNotification(agentName, effectiveDate){
     +'Executed Date: '+effectiveDate+' &nbsp;|&nbsp; Agent Transferred: '+agentName+'<br>'
     +'<span style="color:#e65100">'+INPROGRESS_CASES.length+' active onboarding case(s) were affected by this hierarchy change.</span>'
     +'</div>'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:8px">Affected Onboarding Cases ? Hierarchy Updated &amp; Readiness Re-Checked</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:8px">Affected Onboarding Cases ? Hierarchy Updated &amp; Readiness Re-Checked</div>'
     +'<table style="width:100%;font-size:11px;border-collapse:collapse">'
-    +'<thead><tr style="background:#e8eaf6"><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">Case ID</th><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">Agent</th><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">NPN</th><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">Old Hierarchy</th><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">New Hierarchy</th><th style="padding:6px 8px;border:1px solid #c5cae9;text-align:left">Case Status</th></tr></thead><tbody>';
+    +'<thead><tr style="background:#e6efee"><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">Case ID</th><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">Agent</th><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">NPN</th><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">Old Hierarchy</th><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">New Hierarchy</th><th style="padding:6px 8px;border:1px solid #cdebe4;text-align:left">Case Status</th></tr></thead><tbody>';
   INPROGRESS_CASES.forEach(function(cs){
-    html += '<tr><td style="padding:5px 8px;border:1px solid #e8eaed"><a href="onboarding-cases.html?case='+cs.caseId+'" style="color:#1a237e">'+cs.caseId+'</a></td>'
+    html += '<tr><td style="padding:5px 8px;border:1px solid #e8eaed"><a href="onboarding-cases.html?case='+cs.caseId+'" style="color:#002624">'+cs.caseId+'</a></td>'
       +'<td style="padding:5px 8px;border:1px solid #e8eaed">'+cs.agentName+'</td>'
       +'<td style="padding:5px 8px;border:1px solid #e8eaed">'+cs.npn+'</td>'
       +'<td style="padding:5px 8px;border:1px solid #e8eaed">'+cs.oldHier+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #e8eaed;color:#1a237e;font-weight:600">'+newHier+'</td>'
-      +'<td style="padding:5px 8px;border:1px solid #e8eaed"><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:8px;font-weight:700">'+cs.status+'</span></td></tr>';
+      +'<td style="padding:5px 8px;border:1px solid #e8eaed;color:#002624;font-weight:600">'+newHier+'</td>'
+      +'<td style="padding:5px 8px;border:1px solid #e8eaed"><span style="background:#e8f5f2;color:#0f6a62;padding:2px 8px;border-radius:8px;font-weight:700">'+cs.status+'</span></td></tr>';
   });
   html += '</tbody></table>'
     +'<div style="margin-top:12px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 12px;font-size:11px">'
@@ -2246,8 +2246,8 @@ function showTransferImpactNotification(agentName, effectiveDate){
    ========================================================= */
 function showAlert(zone, msg, type) {
   if(!zone) return;
-  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
-  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e8f5f2',success:'#e8f5e9'};
+  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#a6dace',success:'#a5d6a7'};
   var icons = {danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
   zone.innerHTML = '<div style="background:'+colors[type]+';border:1px solid '+borders[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+icons[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
   zone.style.display='block';
@@ -2255,7 +2255,7 @@ function showAlert(zone, msg, type) {
 }
 
 function showToast(msg, type) {
-  var colors = {success:'#1b5e20',danger:'#b71c1c',warning:'#f57f17',info:'#0d47a1'};
+  var colors = {success:'#1b5e20',danger:'#b71c1c',warning:'#f57f17',info:'#0f6a62'};
   var toast = document.getElementById('toastEl');
   if(toast){
     toast.textContent=msg.replace(/<[^>]*>/g,'');
@@ -2438,13 +2438,13 @@ function approveTransfer(ref, initiatedBy) {
   /* Build review content */
   var html = '';
   /* Agent header */
-  html+='<div style="background:#e8eaf6;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px">'
-    +'<div style="width:40px;height:40px;border-radius:50%;background:#1a237e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">'+review.name.charAt(0)+'</div>'
-    +'<div><div style="font-weight:700;color:#1a237e;font-size:14px">'+review.name+'</div><div style="font-size:11px;color:#5f6368">NPN: '+review.npn+' &bull; Ref: '+ref+'</div></div></div>';
+  html+='<div style="background:#e6efee;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px">'
+    +'<div style="width:40px;height:40px;border-radius:50%;background:#002624;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">'+review.name.charAt(0)+'</div>'
+    +'<div><div style="font-weight:700;color:#002624;font-size:14px">'+review.name+'</div><div style="font-size:11px;color:#5f6368">NPN: '+review.npn+' &bull; Ref: '+ref+'</div></div></div>';
 
   /* 1. Appointments */
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-id-badge" style="margin-right:6px"></i>State Appointments</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-id-badge" style="margin-right:6px"></i>State Appointments</div>'
     +'<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f8f9fa"><th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e8eaed">State</th><th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e8eaed">Status</th><th style="padding:5px 8px;text-align:left;border-bottom:1px solid #e8eaed">Expiry</th></tr></thead><tbody>';
   review.appointments.forEach(function(a){
     var ac=a.status==='Active'?'#1b5e20':'#b71c1c'; var ab=a.status==='Active'?'#e8f5e9':'#fce4ec';
@@ -2456,7 +2456,7 @@ function approveTransfer(ref, initiatedBy) {
   var ahipColor=review.ahip.status==='Certified'?'#1b5e20':'#b71c1c';
   var ahipBg=review.ahip.status==='Certified'?'#e8f5e9':'#fce4ec';
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-certificate" style="margin-right:6px"></i>AHIP Certification</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-certificate" style="margin-right:6px"></i>AHIP Certification</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#5f6368">Status</div><div style="font-weight:700;color:'+ahipColor+'">'+review.ahip.status+'</div></div>'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#5f6368">Completed</div><div style="font-weight:600;font-size:12px">'+review.ahip.completedDate+'</div></div>'
@@ -2467,7 +2467,7 @@ function approveTransfer(ref, initiatedBy) {
   var rtsColor=review.rts.status==='Ready'?'#1b5e20':'#b71c1c';
   var rtsBg=review.rts.status==='Ready'?'#e8f5e9':'#fce4ec';
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Ready to Sell Status</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-clipboard-check" style="margin-right:6px"></i>Ready to Sell Status</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
     +'<div style="background:'+rtsBg+';border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#5f6368">RTS Status</div><div style="font-weight:700;color:'+rtsColor+'"><i class="fas '+(review.rts.status==='Ready'?'fa-check-circle':'fa-times-circle')+'" style="margin-right:4px"></i>'+review.rts.status+'</div></div>'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px 10px;text-align:center"><div style="font-size:10px;color:#5f6368">Cert Date</div><div style="font-weight:600;font-size:12px">'+review.rts.certDate+'</div></div>'
@@ -2476,9 +2476,9 @@ function approveTransfer(ref, initiatedBy) {
 
   /* 4. Leads */
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-bullhorn" style="margin-right:6px"></i>Leads</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-bullhorn" style="margin-right:6px"></i>Leads</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">'
-    +'<div style="background:#e3f2fd;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Total</div><div style="font-weight:700;font-size:16px;color:#0d47a1">'+review.leads.total+'</div></div>'
+    +'<div style="background:#e8f5f2;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Total</div><div style="font-weight:700;font-size:16px;color:#0f6a62">'+review.leads.total+'</div></div>'
     +'<div style="background:#e8f5e9;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Assigned</div><div style="font-weight:700;font-size:16px;color:#1b5e20">'+review.leads.assigned+'</div></div>'
     +'<div style="background:#f1f8e9;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Converted</div><div style="font-weight:700;font-size:16px;color:#33691e">'+review.leads.converted+'</div></div>'
     +'<div style="background:#fff3e0;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Pending</div><div style="font-weight:700;font-size:16px;color:#e65100">'+review.leads.pending+'</div></div>'
@@ -2486,9 +2486,9 @@ function approveTransfer(ref, initiatedBy) {
 
   /* 5. Active Members */
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-users" style="margin-right:6px"></i>Active Members</div>'
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-users" style="margin-right:6px"></i>Active Members</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">'
-    +'<div style="background:#e8eaf6;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Total</div><div style="font-weight:700;font-size:16px;color:#1a237e">'+review.activeMembers.total+'</div></div>'
+    +'<div style="background:#e6efee;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">Total</div><div style="font-weight:700;font-size:16px;color:#002624">'+review.activeMembers.total+'</div></div>'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">MA</div><div style="font-weight:700;font-size:14px">'+review.activeMembers.ma+'</div></div>'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">MAPD</div><div style="font-weight:700;font-size:14px">'+review.activeMembers.mapd+'</div></div>'
     +'<div style="background:#f8f9fa;border-radius:6px;padding:8px;text-align:center"><div style="font-size:10px;color:#5f6368">CSNP</div><div style="font-weight:700;font-size:14px">'+review.activeMembers.csnp+'</div></div>'
@@ -2496,12 +2496,12 @@ function approveTransfer(ref, initiatedBy) {
 
   /* 6. Pending Enrollment */
   html+='<div style="margin-bottom:14px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-file-medical" style="margin-right:6px"></i>Pending Enrollment</div>';
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-file-medical" style="margin-right:6px"></i>Pending Enrollment</div>';
   if(review.pendingEnrollment.total>0){
     html+='<div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:12px;font-weight:700;color:#e65100"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>'+review.pendingEnrollment.total+' pending enrollment(s)</div>';
     html+='<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f8f9fa"><th style="padding:4px 8px;text-align:left;border-bottom:1px solid #e8eaed">App ID</th><th style="padding:4px 8px;text-align:left;border-bottom:1px solid #e8eaed">Type</th><th style="padding:4px 8px;text-align:left;border-bottom:1px solid #e8eaed">Status</th><th style="padding:4px 8px;text-align:left;border-bottom:1px solid #e8eaed">Submitted</th></tr></thead><tbody>';
     review.pendingEnrollment.apps.forEach(function(a){
-      html+='<tr><td style="padding:4px 8px;font-weight:600;color:#0d47a1">'+a.id+'</td><td style="padding:4px 8px">'+a.type+'</td><td style="padding:4px 8px"><span style="background:#e3f2fd;color:#1565c0;padding:2px 6px;border-radius:6px;font-size:10px;font-weight:600">'+a.status+'</span></td><td style="padding:4px 8px;color:#5f6368">'+a.submitted+'</td></tr>';
+      html+='<tr><td style="padding:4px 8px;font-weight:600;color:#0f6a62">'+a.id+'</td><td style="padding:4px 8px">'+a.type+'</td><td style="padding:4px 8px"><span style="background:#e8f5f2;color:#147966;padding:2px 6px;border-radius:6px;font-size:10px;font-weight:600">'+a.status+'</span></td><td style="padding:4px 8px;color:#5f6368">'+a.submitted+'</td></tr>';
     });
     html+='</tbody></table>';
   } else {
@@ -2511,7 +2511,7 @@ function approveTransfer(ref, initiatedBy) {
 
   /* 7. Pending Commission (Override Impact) */
   html+='<div style="margin-bottom:8px">'
-    +'<div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:6px"><i class="fas fa-dollar-sign" style="margin-right:6px"></i>Pending Commission (Override Impact)</div>';
+    +'<div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:6px"><i class="fas fa-dollar-sign" style="margin-right:6px"></i>Pending Commission (Override Impact)</div>';
   if(review.pendingCommission.entries>0){
     html+='<div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:8px;padding:10px 12px;font-size:12px">'
       +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">'
@@ -2706,7 +2706,7 @@ document.addEventListener('DOMContentLoaded', function(){
       <button class="modal-close" onclick="document.getElementById('transferImpactModal').style.display='none'">&times;</button>
     </div>
     <div style="padding:20px">
-      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 14px;font-size:12px;color:#0d47a1;margin-bottom:14px">
+      <div style="background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:10px 14px;font-size:12px;color:#0f6a62;margin-bottom:14px">
         <i class="fas fa-info-circle" style="margin-right:5px"></i>The hierarchy transfer affected the following in-progress onboarding cases. Their hierarchy fields have been automatically updated and hierarchy readiness checks have been re-run. Review each case to confirm no action is required.
       </div>
       <div id="transferImpactBody"></div>
@@ -2722,14 +2722,14 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="modal-overlay" id="transferReviewModal" style="display:none;z-index:1200">
   <div class="modal-box" style="max-width:720px;width:95%">
     <div class="modal-hdr">
-      <h5><i class="fas fa-search-plus" style="color:#1a237e;margin-right:8px"></i>Transfer Review &mdash; Pre-Approval Checklist</h5>
+      <h5><i class="fas fa-search-plus" style="color:#002624;margin-right:8px"></i>Transfer Review &mdash; Pre-Approval Checklist</h5>
       <button class="modal-close" onclick="document.getElementById('transferReviewModal').style.display='none'">&times;</button>
     </div>
     <div style="padding:20px;max-height:70vh;overflow-y:auto" id="transferReviewBody">
       <!-- Populated by approveTransfer() -->
     </div>
     <div class="modal-foot" style="justify-content:space-between">
-      <div style="font-size:11px;color:#5f6368"><i class="fas fa-shield-alt" style="margin-right:4px;color:#1a237e"></i>Review all sections before approving</div>
+      <div style="font-size:11px;color:#5f6368"><i class="fas fa-shield-alt" style="margin-right:4px;color:#002624"></i>Review all sections before approving</div>
       <div class="dflex g8">
         <button class="btn-ol" onclick="document.getElementById('transferReviewModal').style.display='none'">Cancel</button>
         <button class="btn-pr" id="transferReviewConfirmBtn" style="background:#1b5e20"><i class="fas fa-check-circle" style="margin-right:4px"></i>Confirm Approval</button>

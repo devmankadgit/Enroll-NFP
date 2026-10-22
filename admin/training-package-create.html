@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#1a237e}</style>
+<style>:root{--sb:#002624}</style>
 </head>
 <body>
 <nav class="sidebar">
@@ -55,12 +55,12 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4 id="pageTitle">Create Training Package</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="training-admin.html">Training</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Create Package</li></ol>
     </div>
     <div class="dflex g8">
-      <button class="btn-ol btn-sm" onclick="prefillPackage()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <button class="btn-ol btn-sm" onclick="prefillPackage()" style="color:#002624"><i class="fas fa-magic"></i> Prefill</button>
       <a href="training-admin.html" class="btn-ol btn-sm"><i class="fas fa-arrow-left"></i> Back to Training</a>
     </div>
     <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
@@ -72,7 +72,7 @@
 
     <!-- Package Details Card -->
     <div class="card" style="margin-bottom:16px">
-      <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between"><h5><i class="fas fa-info-circle" style="margin-right:8px;color:#1a237e"></i>Package Details</h5><button class="btn-ol btn-sm" onclick="prefillPackageDetails()" style="color:#1a237e"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
+      <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between"><h5><i class="fas fa-info-circle" style="margin-right:8px;color:#002624"></i>Package Details</h5><button class="btn-ol btn-sm" onclick="prefillPackageDetails()" style="color:#002624"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
       <div class="card-body" style="padding:20px">
         <div class="form-row"><div class="fg" style="flex:2"><label>Package Name <span style="color:#c62828">*</span></label><input id="pkgName" placeholder="e.g. AEP 2027 Certification"></div><div class="fg"><label>Training Type <span style="color:#c62828">*</span></label><select id="pkgType"><option value="">-- Select Type --</option><option>AHIP</option><option>Product Training</option><option>Carrier Certification</option><option>Compliance</option><option>Onboarding</option><option>Continuing Education</option></select></div><div class="fg"><label>Status</label><select id="pkgStatus"><option>Draft</option><option>Published</option></select></div></div>
         <div class="form-row"><div class="fg" style="flex:2"><label>Description</label><textarea id="pkgDesc" rows="2" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px" placeholder="Brief description of training content..."></textarea></div></div>
@@ -81,9 +81,9 @@
         <div class="form-row"><div class="fg"><label>Pass Score % <span style="color:#c62828">*</span></label><input id="pkgPassScore" type="number" min="50" max="100" placeholder="80"></div><div class="fg"><label>Number of Attempts <span style="color:#c62828">*</span></label><input id="pkgAttempts" type="number" min="1" max="10" placeholder="3"></div><div class="fg"><label>Includes Exam</label><select id="pkgExam"><option>Yes</option><option>No</option></select></div></div>
         <div class="form-row">
           <div class="fg"><label>Learning Material Upload</label>
-            <div style="border:2px dashed #c5cae9;border-radius:8px;padding:16px;text-align:center;background:#f8f9ff;cursor:pointer" onclick="uploadLearningMaterial()">
-              <i class="fas fa-cloud-upload-alt" style="font-size:22px;color:#1a237e;margin-bottom:4px"></i>
-              <div style="font-size:12px;color:#1a237e;font-weight:600">Click to upload learning materials or videos</div>
+            <div style="border:2px dashed #cdebe4;border-radius:8px;padding:16px;text-align:center;background:#f6fbfa;cursor:pointer" onclick="uploadLearningMaterial()">
+              <i class="fas fa-cloud-upload-alt" style="font-size:22px;color:#002624;margin-bottom:4px"></i>
+              <div style="font-size:12px;color:#002624;font-weight:600">Click to upload learning materials or videos</div>
               <div style="font-size:11px;color:#5f6368;margin-top:2px">PDF, PPTX, MP4, MOV, AVI, WEBM, SCORM — up to 200MB</div>
             </div>
             <div id="pkgMaterialFile" style="display:none;margin-top:8px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:8px 12px;font-size:12px;display:none;align-items:center;gap:8px"><i class="fas fa-file-alt" style="color:#1b5e20"></i><span id="pkgMaterialFileName"></span><button class="btn-ol btn-sm" style="margin-left:auto;font-size:10px;color:#c62828" onclick="removeLearningMaterial()"><i class="fas fa-times"></i></button></div>
@@ -102,12 +102,12 @@
 
     <!-- Modules & Questions Card -->
     <div class="card" style="margin-bottom:16px">
-      <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#1a237e"></i>Modules &amp; Questions</h5></div>
+      <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#002624"></i>Modules &amp; Questions</h5></div>
       <div class="card-body" style="padding:20px">
         <div class="form-row" style="align-items:flex-end;margin-bottom:12px">
           <div class="fg"><label>Number of Modules <span style="color:#c62828">*</span></label><input id="pkgModules" type="number" min="1" max="20" placeholder="e.g. 5" value=""></div>
           <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-pr btn-sm" onclick="generateModuleSections()"><i class="fas fa-cogs" style="margin-right:4px"></i>Generate Sections</button></div>
-          <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-ol btn-sm" onclick="prefillModules()" style="color:#1a237e"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
+          <div class="fg" style="flex:0"><label>&nbsp;</label><button class="btn-ol btn-sm" onclick="prefillModules()" style="color:#002624"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button></div>
         </div>
         <div style="font-size:11px;color:#5f6368;margin-bottom:16px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Enter number of modules and click "Generate Sections" to create module panels. You can edit module names and add MCQ questions under each.</div>
 
@@ -131,7 +131,7 @@
 </div>
 
 <div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 06 10,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -158,8 +158,8 @@ function renderModuleSections(){
   pkgModuleData.forEach(function(mod,idx){
     var qCount=mod.questions.length;
     html+='<div style="border:1px solid #e0e0e0;border-radius:10px;margin-bottom:14px;overflow:hidden">';
-    html+='<div onclick="toggleModSection('+idx+')" style="background:#f5f7ff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8eaed">';
-    html+='<div style="display:flex;align-items:center;gap:10px"><i class="fas fa-chevron-down" id="modChev'+idx+'" style="font-size:10px;color:#1a237e;transition:transform .2s"></i><span style="font-weight:600;color:#1a237e;font-size:13px">Module '+(idx+1)+'</span><span style="color:#5f6368;font-size:12px" id="modNameDisp'+idx+'">'+mod.name+'</span></div>';
+    html+='<div onclick="toggleModSection('+idx+')" style="background:#f6fbfa;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e8eaed">';
+    html+='<div style="display:flex;align-items:center;gap:10px"><i class="fas fa-chevron-down" id="modChev'+idx+'" style="font-size:10px;color:#002624;transition:transform .2s"></i><span style="font-weight:600;color:#002624;font-size:13px">Module '+(idx+1)+'</span><span style="color:#5f6368;font-size:12px" id="modNameDisp'+idx+'">'+mod.name+'</span></div>';
     html+='<span class="bdg '+(qCount>0?'b-green':'b-amber')+'" style="font-size:10px">'+qCount+' question'+(qCount!==1?'s':'')+'</span>';
     html+='</div>';
     html+='<div id="modBody'+idx+'" style="padding:14px 16px;display:none">';
@@ -167,9 +167,9 @@ function renderModuleSections(){
     html+='<div class="form-row" style="margin-bottom:12px"><div class="fg" style="flex:2"><label>Module Name <span style="color:#c62828">*</span></label><input id="modName'+idx+'" value="'+mod.name.replace(/"/g,'&quot;')+'" onchange="updateModName('+idx+')" placeholder="e.g. CKD/ESRD Plan Details & C-SNP Requirements"></div></div>';
     // Module material upload
     html+='<div style="margin-bottom:14px"><label style="font-size:12px;font-weight:600;color:#37474f;margin-bottom:4px;display:block">Module Material / Content</label>';
-    html+='<div style="border:2px dashed #c5cae9;border-radius:8px;padding:12px;text-align:center;background:#f8f9ff;cursor:pointer" onclick="uploadModuleMaterial('+idx+')">';
-    html+='<i class="fas fa-cloud-upload-alt" style="font-size:18px;color:#1a237e;margin-bottom:2px"></i>';
-    html+='<div style="font-size:11px;color:#1a237e;font-weight:600">Upload module material or video</div>';
+    html+='<div style="border:2px dashed #cdebe4;border-radius:8px;padding:12px;text-align:center;background:#f6fbfa;cursor:pointer" onclick="uploadModuleMaterial('+idx+')">';
+    html+='<i class="fas fa-cloud-upload-alt" style="font-size:18px;color:#002624;margin-bottom:2px"></i>';
+    html+='<div style="font-size:11px;color:#002624;font-weight:600">Upload module material or video</div>';
     html+='<div style="font-size:10px;color:#5f6368;margin-top:2px">PDF, PPTX, MP4, MOV, AVI, WEBM, SCORM — up to 200MB</div>';
     html+='</div>';
     // Uploaded file display
@@ -186,7 +186,7 @@ function renderModuleSections(){
       mod.questions.forEach(function(q,qi){
         html+='<div style="background:#f9f9f9;border:1px solid #eee;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:12px">';
         html+='<div style="display:flex;justify-content:space-between;align-items:flex-start">';
-        html+='<div><strong style="color:#0d47a1">Q'+(qi+1)+'.</strong> '+q.q+'</div>';
+        html+='<div><strong style="color:#0f6a62">Q'+(qi+1)+'.</strong> '+q.q+'</div>';
         html+='<button class="btn-ol btn-sm" style="font-size:10px;color:#c62828;flex-shrink:0;margin-left:8px" onclick="removeModQuestion('+idx+','+qi+')"><i class="fas fa-trash"></i></button>';
         html+='</div>';
         html+='<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:8px">';
@@ -207,8 +207,8 @@ function renderModuleSections(){
     }
     html+='</div>';
     // Add question form
-    html+='<div style="background:#f8f9ff;border:1px solid #e8eaed;border-radius:8px;padding:12px 14px;margin-top:10px">';
-    html+='<div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:8px"><i class="fas fa-plus-circle" style="margin-right:4px"></i>Add Question to Module '+(idx+1)+'</div>';
+    html+='<div style="background:#f6fbfa;border:1px solid #e8eaed;border-radius:8px;padding:12px 14px;margin-top:10px">';
+    html+='<div style="font-size:11px;font-weight:700;color:#0f6a62;margin-bottom:8px"><i class="fas fa-plus-circle" style="margin-right:4px"></i>Add Question to Module '+(idx+1)+'</div>';
     html+='<div class="fg" style="margin-bottom:8px"><input id="mq'+idx+'_text" placeholder="Enter question text..." style="width:100%;border:1px solid #ddd;border-radius:5px;padding:7px 10px;font-size:12px"></div>';
     html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">';
     html+='<input id="mq'+idx+'_a" placeholder="Option A *" style="border:1px solid #ddd;border-radius:5px;padding:6px 10px;font-size:12px">';
@@ -410,7 +410,7 @@ function saveAsDraft(){
   showToast('"'+name+'" saved as Draft'+modInfo+'. You can continue editing later.','info');
 }
 
-function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0f6a62','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0f6a62')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
 
 /* --- Validity Period Auto-Calc --- */
 function updateValidityPeriod(){

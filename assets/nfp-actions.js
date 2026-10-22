@@ -18,7 +18,7 @@ function showToast(message, type) {
   type = type || 'success';
   var colors = {
     success: { bg: '#e8f5e9', border: '#a5d6a7', color: '#1b5e20', icon: 'fa-check-circle' },
-    info: { bg: '#e3f2fd', border: '#90caf9', color: '#0d47a1', icon: 'fa-info-circle' },
+    info: { bg: '#e8f5f2', border: '#a6dace', color: '#0f6a62', icon: 'fa-info-circle' },
     warning: { bg: '#fff8e1', border: '#ffe082', color: '#e65100', icon: 'fa-exclamation-triangle' },
     error: { bg: '#ffebee', border: '#ef9a9a', color: '#b71c1c', icon: 'fa-times-circle' }
   };

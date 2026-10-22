@@ -7,19 +7,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#1a237e}
+:root{--sb:#002624}
 .cc-tab{padding:9px 18px;border:none;background:transparent;border-bottom:3px solid transparent;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:.2s}
-.cc-tab.active{color:#1a237e;border-bottom-color:#1a237e}
-.cc-tab:hover{color:#1a237e}
+.cc-tab.active{color:#002624;border-bottom-color:#002624}
+.cc-tab:hover{color:#002624}
 .tier-table th{font-size:11px;color:#5f6368;font-weight:700;padding:9px 10px;white-space:nowrap;background:#f8f9fa}
 .tier-table td{padding:8px 10px;vertical-align:middle;border-bottom:1px solid #f1f3f4}
 .tier-table input[type=number]{width:90px;padding:5px 8px;border:1px solid #dadce0;border-radius:6px;font-size:12px;text-align:right}
-.tier-table input[type=number]:focus{outline:none;border-color:#1a237e;box-shadow:0 0 0 3px rgba(26,35,126,.1)}
+.tier-table input[type=number]:focus{outline:none;border-color:#002624;box-shadow:0 0 0 3px rgba(0,38,36,.1)}
 .tier-table input.err{border-color:#d32f2f;background:#fff5f5}
 .tier-table select{padding:5px 8px;border:1px solid #dadce0;border-radius:6px;font-size:12px;width:160px}
 .level-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px}
-.lb-sfmo{background:#e8eaf6;color:#1a237e}
-.lb-nfmo{background:#e3f2fd;color:#0d47a1}
+.lb-sfmo{background:#e6efee;color:#002624}
+.lb-nfmo{background:#e8f5f2;color:#0f6a62}
 .lb-fmo{background:#e0f2f1;color:#004d40}
 .lb-sga{background:#f3e5f5;color:#4a148c}
 .lb-mga{background:#fff3e0;color:#e65100}
@@ -30,10 +30,10 @@
 .approval-banner.none{background:#f8f9fa;border-color:#e8eaed}
 .split-row{display:none}
 .routing-badge{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600}
-.rb-direct{background:#e3f2fd;color:#0d47a1}
+.rb-direct{background:#e8f5f2;color:#0f6a62}
 .rb-upline{background:#e8f5e9;color:#1b5e20}
 .rb-split{background:#fff3e0;color:#e65100}
-.preview-impact-card{background:linear-gradient(135deg,#e8eaf6,#e3f2fd);border:1px solid #c5cae9;border-radius:12px;padding:16px 20px;margin-bottom:14px}
+.preview-impact-card{background:linear-gradient(135deg,#e6efee,#e8f5f2);border:1px solid #cdebe4;border-radius:12px;padding:16px 20px;margin-bottom:14px}
 .audit-row{font-size:12px}
 .readonly-overlay{position:relative}
 .readonly-overlay::after{content:"Archived — Read Only";position:absolute;inset:0;background:rgba(248,249,250,.75);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#5f6368;pointer-events:none}
@@ -89,13 +89,13 @@
   <div style="display:flex;align-items:center;gap:10px">
     <button class="btn-ol btn-sm" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
     <div>
-      <div style="font-size:15px;font-weight:700;color:#1a237e"><i class="fas fa-sliders-h" style="margin-right:8px"></i>Commission Configuration</div>
+      <div style="font-size:15px;font-weight:700;color:#002624"><i class="fas fa-sliders-h" style="margin-right:8px"></i>Commission Configuration</div>
       <div style="font-size:11px;color:#5f6368">Override Tiers &bull; Payment Routing &bull; Dual-Approval Workflow</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <div style="font-size:12px;color:#5f6368"><i class="fas fa-calendar-alt" style="margin-right:4px;color:#1a237e"></i>Plan Year:</div>
-    <select id="globalPlanYear" onchange="planYearChanged(this.value)" style="padding:7px 12px;border:1px solid #dadce0;border-radius:8px;font-size:13px;font-weight:600;color:#1a237e">
+    <div style="font-size:12px;color:#5f6368"><i class="fas fa-calendar-alt" style="margin-right:4px;color:#002624"></i>Plan Year:</div>
+    <select id="globalPlanYear" onchange="planYearChanged(this.value)" style="padding:7px 12px;border:1px solid #dadce0;border-radius:8px;font-size:13px;font-weight:600;color:#002624">
       <option value="2027">2027 (Draft)</option>
       <option value="2026" selected>2026 (Active)</option>
       <option value="2025">2025 (Archived)</option>
@@ -137,7 +137,7 @@
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <div>
-        <h5 style="margin:0;color:#1a237e">Override Commission Tier Configuration</h5>
+        <h5 style="margin:0;color:#002624">Override Commission Tier Configuration</h5>
         <div style="font-size:12px;color:#5f6368;margin-top:3px">Set Initial and Renewal/Lifetime override Min/Max amounts per hierarchy level. Roll-up amounts auto-calculate when intermediate levels are absent.</div>
       </div>
       <div style="display:flex;gap:8px">
@@ -149,9 +149,9 @@
 
     <!-- Stats -->
     <div class="row-grid" style="margin-bottom:16px">
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Plan Year</div><div class="stat-val" id="overridePlanYear">2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e6efee;color:#002624"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Plan Year</div><div class="stat-val" id="overridePlanYear">2026</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Approval Status</div><div class="stat-val" id="overrideApprovalStatus" style="font-size:14px">None</div></div></div></div>
-      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Active Enrollments</div><div class="stat-val">4,218</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-users"></i></div><div><div class="stat-label">Active Enrollments</div><div class="stat-val">4,218</div></div></div></div>
       <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-coins"></i></div><div><div class="stat-label">Est. Monthly Override</div><div class="stat-val" id="estMonthly">$84,360</div></div></div></div>
     </div>
 
@@ -166,22 +166,22 @@
 
     <div class="card">
       <div class="card-hdr">
-        <h5><i class="fas fa-table" style="margin-right:8px;color:#1a237e"></i>Override Tier Table <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">All amounts in USD &bull; Per enrollment per month</small></h5>
+        <h5><i class="fas fa-table" style="margin-right:8px;color:#002624"></i>Override Tier Table <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">All amounts in USD &bull; Per enrollment per month</small></h5>
       </div>
       <div style="overflow-x:auto">
         <table class="tier-table" style="width:100%;border-collapse:collapse">
           <thead>
             <tr>
               <th style="min-width:130px">Hierarchy Level</th>
-              <th colspan="2" style="text-align:center;background:#e3f2fd;color:#0d47a1;border-left:2px solid #90caf9">Initial Override</th>
+              <th colspan="2" style="text-align:center;background:#e8f5f2;color:#0f6a62;border-left:2px solid #a6dace">Initial Override</th>
               <th colspan="2" style="text-align:center;background:#e8f5e9;color:#1b5e20;border-left:2px solid #a5d6a7">Renewal Override</th>
               <th colspan="2" style="text-align:center;background:#f3e5f5;color:#4a148c;border-left:2px solid #ce93d8">Lifetime Override</th>
               <th style="text-align:center">Roll-up Eligible</th>
             </tr>
             <tr>
               <th></th>
-              <th style="text-align:right;background:#e3f2fd;color:#0d47a1;font-size:10px">Min ($)</th>
-              <th style="text-align:right;background:#e3f2fd;color:#0d47a1;font-size:10px;border-right:2px solid #90caf9">Max ($)</th>
+              <th style="text-align:right;background:#e8f5f2;color:#0f6a62;font-size:10px">Min ($)</th>
+              <th style="text-align:right;background:#e8f5f2;color:#0f6a62;font-size:10px;border-right:2px solid #a6dace">Max ($)</th>
               <th style="text-align:right;background:#e8f5e9;color:#1b5e20;font-size:10px">Min ($)</th>
               <th style="text-align:right;background:#e8f5e9;color:#1b5e20;font-size:10px;border-right:2px solid #a5d6a7">Max ($)</th>
               <th style="text-align:right;background:#f3e5f5;color:#4a148c;font-size:10px">Min ($)</th>
@@ -198,7 +198,7 @@
 
     <!-- Roll-up Calculator -->
     <div class="card" style="margin-top:16px">
-      <div class="card-hdr"><h5><i class="fas fa-calculator" style="margin-right:8px;color:#1a237e"></i>Roll-up Scenario Calculator <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Simulate absent levels to calculate roll-up amounts</small></h5></div>
+      <div class="card-hdr"><h5><i class="fas fa-calculator" style="margin-right:8px;color:#002624"></i>Roll-up Scenario Calculator <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Simulate absent levels to calculate roll-up amounts</small></h5></div>
       <div class="card-body">
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
           <span style="font-size:12px;font-weight:700;color:#333">Select absent levels:</span>
@@ -215,7 +215,7 @@
   <div id="tabRouting" style="display:none">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <div>
-        <h5 style="margin:0;color:#1a237e">Payment Routing Configuration</h5>
+        <h5 style="margin:0;color:#002624">Payment Routing Configuration</h5>
         <div style="font-size:12px;color:#5f6368;margin-top:3px">Define how commissions are routed per hierarchy level: Direct to Agent, Assign to Upline, or Split. Drives onboarding ACH field visibility.</div>
       </div>
       <div style="display:flex;gap:8px">
@@ -244,7 +244,7 @@
     </div>
 
     <div class="card">
-      <div class="card-hdr"><h5><i class="fas fa-route" style="margin-right:8px;color:#1a237e"></i>Payment Routing per Level <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Plan Year: <span id="routingPlanYearLabel">2026</span></small></h5></div>
+      <div class="card-hdr"><h5><i class="fas fa-route" style="margin-right:8px;color:#002624"></i>Payment Routing per Level <small style="font-weight:400;color:#5f6368;font-size:11px;margin-left:6px">Plan Year: <span id="routingPlanYearLabel">2026</span></small></h5></div>
       <div style="overflow-x:auto">
         <table class="tier-table" style="width:100%;border-collapse:collapse">
           <thead>
@@ -267,12 +267,12 @@
 
     <!-- ACH Onboarding Impact -->
     <div class="card" style="margin-top:16px">
-      <div class="card-hdr"><h5><i class="fas fa-university" style="margin-right:8px;color:#1a237e"></i>ACH Onboarding Impact Summary</h5></div>
+      <div class="card-hdr"><h5><i class="fas fa-university" style="margin-right:8px;color:#002624"></i>ACH Onboarding Impact Summary</h5></div>
       <div class="card-body">
         <div style="display:flex;gap:20px;flex-wrap:wrap">
-          <div style="flex:1;min-width:200px;background:#e3f2fd;border-radius:10px;padding:14px">
-            <div style="font-size:11px;font-weight:700;color:#0d47a1;margin-bottom:6px"><i class="fas fa-credit-card" style="margin-right:4px"></i>Requires ACH (Direct)</div>
-            <div style="font-size:22px;font-weight:800;color:#0d47a1" id="achDirectCount">1</div>
+          <div style="flex:1;min-width:200px;background:#e8f5f2;border-radius:10px;padding:14px">
+            <div style="font-size:11px;font-weight:700;color:#0f6a62;margin-bottom:6px"><i class="fas fa-credit-card" style="margin-right:4px"></i>Requires ACH (Direct)</div>
+            <div style="font-size:22px;font-weight:800;color:#0f6a62" id="achDirectCount">1</div>
             <div style="font-size:11px;color:#5f6368">levels require agent banking details during onboarding</div>
           </div>
           <div style="flex:1;min-width:200px;background:#e8f5e9;border-radius:10px;padding:14px">
@@ -294,7 +294,7 @@
   <div id="tabAuditLog" style="display:none">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div>
-        <h5 style="margin:0;color:#1a237e">Commission Configuration Audit Log</h5>
+        <h5 style="margin:0;color:#002624">Commission Configuration Audit Log</h5>
         <div style="font-size:12px;color:#5f6368;margin-top:3px">All override tier and routing changes with before/after values, approver, and effective date. Immutable records — 7 year retention.</div>
       </div>
       <button class="btn-ol btn-sm" onclick="exportAuditLog()"><i class="fas fa-download" style="margin-right:4px"></i>Export CSV</button>
@@ -320,7 +320,7 @@
     </div>
 
     <div class="card">
-      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#1a237e"></i>Audit Log</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-config_AuditLog')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#002624"></i>Audit Log</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-config_AuditLog')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
       <div class="table-wrap">
         <table class="tbl" id="tblExport1">
           <thead>
@@ -470,7 +470,7 @@
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
       <div style="text-align:center;flex:1">
         <div style="font-size:11px;color:#5f6368;font-weight:700">CURRENT Monthly Override</div>
-        <div style="font-size:26px;font-weight:800;color:#1a237e">$84,360</div>
+        <div style="font-size:26px;font-weight:800;color:#002624">$84,360</div>
       </div>
       <div style="display:flex;align-items:center;font-size:22px;color:#5f6368">&rarr;</div>
       <div style="text-align:center;flex:1">
@@ -615,8 +615,8 @@ function renderOverrideTiers() {
         +'<div style="font-size:10px;color:#5f6368">Rank '+lvl.rank+'</div>'
         +(lvl.rollup?'<span style="font-size:10px;background:#fff3e0;color:#e65100;padding:1px 6px;border-radius:8px;display:inline-block;margin-top:2px"><i class="fas fa-arrow-up" style="font-size:8px"></i> Roll-up eligible</span>':'')
         +'</td>'
-        +'<td style="background:#f9fbff"><input type="number" id="iMin'+lvl.id+'" value="'+lvl.initMin.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+')" placeholder="0.00"></td>'
-        +'<td style="background:#f9fbff;border-right:2px solid #e3f2fd"><input type="number" id="iMax'+lvl.id+'" value="'+lvl.initMax.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+')" placeholder="0.00"></td>'
+        +'<td style="background:#f6fbfa"><input type="number" id="iMin'+lvl.id+'" value="'+lvl.initMin.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+')" placeholder="0.00"></td>'
+        +'<td style="background:#f6fbfa;border-right:2px solid #e8f5f2"><input type="number" id="iMax'+lvl.id+'" value="'+lvl.initMax.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+')" placeholder="0.00"></td>'
         +'<td style="background:#f9fff9"><input type="number" id="rMin'+lvl.id+'" value="'+lvl.renewMin.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+');syncLifetime('+lvl.id+')" placeholder="0.00"></td>'
         +'<td style="background:#f9fff9;border-right:2px solid #e8f5e9"><input type="number" id="rMax'+lvl.id+'" value="'+lvl.renewMax.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+');syncLifetime('+lvl.id+')" placeholder="0.00"></td>'
         +'<td style="background:#fdf9ff"><input type="number" id="lMin'+lvl.id+'" value="'+lvl.lifeMin.toFixed(2)+'" step="0.01" min="0" '+dis+' onchange="validateRow('+lvl.id+')" placeholder="0.00"></td>'
@@ -763,7 +763,7 @@ function calcRollup() {
   });
   var result='<div style="margin-bottom:8px;font-weight:700;color:#333">Absent Levels Roll-up Calculation:</div>'
     +lines.join('')
-    +'<div style="display:flex;justify-content:space-between;padding:8px 0;font-weight:700;border-top:2px solid #1a237e;margin-top:4px"><span>Total Roll-up Amount (added to next present upline)</span><span style="color:#1a237e;font-size:14px">$'+rollupTotal.toFixed(2)+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;padding:8px 0;font-weight:700;border-top:2px solid #002624;margin-top:4px"><span>Total Roll-up Amount (added to next present upline)</span><span style="color:#002624;font-size:14px">$'+rollupTotal.toFixed(2)+'</span></div>'
     +'<div style="font-size:11px;color:#5f6368;margin-top:6px"><i class="fas fa-info-circle" style="margin-right:4px"></i>This amount would be added to the Initial Override Max of the nearest present upline level in the enrollment chain.</div>';
   document.getElementById('rollupResult').innerHTML=result;
 }
@@ -930,8 +930,8 @@ function exportAuditLog() {
    ========================================================= */
 function showAlertCC(zone,msg,type) {
   if(!zone)return;
-  var c={danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
-  var b={danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var c={danger:'#fce4ec',warning:'#fff8e1',info:'#e8f5f2',success:'#e8f5e9'};
+  var b={danger:'#ef9a9a',warning:'#ffe082',info:'#a6dace',success:'#a5d6a7'};
   var ic={danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
   zone.innerHTML='<div style="background:'+c[type]+';border:1px solid '+b[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+ic[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
   zone.style.display='block';
@@ -939,7 +939,7 @@ function showAlertCC(zone,msg,type) {
 }
 
 function showToastCC(msg,type) {
-  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#f57f17',info:'#0d47a1'};
+  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#f57f17',info:'#0f6a62'};
   var t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:28px;right:24px;background:'+(colors[type]||colors.info)+';color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:380px;transition:opacity .3s';
   t.textContent=msg;document.body.appendChild(t);

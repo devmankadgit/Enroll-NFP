@@ -7,33 +7,33 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="../assets/nfp.css">
 <style>
-body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+body{background:linear-gradient(135deg,#002624 0%,#04403D 50%,#085a55 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .reg-container{background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:680px;width:100%;overflow:hidden}
-.reg-header{background:#1a237e;color:#fff;padding:28px 32px;text-align:center}
+.reg-header{background:linear-gradient(135deg,#002624 0%,#085a55 55%,#147966 100%);color:#fff;padding:28px 32px;text-align:center}
 .reg-header h2{font-size:20px;margin:0 0 6px;font-weight:700}
 .reg-header p{opacity:.85;font-size:13px;margin:0}
-.reg-logo{font-size:28px;margin-bottom:10px}
+.reg-logo{width:52px;height:52px;margin:0 auto 12px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center}
 .reg-body{padding:28px 32px}
 .reg-body .form-label{font-weight:600;font-size:12px;color:#333;margin-bottom:4px}
 .reg-body .form-control,.reg-body .form-select{font-size:13px;border-radius:8px;border:1px solid #dadce0;padding:10px 14px}
-.reg-body .form-control:focus,.reg-body .form-select:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(26,35,126,.1)}
-.reg-note{background:#e3f2fd;border-radius:8px;padding:12px 16px;font-size:12px;color:#0d47a1;margin-bottom:16px}
+.reg-body .form-control:focus,.reg-body .form-select:focus{border-color:#002624;box-shadow:0 0 0 3px rgba(0,38,36,.1)}
+.reg-note{background:#e8f5f2;border-radius:8px;padding:12px 16px;font-size:12px;color:#0f6a62;margin-bottom:16px}
 .reg-warn{background:#fff8e1;border-radius:8px;padding:12px 16px;font-size:12px;color:#e65100;margin-bottom:16px}
 .reg-success{background:#e8f5e9;border-radius:8px;padding:12px 16px;font-size:12px;color:#1b5e20;display:none;margin-bottom:16px}
 .reg-footer{background:#f8f9fa;padding:16px 32px;text-align:center;font-size:11px;color:#5f6368;border-top:1px solid #e8eaed}
 .npn-check{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-top:4px}
 .state-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
 .state-chip{padding:6px 10px;border:1px solid #dadce0;border-radius:6px;font-size:11px;text-align:center;cursor:pointer;transition:all .15s}
-.state-chip:hover{border-color:#1a237e;background:#e8eaf6}
-.state-chip.selected{background:#1a237e;color:#fff;border-color:#1a237e}
-.pathway-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:600;background:#e8eaf6;color:#1a237e}
+.state-chip:hover{border-color:#002624;background:#e6efee}
+.state-chip.selected{background:#002624;color:#fff;border-color:#002624}
+.pathway-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:600;background:#e6efee;color:#002624}
 </style>
 </head>
 <body>
 
 <div class="reg-container">
   <div class="reg-header">
-    <div class="reg-logo"><i class="fas fa-heartbeat"></i></div>
+    <div class="reg-logo"><img src="../assets/brand/enrollaxis-icon.svg" alt="Enrollaxis" width="34" height="34"></div>
     <h2>Agent Self-Registration</h2>
     <p>Initiate your contracting request with Gold Kidney Health Plan</p>
     <div style="margin-top:10px"><span class="pathway-badge" style="background:rgba(255,255,255,.15);color:#fff"><i class="fas fa-route"></i> Self-Registration Pathway</span></div>
@@ -59,7 +59,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-
 
     <form id="selfRegForm">
       <!-- Section 1: Identity -->
-      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</h6>
+      <h6 style="font-size:13px;font-weight:700;color:#002624;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</h6>
 
       <div class="row mb-3">
         <div class="col-md-6">
@@ -84,7 +84,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-
       </div>
 
       <!-- Section 2: NPN & Licensing -->
-      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-id-badge" style="margin-right:6px"></i>NPN & Licensing</h6>
+      <h6 style="font-size:13px;font-weight:700;color:#002624;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-id-badge" style="margin-right:6px"></i>NPN & Licensing</h6>
 
       <div class="mb-3">
         <label class="form-label">National Producer Number (NPN) <span class="text-danger">*</span></label>
@@ -115,7 +115,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-
       </div>
 
       <!-- Section 3: Upline (Optional) -->
-      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-sitemap" style="margin-right:6px"></i>Upline Information (Optional)</h6>
+      <h6 style="font-size:13px;font-weight:700;color:#002624;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-sitemap" style="margin-right:6px"></i>Upline Information (Optional)</h6>
 
       <div class="reg-note" style="background:#f3e5f5;color:#4a148c">
         <i class="fas fa-question-circle" style="margin-right:6px"></i>
@@ -147,7 +147,7 @@ body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-
       </div>
 
       <!-- Section 4: Additional -->
-      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>Additional Details</h6>
+      <h6 style="font-size:13px;font-weight:700;color:#002624;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>Additional Details</h6>
 
       <div class="row mb-3">
         <div class="col-md-6">

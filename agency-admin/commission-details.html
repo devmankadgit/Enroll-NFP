@@ -44,7 +44,7 @@
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
       <h4>Commission Details &mdash; Member Level</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="commissions.html">Commissions</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li id="breadcrumbAgent">Details</li></ol>
     </div>
@@ -62,13 +62,13 @@
           <div style="display:flex;align-items:center;gap:14px">
             <div style="width:48px;height:48px;border-radius:50%;background:#e65100;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px" id="agentAvatar">?</div>
             <div>
-              <div style="font-weight:700;font-size:16px;color:#1a237e" id="agentNameTitle">Loading...</div>
+              <div style="font-weight:700;font-size:16px;color:#002624" id="agentNameTitle">Loading...</div>
               <div style="font-size:12px;color:#5f6368">NPN: <strong id="agentNPNTitle">—</strong> &nbsp;|&nbsp; <span id="agentTypeTitle"></span></div>
             </div>
           </div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
             <div style="text-align:center;background:#e8f5e9;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Total Net</div><div style="font-weight:700;font-size:18px;color:#1b5e20" id="totalNet">—</div></div>
-            <div style="text-align:center;background:#e3f2fd;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Initial</div><div style="font-weight:700;font-size:16px;color:#0d47a1" id="totalInitial">—</div></div>
+            <div style="text-align:center;background:#e8f5f2;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Initial</div><div style="font-weight:700;font-size:16px;color:#0f6a62" id="totalInitial">—</div></div>
             <div style="text-align:center;background:#f3e5f5;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Renewal</div><div style="font-weight:700;font-size:16px;color:#6a1b9a" id="totalRenewal">—</div></div>
             <div style="text-align:center;background:#ffebee;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Chargebacks</div><div style="font-weight:700;font-size:16px;color:#c62828" id="totalChargeback">—</div></div>
             <div style="text-align:center;background:#f8f9fa;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Members</div><div style="font-weight:700;font-size:16px;color:#333" id="totalMembers">—</div></div>
@@ -126,7 +126,7 @@
     <!-- Member-Level Commission Table -->
     <div class="card mb16">
       <div class="card-hdr">
-        <h5><i class="fas fa-list-alt" style="margin-right:8px;color:#0d47a1"></i>Member-Level Commission Details</h5>
+        <h5><i class="fas fa-list-alt" style="margin-right:8px;color:#0f6a62"></i>Member-Level Commission Details</h5>
         <div class="dflex g8">
           <span id="filterResultCount" style="font-size:12px;color:#5f6368;align-self:center"></span>
           <button class="btn-ol btn-sm" onclick="exportTableToExcel('commDetailTable','commission_details')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
@@ -160,7 +160,7 @@
   </div>
 </div>
 
-<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+<footer style="background:#002624;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
   <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
   <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
   <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
@@ -298,7 +298,7 @@ function applyFilters() {
   var body = document.getElementById('commDetailBody');
   var foot = document.getElementById('commDetailFoot');
   if (!filtered.length) {
-    body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#666;padding:20px"><i class="fas fa-search" style="font-size:18px;display:block;margin-bottom:6px;color:#c5cae9"></i>No commission records match the selected filters.</td></tr>';
+    body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#666;padding:20px"><i class="fas fa-search" style="font-size:18px;display:block;margin-bottom:6px;color:#cdebe4"></i>No commission records match the selected filters.</td></tr>';
     foot.innerHTML = '';
     return;
   }

@@ -96,7 +96,7 @@
         <div><div class="m-val">88%</div><div class="m-label">PQAT Compliance</div><div class="m-sub" style="color:#c62828"><i class="fas fa-arrow-down"></i> 3% below target</div></div>
       </div>
       <div class="metric-tile">
-        <div class="m-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-graduation-cap"></i></div>
+        <div class="m-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-graduation-cap"></i></div>
         <div><div class="m-val">96%</div><div class="m-label">Training Completion</div><div class="m-sub" style="color:#5f6368">Active agents certified</div></div>
       </div>
       <div class="metric-tile">
@@ -143,7 +143,7 @@
               <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2e7d32;margin-right:6px;vertical-align:middle"></span>Active &amp; Valid (142)</div>
               <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f57c00;margin-right:6px;vertical-align:middle"></span>Expiring 30d (12)</div>
               <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#c62828;margin-right:6px;vertical-align:middle"></span>Expired/Suspended (3)</div>
-              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1565c0;margin-right:6px;vertical-align:middle"></span>Pending Verification (8)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#147966;margin-right:6px;vertical-align:middle"></span>Pending Verification (8)</div>
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@
               <td><span class="bdg b-blue">Rate Compliance</span></td>
               <td>J. Martinez</td><td>8823441</td>
               <td style="font-size:11px">CMS rate validation passed. Initial commission $640, renewal PMPM $32.50 — matches CMS-published maximums for CY2026.</td>
-              <td style="font-weight:700;color:#1565c0">$640 init</td>
+              <td style="font-weight:700;color:#147966">$640 init</td>
               <td><span class="bdg b-green">Validated</span></td>
               <td><button class="btn-ol btn-sm" onclick="openFlagDetail(3)"><i class="fas fa-eye"></i></button></td>
             </tr>
@@ -226,13 +226,13 @@
 <script src="../assets/nfp-actions.js"></script>
 <script>
 // Compliance Trends
-new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Overall',data:[91,92,93,93.5,94,94.2],borderColor:'#004d40',fill:false,tension:.3},{label:'License',data:[94,95,95,96,96,96],borderColor:'#1565c0',fill:false,tension:.3},{label:'AHIP',data:[89,90,91,92,93,93],borderColor:'#6a1b9a',fill:false,tension:.3}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:85,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Overall',data:[91,92,93,93.5,94,94.2],borderColor:'#004d40',fill:false,tension:.3},{label:'License',data:[94,95,95,96,96,96],borderColor:'#147966',fill:false,tension:.3},{label:'AHIP',data:[89,90,91,92,93,93],borderColor:'#6a1b9a',fill:false,tension:.3}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:85,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
 
 // Agent Credentials Status
-new Chart(document.getElementById('credChart'),{type:'doughnut',data:{labels:['Active & Valid','Expiring (30d)','Expired/Suspended','Pending Verification'],datasets:[{data:[142,12,3,8],backgroundColor:['#2e7d32','#f57c00','#c62828','#1565c0']}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('credChart'),{type:'doughnut',data:{labels:['Active & Valid','Expiring (30d)','Expired/Suspended','Pending Verification'],datasets:[{data:[142,12,3,8],backgroundColor:['#2e7d32','#f57c00','#c62828','#147966']}]},options:{responsive:true,plugins:{legend:{display:false}}}});
 
 // NIPR Analytics
-new Chart(document.getElementById('niprChart'),{type:'bar',data:{labels:['License Expired','License Suspended','CE Incomplete','Not Found','Expiring Soon'],datasets:[{label:'Alerts',data:[5,3,4,2,4],backgroundColor:['#c62828','#e65100','#f57c00','#757575','#1565c0'],borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
+new Chart(document.getElementById('niprChart'),{type:'bar',data:{labels:['License Expired','License Suspended','CE Incomplete','Not Found','Expiring Soon'],datasets:[{label:'Alerts',data:[5,3,4,2,4],backgroundColor:['#c62828','#e65100','#f57c00','#757575','#147966'],borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
 
 // SOA Compliance
 new Chart(document.getElementById('soaChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'SOA Rate',data:[97.5,98.0,98.2,98.3,98.4,98.5],borderColor:'#2e7d32',backgroundColor:'rgba(46,125,50,0.1)',fill:true,tension:.3},{label:'Target',data:[98,98,98,98,98,98],borderColor:'#c62828',borderDash:[5,5],fill:false}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:96,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
@@ -251,7 +251,7 @@ var FLAG_DATA = [
    details:'Agent voluntarily terminated 05 20,2026. Per policy, earned renewal PMPM commissions are preserved for 42 active members and routed to upline.',
    timeline:['May 20 — Agent termination (voluntary, non-fraud)','May 20 — Renewal commission routing updated to upline GA','May 21 — Upline (Pacific Insurance Group) confirmed receipt','Ongoing — $3,150/mo PMPM continues per hierarchy config'],
    action:'No recovery needed. Renewal commissions preserved per non-fraud termination policy. Upline receives ongoing PMPM payments.'},
-  {title:'Rate Compliance — J. Martinez',agent:'J. Martinez',npn:'8823441',flag:'Rate Compliance',status:'Validated',amount:'$640 initial',color:'#1565c0',
+  {title:'Rate Compliance — J. Martinez',agent:'J. Martinez',npn:'8823441',flag:'Rate Compliance',status:'Validated',amount:'$640 initial',color:'#147966',
    details:'CMS rate validation passed for CY2026. Initial commission $640, renewal PMPM $32.50 — both within CMS-published maximums.',
    timeline:['Jan 15 — CMS publishes CY2026 maximum rates','Feb 1 — System rate config updated by Finance Admin','May 27 — Automated rate compliance check passed','No action required'],
    action:'All commission rates are within CMS maximums. No regulatory risk identified.'}
