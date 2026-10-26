@@ -1,5 +1,5 @@
 /**
- * EnrollAxis — shadcn-style Select enhancer
+ * EnrollAxis - shadcn-style Select enhancer
  * Progressive enhancement for <select class="ui-select">.
  */
 (function () {

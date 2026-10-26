@@ -1,5 +1,5 @@
 /**
- * EnrollAxis — shadcn-style Date Picker (Popover + Calendar)
+ * EnrollAxis - shadcn-style Date Picker (Popover + Calendar)
  * Progressive enhancement for <input class="ui-input" type="date">.
  */
 (function () {
