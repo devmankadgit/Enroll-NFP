@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=11">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=13">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -130,10 +130,104 @@
     gap: 0.75rem;
     margin-bottom: 0.75rem;
   }
-  .exam-seg-nav h3 { margin: 0; font-size: 0.875rem; font-weight: 600; }
-  @media (max-width: 560px) {
+  .exam-seg-nav-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .exam-seg-nav-top .exam-nav-back { justify-self: start; }
+  .exam-seg-nav-top .exam-nav-next { justify-self: end; }
+  .exam-seg-nav-top h3,
+  .exam-seg-nav h3 {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .exam-seg-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.625rem 1rem;
+    flex-wrap: wrap;
+    padding: 0.625rem 0.875rem;
+    border-radius: calc(var(--radius) - 4px);
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-left-width: 3px;
+    border-left-style: solid;
+  }
+  .exam-seg-banner-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .exam-seg-banner-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .exam-q-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 1.35;
+  }
+  .exam-q-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .exam-q-text { min-width: 0; flex: 1; }
+  @media (max-width: 640px) {
     .exam-meta-grid { grid-template-columns: 1fr 1fr; }
-    .exam-seg-nav { flex-wrap: wrap; }
+    .exam-seg-nav-top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .exam-seg-nav-top .exam-nav-back { grid-column: 1; grid-row: 1; }
+    .exam-seg-nav-top .exam-nav-next { grid-column: 2; grid-row: 1; }
+    .exam-seg-nav-top h3 {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      width: 100%;
+      justify-self: stretch;
+    }
+    .exam-seg-nav-top .ui-btn,
+    .exam-seg-nav .ui-btn {
+      width: auto;
+      max-width: 100%;
+      white-space: nowrap;
+    }
+    .exam-seg-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+    .exam-seg-banner-title {
+      flex: none;
+      width: 100%;
+    }
+    .exam-seg-banner-meta {
+      display: block;
+      width: 100%;
+      white-space: normal;
+      padding-left: 1.5rem;
+    }
   }
   .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   .summary-cell {
@@ -156,12 +250,116 @@
     background: #fafafa;
     margin-bottom: 0.75rem;
   }
-  .success-hero { text-align: center; padding: 2rem 1rem; }
+  .success-hero {
+    text-align: center;
+    padding: 1.75rem 1rem 1.25rem;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
   .success-icon {
-    width: 4.5rem; height: 4.5rem; border-radius: 9999px;
-    background: var(--accent); color: var(--primary);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 1rem; font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 9999px;
+    background: var(--accent);
+    color: var(--primary);
+    border: 1px solid var(--primary-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.75rem;
+  }
+  .success-hero h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    line-height: 1.3;
+  }
+  .success-hero-lead {
+    margin: 0 auto 1.5rem;
+    max-width: 28rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--muted-foreground);
+  }
+  .success-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem;
+    margin: 0 0 1.25rem;
+    text-align: left;
+  }
+  .success-meta-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+    min-height: 4.25rem;
+    padding: 0.75rem 0.875rem;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+  }
+  .success-meta-item .k {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  .success-meta-item .v {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--foreground);
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .success-meta-item .v.is-status { color: var(--primary); }
+  .success-next {
+    margin: 0 0 1.25rem;
+    padding: 0.875rem 1rem;
+    text-align: left;
+    background: var(--accent);
+    border: 1px solid var(--primary-200);
+    border-radius: calc(var(--radius) - 2px);
+  }
+  .success-next-title {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--primary);
+  }
+  .success-next ol {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--foreground);
+  }
+  .success-next li + li { margin-top: 0.35rem; }
+  .success-support {
+    margin: 0 0 1.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+  }
+  .success-support a { font-weight: 500; }
+  .success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.625rem;
+  }
+  @media (max-width: 560px) {
+    .success-meta { grid-template-columns: 1fr; }
+    .success-meta-item { min-height: 0; }
+    .success-hero { padding: 1.25rem 0.25rem 0.75rem; }
+    .success-hero h3 { font-size: 1.2rem; }
   }
   .ui-topbar h1,
   .ob-page-titles h1 {
@@ -247,8 +445,6 @@
     .seg-grid { grid-template-columns: 1fr 1fr; }
     .summary-grid { grid-template-columns: 1fr; }
     .contract-scroll { height: 140px; }
-    .success-hero { padding: 1.5rem 0.5rem; }
-    .success-icon { width: 3.75rem; height: 3.75rem; font-size: 1.65rem; }
   }
   @media (max-width: 560px) {
     .seg-grid { grid-template-columns: 1fr; }
@@ -516,14 +712,14 @@
                 <input type="file" id="ahipFile" accept=".pdf" onchange="handleUpload(this,'ahipUploadZone')">
               </label>
             </div>
-            <div style="display:flex;justify-content:flex-end;margin-top:0.5rem">
+            <div class="ui-section-actions">
               <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires live AHIP registry integration"><i class="fas fa-shield-alt"></i> Validate AHIP</button>
             </div>
           </div>
           <div class="ui-section">
             <h3 class="ui-section-title">State Selection / Selling Territories</h3>
             <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
-            <div id="stateCheckboxes">
+            <div class="ui-chip-row" id="stateCheckboxes" style="margin-bottom:0">
               <label class="ui-chip"><input type="checkbox" value="FL"> Florida</label>
               <label class="ui-chip"><input type="checkbox" value="TX"> Texas</label>
               <label class="ui-chip"><input type="checkbox" value="GA"> Georgia</label>
@@ -533,7 +729,7 @@
               <label class="ui-chip"><input type="checkbox" value="NC"> North Carolina</label>
               <label class="ui-chip"><input type="checkbox" value="IL"> Illinois</label>
             </div>
-            <div style="display:flex;justify-content:flex-end;margin-top:0.75rem">
+            <div class="ui-section-actions">
               <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires NIPR integration"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
             </div>
           </div>
@@ -569,10 +765,10 @@
             <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.5rem 0 0">Click a segment to open its certification exam.</p>
           </div>
           <div class="ui-section" id="examSection" style="display:none">
-            <div class="exam-seg-nav">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
+            <div class="exam-seg-nav-top">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
               <h3 class="ui-section-title" style="margin:0;letter-spacing:0.04em">Certification Exams</h3>
-              <button type="button" class="ui-btn ui-btn-sm" id="nextSegTopBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
+              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegTopBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="exam-meta-grid">
               <div class="exam-meta-cell"><div class="k">Pass Score</div><div class="v">85% avg</div></div>
@@ -597,8 +793,8 @@
             </div>
             <div id="examConsolidatedResult" style="display:none"></div>
             <div class="exam-seg-nav" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
-              <button type="button" class="ui-btn ui-btn-sm" id="nextSegBottomBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
+              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegBottomBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
             </div>
           </div>
         </div>
@@ -718,25 +914,55 @@
       <!-- STEP 8 -->
       <section class="ob-section ui-card" id="obStep7">
         <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:0.5rem"></i>Step 8: Submission Complete</h2>
+          <h2 class="ui-card-title"><i class="fas fa-check-circle" style="color:var(--primary);margin-right:0.5rem"></i>Step 8: Submission Complete</h2>
         </div>
         <div class="ui-card-content">
           <div class="success-hero">
-            <div class="success-icon"><i class="fas fa-check"></i></div>
-            <h3 style="color:#1b5e20;margin:0 0 0.5rem">Onboarding Application Submitted!</h3>
-            <p style="color:var(--muted-foreground);font-size:0.8125rem;max-width:32rem;margin:0 auto 1.25rem">
-              Your application is pending payer admin review. You will receive an email after approval before status changes to <strong>Active / Ready to Sell</strong>.
+            <div class="success-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+            <h3>Onboarding Application Submitted!</h3>
+            <p class="success-hero-lead">
+              Your application is with the payer admin team for review. Training completion does not activate your profile automatically. You will get an email when your status changes to <strong>Active / Ready to Sell</strong>.
             </p>
-            <div class="summary-grid" style="max-width:25rem;margin:0 auto 1.25rem;text-align:left">
-              <div class="summary-cell"><div class="k">Case ID</div><div class="v" id="caseID">OB-2026-0001</div></div>
-              <div class="summary-cell"><div class="k">Status</div><div class="v"><span class="ui-badge ui-badge-secondary">Pending Admin Approval</span></div></div>
-              <div class="summary-cell"><div class="k">Submitted</div><div class="v" id="submitDate"></div></div>
-              <div class="summary-cell"><div class="k">Estimated Review</div><div class="v">3-5 Business Days</div></div>
+
+            <div class="success-meta" role="list">
+              <div class="success-meta-item" role="listitem">
+                <div class="k">Case ID</div>
+                <div class="v" id="caseID">OB-2026-0001</div>
+              </div>
+              <div class="success-meta-item" role="listitem">
+                <div class="k">Status</div>
+                <div class="v is-status">Pending Admin Approval</div>
+              </div>
+              <div class="success-meta-item" role="listitem">
+                <div class="k">Submitted</div>
+                <div class="v" id="submitDate">-</div>
+              </div>
+              <div class="success-meta-item" role="listitem">
+                <div class="k">Estimated Review</div>
+                <div class="v">3-5 Business Days</div>
+              </div>
             </div>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin-bottom:1.25rem">
-              Questions? <a href="mailto:brokersupport@EnrollAxis.com">brokersupport@EnrollAxis.com</a> | (800) 555-GOLD ext. 2
+
+            <div class="success-next">
+              <div class="success-next-title">What happens next</div>
+              <ol>
+                <li>Admin reviews your licensing, training, and background results.</li>
+                <li>You receive an email when the decision is ready.</li>
+                <li>After approval, your agent portal unlocks for selling.</li>
+              </ol>
+            </div>
+
+            <p class="success-support">
+              Questions?
+              <a href="mailto:brokersupport@enrollaxis.com">brokersupport@enrollaxis.com</a>
+              <span aria-hidden="true"> · </span>
+              <a href="tel:+18005550100">(800) 555-0100</a>
             </p>
-            <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+
+            <div class="success-actions">
+              <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+              <a href="documents.html" class="ui-btn ui-btn-outline"><i class="fas fa-folder-open"></i> View Documents</a>
+            </div>
           </div>
         </div>
       </section>
@@ -751,6 +977,7 @@
 
 <script src="../assets/ui-select.js"></script>
 <script src="../assets/ui-calendar.js"></script>
+<script src="../assets/ui-label.js"></script>
 <script src="../assets/nfp-actions.js"></script>
 <script>
 (function () {
@@ -797,6 +1024,10 @@
     if (mbLabel) mbLabel.textContent = stepText;
     if (mbFill) mbFill.style.width = pct;
     if (mbName) mbName.textContent = labels[n];
+    if (n === 7) {
+      var dateEl = document.getElementById('submitDate');
+      if (dateEl && (!dateEl.textContent || dateEl.textContent === '-')) finalizeSubmissionMeta();
+    }
     window.scrollTo(0, 0);
   };
 
@@ -814,11 +1045,24 @@
         if (typeof showToast === 'function') showToast('Please agree to the contract and type your legal name.', 'info');
         return;
       }
-      document.getElementById('submitDate').textContent = new Date().toLocaleDateString();
+      finalizeSubmissionMeta();
     }
     drafts[n] = false;
     obGoTo(n + 1);
   };
+
+  function finalizeSubmissionMeta() {
+    var dateEl = document.getElementById('submitDate');
+    var caseEl = document.getElementById('caseID');
+    if (dateEl) {
+      dateEl.textContent = new Date().toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+    }
+    if (caseEl) {
+      caseEl.textContent = 'OB-2026-' + String(Math.floor(1000 + Math.random() * 9000));
+    }
+  }
 
   window.obBack = function (n) { obGoTo(n - 1); };
 
@@ -1050,12 +1294,12 @@ function selectExamSegment(idx) {
 function buildSegPanel(idx) {
   var s = examSegData[idx];
   var ab = s.accentBg, ac = s.accentColor;
-  var html = '<div style="background:' + ab + ';border-left:3px solid ' + ac + ';padding:0.625rem 0.875rem;border-radius:calc(var(--radius) - 4px);margin-bottom:1rem;display:flex;align-items:center;gap:0.625rem;font-size:0.8125rem;font-weight:700;color:' + ac + '"><i class="fas ' + s.icon + '"></i> Segment ' + s.id + ' Exam - ' + s.label + '<span style="margin-left:auto;font-size:0.75rem;font-weight:400;color:var(--muted-foreground)">5 Questions &bull; Pass: 60%</span></div>';
+  var html = '<div class="exam-seg-banner" style="background:' + ab + ';border-left-color:' + ac + ';color:' + ac + '"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' Exam - ' + s.label + '</span></div><div class="exam-seg-banner-meta">5 Questions &bull; Pass: 60%</div></div>';
   if (s.material) html += s.material;
   html += '<div class="seg-questions" id="segQ' + idx + '">';
   for (var qi = 0; qi < 5; qi++) {
     var q = s.questions[qi], nm = 'seg' + idx + 'q' + qi;
-    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:flex-start;gap:0.45rem"><span style="min-width:1.375rem;height:1.375rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.6875rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">' + (qi + 1) + '</span>' + q.q + '</div>';
+    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div class="exam-q-head" style="font-size:0.875rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:center;gap:0.5rem;line-height:1.35"><span class="exam-q-num" style="width:1.5rem;height:1.5rem;min-width:1.5rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.8125rem;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
     for (var oi = 0; oi < q.opts.length; oi++) {
       html += '<label class="q-option-label"><input type="radio" name="' + nm + '" value="' + oi + '"> <span class="q-text">' + q.opts[oi] + '</span></label>';
     }
