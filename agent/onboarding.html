@@ -4,28 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=11">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
   .progress-box {
     padding: 0.85rem 0.9rem;
     background: var(--accent);
-    border: 1px solid #c9ebe3;
+    border: 1px solid var(--primary-200);
     border-radius: 0.65rem;
     margin-bottom: 0.9rem;
   }
   .progress-box .label {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     font-weight: 700;
     font-family: var(--font-heading);
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: .04em;
     color: var(--primary);
     margin-bottom: 0.35rem;
   }
-  .progress-box .value { font-size: 0.75rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
-  .progress-box .ui-progress { margin-top: 0.55rem; background: #d2e8e2; height: 0.4rem; }
+  .progress-box .value { font-size: 0.8125rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
+  .progress-box .ui-progress { margin-top: 0.55rem; background: var(--secondary-400); height: 0.4rem; }
   .progress-box .ui-progress-bar { background: var(--primary); }
   .sidebar-exit {
     margin-top: 0.85rem;
@@ -34,8 +34,45 @@
     width: 100%;
   }
   .sidebar-exit:hover { color: var(--primary) !important; background: var(--accent); }
+
+  .ob-mobile-progress {
+    display: none;
+  }
+  .ob-mobile-progress .row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .ob-mobile-progress .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--primary);
+  }
+  .ob-mobile-progress .value {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+    font-family: var(--font-body);
+  }
+  .ob-mobile-progress .meta { min-width: 0; }
+  .ob-mobile-progress .step-name {
+    margin: 0.15rem 0 0;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 14rem;
+  }
+  .ob-mobile-progress .ui-progress { background: var(--secondary-400); height: 0.4rem; }
+  .ob-mobile-progress .ui-progress-bar { background: var(--primary); }
+
   .seg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
-  @media (max-width: 800px) { .seg-grid { grid-template-columns: 1fr 1fr; } }
   .seg-tile {
     text-align: center;
     padding: 0.65rem 0.4rem;
@@ -43,18 +80,69 @@
     border: 1px solid var(--border);
     border-radius: calc(var(--radius) - 2px);
     cursor: pointer;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
   }
   .seg-tile strong { display: block; font-size: 0.875rem; margin: 0.2rem 0; }
-  .seg-tile.done { border-color: #a6dace; background: var(--accent); }
+  .seg-tile .seg-meta { font-size: 0.6875rem; color: var(--muted-foreground); }
+  .seg-tile.done { border-color: var(--primary-300); background: var(--accent); }
+  .seg-tile.active-seg {
+    background: var(--accent);
+    border-color: var(--primary-300);
+    box-shadow: inset 0 0 0 1px var(--primary);
+  }
+  .q-option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    cursor: pointer;
+    font-size: 0.8125rem;
+    margin-bottom: 0.5rem;
+    transition: border-color .15s, background .15s;
+  }
+  .q-option-label:hover { border-color: var(--primary); background: var(--accent); }
+  .q-option-label input[type="radio"] { flex-shrink: 0; }
+  .q-option-label input[type="radio"]:checked ~ .q-text {
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .exam-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+  }
+  .exam-meta-cell {
+    text-align: center;
+    padding: 0.5rem;
+    background: var(--muted);
+    border-radius: calc(var(--radius) - 4px);
+  }
+  .exam-meta-cell .k { font-size: 0.6875rem; color: var(--muted-foreground); }
+  .exam-meta-cell .v { font-weight: 700; }
+  .exam-seg-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .exam-seg-nav h3 { margin: 0; font-size: 0.875rem; font-weight: 600; }
+  @media (max-width: 560px) {
+    .exam-meta-grid { grid-template-columns: 1fr 1fr; }
+    .exam-seg-nav { flex-wrap: wrap; }
+  }
   .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   .summary-cell {
     padding: 0.65rem 0.75rem;
     background: var(--muted);
     border-radius: calc(var(--radius) - 4px);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
   }
-  .summary-cell .k { font-size: 0.625rem; color: var(--muted-foreground); margin-bottom: 0.15rem; }
+  .summary-cell .k { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 0.15rem; }
   .summary-cell .v { font-weight: 600; }
   .contract-scroll {
     border: 1px solid var(--border);
@@ -62,7 +150,7 @@
     height: 180px;
     overflow-y: auto;
     padding: 0.875rem 1rem;
-    font-size: 0.6875rem;
+    font-size: 0.8125rem;
     line-height: 1.8;
     color: #424242;
     background: #fafafa;
@@ -75,23 +163,98 @@
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 1rem; font-size: 2rem;
   }
-  .ui-topbar h1 {
+  .ui-topbar h1,
+  .ob-page-titles h1 {
     margin: 0;
     font-size: 1.2rem;
     font-weight: 700;
+    font-family: var(--font-heading);
     color: var(--brand-ink);
     letter-spacing: -0.02em;
   }
-  .ui-topbar .subtitle {
+  .ui-topbar .subtitle,
+  .ob-page-titles .subtitle {
     margin: 0.2rem 0 0;
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     color: var(--muted-foreground);
   }
-  .ui-card { border-color: #d7e3e0; box-shadow: 0 1px 2px rgba(10,31,30,.04); }
+  .ob-topbar-logo {
+    display: none;
+    height: 30px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+  .ob-page-titles {
+    display: none;
+  }
+  .ui-card { border-color: var(--secondary-500); box-shadow: 0 1px 2px color-mix(in srgb, var(--secondary-900) 4%, transparent); }
   .ui-card-content > .ui-alert { margin-bottom: 1rem; }
   .ui-card-content > .ui-alert:last-child { margin-bottom: 0; }
-  .ui-topbar h1 { font-family: var(--font-heading); }
   .ui-chip { margin: 0; font-family: var(--font-body); }
+  .ob-vendor-panel .ui-card-content { padding: 1rem; }
+
+  @media (max-width: 900px) {
+    .ob-topbar-logo { display: block; }
+    .ob-topbar-titles { display: none; }
+
+    /* Same left/right gutter as the form via .ui-page padding */
+    .ob-page-titles {
+      display: block;
+      margin: 0 0 0.75rem;
+      padding: 0.25rem 0 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .ob-page-titles h1 { font-size: 1.25rem; line-height: 1.3; }
+    .ob-page-titles .subtitle {
+      margin-top: 0.35rem;
+      line-height: 1.45;
+      max-width: 36rem;
+    }
+
+    .ob-mobile-progress {
+      display: block;
+      margin: 0 0 1rem;
+      padding: 1rem 1rem;
+      background: var(--secondary-0);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+    .ob-mobile-progress .ui-progress {
+      background: var(--secondary-400);
+      height: 0.45rem;
+    }
+
+    /* Field height capped at 40px on small screens */
+    .ui-input,
+    .ui-select-trigger,
+    .ui-date-trigger {
+      height: 40px !important;
+      min-height: 40px !important;
+      max-height: 40px !important;
+      padding: 0 0.75rem !important;
+      font-size: 0.875rem !important;
+      line-height: 1.25rem !important;
+    }
+    .ui-control-row .ui-btn {
+      height: 40px !important;
+      min-height: 40px !important;
+    }
+
+    .seg-grid { grid-template-columns: 1fr 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .contract-scroll { height: 140px; }
+    .success-hero { padding: 1.5rem 0.5rem; }
+    .success-icon { width: 3.75rem; height: 3.75rem; font-size: 1.65rem; }
+  }
+  @media (max-width: 560px) {
+    .seg-grid { grid-template-columns: 1fr; }
+    .ob-topbar-logo { height: 26px; max-width: 140px; }
+    .ob-mobile-progress .step-name { max-width: 12rem; }
+  }
 </style>
 </head>
 <body>
@@ -133,7 +296,8 @@
 
   <div class="ui-main">
     <header class="ui-topbar">
-      <div>
+      <img class="ob-topbar-logo" src="../assets/brand/enrollaxis-logo.svg" alt="Enrollaxis">
+      <div class="ob-topbar-titles">
         <h1>Agent Onboarding</h1>
         <p class="subtitle">Producer Onboarding — Invitation through Ready to Sell</p>
       </div>
@@ -141,6 +305,21 @@
     </header>
 
     <main class="ui-page">
+      <div class="ob-page-titles">
+        <h1>Agent Onboarding</h1>
+        <p class="subtitle">Producer Onboarding — Invitation through Ready to Sell</p>
+      </div>
+
+      <div class="ob-mobile-progress" id="obMobileProgress">
+        <div class="row">
+          <div class="meta">
+            <div class="label">Onboarding Progress</div>
+            <div class="value" id="mb-step-label">Step 1 of 8</div>
+            <p class="step-name" id="mb-step-name">Invitation &amp; Registration</p>
+          </div>
+        </div>
+        <div class="ui-progress"><div class="ui-progress-bar" id="mb-prog-fill" style="width:12.5%"></div></div>
+      </div>
 
       <!-- STEP 1 -->
       <section class="ob-section active ui-card" id="obStep0">
@@ -187,7 +366,7 @@
         </div>
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(0)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(0)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Personal Details</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(0)"><i class="fas fa-arrow-right"></i> Next: Personal Details</button>
         </div>
       </section>
 
@@ -235,7 +414,7 @@
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(1)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(1)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(1)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: W-9 &amp; Payment</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(1)"><i class="fas fa-arrow-right"></i> Next: W-9 &amp; Payment</button>
         </div>
       </section>
 
@@ -273,7 +452,7 @@
               <label class="ui-label">Upload W-9 Form (PDF) <span class="req">*</span></label>
               <label class="ui-upload" id="w9UploadZone">
                 <i class="fas fa-cloud-upload-alt" style="font-size:1.25rem"></i>
-                Click to upload W-9 PDF<br><span style="font-size:0.625rem">Max 5 MB</span>
+                Click to upload W-9 PDF<br><span style="font-size:0.75rem">Max 5 MB</span>
                 <input type="file" id="w9File" accept=".pdf" onchange="handleUpload(this,'w9UploadZone')">
               </label>
             </div>
@@ -312,7 +491,7 @@
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(2)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(2)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(2)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Save &amp; Continue</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(2)"><i class="fas fa-arrow-right"></i> Save &amp; Continue</button>
         </div>
       </section>
 
@@ -343,7 +522,7 @@
           </div>
           <div class="ui-section">
             <h3 class="ui-section-title">State Selection / Selling Territories</h3>
-            <p style="font-size:0.75rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
+            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
             <div id="stateCheckboxes">
               <label class="ui-chip"><input type="checkbox" value="FL"> Florida</label>
               <label class="ui-chip"><input type="checkbox" value="TX"> Texas</label>
@@ -362,7 +541,7 @@
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(3)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(3)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(3)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Training</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(3)"><i class="fas fa-arrow-right"></i> Next: Training</button>
         </div>
       </section>
 
@@ -373,27 +552,60 @@
           <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(4)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
         <div class="ui-card-content">
-          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
+          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem" id="step5InfoAlert">
             <i class="fas fa-info-circle"></i>
-            <div>Complete all 4 training segments. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
+            <div>Complete all 4 training segments. Each segment opens its certification exam. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
           </div>
-          <div class="ui-section">
+          <div class="ui-section" id="step5DashboardSection">
             <h3 class="ui-section-title">Training Progress Dashboard</h3>
             <div class="seg-grid" id="progressDashboard">
-              <div class="seg-tile" data-seg="0" onclick="markSeg(0)"><div>Seg A — Video</div><strong id="dashPctA">0%</strong><div id="dashStatusA">Not completed</div></div>
-              <div class="seg-tile" data-seg="1" onclick="markSeg(1)"><div>Seg B — Training</div><strong id="dashPctB">0%</strong><div id="dashStatusB">Not completed</div></div>
-              <div class="seg-tile" data-seg="2" onclick="markSeg(2)"><div>Seg C — PDF</div><strong id="dashPctC">0%</strong><div id="dashStatusC">Not completed</div></div>
-              <div class="seg-tile" data-seg="3" onclick="markSeg(3)"><div>Seg D — MCQ</div><strong id="dashPctD">0%</strong><div id="dashStatusD">Not completed</div></div>
-              <div class="seg-tile" style="cursor:default;background:var(--accent);border-color:#a6dace"><div style="color:var(--primary);font-weight:600">Total</div><strong id="dashPctTotal" style="color:var(--primary)">0%</strong><div id="overallProgLabel">0 of 4 complete</div></div>
+              <div class="seg-tile" id="dashSegTab0" data-seg="0" onclick="openSegmentScreen(0)"><div>Seg A — Video</div><strong id="dashPctA">0%</strong><div class="seg-meta" id="dashTimeA">—</div><div id="dashStatusA">Not completed</div></div>
+              <div class="seg-tile" id="dashSegTab1" data-seg="1" onclick="openSegmentScreen(1)"><div>Seg B — Training</div><strong id="dashPctB">0%</strong><div class="seg-meta" id="dashTimeB">—</div><div id="dashStatusB">Not completed</div></div>
+              <div class="seg-tile" id="dashSegTab2" data-seg="2" onclick="openSegmentScreen(2)"><div>Seg C — PDF</div><strong id="dashPctC">0%</strong><div class="seg-meta" id="dashTimeC">—</div><div id="dashStatusC">Not completed</div></div>
+              <div class="seg-tile" id="dashSegTab3" data-seg="3" onclick="openSegmentScreen(3)"><div>Seg D — MCQ</div><strong id="dashPctD">0%</strong><div class="seg-meta" id="dashTimeD">—</div><div id="dashStatusD">Not completed</div></div>
+              <div class="seg-tile" style="cursor:default;background:var(--accent);border-color:var(--primary-300)"><div style="color:var(--primary);font-weight:600">Total</div><strong id="dashPctTotal" style="color:var(--primary)">0%</strong><div class="seg-meta" id="dashTimeTotal" style="color:var(--primary)">—</div><div id="overallProgLabel">0 of 4 complete</div></div>
             </div>
             <div class="ui-progress" style="margin-top:0.75rem"><div class="ui-progress-bar" id="overallProgBar" style="width:0%"></div></div>
-            <p style="font-size:0.6875rem;color:var(--muted-foreground);margin:0.5rem 0 0">Prototype: click a segment tile to mark it complete.</p>
+            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.5rem 0 0">Click a segment to open its certification exam.</p>
+          </div>
+          <div class="ui-section" id="examSection" style="display:none">
+            <div class="exam-seg-nav">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
+              <h3>Certification Exam</h3>
+              <button type="button" class="ui-btn ui-btn-sm" id="nextSegTopBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
+            </div>
+            <div class="exam-meta-grid">
+              <div class="exam-meta-cell"><div class="k">Pass Score</div><div class="v">85% avg</div></div>
+              <div class="exam-meta-cell"><div class="k">Total Questions</div><div class="v">20 (4 × 5)</div></div>
+              <div class="exam-meta-cell"><div class="k">Segments</div><div class="v">4</div></div>
+              <div class="exam-meta-cell"><div class="k">Max Attempts</div><div class="v">4 per seg</div></div>
+            </div>
+            <div id="examSeg0" class="exam-seg" style="display:none"></div>
+            <div id="examSeg1" class="exam-seg" style="display:none"></div>
+            <div id="examSeg2" class="exam-seg" style="display:none"></div>
+            <div id="examSeg3" class="exam-seg" style="display:none"></div>
+            <div id="unansweredWarn" class="ui-alert" style="display:none;align-items:flex-start;margin:0.75rem 0;background:#fffbeb;border-color:#f59e0b;color:#92400e">
+              <i class="fas fa-exclamation-triangle"></i>
+              <div style="flex:1">
+                <div style="font-weight:700;margin-bottom:0.25rem"><span id="unansweredCount">0</span> question(s) not answered (<span id="unansweredList"></span>).</div>
+                <div>Would you like to go back and review before submitting?</div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap">
+                  <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="dismissUnansweredWarn()"><i class="fas fa-arrow-left"></i> Go Back &amp; Review</button>
+                  <button type="button" class="ui-btn ui-btn-sm" onclick="submitSegmentForce()"><i class="fas fa-check"></i> Submit Anyway</button>
+                </div>
+              </div>
+            </div>
+            <div id="examConsolidatedResult" style="display:none"></div>
+            <div class="exam-seg-nav" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> Back to Step 5</button>
+              <button type="button" class="ui-btn ui-btn-sm" id="nextSegBottomBtn" onclick="goNextSegment()"><i class="fas fa-arrow-right"></i> Next Segment</button>
+            </div>
           </div>
         </div>
-        <div class="ui-card-footer">
+        <div class="ui-card-footer" id="step5Nav">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(4)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(4)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(4)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Background Check</button>
+          <button type="button" class="ui-btn ui-ml-auto" id="step5Next" onclick="obNext(4)" style="display:none"><i class="fas fa-arrow-right"></i> Next: Background Check</button>
         </div>
       </section>
 
@@ -419,18 +631,18 @@
           </div>
           <div class="ui-section" id="bgInvitePanel">
             <h3 class="ui-section-title">Send to Background Check Vendor</h3>
-            <div class="ui-card" style="box-shadow:none;background:var(--accent)">
+            <div class="ob-vendor-panel" style="background:var(--accent);border:1px solid var(--primary-200);border-radius:var(--radius)">
               <div class="ui-card-content">
                 <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
                   <div class="ui-avatar" style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:var(--primary)"><i class="fas fa-shield-alt"></i></div>
                   <div>
                     <div style="font-weight:600;font-size:0.8125rem">Sterling Talent Solutions</div>
-                    <div style="font-size:0.6875rem;color:var(--muted-foreground)">Accredited background screening vendor</div>
+                    <div style="font-size:0.8125rem;color:var(--muted-foreground)">Accredited background screening vendor</div>
                   </div>
                 </div>
-                <div class="ui-field" style="margin-bottom:0.75rem">
+                <div class="ui-field" style="margin-bottom:1rem">
                   <input class="ui-input" id="bgVendorEmail" value="agent@example.com" disabled>
-                  <span style="font-size:0.625rem;color:var(--muted-foreground)"><i class="fas fa-info-circle"></i> Email from your registration. Contact agency admin to update.</span>
+                  <p class="ui-field-hint"><i class="fas fa-info-circle" aria-hidden="true"></i> Email from your registration. Contact agency admin to update.</p>
                 </div>
                 <button type="button" class="ui-btn ui-btn-block" id="bgSendBtn" onclick="sendBgInvitation()"><i class="fas fa-paper-plane"></i> Send Background Check Invitation</button>
               </div>
@@ -450,7 +662,7 @@
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(5)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(5)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn" onclick="obNext(5)" style="margin-left:auto"><i class="fas fa-arrow-right"></i> Next: Contract</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(5)"><i class="fas fa-arrow-right"></i> Next: Contract</button>
         </div>
       </section>
 
@@ -494,12 +706,12 @@
               <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name"></div>
               <div class="ui-field"><label class="ui-label" for="eSigDate">Date</label><input class="ui-input" id="eSigDate" type="date"></div>
             </div>
-            <p style="font-size:0.625rem;color:var(--muted-foreground);margin:0.35rem 0 0"><i class="fas fa-lock"></i> Typed signature is legally binding under the E-SIGN Act.</p>
+            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.35rem 0 0"><i class="fas fa-lock"></i> Typed signature is legally binding under the E-SIGN Act.</p>
           </div>
         </div>
         <div class="ui-card-footer">
           <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(6)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn" onclick="obNext(6)" style="margin-left:auto"><i class="fas fa-check"></i> Submit &amp; Finalize</button>
+          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(6)"><i class="fas fa-check"></i> Submit &amp; Finalize</button>
         </div>
       </section>
 
@@ -521,7 +733,7 @@
               <div class="summary-cell"><div class="k">Submitted</div><div class="v" id="submitDate"></div></div>
               <div class="summary-cell"><div class="k">Estimated Review</div><div class="v">3–5 Business Days</div></div>
             </div>
-            <p style="font-size:0.75rem;color:var(--muted-foreground);margin-bottom:1.25rem">
+            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin-bottom:1.25rem">
               Questions? <a href="mailto:brokersupport@EnrollAxis.com">brokersupport@EnrollAxis.com</a> | (800) 555-GOLD ext. 2
             </p>
             <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
@@ -537,13 +749,14 @@
   </div>
 </div>
 
+<script src="../assets/ui-select.js"></script>
+<script src="../assets/ui-calendar.js"></script>
 <script src="../assets/nfp-actions.js"></script>
 <script>
 (function () {
   var current = 0;
   var total = 8;
   var drafts = {};
-  var segDone = [false, false, false, false];
   var labels = [
     'Invitation & Registration',
     'Personal & Business Info',
@@ -555,7 +768,12 @@
     'Ready to Sell'
   ];
 
-  function setVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
+  function setVal(id, v) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.value = v;
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }
   function setCheck(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; }
 
   window.obGoTo = function (n) {
@@ -569,8 +787,16 @@
       if (i === n) bar.classList.add('active');
     }
     current = n;
-    document.getElementById('sb-step-label').textContent = 'Step ' + (n + 1) + ' of ' + total;
-    document.getElementById('sb-prog-fill').style.width = (((n + 1) / total) * 100) + '%';
+    var stepText = 'Step ' + (n + 1) + ' of ' + total;
+    var pct = (((n + 1) / total) * 100) + '%';
+    document.getElementById('sb-step-label').textContent = stepText;
+    document.getElementById('sb-prog-fill').style.width = pct;
+    var mbLabel = document.getElementById('mb-step-label');
+    var mbFill = document.getElementById('mb-prog-fill');
+    var mbName = document.getElementById('mb-step-name');
+    if (mbLabel) mbLabel.textContent = stepText;
+    if (mbFill) mbFill.style.width = pct;
+    if (mbName) mbName.textContent = labels[n];
     window.scrollTo(0, 0);
   };
 
@@ -632,19 +858,6 @@
     if (typeof showToast === 'function') showToast('Background check invitation sent.', 'info');
   };
 
-  window.markSeg = function (i) {
-    segDone[i] = true;
-    var letters = ['A', 'B', 'C', 'D'];
-    document.getElementById('dashPct' + letters[i]).textContent = '100%';
-    document.getElementById('dashStatus' + letters[i]).textContent = 'Complete';
-    document.querySelector('.seg-tile[data-seg="' + i + '"]').classList.add('done');
-    var done = segDone.filter(Boolean).length;
-    var pct = (done / 4) * 100;
-    document.getElementById('dashPctTotal').textContent = Math.round(pct) + '%';
-    document.getElementById('overallProgBar').style.width = pct + '%';
-    document.getElementById('overallProgLabel').textContent = done + ' of 4 complete';
-  };
-
   window.prefillStep = function (step) {
     if (step === 0) {
       setVal('regNPN', '88234410');
@@ -666,7 +879,26 @@
       setVal('ahipCert', 'AH2026-88421'); setVal('ahipDate', '2026-01-15'); setVal('ahipExpiry', '2027-01-15');
       document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
     } else if (step === 4) {
-      for (var i = 0; i < 4; i++) markSeg(i);
+      for (var i = 0; i < 4; i++) {
+        segScores[i] = 100;
+        segAttempts[i] = 1;
+        modComplete[i] = true;
+        modTimes[i] = 60000;
+        var letters = ['A', 'B', 'C', 'D'];
+        var names = ['Video', 'Training', 'PDF', 'MCQ'];
+        document.getElementById('dashPct' + letters[i]).textContent = '100%';
+        document.getElementById('dashPct' + letters[i]).style.color = 'var(--primary)';
+        document.getElementById('dashTime' + letters[i]).textContent = '1m 0s';
+        document.getElementById('dashStatus' + letters[i]).textContent = 'Segment ' + letters[i] + ' - ' + names[i] + ' Completed';
+        document.getElementById('dashSegTab' + i).classList.add('done');
+      }
+      modsDone = 4;
+      examPassed = true;
+      document.getElementById('dashPctTotal').textContent = '100%';
+      document.getElementById('dashTimeTotal').textContent = '4m 0s';
+      document.getElementById('overallProgBar').style.width = '100%';
+      document.getElementById('overallProgLabel').textContent = '4 of 4 segments completed';
+      document.getElementById('step5Next').style.display = 'inline-flex';
     } else if (step === 5) {
       setCheck('bgConsent', true); sendBgInvitation();
     } else if (step === 6) {
@@ -676,10 +908,288 @@
     }
   };
 
+
   document.getElementById('regNPN').addEventListener('input', function () {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
 })();
+
+/* Step 5 certification exam — restored from feat/enrolaxis-brand-theme openSegmentScreen flow */
+var modsDone = 0;
+var examPassed = false;
+var examSegData = [
+  {
+    id: 'A', label: 'Video-Based', icon: 'fa-video', accentBg: 'var(--accent)', accentColor: 'var(--primary)',
+    material: '<div style="background:var(--brand-ink);border-radius:calc(var(--radius) - 2px);padding:1rem;text-align:center;margin-bottom:1rem;color:#fff;font-size:0.8125rem"><i class="fas fa-video" style="font-size:1.75rem;margin-bottom:0.5rem;display:block;color:var(--primary-300)"></i><div style="font-weight:600;margin-bottom:0.35rem">EnrollAxis 2026 — C-SNP Product Overview</div><div style="opacity:.75;font-size:0.75rem;margin-bottom:0.625rem">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
+    questions: [
+      { q: "What is the primary target population for EnrollAxis's C-SNP plans?", opts: ["Patients with diabetes only", "Patients with ESRD or Chronic Kidney Disease (CKD)", "All Medicare-eligible beneficiaries over 65", "Patients with congestive heart failure"], ans: 1 },
+      { q: "Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?", opts: ["Medicare Supplement (Medigap)", "Part D Prescription Drug Plan", "Medicare Advantage (Part C)", "Medicare Savings Account (MSA)"], ans: 2 },
+      { q: "What does ESRD stand for?", opts: ["Extended Systematic Renal Disorder", "Early Stage Renal Deficiency", "End Stage Renal Disease", "Emergency Surgical Renal Diagnosis"], ans: 2 },
+      { q: "EnrollAxis's C-SNP plans target members with which qualifying condition?", opts: ["COPD and asthma", "HIV/AIDS", "Diabetes mellitus only", "Chronic Kidney Disease (CKD) or End-Stage Renal Disease (ESRD)"], ans: 3 },
+      { q: "Which federal agency oversees and regulates Medicare Advantage plans?", opts: ["Food and Drug Administration (FDA)", "Centers for Medicare &amp; Medicaid Services (CMS)", "Centers for Disease Control (CDC)", "Office of Inspector General (OIG)"], ans: 1 }
+    ]
+  },
+  {
+    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: '#e8f5e9', accentColor: '#1b5e20',
+    material: '<div style="padding:0.75rem 0.875rem;background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7;max-height:8.5rem;overflow-y:auto"><strong>Training Excerpt — Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 – Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
+    questions: [
+      { q: "The Annual Enrollment Period (AEP) for Medicare Advantage runs from:", opts: ["January 1 – March 31", "October 15 – December 7", "November 1 – December 15", "September 1 – October 31"], ans: 1 },
+      { q: "ICEP stands for:", opts: ["Interim Coverage Eligibility Period", "Individual Coverage Enrollment Plan", "Initial Coverage Election Period", "Initial Carrier Election Period"], ans: 2 },
+      { q: "A Scope of Appointment (SOA) must be obtained at least how many hours before a Medicare sales appointment?", opts: ["24 hours", "36 hours", "48 hours", "72 hours"], ans: 2 },
+      { q: "Under CMS marketing guidelines, agents are PROHIBITED from:", opts: ["Providing members with plan Summary of Benefits", "Discussing plan premium amounts", "Offering gifts or incentives valued over $15", "Scheduling a follow-up appointment"], ans: 2 },
+      { q: "A Special Enrollment Period (SEP) may be triggered by:", opts: ["Annual calendar date only", "A qualifying life event such as moving out of a plan's service area", "A plan's premium increase", "Agent request to the carrier"], ans: 1 }
+    ]
+  },
+  {
+    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: '#ede7f6', accentColor: '#6a1b9a',
+    material: '<div style="padding:0.75rem 0.875rem;background:#faf5ff;border:1px solid #ce93d8;border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:#6a1b9a;margin-right:0.35rem"></i><strong>C-SNP Product Guide — Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
+    questions: [
+      { q: "To enroll in a C-SNP plan, a beneficiary must have:", opts: ["Medicare Part A only", "Medicare Parts A and B AND the qualifying chronic condition", "An active Medigap plan", "Part D enrollment in effect"], ans: 1 },
+      { q: "The PQAT questionnaire is used to:", opts: ["Verify agent licensing credentials", "Assess clinical appropriateness of the C-SNP plan for the member", "Calculate a member's estimated annual premium", "Determine the copay structure for the plan"], ans: 1 },
+      { q: "CKD stands for:", opts: ["Comprehensive Kidney Diagnosis", "Critical Kidney Deficiency", "Chronic Kidney Disease", "Cellular Kidney Disorder"], ans: 2 },
+      { q: "Under HIPAA, an agent's primary obligation is to:", opts: ["Share member PHI with the member's spouse upon verbal request", "Submit member diagnosis records to the state annually", "Report any PHI breaches to the carrier and affected member promptly", "Store member records on personal devices for easy access"], ans: 2 },
+      { q: "The Plan Recommendation Engine helps agents:", opts: ["File claims on behalf of enrolled members", "Match members to the most clinically appropriate plan based on their chronic conditions", "Calculate a member's out-of-pocket maximum", "Verify the member's NPI number"], ans: 1 }
+    ]
+  },
+  {
+    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: '#fff3e0', accentColor: '#e65100',
+    material: '',
+    questions: [
+      { q: "What does MAPD stand for?", opts: ["Medicare Advantage Prescription Drug Plan", "Medicare Approved Provider Directory", "Managed Advantage Plan with Disability", "Medicare Agency Partnership Division"], ans: 0 },
+      { q: "Which enrollment period allows MA plan members to switch plans from January 1 – March 31?", opts: ["Annual Enrollment Period (AEP)", "Initial Coverage Election Period (ICEP)", "Open Enrollment Period (OEP)", "Special Enrollment Period (SEP)"], ans: 2 },
+      { q: "An agent's National Producer Number (NPN) is managed through:", opts: ["Centers for Medicare &amp; Medicaid Services (CMS)", "The state department of insurance", "National Insurance Producer Registry (NIPR)", "The appointing carrier"], ans: 2 },
+      { q: "Medicare Part D primarily covers:", opts: ["Inpatient hospital stays", "Outpatient physician services", "Prescription drug costs", "Long-term custodial care"], ans: 2 },
+      { q: "The maximum number of certification exam attempts allowed in this onboarding is:", opts: ["2 attempts", "3 attempts", "4 attempts", "Unlimited attempts"], ans: 2 }
+    ]
+  }
+];
+var segScores = [-1, -1, -1, -1];
+var segAttempts = [0, 0, 0, 0];
+var pendingSubmitSeg = -1;
+var modTimes = [0, 0, 0, 0];
+var modComplete = [false, false, false, false];
+var examStartTimes = [0, 0, 0, 0];
+var activeExamSeg = 0;
+
+function openSegmentScreen(idx) {
+  activeExamSeg = idx;
+  var dash = document.getElementById('step5DashboardSection');
+  var info = document.getElementById('step5InfoAlert');
+  var nav = document.getElementById('step5Nav');
+  var exam = document.getElementById('examSection');
+  if (dash) dash.style.display = 'none';
+  if (info) info.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  if (exam) exam.style.display = 'block';
+  selectExamSegment(idx);
+  examStartTimes[idx] = Date.now();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeSegmentScreen() {
+  var dash = document.getElementById('step5DashboardSection');
+  var info = document.getElementById('step5InfoAlert');
+  var nav = document.getElementById('step5Nav');
+  var exam = document.getElementById('examSection');
+  var warn = document.getElementById('unansweredWarn');
+  if (dash) dash.style.display = 'block';
+  if (info) info.style.display = 'flex';
+  if (nav) nav.style.display = 'flex';
+  if (exam) exam.style.display = 'none';
+  if (warn) warn.style.display = 'none';
+}
+
+function goNextSegment() {
+  openSegmentScreen((activeExamSeg + 1) % 4);
+}
+
+function updateExamSegmentButtons() {
+  for (var i = 0; i < 4; i++) {
+    var btn = document.getElementById('dashSegTab' + i);
+    if (!btn) continue;
+    btn.classList.toggle('active-seg', i === activeExamSeg);
+  }
+}
+
+function selectExamSegment(idx) {
+  activeExamSeg = idx;
+  for (var i = 0; i < 4; i++) {
+    var panel = document.getElementById('examSeg' + i);
+    if (panel) panel.style.display = i === idx ? 'block' : 'none';
+  }
+  var activePanel = document.getElementById('examSeg' + idx);
+  if (activePanel && !activePanel.innerHTML.trim()) buildSegPanel(idx);
+  updateExamSegmentButtons();
+}
+
+function buildSegPanel(idx) {
+  var s = examSegData[idx];
+  var ab = s.accentBg, ac = s.accentColor;
+  var html = '<div style="background:' + ab + ';border-left:3px solid ' + ac + ';padding:0.625rem 0.875rem;border-radius:calc(var(--radius) - 4px);margin-bottom:1rem;display:flex;align-items:center;gap:0.625rem;font-size:0.8125rem;font-weight:700;color:' + ac + '"><i class="fas ' + s.icon + '"></i> Segment ' + s.id + ' Exam — ' + s.label + '<span style="margin-left:auto;font-size:0.75rem;font-weight:400;color:var(--muted-foreground)">5 Questions · Pass: 60%</span></div>';
+  if (s.material) html += s.material;
+  html += '<div class="seg-questions" id="segQ' + idx + '">';
+  for (var qi = 0; qi < 5; qi++) {
+    var q = s.questions[qi], nm = 'seg' + idx + 'q' + qi;
+    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:flex-start;gap:0.45rem"><span style="min-width:1.375rem;height:1.375rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.6875rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">' + (qi + 1) + '</span>' + q.q + '</div>';
+    for (var oi = 0; oi < q.opts.length; oi++) {
+      html += '<label class="q-option-label"><input type="radio" name="' + nm + '" value="' + oi + '"> <span class="q-text">' + q.opts[oi] + '</span></label>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  html += '<div class="seg-submit-row" style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:0.25rem"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-check"></i> Submit Segment ' + s.id + ' Exam</button></div>';
+  html += '<div id="segScore' + idx + '" style="display:none;margin-top:0.875rem"></div>';
+  document.getElementById('examSeg' + idx).innerHTML = html;
+  examStartTimes[idx] = Date.now();
+}
+
+function submitSegment(idx) {
+  var missing = [];
+  for (var i = 0; i < 5; i++) {
+    if (!document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked')) missing.push(i + 1);
+  }
+  if (missing.length) {
+    pendingSubmitSeg = idx;
+    document.getElementById('unansweredCount').textContent = missing.length;
+    document.getElementById('unansweredList').textContent = missing.map(function (n) { return 'Q' + n; }).join(', ');
+    var w = document.getElementById('unansweredWarn');
+    w.style.display = 'flex';
+    w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  doSubmitSegment(idx);
+}
+
+function dismissUnansweredWarn() {
+  document.getElementById('unansweredWarn').style.display = 'none';
+  pendingSubmitSeg = -1;
+}
+
+function submitSegmentForce() {
+  document.getElementById('unansweredWarn').style.display = 'none';
+  doSubmitSegment(pendingSubmitSeg);
+  pendingSubmitSeg = -1;
+}
+
+function doSubmitSegment(idx) {
+  var s = examSegData[idx], correct = 0;
+  segAttempts[idx]++;
+  for (var i = 0; i < 5; i++) {
+    var sel = document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked');
+    if (sel && parseInt(sel.value, 10) === s.questions[i].ans) correct++;
+  }
+  var pct = Math.round((correct / 5) * 100);
+  segScores[idx] = pct;
+
+  var examElapsed = Date.now() - examStartTimes[idx];
+  modTimes[idx] = examElapsed;
+  var examSecs = Math.round(examElapsed / 1000);
+  var examTimeStr = examSecs >= 60 ? Math.floor(examSecs / 60) + 'm ' + (examSecs % 60) + 's' : examSecs + 's';
+
+  var sp = document.getElementById('examSeg' + idx);
+  sp.querySelector('.seg-questions').style.display = 'none';
+  sp.querySelector('.seg-submit-row').style.display = 'none';
+
+  var pass = pct >= 60;
+  var retryHtml = '';
+  if (!pass && segAttempts[idx] < 4) {
+    retryHtml = '<div style="text-align:center;margin-top:0.5rem"><button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="retrySegExam(' + idx + ')"><i class="fas fa-redo"></i> Retry (Attempt ' + (segAttempts[idx] + 1) + ' of 4)</button></div>';
+  } else if (!pass) {
+    retryHtml = '<div style="text-align:center;color:#b91c1c;font-weight:600;font-size:0.75rem;margin-top:0.35rem"><i class="fas fa-ban"></i> Max attempts reached for Segment ' + s.id + '</div>';
+  }
+
+  document.getElementById('segScore' + idx).innerHTML =
+    '<div style="padding:0.75rem 0.875rem;border-radius:calc(var(--radius) - 2px);text-align:center;background:' + (pass ? '#e8f5e9' : '#fffbeb') + ';border:1px solid ' + (pass ? '#c8e6c9' : '#f59e0b') + ';font-size:0.8125rem;color:' + (pass ? '#1b5e20' : '#92400e') + '">' +
+    '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> — Score: ' + correct + '/5 (' + pct + '%) &nbsp;|&nbsp; Time: ' + examTimeStr +
+    '</div>' + retryHtml;
+  document.getElementById('segScore' + idx).style.display = 'block';
+
+  var labels = ['A', 'B', 'C', 'D'];
+  var names = ['Video', 'Training', 'PDF', 'MCQ'];
+  var label = labels[idx];
+  var statusEl = document.getElementById('dashStatus' + label);
+  var pctEl = document.getElementById('dashPct' + label);
+  var timeEl = document.getElementById('dashTime' + label);
+  var tab = document.getElementById('dashSegTab' + idx);
+
+  if (pctEl) {
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = pass ? 'var(--primary)' : '#b91c1c';
+  }
+  if (timeEl) timeEl.textContent = examTimeStr;
+  if (statusEl) {
+    statusEl.textContent = pass ? ('Segment ' + label + ' - ' + names[idx] + ' Completed') : ('Segment ' + label + ' Needs Retry');
+    statusEl.style.color = pass ? 'var(--primary)' : '#b91c1c';
+  }
+  if (tab) tab.classList.toggle('done', pass);
+
+  if (pass && !modComplete[idx]) {
+    modComplete[idx] = true;
+    modsDone++;
+  }
+
+  var sumScores = 0;
+  for (var si = 0; si < 4; si++) sumScores += segScores[si] >= 0 ? segScores[si] : 0;
+  var overallPct = Math.round(sumScores / 4);
+  document.getElementById('overallProgBar').style.width = overallPct + '%';
+  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments completed';
+  document.getElementById('dashPctTotal').textContent = overallPct + '%';
+
+  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
+  var totalSecs = Math.round(totalMs / 1000);
+  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
+  document.getElementById('dashTimeTotal').textContent = totalStr;
+
+  if (modsDone === 4) document.getElementById('step5Next').style.display = 'inline-flex';
+
+  closeSegmentScreen();
+  checkAllComplete();
+}
+
+function retrySegExam(idx) {
+  document.getElementById('examSeg' + idx).innerHTML = '';
+  buildSegPanel(idx);
+}
+
+function checkAllComplete() {
+  if (segScores.every(function (s) { return s >= 60; })) showConsolidatedResult();
+}
+
+function showConsolidatedResult() {
+  var total = segScores.reduce(function (a, b) { return a + b; }, 0);
+  var avg = Math.round(total / 4);
+  var pass = avg >= 85;
+  examPassed = pass;
+  var segMeta = [['A', 'Video'], ['B', 'Training'], ['C', 'PDF'], ['D', 'MCQ']];
+  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
+  var totalSecs = Math.round(totalMs / 1000);
+  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
+
+  var grid = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:1rem;font-size:0.75rem">';
+  for (var i = 0; i < 4; i++) {
+    var sc = segScores[i] >= 60;
+    var segSecs = Math.round(modTimes[i] / 1000);
+    var segTimeStr = segSecs >= 60 ? Math.floor(segSecs / 60) + 'm ' + (segSecs % 60) + 's' : segSecs + 's';
+    grid += '<div style="text-align:center;padding:0.625rem 0.4rem;border-radius:calc(var(--radius) - 2px);background:' + (sc ? '#e8f5e9' : '#fef2f2') + ';border:1px solid ' + (sc ? '#c8e6c9' : '#fecaca') + '"><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-bottom:0.2rem">Seg ' + segMeta[i][0] + ' — ' + segMeta[i][1] + '</div><div style="font-size:0.875rem;font-weight:700;color:' + (sc ? '#1b5e20' : '#b91c1c') + '">' + segScores[i] + '%</div><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.15rem"><i class="fas fa-clock"></i> ' + segTimeStr + '</div></div>';
+  }
+  grid += '</div>';
+  var banner = '<div style="text-align:center;padding:1.125rem;border-radius:calc(var(--radius) - 2px);background:' + (pass ? '#e8f5e9' : '#fef2f2') + ';border:1px solid ' + (pass ? '#c8e6c9' : '#fecaca') + ';margin-bottom:0.875rem"><i class="fas ' + (pass ? 'fa-award' : 'fa-times-circle') + '" style="font-size:2rem;color:' + (pass ? '#1b5e20' : '#b91c1c') + ';margin-bottom:0.5rem;display:block"></i><div style="font-size:0.9375rem;font-weight:700;color:' + (pass ? '#1b5e20' : '#b91c1c') + '">' + (pass ? 'Certification Passed!' : 'Did Not Pass — 85% Average Required') + '</div><div style="font-size:0.8125rem;margin-top:0.25rem;color:var(--muted-foreground)">Overall Score: <strong>' + avg + '%</strong> &nbsp;|&nbsp; Total Time: <strong>' + totalStr + '</strong></div></div>';
+
+  if (pass) document.getElementById('step5Next').style.display = 'inline-flex';
+
+  var el = document.getElementById('examConsolidatedResult');
+  el.innerHTML = banner + grid;
+  el.style.display = 'block';
+  document.getElementById('examSection').style.display = 'block';
+  document.getElementById('step5DashboardSection').style.display = 'none';
+  document.getElementById('step5InfoAlert').style.display = 'none';
+  document.getElementById('step5Nav').style.display = 'none';
+  for (var j = 0; j < 4; j++) {
+    var p = document.getElementById('examSeg' + j);
+    if (p) p.style.display = 'none';
+  }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 </script>
 </body>
 </html>
