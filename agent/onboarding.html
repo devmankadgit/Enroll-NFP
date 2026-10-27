@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=13">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=18">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -176,7 +176,7 @@
   }
   .exam-q-head {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
     line-height: 1.35;
   }
@@ -260,9 +260,9 @@
     width: 4rem;
     height: 4rem;
     border-radius: 9999px;
-    background: var(--accent);
-    color: var(--primary);
-    border: 1px solid var(--primary-200);
+    background: var(--success-50);
+    color: var(--success-700);
+    border: 1px solid var(--success-200);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -275,7 +275,7 @@
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--primary);
+    color: var(--success-800);
     line-height: 1.3;
   }
   .success-hero-lead {
@@ -317,13 +317,13 @@
     line-height: 1.35;
     word-break: break-word;
   }
-  .success-meta-item .v.is-status { color: var(--primary); }
+  .success-meta-item .v.is-status { color: var(--success-700); }
   .success-next {
     margin: 0 0 1.25rem;
     padding: 0.875rem 1rem;
     text-align: left;
-    background: var(--accent);
-    border: 1px solid var(--primary-200);
+    background: var(--info-50);
+    border: 1px solid var(--info-200);
     border-radius: calc(var(--radius) - 2px);
   }
   .success-next-title {
@@ -332,7 +332,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--primary);
+    color: var(--info-700);
   }
   .success-next ol {
     margin: 0;
@@ -454,10 +454,12 @@
 </style>
 </head>
 <body>
-<div class="ui-shell">
-  <aside class="ui-sidebar">
+<div class="ui-shell" id="appShell">
+  <button type="button" class="ui-sidebar-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
+  <aside class="ui-sidebar" id="appSidebar">
     <div class="ui-sidebar-brand">
-      <img class="ui-sidebar-logo" src="../assets/brand/enrollaxis-logo.svg" alt="Enrollaxis">
+      <img class="ui-sidebar-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="Enrollaxis">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
     </div>
     <nav class="ui-sidebar-nav">
       <div class="progress-box">
@@ -473,7 +475,7 @@
         <button type="button" class="ui-step-item" id="bar4" onclick="obGoTo(4)"><span class="ui-step-num">5</span>Training &amp; Certification</button>
         <button type="button" class="ui-step-item" id="bar5" onclick="obGoTo(5)"><span class="ui-step-num">6</span>Background Check</button>
         <button type="button" class="ui-step-item" id="bar6" onclick="obGoTo(6)"><span class="ui-step-num">7</span>Contract Execution</button>
-        <button type="button" class="ui-step-item" id="bar7" onclick="obGoTo(7)"><span class="ui-step-num">8</span>Ready to Sell</button>
+        <button type="button" class="ui-step-item is-locked" id="bar7" onclick="obGoTo(7)" aria-disabled="true"><span class="ui-step-num">8</span>Ready to Sell</button>
       </div>
       <a href="../auth/login.html" class="ui-btn ui-btn-ghost ui-btn-sm sidebar-exit" onclick="return confirm('Save draft and exit?')">
         <i class="fas fa-sign-out-alt"></i> Save &amp; Exit
@@ -492,7 +494,10 @@
 
   <div class="ui-main">
     <header class="ui-topbar">
-      <img class="ob-topbar-logo" src="../assets/brand/enrollaxis-logo.svg" alt="Enrollaxis">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <img class="ob-topbar-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="Enrollaxis">
       <div class="ob-topbar-titles">
         <h1>Agent Onboarding</h1>
         <p class="subtitle">Producer Onboarding - Invitation through Ready to Sell</p>
@@ -780,7 +785,7 @@
             <div id="examSeg1" class="exam-seg" style="display:none"></div>
             <div id="examSeg2" class="exam-seg" style="display:none"></div>
             <div id="examSeg3" class="exam-seg" style="display:none"></div>
-            <div id="unansweredWarn" class="ui-alert" style="display:none;align-items:flex-start;margin:0.75rem 0;background:#fffbeb;border-color:#f59e0b;color:#92400e">
+            <div id="unansweredWarn" class="ui-alert ui-alert-warning" style="display:none;align-items:flex-start;margin:0.75rem 0">
               <i class="fas fa-exclamation-triangle"></i>
               <div style="flex:1">
                 <div style="font-weight:700;margin-bottom:0.25rem"><span id="unansweredCount">0</span> question(s) not answered (<span id="unansweredList"></span>).</div>
@@ -869,6 +874,13 @@
           <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(6)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
         <div class="ui-card-content">
+          <div class="ob-block-banner" id="readyBlockBanner" role="alert">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            <div>
+              <strong>Complete the steps below before Ready to Sell unlocks.</strong>
+              <ul id="readyBlockBannerList"></ul>
+            </div>
+          </div>
           <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
             <i class="fas fa-info-circle"></i>
             <div>Review and digitally sign your Agent Contracting Agreement.</div>
@@ -961,7 +973,6 @@
 
             <div class="success-actions">
               <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
-              <a href="documents.html" class="ui-btn ui-btn-outline"><i class="fas fa-folder-open"></i> View Documents</a>
             </div>
           </div>
         </div>
@@ -984,6 +995,7 @@
   var current = 0;
   var total = 8;
   var drafts = {};
+  var bgInviteSent = false;
   var labels = [
     'Invitation & Registration',
     'Personal & Business Info',
@@ -994,6 +1006,15 @@
     'Contract Execution',
     'Ready to Sell'
   ];
+  var stepFullNames = [
+    'Step 1: Invitation & Registration',
+    'Step 2: Personal & Business Info',
+    'Step 3: W-9 & Tax / Payment',
+    'Step 4: AHIP & License Verification',
+    'Step 5: Training & Certification',
+    'Step 6: Background Check',
+    'Step 7: Contract Execution'
+  ];
 
   function setVal(id, v) {
     var el = document.getElementById(id);
@@ -1002,18 +1023,161 @@
     el.dispatchEvent(new Event('change', { bubbles: true }));
   }
   function setCheck(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; }
+  function hasVal(id) {
+    var el = document.getElementById(id);
+    return !!(el && el.value && String(el.value).trim());
+  }
+
+  function isStepComplete(n) {
+    if (drafts[n]) return false;
+    if (n === 0) {
+      var npnEl = document.getElementById('regNPN');
+      var npn = npnEl ? npnEl.value.trim() : '';
+      if (!npn || npn.length < 5) return false;
+      var npnResult = document.getElementById('npnResult');
+      return !!(npnResult && npnResult.style.display !== 'none');
+    }
+    if (n === 1) {
+      return hasVal('piFirst') && hasVal('piLast') && hasVal('piDOB') && hasVal('piSSN') &&
+        hasVal('piPhone') && hasVal('piBizStreet') && hasVal('piBizCity') && hasVal('piBizState') && hasVal('piBizZip');
+    }
+    if (n === 2) {
+      if (!hasVal('taxEntity') || !hasVal('taxTIN') || !hasVal('taxName')) return false;
+      var w9Zone = document.getElementById('w9UploadZone');
+      var w9File = document.getElementById('w9File');
+      var w9Ok = (w9Zone && w9Zone.classList.contains('has-file')) ||
+        (w9File && w9File.files && w9File.files.length);
+      if (!w9Ok) return false;
+      var ach = document.getElementById('payACH');
+      var check = document.getElementById('payCheck');
+      if (!(ach && ach.checked) && !(check && check.checked)) return false;
+      if (ach && ach.checked) {
+        return hasVal('bankName') && hasVal('bankRouting') && hasVal('bankAcct') && hasVal('bankAcctType');
+      }
+      return hasVal('checkAddr');
+    }
+    if (n === 3) {
+      if (!hasVal('ahipCert') || !hasVal('ahipDate')) return false;
+      return !!document.querySelectorAll('#stateCheckboxes input:checked').length;
+    }
+    if (n === 4) {
+      return typeof modsDone !== 'undefined' && modsDone === 4 &&
+        typeof examPassed !== 'undefined' && examPassed === true;
+    }
+    if (n === 5) {
+      var bgConsent = document.getElementById('bgConsent');
+      return !!(bgConsent && bgConsent.checked) && bgInviteSent;
+    }
+    if (n === 6) {
+      var contractRead = document.getElementById('contractRead');
+      return !!(contractRead && contractRead.checked) && hasVal('eSigName');
+    }
+    return true;
+  }
+
+  function canOpenFinalStep() {
+    for (var i = 0; i <= 6; i++) {
+      if (!isStepComplete(i)) return false;
+    }
+    return true;
+  }
+
+  function getIncompletePriorSteps() {
+    var list = [];
+    for (var i = 0; i <= 5; i++) {
+      if (!isStepComplete(i)) list.push(i);
+    }
+    return list;
+  }
+
+  function refreshReadyBlockBanner(forceShow) {
+    var banner = document.getElementById('readyBlockBanner');
+    var listEl = document.getElementById('readyBlockBannerList');
+    if (!banner || !listEl) return;
+    var incomplete = getIncompletePriorSteps();
+    if (!incomplete.length) {
+      banner.classList.remove('is-visible');
+      listEl.innerHTML = '';
+      return;
+    }
+    if (forceShow || current === 6) {
+      listEl.innerHTML = incomplete.map(function (i) {
+        return '<li><a href="javascript:void(0)" onclick="obGoTo(' + i + ')">' + stepFullNames[i] + '</a></li>';
+      }).join('');
+      banner.classList.add('is-visible');
+    } else {
+      banner.classList.remove('is-visible');
+    }
+  }
+
+  function updateFinalStepLock() {
+    var bar7 = document.getElementById('bar7');
+    if (!bar7) return;
+    var unlocked = canOpenFinalStep();
+    bar7.classList.toggle('is-locked', !unlocked);
+    bar7.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+  }
+  window.updateFinalStepLock = updateFinalStepLock;
+
+  var shell = document.getElementById('appShell');
+  var sidebarToggle = document.getElementById('sidebarToggle');
+  var sidebarClose = document.getElementById('sidebarClose');
+  var sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function isMobileShell() {
+    return window.matchMedia('(max-width: 900px)').matches;
+  }
+
+  function setSidebarOpen(open) {
+    if (!shell) return;
+    shell.classList.toggle('sidebar-open', !!open);
+    if (sidebarToggle) {
+      sidebarToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      sidebarToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    document.body.style.overflow = open && isMobileShell() ? 'hidden' : '';
+  }
+
+  function toggleSidebar() {
+    setSidebarOpen(!(shell && shell.classList.contains('sidebar-open')));
+  }
+
+  if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+  if (sidebarClose) sidebarClose.addEventListener('click', function () { setSidebarOpen(false); });
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', function () { setSidebarOpen(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setSidebarOpen(false);
+  });
+  window.addEventListener('resize', function () {
+    if (!isMobileShell()) setSidebarOpen(false);
+  });
 
   window.obGoTo = function (n) {
     if (n < 0 || n >= total) return;
+    var blockedFinal = false;
+    if (n === 7 && !canOpenFinalStep()) {
+      blockedFinal = true;
+      if (typeof showToast === 'function') {
+        showToast('Complete Steps 1 through 7 before opening Ready to Sell.', 'info');
+      }
+      n = 6;
+    }
     document.querySelectorAll('.ob-section').forEach(function (s) { s.classList.remove('active'); });
     document.getElementById('obStep' + n).classList.add('active');
     for (var i = 0; i < total; i++) {
       var bar = document.getElementById('bar' + i);
+      if (!bar) continue;
       bar.classList.remove('active', 'done', 'draft');
-      if (i < n) bar.classList.add(drafts[i] ? 'draft' : 'done');
+      if (i === 7) {
+        /* lock state applied below via updateFinalStepLock */
+      } else if (i < n) {
+        bar.classList.add(drafts[i] ? 'draft' : 'done');
+      }
       if (i === n) bar.classList.add('active');
     }
     current = n;
+    updateFinalStepLock();
+    refreshReadyBlockBanner(blockedFinal);
     var stepText = 'Step ' + (n + 1) + ' of ' + total;
     var pct = (((n + 1) / total) * 100) + '%';
     document.getElementById('sb-step-label').textContent = stepText;
@@ -1028,6 +1192,11 @@
       var dateEl = document.getElementById('submitDate');
       if (dateEl && (!dateEl.textContent || dateEl.textContent === '-')) finalizeSubmissionMeta();
     }
+    if (blockedFinal) {
+      var banner = document.getElementById('readyBlockBanner');
+      if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (isMobileShell()) setSidebarOpen(false);
     window.scrollTo(0, 0);
   };
 
@@ -1045,9 +1214,25 @@
         if (typeof showToast === 'function') showToast('Please agree to the contract and type your legal name.', 'info');
         return;
       }
+      var incomplete = getIncompletePriorSteps();
+      if (incomplete.length) {
+        refreshReadyBlockBanner(true);
+        var banner = document.getElementById('readyBlockBanner');
+        if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (typeof showToast === 'function') {
+          showToast('Complete the listed steps before submitting Ready to Sell.', 'info');
+        }
+        return;
+      }
+      drafts[n] = false;
+      if (!canOpenFinalStep()) return;
       finalizeSubmissionMeta();
+      updateFinalStepLock();
+      obGoTo(n + 1);
+      return;
     }
     drafts[n] = false;
+    updateFinalStepLock();
     obGoTo(n + 1);
   };
 
@@ -1068,6 +1253,7 @@
 
   window.skipStep = function (n) {
     drafts[n] = true;
+    updateFinalStepLock();
     obGoTo(n + 1);
   };
 
@@ -1079,17 +1265,20 @@
     }
     document.getElementById('err_regNPN').classList.remove('show');
     document.getElementById('npnResult').style.display = 'flex';
+    updateFinalStepLock();
   };
 
   window.togglePayFields = function () {
     var check = document.getElementById('payCheck').checked;
     document.getElementById('achFields').style.display = check ? 'none' : 'block';
     document.getElementById('checkFields').style.display = check ? 'block' : 'none';
+    updateFinalStepLock();
   };
 
   window.handleUpload = function (input, zoneId) {
     var zone = document.getElementById(zoneId);
     if (input.files && input.files[0]) zone.classList.add('has-file');
+    updateFinalStepLock();
   };
 
   window.sendBgInvitation = function () {
@@ -1097,8 +1286,10 @@
       if (typeof showToast === 'function') showToast('Please authorize the background check first.', 'info');
       return;
     }
+    bgInviteSent = true;
     document.getElementById('bgInviteTimestamp').textContent = new Date().toLocaleString();
     document.getElementById('bgStatusPanel').style.display = 'block';
+    updateFinalStepLock();
     if (typeof showToast === 'function') showToast('Background check invitation sent.', 'info');
   };
 
@@ -1167,12 +1358,20 @@
       setVal('eSigName', 'James R Martinez');
       setVal('eSigDate', new Date().toISOString().slice(0, 10));
     }
+    drafts[step] = false;
+    updateFinalStepLock();
+    refreshReadyBlockBanner(false);
   };
 
 
   document.getElementById('regNPN').addEventListener('input', function () {
     this.value = this.value.replace(/[^0-9]/g, '');
+    var npnResult = document.getElementById('npnResult');
+    if (npnResult) npnResult.style.display = 'none';
+    updateFinalStepLock();
   });
+
+  updateFinalStepLock();
 })();
 
 /* Step 5 certification exam - restored from feat/enrolaxis-brand-theme openSegmentScreen flow */
@@ -1191,7 +1390,7 @@ var examSegData = [
     ]
   },
   {
-    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: '#e8f5e9', accentColor: '#1b5e20',
+    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: 'var(--success-50)', accentColor: 'var(--success-800)',
     material: '<div style="padding:0.75rem 0.875rem;background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7;max-height:8.5rem;overflow-y:auto"><strong>Training Excerpt - Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 - Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
     questions: [
       { q: "The Annual Enrollment Period (AEP) for Medicare Advantage runs from:", opts: ["January 1 - March 31", "October 15 - December 7", "November 1 - December 15", "September 1 - October 31"], ans: 1 },
@@ -1202,8 +1401,8 @@ var examSegData = [
     ]
   },
   {
-    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: '#ede7f6', accentColor: '#6a1b9a',
-    material: '<div style="padding:0.75rem 0.875rem;background:#faf5ff;border:1px solid #ce93d8;border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:#6a1b9a;margin-right:0.35rem"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
+    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: 'var(--discovery-50)', accentColor: 'var(--discovery-700)',
+    material: '<div style="padding:0.75rem 0.875rem;background:var(--discovery-50);border:1px solid var(--discovery-300);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:var(--discovery-700);margin-right:0.35rem"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
     questions: [
       { q: "To enroll in a C-SNP plan, a beneficiary must have:", opts: ["Medicare Part A only", "Medicare Parts A and B AND the qualifying chronic condition", "An active Medigap plan", "Part D enrollment in effect"], ans: 1 },
       { q: "The PQAT questionnaire is used to:", opts: ["Verify agent licensing credentials", "Assess clinical appropriateness of the C-SNP plan for the member", "Calculate a member's estimated annual premium", "Determine the copay structure for the plan"], ans: 1 },
@@ -1213,7 +1412,7 @@ var examSegData = [
     ]
   },
   {
-    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: '#fff3e0', accentColor: '#e65100',
+    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: 'var(--tertiary-50)', accentColor: 'var(--tertiary-700)',
     material: '',
     questions: [
       { q: "What does MAPD stand for?", opts: ["Medicare Advantage Prescription Drug Plan", "Medicare Approved Provider Directory", "Managed Advantage Plan with Disability", "Medicare Agency Partnership Division"], ans: 0 },
@@ -1299,7 +1498,7 @@ function buildSegPanel(idx) {
   html += '<div class="seg-questions" id="segQ' + idx + '">';
   for (var qi = 0; qi < 5; qi++) {
     var q = s.questions[qi], nm = 'seg' + idx + 'q' + qi;
-    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div class="exam-q-head" style="font-size:0.875rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:center;gap:0.5rem;line-height:1.35"><span class="exam-q-num" style="width:1.5rem;height:1.5rem;min-width:1.5rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.8125rem;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
+    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div class="exam-q-head" style="font-size:0.875rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:flex-start;gap:0.5rem;line-height:1.35"><span class="exam-q-num" style="width:1.5rem;height:1.5rem;min-width:1.5rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.8125rem;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
     for (var oi = 0; oi < q.opts.length; oi++) {
       html += '<label class="q-option-label"><input type="radio" name="' + nm + '" value="' + oi + '"> <span class="q-text">' + q.opts[oi] + '</span></label>';
     }
@@ -1364,11 +1563,11 @@ function doSubmitSegment(idx) {
   if (!pass && segAttempts[idx] < 4) {
     retryHtml = '<div style="text-align:center;margin-top:0.5rem"><button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="retrySegExam(' + idx + ')"><i class="fas fa-redo"></i> Retry (Attempt ' + (segAttempts[idx] + 1) + ' of 4)</button></div>';
   } else if (!pass) {
-    retryHtml = '<div style="text-align:center;color:#b91c1c;font-weight:600;font-size:0.75rem;margin-top:0.35rem"><i class="fas fa-ban"></i> Max attempts reached for Segment ' + s.id + '</div>';
+    retryHtml = '<div style="text-align:center;color:var(--danger);font-weight:600;font-size:0.75rem;margin-top:0.35rem"><i class="fas fa-ban"></i> Max attempts reached for Segment ' + s.id + '</div>';
   }
 
   document.getElementById('segScore' + idx).innerHTML =
-    '<div style="padding:0.75rem 0.875rem;border-radius:calc(var(--radius) - 2px);text-align:center;background:' + (pass ? '#e8f5e9' : '#fffbeb') + ';border:1px solid ' + (pass ? '#c8e6c9' : '#f59e0b') + ';font-size:0.8125rem;color:' + (pass ? '#1b5e20' : '#92400e') + '">' +
+    '<div style="padding:0.75rem 0.875rem;border-radius:calc(var(--radius) - 2px);text-align:center;background:' + (pass ? 'var(--success-50)' : 'var(--warning-50)') + ';border:1px solid ' + (pass ? 'var(--success-200)' : 'var(--warning-300)') + ';font-size:0.8125rem;color:' + (pass ? 'var(--success-800)' : 'var(--warning-800)') + '">' +
     '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> - Score: ' + correct + '/5 (' + pct + '%) &nbsp;|&nbsp; Time: ' + examTimeStr +
     '</div>' + retryHtml;
   document.getElementById('segScore' + idx).style.display = 'block';
@@ -1383,12 +1582,12 @@ function doSubmitSegment(idx) {
 
   if (pctEl) {
     pctEl.textContent = pct + '%';
-    pctEl.style.color = pass ? 'var(--primary)' : '#b91c1c';
+    pctEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
   }
   if (timeEl) timeEl.textContent = examTimeStr;
   if (statusEl) {
     statusEl.textContent = pass ? ('Segment ' + label + ' - ' + names[idx] + ' Completed') : ('Segment ' + label + ' Needs Retry');
-    statusEl.style.color = pass ? 'var(--primary)' : '#b91c1c';
+    statusEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
   }
   if (tab) tab.classList.toggle('done', pass);
 
@@ -1439,12 +1638,13 @@ function showConsolidatedResult() {
     var sc = segScores[i] >= 60;
     var segSecs = Math.round(modTimes[i] / 1000);
     var segTimeStr = segSecs >= 60 ? Math.floor(segSecs / 60) + 'm ' + (segSecs % 60) + 's' : segSecs + 's';
-    grid += '<div style="text-align:center;padding:0.625rem 0.4rem;border-radius:calc(var(--radius) - 2px);background:' + (sc ? '#e8f5e9' : '#fef2f2') + ';border:1px solid ' + (sc ? '#c8e6c9' : '#fecaca') + '"><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-bottom:0.2rem">Seg ' + segMeta[i][0] + ' - ' + segMeta[i][1] + '</div><div style="font-size:0.875rem;font-weight:700;color:' + (sc ? '#1b5e20' : '#b91c1c') + '">' + segScores[i] + '%</div><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.15rem"><i class="fas fa-clock"></i> ' + segTimeStr + '</div></div>';
+    grid += '<div style="text-align:center;padding:0.625rem 0.4rem;border-radius:calc(var(--radius) - 2px);background:' + (sc ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (sc ? 'var(--success-200)' : 'var(--danger-200)') + '"><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-bottom:0.2rem">Seg ' + segMeta[i][0] + ' - ' + segMeta[i][1] + '</div><div style="font-size:0.875rem;font-weight:700;color:' + (sc ? 'var(--success-800)' : 'var(--danger)') + '">' + segScores[i] + '%</div><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.15rem"><i class="fas fa-clock"></i> ' + segTimeStr + '</div></div>';
   }
   grid += '</div>';
-  var banner = '<div style="text-align:center;padding:1.125rem;border-radius:calc(var(--radius) - 2px);background:' + (pass ? '#e8f5e9' : '#fef2f2') + ';border:1px solid ' + (pass ? '#c8e6c9' : '#fecaca') + ';margin-bottom:0.875rem"><i class="fas ' + (pass ? 'fa-award' : 'fa-times-circle') + '" style="font-size:2rem;color:' + (pass ? '#1b5e20' : '#b91c1c') + ';margin-bottom:0.5rem;display:block"></i><div style="font-size:0.9375rem;font-weight:700;color:' + (pass ? '#1b5e20' : '#b91c1c') + '">' + (pass ? 'Certification Passed!' : 'Did Not Pass - 85% Average Required') + '</div><div style="font-size:0.8125rem;margin-top:0.25rem;color:var(--muted-foreground)">Overall Score: <strong>' + avg + '%</strong> &nbsp;|&nbsp; Total Time: <strong>' + totalStr + '</strong></div></div>';
+  var banner = '<div style="text-align:center;padding:1.125rem;border-radius:calc(var(--radius) - 2px);background:' + (pass ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (pass ? 'var(--success-200)' : 'var(--danger-200)') + ';margin-bottom:0.875rem"><i class="fas ' + (pass ? 'fa-award' : 'fa-times-circle') + '" style="font-size:2rem;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + ';margin-bottom:0.5rem;display:block"></i><div style="font-size:0.9375rem;font-weight:700;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + '">' + (pass ? 'Certification Passed!' : 'Did Not Pass - 85% Average Required') + '</div><div style="font-size:0.8125rem;margin-top:0.25rem;color:var(--muted-foreground)">Overall Score: <strong>' + avg + '%</strong> &nbsp;|&nbsp; Total Time: <strong>' + totalStr + '</strong></div></div>';
 
   if (pass) document.getElementById('step5Next').style.display = 'inline-flex';
+  if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
 
   var el = document.getElementById('examConsolidatedResult');
   el.innerHTML = banner + grid;

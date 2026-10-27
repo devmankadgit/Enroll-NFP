@@ -16,11 +16,37 @@
 
 function showToast(message, type) {
   type = type || 'success';
+  function tok(name, fallback) {
+    try {
+      var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      return v || fallback;
+    } catch (e) { return fallback; }
+  }
   var colors = {
-    success: { bg: '#e8f5e9', border: '#a5d6a7', color: '#1b5e20', icon: 'fa-check-circle' },
-    info: { bg: '#e8f5f2', border: '#a6dace', color: '#0f6a62', icon: 'fa-info-circle' },
-    warning: { bg: '#fff8e1', border: '#ffe082', color: '#e65100', icon: 'fa-exclamation-triangle' },
-    error: { bg: '#ffebee', border: '#ef9a9a', color: '#b71c1c', icon: 'fa-times-circle' }
+    success: {
+      bg: tok('--success-50', '#ECFDF2'),
+      border: tok('--success-200', '#B5F7CC'),
+      color: tok('--success-700', '#1B9D48'),
+      icon: 'fa-check-circle'
+    },
+    info: {
+      bg: tok('--info-50', '#ECF8FD'),
+      border: tok('--info-200', '#B5E5F7'),
+      color: tok('--info-700', '#127EA5'),
+      icon: 'fa-info-circle'
+    },
+    warning: {
+      bg: tok('--warning-50', '#FEF9EB'),
+      border: tok('--warning-200', '#FBE8B1'),
+      color: tok('--warning-700', '#AE8509'),
+      icon: 'fa-exclamation-triangle'
+    },
+    error: {
+      bg: tok('--danger-50', '#FDECEC'),
+      border: tok('--danger-200', '#F7B5B5'),
+      color: tok('--danger-700', '#9D1B1B'),
+      icon: 'fa-times-circle'
+    }
   };
   var c = colors[type] || colors.success;
   var toast = document.createElement('div');
@@ -140,7 +166,7 @@ function nfpSubmit(what) {
 }
 
 function nfpExport(what) {
-  showToast((what || 'Report') + ' exported — download starting…', 'info');
+  showToast((what || 'Report') + ' exported - download starting...', 'info');
 }
 
 function nfpApprove(what) {

@@ -13,6 +13,7 @@ This repo is a **static HTML prototype**. Do not introduce React/Vite for UI. Bu
 - For selects: use `<select class="ui-select">` plus `assets/ui-select.js` (enhances to a shadcn-style trigger + listbox). Do not leave bare native dropdown styling.
 - For dates: use `<input class="ui-input" type="date">` plus `assets/ui-calendar.js` (enhances to a shadcn-style date picker + calendar popover). Do not leave bare native date pickers.
 - For labels: use `<label class="ui-label">` plus `assets/ui-label.js`. Long names truncate with `...` on one line; hover shows the full name via `title`. Do not wrap field labels to a second line.
+- For mobile nav (≤900px): put `.ui-sidebar-toggle` (hamburger) in `.ui-topbar`, use `.ui-sidebar-backdrop` + `.ui-sidebar-close`, and toggle `.sidebar-open` on `.ui-shell` to slide the sidebar in as a drawer. Do not leave the sidebar permanently hidden with no way to open it.
 - Match patterns from [ui.shadcn.com](https://ui.shadcn.com/) (Button, Input, Card, Select, Alert, Checkbox, Progress, Badge, etc.) as plain HTML.
 - Keep EnrollAxis teal tokens already defined in `shadcn-ui.css` (`--primary`, `--brand-*`).
 
