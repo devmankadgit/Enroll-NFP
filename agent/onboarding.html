@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=18">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=24">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -25,7 +25,7 @@
     margin-bottom: 0.35rem;
   }
   .progress-box .value { font-size: 0.8125rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
-  .progress-box .ui-progress { margin-top: 0.55rem; background: var(--secondary-400); height: 0.4rem; }
+  .progress-box .ui-progress { margin-top: 0.55rem; background: var(--base-200); height: 0.4rem; }
   .progress-box .ui-progress-bar { background: var(--primary); }
   .sidebar-exit {
     margin-top: 0.85rem;
@@ -69,7 +69,7 @@
     text-overflow: ellipsis;
     max-width: 14rem;
   }
-  .ob-mobile-progress .ui-progress { background: var(--secondary-400); height: 0.4rem; }
+  .ob-mobile-progress .ui-progress { background: var(--base-200); height: 0.4rem; }
   .ob-mobile-progress .ui-progress-bar { background: var(--primary); }
 
   .seg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
@@ -246,8 +246,8 @@
     padding: 0.875rem 1rem;
     font-size: 0.8125rem;
     line-height: 1.8;
-    color: #424242;
-    background: #fafafa;
+    color: var(--base-700);
+    background: var(--base-50);
     margin-bottom: 0.75rem;
   }
   .success-hero {
@@ -386,7 +386,7 @@
   .ob-page-titles {
     display: none;
   }
-  .ui-card { border-color: var(--secondary-500); box-shadow: 0 1px 2px color-mix(in srgb, var(--secondary-900) 4%, transparent); }
+  .ui-card { border-color: var(--base-200); box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent); }
   .ui-card-content > .ui-alert { margin-bottom: 1rem; }
   .ui-card-content > .ui-alert:last-child { margin-bottom: 0; }
   .ui-chip { margin: 0; font-family: var(--font-body); }
@@ -416,13 +416,13 @@
       display: block;
       margin: 0 0 1rem;
       padding: 1rem 1rem;
-      background: var(--secondary-0);
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
     }
     .ob-mobile-progress .ui-progress {
-      background: var(--secondary-400);
+      background: var(--base-200);
       height: 0.45rem;
     }
 
@@ -1380,7 +1380,7 @@ var examPassed = false;
 var examSegData = [
   {
     id: 'A', label: 'Video-Based', icon: 'fa-video', accentBg: 'var(--accent)', accentColor: 'var(--primary)',
-    material: '<div style="background:var(--brand-ink);border-radius:calc(var(--radius) - 2px);padding:1rem;text-align:center;margin-bottom:1rem;color:#fff;font-size:0.8125rem"><i class="fas fa-video" style="font-size:1.75rem;margin-bottom:0.5rem;display:block;color:var(--primary-300)"></i><div style="font-weight:600;margin-bottom:0.35rem">EnrollAxis 2026 - C-SNP Product Overview</div><div style="opacity:.75;font-size:0.75rem;margin-bottom:0.625rem">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
+    material: '<div style="background:var(--brand-ink);border-radius:calc(var(--radius) - 2px);padding:1rem;text-align:center;margin-bottom:1rem;color:var(--white);font-size:0.8125rem"><i class="fas fa-video" style="font-size:1.75rem;margin-bottom:0.5rem;display:block;color:var(--primary-300)"></i><div style="font-weight:600;margin-bottom:0.35rem">EnrollAxis 2026 - C-SNP Product Overview</div><div style="opacity:.75;font-size:0.75rem;margin-bottom:0.625rem">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
     questions: [
       { q: "What is the primary target population for EnrollAxis's C-SNP plans?", opts: ["Patients with diabetes only", "Patients with ESRD or Chronic Kidney Disease (CKD)", "All Medicare-eligible beneficiaries over 65", "Patients with congestive heart failure"], ans: 1 },
       { q: "Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?", opts: ["Medicare Supplement (Medigap)", "Part D Prescription Drug Plan", "Medicare Advantage (Part C)", "Medicare Savings Account (MSA)"], ans: 2 },
@@ -1390,7 +1390,7 @@ var examSegData = [
     ]
   },
   {
-    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: 'var(--success-50)', accentColor: 'var(--success-800)',
+    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: 'var(--secondary-50)', accentColor: 'var(--secondary-800)',
     material: '<div style="padding:0.75rem 0.875rem;background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7;max-height:8.5rem;overflow-y:auto"><strong>Training Excerpt - Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 - Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
     questions: [
       { q: "The Annual Enrollment Period (AEP) for Medicare Advantage runs from:", opts: ["January 1 - March 31", "October 15 - December 7", "November 1 - December 15", "September 1 - October 31"], ans: 1 },
@@ -1401,8 +1401,8 @@ var examSegData = [
     ]
   },
   {
-    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: 'var(--discovery-50)', accentColor: 'var(--discovery-700)',
-    material: '<div style="padding:0.75rem 0.875rem;background:var(--discovery-50);border:1px solid var(--discovery-300);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:var(--discovery-700);margin-right:0.35rem"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
+    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: 'var(--primary-50)', accentColor: 'var(--primary-700)',
+    material: '<div style="padding:0.75rem 0.875rem;background:var(--primary-50);border:1px solid var(--primary-200);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:var(--primary-700);margin-right:0.35rem"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
     questions: [
       { q: "To enroll in a C-SNP plan, a beneficiary must have:", opts: ["Medicare Part A only", "Medicare Parts A and B AND the qualifying chronic condition", "An active Medigap plan", "Part D enrollment in effect"], ans: 1 },
       { q: "The PQAT questionnaire is used to:", opts: ["Verify agent licensing credentials", "Assess clinical appropriateness of the C-SNP plan for the member", "Calculate a member's estimated annual premium", "Determine the copay structure for the plan"], ans: 1 },
@@ -1412,7 +1412,7 @@ var examSegData = [
     ]
   },
   {
-    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: 'var(--tertiary-50)', accentColor: 'var(--tertiary-700)',
+    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: 'var(--secondary-100)', accentColor: 'var(--secondary-800)',
     material: '',
     questions: [
       { q: "What does MAPD stand for?", opts: ["Medicare Advantage Prescription Drug Plan", "Medicare Approved Provider Directory", "Managed Advantage Plan with Disability", "Medicare Agency Partnership Division"], ans: 0 },
