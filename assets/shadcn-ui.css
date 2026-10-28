@@ -220,11 +220,23 @@ button, input, select, textarea { font: inherit; }
 .ui-btn:active { background: var(--primary-700); color: var(--primary-foreground); }
 .ui-btn:disabled, .ui-btn[disabled] { pointer-events: none; opacity: .5; }
 .ui-btn-outline {
-  background: var(--background);
-  color: var(--foreground);
-  border-color: var(--border);
+  background: var(--white);
+  color: var(--primary);
+  border-color: var(--primary);
 }
-.ui-btn-outline:hover { background: var(--neutral-50); color: var(--foreground); }
+.ui-btn-outline:hover {
+  background: var(--primary-50);
+  color: var(--primary-700);
+  border-color: var(--primary-600);
+}
+.ui-btn-outline:active {
+  background: var(--primary-100);
+  color: var(--primary-800);
+  border-color: var(--primary-700);
+}
+.ui-btn-outline:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-500) 35%, transparent);
+}
 .ui-btn-secondary {
   background: var(--white);
   color: var(--primary);
@@ -232,8 +244,13 @@ button, input, select, textarea { font: inherit; }
 }
 .ui-btn-secondary:hover {
   background: var(--primary-50);
-  color: var(--primary-600);
+  color: var(--primary-700);
   border-color: var(--primary-600);
+}
+.ui-btn-secondary:active {
+  background: var(--primary-100);
+  color: var(--primary-800);
+  border-color: var(--primary-700);
 }
 .ui-btn-secondary:focus-visible {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-500) 35%, transparent);
@@ -242,7 +259,14 @@ button, input, select, textarea { font: inherit; }
   background: transparent;
   color: var(--foreground);
 }
-.ui-btn-ghost:hover { background: var(--neutral-50); color: var(--foreground); }
+.ui-btn-ghost:hover {
+  background: var(--primary-50);
+  color: var(--primary);
+}
+.ui-btn-ghost:active {
+  background: var(--primary-100);
+  color: var(--primary-700);
+}
 .ui-btn-destructive {
   background: var(--destructive);
   color: var(--destructive-foreground);
@@ -264,8 +288,13 @@ button, input, select, textarea { font: inherit; }
 }
 .ui-btn-warning:hover {
   background: var(--primary-50);
-  color: var(--primary-600);
+  color: var(--primary-700);
   border-color: var(--primary-600);
+}
+.ui-btn-warning:active {
+  background: var(--primary-100);
+  color: var(--primary-800);
+  border-color: var(--primary-700);
 }
 .ui-btn-sm { height: 2rem; padding: 0 0.75rem; font-size: 0.8125rem; border-radius: calc(var(--radius) - 4px); }
 .ui-btn-lg { height: 2.75rem; padding: 0 2rem; font-size: 0.9375rem; }
@@ -864,7 +893,7 @@ button, input, select, textarea { font: inherit; }
 /* -- Alert -- */
 .ui-alert {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -881,7 +910,7 @@ button, input, select, textarea { font: inherit; }
   height: 1rem;
   font-size: 1rem;
   line-height: 1;
-  margin: 0;
+  margin: 0.15rem 0 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1196,10 +1225,28 @@ button, input, select, textarea { font: inherit; }
   background: var(--primary);
   border-color: var(--primary);
   color: var(--primary-0);
+  font-size: 0;
+}
+.ui-step-item.done .ui-step-num::after {
+  content: '\f00c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.625rem;
+  line-height: 1;
+  color: var(--primary-0);
 }
 .ui-step-item.draft .ui-step-num {
   background: var(--warning-50);
   border-color: var(--warning-400);
+  color: var(--warning);
+  font-size: 0;
+}
+.ui-step-item.draft .ui-step-num::after {
+  content: '\f06a';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.625rem;
+  line-height: 1;
   color: var(--warning);
 }
 .ui-step-item.is-locked {
