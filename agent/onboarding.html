@@ -228,54 +228,110 @@
   .seg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
   .seg-tile {
     text-align: center;
-    padding: 0.65rem 0.4rem;
-    background: var(--background);
-    border: 1px solid var(--border);
+    padding: 0.75rem 0.5rem;
+    background: var(--white);
+    border: 1px solid var(--neutral-200);
     border-radius: calc(var(--radius) - 2px);
     cursor: pointer;
     font-size: 0.75rem;
+    color: var(--neutral-700);
+    transition: border-color .15s, background .15s, box-shadow .15s;
   }
-  .seg-tile strong { display: block; font-size: 0.875rem; margin: 0.2rem 0; }
-  .seg-tile .seg-meta { font-size: 0.6875rem; color: var(--muted-foreground); }
-  .seg-tile.done { border-color: var(--primary-300); background: var(--accent); }
-  .seg-tile.active-seg {
-    background: var(--accent);
+  .seg-tile:hover {
     border-color: var(--primary-300);
-    box-shadow: inset 0 0 0 1px var(--primary);
+    background: var(--primary-50);
+  }
+  .seg-tile strong {
+    display: block;
+    font-size: 1rem;
+    margin: 0.25rem 0;
+    color: var(--brand-ink);
+    font-family: var(--font-heading);
+  }
+  .seg-tile .seg-meta { font-size: 0.6875rem; color: var(--neutral-500); }
+  .seg-tile.done {
+    border-color: var(--primary-300);
+    background: var(--primary-50);
+  }
+  .seg-tile.done strong { color: var(--primary); }
+  .seg-tile.active-seg {
+    background: var(--primary-50);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
   }
   .q-option-label {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.625rem;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid var(--border);
+    padding: 0.7rem 0.875rem;
+    border: 1px solid var(--neutral-200);
     border-radius: calc(var(--radius) - 2px);
     cursor: pointer;
     font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--foreground);
     margin-bottom: 0.5rem;
-    transition: border-color .15s, background .15s;
+    background: var(--white);
+    transition: border-color .15s, background .15s, box-shadow .15s;
   }
-  .q-option-label:hover { border-color: var(--primary); background: var(--accent); }
-  .q-option-label input[type="radio"] { flex-shrink: 0; }
+  .q-option-label:hover {
+    border-color: var(--primary-400);
+    background: var(--primary-50);
+  }
+  .q-option-label:has(input:checked),
+  .q-option-label.is-selected {
+    border-color: var(--primary);
+    background: var(--primary-50);
+    box-shadow: 0 0 0 1px var(--primary);
+  }
+  .q-option-label input[type="radio"] {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.15rem;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
   .q-option-label input[type="radio"]:checked ~ .q-text {
     font-weight: 600;
-    color: var(--primary);
+    color: var(--primary-700);
+  }
+  .exam-workspace {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
   }
   .exam-meta-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
     margin-bottom: 1rem;
-    font-size: 0.75rem;
+    padding: 0.75rem;
+    background: var(--primary-50);
+    border: 1px solid var(--primary-100);
+    border-radius: calc(var(--radius) - 2px);
   }
   .exam-meta-cell {
-    text-align: center;
-    padding: 0.5rem;
-    background: var(--muted);
-    border-radius: calc(var(--radius) - 4px);
+    text-align: left;
+    padding: 0.15rem 0.35rem;
+    background: transparent;
+    border-radius: 0;
   }
-  .exam-meta-cell .k { font-size: 0.6875rem; color: var(--muted-foreground); }
-  .exam-meta-cell .v { font-weight: 700; }
+  .exam-meta-cell .k {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--primary-700);
+    margin-bottom: 0.15rem;
+  }
+  .exam-meta-cell .v {
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+  }
   .exam-seg-nav {
     display: flex;
     align-items: center;
@@ -288,67 +344,154 @@
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 0.5rem 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.875rem;
   }
   .exam-seg-nav-top .exam-nav-back { justify-self: start; }
   .exam-seg-nav-top .exam-nav-next { justify-self: end; }
   .exam-seg-nav-top h3,
   .exam-seg-nav h3 {
     margin: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--primary);
     text-align: center;
+    letter-spacing: -0.01em;
+    text-transform: none;
   }
   .exam-seg-banner {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 0.625rem 1rem;
     flex-wrap: wrap;
-    padding: 0.625rem 0.875rem;
-    border-radius: calc(var(--radius) - 4px);
+    padding: 0.75rem 0.9rem;
+    border-radius: calc(var(--radius) - 2px);
     margin-bottom: 1rem;
     font-size: 0.8125rem;
-    font-weight: 700;
-    border-left-width: 3px;
-    border-left-style: solid;
+    font-weight: 600;
+    background: var(--primary-50);
+    border: 1px solid var(--primary-100);
+    color: var(--primary-800);
   }
   .exam-seg-banner-title {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
     min-width: 0;
     flex: 1 1 auto;
+    line-height: 1.35;
+  }
+  .exam-seg-banner-title > i {
+    margin-top: 0.15rem;
+    flex-shrink: 0;
   }
   .exam-seg-banner-meta {
     font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--muted-foreground);
+    font-weight: 500;
+    color: var(--primary-700);
     white-space: nowrap;
     flex-shrink: 0;
+  }
+  .exam-media {
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(160deg, var(--neutral-900) 0%, var(--primary-900) 100%);
+    color: var(--white);
+    font-size: 0.8125rem;
+  }
+  .exam-media-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.55rem;
+    display: block;
+    color: var(--primary-200);
+  }
+  .exam-media-title {
+    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    margin-bottom: 0.35rem;
+    color: var(--white);
+  }
+  .exam-media-meta {
+    opacity: 0.85;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-100);
+  }
+  .exam-reading {
+    padding: 0.85rem 1rem;
+    background: var(--neutral-50);
+    border: 1px solid var(--neutral-200);
+    border-radius: calc(var(--radius) - 2px);
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--foreground);
+    max-height: 9rem;
+    overflow-y: auto;
+  }
+  .exam-q-card {
+    margin-bottom: 0.875rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--neutral-200);
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--white);
   }
   .exam-q-head {
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
-    line-height: 1.35;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    color: var(--brand-ink);
   }
   .exam-q-num {
     width: 1.5rem;
     height: 1.5rem;
     min-width: 1.5rem;
+    margin-top: 0.1rem;
     border-radius: 9999px;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 700;
     line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    background: var(--primary-50);
+    color: var(--primary);
+    border: 1px solid var(--primary-200);
   }
   .exam-q-text { min-width: 0; flex: 1; }
+  .seg-submit-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+  }
+  .exam-score-box {
+    padding: 0.85rem 1rem;
+    border-radius: calc(var(--radius) - 2px);
+    text-align: center;
+    font-size: 0.8125rem;
+  }
+  .exam-score-box.is-pass {
+    background: var(--success-50);
+    border: 1px solid var(--success-200);
+    color: var(--success-800);
+  }
+  .exam-score-box.is-fail {
+    background: var(--warning-50);
+    border: 1px solid var(--warning-300);
+    color: var(--warning-800);
+  }
   @media (max-width: 640px) {
-    .exam-meta-grid { grid-template-columns: 1fr 1fr; }
+    .exam-meta-grid { grid-template-columns: 1fr 1fr; gap: 0.65rem 0.5rem; }
     .exam-seg-nav-top {
       grid-template-columns: 1fr 1fr;
     }
@@ -381,6 +524,7 @@
       white-space: normal;
       padding-left: 1.5rem;
     }
+    .seg-submit-row .ui-btn { width: 100%; }
   }
   .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   .summary-cell {
@@ -1015,13 +1159,13 @@
             <div class="ui-progress" style="margin-top:0.75rem"><div class="ui-progress-bar" id="overallProgBar" style="width:0%"></div></div>
             <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.5rem 0 0">Click a segment to open its certification exam.</p>
           </div>
-          <div class="ui-section" id="examSection" style="display:none">
+          <div class="exam-workspace" id="examSection" style="display:none">
             <div class="exam-seg-nav-top">
               <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
-              <h3 class="ui-section-title" style="margin:0;letter-spacing:0.04em">Certification Exams</h3>
+              <h3>Certification Exams</h3>
               <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegTopBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
             </div>
-            <div class="exam-meta-grid">
+            <div class="exam-meta-grid" aria-label="Exam requirements">
               <div class="exam-meta-cell"><div class="k">Pass Score</div><div class="v">85% avg</div></div>
               <div class="exam-meta-cell"><div class="k">Total Questions</div><div class="v">20 (4 × 5)</div></div>
               <div class="exam-meta-cell"><div class="k">Segments</div><div class="v">4</div></div>
@@ -1711,7 +1855,7 @@ var examPassed = false;
 var examSegData = [
   {
     id: 'A', label: 'Video-Based', icon: 'fa-video', accentBg: 'var(--accent)', accentColor: 'var(--primary)',
-    material: '<div style="background:var(--brand-ink);border-radius:calc(var(--radius) - 2px);padding:1rem;text-align:center;margin-bottom:1rem;color:var(--white);font-size:0.8125rem"><i class="fas fa-video" style="font-size:1.75rem;margin-bottom:0.5rem;display:block;color:var(--primary-300)"></i><div style="font-weight:600;margin-bottom:0.35rem">EnrollAxis 2026 - C-SNP Product Overview</div><div style="opacity:.75;font-size:0.75rem;margin-bottom:0.625rem">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
+    material: '<div class="exam-media"><i class="fas fa-video exam-media-icon" aria-hidden="true"></i><div class="exam-media-title">EnrollAxis 2026 - C-SNP Product Overview</div><div class="exam-media-meta">Duration: ~8 min | Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
     questions: [
       { q: "What is the primary target population for EnrollAxis's C-SNP plans?", opts: ["Patients with diabetes only", "Patients with ESRD or Chronic Kidney Disease (CKD)", "All Medicare-eligible beneficiaries over 65", "Patients with congestive heart failure"], ans: 1 },
       { q: "Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?", opts: ["Medicare Supplement (Medigap)", "Part D Prescription Drug Plan", "Medicare Advantage (Part C)", "Medicare Savings Account (MSA)"], ans: 2 },
@@ -1722,7 +1866,7 @@ var examSegData = [
   },
   {
     id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: 'var(--secondary-50)', accentColor: 'var(--secondary-800)',
-    material: '<div style="padding:0.75rem 0.875rem;background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7;max-height:8.5rem;overflow-y:auto"><strong>Training Excerpt - Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 - Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
+    material: '<div class="exam-reading"><strong>Training Excerpt - Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 - Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
     questions: [
       { q: "The Annual Enrollment Period (AEP) for Medicare Advantage runs from:", opts: ["January 1 - March 31", "October 15 - December 7", "November 1 - December 15", "September 1 - October 31"], ans: 1 },
       { q: "ICEP stands for:", opts: ["Interim Coverage Eligibility Period", "Individual Coverage Enrollment Plan", "Initial Coverage Election Period", "Initial Carrier Election Period"], ans: 2 },
@@ -1733,7 +1877,7 @@ var examSegData = [
   },
   {
     id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: 'var(--primary-50)', accentColor: 'var(--primary-700)',
-    material: '<div style="padding:0.75rem 0.875rem;background:var(--primary-50);border:1px solid var(--primary-200);border-radius:calc(var(--radius) - 2px);margin-bottom:1rem;font-size:0.8125rem;line-height:1.7"><i class="fas fa-file-pdf" style="color:var(--primary-700);margin-right:0.35rem"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
+    material: '<div class="exam-reading"><i class="fas fa-file-pdf" style="color:var(--primary);margin-right:0.35rem" aria-hidden="true"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
     questions: [
       { q: "To enroll in a C-SNP plan, a beneficiary must have:", opts: ["Medicare Part A only", "Medicare Parts A and B AND the qualifying chronic condition", "An active Medigap plan", "Part D enrollment in effect"], ans: 1 },
       { q: "The PQAT questionnaire is used to:", opts: ["Verify agent licensing credentials", "Assess clinical appropriateness of the C-SNP plan for the member", "Calculate a member's estimated annual premium", "Determine the copay structure for the plan"], ans: 1 },
@@ -1823,23 +1967,37 @@ function selectExamSegment(idx) {
 
 function buildSegPanel(idx) {
   var s = examSegData[idx];
-  var ab = s.accentBg, ac = s.accentColor;
-  var html = '<div class="exam-seg-banner" style="background:' + ab + ';border-left-color:' + ac + ';color:' + ac + '"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' Exam - ' + s.label + '</span></div><div class="exam-seg-banner-meta">5 Questions &bull; Pass: 60%</div></div>';
+  var html = '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' Exam - ' + s.label + '</span></div><div class="exam-seg-banner-meta">5 Questions · Pass: 60%</div></div>';
   if (s.material) html += s.material;
   html += '<div class="seg-questions" id="segQ' + idx + '">';
   for (var qi = 0; qi < 5; qi++) {
     var q = s.questions[qi], nm = 'seg' + idx + 'q' + qi;
-    html += '<div style="margin-bottom:0.875rem;padding:0.75rem 0.875rem;border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);background:var(--background)"><div class="exam-q-head" style="font-size:0.875rem;font-weight:600;margin-bottom:0.625rem;display:flex;align-items:flex-start;gap:0.5rem;line-height:1.35"><span class="exam-q-num" style="width:1.5rem;height:1.5rem;min-width:1.5rem;border-radius:9999px;background:' + ab + ';color:' + ac + ';font-size:0.8125rem;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.1rem">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
+    html += '<div class="exam-q-card"><div class="exam-q-head"><span class="exam-q-num">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
     for (var oi = 0; oi < q.opts.length; oi++) {
       html += '<label class="q-option-label"><input type="radio" name="' + nm + '" value="' + oi + '"> <span class="q-text">' + q.opts[oi] + '</span></label>';
     }
     html += '</div>';
   }
   html += '</div>';
-  html += '<div class="seg-submit-row" style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:0.25rem"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-check"></i> Submit Segment ' + s.id + ' Exam</button></div>';
+  html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-check"></i> Submit Segment ' + s.id + ' Exam</button></div>';
   html += '<div id="segScore' + idx + '" style="display:none;margin-top:0.875rem"></div>';
   document.getElementById('examSeg' + idx).innerHTML = html;
+  bindExamOptionSelection(idx);
   examStartTimes[idx] = Date.now();
+}
+
+function bindExamOptionSelection(idx) {
+  var root = document.getElementById('examSeg' + idx);
+  if (!root) return;
+  root.querySelectorAll('.q-option-label input[type="radio"]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var name = input.name;
+      root.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+        var lab = r.closest('.q-option-label');
+        if (lab) lab.classList.toggle('is-selected', r.checked);
+      });
+    });
+  });
 }
 
 function submitSegment(idx) {
@@ -1898,8 +2056,8 @@ function doSubmitSegment(idx) {
   }
 
   document.getElementById('segScore' + idx).innerHTML =
-    '<div style="padding:0.75rem 0.875rem;border-radius:calc(var(--radius) - 2px);text-align:center;background:' + (pass ? 'var(--success-50)' : 'var(--warning-50)') + ';border:1px solid ' + (pass ? 'var(--success-200)' : 'var(--warning-300)') + ';font-size:0.8125rem;color:' + (pass ? 'var(--success-800)' : 'var(--warning-800)') + '">' +
-    '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> - Score: ' + correct + '/5 (' + pct + '%) &nbsp;|&nbsp; Time: ' + examTimeStr +
+    '<div class="exam-score-box ' + (pass ? 'is-pass' : 'is-fail') + '">' +
+    '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> - Score: ' + correct + '/5 (' + pct + '%) | Time: ' + examTimeStr +
     '</div>' + retryHtml;
   document.getElementById('segScore' + idx).style.display = 'block';
 
