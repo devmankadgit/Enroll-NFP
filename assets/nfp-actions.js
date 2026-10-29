@@ -38,7 +38,7 @@ function showToast(message, type) {
     warning: {
       bg: tok('--warning-50', '#FEF9EB'),
       border: tok('--warning-200', '#FBE8B1'),
-      color: tok('--warning-700', '#AE8509'),
+      color: '#876707',
       icon: 'fa-exclamation-triangle'
     },
     error: {
