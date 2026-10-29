@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=59">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=61">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* Agent onboarding: teal primary, lime energy, slate structure */
@@ -1311,13 +1311,6 @@
           <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(6)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
         <div class="ui-card-content">
-          <div class="ob-block-banner" id="readyBlockBanner" role="alert">
-            <i class="fas fa-lock" aria-hidden="true"></i>
-            <div>
-              <strong>Complete the steps below before Ready to Sell unlocks.</strong>
-              <ul id="readyBlockBannerList"></ul>
-            </div>
-          </div>
           <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
             <i class="fas fa-info-circle"></i>
             <div>Review and digitally sign your Agent Contracting Agreement.</div>
@@ -1519,32 +1512,20 @@
     return true;
   }
 
-  function getIncompletePriorSteps() {
-    var list = [];
-    for (var i = 0; i <= 5; i++) {
-      if (!isStepComplete(i)) list.push(i);
+  function getFirstIncompleteRequiredStep() {
+    for (var i = 0; i <= 6; i++) {
+      if (!isStepComplete(i)) return i;
     }
-    return list;
+    return -1;
   }
 
-  function refreshReadyBlockBanner(forceShow) {
-    var banner = document.getElementById('readyBlockBanner');
-    var listEl = document.getElementById('readyBlockBannerList');
-    if (!banner || !listEl) return;
-    var incomplete = getIncompletePriorSteps();
-    if (!incomplete.length) {
-      banner.classList.remove('is-visible');
-      listEl.innerHTML = '';
-      return;
+  function toastNextPendingStep() {
+    var idx = getFirstIncompleteRequiredStep();
+    if (idx < 0) return false;
+    if (typeof showToast === 'function') {
+      showToast(stepFullNames[idx] + ' is still pending.', 'warning');
     }
-    if (forceShow || current === 6) {
-      listEl.innerHTML = incomplete.map(function (i) {
-        return '<li><a href="javascript:void(0)" onclick="obGoTo(' + i + ')">' + stepFullNames[i] + '</a></li>';
-      }).join('');
-      banner.classList.add('is-visible');
-    } else {
-      banner.classList.remove('is-visible');
-    }
+    return true;
   }
 
   function updateFinalStepLock() {
@@ -1687,19 +1668,14 @@
 
   window.obGoTo = function (n) {
     if (n < 0 || n >= total) return;
-    var blockedFinal = false;
     if (n === 7 && !canOpenFinalStep()) {
-      blockedFinal = true;
-      if (typeof showToast === 'function') {
-        showToast('Complete Steps 1 through 7 before opening Ready to Sell.', 'info');
-      }
+      toastNextPendingStep();
       n = 6;
     }
     document.querySelectorAll('.ob-section').forEach(function (s) { s.classList.remove('active'); });
     document.getElementById('obStep' + n).classList.add('active');
     current = n;
     syncStepBars(n);
-    refreshReadyBlockBanner(blockedFinal);
     var stepText = 'Step ' + (n + 1) + ' of ' + total;
     var pct = (((n + 1) / total) * 100) + '%';
     document.getElementById('sb-step-label').textContent = stepText;
@@ -1711,10 +1687,6 @@
     if (n === 7) {
       var dateEl = document.getElementById('submitDate');
       if (dateEl && (!dateEl.textContent || dateEl.textContent === '-')) finalizeSubmissionMeta();
-    }
-    if (blockedFinal) {
-      var banner = document.getElementById('readyBlockBanner');
-      if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     if (isMobileShell()) setSidebarOpen(false);
     window.scrollTo(0, 0);
@@ -1734,16 +1706,7 @@
         if (typeof showToast === 'function') showToast('Please agree to the contract and type your legal name.', 'info');
         return;
       }
-      var incomplete = getIncompletePriorSteps();
-      if (incomplete.length) {
-        refreshReadyBlockBanner(true);
-        var banner = document.getElementById('readyBlockBanner');
-        if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (typeof showToast === 'function') {
-          showToast('Complete the listed steps before submitting Ready to Sell.', 'info');
-        }
-        return;
-      }
+      if (toastNextPendingStep()) return;
       drafts[n] = false;
       if (!canOpenFinalStep()) return;
       finalizeSubmissionMeta();
@@ -1880,7 +1843,6 @@
     }
     drafts[step] = false;
     updateFinalStepLock();
-    refreshReadyBlockBanner(false);
   };
 
 
