@@ -21,6 +21,11 @@
   /* ---------- Nav extras ---------- */
   .ob-nav-progress { margin: 4px 4px 8px; padding: 16px; border-radius: 12px; background: var(--mx-bg-neutral); }
   .ob-nav-progress .mx-row { justify-content: space-between; margin-bottom: 10px; }
+  @media (min-width: 1200px) {
+    .nav-mini .ob-nav-progress { margin: 0 8px 8px; padding: 10px 0; text-align: center; }
+    .nav-mini .ob-nav-progress .mx-overline, .nav-mini .ob-nav-progress .mx-linear, .nav-mini #navMeta { display: none; }
+    .nav-mini .ob-nav-progress .mx-row { justify-content: center; margin: 0; }
+  }
   .ob-header-step { display: none; min-width: 0; }
   .ob-header-step .mx-caption { white-space: nowrap; }
   .ob-header-step .mx-subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -242,9 +247,11 @@
   <button type="button" class="mx-backdrop" id="navBackdrop" aria-label="Close menu" tabindex="-1"></button>
 
   <!-- ================= NAV ================= -->
+  <button type="button" class="mx-nav-toggle" id="navMini" aria-label="Collapse sidebar" aria-controls="appNav" aria-expanded="true" title="Collapse sidebar"><span data-icon="alt-arrow-left-linear"></span></button>
   <aside class="mx-nav" id="appNav" aria-label="Onboarding steps">
     <div class="mx-nav-brand">
-      <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+      <img class="mx-logo-full" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+      <img class="mx-logo-mini" src="../assets/brand/enrollaxis-icon@3x.png" alt="EnrollAxis">
       <button type="button" class="mx-icon-btn mx-nav-close" id="navClose" aria-label="Close menu"><span data-icon="close-circle-bold"></span></button>
     </div>
     <div class="mx-nav-body">
@@ -262,6 +269,9 @@
       <ul class="mx-nav-list" data-nav-group="2,3,4,5"></ul>
       <div class="mx-nav-subheader">Finish</div>
       <ul class="mx-nav-list" data-nav-group="6,7"></ul>
+    </div>
+    <div class="mx-nav-foot-mini">
+      <a class="mx-icon-btn" href="mailto:brokersupport@enrollaxis.com" title="Contact support" aria-label="Contact support"><span data-icon="headphones-round-sound-bold-duotone"></span></a>
     </div>
     <div class="mx-nav-foot">
       <div class="mx-help-card">

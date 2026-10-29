@@ -9,27 +9,27 @@
   var STORE_KEY = 'ea.agentOnboarding.v2';
   var TOTAL = 8;
   var STEPS = [
-    { title: 'Get started', caption: 'Invite and NPN', icon: 'rocket-2-bold-duotone', mins: 2,
+    { title: 'Get started', short: 'Start', caption: 'Invite and NPN', icon: 'rocket-2-bold-duotone', mins: 2,
       tips: ['Your NPN is on your NIPR record or your state license.', 'We use it to fill in your name, address and licenses for you.'] },
-    { title: 'About you', caption: 'Identity and address', icon: 'user-id-bold-duotone', mins: 2,
+    { title: 'About you', short: 'About', caption: 'Identity and address', icon: 'user-id-bold-duotone', mins: 2,
       subtitle: 'Confirm your details. Most of them come straight from NIPR.',
       tips: ['Your name must match your state license exactly.', 'Use a business address. A home office is fine.'] },
-    { title: 'Tax & payouts', caption: 'W-9 and bank', icon: 'wallet-money-bold-duotone', mins: 4,
+    { title: 'Tax & payouts', short: 'Tax', caption: 'W-9 and bank', icon: 'wallet-money-bold-duotone', mins: 4,
       subtitle: 'Set up your W-9 and choose how commissions are paid.',
       tips: ['E-signing your W-9 is faster than uploading a scan.', 'Find the routing number at the bottom-left of a check.', 'Bank details are encrypted and only used for commission payments.'] },
-    { title: 'Licenses & states', caption: 'AHIP and territories', icon: 'diploma-verified-bold-duotone', mins: 2,
+    { title: 'Licenses & states', short: 'Licenses', caption: 'AHIP and territories', icon: 'diploma-verified-bold-duotone', mins: 2,
       subtitle: 'Add your AHIP certification and the states where you will sell.',
       tips: ['AHIP must be completed for the current plan year.', 'You can only sell in states where you hold an active license and appointment.'] },
-    { title: 'Training', caption: '4 short modules', icon: 'square-academic-cap-bold-duotone', mins: 8,
+    { title: 'Training', short: 'Training', caption: '4 short modules', icon: 'square-academic-cap-bold-duotone', mins: 8,
       subtitle: 'Four short modules, each with a 5-question check.',
       tips: ['Pass each module with 60% or more.', 'Your best score per module counts toward the 85% average.', 'Use keys 1-4 to answer and arrow keys to move.'] },
-    { title: 'Background check', caption: 'Vendor verification', icon: 'shield-user-bold-duotone', mins: 1,
+    { title: 'Background check', short: 'Background', caption: 'Vendor verification', icon: 'shield-user-bold-duotone', mins: 1,
       subtitle: 'Authorize the check. Our vendor emails you a secure link.',
       tips: ['You can continue while the vendor completes the check.', 'Results usually arrive in 1-3 business days.'] },
-    { title: 'Review & sign', caption: 'Contract and submit', icon: 'pen-new-square-bold-duotone', mins: 2,
+    { title: 'Review & sign', short: 'Sign', caption: 'Contract and submit', icon: 'pen-new-square-bold-duotone', mins: 2,
       subtitle: 'Check your application, sign the contract and submit.',
       tips: ['Use Edit to jump back to any step. Your answers stay saved.', 'Your typed name is a legally binding signature.'] },
-    { title: 'Ready to sell', caption: 'Admin approval', icon: 'cup-star-bold-duotone', mins: 0,
+    { title: 'Ready to sell', short: 'Ready', caption: 'Admin approval', icon: 'cup-star-bold-duotone', mins: 0,
       tips: ['Admin review usually takes 3-5 business days.', 'We email you as soon as a decision is made.'] }
   ];
 
@@ -298,8 +298,8 @@
         var cls = 'mx-nav-item' + (i === S.step ? ' is-active' : '') + (st ? ' is-' + st : '');
         var cap = { done: 'Complete', attention: 'Needs attention', locked: 'Unlocks after you submit' }[st] || step.caption;
         var statusIcon = { done: 'check-circle-bold', attention: 'danger-circle-bold', locked: 'lock-keyhole-minimalistic-bold-duotone' }[st];
-        return '<li><button type="button" class="' + cls + '" id="bar' + i + '" onclick="obGoTo(' + i + ')"' + (i === S.step ? ' aria-current="step"' : '') + (st === 'locked' ? ' aria-disabled="true"' : '') + '>' +
-          '<span class="mx-nav-icon">' + ic(step.icon) + '</span><span class="mx-nav-text"><span class="mx-nav-title">' + esc(step.title) + '</span><span class="mx-nav-caption">' + esc(cap) + '</span></span>' +
+        return '<li><button type="button" class="' + cls + '" id="bar' + i + '" onclick="obGoTo(' + i + ')" title="' + esc(step.title + ' - ' + cap) + '"' + (i === S.step ? ' aria-current="step"' : '') + (st === 'locked' ? ' aria-disabled="true"' : '') + '>' +
+          '<span class="mx-nav-icon">' + ic(step.icon) + '</span><span class="mx-nav-short" aria-hidden="true">' + esc(step.short) + '</span><span class="mx-nav-text"><span class="mx-nav-title">' + esc(step.title) + '</span><span class="mx-nav-caption">' + esc(cap) + '</span></span>' +
           (statusIcon ? '<span class="mx-nav-status">' + ic(statusIcon) + '</span>' : '') + '</button></li>';
       }).join('');
     });
@@ -1167,6 +1167,14 @@
     MX.bindForm(document);
 
     $('navOpen').addEventListener('click', function () { setNav(true); });
+    var setMini = function (on) {
+      $('appShell').classList.toggle('nav-mini', on);
+      var b = $('navMini'), label = on ? 'Expand sidebar' : 'Collapse sidebar';
+      b.setAttribute('aria-label', label); b.title = label; b.setAttribute('aria-expanded', on ? 'false' : 'true');
+      try { localStorage.setItem('ea.navMini', on ? '1' : '0'); } catch (e) { /* per-device preference only */ }
+    };
+    try { if (localStorage.getItem('ea.navMini') === '1') setMini(true); } catch (e) { /* ignore */ }
+    $('navMini').addEventListener('click', function () { setMini(!$('appShell').classList.contains('nav-mini')); });
     $('navClose').addEventListener('click', function () { setNav(false); });
     $('navBackdrop').addEventListener('click', function () { setNav(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });

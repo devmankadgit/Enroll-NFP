@@ -23,6 +23,7 @@
   --mx-shadow-primary: 0 8px 16px 0 color-mix(in srgb, var(--primary-500) 24%, transparent);
   --mx-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --mx-nav-w: 288px;
+  --mx-nav-mini-w: 88px;
   --mx-header-h: 72px;
 }
 
@@ -53,10 +54,48 @@ body.mx-body { background: var(--mx-bg); color: var(--mx-text); font-size: 14px;
   position: fixed; inset: 0 auto 0 0; width: var(--mx-nav-w); z-index: 40;
   background: var(--mx-bg); border-right: 1px dashed var(--mx-divider-dashed);
   display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain;
-  transition: transform .3s var(--mx-ease);
+  transition: transform .3s var(--mx-ease), width .3s var(--mx-ease);
 }
 .mx-nav-brand { display: flex; align-items: center; justify-content: space-between; padding: 24px 20px 12px 28px; }
 .mx-nav-brand img { height: 30px; width: auto; }
+.mx-nav-brand .mx-logo-mini { display: none; width: 40px; height: 40px; }
+.mx-nav-short { display: none; }
+.mx-nav-foot-mini { display: none; }
+
+/* Collapse toggle on the nav edge (desktop only) */
+.mx-nav-toggle {
+  position: fixed; z-index: 41; top: 28px; left: calc(var(--mx-nav-w) - 13px);
+  width: 26px; height: 26px; padding: 0; border-radius: 50%; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--mx-divider-dashed); color: var(--mx-text-2);
+  background: color-mix(in srgb, var(--white) 90%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: left .3s var(--mx-ease), color .2s, background .2s;
+}
+.mx-nav-toggle:hover { color: var(--primary-600); background: var(--primary-50); }
+.mx-nav-toggle:focus-visible { outline: 2px solid var(--primary-300); }
+.mx-nav-toggle [data-icon] { font-size: 16px; transition: transform .3s var(--mx-ease); }
+
+/* Mini nav: logo icon, icons with short labels, status dots */
+@media (min-width: 1200px) {
+  .mx-shell.nav-mini .mx-nav { width: var(--mx-nav-mini-w); overflow-x: hidden; }
+  .mx-shell.nav-mini .mx-main { margin-left: var(--mx-nav-mini-w); }
+  .mx-shell.nav-mini .mx-nav-toggle { left: calc(var(--mx-nav-mini-w) - 13px); }
+  .mx-shell.nav-mini .mx-nav-toggle [data-icon] { transform: rotate(180deg); }
+  .mx-shell.nav-mini .mx-nav-brand { justify-content: center; padding: 24px 0 16px; }
+  .mx-shell.nav-mini .mx-logo-full { display: none; }
+  .mx-shell.nav-mini .mx-logo-mini { display: block; }
+  .mx-shell.nav-mini .mx-nav-body { padding: 0 4px 16px; }
+  .mx-shell.nav-mini .mx-nav-subheader { display: none; }
+  .mx-shell.nav-mini .mx-nav-list + .mx-nav-subheader { display: block; height: 1px; padding: 0; margin: 8px 16px; background: var(--mx-divider); font-size: 0; }
+  .mx-shell.nav-mini .mx-nav-item { position: relative; flex-direction: column; justify-content: center; gap: 4px; min-height: 58px; padding: 8px 4px 6px; text-align: center; }
+  .mx-shell.nav-mini .mx-nav-item .mx-nav-text { display: none; }
+  .mx-shell.nav-mini .mx-nav-short { display: block; max-width: 100%; font-size: 0.625rem; font-weight: 600; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mx-shell.nav-mini .mx-nav-item .mx-nav-icon { font-size: 22px; }
+  .mx-shell.nav-mini .mx-nav-item .mx-nav-status { position: absolute; top: 5px; right: 14px; font-size: 14px; background: var(--white); border-radius: 50%; }
+  .mx-shell.nav-mini .mx-nav-foot { display: none; }
+  .mx-shell.nav-mini .mx-nav-foot-mini { display: flex; justify-content: center; padding: 8px 0 24px; }
+  .mx-main { transition: margin-left .3s var(--mx-ease); }
+}
 .mx-nav .mx-nav-close { display: none; }
 .mx-nav-body { flex: 1; padding: 8px 16px 16px; }
 .mx-nav-subheader { padding: 16px 12px 8px; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mx-text-3); }
@@ -531,6 +570,7 @@ body.mx-body { background: var(--mx-bg); color: var(--mx-text); font-size: 14px;
   .mx-shell.nav-open .mx-nav { transform: none; box-shadow: var(--mx-shadow-dialog); }
   .mx-shell.nav-open .mx-backdrop { opacity: 1; pointer-events: auto; }
   .mx-nav .mx-nav-close { display: inline-flex; }
+  .mx-nav-toggle { display: none; }
   .mx-main { margin-left: 0; }
   .mx-header { padding: 0 24px; height: 64px; }
   .mx-header .mx-menu-btn { display: inline-flex; }
