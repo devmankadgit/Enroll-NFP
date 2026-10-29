@@ -272,7 +272,7 @@
       if (n === 6) {
         right = '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary mx-btn-lg" id="submitBtn" onclick="obNext(6)"><span data-icon="plain-2-bold-duotone"></span>Submit application</button>';
       } else {
-        right = '<button type="button" class="mx-btn mx-btn-soft mx-btn-neutral" onclick="skipStep(' + n + ')" title="Save what you have and come back later">Finish later</button>' +
+        right = '<button type="button" class="mx-btn mx-btn-outlined mx-btn-neutral" onclick="skipStep(' + n + ')" title="Save what you have and come back later">Finish later</button>' +
           '<span class="ob-next-hint">Next: <strong>' + esc(STEPS[n + 1].title) + '</strong></span>' +
           '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary mx-btn-lg" onclick="obNext(' + n + ')">Continue<span data-icon="arrow-right-linear"></span></button>';
       }
@@ -363,13 +363,18 @@
     renderNav();
     setNav(false);
     window.scrollTo({ top: 0, behavior: 'auto' });
-    var h = $('obT' + n);
-    if (h && document.activeElement && document.activeElement !== document.body) { try { h.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+    var target = null;
+    if (!force && n >= 1 && n <= 5 && window.matchMedia('(min-width: 1024px)').matches) {
+      target = [].slice.call(stepEl(n).querySelectorAll('.mx-input:not([readonly])')).filter(function (el) { return !el.value && el.offsetParent; })[0];
+    }
+    if (!target && document.activeElement && document.activeElement !== document.body) target = $('obT' + n);
+    if (target) { try { target.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
     persist();
   };
 
   window.obNext = function (n) {
-    if (n === 0 && S.npnStatus !== 'found' && !quietFieldError($('regNPN'))) {
+    var sameNpn = S.npn === MX.digits(val('regNPN'));
+    if (n === 0 && !quietFieldError($('regNPN')) && (!S.npnStatus || S.npnStatus === 'error' || !sameNpn)) {
       obLookupNPN().then(function (ok) { if (ok) window.obNext(0); });
       return;
     }
@@ -527,6 +532,7 @@
       MX.setFieldError(tin, '');
     }
     $('taxSameNameRow').hidden = !ind;
+    $('taxName').setAttribute('data-label', ind ? 'Name on tax return' : 'Business name');
     $('taxNameLabel').innerHTML = (ind ? 'Name on tax return' : 'Business name (as on tax return)') + '<span class="req">*</span>';
     $('taxNameField').hidden = ind && $('taxSameName').checked;
     clearGroupError('taxEntityErr', $('taxEntityGroup'));
@@ -662,19 +668,25 @@
     var passed = S.exam.best.filter(function (x) { return x >= PASS_MODULE; }).length;
     var avg = avgBest(), anyLocked = [0, 1, 2, 3].some(function (i) { return moduleState(i) === 'locked'; });
     var tone = examPassed() ? '' : (anyLocked ? 'is-error' : (passed === 4 ? 'is-warning' : ''));
+    var nextUp = -1;
+    for (var k = 0; k < 4; k++) { var ms = moduleState(k); if (ms === 'new' || ms === 'retry') { nextUp = k; break; } }
+    if (!examPassed() && passed === 4) { var low = -1; for (var j = 0; j < 4; j++) if (S.exam.attempts[j] < MAX_ATTEMPTS && (low < 0 || S.exam.best[j] < S.exam.best[low])) low = j; nextUp = low; }
     var title, text, label;
     if (examPassed()) { title = 'Certification passed'; text = 'Average ' + avg + '% across all four modules. Nice work.'; label = '<span class="mx-label mx-label-success">' + ic('medal-ribbons-star-bold-duotone') + 'Passed</span>'; }
     else if (anyLocked) { title = 'A module is out of attempts'; text = 'Contact broker support to reset your attempts. Your other scores are kept.'; label = '<span class="mx-label mx-label-error">Action needed</span>'; }
-    else if (passed === 4) { title = 'Almost there'; text = 'Your average is ' + avg + '%. Retake any module to reach ' + PASS_AVG + '%. Only your best score counts.'; label = '<span class="mx-label mx-label-warning">Below ' + PASS_AVG + '%</span>'; }
+    else if (passed === 4 && nextUp < 0) { title = 'No retakes left'; text = 'Your average is ' + avg + '% and every module is out of attempts. Contact broker support to reset a module.'; label = '<span class="mx-label mx-label-error">Action needed</span>'; tone = 'is-error'; }
+    else if (passed === 4) { title = 'Almost there'; text = 'Your average is ' + avg + '%. Retake Module ' + MODULES[nextUp].id + ' (your lowest score) to reach ' + PASS_AVG + '%. Only your best score counts.'; label = '<span class="mx-label mx-label-warning">Below ' + PASS_AVG + '%</span>'; }
     else if (S.exam.attempts.some(function (a) { return a > 0; })) { title = passed + ' of 4 modules passed'; text = 'Keep going. You need ' + PASS_MODULE + '% in each module and an ' + PASS_AVG + '% average.'; label = ''; }
     else { title = 'Start with Module A'; text = 'Each module is short: study the material, then answer 5 questions.'; label = ''; }
+    var cta = nextUp >= 0 && !examPassed() ? '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary" id="trainingCta">' + (S.exam.attempts[nextUp] ? 'Retake' : 'Start') + ' Module ' + MODULES[nextUp].id + ic('arrow-right-linear') + '</button>' : '';
     $('trainingOverall').innerHTML = MX.ring(72, 7, avg, '<span class="mx-subtitle">' + avg + '%</span>', tone) +
-      '<div class="mx-titles"><p class="mx-h6">' + esc(title) + '</p><p class="mx-caption">' + esc(text) + '</p></div>' + label;
+      '<div class="mx-titles"><p class="mx-h6">' + esc(title) + '</p><p class="mx-caption">' + esc(text) + '</p></div>' + label + cta;
+    if (cta) $('trainingCta').addEventListener('click', function () { openModule(nextUp, true); });
 
     $('moduleGrid').innerHTML = MODULES.map(function (m, i) {
       var st = moduleState(i), best = S.exam.best[i], att = S.exam.attempts[i];
       var status = { pass: '<span class="mx-label mx-label-success">' + ic('check-circle-bold') + 'Passed</span>', retry: '<span class="mx-label mx-label-error">Retake needed</span>', locked: '<span class="mx-label mx-label-error">' + ic('lock-keyhole-minimalistic-bold-duotone') + 'Locked</span>', 'new': '<span class="mx-label">Not started</span>' }[st];
-      var btn = { pass: 'Retake', retry: 'Try again', locked: 'Get help', 'new': 'Start' }[st];
+      var btn = { pass: att >= MAX_ATTEMPTS ? 'Done' : 'Retake', retry: 'Try again', locked: 'Get help', 'new': 'Start' }[st];
       var meta = att ? 'Best ' + best + '% &middot; ' + plural(att, 'attempt') + ' of ' + MAX_ATTEMPTS + (S.exam.times[i] ? ' &middot; ' + fmtTime(S.exam.times[i]) : '') : m.questions.length + ' questions &middot; about ' + m.mins + ' min';
       return '<button type="button" class="ob-module' + (st === 'pass' ? ' is-pass' : '') + (st === 'locked' ? ' is-locked' : '') + '" data-mod="' + i + '">' +
         '<div class="ob-module-top"><span class="mx-icon-box ' + m.tone + '"><span data-icon="' + m.icon + '"></span></span><div class="mx-titles"><span class="mx-overline">Module ' + m.id + ' &middot; ' + m.kind + '</span><p class="mx-subtitle" style="margin-top:2px">' + esc(m.title) + '</p></div>' + status + '</div>' +
@@ -686,7 +698,7 @@
     $('moduleGrid').querySelectorAll('[data-mod]').forEach(function (b) { b.addEventListener('click', function () { openModule(+b.getAttribute('data-mod')); }); });
   }
 
-  function openModule(i) {
+  function openModule(i, direct) {
     var st = moduleState(i);
     if (st === 'locked') {
       MX.dialog({ tone: 'error', icon: 'lock-keyhole-minimalistic-bold-duotone', title: 'Module ' + MODULES[i].id + ' is out of attempts',
@@ -695,7 +707,11 @@
       }).then(function (v) { if (v) location.href = 'mailto:brokersupport@enrollaxis.com?subject=Reset%20training%20Module%20' + MODULES[i].id; });
       return;
     }
-    if (st === 'pass') {
+    if (st === 'pass' && S.exam.attempts[i] >= MAX_ATTEMPTS) {
+      MX.toast({ type: 'info', title: 'Module ' + MODULES[i].id + ' is complete', message: 'You have used all ' + MAX_ATTEMPTS + ' attempts here. Your best score of ' + S.exam.best[i] + '% is kept.' });
+      return;
+    }
+    if (st === 'pass' && !direct) {
       MX.dialog({ tone: 'primary', icon: 'restart-bold', title: 'Retake Module ' + MODULES[i].id + '?',
         message: 'Your best score (' + S.exam.best[i] + '%) is kept even if you score lower. This uses attempt ' + (S.exam.attempts[i] + 1) + ' of ' + MAX_ATTEMPTS + '.',
         actions: [{ label: 'Cancel', variant: 'outlined', value: null }, { label: 'Retake', variant: 'contained', value: true }]
@@ -708,6 +724,7 @@
     E = { mod: i, q: 0, answers: [null, null, null, null, null], started: Date.now(), materialOpen: true, missing: [], watched: false };
     $('trainingHome').hidden = true;
     $('trainingFoot').hidden = true;
+    $('obStep4').classList.add('is-exam');
     $('examView').hidden = false;
     hideSummary(4);
     renderExam();
@@ -721,6 +738,7 @@
     $('examView').innerHTML = '';
     $('trainingHome').hidden = false;
     $('trainingFoot').hidden = false;
+    $('obStep4').classList.remove('is-exam');
     if (!silent) { renderTraining(); renderNav(); }
   }
   window.closeSegmentScreen = function () { closeExam(); };
@@ -739,7 +757,7 @@
       '<div class="mx-titles"><span class="mx-overline">Module ' + m.id + ' &middot; Attempt ' + (S.exam.attempts[E.mod] + 1) + ' of ' + MAX_ATTEMPTS + '</span><p class="mx-h5">' + esc(m.title) + '</p></div>' +
       '<span class="ob-exam-timer" id="examTimer">' + ic('clock-circle-bold-duotone') + '<span>' + fmtTime(Date.now() - E.started) + '</span></span></div>' +
       '<div class="mx-linear mx-mb-24" aria-hidden="true"><span style="width:' + (answered / 5 * 100) + '%"></span></div>' +
-      '<details class="ob-material"' + (E.materialOpen ? ' open' : '') + ' id="obMaterial"><summary>' + ic(m.icon, 'mx-ic-20') + 'Study material' + ic('alt-arrow-down-linear', 'chev') + '</summary><div class="ob-material-body">' + materialHtml(m) + '</div></details>' +
+      '<details class="ob-material"' + (E.q === 0 ? ' open' : '') + ' id="obMaterial"><summary>' + ic(m.icon, 'mx-ic-20') + 'Study material' + ic('alt-arrow-down-linear', 'chev') + '</summary><div class="ob-material-body">' + materialHtml(m) + '</div></details>' +
       '<div class="ob-q" role="group" aria-labelledby="obQText"><span class="mx-overline">Question ' + (E.q + 1) + ' of ' + m.questions.length + '</span><p class="ob-q-text" id="obQText">' + esc(q.q) + '</p><div class="ob-q-opts" role="radiogroup" aria-labelledby="obQText">' +
       q.opts.map(function (o, oi) {
         return '<label class="mx-option"><input type="radio" name="exq" value="' + oi + '"' + (E.answers[E.q] === oi ? ' checked' : '') + '><span class="ob-q-letter">' + letters[oi] + '</span><span class="mx-option-body"><span class="mx-option-title" style="font-weight:500">' + esc(o) + '</span></span></label>';
@@ -753,7 +771,6 @@
       '<p class="mx-caption ob-kbd ob-hide-sm mx-mt-16">' + ic('keyboard-bold-duotone', 'mx-ic-16') + 'Press <kbd>1</kbd>-<kbd>4</kbd> to answer and <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move</p>';
     var v = $('examView');
     v.innerHTML = html;
-    v.querySelector('#obMaterial').addEventListener('toggle', function (e) { if (E) E.materialOpen = e.target.open; });
     v.querySelectorAll('input[name=exq]').forEach(function (r) {
       r.addEventListener('change', function () {
         var first = E.answers[E.q] === null;
@@ -826,7 +843,8 @@
     var nextMod = -1;
     for (var k = 1; k <= 4; k++) { var c = (i + k) % 4; if (S.exam.best[c] < PASS_MODULE && moduleState(c) !== 'locked') { nextMod = c; break; } }
     var actions = '<button type="button" class="mx-btn mx-btn-outlined mx-btn-neutral" data-r="home">All modules</button>';
-    if (!pass && left > 0) actions += '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary" data-r="retry">' + ic('restart-bold') + 'Try again (' + left + ' left)</button>';
+    if (pass && examPassed()) actions += '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary" data-r="continue">Continue to Background check' + ic('arrow-right-linear') + '</button>';
+    else if (!pass && left > 0) actions += '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary" data-r="retry">' + ic('restart-bold') + 'Try again (' + left + ' left)</button>';
     else if (nextMod >= 0) actions += '<button type="button" class="mx-btn mx-btn-contained mx-btn-primary" data-r="next">Module ' + MODULES[nextMod].id + ic('arrow-right-linear') + '</button>';
     var body = pass
       ? 'You passed Module ' + m.id + '. ' + (nextMod >= 0 ? 'On to the next one.' : (examPassed() ? 'That completes your training.' : 'Retake a module to raise your average to ' + PASS_AVG + '%.'))
@@ -845,6 +863,7 @@
         if (r === 'home') closeExam();
         if (r === 'retry') { E = null; startExam(i); }
         if (r === 'next') { E = null; startExam(nextMod); }
+        if (r === 'continue') { closeExam(); obNext(4); }
       });
     });
     E.done = true;
@@ -1219,6 +1238,19 @@
     $('w9Certify').addEventListener('change', function () { if (this.checked) clearGroupError('w9CertErr', $('w9CertifyRow')); });
     $('checkSameAddr').addEventListener('change', syncPay);
     $('bankRouting').addEventListener('input', syncRouting);
+    $('bankAcct2').addEventListener('paste', function (e) {
+      e.preventDefault();
+      MX.setFieldError(this, 'For your security, type the account number again instead of pasting it.');
+    });
+    document.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (e.key !== 'Enter' || !t || t.tagName !== 'INPUT' || document.querySelector('.mx-dialog-root')) return;
+      if (t.id === 'regNPN' || t.id === 'stateSearch' || t.type === 'checkbox' || t.type === 'radio' || !t.closest('.ob-step.is-active')) return;
+      e.preventDefault();
+      t._mxTouched = true;
+      MX.validateField(t);
+      obNext(S.step);
+    });
     $('bankAcct').addEventListener('input', function () { if ($('bankAcct2').value) { $('bankAcct2')._mxTouched = true; MX.validateField($('bankAcct2')); } });
     dz.w9 = MX.dropzone($('w9Zone'), { accept: ['pdf'], maxMB: 5, list: $('w9List'), errorEl: $('w9Err'), onChange: function (f) { S.files.w9 = f; if (f) clearGroupError('w9Err'); persist(); } });
     dz.void = MX.dropzone($('voidZone'), { accept: ['pdf', 'jpg', 'jpeg', 'png'], maxMB: 5, list: $('voidList'), errorEl: $('voidErr'), onChange: function (f) { S.files.void = f; persist(); } });

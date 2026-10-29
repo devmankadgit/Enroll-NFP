@@ -15,6 +15,8 @@
   .ob-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; font-size: 0.875rem; color: var(--mx-text); }
   .ob-crumbs span:not(:last-child)::after { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--neutral-400); margin-left: 12px; vertical-align: middle; }
   .ob-crumbs span:last-child { color: var(--mx-text-3); }
+  .mx-container { container: page / inline-size; }
+  .ob-col { container: card / inline-size; min-width: 0; }
   .ob-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
   .ob-side { position: sticky; top: calc(var(--mx-header-h) + 8px); display: flex; flex-direction: column; gap: 24px; }
 
@@ -41,9 +43,13 @@
   .ob-user-pop .ob-user-head { padding: 12px 12px 10px; border-bottom: 1px dashed var(--mx-divider-dashed); margin-bottom: 4px; }
 
   /* ---------- Step card ---------- */
-  .ob-step { display: none; }
+  .ob-step { display: none; scroll-margin-top: calc(var(--mx-header-h) + 16px); }
+  .mx-error-summary, .mx-field, .mx-options, .ob-q { scroll-margin-top: calc(var(--mx-header-h) + 24px); }
+  .ob-step [tabindex="-1"]:focus { outline: none; }
+  .ob-step.is-exam .ob-step-head { display: none; }
+  .ob-step.is-exam .ob-step-body { padding-top: 24px; }
   .ob-step.is-active { display: block; animation: mx-fade-up .35s var(--mx-ease); }
-  .ob-step-head { display: flex; align-items: flex-start; gap: 16px; padding: 24px 24px 20px; }
+  .ob-step-head { display: flex; align-items: flex-start; gap: 16px; padding: 24px 24px 20px; margin-bottom: 24px; border-bottom: 1px dashed var(--mx-divider-dashed); }
   .ob-step-head .mx-icon-box { width: 56px; height: 56px; border-radius: 14px; }
   .ob-step-head .mx-icon-box [data-icon] { font-size: 32px; }
   .ob-step-head .mx-titles { flex: 1; min-width: 0; }
@@ -52,7 +58,7 @@
   .ob-step-body { padding: 0 24px 8px; }
   .ob-step-body > .mx-alert, .ob-step-body > .mx-error-summary { margin-bottom: 20px; }
   .ob-block { padding: 24px 0; border-top: 1px dashed var(--mx-divider-dashed); }
-  .ob-block:first-child { border-top: 0; padding-top: 4px; }
+  .ob-block:not(.ob-block ~ .ob-block) { border-top: 0; padding-top: 0; }
   .ob-step-foot {
     display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-top: 1px dashed var(--mx-divider-dashed);
     border-radius: 0 0 var(--mx-radius-lg) var(--mx-radius-lg); background: var(--white);
@@ -77,7 +83,7 @@
   .ob-hero-chips button.mx-label:hover { background: var(--white); }
   .ob-hero > svg { width: 100%; height: auto; }
   .ob-need { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-  .ob-need-item { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; border: 1px solid var(--mx-divider); }
+  .ob-need-item { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 12px; border: 1px solid var(--mx-divider); }
   .ob-need-item .mx-subtitle { font-size: 0.8125rem; }
   .ob-npn-row { display: flex; gap: 12px; align-items: flex-start; }
   .ob-npn-row .mx-field { flex: 1; }
@@ -115,7 +121,7 @@
   .ob-module-bottom .mx-meta { flex: 1; min-width: 0; }
   .ob-module.is-pass { border-color: color-mix(in srgb, var(--primary-500) 36%, transparent); }
   .ob-module.is-locked { opacity: .7; }
-  .ob-overall { display: flex; align-items: center; gap: 20px; padding: 16px 20px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--primary-500) 8%, var(--white)), color-mix(in srgb, var(--secondary-400) 10%, var(--white))); }
+  .ob-overall { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; padding: 16px 20px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--primary-500) 8%, var(--white)), color-mix(in srgb, var(--secondary-400) 10%, var(--white))); }
   .ob-overall .mx-titles { flex: 1; min-width: 0; }
 
   .ob-exam-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
@@ -129,7 +135,7 @@
   .ob-material[open] summary .chev { transform: rotate(180deg); }
   .ob-material-body p { margin: 0 0 10px; }
   .ob-material-body { padding: 0 16px 16px; font-size: 0.875rem; line-height: 1.7; color: var(--mx-text-2); }
-  .ob-video { position: relative; aspect-ratio: 16 / 7; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--white); background: linear-gradient(135deg, var(--primary-700), var(--primary-500) 60%, var(--secondary-500)); }
+  .ob-video { position: relative; aspect-ratio: 16 / 6; max-height: 220px; width: 100%; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--white); background: linear-gradient(135deg, var(--primary-700), var(--primary-500) 60%, var(--secondary-500)); }
   .ob-video button { border: 0; background: color-mix(in srgb, var(--white) 22%, transparent); color: var(--white); width: 64px; height: 64px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 40px; transition: transform .2s, background .2s; }
   .ob-video button:hover { transform: scale(1.06); background: color-mix(in srgb, var(--white) 32%, transparent); }
   .ob-video .ob-video-bar { position: absolute; left: 16px; right: 16px; bottom: 14px; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--white) 30%, transparent); overflow: hidden; }
@@ -209,22 +215,28 @@
   @keyframes ob-arrow { 0%, 100% { transform: translateY(2px); } 50% { transform: translateY(-5px); } }
 
   /* ---------- Responsive ---------- */
+  @container page (max-width: 1060px) {
+    .ob-layout { grid-template-columns: minmax(0, 1fr); }
+    .ob-side { display: none; }
+  }
+  @container card (max-width: 720px) {
+    .mx-options-4, .ob-need, .ob-record-grid, .ob-stat-row, .ob-success-meta, .mx-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ob-hero { grid-template-columns: minmax(0, 1fr) 190px; }
+  }
+  @container card (max-width: 520px) {
+    .mx-grid-3, .ob-record-grid, .ob-success-meta { grid-template-columns: minmax(0, 1fr); }
+    .mx-grid .mx-span-2 { grid-column: auto; }
+  }
   @media (max-width: 1199px) {
-    .ob-layout { grid-template-columns: minmax(0, 1fr) 280px; }
     .ob-header-step { display: block; }
     .ob-header-bar { display: block; }
     .ob-page-head { margin-bottom: 24px; }
-  }
-  @media (max-width: 1023px) {
-    .ob-layout { grid-template-columns: minmax(0, 1fr); }
-    .ob-side { display: none; }
-    .ob-need, .ob-record-grid, .ob-stat-row, .ob-success-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 767px) {
     .ob-page-head { display: none; }
     .ob-hero { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 20px; }
     .ob-hero > svg { display: none; }
-    .ob-step-head { padding: 20px 16px 16px; }
+    .ob-step-head { padding: 20px 16px 16px; margin-bottom: 20px; }
     .ob-step-head .mx-icon-box { width: 48px; height: 48px; }
     .ob-step-body { padding: 0 16px 8px; }
     .ob-step-foot { position: sticky; bottom: 0; z-index: 5; padding: 12px 16px; background: color-mix(in srgb, var(--white) 92%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
@@ -234,11 +246,17 @@
     .ob-vendor { grid-template-columns: minmax(0, 1fr); }
     .ob-vendor > svg { width: 110px; margin: 0 auto; }
     .ob-q-dots { order: -1; width: 100%; justify-content: center; }
+    .ob-exam-head .mx-titles { order: 3; flex-basis: 100%; }
+    .ob-exam-head .ob-exam-timer { margin-left: auto; }
+    .ob-q { padding: 16px; }
     .ob-save .ob-save-text { display: none; }
     .ob-header-step .mx-subtitle { max-width: 44vw; }
   }
-  @media (max-width: 420px) {
-    .ob-need, .ob-record-grid, .ob-stat-row, .ob-success-meta { grid-template-columns: minmax(0, 1fr); }
+  @media print {
+    .mx-nav, .mx-nav-toggle, .mx-header, .ob-side, .ob-page-head, .mx-toaster, .mx-main > footer, .ob-success .mx-row { display: none !important; }
+    .mx-main { margin: 0 !important; }
+    .mx-card { box-shadow: none; }
+    .ob-ring-pulse, .ob-twinkle { display: none; }
   }
 </style>
 </head>
@@ -505,7 +523,7 @@
         <div class="mx-grid mx-grid-3">
           <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="card-2-bold-duotone"></span><input class="mx-input mx-mono" id="bankRouting" data-mask="digits" maxlength="9" inputmode="numeric" autocomplete="off" placeholder="9 digits" data-rules="required|routing" data-label="Routing number"><label class="mx-field-label" for="bankRouting">Routing number<span class="req">*</span></label></div><div id="bankDetected" class="ob-bank-chip" hidden></div></div>
           <div class="mx-field has-end"><div class="mx-field-box"><input class="mx-input mx-mono" id="bankAcct" type="password" data-mask="digits" maxlength="17" inputmode="numeric" autocomplete="off" placeholder="4-17 digits" data-rules="required|account" data-label="Account number"><label class="mx-field-label" for="bankAcct">Account number<span class="req">*</span></label><span class="mx-adorn-end"><button type="button" class="mx-icon-btn mx-icon-btn-sm" data-toggle-visibility="bankAcct" aria-label="Show value"><span data-icon="eye-bold"></span></button></span></div></div>
-          <div class="mx-field"><div class="mx-field-box"><input class="mx-input mx-mono" id="bankAcct2" data-mask="digits" maxlength="17" inputmode="numeric" autocomplete="off" placeholder="Type it again" data-rules="required|match:bankAcct" data-label="Confirm account number" data-required-msg="Type your account number again to confirm it." data-show-valid onpaste="return false"><label class="mx-field-label" for="bankAcct2">Confirm account number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+          <div class="mx-field"><div class="mx-field-box"><input class="mx-input mx-mono" id="bankAcct2" data-mask="digits" maxlength="17" inputmode="numeric" autocomplete="off" placeholder="Type it again" data-rules="required|match:bankAcct" data-label="Confirm account number" data-required-msg="Type your account number again to confirm it." data-show-valid><label class="mx-field-label" for="bankAcct2">Confirm account number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
         </div>
         <div class="mx-row mx-mt-16">
           <span class="mx-caption">Account type</span>
@@ -539,7 +557,7 @@
     <div class="ob-block">
       <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">AHIP Medicare certification</h3><p class="mx-caption">You need AHIP for the current plan year to sell Medicare Advantage.</p></div></div>
       <div class="mx-grid mx-grid-3">
-        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="medal-ribbons-star-bold-duotone"></span><input class="mx-input mx-mono" id="ahipCert" data-mask="ahip" placeholder="AH2026-12345" autocomplete="off" data-rules="required|ahip" data-label="AHIP certificate number" data-show-valid><label class="mx-field-label" for="ahipCert">AHIP certificate number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="medal-ribbons-star-bold-duotone"></span><input class="mx-input mx-mono" id="ahipCert" data-mask="ahip" placeholder="AH2026-12345" autocomplete="off" data-rules="required|ahip" data-label="AHIP certificate number" data-show-valid><label class="mx-field-label" for="ahipCert">Certificate number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
         <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="calendar-bold-duotone"></span><input class="mx-input mx-mono" id="ahipDate" data-mask="date" inputmode="numeric" placeholder="MM/DD/YYYY" data-rules="required|date|past" data-label="Completion date"><label class="mx-field-label" for="ahipDate">Completion date<span class="req">*</span></label></div></div>
         <div class="mx-field"><div class="mx-field-box"><input class="mx-input mx-mono" id="ahipExpiry" readonly placeholder=" "><label class="mx-field-label" for="ahipExpiry">Valid through</label></div><p class="mx-helper mx-helper-hint" id="ahipExpiryHint">Worked out from your completion date</p></div>
       </div>

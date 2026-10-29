@@ -120,16 +120,29 @@
   var MASKS = {
     digits: function (v, el) { return digits(v).slice(0, +(el.getAttribute('maxlength') || 20)); },
     phone: function (v) {
-      var d = digits(v).slice(0, 10);
+      var raw = String(v || ''), d = digits(raw);
+      if (/^\s*\+?1\b/.test(raw) && raw.replace(/\s/g, '').charAt(0) === '+') d = d.slice(1);
+      else if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+      d = d.slice(0, 10);
       if (d.length < 4) return d.length ? '(' + d : '';
       if (d.length < 7) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
       return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
     },
+    /* MM/DD/YYYY. Accepts 03121985, 3/12/1985, 3-12-1985: a separator after one digit pads it with 0. */
     date: function (v) {
-      var d = digits(v).slice(0, 8);
-      if (d.length < 3) return d;
-      if (d.length < 5) return d.slice(0, 2) + '/' + d.slice(2);
-      return d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
+      var seg = ['', '', ''], i = 0, raw = String(v || '');
+      for (var k = 0; k < raw.length; k++) {
+        var ch = raw.charAt(k);
+        if (/\d/.test(ch)) {
+          if (i < 2 && seg[i].length === 2) i++;
+          if (i === 2 && seg[2].length === 4) break;
+          seg[i] += ch;
+        } else if (i < 2 && seg[i].length) {
+          if (seg[i].length === 1) seg[i] = '0' + seg[i];
+          i++;
+        }
+      }
+      return seg[0] + (i >= 1 ? '/' + seg[1] : '') + (i >= 2 ? '/' + seg[2] : '');
     },
     ssn: function (v) {
       var d = digits(v).slice(0, 9);
@@ -193,7 +206,10 @@
     phone: function (v) { return !v || digits(v).length === 10 ? '' : 'Enter a 10-digit US phone number.'; },
     email: function (v) { return !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Enter a valid email address, like name@agency.com.'; },
     zip: function (v) { return !v || /^\d{5}$/.test(v) ? '' : 'ZIP code must be 5 digits.'; },
-    date: function (v) { return !v || parseUSDate(v) ? '' : 'Enter a real date as MM/DD/YYYY.'; },
+    date: function (v) {
+      if (!v || parseUSDate(v)) return '';
+      return /^\d{2}\/\d{2}\/\d{2}$/.test(v) ? 'Use a 4-digit year, like 1985.' : 'Enter a real date as MM/DD/YYYY.';
+    },
     past: function (v) { var d = parseUSDate(v); return !d || d <= new Date() ? '' : 'This date cannot be in the future.'; },
     adult: function (v) {
       var d = parseUSDate(v);
