@@ -4,2141 +4,728 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
+<link rel="icon" href="../assets/brand/enrollaxis-icon.png">
 <link rel="stylesheet" href="../assets/shadcn-ui.css?v=28">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/minimal-ui.css?v=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap">
 <style>
-  /* One continuous Enrollaxis light theme across sidebar + flow */
-  .progress-box {
-    padding: 0.85rem 0.9rem;
-    background: var(--accent);
-    border: 1px solid var(--primary-200);
-    border-radius: 0.65rem;
-    margin-bottom: 0.9rem;
-  }
-  .progress-box .label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: var(--font-heading);
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    color: var(--primary);
-    margin-bottom: 0.35rem;
-  }
-  .progress-box .value { font-size: 0.8125rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
-  .progress-box .ui-progress { margin-top: 0.55rem; background: var(--base-200); height: 0.4rem; }
-  .progress-box .ui-progress-bar { background: var(--primary); }
-  .sidebar-exit {
-    margin-top: 0.85rem;
-    color: var(--muted-foreground) !important;
-    justify-content: flex-start;
-    width: 100%;
-  }
-  .sidebar-exit:hover { color: var(--primary) !important; background: var(--accent); }
+  /* ---------- Page layout ---------- */
+  .ob-page-head { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin: 8px 0 32px; }
+  .ob-page-head .mx-titles { flex: 1; min-width: 240px; }
+  .ob-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; font-size: 0.875rem; color: var(--mx-text); }
+  .ob-crumbs span:not(:last-child)::after { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--neutral-400); margin-left: 12px; vertical-align: middle; }
+  .ob-crumbs span:last-child { color: var(--mx-text-3); }
+  .ob-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+  .ob-side { position: sticky; top: calc(var(--mx-header-h) + 8px); display: flex; flex-direction: column; gap: 24px; }
 
-  .ob-mobile-sticky-sentinel {
-    height: 0;
-    margin: 0;
-    padding: 0;
-    pointer-events: none;
+  /* ---------- Nav extras ---------- */
+  .ob-nav-progress { margin: 4px 4px 8px; padding: 16px; border-radius: 12px; background: var(--mx-bg-neutral); }
+  .ob-nav-progress .mx-row { justify-content: space-between; margin-bottom: 10px; }
+  .ob-header-step { display: none; min-width: 0; }
+  .ob-header-step .mx-caption { white-space: nowrap; }
+  .ob-header-step .mx-subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ob-header-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in srgb, var(--primary-500) 12%, transparent); display: none; }
+  .ob-header-bar span { display: block; height: 100%; background: var(--primary-500); transition: width .5s var(--mx-ease); }
+  .ob-save {
+    display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 600; color: var(--mx-text-3); white-space: nowrap;
   }
-  .ob-mobile-nav {
-    display: none;
-  }
-  .ob-mobile-progress {
-    display: none;
-  }
-  .ob-mobile-progress-head {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-    margin: 0;
-  }
-  .ob-mobile-progress-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    width: 100%;
-  }
-  .ob-mobile-progress .value {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    font-family: var(--font-body);
-    color: var(--primary-700);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .ob-mobile-progress .meta {
-    font-size: 0.6875rem;
-    font-weight: 500;
-    font-family: var(--font-body);
-    color: var(--neutral-500);
-    white-space: nowrap;
-  }
-  .ob-mobile-progress .step-name {
-    margin: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
-    font-family: var(--font-heading);
-    color: var(--primary);
-    letter-spacing: -0.01em;
-    line-height: 1.35;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  .ob-mobile-steps {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0;
-    margin-top: 0.85rem;
-    padding: 0.2rem 0.15rem;
-    position: relative;
-  }
-  .ob-mobile-steps::before {
-    content: '';
-    position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
-    top: 50%;
-    height: 3px;
-    background: var(--neutral-100);
-    transform: translateY(-50%);
-    z-index: 0;
-    border-radius: 9999px;
-  }
-  .ob-mobile-rail {
-    position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
-    top: 50%;
-    height: 3px;
-    background: var(--primary);
-    transform: translateY(-50%) scaleX(0);
-    transform-origin: left center;
-    z-index: 0;
-    transition: transform .28s ease;
-    border-radius: 9999px;
-  }
-  .ob-mobile-step {
-    position: relative;
-    z-index: 1;
-    flex: 0 0 auto;
-    width: 1.75rem;
-    height: 1.75rem;
-    margin: 0;
-    padding: 0;
-    border-radius: 9999px;
-    border: 2px solid var(--neutral-200);
-    background: var(--white);
-    color: var(--neutral-500);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    font-family: var(--font-body);
-    line-height: 1;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 0 3px var(--white);
-    -webkit-tap-highlight-color: transparent;
-    transition: background .15s, color .15s, border-color .15s, box-shadow .15s, transform .15s;
-  }
-  /* Larger finger target without changing visual size */
-  .ob-mobile-step::before {
-    content: '';
-    position: absolute;
-    inset: -0.45rem;
-    border-radius: 9999px;
-  }
-  .ob-mobile-step:hover {
-    border-color: var(--primary-400);
-    color: var(--primary);
-    transform: translateY(-1px);
-  }
-  .ob-mobile-step:active:not(.is-locked) {
-    transform: scale(0.92);
-  }
-  .ob-mobile-step:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 28%, var(--white));
-  }
-  .ob-mobile-step.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: var(--white);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, var(--white));
-    animation: ob-step-pulse 1.8s ease-in-out infinite;
-  }
-  .ob-mobile-step.done {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: var(--white);
-    font-size: 0;
-  }
-  .ob-mobile-step.done::after {
-    content: '\f00c';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-size: 0.55rem;
-    line-height: 1;
-    color: var(--white);
-  }
-  .ob-mobile-step.draft {
-    background: var(--warning-50);
-    border-color: var(--warning-500);
-    color: var(--warning-800);
-    font-size: 0;
-    box-shadow: 0 0 0 3px var(--white);
-  }
-  .ob-mobile-step.draft::after {
-    content: '\f06a';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-size: 0.625rem;
-    line-height: 1;
-    color: var(--warning-700);
-  }
-  .ob-mobile-step.is-locked {
-    cursor: not-allowed;
-    background: var(--neutral-50);
-    border-color: var(--neutral-200);
-    color: var(--neutral-400);
-    box-shadow: 0 0 0 3px var(--white);
-  }
-  .ob-mobile-step.is-locked:hover,
-  .ob-mobile-step.is-locked:active {
-    transform: none;
-    border-color: var(--neutral-200);
-    color: var(--neutral-400);
-  }
-  @keyframes ob-step-pulse {
-    0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, var(--white)); }
-    50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 28%, var(--white)); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ob-mobile-step,
-    .ob-mobile-rail { transition: none; }
-    .ob-mobile-step.active { animation: none; }
-  }
+  .ob-save [data-icon] { font-size: 18px; color: var(--primary-500); }
+  .ob-save.is-saving [data-icon] { animation: mx-blink 1s infinite; color: var(--neutral-400); }
+  .ob-user-pop { right: 0; top: calc(100% + 8px); width: 240px; }
+  .ob-user-pop .ob-user-head { padding: 12px 12px 10px; border-bottom: 1px dashed var(--mx-divider-dashed); margin-bottom: 4px; }
 
-  .seg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
-  .seg-tile {
-    text-align: center;
-    padding: 0.75rem 0.5rem;
-    background: var(--white);
-    border: 1px solid var(--neutral-200);
-    border-radius: calc(var(--radius) - 2px);
-    cursor: pointer;
-    font-size: 0.75rem;
-    color: var(--neutral-700);
-    transition: border-color .15s, background .15s, box-shadow .15s;
+  /* ---------- Step card ---------- */
+  .ob-step { display: none; }
+  .ob-step.is-active { display: block; animation: mx-fade-up .35s var(--mx-ease); }
+  .ob-step-head { display: flex; align-items: flex-start; gap: 16px; padding: 24px 24px 20px; }
+  .ob-step-head .mx-icon-box { width: 56px; height: 56px; border-radius: 14px; }
+  .ob-step-head .mx-icon-box [data-icon] { font-size: 32px; }
+  .ob-step-head .mx-titles { flex: 1; min-width: 0; }
+  .ob-step-head .mx-h4 { margin-top: 2px; }
+  .ob-step-head .mx-body2 { margin-top: 4px; }
+  .ob-step-body { padding: 0 24px 8px; }
+  .ob-step-body > .mx-alert, .ob-step-body > .mx-error-summary { margin-bottom: 20px; }
+  .ob-block { padding: 24px 0; border-top: 1px dashed var(--mx-divider-dashed); }
+  .ob-block:first-child { border-top: 0; padding-top: 4px; }
+  .ob-step-foot {
+    display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-top: 1px dashed var(--mx-divider-dashed);
+    border-radius: 0 0 var(--mx-radius-lg) var(--mx-radius-lg); background: var(--white);
   }
-  .seg-tile:hover {
-    border-color: var(--primary-300);
-    background: var(--primary-50);
-  }
-  .seg-tile strong {
-    display: block;
-    font-size: 1rem;
-    margin: 0.25rem 0;
-    color: var(--brand-ink);
-    font-family: var(--font-heading);
-  }
-  .seg-tile .seg-meta { font-size: 0.6875rem; color: var(--neutral-500); }
-  .seg-tile.done {
-    border-color: var(--primary-300);
-    background: var(--primary-50);
-  }
-  .seg-tile.done strong { color: var(--primary); }
-  .seg-tile.active-seg {
-    background: var(--primary-50);
-    border-color: var(--primary);
-    box-shadow: 0 0 0 1px var(--primary);
-  }
-  .q-option-label {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.625rem;
-    padding: 0.7rem 0.875rem;
-    border: 1px solid var(--neutral-200);
-    border-radius: calc(var(--radius) - 2px);
-    cursor: pointer;
-    font-size: 0.8125rem;
-    line-height: 1.4;
-    color: var(--foreground);
-    margin-bottom: 0.5rem;
-    background: var(--white);
-    transition: border-color .15s, background .15s, box-shadow .15s;
-  }
-  .q-option-label:hover {
-    border-color: var(--primary-400);
-    background: var(--primary-50);
-  }
-  .q-option-label:has(input:checked),
-  .q-option-label.is-selected {
-    border-color: var(--primary);
-    background: var(--primary-50);
-    box-shadow: 0 0 0 1px var(--primary);
-  }
-  .q-option-label input[type="radio"] {
-    flex-shrink: 0;
-    width: 1rem;
-    height: 1rem;
-    margin-top: 0.15rem;
-    accent-color: var(--primary);
-    cursor: pointer;
-  }
-  .q-option-label input[type="radio"]:checked ~ .q-text {
-    font-weight: 600;
-    color: var(--primary-700);
-  }
-  .exam-workspace {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-  }
-  .exam-meta-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    background: var(--primary-50);
-    border: 1px solid var(--primary-100);
-    border-radius: calc(var(--radius) - 2px);
-  }
-  .exam-meta-cell {
-    text-align: left;
-    padding: 0.15rem 0.35rem;
-    background: transparent;
-    border-radius: 0;
-  }
-  .exam-meta-cell .k {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--primary-700);
-    margin-bottom: 0.15rem;
-  }
-  .exam-meta-cell .v {
-    font-size: 0.875rem;
-    font-weight: 600;
-    font-family: var(--font-heading);
-    color: var(--brand-ink);
-  }
-  .exam-seg-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-  .exam-seg-nav-top {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
-    margin-bottom: 0.875rem;
-  }
-  .exam-seg-nav-top .exam-nav-back { justify-self: start; }
-  .exam-seg-nav-top .exam-nav-next { justify-self: end; }
-  .exam-seg-nav-top h3,
-  .exam-seg-nav h3 {
-    margin: 0;
-    font-size: 0.9375rem;
-    font-weight: 700;
-    font-family: var(--font-heading);
-    color: var(--primary);
-    text-align: center;
-    letter-spacing: -0.01em;
-    text-transform: none;
-  }
-  .exam-seg-banner {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.625rem 1rem;
-    flex-wrap: wrap;
-    padding: 0.75rem 0.9rem;
-    border-radius: calc(var(--radius) - 2px);
-    margin-bottom: 1rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    background: var(--primary-50);
-    border: 1px solid var(--primary-100);
-    color: var(--primary-800);
-  }
-  .exam-seg-banner-title {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    min-width: 0;
-    flex: 1 1 auto;
-    line-height: 1.35;
-  }
-  .exam-seg-banner-title > i {
-    margin-top: 0.15rem;
-    flex-shrink: 0;
-  }
-  .exam-seg-banner-meta {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--primary-700);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .exam-media {
-    border-radius: calc(var(--radius) - 2px);
-    padding: 1.25rem 1rem;
-    text-align: center;
-    margin-bottom: 1rem;
-    background: linear-gradient(160deg, var(--neutral-900) 0%, var(--primary-900) 100%);
-    color: var(--white);
-    font-size: 0.8125rem;
-  }
-  .exam-media-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.55rem;
-    display: block;
-    color: var(--primary-200);
-  }
-  .exam-media-title {
-    font-weight: 600;
-    font-family: var(--font-heading);
-    font-size: 0.9375rem;
-    margin-bottom: 0.35rem;
-    color: var(--white);
-  }
-  .exam-media-meta {
-    opacity: 0.85;
-    font-size: 0.75rem;
-    margin-bottom: 0.75rem;
-    color: var(--primary-100);
-  }
-  .exam-reading {
-    padding: 0.85rem 1rem;
-    background: var(--neutral-50);
-    border: 1px solid var(--neutral-200);
-    border-radius: calc(var(--radius) - 2px);
-    margin-bottom: 1rem;
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    color: var(--foreground);
-    max-height: 9rem;
-    overflow-y: auto;
-  }
-  .exam-q-card {
-    margin-bottom: 0.875rem;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--neutral-200);
-    border-radius: calc(var(--radius) - 2px);
-    background: var(--white);
-  }
-  .exam-q-head {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.625rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    line-height: 1.4;
-    color: var(--brand-ink);
-  }
-  .exam-q-num {
-    width: 1.5rem;
-    height: 1.5rem;
-    min-width: 1.5rem;
-    margin-top: 0.1rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background: var(--primary-50);
-    color: var(--primary);
-    border: 1px solid var(--primary-200);
-  }
-  .exam-q-text { min-width: 0; flex: 1; }
-  .seg-submit-row {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    margin-top: 0.35rem;
-  }
-  .exam-score-box {
-    padding: 0.85rem 1rem;
-    border-radius: calc(var(--radius) - 2px);
-    text-align: center;
-    font-size: 0.8125rem;
-  }
-  .exam-score-box.is-pass {
-    background: var(--success-50);
-    border: 1px solid var(--success-200);
-    color: var(--success-800);
-  }
-  .exam-score-box.is-fail {
-    background: var(--warning-50);
-    border: 1px solid var(--warning-300);
-    color: var(--warning-800);
-  }
-  @media (max-width: 640px) {
-    .exam-meta-grid { grid-template-columns: 1fr 1fr; gap: 0.65rem 0.5rem; }
-    .exam-seg-nav-top {
-      grid-template-columns: 1fr 1fr;
-    }
-    .exam-seg-nav-top .exam-nav-back { grid-column: 1; grid-row: 1; }
-    .exam-seg-nav-top .exam-nav-next { grid-column: 2; grid-row: 1; }
-    .exam-seg-nav-top h3 {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      width: 100%;
-      justify-self: stretch;
-    }
-    .exam-seg-nav-top .ui-btn,
-    .exam-seg-nav .ui-btn {
-      width: auto;
-      max-width: 100%;
-      white-space: nowrap;
-    }
-    .exam-seg-banner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.35rem;
-    }
-    .exam-seg-banner-title {
-      flex: none;
-      width: 100%;
-    }
-    .exam-seg-banner-meta {
-      display: block;
-      width: 100%;
-      white-space: normal;
-      padding-left: 1.5rem;
-    }
-    .seg-submit-row .ui-btn { width: 100%; }
-  }
-  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-  .summary-cell {
-    padding: 0.65rem 0.75rem;
-    background: var(--muted);
-    border-radius: calc(var(--radius) - 4px);
-    font-size: 0.8125rem;
-  }
-  .summary-cell .k { font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 0.15rem; }
-  .summary-cell .v { font-weight: 600; }
-  .contract-scroll {
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) - 2px);
-    height: 180px;
-    overflow-y: auto;
-    padding: 0.875rem 1rem;
-    font-size: 0.8125rem;
-    line-height: 1.8;
-    color: var(--base-700);
-    background: var(--base-50);
-    margin-bottom: 0.75rem;
-  }
-  .success-hero {
-    text-align: center;
-    padding: 1.75rem 1rem 1.25rem;
-    max-width: 36rem;
-    margin: 0 auto;
-  }
-  .success-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 9999px;
-    background: var(--success-50);
-    color: var(--success-700);
-    border: 1px solid var(--success-200);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.75rem;
-  }
-  .success-hero h3 {
-    margin: 0 0 0.5rem;
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--success-800);
-    line-height: 1.3;
-  }
-  .success-hero-lead {
-    margin: 0 auto 1.5rem;
-    max-width: 28rem;
-    font-size: 0.875rem;
-    line-height: 1.55;
-    color: var(--muted-foreground);
-  }
-  .success-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.625rem;
-    margin: 0 0 1.25rem;
-    text-align: left;
-  }
-  .success-meta-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.2rem;
-    min-height: 4.25rem;
-    padding: 0.75rem 0.875rem;
-    background: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) - 2px);
-  }
-  .success-meta-item .k {
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-  }
-  .success-meta-item .v {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--foreground);
-    line-height: 1.35;
-    word-break: break-word;
-  }
-  .success-meta-item .v.is-status { color: var(--success-700); }
-  .success-next {
-    margin: 0 0 1.25rem;
-    padding: 0.875rem 1rem;
-    text-align: left;
-    background: var(--info-50);
-    border: 1px solid var(--info-200);
-    border-radius: calc(var(--radius) - 2px);
-  }
-  .success-next-title {
-    margin: 0 0 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--info-700);
-  }
-  .success-next ol {
-    margin: 0;
-    padding-left: 1.15rem;
-    font-size: 0.8125rem;
-    line-height: 1.55;
-    color: var(--foreground);
-  }
-  .success-next li + li { margin-top: 0.35rem; }
-  .success-support {
-    margin: 0 0 1.25rem;
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--muted-foreground);
-  }
-  .success-support a { font-weight: 500; }
-  .success-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.625rem;
-  }
-  @media (max-width: 560px) {
-    .success-meta { grid-template-columns: 1fr; }
-    .success-meta-item { min-height: 0; }
-    .success-hero { padding: 1.25rem 0.25rem 0.75rem; }
-    .success-hero h3 { font-size: 1.2rem; }
-  }
-  .ui-topbar h1,
-  .ob-page-titles h1 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: var(--font-heading);
-    color: var(--brand-ink);
-    letter-spacing: -0.02em;
-  }
-  .ui-topbar .subtitle,
-  .ob-page-titles .subtitle {
-    margin: 0.2rem 0 0;
-    font-size: 0.8125rem;
-    color: var(--muted-foreground);
-  }
-  .ob-topbar-logo {
-    display: none;
-    height: 30px;
-    width: auto;
-    max-width: 160px;
-    object-fit: contain;
-  }
-  .ob-page-titles {
-    display: none;
-  }
-  .ui-card { border-color: var(--base-200); box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent); }
-  .ui-card-content > .ui-alert { margin-bottom: 1rem; }
-  .ui-card-content > .ui-alert:last-child { margin-bottom: 0; }
-  .ui-chip { margin: 0; font-family: var(--font-body); }
-  .ob-vendor-panel .ui-card-content { padding: 1rem; }
+  .ob-step-foot .ob-foot-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+  .ob-next-hint { font-size: 0.75rem; color: var(--mx-text-3); margin-right: 4px; }
+  .ob-next-hint strong { color: var(--mx-text-2); font-weight: 600; }
 
-  @media (max-width: 900px) {
-    /* No drawer sidebar / hamburger on small screens */
-    .ui-sidebar,
-    .ui-sidebar-backdrop,
-    .ui-sidebar-toggle,
-    .ui-sidebar-close {
-      display: none !important;
-    }
-    .ui-shell.sidebar-open { overflow: visible; }
-    .ui-main { margin-left: 0; }
-
-    .ob-topbar-logo { display: block; }
-    .ob-topbar-titles { display: none; }
-
-    /* Same left/right gutter as the form via .ui-page padding */
-    .ob-page-titles {
-      display: block;
-      margin: 0 0 0.75rem;
-      padding: 0.25rem 0 0;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-    }
-    .ob-page-titles h1 { font-size: 1.25rem; line-height: 1.3; }
-    .ob-page-titles .subtitle {
-      margin-top: 0.35rem;
-      line-height: 1.45;
-      max-width: 36rem;
-    }
-
-    /* In-flow: inset card with side spacing. Stuck: full-bleed, no side gap. */
-    .ui-page { overflow-x: clip; }
-    .ob-mobile-nav {
-      --ob-page-pad-x: 1rem;
-      display: block;
-      position: sticky;
-      top: var(--ob-topbar-h, 3.5rem);
-      z-index: 25;
-      box-sizing: border-box;
-      width: auto;
-      max-width: none;
-      margin: 0 0 1rem;
-      padding: 0.85rem 1rem;
-      background: var(--white);
-      border: 1px solid var(--neutral-200);
-      border-radius: calc(var(--radius) + 2px);
-      box-shadow: 0 1px 2px color-mix(in srgb, var(--neutral-950) 4%, transparent);
-      transition: box-shadow .18s ease, padding .18s ease, background .18s ease, border-radius .18s ease, margin .18s ease, width .18s ease, border-color .18s ease;
-    }
-    .ob-mobile-nav.is-stuck {
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(50% - 50vw);
-      margin-right: 0;
-      margin-bottom: 1rem;
-      padding: 0.65rem var(--ob-page-pad-x) 0.7rem;
-      background: color-mix(in srgb, var(--white) 94%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: none;
-      border-radius: 0;
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 10px 22px color-mix(in srgb, var(--neutral-950) 10%, transparent);
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress-head {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.35rem 0.55rem;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress-top {
-      display: contents;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress .meta { display: none; }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress .value {
-      flex-shrink: 0;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress .value::after {
-      content: '\00b7';
-      margin-left: 0.4rem;
-      color: var(--neutral-400);
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress .step-name {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--primary);
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-steps {
-      margin-top: 0.55rem;
-      padding: 0.1rem 0;
-    }
-    .ob-mobile-nav.is-stuck .ob-mobile-step {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--white) 94%, transparent);
-    }
-
-    .ob-mobile-progress {
-      display: block;
-      margin: 0;
-      padding: 0;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-    }
-
-    /* Field height capped at 40px on small screens */
-    .ui-input,
-    .ui-select-trigger,
-    .ui-date-trigger {
-      height: 40px !important;
-      min-height: 40px !important;
-      max-height: 40px !important;
-      padding: 0 0.75rem !important;
-      font-size: 0.875rem !important;
-      line-height: 1.25rem !important;
-    }
-    .ui-control-row .ui-btn {
-      height: 40px !important;
-      min-height: 40px !important;
-    }
-
-    .seg-grid { grid-template-columns: 1fr 1fr; }
-    .summary-grid { grid-template-columns: 1fr; }
-    .contract-scroll { height: 140px; }
+  /* ---------- Step 1: welcome ---------- */
+  .ob-hero {
+    position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 16px; align-items: center;
+    padding: 32px 32px 28px; border-radius: var(--mx-radius-lg) var(--mx-radius-lg) 0 0;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-200) 30%, var(--white)) 0%, color-mix(in srgb, var(--secondary-200) 34%, var(--white)) 100%);
   }
-  @media (max-width: 560px) {
-    .seg-grid { grid-template-columns: 1fr; }
-    .ob-topbar-logo { height: 26px; max-width: 140px; }
-    .ob-mobile-step { width: 1.55rem; height: 1.55rem; font-size: 0.5625rem; }
-    .ob-mobile-steps::before,
-    .ob-mobile-rail { left: 0.75rem; right: 0.75rem; }
-    .ob-mobile-nav { --ob-page-pad-x: 0.75rem; }
-    .ob-mobile-progress .step-name { font-size: 0.8125rem; }
-    .ob-mobile-nav.is-stuck .ob-mobile-progress .step-name { font-size: 0.8125rem; }
+  .ob-hero::before { content: ''; position: absolute; width: 320px; height: 320px; right: -80px; top: -120px; border-radius: 50%; background: color-mix(in srgb, var(--primary-300) 18%, transparent); }
+  .ob-hero > * { position: relative; }
+  .ob-hero .mx-h3 { color: var(--primary-900); }
+  .ob-hero .mx-body2 { color: var(--primary-800); max-width: 460px; margin-top: 8px; }
+  .ob-hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .ob-hero-chips .mx-label { height: 28px; padding: 0 10px; background: color-mix(in srgb, var(--white) 72%, transparent); color: var(--primary-800); }
+  .ob-hero-chips button.mx-label { border: 0; cursor: pointer; font: inherit; font-size: 0.75rem; font-weight: 700; }
+  .ob-hero-chips button.mx-label:hover { background: var(--white); }
+  .ob-hero > svg { width: 100%; height: auto; }
+  .ob-need { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .ob-need-item { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; border: 1px solid var(--mx-divider); }
+  .ob-need-item .mx-subtitle { font-size: 0.8125rem; }
+  .ob-npn-row { display: flex; gap: 12px; align-items: flex-start; }
+  .ob-npn-row .mx-field { flex: 1; }
+  .ob-npn-row .mx-btn { height: 54px; }
+  .ob-demo-hint { margin-top: 10px; display: flex; gap: 6px; align-items: flex-start; }
+  .ob-demo-hint code { font-size: 0.75rem; padding: 1px 6px; border-radius: 4px; background: var(--mx-bg-neutral); color: var(--mx-text-2); cursor: pointer; border: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .ob-demo-hint code:hover { background: var(--primary-50); color: var(--primary-700); }
+  .ob-lookup { margin-top: 16px; }
+  .ob-lookup-loading { display: flex; align-items: center; gap: 20px; padding: 16px; border-radius: 12px; border: 1px dashed var(--mx-divider-dashed); }
+  .ob-lookup-loading svg { width: 88px; flex-shrink: 0; }
+  .ob-record { border-radius: 12px; border: 1px solid color-mix(in srgb, var(--primary-500) 32%, transparent); overflow: hidden; animation: mx-fade-up .35s var(--mx-ease); }
+  .ob-record-head { display: flex; align-items: center; gap: 14px; padding: 16px; background: color-mix(in srgb, var(--primary-500) 6%, var(--white)); }
+  .ob-record-head .mx-avatar { width: 48px; height: 48px; font-size: 1rem; }
+  .ob-record-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 16px; }
+  .ob-kv .mx-caption { margin-bottom: 2px; }
+  .ob-kv .mx-subtitle { font-size: 0.8125rem; }
+
+  /* ---------- Generic bits ---------- */
+  .ob-stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .ob-stat { padding: 14px 16px; border-radius: 12px; background: var(--mx-bg-neutral); }
+  .ob-stat .mx-h5 { margin-top: 2px; }
+  .ob-inline-check { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--success-700); }
+  .ob-inline-check [data-icon] { font-size: 16px; }
+  .ob-bank-chip { margin-top: 8px; margin-left: 12px; }
+  .ob-reveal { animation: mx-fade-up .3s var(--mx-ease); }
+
+  /* ---------- Training ---------- */
+  .ob-module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ob-module { display: flex; flex-direction: column; border-radius: 16px; border: 1px solid var(--mx-divider); padding: 20px; transition: box-shadow .25s, transform .25s, border-color .25s; cursor: pointer; text-align: left; background: var(--white); font: inherit; color: inherit; }
+  .ob-module:hover { box-shadow: var(--mx-shadow-card); transform: translateY(-2px); border-color: transparent; }
+  .ob-module:focus-visible { outline: 2px solid var(--primary-400); outline-offset: 2px; }
+  .ob-module-top { display: flex; align-items: flex-start; gap: 12px; }
+  .ob-module-top .mx-titles { flex: 1; min-width: 0; }
+  .ob-module-bottom { display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--mx-divider-dashed); }
+  .ob-module-bottom .mx-meta { flex: 1; min-width: 0; }
+  .ob-module.is-pass { border-color: color-mix(in srgb, var(--primary-500) 36%, transparent); }
+  .ob-module.is-locked { opacity: .7; }
+  .ob-overall { display: flex; align-items: center; gap: 20px; padding: 16px 20px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--primary-500) 8%, var(--white)), color-mix(in srgb, var(--secondary-400) 10%, var(--white))); }
+  .ob-overall .mx-titles { flex: 1; min-width: 0; }
+
+  .ob-exam-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ob-exam-head .mx-titles { flex: 1; min-width: 180px; }
+  .ob-exam-timer { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 600; color: var(--mx-text-2); }
+  .ob-exam-timer [data-icon] { font-size: 18px; color: var(--primary-500); }
+  .ob-material { border-radius: 12px; background: var(--mx-bg-neutral); margin-bottom: 20px; overflow: hidden; }
+  .ob-material summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
+  .ob-material summary::-webkit-details-marker { display: none; }
+  .ob-material summary .chev { margin-left: auto; font-size: 18px; transition: transform .2s; }
+  .ob-material[open] summary .chev { transform: rotate(180deg); }
+  .ob-material-body p { margin: 0 0 10px; }
+  .ob-material-body { padding: 0 16px 16px; font-size: 0.875rem; line-height: 1.7; color: var(--mx-text-2); }
+  .ob-video { position: relative; aspect-ratio: 16 / 7; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--white); background: linear-gradient(135deg, var(--primary-700), var(--primary-500) 60%, var(--secondary-500)); }
+  .ob-video button { border: 0; background: color-mix(in srgb, var(--white) 22%, transparent); color: var(--white); width: 64px; height: 64px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 40px; transition: transform .2s, background .2s; }
+  .ob-video button:hover { transform: scale(1.06); background: color-mix(in srgb, var(--white) 32%, transparent); }
+  .ob-video .ob-video-bar { position: absolute; left: 16px; right: 16px; bottom: 14px; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--white) 30%, transparent); overflow: hidden; }
+  .ob-video .ob-video-bar span { display: block; height: 100%; width: 0; background: var(--white); transition: width .3s linear; }
+  .ob-q { padding: 20px; border-radius: 16px; border: 1px solid var(--mx-divider); }
+  .ob-q-text { font-family: var(--font-heading); font-size: 1.0625rem; font-weight: 600; line-height: 1.5; margin: 6px 0 16px; }
+  .ob-q-opts { display: grid; gap: 10px; }
+  .ob-q-opts .mx-option { align-items: center; padding: 12px 14px; }
+  .ob-q-letter { width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8125rem; background: var(--mx-bg-neutral); color: var(--mx-text-2); flex-shrink: 0; transition: all .2s; }
+  .ob-q-opts .mx-option:has(input:checked) .ob-q-letter { background: var(--primary-500); color: var(--white); }
+  .ob-q-nav { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .ob-q-dots { display: flex; gap: 6px; margin: 0 auto; }
+  .ob-q-dot { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--mx-divider); background: var(--white); font: inherit; font-size: 0.75rem; font-weight: 700; color: var(--mx-text-3); cursor: pointer; transition: all .15s; }
+  .ob-q-dot.is-answered { background: color-mix(in srgb, var(--primary-500) 12%, transparent); border-color: transparent; color: var(--primary-700); }
+  .ob-q-dot.is-current { border-color: var(--primary-500); box-shadow: 0 0 0 1px var(--primary-500); color: var(--primary-700); }
+  .ob-q-dot.is-missing { border-color: var(--danger-400); color: var(--danger-600); background: var(--danger-50); }
+  .ob-kbd { display: inline-flex; align-items: center; gap: 6px; }
+  .ob-kbd kbd { font: inherit; font-size: 0.6875rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--mx-divider); background: var(--white); color: var(--mx-text-2); }
+  .ob-result { text-align: center; padding: 16px 8px 4px; animation: mx-fade-up .35s var(--mx-ease); }
+  .ob-result .mx-ring { display: flex; margin: 0 auto 16px; }
+  .ob-result .mx-row { justify-content: center; margin-top: 20px; }
+
+  /* ---------- Background ---------- */
+  .ob-vendor { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; align-items: center; padding: 20px; border-radius: 16px; background: var(--mx-bg-neutral); }
+  .ob-vendor svg { width: 100%; height: auto; }
+
+  /* ---------- Review & sign ---------- */
+  .ob-review { border-radius: 12px; border: 1px solid var(--mx-divider); overflow: hidden; }
+  .ob-review-row { display: flex; align-items: center; gap: 14px; padding: 12px 14px; }
+  .ob-review-row + .ob-review-row { border-top: 1px dashed var(--mx-divider-dashed); }
+  .ob-review-row .mx-titles { flex: 1; min-width: 0; }
+  .ob-review-row .mx-caption { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ob-doc-wrap { position: relative; border-radius: 12px; background: var(--mx-bg-neutral); overflow: hidden; }
+  .ob-doc-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: color-mix(in srgb, var(--primary-500) 14%, transparent); z-index: 1; }
+  .ob-doc-bar span { display: block; height: 100%; width: 0; background: var(--primary-500); transition: width .15s; }
+  .ob-doc { max-height: 240px; overflow-y: auto; padding: 20px 22px; font-size: 0.8125rem; line-height: 1.75; color: var(--mx-text-2); }
+  .ob-doc h4 { font-family: var(--font-heading); font-size: 0.875rem; color: var(--mx-text); margin: 0 0 10px; }
+  .ob-doc p { margin: 0 0 12px; }
+  .ob-doc-hint { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; font-size: 0.75rem; font-weight: 600; color: var(--mx-text-2); border-top: 1px dashed var(--mx-divider-dashed); background: var(--white); }
+  .ob-doc-hint [data-icon] { font-size: 16px; }
+  .ob-doc-hint.is-done { color: var(--success-700); }
+  .ob-sig { margin-top: 12px; padding: 16px 20px 12px; border-radius: 12px; border: 1px dashed var(--mx-divider-dashed); background: linear-gradient(transparent 70%, color-mix(in srgb, var(--primary-500) 4%, transparent)); }
+  .ob-sig-name { font-family: 'Dancing Script', cursive; font-size: 2.25rem; line-height: 1.2; color: var(--primary-800); min-height: 46px; border-bottom: 1px solid var(--neutral-300); padding-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ob-sig-name.is-empty { color: var(--neutral-300); font-size: 1.5rem; }
+  .ob-sig-meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; }
+
+  /* ---------- Success ---------- */
+  .ob-success { text-align: center; padding: 40px 24px 32px; }
+  .ob-success svg.ob-success-illus { width: 220px; height: auto; margin: 0 auto 12px; }
+  .ob-success .mx-body2 { max-width: 520px; margin: 10px auto 0; }
+  .ob-success-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 28px 0; text-align: left; }
+  .ob-success-next { max-width: 520px; margin: 0 auto; text-align: left; }
+
+  /* ---------- Side column ---------- */
+  .ob-side-progress { text-align: center; }
+  .ob-side-progress .mx-ring { margin: 4px auto 12px; }
+  .ob-side-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+  .ob-side-list li { display: flex; align-items: center; gap: 10px; font-size: 0.8125rem; }
+  .ob-side-list li [data-icon] { font-size: 18px; }
+  .ob-tips ul { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .ob-tips li { display: flex; gap: 10px; font-size: 0.8125rem; color: var(--mx-text-2); line-height: 1.55; }
+  .ob-tips li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--primary-400); margin-top: 7px; flex-shrink: 0; }
+
+  /* ---------- Illustrations ---------- */
+  .ob-tick { opacity: 0; transform-origin: center; transform-box: fill-box; animation: mx-pop .4s var(--mx-ease) forwards; }
+  .ob-tick.d1 { animation-delay: .5s; } .ob-tick.d2 { animation-delay: 1.1s; } .ob-tick.d3 { animation-delay: 1.7s; }
+  .ob-magnify { animation: ob-magnify 2.4s ease-in-out infinite; }
+  @keyframes ob-magnify { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(22px, 6px); } 66% { transform: translate(8px, 18px); } }
+  .ob-ring-pulse { transform-origin: center; transform-box: fill-box; animation: ob-ring 2.4s ease-out infinite; }
+  .ob-ring-pulse.d2 { animation-delay: 1.2s; }
+  @keyframes ob-ring { 0% { transform: scale(.7); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
+  .ob-check-draw { stroke-dasharray: 80; stroke-dashoffset: 80; animation: mx-draw .7s .35s var(--mx-ease) forwards; }
+  .ob-twinkle { transform-origin: center; transform-box: fill-box; animation: ob-twinkle 1.8s ease-in-out infinite; }
+  .ob-twinkle.d2 { animation-delay: .6s; } .ob-twinkle.d3 { animation-delay: 1.2s; }
+  @keyframes ob-twinkle { 0%, 100% { transform: scale(.6); opacity: .4; } 50% { transform: scale(1.1); opacity: 1; } }
+  .ob-arrow-up { animation: ob-arrow 1.6s ease-in-out infinite; }
+  @keyframes ob-arrow { 0%, 100% { transform: translateY(2px); } 50% { transform: translateY(-5px); } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1199px) {
+    .ob-layout { grid-template-columns: minmax(0, 1fr) 280px; }
+    .ob-header-step { display: block; }
+    .ob-header-bar { display: block; }
+    .ob-page-head { margin-bottom: 24px; }
+  }
+  @media (max-width: 1023px) {
+    .ob-layout { grid-template-columns: minmax(0, 1fr); }
+    .ob-side { display: none; }
+    .ob-need, .ob-record-grid, .ob-stat-row, .ob-success-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 767px) {
+    .ob-page-head { display: none; }
+    .ob-hero { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 20px; }
+    .ob-hero > svg { display: none; }
+    .ob-step-head { padding: 20px 16px 16px; }
+    .ob-step-head .mx-icon-box { width: 48px; height: 48px; }
+    .ob-step-body { padding: 0 16px 8px; }
+    .ob-step-foot { position: sticky; bottom: 0; z-index: 5; padding: 12px 16px; background: color-mix(in srgb, var(--white) 92%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .ob-next-hint, .ob-hide-sm { display: none !important; }
+    .ob-npn-row { flex-direction: column; align-items: stretch; }
+    .ob-module-grid { grid-template-columns: minmax(0, 1fr); }
+    .ob-vendor { grid-template-columns: minmax(0, 1fr); }
+    .ob-vendor svg { width: 110px; margin: 0 auto; }
+    .ob-q-dots { order: -1; width: 100%; justify-content: center; }
+    .ob-save .ob-save-text { display: none; }
+    .ob-header-step .mx-subtitle { max-width: 44vw; }
+  }
+  @media (max-width: 420px) {
+    .ob-need, .ob-record-grid, .ob-stat-row, .ob-success-meta { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 </head>
-<body>
-<div class="ui-shell" id="appShell">
-  <button type="button" class="ui-sidebar-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
-  <aside class="ui-sidebar" id="appSidebar">
-    <div class="ui-sidebar-brand">
-      <img class="ui-sidebar-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="Enrollaxis">
-      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
+<body class="mx-body">
+<div class="mx-shell" id="appShell">
+  <button type="button" class="mx-backdrop" id="navBackdrop" aria-label="Close menu" tabindex="-1"></button>
+
+  <!-- ================= NAV ================= -->
+  <aside class="mx-nav" id="appNav" aria-label="Onboarding steps">
+    <div class="mx-nav-brand">
+      <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+      <button type="button" class="mx-icon-btn mx-nav-close" id="navClose" aria-label="Close menu"><span data-icon="close-circle-bold"></span></button>
     </div>
-    <nav class="ui-sidebar-nav">
-      <div class="progress-box">
-        <div class="label">Onboarding Progress</div>
-        <div class="value" id="sb-step-label">Step 1 of 8</div>
-        <div class="ui-progress"><div class="ui-progress-bar" id="sb-prog-fill" style="width:12.5%"></div></div>
-      </div>
-      <div class="ui-step-list" id="obStepBar">
-        <button type="button" class="ui-step-item active" id="bar0" onclick="obGoTo(0)"><span class="ui-step-num">1</span>Invitation &amp; Registration</button>
-        <button type="button" class="ui-step-item" id="bar1" onclick="obGoTo(1)"><span class="ui-step-num">2</span>Personal &amp; Business Info</button>
-        <button type="button" class="ui-step-item" id="bar2" onclick="obGoTo(2)"><span class="ui-step-num">3</span>W-9 &amp; Tax / Payment</button>
-        <button type="button" class="ui-step-item" id="bar3" onclick="obGoTo(3)"><span class="ui-step-num">4</span>AHIP &amp; License Verification</button>
-        <button type="button" class="ui-step-item" id="bar4" onclick="obGoTo(4)"><span class="ui-step-num">5</span>Training &amp; Certification</button>
-        <button type="button" class="ui-step-item" id="bar5" onclick="obGoTo(5)"><span class="ui-step-num">6</span>Background Check</button>
-        <button type="button" class="ui-step-item" id="bar6" onclick="obGoTo(6)"><span class="ui-step-num">7</span>Contract Execution</button>
-        <button type="button" class="ui-step-item is-locked" id="bar7" onclick="obGoTo(7)" aria-disabled="true"><span class="ui-step-num">8</span>Ready to Sell</button>
-      </div>
-      <a href="../auth/login.html" class="ui-btn ui-btn-ghost ui-btn-sm sidebar-exit" onclick="return confirm('Save draft and exit?')">
-        <i class="fas fa-sign-out-alt"></i> Save &amp; Exit
-      </a>
-    </nav>
-    <div class="ui-sidebar-foot">
-      <div style="display:flex;align-items:center;gap:0.5rem">
-        <div class="ui-avatar">JM</div>
-        <div>
-          <div class="name">James Martinez</div>
-          <div class="meta">NPN 8823441 - Onboarding</div>
+    <div class="mx-nav-body">
+      <div class="ob-nav-progress">
+        <div class="mx-row">
+          <span class="mx-overline">Your progress</span>
+          <span class="mx-label mx-label-primary" id="navPct">0%</span>
         </div>
+        <div class="mx-linear"><span id="navBar" style="width:0%"></span></div>
+        <p class="mx-caption mx-mt-8" id="navMeta">0 of 7 steps complete</p>
+      </div>
+      <div class="mx-nav-subheader">Get started</div>
+      <ul class="mx-nav-list" data-nav-group="0,1"></ul>
+      <div class="mx-nav-subheader">Compliance</div>
+      <ul class="mx-nav-list" data-nav-group="2,3,4,5"></ul>
+      <div class="mx-nav-subheader">Finish</div>
+      <ul class="mx-nav-list" data-nav-group="6,7"></ul>
+    </div>
+    <div class="mx-nav-foot">
+      <div class="mx-help-card">
+        <svg class="mx-illus" viewBox="0 0 120 84" aria-hidden="true">
+          <circle cx="60" cy="46" r="34" fill="var(--white)" opacity=".7"/>
+          <g class="mx-float"><rect x="18" y="18" width="52" height="30" rx="10" fill="var(--primary-500)"/><path d="M28 48l-4 10 12-10z" fill="var(--primary-500)"/>
+            <circle cx="34" cy="33" r="3" fill="var(--white)" class="mx-blink"/><circle cx="44" cy="33" r="3" fill="var(--white)" class="mx-blink" style="animation-delay:.2s"/><circle cx="54" cy="33" r="3" fill="var(--white)" class="mx-blink" style="animation-delay:.4s"/></g>
+          <g class="mx-float-slow"><rect x="56" y="40" width="46" height="26" rx="9" fill="var(--secondary-400)"/><path d="M92 66l4 9-12-9z" fill="var(--secondary-400)"/>
+            <rect x="64" y="49" width="30" height="3" rx="1.5" fill="var(--white)"/><rect x="64" y="55" width="20" height="3" rx="1.5" fill="var(--white)" opacity=".8"/></g>
+        </svg>
+        <p class="mx-subtitle">Stuck on a step?</p>
+        <p class="mx-caption" style="margin:4px 0 12px">Broker support replies in under 5 minutes, Mon-Fri 8am-8pm ET.</p>
+        <a class="mx-btn mx-btn-contained mx-btn-primary mx-btn-sm" href="mailto:brokersupport@enrollaxis.com"><span data-icon="headphones-round-sound-bold-duotone"></span>Contact support</a>
       </div>
     </div>
   </aside>
 
-  <div class="ui-main">
-    <header class="ui-topbar">
-      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
-        <i class="fas fa-bars" aria-hidden="true"></i>
-      </button>
-      <img class="ob-topbar-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="Enrollaxis">
-      <div class="ob-topbar-titles">
-        <h1>Agent Onboarding</h1>
-        <p class="subtitle">Producer Onboarding - Invitation through Ready to Sell</p>
+  <div class="mx-main">
+    <!-- ================= HEADER ================= -->
+    <header class="mx-header">
+      <button type="button" class="mx-icon-btn mx-menu-btn" id="navOpen" aria-label="Open steps menu" aria-controls="appNav" aria-expanded="false"><span data-icon="hamburger-menu-linear"></span></button>
+      <div class="ob-header-step">
+        <p class="mx-caption" id="hdrStepNum">Step 1 of 8</p>
+        <p class="mx-subtitle" id="hdrStepName">Get started</p>
       </div>
-      <a href="../auth/login.html" class="ui-btn ui-btn-ghost ui-btn-icon" title="Logout" style="color:var(--primary)"><i class="fas fa-sign-out-alt"></i></a>
+      <div class="mx-header-spacer"></div>
+      <span class="ob-save" id="saveStatus" title="Progress is saved on this device"><span data-icon="cloud-check-bold-duotone"></span><span class="ob-save-text">All changes saved</span></span>
+      <button type="button" class="mx-btn mx-btn-soft mx-btn-primary mx-btn-sm" id="demoFill" title="Fill this step with sample data (prototype only)"><span data-icon="magic-stick-3-bold-duotone"></span><span class="ob-hide-sm">Demo fill</span></button>
+      <a class="mx-icon-btn ob-hide-sm" href="mailto:brokersupport@enrollaxis.com" aria-label="Get help"><span data-icon="question-circle-bold-duotone"></span></a>
+      <button type="button" class="mx-icon-btn" id="bellBtn" aria-label="Notifications, 2 unread"><span data-icon="bell-bing-bold-duotone"></span><span class="mx-badge-dot">2</span></button>
+      <div style="position:relative">
+        <button type="button" class="mx-avatar-ring" id="userBtn" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false"><span class="mx-avatar">JM</span></button>
+        <div class="mx-popover ob-user-pop" id="userPop" role="menu" hidden>
+          <div class="ob-user-head">
+            <p class="mx-subtitle" id="userName">James Martinez</p>
+            <p class="mx-caption" id="userEmail">james.martinez@healthfirstdist.com</p>
+          </div>
+          <button type="button" class="mx-menu-item" role="menuitem" onclick="obSaveExit()"><span data-icon="logout-2-bold-duotone"></span>Save &amp; exit</button>
+          <button type="button" class="mx-menu-item is-danger" role="menuitem" onclick="obStartOver()"><span data-icon="restart-bold"></span>Start over</button>
+        </div>
+      </div>
+      <div class="ob-header-bar" aria-hidden="true"><span id="hdrBar" style="width:0%"></span></div>
     </header>
 
-    <main class="ui-page">
-      <div class="ob-page-titles">
-        <h1>Agent Onboarding</h1>
-        <p class="subtitle">Producer Onboarding - Invitation through Ready to Sell</p>
+    <main class="mx-container" id="main">
+      <div class="ob-page-head">
+        <div class="mx-titles">
+          <h1 class="mx-h4">Agent onboarding</h1>
+          <nav class="ob-crumbs" aria-label="Breadcrumb"><span>Agent portal</span><span>Onboarding</span><span id="crumbStep">Get started</span></nav>
+        </div>
+        <span class="mx-label mx-label-warning" id="appStatusLabel"><span data-icon="hourglass-bold-duotone"></span>In progress</span>
       </div>
 
-      <div class="ob-mobile-sticky-sentinel" id="obMobileStickySentinel" aria-hidden="true"></div>
-      <div class="ob-mobile-nav" id="obMobileNav">
-        <div class="ob-mobile-progress" id="obMobileProgress">
-          <div class="ob-mobile-progress-head">
-            <div class="ob-mobile-progress-top">
-              <div class="value" id="mb-step-label">Step 1 of 8</div>
-              <div class="meta" id="mb-step-meta">0 of 7 complete</div>
-            </div>
-            <p class="step-name" id="mb-step-name">Invitation &amp; Registration</p>
-          </div>
-        </div>
-        <nav class="ob-mobile-steps" id="obMobileSteps" aria-label="Onboarding steps">
-          <span class="ob-mobile-rail" id="obMobileRail" aria-hidden="true"></span>
-          <button type="button" class="ob-mobile-step active" id="mbar0" onclick="obGoTo(0)" aria-label="Step 1: Invitation &amp; Registration" title="Invitation &amp; Registration">1</button>
-          <button type="button" class="ob-mobile-step" id="mbar1" onclick="obGoTo(1)" aria-label="Step 2: Personal &amp; Business Info" title="Personal &amp; Business Info">2</button>
-          <button type="button" class="ob-mobile-step" id="mbar2" onclick="obGoTo(2)" aria-label="Step 3: W-9 &amp; Tax / Payment" title="W-9 &amp; Tax / Payment">3</button>
-          <button type="button" class="ob-mobile-step" id="mbar3" onclick="obGoTo(3)" aria-label="Step 4: AHIP &amp; License Verification" title="AHIP &amp; License Verification">4</button>
-          <button type="button" class="ob-mobile-step" id="mbar4" onclick="obGoTo(4)" aria-label="Step 5: Training &amp; Certification" title="Training &amp; Certification">5</button>
-          <button type="button" class="ob-mobile-step" id="mbar5" onclick="obGoTo(5)" aria-label="Step 6: Background Check" title="Background Check">6</button>
-          <button type="button" class="ob-mobile-step" id="mbar6" onclick="obGoTo(6)" aria-label="Step 7: Contract Execution" title="Contract Execution">7</button>
-          <button type="button" class="ob-mobile-step is-locked" id="mbar7" onclick="obGoTo(7)" aria-label="Step 8: Ready to Sell (locked)" title="Ready to Sell - complete prior steps to unlock" aria-disabled="true">8</button>
-        </nav>
+      <div class="ob-layout">
+        <div class="ob-col">
+
+<!-- ======================= STEP 1: GET STARTED ======================= -->
+<section class="ob-step mx-card is-active" id="obStep0" data-step="0" aria-labelledby="obT0">
+  <div class="ob-hero">
+    <div>
+      <span class="mx-overline" style="color:var(--primary-700)">Invitation from HealthFirst Distribution</span>
+      <h2 class="mx-h3" id="obT0" style="margin-top:6px">Welcome aboard, James</h2>
+      <p class="mx-body2">Let's get you appointed and ready to sell. It takes about 20 minutes, and your progress saves as you go.</p>
+      <div class="ob-hero-chips">
+        <button type="button" class="mx-label" id="copyInvite" title="Copy invite code"><span data-icon="ticket-bold-duotone"></span>EA-INV-2026-0847<span data-icon="copy-bold"></span></button>
+        <span class="mx-label"><span data-icon="buildings-2-bold-duotone"></span>Agency-driven (FMO)</span>
+        <span class="mx-label"><span data-icon="alarm-bold-duotone"></span>Invite valid until Nov 12, 2026</span>
       </div>
+    </div>
+    <svg viewBox="0 0 260 190" aria-hidden="true">
+      <ellipse cx="130" cy="176" rx="96" ry="8" fill="var(--primary-900)" opacity=".08"/>
+      <g class="mx-float-slow">
+        <rect x="52" y="22" width="150" height="146" rx="16" fill="var(--white)"/>
+        <rect x="52" y="22" width="150" height="38" rx="16" fill="var(--primary-500)"/>
+        <rect x="52" y="44" width="150" height="16" fill="var(--primary-500)"/>
+        <circle cx="78" cy="41" r="11" fill="var(--secondary-300)"/>
+        <rect x="96" y="34" width="56" height="6" rx="3" fill="var(--white)"/>
+        <rect x="96" y="44" width="36" height="5" rx="2.5" fill="var(--white)" opacity=".6"/>
+        <g><circle cx="76" cy="86" r="9" fill="var(--primary-50)"/><path class="ob-tick d1" d="M71.5 86l3 3 6-6" stroke="var(--primary-500)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="94" y="82" width="84" height="8" rx="4" fill="var(--neutral-100)"/></g>
+        <g><circle cx="76" cy="114" r="9" fill="var(--primary-50)"/><path class="ob-tick d2" d="M71.5 114l3 3 6-6" stroke="var(--primary-500)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="94" y="110" width="64" height="8" rx="4" fill="var(--neutral-100)"/></g>
+        <g><circle cx="76" cy="142" r="9" fill="var(--primary-50)"/><path class="ob-tick d3" d="M71.5 142l3 3 6-6" stroke="var(--primary-500)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="94" y="138" width="74" height="8" rx="4" fill="var(--neutral-100)"/></g>
+      </g>
+      <g class="mx-float"><circle cx="212" cy="40" r="22" fill="var(--secondary-400)"/><path d="M212 29l3.2 6.6 7.3 1-5.3 5.1 1.3 7.2-6.5-3.4-6.5 3.4 1.3-7.2-5.3-5.1 7.3-1z" fill="var(--white)"/></g>
+      <circle class="ob-twinkle" cx="34" cy="62" r="5" fill="var(--primary-300)"/>
+      <circle class="ob-twinkle d2" cx="226" cy="120" r="4" fill="var(--primary-400)"/>
+      <circle class="ob-twinkle d3" cx="40" cy="140" r="3.5" fill="var(--secondary-400)"/>
+    </svg>
+  </div>
+  <div class="ob-step-body" style="padding-top:24px">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Keep these handy</h3><p class="mx-caption">You can stop at any time and finish later.</p></div></div>
+      <div class="ob-need">
+        <div class="ob-need-item"><span class="mx-icon-box mx-icon-box-sm"><span data-icon="user-id-bold-duotone"></span></span><div><p class="mx-subtitle">Your NPN</p><p class="mx-caption">From NIPR</p></div></div>
+        <div class="ob-need-item"><span class="mx-icon-box mx-icon-box-sm is-secondary"><span data-icon="diploma-verified-bold-duotone"></span></span><div><p class="mx-subtitle">AHIP certificate</p><p class="mx-caption">Current plan year</p></div></div>
+        <div class="ob-need-item"><span class="mx-icon-box mx-icon-box-sm is-info"><span data-icon="document-text-bold-duotone"></span></span><div><p class="mx-subtitle">SSN or EIN</p><p class="mx-caption">For your W-9</p></div></div>
+        <div class="ob-need-item"><span class="mx-icon-box mx-icon-box-sm is-warning"><span data-icon="card-transfer-bold-duotone"></span></span><div><p class="mx-subtitle">Bank details</p><p class="mx-caption">For commissions</p></div></div>
+      </div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Find your producer record</h3><p class="mx-caption">Enter your NPN and we'll pull your name, address and licenses from NIPR, so you don't have to type them.</p></div></div>
+      <div class="ob-npn-row">
+        <div class="mx-field has-start">
+          <div class="mx-field-box">
+            <span class="mx-adorn-start" data-icon="user-id-bold-duotone"></span>
+            <input class="mx-input mx-mono" id="regNPN" data-mask="digits" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="e.g. 88234410" data-rules="required|npn" data-label="NPN" data-required-msg="Enter your National Producer Number (NPN) to continue." aria-describedby="regNPN-hint">
+            <label class="mx-field-label" for="regNPN">National Producer Number (NPN)<span class="req">*</span></label>
+          </div>
+          <p class="mx-helper mx-helper-hint" id="regNPN-hint">6 to 10 digits. Each NPN can be registered only once.</p>
+        </div>
+        <button type="button" class="mx-btn mx-btn-contained mx-btn-neutral mx-btn-lg" id="npnLookupBtn" onclick="obLookupNPN()"><span data-icon="magnifer-linear"></span>Look up</button>
+      </div>
+      <p class="mx-caption ob-demo-hint"><span data-icon="lightbulb-bolt-bold-duotone" class="mx-ic-16" style="color:var(--warning-500)"></span><span>Prototype: any NPN works. Try
+        <code data-npn="12345678">12345678</code> already registered, <code data-npn="00000000">00000000</code> not found, <code data-npn="99999999">99999999</code> NIPR offline.</span></p>
+      <div class="ob-lookup" id="npnResult" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="ob-step-foot">
+    <div class="ob-foot-right">
+      <span class="ob-next-hint">Next: <strong>About you</strong></span>
+      <button type="button" class="mx-btn mx-btn-contained mx-btn-primary mx-btn-lg" onclick="obNext(0)">Continue<span data-icon="arrow-right-linear"></span></button>
+    </div>
+  </div>
+</section>
 
-      <!-- STEP 1 -->
-      <section class="ob-section active ui-card" id="obStep0">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-envelope-open-text" style="color:var(--primary);margin-right:0.5rem"></i>Step 1: Invitation &amp; Registration</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(0)"><i class="fas fa-magic"></i> Prefill Data</button>
-        </div>
-        <div class="ui-card-content">
-          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem"><i class="fas fa-info-circle"></i><div>Each NPN can only be registered once.</div></div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">Invitation Details</h3>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field">
-                <label class="ui-label" for="inviteType">Invitation Type <span class="req">*</span></label>
-                <select class="ui-select" id="inviteType" disabled>
-                  <option>Agency-Driven (FMO Invitation)</option>
-                  <option>Carrier / Payer Initiated</option>
-                  <option>Self-Registration (Public Link)</option>
-                </select>
-              </div>
-              <div class="ui-field">
-                <label class="ui-label" for="inviteToken">Invite Code / Token <span class="req">*</span></label>
-                <input class="ui-input" id="inviteToken" value="EA-INV-2026-0847" disabled>
-              </div>
-              <div class="ui-field">
-                <label class="ui-label" for="invitedBy">Invited By (Agency / FMO Name)</label>
-                <input class="ui-input" id="invitedBy" value="HealthFirst Distribution" disabled>
-              </div>
-            </div>
-          </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">NPN Pre-Validation</h3>
-            <div class="ui-field">
-              <label class="ui-label" for="regNPN">National Producer Number (NPN) <span class="req">*</span></label>
-              <div class="ui-control-row">
-                <input class="ui-input" id="regNPN" placeholder="Please enter your NPN number" maxlength="10" inputmode="numeric">
-                <button type="button" class="ui-btn ui-btn-outline" onclick="validateNPN()"><i class="fas fa-search"></i> Validate NPN</button>
-              </div>
-              <span class="ui-field-error" id="err_regNPN">Please enter a valid NPN number.</span>
-            </div>
-            <div class="ui-alert ui-alert-success" id="npnResult" style="display:none;margin-top:0.75rem"><i class="fas fa-check-circle"></i><div><strong>NPN Validated</strong></div></div>
-          </div>
-          <div class="ui-alert ui-alert-warning"><i class="fas fa-exclamation-triangle"></i><div>Duplicate NPN submissions are blocked and trigger an admin alert.</div></div>
-        </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(0)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(0)"><i class="fas fa-arrow-right"></i> Next: Personal Details</button>
-        </div>
-      </section>
+<!-- ======================= STEP 2: ABOUT YOU ======================= -->
+<section class="ob-step mx-card" id="obStep1" data-step="1" aria-labelledby="obT1">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div class="mx-alert mx-alert-primary" id="niprPrefillNote" hidden><span data-icon="magic-stick-3-bold-duotone"></span><div class="mx-alert-body"><div class="mx-alert-title">We filled in what we could from NIPR</div>Check the details marked <strong>From NIPR</strong>. You only need to add your date of birth and mobile number.</div></div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Identity</h3><p class="mx-caption">Must match your state license exactly.</p></div><span class="mx-label mx-label-primary" id="niprBadgeName" hidden><span data-icon="verified-check-bold"></span>From NIPR</span></div>
+      <div class="mx-grid mx-grid-3">
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piFirst" placeholder="First name" autocomplete="given-name" data-rules="required|name" data-label="First name" data-show-valid><label class="mx-field-label" for="piFirst">First name<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piMI" placeholder="R" maxlength="1" autocomplete="additional-name" data-rules="name" data-label="Middle initial"><label class="mx-field-label" for="piMI">Middle initial</label></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piLast" placeholder="Last name" autocomplete="family-name" data-rules="required|name" data-label="Last name" data-show-valid><label class="mx-field-label" for="piLast">Last name<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="calendar-bold-duotone"></span><input class="mx-input mx-mono" id="piDOB" data-mask="date" inputmode="numeric" placeholder="MM/DD/YYYY" autocomplete="bday" data-rules="required|date|past|adult" data-label="Date of birth" data-show-valid><label class="mx-field-label" for="piDOB">Date of birth<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div><p class="mx-helper mx-helper-hint">Type it as MM/DD/YYYY</p></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="smartphone-bold-duotone"></span><input class="mx-input mx-mono" id="piPhone" type="tel" data-mask="phone" inputmode="tel" placeholder="(555) 000-0000" autocomplete="tel-national" data-rules="required|phone" data-label="Mobile phone" data-show-valid><label class="mx-field-label" for="piPhone">Mobile phone<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="letter-bold-duotone"></span><input class="mx-input" id="piEmail" readonly value="james.martinez@healthfirstdist.com" placeholder=" "><label class="mx-field-label" for="piEmail">Email (from your invite)</label></div><p class="mx-helper mx-helper-hint">To change it, ask your agency admin.</p></div>
+      </div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Business address</h3><p class="mx-caption">Start with the ZIP code. City and state fill in by themselves.</p></div><span class="mx-label mx-label-primary" id="niprBadgeAddr" hidden><span data-icon="verified-check-bold"></span>From NIPR</span></div>
+      <div class="mx-grid mx-grid-3">
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="map-point-bold-duotone"></span><input class="mx-input mx-mono" id="piBizZip" data-mask="digits" maxlength="5" inputmode="numeric" placeholder="33136" autocomplete="postal-code" data-rules="required|zip" data-label="ZIP code"><label class="mx-field-label" for="piBizZip">ZIP code<span class="req">*</span></label></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piBizCity" readonly placeholder=" " data-label="City"><label class="mx-field-label" for="piBizCity">City</label></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piBizState" readonly maxlength="2" placeholder=" " data-label="State"><label class="mx-field-label" for="piBizState">State</label></div></div>
+        <div class="mx-field mx-span-2"><div class="mx-field-box"><input class="mx-input" id="piBizStreet" placeholder="1801 NW 9th Ave" autocomplete="address-line1" data-rules="required|min:4" data-label="Street address"><label class="mx-field-label" for="piBizStreet">Street address<span class="req">*</span></label></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input" id="piBizSuite" placeholder="Suite 210" autocomplete="address-line2"><label class="mx-field-label" for="piBizSuite">Suite / unit (optional)</label></div></div>
+      </div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">How should we reach you?</h3><p class="mx-caption">Optional. You can change this later in your profile.</p></div></div>
+      <div class="mx-paper mx-stack">
+        <label class="mx-switch-row" for="piSMS"><span class="mx-switch"><input type="checkbox" id="piSMS"><span class="mx-switch-track"></span></span><span class="mx-switch-text"><span class="mx-subtitle">Text messages</span><span class="mx-caption" style="display:block">Application status, licensing alerts and commission updates. Msg and data rates may apply.</span></span></label>
+        <label class="mx-switch-row" for="piEmailConsent"><span class="mx-switch"><input type="checkbox" id="piEmailConsent"><span class="mx-switch-track"></span></span><span class="mx-switch-text"><span class="mx-subtitle">Email updates</span><span class="mx-caption" style="display:block">Training reminders, compliance news and enrollment activity.</span></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="ob-step-foot"></div>
+</section>
 
-      <!-- STEP 2 -->
-      <section class="ob-section ui-card" id="obStep1">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-user" style="color:var(--primary);margin-right:0.5rem"></i>Step 2: Personal &amp; Business Information</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(1)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 3: TAX & PAYOUTS ======================= -->
+<section class="ob-step mx-card" id="obStep2" data-step="2" aria-labelledby="obT2">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">How do you file taxes?</h3><p class="mx-caption">This decides what goes on your W-9 and 1099.</p></div></div>
+      <div class="mx-options mx-options-4" id="taxEntityGroup" role="radiogroup" aria-label="Tax entity type">
+        <label class="mx-option is-vertical"><input type="radio" name="taxEntity" value="individual"><span class="mx-option-radio"></span><span class="mx-option-icon" data-icon="user-bold-duotone"></span><span class="mx-option-body"><span class="mx-option-title">Individual</span><span class="mx-option-desc">Sole proprietor, files with SSN</span></span></label>
+        <label class="mx-option is-vertical"><input type="radio" name="taxEntity" value="llc"><span class="mx-option-radio"></span><span class="mx-option-icon" data-icon="case-round-bold-duotone"></span><span class="mx-option-body"><span class="mx-option-title">Single-member LLC</span><span class="mx-option-desc">Business with an EIN</span></span></label>
+        <label class="mx-option is-vertical"><input type="radio" name="taxEntity" value="corp"><span class="mx-option-radio"></span><span class="mx-option-icon" data-icon="buildings-2-bold-duotone"></span><span class="mx-option-body"><span class="mx-option-title">Corporation</span><span class="mx-option-desc">C-corp or S-corp</span></span></label>
+        <label class="mx-option is-vertical"><input type="radio" name="taxEntity" value="partnership"><span class="mx-option-radio"></span><span class="mx-option-icon" data-icon="users-group-rounded-bold-duotone"></span><span class="mx-option-body"><span class="mx-option-title">Partnership</span><span class="mx-option-desc">Two or more owners</span></span></label>
+      </div>
+      <p class="mx-group-error" id="taxEntityErr"></p>
+      <div class="mx-grid mx-grid-2 mx-mt-24" id="taxIdFields" hidden>
+        <div class="mx-field has-start has-end"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="lock-keyhole-minimalistic-bold-duotone"></span><input class="mx-input mx-mono" id="taxTIN" type="password" data-mask="ssn" inputmode="numeric" autocomplete="off" placeholder="XXX-XX-XXXX" data-rules="required|ssn" data-label="Social Security number"><label class="mx-field-label" for="taxTIN" id="taxTINLabel">Social Security number<span class="req">*</span></label><span class="mx-adorn-end"><button type="button" class="mx-icon-btn mx-icon-btn-sm" data-toggle-visibility="taxTIN" aria-label="Show value"><span data-icon="eye-bold"></span></button></span></div><p class="mx-helper mx-helper-hint"><span data-icon="shield-check-bold-duotone"></span>Encrypted. Used only for your 1099.</p></div>
+        <div>
+          <label class="mx-switch-row" for="taxSameName" id="taxSameNameRow"><span class="mx-switch"><input type="checkbox" id="taxSameName" checked><span class="mx-switch-track"></span></span><span class="mx-switch-text"><span class="mx-subtitle">Name on tax return is my legal name</span><span class="mx-caption" style="display:block" id="taxSameNameText">James R Martinez</span></span></label>
+          <div class="mx-field mx-mt-16" id="taxNameField" hidden><div class="mx-field-box"><input class="mx-input" id="taxName" placeholder="Exactly as on your tax return" data-rules="required|min:2" data-label="Name on tax return"><label class="mx-field-label" for="taxName" id="taxNameLabel">Name on tax return<span class="req">*</span></label></div></div>
         </div>
-        <div class="ui-card-content">
-          <div class="ui-section">
-            <h3 class="ui-section-title">Personal Information</h3>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field"><label class="ui-label" for="piFirst">First Name <span class="req">*</span></label><input class="ui-input" id="piFirst" placeholder="First name"></div>
-              <div class="ui-field"><label class="ui-label" for="piMI">Middle Name</label><input class="ui-input" id="piMI" placeholder="MI" maxlength="2"></div>
-              <div class="ui-field"><label class="ui-label" for="piLast">Last Name <span class="req">*</span></label><input class="ui-input" id="piLast" placeholder="Last name"></div>
-            </div>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field"><label class="ui-label" for="piDOB">Date of Birth <span class="req">*</span></label><input class="ui-input" id="piDOB" type="date"></div>
-              <div class="ui-field"><label class="ui-label" for="piSSN">SSN / EIN <span class="req">*</span></label><input class="ui-input" id="piSSN" placeholder="XXX-XX-XXXX"></div>
-              <div class="ui-field"><label class="ui-label" for="piPhone">Phone Number <span class="req">*</span></label><input class="ui-input" id="piPhone" type="tel" placeholder="(555) 000-0000"></div>
-            </div>
-            <div class="ui-form-grid cols-2">
-              <div class="ui-field"><label class="ui-label" for="piBizStreet">Business Street <span class="req">*</span></label><input class="ui-input" id="piBizStreet" placeholder="Street address"></div>
-              <div class="ui-field"><label class="ui-label" for="piBizSuite">Business Suite</label><input class="ui-input" id="piBizSuite" placeholder="Suite / Apt"></div>
-            </div>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field"><label class="ui-label" for="piBizZip">Business ZIP <span class="req">*</span></label><input class="ui-input" id="piBizZip" maxlength="5" inputmode="numeric" placeholder="ZIP Code"></div>
-              <div class="ui-field"><label class="ui-label" for="piBizCity">Business City <span class="req">*</span></label><input class="ui-input" id="piBizCity" placeholder="Auto-filled from ZIP"></div>
-              <div class="ui-field"><label class="ui-label" for="piBizState">Business State <span class="req">*</span></label><input class="ui-input" id="piBizState" placeholder="Auto-filled from ZIP"></div>
-            </div>
-            <div class="ui-consent-panel">
-              <h3 class="ui-section-title">Communication Consent</h3>
-              <label class="ui-check-row" for="piSMS">
-                <input type="checkbox" id="piSMS">
-                <span>I consent to receive SMS/text notifications regarding my application, licensing status, and commission updates.</span>
-              </label>
-              <label class="ui-check-row" for="piEmailConsent">
-                <input type="checkbox" id="piEmailConsent">
-                <span>I consent to receive email notifications regarding training, compliance updates, and enrollment activity.</span>
-              </label>
-            </div>
+      </div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">W-9 form</h3><p class="mx-caption">Most agents e-sign. It takes about 30 seconds.</p></div></div>
+      <div class="mx-options mx-options-2" id="w9ModeGroup" role="radiogroup" aria-label="W-9 option">
+        <label class="mx-option"><input type="radio" name="w9Mode" value="esign"><span class="mx-option-radio"></span><span class="mx-option-body"><span class="mx-option-title">E-sign my W-9 <span class="mx-label mx-label-primary">Recommended</span></span><span class="mx-option-desc">We fill it with your details. You just confirm.</span></span><span class="mx-option-icon" data-icon="pen-new-square-bold-duotone"></span></label>
+        <label class="mx-option"><input type="radio" name="w9Mode" value="upload"><span class="mx-option-radio"></span><span class="mx-option-body"><span class="mx-option-title">Upload a signed W-9</span><span class="mx-option-desc">PDF, up to 5 MB</span></span><span class="mx-option-icon" data-icon="cloud-upload-bold-duotone"></span></label>
+      </div>
+      <p class="mx-group-error" id="w9ModeErr"></p>
+      <div id="w9EsignPanel" class="mx-paper mx-paper-neutral mx-mt-16 ob-reveal" hidden>
+        <div class="mx-row" style="gap:16px;align-items:flex-start">
+          <span class="mx-icon-box is-info"><span data-icon="document-text-bold-duotone"></span></span>
+          <div style="flex:1;min-width:0">
+            <p class="mx-subtitle">Form W-9 (Rev. March 2024)</p>
+            <p class="mx-caption" id="w9Summary">Filled with your name, entity type, TIN and business address.</p>
+            <label class="mx-check-row mx-mt-16" for="w9Certify" id="w9CertifyRow"><span class="mx-check"><input type="checkbox" id="w9Certify"><span class="mx-check-box"></span></span><span class="mx-body2" style="color:var(--mx-text)">Under penalties of perjury, I certify that the TIN shown is correct, I am not subject to backup withholding, and I am a U.S. person.</span></label>
+            <p class="mx-group-error" id="w9CertErr"></p>
           </div>
         </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(1)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(1)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(1)"><i class="fas fa-arrow-right"></i> Next: W-9 &amp; Payment</button>
+      </div>
+      <div id="w9UploadPanel" class="mx-mt-16 ob-reveal" hidden>
+        <label class="mx-dropzone" id="w9Zone">
+          <svg class="mx-illus" viewBox="0 0 200 110" aria-hidden="true">
+            <ellipse cx="100" cy="102" rx="70" ry="6" fill="var(--primary-900)" opacity=".06"/>
+            <rect x="52" y="30" width="96" height="64" rx="10" fill="var(--primary-100)"/>
+            <path d="M52 40a10 10 0 0110-10h22l8 9h46a10 10 0 0110 10v4H52z" fill="var(--primary-300)"/>
+            <rect x="70" y="16" width="60" height="58" rx="6" fill="var(--white)" class="mx-float"/>
+            <rect x="78" y="28" width="34" height="5" rx="2.5" fill="var(--neutral-200)"/><rect x="78" y="38" width="44" height="5" rx="2.5" fill="var(--neutral-100)"/><rect x="78" y="48" width="28" height="5" rx="2.5" fill="var(--neutral-100)"/>
+            <rect x="52" y="54" width="96" height="40" rx="10" fill="var(--primary-500)"/>
+            <g class="ob-arrow-up"><circle cx="100" cy="74" r="12" fill="var(--white)"/><path d="M100 80v-11m-5 5l5-5 5 5" stroke="var(--primary-600)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          </svg>
+          <span class="mx-dz-title">Drop your W-9 here</span>
+          <span class="mx-caption">or <span class="mx-dz-link">browse</span> from your computer. PDF only, up to 5 MB.</span>
+          <input type="file" id="w9File" accept=".pdf,application/pdf" aria-label="Upload W-9 PDF">
+        </label>
+        <div id="w9List"></div>
+        <p class="mx-group-error" id="w9Err"></p>
+      </div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">How do you want to get paid?</h3><p class="mx-caption">Direct deposit arrives about 7 days faster than a paper check.</p></div></div>
+      <div class="mx-options mx-options-2" id="payMethodGroup" role="radiogroup" aria-label="Payment method">
+        <label class="mx-option"><input type="radio" name="payMethod" id="payACH" value="ach"><span class="mx-option-radio"></span><span class="mx-option-body"><span class="mx-option-title">Direct deposit (ACH) <span class="mx-label mx-label-success">Fastest</span></span><span class="mx-option-desc">Paid on the 15th of each month</span></span><span class="mx-option-icon" data-icon="card-transfer-bold-duotone"></span></label>
+        <label class="mx-option"><input type="radio" name="payMethod" id="payCheck" value="check"><span class="mx-option-radio"></span><span class="mx-option-body"><span class="mx-option-title">Paper check</span><span class="mx-option-desc">Mailed to you, 5-7 business days</span></span><span class="mx-option-icon" data-icon="bill-list-bold-duotone"></span></label>
+      </div>
+      <p class="mx-group-error" id="payMethodErr"></p>
+      <div id="achFields" class="mx-mt-24 ob-reveal" hidden>
+        <div class="mx-grid mx-grid-3">
+          <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="card-2-bold-duotone"></span><input class="mx-input mx-mono" id="bankRouting" data-mask="digits" maxlength="9" inputmode="numeric" autocomplete="off" placeholder="9 digits" data-rules="required|routing" data-label="Routing number"><label class="mx-field-label" for="bankRouting">Routing number<span class="req">*</span></label></div><div id="bankDetected" class="ob-bank-chip" hidden></div></div>
+          <div class="mx-field has-end"><div class="mx-field-box"><input class="mx-input mx-mono" id="bankAcct" type="password" data-mask="digits" maxlength="17" inputmode="numeric" autocomplete="off" placeholder="4-17 digits" data-rules="required|account" data-label="Account number"><label class="mx-field-label" for="bankAcct">Account number<span class="req">*</span></label><span class="mx-adorn-end"><button type="button" class="mx-icon-btn mx-icon-btn-sm" data-toggle-visibility="bankAcct" aria-label="Show value"><span data-icon="eye-bold"></span></button></span></div></div>
+          <div class="mx-field"><div class="mx-field-box"><input class="mx-input mx-mono" id="bankAcct2" data-mask="digits" maxlength="17" inputmode="numeric" autocomplete="off" placeholder="Type it again" data-rules="required|match:bankAcct" data-label="Confirm account number" data-required-msg="Type your account number again to confirm it." data-show-valid onpaste="return false"><label class="mx-field-label" for="bankAcct2">Confirm account number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
         </div>
-      </section>
+        <div class="mx-row mx-mt-16">
+          <span class="mx-caption">Account type</span>
+          <div class="mx-segmented" role="radiogroup" aria-label="Account type">
+            <label><input type="radio" name="bankAcctType" value="Checking" checked><span>Checking</span></label>
+            <label><input type="radio" name="bankAcctType" value="Savings"><span>Savings</span></label>
+          </div>
+        </div>
+        <label class="mx-dropzone is-compact mx-mt-16" id="voidZone">
+          <span class="mx-dz-icon" data-icon="document-add-bold-duotone"></span>
+          <span><span class="mx-subtitle" style="display:block">Add a voided check (optional)</span><span class="mx-caption">Speeds up bank verification. PDF, JPG or PNG up to 5 MB.</span></span>
+          <input type="file" id="voidFile" accept=".pdf,.jpg,.jpeg,.png" aria-label="Upload voided check">
+        </label>
+        <div id="voidList" class="mx-mt-8"></div>
+        <p class="mx-group-error" id="voidErr"></p>
+      </div>
+      <div id="checkFields" class="mx-mt-24 ob-reveal" hidden>
+        <label class="mx-switch-row" for="checkSameAddr"><span class="mx-switch"><input type="checkbox" id="checkSameAddr" checked><span class="mx-switch-track"></span></span><span class="mx-switch-text"><span class="mx-subtitle">Mail checks to my business address</span><span class="mx-caption" style="display:block" id="checkSameAddrText">Add your business address in About you</span></span></label>
+        <div class="mx-field mx-mt-16" id="checkAddrField" hidden><div class="mx-field-box"><input class="mx-input" id="checkAddr" placeholder="Street, City, State ZIP" data-rules="required|min:10" data-label="Mailing address"><label class="mx-field-label" for="checkAddr">Mailing address<span class="req">*</span></label></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ob-step-foot"></div>
+</section>
 
-      <!-- STEP 3 -->
-      <section class="ob-section ui-card" id="obStep2">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-file-invoice-dollar" style="color:var(--primary);margin-right:0.5rem"></i>Step 3: W-9 Tax Details &amp; Payment Preferences</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(2)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 4: LICENSES ======================= -->
+<section class="ob-step mx-card" id="obStep3" data-step="3" aria-labelledby="obT3">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">AHIP Medicare certification</h3><p class="mx-caption">You need AHIP for the current plan year to sell Medicare Advantage.</p></div></div>
+      <div class="mx-grid mx-grid-3">
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="medal-ribbons-star-bold-duotone"></span><input class="mx-input mx-mono" id="ahipCert" data-mask="ahip" placeholder="AH2026-12345" autocomplete="off" data-rules="required|ahip" data-label="AHIP certificate number" data-show-valid><label class="mx-field-label" for="ahipCert">AHIP certificate number<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="calendar-bold-duotone"></span><input class="mx-input mx-mono" id="ahipDate" data-mask="date" inputmode="numeric" placeholder="MM/DD/YYYY" data-rules="required|date|past" data-label="Completion date"><label class="mx-field-label" for="ahipDate">Completion date<span class="req">*</span></label></div></div>
+        <div class="mx-field"><div class="mx-field-box"><input class="mx-input mx-mono" id="ahipExpiry" readonly placeholder=" "><label class="mx-field-label" for="ahipExpiry">Valid through</label></div><p class="mx-helper mx-helper-hint" id="ahipExpiryHint">Worked out from your completion date</p></div>
+      </div>
+      <label class="mx-dropzone is-compact mx-mt-16" id="ahipZone">
+        <span class="mx-dz-icon" data-icon="document-add-bold-duotone"></span>
+        <span><span class="mx-subtitle" style="display:block">Attach your AHIP certificate (optional)</span><span class="mx-caption">Helps the review team approve you faster. PDF up to 5 MB.</span></span>
+        <input type="file" id="ahipFile" accept=".pdf,application/pdf" aria-label="Upload AHIP certificate">
+      </label>
+      <div id="ahipList" class="mx-mt-8"></div>
+      <p class="mx-group-error" id="ahipErr"></p>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Where will you sell?</h3><p class="mx-caption">States with an active license are already added from NIPR. Add any others you plan to sell in.</p></div><span class="mx-label mx-label-primary" id="statesCount">0 states</span></div>
+      <div class="mx-field has-start" style="position:relative" id="stateCombo">
+        <div class="mx-field-box"><span class="mx-adorn-start" data-icon="global-bold-duotone"></span>
+          <input class="mx-input" id="stateSearch" placeholder="Type a state name or code" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="stateList" aria-autocomplete="list">
+          <label class="mx-field-label" for="stateSearch">Add a state</label>
         </div>
-        <div class="ui-card-content">
-          <div class="ui-alert ui-alert-warning" style="margin-bottom:0.75rem">
-            <i class="fas fa-exclamation-triangle"></i>
-            <div>
-              <div class="ui-alert-title">W-9 &amp; Payment Details Required for Final Submission</div>
-              You can save progress and complete these details later. Final submission is blocked until W-9 and payment fields are complete.
-            </div>
-          </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">W-9 Tax Information</h3>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field">
-                <label class="ui-label" for="taxEntity">Tax Entity Type <span class="req">*</span></label>
-                <select class="ui-select" id="taxEntity">
-                  <option value="" disabled selected>Select Entity Type</option>
-                  <option>Individual / Sole Proprietor</option>
-                  <option>LLC (Single Member)</option>
-                  <option>Corporation</option>
-                  <option>Partnership</option>
-                </select>
-              </div>
-              <div class="ui-field"><label class="ui-label" for="taxTIN">Taxpayer ID (TIN/EIN) <span class="req">*</span></label><input class="ui-input" id="taxTIN" placeholder="XXX-XX-XXXX"></div>
-              <div class="ui-field"><label class="ui-label" for="taxName">Tax Name (as on return) <span class="req">*</span></label><input class="ui-input" id="taxName" placeholder="Full legal name"></div>
-            </div>
-            <div class="ui-field">
-              <label class="ui-label">Upload W-9 Form (PDF) <span class="req">*</span></label>
-              <label class="ui-upload" id="w9UploadZone">
-                <i class="fas fa-cloud-upload-alt" style="font-size:1.25rem"></i>
-                Click to upload W-9 PDF<br><span style="font-size:0.75rem">Max 5 MB</span>
-                <input type="file" id="w9File" accept=".pdf" onchange="handleUpload(this,'w9UploadZone')">
-              </label>
-            </div>
-          </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">Commission Payment Preferences</h3>
-            <div class="ui-chip-row">
-              <label class="ui-chip"><input type="radio" name="payMethod" id="payACH" value="ach" onchange="togglePayFields()"> ACH Direct Deposit</label>
-              <label class="ui-chip"><input type="radio" name="payMethod" id="payCheck" value="check" onchange="togglePayFields()"> Physical Check</label>
-            </div>
-            <div id="achFields">
-              <div class="ui-form-grid cols-3">
-                <div class="ui-field"><label class="ui-label" for="bankName">Bank Name</label><input class="ui-input" id="bankName" placeholder="e.g. Chase Bank"></div>
-                <div class="ui-field"><label class="ui-label" for="bankRouting">Routing Number</label><input class="ui-input" id="bankRouting" placeholder="9-digit ABA"></div>
-                <div class="ui-field"><label class="ui-label" for="bankAcct">Account Number</label><input class="ui-input" id="bankAcct" placeholder="Account number"></div>
-              </div>
-              <div class="ui-form-grid cols-2">
-                <div class="ui-field">
-                  <label class="ui-label" for="bankAcctType">Account Type</label>
-                  <select class="ui-select" id="bankAcctType"><option value="" disabled selected>Select Account Type</option><option>Checking</option><option>Savings</option></select>
-                </div>
-                <div class="ui-field">
-                  <label class="ui-label">Upload Voided Check / Bank Letter</label>
-                  <label class="ui-upload" id="voidUploadZone" style="padding:0.5rem">
-                    <i class="fas fa-cloud-upload-alt"></i> Upload void check or bank letter
-                    <input type="file" id="voidFile" accept=".pdf,.jpg,.png" onchange="handleUpload(this,'voidUploadZone')">
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div id="checkFields" style="display:none">
-              <div class="ui-field"><label class="ui-label" for="checkAddr">Check Mailing Address <span class="req">*</span></label><input class="ui-input" id="checkAddr" placeholder="Street, City, State, ZIP"></div>
-            </div>
-          </div>
-        </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(2)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(2)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(2)"><i class="fas fa-arrow-right"></i> Save &amp; Continue</button>
-        </div>
-      </section>
+        <div class="mx-combo-list" id="stateList" role="listbox" hidden></div>
+      </div>
+      <div class="mx-row mx-mt-16" id="stateChips" style="gap:8px"></div>
+      <p class="mx-group-error" id="statesErr"></p>
+      <div class="mx-alert mx-alert-warning mx-mt-16" id="statePendingNote" hidden><span data-icon="danger-triangle-bold"></span><div class="mx-alert-body">You don't have an active license in <strong id="statePendingList"></strong> yet. You can keep them, but you can only sell there after the license and appointment are approved.</div></div>
+    </div>
+  </div>
+  <div class="ob-step-foot"></div>
+</section>
 
-      <!-- STEP 4 -->
-      <section class="ob-section ui-card" id="obStep3">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-certificate" style="color:var(--primary);margin-right:0.5rem"></i>Step 4: AHIP, State Selection &amp; License</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(3)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 5: TRAINING ======================= -->
+<section class="ob-step mx-card" id="obStep4" data-step="4" aria-labelledby="obT4">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div id="trainingHome">
+      <div class="ob-block">
+        <div class="ob-stat-row">
+          <div class="ob-stat"><p class="mx-caption">Modules</p><p class="mx-h5">4</p></div>
+          <div class="ob-stat"><p class="mx-caption">Questions</p><p class="mx-h5">5 each</p></div>
+          <div class="ob-stat"><p class="mx-caption">To pass</p><p class="mx-h5">85% avg</p></div>
+          <div class="ob-stat"><p class="mx-caption">Attempts</p><p class="mx-h5">4 per module</p></div>
         </div>
-        <div class="ui-card-content">
-          <div class="ui-section">
-            <h3 class="ui-section-title">AHIP Medicare Certification</h3>
-            <div class="ui-form-grid cols-3">
-              <div class="ui-field"><label class="ui-label" for="ahipCert">AHIP Certificate # <span class="req">*</span></label><input class="ui-input" id="ahipCert" placeholder="e.g. AH2026-XXXXX"></div>
-              <div class="ui-field"><label class="ui-label" for="ahipDate">Completion Date <span class="req">*</span></label><input class="ui-input" id="ahipDate" type="date"></div>
-              <div class="ui-field"><label class="ui-label" for="ahipExpiry">Valid Through</label><input class="ui-input" id="ahipExpiry" type="date"></div>
-            </div>
-            <div class="ui-field">
-              <label class="ui-label">Upload AHIP Certificate (optional)</label>
-              <label class="ui-upload" id="ahipUploadZone" style="padding:0.5rem">
-                <i class="fas fa-cloud-upload-alt"></i> Upload certificate PDF
-                <input type="file" id="ahipFile" accept=".pdf" onchange="handleUpload(this,'ahipUploadZone')">
-              </label>
-            </div>
-            <div class="ui-section-actions">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires live AHIP registry integration"><i class="fas fa-shield-alt"></i> Validate AHIP</button>
-            </div>
-          </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">State Selection / Selling Territories</h3>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
-            <div class="ui-chip-row" id="stateCheckboxes" style="margin-bottom:0">
-              <label class="ui-chip"><input type="checkbox" value="FL"> Florida</label>
-              <label class="ui-chip"><input type="checkbox" value="TX"> Texas</label>
-              <label class="ui-chip"><input type="checkbox" value="GA"> Georgia</label>
-              <label class="ui-chip"><input type="checkbox" value="CA"> California</label>
-              <label class="ui-chip"><input type="checkbox" value="NY"> New York</label>
-              <label class="ui-chip"><input type="checkbox" value="AZ"> Arizona</label>
-              <label class="ui-chip"><input type="checkbox" value="NC"> North Carolina</label>
-              <label class="ui-chip"><input type="checkbox" value="IL"> Illinois</label>
-            </div>
-            <div class="ui-section-actions">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires NIPR integration"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
-            </div>
-          </div>
-        </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(3)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(3)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(3)"><i class="fas fa-arrow-right"></i> Next: Training</button>
-        </div>
-      </section>
+      </div>
+      <div class="ob-block">
+        <div class="ob-overall mx-mb-24" id="trainingOverall"></div>
+        <div class="ob-module-grid" id="moduleGrid"></div>
+      </div>
+    </div>
+    <div id="examView" hidden></div>
+  </div>
+  <div class="ob-step-foot" id="trainingFoot"></div>
+</section>
 
-      <!-- STEP 5 -->
-      <section class="ob-section ui-card" id="obStep4">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-graduation-cap" style="color:var(--primary);margin-right:0.5rem"></i>Step 5: Training &amp; Certification</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(4)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 6: BACKGROUND ======================= -->
+<section class="ob-step mx-card" id="obStep5" data-step="5" aria-labelledby="obT5">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" tabindex="-1" hidden></div>
+    <div class="mx-alert mx-alert-info"><span data-icon="shield-check-bold-duotone"></span><div class="mx-alert-body">Identity verification happens on the vendor's secure site. EnrollAxis does <strong>not</strong> collect or store your government ID.</div></div>
+    <div class="ob-block">
+      <div class="ob-vendor">
+        <svg viewBox="0 0 140 140" aria-hidden="true">
+          <defs><clipPath id="shieldClip"><path d="M70 14l44 16v34c0 28-19 50-44 60-25-10-44-32-44-60V30z"/></clipPath></defs>
+          <circle cx="70" cy="70" r="62" fill="var(--white)"/>
+          <circle class="ob-ring-pulse" cx="70" cy="70" r="50" fill="none" stroke="var(--primary-300)" stroke-width="2"/>
+          <path d="M70 14l44 16v34c0 28-19 50-44 60-25-10-44-32-44-60V30z" fill="var(--primary-500)"/>
+          <g clip-path="url(#shieldClip)"><rect class="mx-scan" x="20" y="30" width="100" height="16" fill="var(--white)" opacity=".22"/></g>
+          <circle cx="70" cy="60" r="13" fill="var(--white)" opacity=".95"/>
+          <path d="M48 96c4-12 13-18 22-18s18 6 22 18" fill="var(--white)" opacity=".95"/>
+          <g class="mx-float"><circle cx="108" cy="104" r="15" fill="var(--secondary-400)"/><path d="M101 104l5 5 9-9" stroke="var(--white)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+        </svg>
+        <div>
+          <div class="mx-row" style="gap:8px"><p class="mx-h6">Sterling Talent Solutions</p><span class="mx-label mx-label-success"><span data-icon="verified-check-bold"></span>Accredited</span></div>
+          <p class="mx-caption" style="margin-top:2px">Usually done in 1-3 business days. We'll email you at <strong id="bgEmail">james.martinez@healthfirstdist.com</strong>.</p>
+          <label class="mx-switch-row mx-mt-16" for="bgConsent" id="bgConsentRow"><span class="mx-switch"><input type="checkbox" id="bgConsent"><span class="mx-switch-track"></span></span><span class="mx-switch-text"><span class="mx-subtitle">I authorize a background and sanctions check</span><span class="mx-caption" style="display:block">The health plan may run this check through its vendor. I'll verify my identity on the vendor's secure portal.</span></span></label>
+          <p class="mx-group-error" id="bgConsentErr"></p>
+          <div class="mx-row mx-mt-16"><button type="button" class="mx-btn mx-btn-contained mx-btn-primary" id="bgSendBtn" onclick="sendBgInvitation()"><span data-icon="plain-2-bold-duotone"></span>Send me the vendor link</button></div>
         </div>
-        <div class="ui-card-content">
-          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem" id="step5InfoAlert">
-            <i class="fas fa-info-circle"></i>
-            <div>Complete all 4 training segments. Each segment opens its certification exam. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
-          </div>
-          <div class="ui-section" id="step5DashboardSection">
-            <h3 class="ui-section-title">Training Progress Dashboard</h3>
-            <div class="seg-grid" id="progressDashboard">
-              <div class="seg-tile" id="dashSegTab0" data-seg="0" onclick="openSegmentScreen(0)"><div>Seg A - Video</div><strong id="dashPctA">0%</strong><div class="seg-meta" id="dashTimeA">-</div><div id="dashStatusA">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab1" data-seg="1" onclick="openSegmentScreen(1)"><div>Seg B - Training</div><strong id="dashPctB">0%</strong><div class="seg-meta" id="dashTimeB">-</div><div id="dashStatusB">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab2" data-seg="2" onclick="openSegmentScreen(2)"><div>Seg C - PDF</div><strong id="dashPctC">0%</strong><div class="seg-meta" id="dashTimeC">-</div><div id="dashStatusC">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab3" data-seg="3" onclick="openSegmentScreen(3)"><div>Seg D - MCQ</div><strong id="dashPctD">0%</strong><div class="seg-meta" id="dashTimeD">-</div><div id="dashStatusD">Not completed</div></div>
-              <div class="seg-tile" style="cursor:default;background:var(--accent);border-color:var(--primary-300)"><div style="color:var(--primary);font-weight:600">Total</div><strong id="dashPctTotal" style="color:var(--primary)">0%</strong><div class="seg-meta" id="dashTimeTotal" style="color:var(--primary)">-</div><div id="overallProgLabel">0 of 4 complete</div></div>
-            </div>
-            <div class="ui-progress" style="margin-top:0.75rem"><div class="ui-progress-bar" id="overallProgBar" style="width:0%"></div></div>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.5rem 0 0">Click a segment to open its certification exam.</p>
-          </div>
-          <div class="exam-workspace" id="examSection" style="display:none">
-            <div class="exam-seg-nav-top">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
-              <h3>Certification Exams</h3>
-              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegTopBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
-            </div>
-            <div class="exam-meta-grid" aria-label="Exam requirements">
-              <div class="exam-meta-cell"><div class="k">Pass Score</div><div class="v">85% avg</div></div>
-              <div class="exam-meta-cell"><div class="k">Total Questions</div><div class="v">20 (4 × 5)</div></div>
-              <div class="exam-meta-cell"><div class="k">Segments</div><div class="v">4</div></div>
-              <div class="exam-meta-cell"><div class="k">Max Attempts</div><div class="v">4 per seg</div></div>
-            </div>
-            <div id="examSeg0" class="exam-seg" style="display:none"></div>
-            <div id="examSeg1" class="exam-seg" style="display:none"></div>
-            <div id="examSeg2" class="exam-seg" style="display:none"></div>
-            <div id="examSeg3" class="exam-seg" style="display:none"></div>
-            <div id="unansweredWarn" class="ui-alert ui-alert-warning" style="display:none;align-items:flex-start;margin:0.75rem 0">
-              <i class="fas fa-exclamation-triangle"></i>
-              <div style="flex:1">
-                <div style="font-weight:700;margin-bottom:0.25rem"><span id="unansweredCount">0</span> question(s) not answered (<span id="unansweredList"></span>).</div>
-                <div>Would you like to go back and review before submitting?</div>
-                <div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap">
-                  <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="dismissUnansweredWarn()"><i class="fas fa-arrow-left"></i> Go Back &amp; Review</button>
-                  <button type="button" class="ui-btn ui-btn-sm" onclick="submitSegmentForce()"><i class="fas fa-check"></i> Submit Anyway</button>
-                </div>
-              </div>
-            </div>
-            <div id="examConsolidatedResult" style="display:none"></div>
-            <div class="exam-seg-nav" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
-              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegBottomBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="ui-card-footer" id="step5Nav">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(4)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(4)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" id="step5Next" onclick="obNext(4)" style="display:none"><i class="fas fa-arrow-right"></i> Next: Background Check</button>
-        </div>
-      </section>
+      </div>
+    </div>
+    <div class="ob-block" id="bgStatusPanel" hidden>
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Check status</h3><p class="mx-caption">You can keep going. We'll update this when the vendor responds.</p></div><button type="button" class="mx-btn mx-btn-text mx-btn-primary mx-btn-sm" id="bgResendBtn" onclick="resendBgInvitation()"><span data-icon="refresh-bold"></span><span>Resend link</span></button></div>
+      <ul class="mx-timeline" id="bgTimeline"></ul>
+    </div>
+  </div>
+  <div class="ob-step-foot"></div>
+</section>
 
-      <!-- STEP 6 -->
-      <section class="ob-section ui-card" id="obStep5">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-user-secret" style="color:var(--primary);margin-right:0.5rem"></i>Step 6: Background &amp; Sanctions Check</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(5)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 7: REVIEW & SIGN ======================= -->
+<section class="ob-step mx-card" id="obStep6" data-step="6" aria-labelledby="obT6">
+  <div class="ob-step-head"></div>
+  <div class="ob-step-body">
+    <div class="mx-alert mx-alert-error mx-error-summary" id="readyBlockBanner" tabindex="-1" hidden></div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Review your application</h3><p class="mx-caption">Everything must be complete before you can submit.</p></div></div>
+      <div class="ob-review" id="reviewList"></div>
+    </div>
+    <div class="ob-block">
+      <div class="mx-section-head"><div class="mx-titles"><h3 class="mx-h6">Agent Contracting Agreement CY2026</h3><p class="mx-caption">Version 3.2 &middot; Medicare Advantage &middot; <span id="contractStates">Selling states from step 4</span></p></div><span class="mx-label mx-label-info">5 min read</span></div>
+      <div class="ob-doc-wrap">
+        <div class="ob-doc-bar"><span id="contractReadBar"></span></div>
+        <div class="ob-doc" id="contractDoc" tabindex="0" aria-label="Contract text, scroll to read">
+          <h4>AGENT CONTRACTING AGREEMENT</h4>
+          <p>This agreement is entered into between EnrollAxis, Inc. ("Carrier") and the agent identified during registration ("Agent").</p>
+          <p><strong>1. Appointment.</strong> Carrier appoints Agent to solicit applications for Carrier's Medicare Advantage plans in the selected territories. Appointment is effective only after Carrier approval and state appointment filing.</p>
+          <p><strong>2. Compliance.</strong> Agent agrees to comply with all CMS marketing guidelines, HIPAA requirements, and applicable state regulations, including Scope of Appointment rules and the 48-hour waiting period.</p>
+          <p><strong>3. Commissions.</strong> Carrier shall pay Agent commissions per the current commission schedule. Chargebacks apply to rapid disenrollments as described in Schedule B.</p>
+          <p><strong>4. Training.</strong> Agent must complete annual product and compliance training before selling in each plan year.</p>
+          <p><strong>5. Term &amp; Termination.</strong> This agreement remains in effect unless terminated by either party with 30 days written notice, or immediately for cause.</p>
+          <p><strong>6. Confidentiality.</strong> Agent shall maintain strict confidentiality of all member, carrier, and proprietary information, during and after the term of this agreement.</p>
+          <p><strong>7. Records.</strong> Agent shall retain enrollment records for ten (10) years and make them available to Carrier and CMS on request.</p>
+          <p style="margin-bottom:0"><strong>8. Entire Agreement.</strong> This agreement and its schedules are the entire agreement between the parties and replace all earlier agreements on this subject.</p>
         </div>
-        <div class="ui-card-content">
-          <div class="ui-alert ui-alert-warning" style="margin-bottom:0.75rem">
-            <i class="fas fa-info-circle"></i>
-            <div>Background check is completed through a trusted vendor portal. EnrollAxis does <strong>not</strong> collect or store your SSN or government ID.</div>
-          </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">Authorization &amp; Consent</h3>
-            <div class="ui-alert ui-alert-success">
-              <label class="ui-check-row">
-                <input type="checkbox" id="bgConsent">
-                <span>I authorize the health plan to initiate a background check through its designated vendor. I understand I will complete identity verification on the vendor's secure portal.</span>
-              </label>
-            </div>
-          </div>
-          <div class="ui-section" id="bgInvitePanel">
-            <h3 class="ui-section-title">Send to Background Check Vendor</h3>
-            <div class="ob-vendor-panel" style="background:var(--accent);border:1px solid var(--primary-200);border-radius:var(--radius)">
-              <div class="ui-card-content">
-                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
-                  <div class="ui-avatar" style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:var(--primary)"><i class="fas fa-shield-alt"></i></div>
-                  <div>
-                    <div style="font-weight:600;font-size:0.8125rem">Sterling Talent Solutions</div>
-                    <div style="font-size:0.8125rem;color:var(--muted-foreground)">Accredited background screening vendor</div>
-                  </div>
-                </div>
-                <div class="ui-field" style="margin-bottom:1rem">
-                  <input class="ui-input" id="bgVendorEmail" value="agent@example.com" disabled>
-                  <p class="ui-field-hint"><i class="fas fa-info-circle" aria-hidden="true"></i> Email from your registration. Contact agency admin to update.</p>
-                </div>
-                <button type="button" class="ui-btn ui-btn-block" id="bgSendBtn" onclick="sendBgInvitation()"><i class="fas fa-paper-plane"></i> Send Background Check Invitation</button>
-              </div>
-            </div>
-          </div>
-          <div class="ui-section" id="bgStatusPanel" style="display:none">
-            <h3 class="ui-section-title">Verification Status</h3>
-            <div class="ui-alert ui-alert-warning">
-              <i class="fas fa-hourglass-half"></i>
-              <div>
-                <div class="ui-alert-title">Invitation Sent - Awaiting Vendor Completion</div>
-                Sent: <span id="bgInviteTimestamp"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(5)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-btn-secondary" onclick="skipStep(5)"><i class="fas fa-forward"></i> Save Draft &amp; Continue</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(5)"><i class="fas fa-arrow-right"></i> Next: Contract</button>
-        </div>
-      </section>
+        <div class="ob-doc-hint" id="contractHint"><span data-icon="alt-arrow-down-linear"></span><span>Scroll to the end to unlock signing</span></div>
+      </div>
+      <label class="mx-check-row mx-mt-16" for="contractRead" id="contractReadRow"><span class="mx-check"><input type="checkbox" id="contractRead" disabled><span class="mx-check-box"></span></span><span class="mx-body2" style="color:var(--mx-text)">I have read and agree to the Agent Contracting Agreement. I understand it is legally binding.</span></label>
+      <p class="mx-group-error" id="contractReadErr"></p>
+      <div class="mx-grid mx-grid-2 mx-mt-24">
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="pen-bold"></span><input class="mx-input" id="eSigName" placeholder="Type your full legal name" autocomplete="name" data-rules="required" data-label="Signature" data-required-msg="Type your full legal name to sign." data-show-valid><label class="mx-field-label" for="eSigName">Sign by typing your full legal name<span class="req">*</span></label><span class="mx-adorn-end"><span class="mx-valid-mark" data-icon="check-circle-bold"></span></span></div><p class="mx-helper mx-helper-hint" id="eSigHint">Must match your legal name</p></div>
+        <div class="mx-field has-start"><div class="mx-field-box"><span class="mx-adorn-start" data-icon="calendar-bold-duotone"></span><input class="mx-input mx-mono" id="eSigDate" readonly placeholder=" "><label class="mx-field-label" for="eSigDate">Date signed</label></div></div>
+      </div>
+      <div class="ob-sig" aria-hidden="true">
+        <div class="ob-sig-name is-empty" id="sigPreview">Your signature</div>
+        <div class="ob-sig-meta"><span class="mx-caption"><span data-icon="lock-keyhole-minimalistic-bold-duotone" class="mx-ic-16" style="display:inline-flex;vertical-align:-3px"></span> Legally binding under the E-SIGN Act</span><span class="mx-caption" id="sigMeta"></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="ob-step-foot"></div>
+</section>
 
-      <!-- STEP 7 -->
-      <section class="ob-section ui-card" id="obStep6">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-file-signature" style="color:var(--primary);margin-right:0.5rem"></i>Step 7: Contract Execution</h2>
-          <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(6)"><i class="fas fa-magic"></i> Prefill Data</button>
+<!-- ======================= STEP 8: DONE ======================= -->
+<section class="ob-step mx-card" id="obStep7" data-step="7" aria-labelledby="obT7">
+  <div class="ob-success">
+    <svg class="ob-success-illus" viewBox="0 0 220 170" aria-hidden="true">
+      <ellipse cx="110" cy="160" rx="70" ry="7" fill="var(--primary-900)" opacity=".07"/>
+      <circle class="ob-ring-pulse" cx="110" cy="80" r="60" fill="none" stroke="var(--primary-300)" stroke-width="2"/>
+      <circle class="ob-ring-pulse d2" cx="110" cy="80" r="60" fill="none" stroke="var(--secondary-400)" stroke-width="2"/>
+      <circle cx="110" cy="80" r="52" fill="var(--primary-100)"/>
+      <circle cx="110" cy="80" r="40" fill="var(--primary-500)"/>
+      <path class="ob-check-draw" d="M92 81l12 12 24-26" stroke="var(--white)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="ob-twinkle" d="M40 34l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--secondary-400)"/>
+      <path class="ob-twinkle d2" d="M182 44l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="var(--primary-400)"/>
+      <path class="ob-twinkle d3" d="M176 122l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--secondary-500)"/>
+      <circle class="ob-twinkle d2" cx="44" cy="118" r="4" fill="var(--primary-300)"/>
+      <circle class="ob-twinkle" cx="196" cy="88" r="3" fill="var(--secondary-400)"/>
+    </svg>
+    <h2 class="mx-h3" id="obT7">Application submitted</h2>
+    <p class="mx-body2">Nice work, James. Your application is with the payer admin team. You'll get an email the moment your status changes to <strong>Active - Ready to Sell</strong>.</p>
+    <div class="ob-success-meta">
+      <div class="ob-stat"><p class="mx-caption">Case ID</p><p class="mx-subtitle mx-mono" id="caseID">OB-2026-0001</p></div>
+      <div class="ob-stat"><p class="mx-caption">Status</p><span class="mx-label mx-label-warning" style="margin-top:4px">Pending approval</span></div>
+      <div class="ob-stat"><p class="mx-caption">Submitted</p><p class="mx-subtitle" id="submitDate">-</p></div>
+      <div class="ob-stat"><p class="mx-caption">Typical review</p><p class="mx-subtitle">3-5 business days</p></div>
+    </div>
+    <div class="ob-success-next">
+      <p class="mx-h6 mx-mb-16">What happens next</p>
+      <ul class="mx-timeline">
+        <li class="is-done"><span class="mx-tl-dot" data-icon="check-read-linear"></span><div><p class="mx-tl-title">Application received</p><p class="mx-caption" id="tlSubmitted">Just now</p></div></li>
+        <li class="is-active"><span class="mx-tl-dot" data-icon="hourglass-bold-duotone"></span><div><p class="mx-tl-title">Admin review</p><p class="mx-caption">Licensing, training and background results are checked.</p></div></li>
+        <li><span class="mx-tl-dot" data-icon="letter-opened-bold-duotone"></span><div><p class="mx-tl-title">Decision email</p><p class="mx-caption">Sent to james.martinez@healthfirstdist.com</p></div></li>
+        <li><span class="mx-tl-dot" data-icon="cup-star-bold-duotone"></span><div><p class="mx-tl-title">Ready to sell</p><p class="mx-caption">Your agent portal unlocks for enrollments.</p></div></li>
+      </ul>
+    </div>
+    <div class="mx-row mx-mt-24" style="justify-content:center">
+      <button type="button" class="mx-btn mx-btn-outlined mx-btn-neutral mx-btn-lg" onclick="window.print()"><span data-icon="download-minimalistic-bold"></span>Download summary</button>
+      <a href="dashboard.html" class="mx-btn mx-btn-contained mx-btn-primary mx-btn-lg"><span data-icon="home-2-bold-duotone"></span>Go to dashboard</a>
+    </div>
+    <p class="mx-caption mx-mt-24">Questions? <a href="mailto:brokersupport@enrollaxis.com">brokersupport@enrollaxis.com</a> &middot; <a href="tel:+18005550100">(800) 555-0100</a></p>
+  </div>
+</section>
+
         </div>
-        <div class="ui-card-content">
-          <div class="ob-block-banner" id="readyBlockBanner" role="alert">
-            <i class="fas fa-lock" aria-hidden="true"></i>
-            <div>
-              <strong>Complete the steps below before Ready to Sell unlocks.</strong>
-              <ul id="readyBlockBannerList"></ul>
-            </div>
+
+        <!-- ================= SIDE COLUMN ================= -->
+        <aside class="ob-side" aria-label="Progress summary">
+          <div class="mx-card mx-card-pad ob-side-progress">
+            <p class="mx-h6" style="text-align:left">Application progress</p>
+            <div id="sideRing" class="mx-mt-16"></div>
+            <p class="mx-subtitle" id="sideMeta">0 of 7 steps complete</p>
+            <p class="mx-caption" id="sideEta">About 20 minutes left</p>
+            <ul class="ob-side-list" id="sideList"></ul>
           </div>
-          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem">
-            <i class="fas fa-info-circle"></i>
-            <div>Review and digitally sign your Agent Contracting Agreement.</div>
+          <div class="mx-card mx-card-pad ob-tips">
+            <div class="mx-row" style="gap:10px"><span class="mx-icon-box mx-icon-box-sm is-warning"><span data-icon="lightbulb-bolt-bold-duotone"></span></span><p class="mx-h6">Good to know</p></div>
+            <ul id="sideTips"></ul>
           </div>
-          <div class="ui-section">
-            <h3 class="ui-section-title">Contract Summary</h3>
-            <div class="summary-grid" style="margin-bottom:0.75rem">
-              <div class="summary-cell"><div class="k">Contract Type</div><div class="v">Agent Contracting Agreement CY2026</div></div>
-              <div class="summary-cell"><div class="k">Version</div><div class="v">v3.2</div></div>
-              <div class="summary-cell"><div class="k">Lines of Business</div><div class="v">As selected in Step 4</div></div>
-              <div class="summary-cell"><div class="k">Selling States</div><div class="v">As selected in Step 4</div></div>
-            </div>
-            <div class="contract-scroll">
-              <strong>AGENT CONTRACTING AGREEMENT</strong><br><br>
-              This agreement is entered into between EnrollAxis, Inc. ("Carrier") and the agent identified during registration ("Agent").<br><br>
-              <strong>1. Appointment.</strong> Carrier appoints Agent to solicit applications for Carrier's Medicare Advantage plans in the selected territories.<br><br>
-              <strong>2. Compliance.</strong> Agent agrees to comply with all CMS marketing guidelines, HIPAA requirements, and applicable state regulations.<br><br>
-              <strong>3. Commissions.</strong> Carrier shall pay Agent commissions per the current commission schedule.<br><br>
-              <strong>4. Term &amp; Termination.</strong> This agreement remains in effect unless terminated by either party with 30 days written notice.<br><br>
-              <strong>5. Confidentiality.</strong> Agent shall maintain strict confidentiality of all member, carrier, and proprietary information.<br><br>
-              <em>[Full agreement continues - scroll to read complete terms before signing]</em>
-            </div>
-            <div class="ui-alert ui-alert-success" style="margin-bottom:0.75rem">
-              <label class="ui-check-row">
-                <input type="checkbox" id="contractRead">
-                <span>I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document.</span>
-              </label>
-            </div>
-            <h3 class="ui-section-title">Electronic Signature</h3>
-            <div class="ui-form-grid cols-2">
-              <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name"></div>
-              <div class="ui-field"><label class="ui-label" for="eSigDate">Date</label><input class="ui-input" id="eSigDate" type="date"></div>
-            </div>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.35rem 0 0"><i class="fas fa-lock"></i> Typed signature is legally binding under the E-SIGN Act.</p>
-          </div>
-        </div>
-        <div class="ui-card-footer">
-          <button type="button" class="ui-btn ui-btn-outline" onclick="obBack(6)"><i class="fas fa-arrow-left"></i> Back</button>
-          <button type="button" class="ui-btn ui-ml-auto" onclick="obNext(6)"><i class="fas fa-check"></i> Submit &amp; Finalize</button>
-        </div>
-      </section>
-
-      <!-- STEP 8 -->
-      <section class="ob-section ui-card" id="obStep7">
-        <div class="ui-card-header">
-          <h2 class="ui-card-title"><i class="fas fa-check-circle" style="color:var(--primary);margin-right:0.5rem"></i>Step 8: Submission Complete</h2>
-        </div>
-        <div class="ui-card-content">
-          <div class="success-hero">
-            <div class="success-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
-            <h3>Onboarding Application Submitted!</h3>
-            <p class="success-hero-lead">
-              Your application is with the payer admin team for review. Training completion does not activate your profile automatically. You will get an email when your status changes to <strong>Active / Ready to Sell</strong>.
-            </p>
-
-            <div class="success-meta" role="list">
-              <div class="success-meta-item" role="listitem">
-                <div class="k">Case ID</div>
-                <div class="v" id="caseID">OB-2026-0001</div>
-              </div>
-              <div class="success-meta-item" role="listitem">
-                <div class="k">Status</div>
-                <div class="v is-status">Pending Admin Approval</div>
-              </div>
-              <div class="success-meta-item" role="listitem">
-                <div class="k">Submitted</div>
-                <div class="v" id="submitDate">-</div>
-              </div>
-              <div class="success-meta-item" role="listitem">
-                <div class="k">Estimated Review</div>
-                <div class="v">3-5 Business Days</div>
-              </div>
-            </div>
-
-            <div class="success-next">
-              <div class="success-next-title">What happens next</div>
-              <ol>
-                <li>Admin reviews your licensing, training, and background results.</li>
-                <li>You receive an email when the decision is ready.</li>
-                <li>After approval, your agent portal unlocks for selling.</li>
-              </ol>
-            </div>
-
-            <p class="success-support">
-              Questions?
-              <a href="mailto:brokersupport@enrollaxis.com">brokersupport@enrollaxis.com</a>
-              <span aria-hidden="true"> · </span>
-              <a href="tel:+18005550100">(800) 555-0100</a>
-            </p>
-
-            <div class="success-actions">
-              <a href="dashboard.html" class="ui-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
+        </aside>
+      </div>
     </main>
 
-    <footer class="ui-page-footer">
-      Last Updated: 05.28.2026 &nbsp;|&nbsp; Copyright © 2026 EnrollAxis
-    </footer>
+    <footer style="padding:16px 40px 24px;text-align:center" class="mx-caption">Copyright &copy; 2026 EnrollAxis &middot; <a href="#" onclick="return false">Privacy</a> &middot; <a href="#" onclick="return false">Terms</a></footer>
   </div>
 </div>
 
-<script src="../assets/ui-select.js"></script>
-<script src="../assets/ui-calendar.js"></script>
-<script src="../assets/ui-label.js"></script>
-<script src="../assets/nfp-actions.js"></script>
-<script>
-(function () {
-  var current = 0;
-  var total = 8;
-  var drafts = {};
-  var bgInviteSent = false;
-  var labels = [
-    'Invitation & Registration',
-    'Personal & Business Info',
-    'W-9 & Tax / Payment',
-    'AHIP & License Verification',
-    'Training & Certification',
-    'Background Check',
-    'Contract Execution',
-    'Ready to Sell'
-  ];
-  var stepFullNames = [
-    'Step 1: Invitation & Registration',
-    'Step 2: Personal & Business Info',
-    'Step 3: W-9 & Tax / Payment',
-    'Step 4: AHIP & License Verification',
-    'Step 5: Training & Certification',
-    'Step 6: Background Check',
-    'Step 7: Contract Execution'
-  ];
-
-  function setVal(id, v) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.value = v;
-    el.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-  function setCheck(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; }
-  function hasVal(id) {
-    var el = document.getElementById(id);
-    return !!(el && el.value && String(el.value).trim());
-  }
-
-  function isStepComplete(n) {
-    if (drafts[n]) return false;
-    if (n === 0) {
-      var npnEl = document.getElementById('regNPN');
-      var npn = npnEl ? npnEl.value.trim() : '';
-      if (!npn || npn.length < 5) return false;
-      var npnResult = document.getElementById('npnResult');
-      return !!(npnResult && npnResult.style.display !== 'none');
-    }
-    if (n === 1) {
-      return hasVal('piFirst') && hasVal('piLast') && hasVal('piDOB') && hasVal('piSSN') &&
-        hasVal('piPhone') && hasVal('piBizStreet') && hasVal('piBizCity') && hasVal('piBizState') && hasVal('piBizZip');
-    }
-    if (n === 2) {
-      if (!hasVal('taxEntity') || !hasVal('taxTIN') || !hasVal('taxName')) return false;
-      var w9Zone = document.getElementById('w9UploadZone');
-      var w9File = document.getElementById('w9File');
-      var w9Ok = (w9Zone && w9Zone.classList.contains('has-file')) ||
-        (w9File && w9File.files && w9File.files.length);
-      if (!w9Ok) return false;
-      var ach = document.getElementById('payACH');
-      var check = document.getElementById('payCheck');
-      if (!(ach && ach.checked) && !(check && check.checked)) return false;
-      if (ach && ach.checked) {
-        return hasVal('bankName') && hasVal('bankRouting') && hasVal('bankAcct') && hasVal('bankAcctType');
-      }
-      return hasVal('checkAddr');
-    }
-    if (n === 3) {
-      if (!hasVal('ahipCert') || !hasVal('ahipDate')) return false;
-      return !!document.querySelectorAll('#stateCheckboxes input:checked').length;
-    }
-    if (n === 4) {
-      return typeof modsDone !== 'undefined' && modsDone === 4 &&
-        typeof examPassed !== 'undefined' && examPassed === true;
-    }
-    if (n === 5) {
-      var bgConsent = document.getElementById('bgConsent');
-      return !!(bgConsent && bgConsent.checked) && bgInviteSent;
-    }
-    if (n === 6) {
-      var contractRead = document.getElementById('contractRead');
-      return !!(contractRead && contractRead.checked) && hasVal('eSigName');
-    }
-    return true;
-  }
-
-  function canOpenFinalStep() {
-    for (var i = 0; i <= 6; i++) {
-      if (!isStepComplete(i)) return false;
-    }
-    return true;
-  }
-
-  function getIncompletePriorSteps() {
-    var list = [];
-    for (var i = 0; i <= 5; i++) {
-      if (!isStepComplete(i)) list.push(i);
-    }
-    return list;
-  }
-
-  function refreshReadyBlockBanner(forceShow) {
-    var banner = document.getElementById('readyBlockBanner');
-    var listEl = document.getElementById('readyBlockBannerList');
-    if (!banner || !listEl) return;
-    var incomplete = getIncompletePriorSteps();
-    if (!incomplete.length) {
-      banner.classList.remove('is-visible');
-      listEl.innerHTML = '';
-      return;
-    }
-    if (forceShow || current === 6) {
-      listEl.innerHTML = incomplete.map(function (i) {
-        return '<li><a href="javascript:void(0)" onclick="obGoTo(' + i + ')">' + stepFullNames[i] + '</a></li>';
-      }).join('');
-      banner.classList.add('is-visible');
-    } else {
-      banner.classList.remove('is-visible');
-    }
-  }
-
-  function updateFinalStepLock() {
-    var unlocked = canOpenFinalStep();
-    ['bar7', 'mbar7'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.toggle('is-locked', !unlocked);
-      el.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
-    });
-  }
-  window.updateFinalStepLock = updateFinalStepLock;
-
-  function updateMobileRail(activeIdx) {
-    var rail = document.getElementById('obMobileRail');
-    if (!rail) return;
-    var ratio = total <= 1 ? 0 : Math.max(0, activeIdx) / (total - 1);
-    rail.style.transform = 'translateY(-50%) scaleX(' + ratio + ')';
-  }
-
-  function countCompletedRequired() {
-    var done = 0;
-    for (var i = 0; i <= 6; i++) {
-      if (isStepComplete(i)) done += 1;
-    }
-    return done;
-  }
-
-  function syncStepBars(activeIdx) {
-    for (var i = 0; i < total; i++) {
-      [document.getElementById('bar' + i), document.getElementById('mbar' + i)].forEach(function (el) {
-        if (!el) return;
-        el.classList.remove('active', 'done', 'draft');
-        if (i < activeIdx) el.classList.add(isStepComplete(i) ? 'done' : 'draft');
-        if (i === activeIdx) el.classList.add('active');
-      });
-    }
-    updateMobileRail(activeIdx);
-    updateFinalStepLock();
-    for (var j = 0; j < total; j++) {
-      var mbar = document.getElementById('mbar' + j);
-      if (!mbar) continue;
-      var status = '';
-      if (mbar.classList.contains('is-locked')) status = ' (locked)';
-      else if (mbar.classList.contains('done')) status = ' (complete)';
-      else if (mbar.classList.contains('draft')) status = ' (needs attention)';
-      else if (mbar.classList.contains('active')) status = ' (current)';
-      mbar.setAttribute('aria-label', 'Step ' + (j + 1) + ': ' + labels[j] + status);
-      mbar.setAttribute('title', labels[j] + status);
-    }
-    var mbMeta = document.getElementById('mb-step-meta');
-    if (mbMeta) mbMeta.textContent = countCompletedRequired() + ' of 7 complete';
-  }
-
-  var shell = document.getElementById('appShell');
-  var sidebarToggle = document.getElementById('sidebarToggle');
-  var sidebarClose = document.getElementById('sidebarClose');
-  var sidebarBackdrop = document.getElementById('sidebarBackdrop');
-
-  function isMobileShell() {
-    return window.matchMedia('(max-width: 900px)').matches;
-  }
-
-  function setSidebarOpen(open) {
-    if (!shell) return;
-    shell.classList.toggle('sidebar-open', !!open);
-    if (sidebarToggle) {
-      sidebarToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      sidebarToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    }
-    document.body.style.overflow = open && isMobileShell() ? 'hidden' : '';
-  }
-
-  function toggleSidebar() {
-    setSidebarOpen(!(shell && shell.classList.contains('sidebar-open')));
-  }
-
-  if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
-  if (sidebarClose) sidebarClose.addEventListener('click', function () { setSidebarOpen(false); });
-  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', function () { setSidebarOpen(false); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') setSidebarOpen(false);
-  });
-
-  function syncMobileStickyOffset() {
-    var topbar = document.querySelector('.ui-topbar');
-    if (topbar) {
-      document.documentElement.style.setProperty('--ob-topbar-h', topbar.offsetHeight + 'px');
-    }
-    var page = document.querySelector('.ui-page');
-    var nav = document.getElementById('obMobileNav');
-    if (page && nav) {
-      var padX = getComputedStyle(page).paddingLeft || '1rem';
-      nav.style.setProperty('--ob-page-pad-x', padX);
-    }
-  }
-
-  var mobileStickyObserver = null;
-  function syncMobileNavStuck() {
-    var nav = document.getElementById('obMobileNav');
-    if (!nav) return;
-    if (!isMobileShell()) {
-      nav.classList.remove('is-stuck');
-      return;
-    }
-    var topH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ob-topbar-h')) || 56;
-    var rect = nav.getBoundingClientRect();
-    var stuck = rect.top <= (topH + 1);
-    nav.classList.toggle('is-stuck', stuck);
-  }
-
-  function setupMobileStickyNav() {
-    var nav = document.getElementById('obMobileNav');
-    var sentinel = document.getElementById('obMobileStickySentinel');
-    if (!nav || !sentinel) return;
-    if (mobileStickyObserver) {
-      mobileStickyObserver.disconnect();
-      mobileStickyObserver = null;
-    }
-    if (typeof IntersectionObserver !== 'undefined') {
-      var topbar = document.querySelector('.ui-topbar');
-      var topH = topbar ? topbar.offsetHeight : 56;
-      mobileStickyObserver = new IntersectionObserver(function () {
-        syncMobileNavStuck();
-      }, { threshold: [0, 1], rootMargin: '-' + topH + 'px 0px 0px 0px' });
-      mobileStickyObserver.observe(sentinel);
-    }
-    syncMobileNavStuck();
-  }
-
-  syncMobileStickyOffset();
-  setupMobileStickyNav();
-  window.addEventListener('scroll', syncMobileNavStuck, { passive: true });
-  window.addEventListener('resize', function () {
-    if (!isMobileShell()) setSidebarOpen(false);
-    syncMobileStickyOffset();
-    setupMobileStickyNav();
-    syncMobileNavStuck();
-  });
-
-  window.obGoTo = function (n) {
-    if (n < 0 || n >= total) return;
-    var blockedFinal = false;
-    if (n === 7 && !canOpenFinalStep()) {
-      blockedFinal = true;
-      if (typeof showToast === 'function') {
-        showToast('Complete Steps 1 through 7 before opening Ready to Sell.', 'info');
-      }
-      n = 6;
-    }
-    document.querySelectorAll('.ob-section').forEach(function (s) { s.classList.remove('active'); });
-    document.getElementById('obStep' + n).classList.add('active');
-    current = n;
-    syncStepBars(n);
-    refreshReadyBlockBanner(blockedFinal);
-    var stepText = 'Step ' + (n + 1) + ' of ' + total;
-    var pct = (((n + 1) / total) * 100) + '%';
-    document.getElementById('sb-step-label').textContent = stepText;
-    document.getElementById('sb-prog-fill').style.width = pct;
-    var mbLabel = document.getElementById('mb-step-label');
-    var mbName = document.getElementById('mb-step-name');
-    if (mbLabel) mbLabel.textContent = stepText;
-    if (mbName) mbName.textContent = labels[n];
-    if (n === 7) {
-      var dateEl = document.getElementById('submitDate');
-      if (dateEl && (!dateEl.textContent || dateEl.textContent === '-')) finalizeSubmissionMeta();
-    }
-    if (blockedFinal) {
-      var banner = document.getElementById('readyBlockBanner');
-      if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    if (isMobileShell()) setSidebarOpen(false);
-    window.scrollTo(0, 0);
-  };
-
-  window.obNext = function (n) {
-    if (n === 0) {
-      var npn = document.getElementById('regNPN').value.trim();
-      if (!npn) {
-        document.getElementById('err_regNPN').classList.add('show');
-        return;
-      }
-      document.getElementById('err_regNPN').classList.remove('show');
-    }
-    if (n === 6) {
-      if (!document.getElementById('contractRead').checked || !document.getElementById('eSigName').value.trim()) {
-        if (typeof showToast === 'function') showToast('Please agree to the contract and type your legal name.', 'info');
-        return;
-      }
-      var incomplete = getIncompletePriorSteps();
-      if (incomplete.length) {
-        refreshReadyBlockBanner(true);
-        var banner = document.getElementById('readyBlockBanner');
-        if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (typeof showToast === 'function') {
-          showToast('Complete the listed steps before submitting Ready to Sell.', 'info');
-        }
-        return;
-      }
-      drafts[n] = false;
-      if (!canOpenFinalStep()) return;
-      finalizeSubmissionMeta();
-      updateFinalStepLock();
-      obGoTo(n + 1);
-      return;
-    }
-    drafts[n] = false;
-    updateFinalStepLock();
-    obGoTo(n + 1);
-  };
-
-  function finalizeSubmissionMeta() {
-    var dateEl = document.getElementById('submitDate');
-    var caseEl = document.getElementById('caseID');
-    if (dateEl) {
-      dateEl.textContent = new Date().toLocaleDateString('en-US', {
-        year: 'numeric', month: 'short', day: 'numeric'
-      });
-    }
-    if (caseEl) {
-      caseEl.textContent = 'OB-2026-' + String(Math.floor(1000 + Math.random() * 9000));
-    }
-  }
-
-  window.obBack = function (n) { obGoTo(n - 1); };
-
-  window.skipStep = function (n) {
-    drafts[n] = true;
-    updateFinalStepLock();
-    obGoTo(n + 1);
-  };
-
-  window.validateNPN = function () {
-    var npn = document.getElementById('regNPN').value.trim();
-    if (!npn || npn.length < 5) {
-      document.getElementById('err_regNPN').classList.add('show');
-      return;
-    }
-    document.getElementById('err_regNPN').classList.remove('show');
-    document.getElementById('npnResult').style.display = 'flex';
-    updateFinalStepLock();
-  };
-
-  window.togglePayFields = function () {
-    var check = document.getElementById('payCheck').checked;
-    document.getElementById('achFields').style.display = check ? 'none' : 'block';
-    document.getElementById('checkFields').style.display = check ? 'block' : 'none';
-    updateFinalStepLock();
-  };
-
-  window.handleUpload = function (input, zoneId) {
-    var zone = document.getElementById(zoneId);
-    if (input.files && input.files[0]) zone.classList.add('has-file');
-    updateFinalStepLock();
-  };
-
-  window.sendBgInvitation = function () {
-    if (!document.getElementById('bgConsent').checked) {
-      if (typeof showToast === 'function') showToast('Please authorize the background check first.', 'info');
-      return;
-    }
-    bgInviteSent = true;
-    document.getElementById('bgInviteTimestamp').textContent = new Date().toLocaleString();
-    document.getElementById('bgStatusPanel').style.display = 'block';
-    updateFinalStepLock();
-    if (typeof showToast === 'function') showToast('Background check invitation sent.', 'info');
-  };
-
-  window.prefillStep = function (step) {
-    if (step === 0) {
-      setVal('regNPN', '88234410');
-      document.getElementById('npnResult').style.display = 'flex';
-    } else if (step === 1) {
-      setVal('piFirst', 'James'); setVal('piMI', 'R'); setVal('piLast', 'Martinez');
-      setVal('piDOB', '1985-03-12'); setVal('piSSN', '***-**-4589'); setVal('piPhone', '(786) 555-0147');
-      setVal('piBizStreet', '1801 NW 9th Ave'); setVal('piBizSuite', 'Suite 210');
-      setVal('piBizZip', '33136'); setVal('piBizCity', 'Miami'); setVal('piBizState', 'FL');
-      setCheck('piSMS', true); setCheck('piEmailConsent', true);
-    } else if (step === 2) {
-      setVal('taxEntity', 'Individual / Sole Proprietor');
-      setVal('taxTIN', '***-**-4589'); setVal('taxName', 'James R Martinez');
-      setCheck('payACH', true); togglePayFields();
-      setVal('bankName', 'Chase Bank'); setVal('bankRouting', '021000021');
-      setVal('bankAcct', '****7832'); setVal('bankAcctType', 'Checking');
-      document.getElementById('w9UploadZone').classList.add('has-file');
-    } else if (step === 3) {
-      setVal('ahipCert', 'AH2026-88421'); setVal('ahipDate', '2026-01-15'); setVal('ahipExpiry', '2027-01-15');
-      document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
-    } else if (step === 4) {
-      /* Match feat/enrolaxis-brand-theme: build each exam, auto-answer, submit */
-      var letters = ['A', 'B', 'C', 'D'];
-      var fakeTimes = [3200, 4100, 3500, 2800];
-      for (var si = 0; si < 4; si++) {
-        modComplete[si] = true;
-        modTimes[si] = fakeTimes[si];
-        var s2 = Math.round(fakeTimes[si] / 1000);
-        var ts = s2 >= 60 ? Math.floor(s2 / 60) + 'm ' + (s2 % 60) + 's' : s2 + 's';
-        document.getElementById('dashPct' + letters[si]).textContent = '100%';
-        document.getElementById('dashPct' + letters[si]).style.color = 'var(--primary)';
-        document.getElementById('dashTime' + letters[si]).textContent = ts;
-        document.getElementById('dashSegTab' + si).classList.add('done');
-      }
-      modsDone = 4;
-      document.getElementById('overallProgBar').style.width = '100%';
-      document.getElementById('overallProgLabel').textContent = '4 of 4 segments complete';
-      document.getElementById('dashPctTotal').textContent = '100%';
-      var totalMs2 = fakeTimes.reduce(function (a, b) { return a + b; }, 0);
-      var ts2 = Math.round(totalMs2 / 1000);
-      document.getElementById('dashTimeTotal').textContent = ts2 >= 60 ? Math.floor(ts2 / 60) + 'm ' + (ts2 % 60) + 's' : ts2 + 's';
-      document.getElementById('examSection').style.display = 'block';
-      window.__prefillTraining = true;
-      for (var xi = 0; xi < 4; xi++) {
-        showSegmentExam(xi);
-        var seg = examSegData[xi];
-        for (var qi = 0; qi < 5; qi++) {
-          var radios = document.querySelectorAll('input[name="seg' + xi + 'q' + qi + '"]');
-          if (radios.length) radios[seg.questions[qi].ans].checked = true;
-        }
-        examStartTimes[xi] = Date.now() - 2000;
-        doSubmitSegment(xi);
-      }
-      window.__prefillTraining = false;
-      examPassed = true;
-      var step5Next = document.getElementById('step5Next');
-      if (step5Next) step5Next.style.display = 'inline-flex';
-      closeSegmentScreen();
-    } else if (step === 5) {
-      setCheck('bgConsent', true); sendBgInvitation();
-    } else if (step === 6) {
-      setCheck('contractRead', true);
-      setVal('eSigName', 'James R Martinez');
-      setVal('eSigDate', new Date().toISOString().slice(0, 10));
-    }
-    drafts[step] = false;
-    updateFinalStepLock();
-    refreshReadyBlockBanner(false);
-  };
-
-
-  document.getElementById('regNPN').addEventListener('input', function () {
-    this.value = this.value.replace(/[^0-9]/g, '');
-    var npnResult = document.getElementById('npnResult');
-    if (npnResult) npnResult.style.display = 'none';
-    updateFinalStepLock();
-  });
-
-  updateFinalStepLock();
-  syncStepBars(current);
-  syncMobileNavStuck();
-})();
-
-/* Step 5 certification exam - restored from feat/enrolaxis-brand-theme openSegmentScreen flow */
-var modsDone = 0;
-var examPassed = false;
-var examSegData = [
-  {
-    id: 'A', label: 'Video-Based', icon: 'fa-video', accentBg: 'var(--accent)', accentColor: 'var(--primary)',
-    material: '<div class="exam-media"><i class="fas fa-video exam-media-icon" aria-hidden="true"></i><div class="exam-media-title">EnrollAxis 2026 - C-SNP Product Overview</div><div class="exam-media-meta">Duration: ~8 min | Watch the full video before answering questions</div><button type="button" class="ui-btn ui-btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i> Play Video</button></div>',
-    questions: [
-      { q: "What is the primary target population for EnrollAxis's C-SNP plans?", opts: ["Patients with diabetes only", "Patients with ESRD or Chronic Kidney Disease (CKD)", "All Medicare-eligible beneficiaries over 65", "Patients with congestive heart failure"], ans: 1 },
-      { q: "Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?", opts: ["Medicare Supplement (Medigap)", "Part D Prescription Drug Plan", "Medicare Advantage (Part C)", "Medicare Savings Account (MSA)"], ans: 2 },
-      { q: "What does ESRD stand for?", opts: ["Extended Systematic Renal Disorder", "Early Stage Renal Deficiency", "End Stage Renal Disease", "Emergency Surgical Renal Diagnosis"], ans: 2 },
-      { q: "EnrollAxis's C-SNP plans target members with which qualifying condition?", opts: ["COPD and asthma", "HIV/AIDS", "Diabetes mellitus only", "Chronic Kidney Disease (CKD) or End-Stage Renal Disease (ESRD)"], ans: 3 },
-      { q: "Which federal agency oversees and regulates Medicare Advantage plans?", opts: ["Food and Drug Administration (FDA)", "Centers for Medicare &amp; Medicaid Services (CMS)", "Centers for Disease Control (CDC)", "Office of Inspector General (OIG)"], ans: 1 }
-    ]
-  },
-  {
-    id: 'B', label: 'Training Material', icon: 'fa-book', accentBg: 'var(--secondary-50)', accentColor: 'var(--secondary-800)',
-    material: '<div class="exam-reading"><strong>Training Excerpt - Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 - Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
-    questions: [
-      { q: "The Annual Enrollment Period (AEP) for Medicare Advantage runs from:", opts: ["January 1 - March 31", "October 15 - December 7", "November 1 - December 15", "September 1 - October 31"], ans: 1 },
-      { q: "ICEP stands for:", opts: ["Interim Coverage Eligibility Period", "Individual Coverage Enrollment Plan", "Initial Coverage Election Period", "Initial Carrier Election Period"], ans: 2 },
-      { q: "A Scope of Appointment (SOA) must be obtained at least how many hours before a Medicare sales appointment?", opts: ["24 hours", "36 hours", "48 hours", "72 hours"], ans: 2 },
-      { q: "Under CMS marketing guidelines, agents are PROHIBITED from:", opts: ["Providing members with plan Summary of Benefits", "Discussing plan premium amounts", "Offering gifts or incentives valued over $15", "Scheduling a follow-up appointment"], ans: 2 },
-      { q: "A Special Enrollment Period (SEP) may be triggered by:", opts: ["Annual calendar date only", "A qualifying life event such as moving out of a plan's service area", "A plan's premium increase", "Agent request to the carrier"], ans: 1 }
-    ]
-  },
-  {
-    id: 'C', label: 'PDF Review', icon: 'fa-file-pdf', accentBg: 'var(--primary-50)', accentColor: 'var(--primary-700)',
-    material: '<div class="exam-reading"><i class="fas fa-file-pdf" style="color:var(--primary);margin-right:0.35rem" aria-hidden="true"></i><strong>C-SNP Product Guide - Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
-    questions: [
-      { q: "To enroll in a C-SNP plan, a beneficiary must have:", opts: ["Medicare Part A only", "Medicare Parts A and B AND the qualifying chronic condition", "An active Medigap plan", "Part D enrollment in effect"], ans: 1 },
-      { q: "The PQAT questionnaire is used to:", opts: ["Verify agent licensing credentials", "Assess clinical appropriateness of the C-SNP plan for the member", "Calculate a member's estimated annual premium", "Determine the copay structure for the plan"], ans: 1 },
-      { q: "CKD stands for:", opts: ["Comprehensive Kidney Diagnosis", "Critical Kidney Deficiency", "Chronic Kidney Disease", "Cellular Kidney Disorder"], ans: 2 },
-      { q: "Under HIPAA, an agent's primary obligation is to:", opts: ["Share member PHI with the member's spouse upon verbal request", "Submit member diagnosis records to the state annually", "Report any PHI breaches to the carrier and affected member promptly", "Store member records on personal devices for easy access"], ans: 2 },
-      { q: "The Plan Recommendation Engine helps agents:", opts: ["File claims on behalf of enrolled members", "Match members to the most clinically appropriate plan based on their chronic conditions", "Calculate a member's out-of-pocket maximum", "Verify the member's NPI number"], ans: 1 }
-    ]
-  },
-  {
-    id: 'D', label: 'General MCQ', icon: 'fa-list-ul', accentBg: 'var(--secondary-100)', accentColor: 'var(--secondary-800)',
-    material: '',
-    questions: [
-      { q: "What does MAPD stand for?", opts: ["Medicare Advantage Prescription Drug Plan", "Medicare Approved Provider Directory", "Managed Advantage Plan with Disability", "Medicare Agency Partnership Division"], ans: 0 },
-      { q: "Which enrollment period allows MA plan members to switch plans from January 1 - March 31?", opts: ["Annual Enrollment Period (AEP)", "Initial Coverage Election Period (ICEP)", "Open Enrollment Period (OEP)", "Special Enrollment Period (SEP)"], ans: 2 },
-      { q: "An agent's National Producer Number (NPN) is managed through:", opts: ["Centers for Medicare &amp; Medicaid Services (CMS)", "The state department of insurance", "National Insurance Producer Registry (NIPR)", "The appointing carrier"], ans: 2 },
-      { q: "Medicare Part D primarily covers:", opts: ["Inpatient hospital stays", "Outpatient physician services", "Prescription drug costs", "Long-term custodial care"], ans: 2 },
-      { q: "The maximum number of certification exam attempts allowed in this onboarding is:", opts: ["2 attempts", "3 attempts", "4 attempts", "Unlimited attempts"], ans: 2 }
-    ]
-  }
-];
-var segScores = [-1, -1, -1, -1];
-var segAttempts = [0, 0, 0, 0];
-var pendingSubmitSeg = -1;
-var modTimes = [0, 0, 0, 0];
-var modComplete = [false, false, false, false];
-var examStartTimes = [0, 0, 0, 0];
-var activeExamSeg = 0;
-
-function openSegmentScreen(idx) {
-  activeExamSeg = idx;
-  var dash = document.getElementById('step5DashboardSection');
-  var info = document.getElementById('step5InfoAlert');
-  var nav = document.getElementById('step5Nav');
-  var exam = document.getElementById('examSection');
-  if (dash) dash.style.display = 'none';
-  if (info) info.style.display = 'none';
-  if (nav) nav.style.display = 'none';
-  if (exam) exam.style.display = 'block';
-  selectExamSegment(idx);
-  if (segScores[idx] < 0) examStartTimes[idx] = Date.now();
-  if (examPassed || segScores.every(function (s) { return s >= 60; })) {
-    var cons = document.getElementById('examConsolidatedResult');
-    if (cons && cons.innerHTML.trim()) cons.style.display = 'block';
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showSegmentExam(idx) {
-  selectExamSegment(idx);
-}
-
-function closeSegmentScreen() {
-  var dash = document.getElementById('step5DashboardSection');
-  var info = document.getElementById('step5InfoAlert');
-  var nav = document.getElementById('step5Nav');
-  var exam = document.getElementById('examSection');
-  var warn = document.getElementById('unansweredWarn');
-  if (dash) dash.style.display = 'block';
-  if (info) info.style.display = 'flex';
-  if (nav) nav.style.display = 'flex';
-  if (exam) exam.style.display = 'none';
-  if (warn) warn.style.display = 'none';
-}
-
-function goNextSegment() {
-  openSegmentScreen((activeExamSeg + 1) % 4);
-}
-
-function updateExamSegmentButtons() {
-  for (var i = 0; i < 4; i++) {
-    var btn = document.getElementById('dashSegTab' + i);
-    if (!btn) continue;
-    btn.classList.toggle('active-seg', i === activeExamSeg);
-  }
-}
-
-function selectExamSegment(idx) {
-  activeExamSeg = idx;
-  for (var i = 0; i < 4; i++) {
-    var panel = document.getElementById('examSeg' + i);
-    if (panel) panel.style.display = i === idx ? 'block' : 'none';
-  }
-  var activePanel = document.getElementById('examSeg' + idx);
-  if (activePanel && !activePanel.innerHTML.trim()) buildSegPanel(idx);
-  updateExamSegmentButtons();
-}
-
-function buildSegPanel(idx) {
-  var s = examSegData[idx];
-  var html = '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' Exam - ' + s.label + '</span></div><div class="exam-seg-banner-meta">5 Questions · Pass: 60%</div></div>';
-  if (s.material) html += s.material;
-  html += '<div class="seg-questions" id="segQ' + idx + '">';
-  for (var qi = 0; qi < 5; qi++) {
-    var q = s.questions[qi], nm = 'seg' + idx + 'q' + qi;
-    html += '<div class="exam-q-card"><div class="exam-q-head"><span class="exam-q-num">' + (qi + 1) + '</span><span class="exam-q-text">' + q.q + '</span></div>';
-    for (var oi = 0; oi < q.opts.length; oi++) {
-      html += '<label class="q-option-label"><input type="radio" name="' + nm + '" value="' + oi + '"> <span class="q-text">' + q.opts[oi] + '</span></label>';
-    }
-    html += '</div>';
-  }
-  html += '</div>';
-  html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-check"></i> Submit Segment ' + s.id + ' Exam</button></div>';
-  html += '<div id="segScore' + idx + '" style="display:none;margin-top:0.875rem"></div>';
-  document.getElementById('examSeg' + idx).innerHTML = html;
-  bindExamOptionSelection(idx);
-  examStartTimes[idx] = Date.now();
-}
-
-function bindExamOptionSelection(idx) {
-  var root = document.getElementById('examSeg' + idx);
-  if (!root) return;
-  root.querySelectorAll('.q-option-label input[type="radio"]').forEach(function (input) {
-    input.addEventListener('change', function () {
-      var name = input.name;
-      root.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
-        var lab = r.closest('.q-option-label');
-        if (lab) lab.classList.toggle('is-selected', r.checked);
-      });
-    });
-  });
-}
-
-function submitSegment(idx) {
-  var missing = [];
-  for (var i = 0; i < 5; i++) {
-    if (!document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked')) missing.push(i + 1);
-  }
-  if (missing.length) {
-    pendingSubmitSeg = idx;
-    document.getElementById('unansweredCount').textContent = missing.length;
-    document.getElementById('unansweredList').textContent = missing.map(function (n) { return 'Q' + n; }).join(', ');
-    var w = document.getElementById('unansweredWarn');
-    w.style.display = 'flex';
-    w.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  doSubmitSegment(idx);
-}
-
-function dismissUnansweredWarn() {
-  document.getElementById('unansweredWarn').style.display = 'none';
-  pendingSubmitSeg = -1;
-}
-
-function submitSegmentForce() {
-  document.getElementById('unansweredWarn').style.display = 'none';
-  doSubmitSegment(pendingSubmitSeg);
-  pendingSubmitSeg = -1;
-}
-
-function doSubmitSegment(idx) {
-  var s = examSegData[idx], correct = 0;
-  segAttempts[idx]++;
-  for (var i = 0; i < 5; i++) {
-    var sel = document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked');
-    if (sel && parseInt(sel.value, 10) === s.questions[i].ans) correct++;
-  }
-  var pct = Math.round((correct / 5) * 100);
-  segScores[idx] = pct;
-
-  var examElapsed = Date.now() - examStartTimes[idx];
-  modTimes[idx] = examElapsed;
-  var examSecs = Math.round(examElapsed / 1000);
-  var examTimeStr = examSecs >= 60 ? Math.floor(examSecs / 60) + 'm ' + (examSecs % 60) + 's' : examSecs + 's';
-
-  var sp = document.getElementById('examSeg' + idx);
-  sp.querySelector('.seg-questions').style.display = 'none';
-  sp.querySelector('.seg-submit-row').style.display = 'none';
-
-  var pass = pct >= 60;
-  var retryHtml = '';
-  if (!pass && segAttempts[idx] < 4) {
-    retryHtml = '<div style="text-align:center;margin-top:0.5rem"><button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="retrySegExam(' + idx + ')"><i class="fas fa-redo"></i> Retry (Attempt ' + (segAttempts[idx] + 1) + ' of 4)</button></div>';
-  } else if (!pass) {
-    retryHtml = '<div style="text-align:center;color:var(--danger);font-weight:600;font-size:0.75rem;margin-top:0.35rem"><i class="fas fa-ban"></i> Max attempts reached for Segment ' + s.id + '</div>';
-  }
-
-  document.getElementById('segScore' + idx).innerHTML =
-    '<div class="exam-score-box ' + (pass ? 'is-pass' : 'is-fail') + '">' +
-    '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> - Score: ' + correct + '/5 (' + pct + '%) | Time: ' + examTimeStr +
-    '</div>' + retryHtml;
-  document.getElementById('segScore' + idx).style.display = 'block';
-
-  var labels = ['A', 'B', 'C', 'D'];
-  var names = ['Video', 'Training', 'PDF', 'MCQ'];
-  var label = labels[idx];
-  var statusEl = document.getElementById('dashStatus' + label);
-  var pctEl = document.getElementById('dashPct' + label);
-  var timeEl = document.getElementById('dashTime' + label);
-  var tab = document.getElementById('dashSegTab' + idx);
-
-  if (pctEl) {
-    pctEl.textContent = pct + '%';
-    pctEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
-  }
-  if (timeEl) timeEl.textContent = examTimeStr;
-  if (statusEl) {
-    statusEl.textContent = pass ? ('Segment ' + label + ' - ' + names[idx] + ' Completed') : ('Segment ' + label + ' Needs Retry');
-    statusEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
-  }
-  if (tab) tab.classList.toggle('done', pass);
-
-  if (pass && !modComplete[idx]) {
-    modComplete[idx] = true;
-    modsDone++;
-  }
-
-  var sumScores = 0;
-  for (var si = 0; si < 4; si++) sumScores += segScores[si] >= 0 ? segScores[si] : 0;
-  var overallPct = Math.round(sumScores / 4);
-  document.getElementById('overallProgBar').style.width = overallPct + '%';
-  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments completed';
-  document.getElementById('dashPctTotal').textContent = overallPct + '%';
-
-  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
-  document.getElementById('dashTimeTotal').textContent = totalStr;
-
-  if (modsDone === 4) document.getElementById('step5Next').style.display = 'inline-flex';
-
-  if (!window.__prefillTraining) closeSegmentScreen();
-  checkAllComplete();
-}
-
-function retrySegExam(idx) {
-  document.getElementById('examSeg' + idx).innerHTML = '';
-  buildSegPanel(idx);
-}
-
-function checkAllComplete() {
-  if (segScores.every(function (s) { return s >= 60; })) showConsolidatedResult();
-}
-
-function showConsolidatedResult() {
-  var total = segScores.reduce(function (a, b) { return a + b; }, 0);
-  var avg = Math.round(total / 4);
-  var pass = avg >= 85;
-  examPassed = pass;
-  var segMeta = [['A', 'Video'], ['B', 'Training'], ['C', 'PDF'], ['D', 'MCQ']];
-  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
-
-  var grid = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:1rem;font-size:0.75rem">';
-  for (var i = 0; i < 4; i++) {
-    var sc = segScores[i] >= 60;
-    var segSecs = Math.round(modTimes[i] / 1000);
-    var segTimeStr = segSecs >= 60 ? Math.floor(segSecs / 60) + 'm ' + (segSecs % 60) + 's' : segSecs + 's';
-    grid += '<div style="text-align:center;padding:0.625rem 0.4rem;border-radius:calc(var(--radius) - 2px);background:' + (sc ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (sc ? 'var(--success-200)' : 'var(--danger-200)') + '"><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-bottom:0.2rem">Seg ' + segMeta[i][0] + ' - ' + segMeta[i][1] + '</div><div style="font-size:0.875rem;font-weight:700;color:' + (sc ? 'var(--success-800)' : 'var(--danger)') + '">' + segScores[i] + '%</div><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.15rem"><i class="fas fa-clock"></i> ' + segTimeStr + '</div></div>';
-  }
-  grid += '</div>';
-  var banner = '<div style="text-align:center;padding:1.125rem;border-radius:calc(var(--radius) - 2px);background:' + (pass ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (pass ? 'var(--success-200)' : 'var(--danger-200)') + ';margin-bottom:0.875rem"><i class="fas ' + (pass ? 'fa-award' : 'fa-times-circle') + '" style="font-size:2rem;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + ';margin-bottom:0.5rem;display:block"></i><div style="font-size:0.9375rem;font-weight:700;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + '">' + (pass ? 'Certification Passed!' : 'Did Not Pass - 85% Average Required') + '</div><div style="font-size:0.8125rem;margin-top:0.25rem;color:var(--muted-foreground)">Overall Score: <strong>' + avg + '%</strong> &nbsp;|&nbsp; Total Time: <strong>' + totalStr + '</strong></div></div>';
-
-  if (pass) document.getElementById('step5Next').style.display = 'inline-flex';
-  if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
-
-  var el = document.getElementById('examConsolidatedResult');
-  el.innerHTML = banner + grid;
-  el.style.display = 'block';
-}
-</script>
+<script src="../assets/minimal-icons.js?v=1"></script>
+<script src="../assets/minimal-ui.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+<script src="../assets/agent-onboarding.js?v=1"></script>
 </body>
 </html>

@@ -17,6 +17,15 @@ This repo is a **static HTML prototype**. Do not introduce React/Vite for UI. Bu
 - Match patterns from [ui.shadcn.com](https://ui.shadcn.com/) (Button, Input, Card, Select, Alert, Checkbox, Progress, Badge, etc.) as plain HTML.
 - Keep EnrollAxis teal tokens already defined in `shadcn-ui.css` (`--primary`, `--brand-*`).
 
+## Minimal layer (agent onboarding)
+
+`agent/onboarding.html` uses a Minimal-style layer on top of this kit (look inspired by minimals.cc, same brand tokens):
+
+- `assets/minimal-ui.css` - `mx-*` components: nav shell, cards, soft labels, floating-label fields, option cards, switches, dropzone, toast, dialog, progress ring, timeline.
+- `assets/minimal-ui.js` - `MX.toast`, `MX.dialog`, field validation via `data-rules` (+ `data-mask`), `MX.dropzone`, `MX.ring`.
+- `assets/minimal-icons.js` - offline Solar duotone icon subset; use `<span data-icon="name"></span>` or `mxIcon('name')`. Add new icons to this bundle; do not load icons from a CDN.
+- Errors: inline under the field, plus an error summary at the top of the step on Continue. Use toasts for system events, dialogs for confirmations. No `alert()` / `confirm()`.
+
 ## Do not
 
 - Add Bootstrap, Material, or new one-off component CSS for screens.
