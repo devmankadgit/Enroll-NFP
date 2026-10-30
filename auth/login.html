@@ -3,173 +3,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign In | EnrollAxis</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=9">
+<title>Log In | EnrollAxis</title>
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=70">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   body {
     min-height: 100vh;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem;
-    background: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 55%, var(--brand-teal) 100%);
+    padding: 1.5rem 1.25rem 2rem;
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 35%, var(--primary-50) 0%, transparent 62%),
+      linear-gradient(180deg, #F7FBFA 0%, var(--neutral-50) 100%);
+    font-family: var(--font-body);
+    box-sizing: border-box;
   }
-  .login-shell {
-    display: flex;
-    max-width: 900px;
+
+  .login-page {
     width: 100%;
-    border-radius: 1.25rem;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .login-card {
+    background: var(--white);
+    border-radius: 1rem;
     overflow: hidden;
-    box-shadow: var(--shadow-xl);
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--neutral-950) 4%, transparent),
+      0 18px 40px color-mix(in srgb, var(--primary-900) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary-100) 70%, var(--border));
   }
-  .login-hero {
-    flex: 1;
-    padding: 3rem 2.5rem;
-    color: #fff;
-    background: rgba(255,255,255,.1);
-    backdrop-filter: blur(10px);
+
+  .login-card-top {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.35rem 1rem;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary-50) 88%, var(--white)) 0%,
+      color-mix(in srgb, var(--secondary-50) 55%, var(--white)) 55%,
+      color-mix(in srgb, var(--primary-50) 40%, var(--white)) 100%
+    );
+    border-bottom: 1px solid color-mix(in srgb, var(--primary-100) 65%, transparent);
   }
-  .login-hero h1 { margin: 0 0 0.6rem; font-size: 1.625rem; font-weight: 800; letter-spacing: -0.02em; }
-  .login-hero > p { margin: 0 0 1.5rem; font-size: 0.875rem; opacity: .85; line-height: 1.6; }
-  .feature-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
-  .feature-list li { display: flex; gap: 0.65rem; font-size: 0.8125rem; opacity: .9; align-items: flex-start; }
-  .feature-list i { color: #a6dace; margin-top: 0.15rem; flex-shrink: 0; }
-  .login-hero-foot { font-size: 0.8125rem; opacity: .5; margin-top: 2rem; }
-  .login-panel {
-    width: 380px;
-    flex-shrink: 0;
-    background: var(--card);
-    padding: 3rem 2.5rem;
+
+  .login-card-top .brand-logo {
+    height: 34px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .lang-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--neutral-700);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    line-height: 1.2;
+  }
+  .lang-select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-500) 22%, transparent);
+    border-radius: 4px;
+  }
+  .lang-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--neutral-700);
+    font-size: 0.875rem;
+  }
+  .lang-wrap i {
+    font-size: 0.65rem;
+    color: var(--neutral-500);
+  }
+
+  .login-card-body {
+    padding: 1.5rem 1.5rem 1.75rem;
+  }
+
+  .login-card-body h1 {
+    margin: 0 0 1.35rem;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .login-field {
+    margin-bottom: 1rem;
+  }
+  .login-field .ui-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--neutral-800);
+    margin-bottom: 0.4rem;
+  }
+  .login-field .ui-input-wrap .ui-input {
+    padding-right: 2.75rem;
+  }
+  .login-field .ui-input-icon {
+    color: var(--neutral-400);
+  }
+
+  .forgot-row {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    margin: -0.15rem 0 1.15rem;
   }
-  .brand-block { margin-bottom: 1.75rem; }
-  .brand-block img { height: 1.875rem; width: auto; }
-  .brand-block span { display: block; margin-top: 0.35rem; font-size: 0.8125rem; color: var(--muted-foreground); }
-  .login-panel h2 { margin: 0 0 0.3rem; font-size: 1.25rem; font-weight: 700; color: var(--brand-deep); }
-  .login-panel .sub { margin: 0 0 1.35rem; font-size: 0.8125rem; color: var(--muted-foreground); }
-  .forgot-row { text-align: right; margin: -0.25rem 0 0.75rem; }
-  .portal-links { text-align: center; margin-top: 1rem; padding-top: 0.875rem; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--muted-foreground); }
-  .site-footer {
+  .forgot-row a {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--primary-600);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .forgot-row a:hover {
+    color: var(--primary-700);
+  }
+
+  .login-submit {
     width: 100%;
-    max-width: 900px;
-    margin-top: 2rem;
-    text-align: center;
-    color: rgba(255,255,255,.75);
-    font-size: 0.8125rem;
-    padding: 1rem;
+    height: 2.75rem;
+    border: 0;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--primary-500);
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
   }
-  .site-footer strong { display: block; color: #fff; margin-bottom: 0.25rem; }
-  @media (max-width: 640px) {
-    .login-hero { display: none; }
-    .login-panel { width: 100%; border-radius: 1.25rem; padding: 2.25rem 1.5rem; }
-    .login-shell { border-radius: 1.25rem; }
+  .login-submit:hover {
+    background: var(--primary-600);
+  }
+  .login-submit:active {
+    background: var(--primary-700);
+  }
+  .login-submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-500) 30%, transparent);
+  }
+
+  .powered-by {
+    margin-top: 1.75rem;
+    align-self: flex-end;
+    text-align: right;
+  }
+  .powered-by .label {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--neutral-500);
+  }
+  .powered-by img {
+    height: 28px;
+    width: auto;
+    max-width: 160px;
+    display: inline-block;
+    object-fit: contain;
+    object-position: right center;
+  }
+
+  @media (max-width: 480px) {
+    .login-card-body {
+      padding: 1.25rem 1.15rem 1.5rem;
+    }
+    .login-card-body h1 {
+      font-size: 1.35rem;
+    }
+    .login-card-top {
+      padding: 1rem 1.1rem 0.9rem;
+    }
+    .login-card-top .brand-logo {
+      height: 30px;
+    }
   }
 </style>
 </head>
 <body>
-  <div class="login-shell">
-    <aside class="login-hero">
-      <div>
-        <h1>EnrollAxis</h1>
-        <p>Agent &amp; Agency Portal - your complete platform for Medicare enrollment, commission tracking, and member management.</p>
-        <ul class="feature-list">
-          <li><i class="fas fa-check-circle"></i><span>End-to-end enrollment from lead capture to CMS OEC submission - all in one place.</span></li>
-          <li><i class="fas fa-check-circle"></i><span>Real-time commission tracking with transparent ledger, incentive calculation, and payment history.</span></li>
-          <li><i class="fas fa-check-circle"></i><span>HIPAA-compliant member profiles with PHI masking, minimum-necessary access controls, and full audit trail.</span></li>
-          <li><i class="fas fa-check-circle"></i><span>Automated 7-day CMS compliance alerts with At Risk and Breach escalation to Enrollment Ops.</span></li>
-          <li><i class="fas fa-check-circle"></i><span>Proactive action item dashboard aggregating HRA, Healthy Visit, PQAT, C-SNP, and lead tasks.</span></li>
-          <li><i class="fas fa-check-circle"></i><span>Multi-portal access for agents, agencies, finance, enrollment ops, compliance, and members.</span></li>
-        </ul>
-      </div>
-      <div class="login-hero-foot">- 2026 EnrollAxis. All rights reserved.</div>
-    </aside>
-
-    <div class="login-panel">
-      <div class="brand-block">
-        <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
-        <span>Agent &amp; Agency Portal</span>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-card-top">
+        <img class="brand-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+        <label class="lang-wrap" for="langSelect">
+          <select class="lang-select" id="langSelect" aria-label="Language">
+            <option selected>English</option>
+          </select>
+          <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </label>
       </div>
 
-      <h2>Sign In</h2>
-      <p class="sub">Enter your credentials to access your portal</p>
+      <div class="login-card-body">
+        <h1>Log In</h1>
 
-      <div class="ui-field" style="margin-bottom:0.85rem">
-        <label class="ui-label" for="email">Email Address</label>
-        <div class="ui-input-wrap">
-          <input class="ui-input" id="email" type="email" value="james.martinez@healthfirst.com" autocomplete="username">
-          <span class="ui-input-icon"><i class="fas fa-envelope"></i></span>
+        <div class="login-field ui-field">
+          <label class="ui-label" for="username">Username</label>
+          <div class="ui-input-wrap">
+            <input class="ui-input" id="username" type="text" placeholder="Username" autocomplete="username">
+            <span class="ui-input-icon" aria-hidden="true"><i class="far fa-user-circle"></i></span>
+          </div>
         </div>
-      </div>
 
-      <div class="ui-field" style="margin-bottom:0.85rem">
-        <label class="ui-label" for="password">Password</label>
-        <div class="ui-input-wrap">
-          <input class="ui-input" id="password" type="password" value="••••••••••" autocomplete="current-password">
-          <button type="button" class="ui-input-icon ui-clickable" id="togglePw" aria-label="Show password"><i class="fas fa-eye"></i></button>
+        <div class="login-field ui-field">
+          <label class="ui-label" for="password">Password</label>
+          <div class="ui-input-wrap">
+            <input class="ui-input" id="password" type="password" placeholder="Password" autocomplete="current-password">
+            <button type="button" class="ui-input-icon ui-clickable" id="togglePw" aria-label="Show password"><i class="fas fa-eye-slash"></i></button>
+          </div>
         </div>
-      </div>
 
-      <div class="ui-field" style="margin-bottom:0.5rem">
-        <label class="ui-label" for="portalSelect">Portal Access</label>
-        <select class="ui-select" id="portalSelect">
-          <option value="../agency-admin/dashboard.html">Agency Admin</option>
-          <option value="../agent/onboarding.html">Agent Onboarding</option>
-          <option value="../agent/dashboard.html">Agent</option>
-        </select>
-      </div>
+        <div class="forgot-row">
+          <a href="forgot-password.html">Forgot Password?</a>
+        </div>
 
-      <div class="forgot-row">
-        <button type="button" class="ui-btn ui-btn-link ui-btn-sm" onclick="showToast && showToast('Password reset link sent to your email address','info')">Forgot password?</button>
+        <button type="button" class="login-submit" id="loginBtn">Log In</button>
       </div>
+    </div>
 
-      <button type="button" class="ui-btn ui-btn-block" onclick="loginRoute()">
-        <i class="fas fa-sign-in-alt"></i> Sign In
-      </button>
-
-      <div class="portal-links">
-        Other portals:
-        <a href="../auth-carrier/login.html">Payer</a>
-        &nbsp;|&nbsp;
-        <a href="../auth-member/login.html">Member</a>
-      </div>
-
-      <div class="ui-alert ui-alert-info" style="margin-top:1rem">
-        <i class="fas fa-shield-alt"></i>
-        <div>This system contains PHI. Unauthorized access is prohibited under HIPAA. All access is logged and monitored.</div>
-      </div>
+    <div class="powered-by">
+      <p class="label">Powered by</p>
+      <img src="../assets/brand/aaneel-poweredby.png" alt="AaNeel">
     </div>
   </div>
 
-  <footer class="site-footer">
-    <strong>EnrollAxis, Inc.®</strong>
-    <div>Enrollment in EnrollAxis depends on contract renewal.</div>
-    <div style="opacity:.7;margin-top:0.25rem">Last Updated: 03 31, 2026 &nbsp;|&nbsp; Copyright © 2026 EnrollAxis</div>
-  </footer>
-
-  <script src="../assets/ui-select.js"></script>
-  <script src="../assets/nfp-actions.js"></script>
   <script>
-    function loginRoute() {
-      var sel = document.getElementById('portalSelect');
-      location.href = sel.value;
-    }
     document.getElementById('togglePw').addEventListener('click', function () {
       var input = document.getElementById('password');
       var icon = this.querySelector('i');
       if (input.type === 'password') {
         input.type = 'text';
-        icon.className = 'fas fa-eye-slash';
+        icon.className = 'fas fa-eye';
+        this.setAttribute('aria-label', 'Hide password');
       } else {
         input.type = 'password';
-        icon.className = 'fas fa-eye';
+        icon.className = 'fas fa-eye-slash';
+        this.setAttribute('aria-label', 'Show password');
       }
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', function () {
+      window.location.href = '../agent/onboarding.html';
     });
   </script>
 </body>
