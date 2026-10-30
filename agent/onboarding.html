@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=70">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=71">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -27,17 +27,6 @@
   .progress-box .value { font-size: 0.8125rem; font-weight: 600; color: var(--brand-ink); font-family: var(--font-body); }
   .progress-box .ui-progress { margin-top: 0.55rem; background: var(--base-200); height: 0.4rem; }
   .progress-box .ui-progress-bar { background: var(--primary); }
-  .sidebar-login-link {
-    margin-top: 0.65rem;
-    text-decoration: none;
-  }
-  .sidebar-login-link .ui-step-num {
-    font-size: 0.625rem;
-  }
-  .sidebar-login-link .ui-step-num i {
-    font-size: 0.625rem;
-    line-height: 1;
-  }
 
   .ob-mobile-sticky-sentinel {
     height: 0;
@@ -904,10 +893,6 @@
         <button type="button" class="ui-step-item" id="bar6" onclick="obGoTo(6)"><span class="ui-step-num">7</span>Contract Execution</button>
         <button type="button" class="ui-step-item is-locked" id="bar7" onclick="obGoTo(7)" aria-disabled="true"><span class="ui-step-num">8</span>Ready to Sell</button>
       </div>
-      <a href="../auth/login.html" class="ui-step-item sidebar-login-link">
-        <span class="ui-step-num"><i class="fas fa-sign-in-alt" aria-hidden="true"></i></span>
-        Login Page
-      </a>
     </nav>
     <div class="ui-sidebar-foot">
       <div style="display:flex;align-items:center;gap:0.5rem">
@@ -1159,7 +1144,7 @@
               </label>
             </div>
             <div class="ui-section-actions">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires live AHIP registry integration"><i class="fas fa-shield-alt"></i> Validate AHIP</button>
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" id="btnValidateAhip" disabled onclick="typeof showToast==='function'&&showToast('AHIP certificate validated.','success')"><i class="fas fa-shield-alt"></i> Validate AHIP</button>
             </div>
           </div>
           <div class="ui-section">
@@ -1176,7 +1161,7 @@
               <label class="ui-chip"><input type="checkbox" value="IL"> Illinois</label>
             </div>
             <div class="ui-section-actions">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" disabled title="Requires NIPR integration"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" id="btnValidateLicense" disabled onclick="typeof showToast==='function'&&showToast('License and state appointment validated.','success')"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
             </div>
           </div>
         </div>
@@ -1800,6 +1785,7 @@
     } else if (step === 3) {
       setVal('ahipCert', 'AH2026-88421'); setVal('ahipDate', '2026-01-15'); setVal('ahipExpiry', '2027-01-15');
       document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
+      syncStep4ValidateButtons();
     } else if (step === 4) {
       /* Match feat/enrolaxis-brand-theme: build each exam, auto-answer, submit */
       var letters = ['A', 'B', 'C', 'D'];
@@ -1856,6 +1842,26 @@
     if (npnResult) npnResult.style.display = 'none';
     updateFinalStepLock();
   });
+
+  function syncStep4ValidateButtons() {
+    var ahipBtn = document.getElementById('btnValidateAhip');
+    var licenseBtn = document.getElementById('btnValidateLicense');
+    var ahipCert = document.getElementById('ahipCert');
+    var ahipOk = !!(ahipCert && ahipCert.value.trim());
+    var stateOk = !!document.querySelectorAll('#stateCheckboxes input:checked').length;
+    if (ahipBtn) ahipBtn.disabled = !ahipOk;
+    if (licenseBtn) licenseBtn.disabled = !stateOk;
+  }
+
+  var ahipCertInput = document.getElementById('ahipCert');
+  if (ahipCertInput) {
+    ahipCertInput.addEventListener('input', syncStep4ValidateButtons);
+    ahipCertInput.addEventListener('change', syncStep4ValidateButtons);
+  }
+  document.querySelectorAll('#stateCheckboxes input[type="checkbox"]').forEach(function (cb) {
+    cb.addEventListener('change', syncStep4ValidateButtons);
+  });
+  syncStep4ValidateButtons();
 
   updateFinalStepLock();
   syncStepBars(current);
