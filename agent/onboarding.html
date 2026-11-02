@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=73">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=74">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -957,7 +957,7 @@
         <div class="ui-card-content">
           <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem"><i class="fas fa-info-circle"></i><div>Each NPN can only be registered once.</div></div>
           <div class="ui-section">
-            <h3 class="ui-section-title">Invitation Details</h3>
+            <h3 class="ui-section-title"><i class="fas fa-envelope-open-text" aria-hidden="true"></i>Invitation Details</h3>
             <div class="ui-form-grid cols-3">
               <div class="ui-field">
                 <label class="ui-label" for="inviteType">Invitation Type <span class="req">*</span></label>
@@ -978,7 +978,7 @@
             </div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">NPN Pre-Validation</h3>
+            <h3 class="ui-section-title"><i class="fas fa-id-card" aria-hidden="true"></i>NPN Pre-Validation</h3>
             <div class="ui-field">
               <label class="ui-label" for="regNPN">National Producer Number (NPN) <span class="req">*</span></label>
               <div class="ui-control-row">
@@ -1005,7 +1005,7 @@
         </div>
         <div class="ui-card-content">
           <div class="ui-section">
-            <h3 class="ui-section-title">Personal Information</h3>
+            <h3 class="ui-section-title"><i class="fas fa-user" aria-hidden="true"></i>Personal Information</h3>
             <div class="ui-form-grid cols-3">
               <div class="ui-field"><label class="ui-label" for="piFirst">First Name <span class="req">*</span></label><input class="ui-input" id="piFirst" placeholder="First name"></div>
               <div class="ui-field"><label class="ui-label" for="piMI">Middle Name</label><input class="ui-input" id="piMI" placeholder="MI" maxlength="2"></div>
@@ -1026,7 +1026,7 @@
               <div class="ui-field"><label class="ui-label" for="piBizState">Business State <span class="req">*</span></label><input class="ui-input" id="piBizState" placeholder="Auto-filled from ZIP"></div>
             </div>
             <div class="ui-consent-panel">
-              <h3 class="ui-section-title">Communication Consent</h3>
+              <h3 class="ui-section-title"><i class="fas fa-comments" aria-hidden="true"></i>Communication Consent</h3>
               <label class="ui-check-row" for="piSMS">
                 <input type="checkbox" id="piSMS">
                 <span>I consent to receive SMS/text notifications regarding my application, licensing status, and commission updates.</span>
@@ -1060,7 +1060,7 @@
             </div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">W-9 Tax Information</h3>
+            <h3 class="ui-section-title"><i class="fas fa-file-invoice" aria-hidden="true"></i>W-9 Tax Information</h3>
             <div class="ui-form-grid cols-3">
               <div class="ui-field">
                 <label class="ui-label" for="taxEntity">Tax Entity Type <span class="req">*</span></label>
@@ -1085,7 +1085,7 @@
             </div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">Commission Payment Preferences</h3>
+            <h3 class="ui-section-title"><i class="fas fa-university" aria-hidden="true"></i>Commission Payment Preferences</h3>
             <div class="ui-chip-row">
               <label class="ui-chip"><input type="radio" name="payMethod" id="payACH" value="ach" onchange="togglePayFields()"> ACH Direct Deposit</label>
               <label class="ui-chip"><input type="radio" name="payMethod" id="payCheck" value="check" onchange="togglePayFields()"> Physical Check</label>
@@ -1130,7 +1130,7 @@
         </div>
         <div class="ui-card-content">
           <div class="ui-section">
-            <h3 class="ui-section-title">AHIP Medicare Certification</h3>
+            <h3 class="ui-section-title"><i class="fas fa-certificate" aria-hidden="true"></i>AHIP Medicare Certification</h3>
             <div class="ui-form-grid cols-3">
               <div class="ui-field"><label class="ui-label" for="ahipCert">AHIP Certificate # <span class="req">*</span></label><input class="ui-input" id="ahipCert" placeholder="e.g. AH2026-XXXXX"></div>
               <div class="ui-field"><label class="ui-label" for="ahipDate">Completion Date <span class="req">*</span></label><input class="ui-input" id="ahipDate" type="date"></div>
@@ -1148,7 +1148,7 @@
             </div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">State Selection / Selling Territories</h3>
+            <h3 class="ui-section-title"><i class="fas fa-map-marked-alt" aria-hidden="true"></i>State Selection / Selling Territories</h3>
             <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0 0 0.75rem">Select states where you hold (or will hold) an active license.</p>
             <div class="ui-chip-row" id="stateCheckboxes" style="margin-bottom:0">
               <label class="ui-chip"><input type="checkbox" value="FL"> Florida</label>
@@ -1184,7 +1184,7 @@
             <div>Complete all 4 training segments. Each segment opens its certification exam. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
           </div>
           <div class="ui-section" id="step5DashboardSection">
-            <h3 class="ui-section-title">Training Progress Dashboard</h3>
+            <h3 class="ui-section-title"><i class="fas fa-chart-line" aria-hidden="true"></i>Training Progress Dashboard</h3>
             <div class="seg-grid" id="progressDashboard">
               <div class="seg-tile" id="dashSegTab0" data-seg="0" onclick="openSegmentScreen(0)"><div>Seg A - Video</div><strong id="dashPctA">0%</strong><div class="seg-meta" id="dashTimeA">-</div><div id="dashStatusA">Not completed</div></div>
               <div class="seg-tile" id="dashSegTab1" data-seg="1" onclick="openSegmentScreen(1)"><div>Seg B - Training</div><strong id="dashPctB">0%</strong><div class="seg-meta" id="dashTimeB">-</div><div id="dashStatusB">Not completed</div></div>
@@ -1248,7 +1248,7 @@
             <div>Background check is completed through a trusted vendor portal. EnrollAxis does <strong>not</strong> collect or store your SSN or government ID.</div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">Authorization &amp; Consent</h3>
+            <h3 class="ui-section-title"><i class="fas fa-balance-scale" aria-hidden="true"></i>Authorization &amp; Consent</h3>
             <div class="ui-check-panel">
               <label class="ui-check-row">
                 <input type="checkbox" id="bgConsent">
@@ -1257,7 +1257,7 @@
             </div>
           </div>
           <div class="ui-section" id="bgInvitePanel">
-            <h3 class="ui-section-title">Send to Background Check Vendor</h3>
+            <h3 class="ui-section-title"><i class="fas fa-paper-plane" aria-hidden="true"></i>Send to Background Check Vendor</h3>
             <div class="ob-vendor-panel" style="background:var(--accent);border:1px solid var(--primary-200);border-radius:var(--radius)">
               <div class="ui-card-content">
                 <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
@@ -1276,7 +1276,7 @@
             </div>
           </div>
           <div class="ui-section" id="bgStatusPanel" style="display:none">
-            <h3 class="ui-section-title">Verification Status</h3>
+            <h3 class="ui-section-title"><i class="fas fa-clipboard-check" aria-hidden="true"></i>Verification Status</h3>
             <div class="ui-alert ui-alert-warning">
               <i class="fas fa-hourglass-half"></i>
               <div>
@@ -1305,7 +1305,7 @@
             <div>Review and digitally sign your Agent Contracting Agreement.</div>
           </div>
           <div class="ui-section">
-            <h3 class="ui-section-title">Contract Summary</h3>
+            <h3 class="ui-section-title"><i class="fas fa-file-alt" aria-hidden="true"></i>Contract Summary</h3>
             <div class="summary-grid" style="margin-bottom:0.75rem">
               <div class="summary-cell"><div class="k">Contract Type</div><div class="v">Agent Contracting Agreement CY2026</div></div>
               <div class="summary-cell"><div class="k">Version</div><div class="v">v3.2</div></div>
@@ -1328,7 +1328,7 @@
                 <span>I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document.</span>
               </label>
             </div>
-            <h3 class="ui-section-title">Electronic Signature</h3>
+            <h3 class="ui-section-title"><i class="fas fa-signature" aria-hidden="true"></i>Electronic Signature</h3>
             <div class="ui-form-grid cols-2">
               <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name"></div>
               <div class="ui-field"><label class="ui-label" for="eSigDate">Date</label><input class="ui-input" id="eSigDate" type="date"></div>
