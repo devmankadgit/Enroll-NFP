@@ -6,6 +6,7 @@
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
 <link rel="stylesheet" href="../assets/shadcn-ui.css?v=74">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap">
 <script src="../assets/minimal-icons.js"></script>
 <style>
   /* One continuous Enrollaxis light theme across sidebar + flow */
@@ -95,8 +96,8 @@
   .ob-mobile-steps::before {
     content: '';
     position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
+    left: var(--ob-rail-left, 0.85rem);
+    right: var(--ob-rail-right, 0.85rem);
     top: 50%;
     height: 3px;
     background: var(--neutral-100);
@@ -106,8 +107,9 @@
   }
   .ob-mobile-rail {
     position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
+    left: var(--ob-rail-left, 0.85rem);
+    right: auto;
+    width: var(--ob-rail-width, calc(100% - 1.7rem));
     top: 50%;
     height: 3px;
     background: var(--primary);
@@ -558,6 +560,40 @@
     background: var(--base-50);
     margin-bottom: 0.75rem;
   }
+  .ob-sig {
+    margin-top: 0.75rem;
+    padding: 1rem 1.25rem 0.75rem;
+    border-radius: calc(var(--radius) + 2px);
+    border: 1px dashed var(--border);
+    background: linear-gradient(transparent 70%, color-mix(in srgb, var(--primary) 4%, transparent));
+  }
+  .ob-sig-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.25rem;
+    line-height: 1.2;
+    color: var(--brand-ink, #0f172a);
+    min-height: 2.875rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ob-sig-name.is-empty {
+    color: var(--muted-foreground);
+    opacity: 0.55;
+    font-size: 1.5rem;
+  }
+  .ob-sig-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .ob-sig-meta i { margin-right: 0.2rem; }
   .success-hero {
     text-align: center;
     padding: 1.75rem 1rem 1.25rem;
@@ -721,6 +757,16 @@
     object-fit: contain;
     object-position: left center;
     opacity: 1;
+  }
+  .ob-topbar-logo {
+    display: none;
+    height: 28px;
+    width: auto;
+    max-width: min(160px, 46vw);
+    object-fit: contain;
+    object-position: left center;
+    flex-shrink: 1;
+    min-width: 0;
   }
   .ob-topbar-actions {
     display: inline-flex;
@@ -1056,22 +1102,29 @@
   }
   .ob-need {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
     margin-top: 0.85rem;
   }
   .ob-need-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    align-items: flex-start;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: center;
     padding: 1rem;
     border-radius: calc(var(--radius) - 2px);
     border: 1px solid var(--border);
     background: var(--white);
+    min-width: 0;
+    overflow: hidden;
+  }
+  .ob-need-item > div {
+    min-width: 0;
+    flex: 1;
   }
   .ob-need-icon {
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     width: 2.25rem;
@@ -1093,11 +1146,19 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--brand-ink);
+    overflow-wrap: break-word;
   }
   .ob-need-item .sub {
     margin: 0.15rem 0 0;
     font-size: 0.75rem;
     color: var(--muted-foreground);
+    overflow-wrap: break-word;
+  }
+  .ui-step-item.is-welcome {
+    color: var(--brand-ink);
+  }
+  .ui-step-item.is-welcome.active {
+    color: var(--primary-0, #fff);
   }
   .ui-step-item.is-welcome .ui-step-num {
     background: var(--accent);
@@ -1197,7 +1258,6 @@
   @media (max-width: 900px) {
     .ob-hero { grid-template-columns: 1fr; }
     .ob-hero-art { max-width: 12rem; margin: 0 auto; }
-    .ob-need { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 520px) {
     .ob-need { grid-template-columns: 1fr; }
@@ -1228,6 +1288,13 @@
     }
     .ui-shell.sidebar-open { overflow: visible; }
     .ui-main { margin-left: 0; }
+
+    /* Titles live in the page body on small screens; header shows brand logo */
+    .ob-topbar-titles { display: none; }
+    .ob-topbar-logo {
+      display: block;
+      margin-right: auto;
+    }
 
     /* Same left/right gutter as the form via .ui-page padding */
     .ob-page-titles {
@@ -1349,8 +1416,7 @@
     .ob-mobile-step { width: 1.55rem; height: 1.55rem; font-size: 0.5625rem; }
     .ob-mobile-step.done { background-size: 64%; }
     .ob-mobile-step.draft { background-size: 58%; }
-    .ob-mobile-steps::before,
-    .ob-mobile-rail { left: 0.75rem; right: 0.75rem; }
+    /* Rail insets are measured in JS to match G + step nodes */
     .ob-mobile-nav { --ob-page-pad-x: 0.75rem; }
     .ob-mobile-progress .step-name { font-size: 0.8125rem; }
     .ob-mobile-nav.is-stuck .ob-mobile-progress .step-name { font-size: 0.8125rem; }
@@ -1400,6 +1466,7 @@
         <h1>Agent Onboarding</h1>
         <p class="subtitle">Producer Onboarding - Invitation through Ready to Sell</p>
       </div>
+      <img class="ob-topbar-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
       <div class="ob-topbar-actions">
         <button type="button" class="ob-notify-btn" aria-label="Notifications, 2 unread">
           <i class="far fa-bell" aria-hidden="true"></i>
@@ -1418,10 +1485,6 @@
             <button type="button" class="ob-user-menu-item" role="menuitem" onclick="obSaveExit()">
               <span data-icon="logout-2-bold-duotone" aria-hidden="true"></span>
               Save &amp; exit
-            </button>
-            <button type="button" class="ob-user-menu-item is-danger" role="menuitem" onclick="obStartOver()">
-              <span data-icon="restart-bold" aria-hidden="true"></span>
-              Start over
             </button>
           </div>
         </div>
@@ -1921,10 +1984,16 @@
             </div>
             <h3 class="ui-section-title"><i class="fas fa-signature" aria-hidden="true"></i>Electronic Signature</h3>
             <div class="ui-form-grid cols-2">
-              <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name"></div>
+              <div class="ui-field"><label class="ui-label" for="eSigName">Type Your Full Legal Name to Sign <span class="req">*</span></label><input class="ui-input" id="eSigName" placeholder="Full legal name" autocomplete="name"></div>
               <div class="ui-field"><label class="ui-label" for="eSigDate">Date</label><input class="ui-input" id="eSigDate" type="date"></div>
             </div>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.35rem 0 0"><i class="fas fa-lock"></i> Typed signature is legally binding under the E-SIGN Act.</p>
+            <div class="ob-sig" aria-hidden="true">
+              <div class="ob-sig-name is-empty" id="sigPreview">Your signature</div>
+              <div class="ob-sig-meta">
+                <span><i class="fas fa-lock" aria-hidden="true"></i> Legally binding under the E-SIGN Act</span>
+                <span id="sigMeta"></span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="ui-card-footer">
@@ -2148,63 +2217,13 @@
     location.href = '../auth/login.html';
   };
 
-  window.obStartOver = function () {
-    setUserMenuOpen(false);
-    obDialog({
-      tone: 'danger',
-      icon: 'restart-bold',
-      title: 'Start over?',
-      message: 'This clears everything you entered on this device, including training scores. This cannot be undone.',
-      actions: [
-        { label: 'Cancel', variant: 'outline', value: null },
-        { label: 'Clear and start over', variant: 'danger', color: 'danger', value: true }
-      ]
-    }).then(function (v) {
-      if (!v) return;
-      clearSaved();
-      location.href = location.pathname + '?fresh=1';
-    });
-  };
-
-  function showWelcomeBack(saved) {
+  function resumeSaved(saved) {
     var st = typeof saved.step === 'number' ? saved.step : -1;
-    var stepName = st < 0 ? 'Get started' : (labels[st] || 'your application');
-    var stepOf = st < 0 ? 'Get started' : ('step ' + (st + 1) + ' of ' + total);
-    return obDialog({
-      tone: 'primary',
-      icon: 'cloud-check-bold-duotone',
-      title: 'Welcome back, James',
-      persistent: true,
-      html: '<p style="margin:0">You stopped at <strong>' + esc(stepName) + '</strong> (' + esc(stepOf) + '), last saved ' + esc(fmtStamp(saved.savedAt)) + '. Pick up where you left off?</p>',
-      actions: [
-        { label: 'Start over', variant: 'outline', value: 'new' },
-        { label: 'Resume', variant: 'primary', value: 'resume' }
-      ]
-    }).then(function (v) {
-      if (v === 'new') {
-        return obDialog({
-          tone: 'danger',
-          icon: 'restart-bold',
-          title: 'Start over?',
-          message: 'This clears everything you entered on this device, including training scores. This cannot be undone.',
-          actions: [
-            { label: 'Cancel', variant: 'outline', value: null },
-            { label: 'Clear and start over', variant: 'danger', color: 'danger', value: true }
-          ]
-        }).then(function (ok) {
-          if (!ok) return showWelcomeBack(saved);
-          clearSaved();
-          drafts = {};
-          bgInviteSent = false;
-          obGoWelcome();
-        });
-      }
-      drafts = saved.drafts || {};
-      bgInviteSent = !!saved.bgInviteSent;
-      applyFieldValues(saved.values || {});
-      if (st < 0) obGoWelcome();
-      else obGoTo(st);
-    });
+    drafts = saved.drafts || {};
+    bgInviteSent = !!saved.bgInviteSent;
+    applyFieldValues(saved.values || {});
+    if (st < 0) obGoWelcome();
+    else obGoTo(st);
   }
 
   function setVal(id, v) {
@@ -2302,11 +2321,32 @@
   }
   window.updateFinalStepLock = updateFinalStepLock;
 
-  function updateMobileRail(activeIdx) {
+  function updateMobileRail(stepIdx) {
+    if (typeof stepIdx !== 'number') stepIdx = current;
     var rail = document.getElementById('obMobileRail');
-    if (!rail) return;
-    var ratio = total <= 1 ? 0 : Math.max(0, activeIdx) / (total - 1);
-    rail.style.transform = 'translateY(-50%) scaleX(' + ratio + ')';
+    var track = document.getElementById('obMobileSteps');
+    if (!rail || !track) return;
+    var nodes = track.querySelectorAll('.ob-mobile-step');
+    if (nodes.length < 2) {
+      rail.style.transform = 'translateY(-50%) scaleX(0)';
+      return;
+    }
+    /* Nodes are Welcome (G) + steps 0..total-1 */
+    var nodeIdx = stepIdx < 0 ? 0 : Math.min(stepIdx + 1, nodes.length - 1);
+    function centerX(el) {
+      return el.offsetLeft + el.offsetWidth / 2;
+    }
+    var firstX = centerX(nodes[0]);
+    var lastX = centerX(nodes[nodes.length - 1]);
+    var targetX = centerX(nodes[nodeIdx]);
+    var span = Math.max(0, lastX - firstX);
+    var ratio = span <= 0 ? 0 : (targetX - firstX) / span;
+    track.style.setProperty('--ob-rail-left', firstX + 'px');
+    track.style.setProperty('--ob-rail-right', Math.max(0, track.clientWidth - lastX) + 'px');
+    track.style.setProperty('--ob-rail-width', span + 'px');
+    rail.style.left = firstX + 'px';
+    rail.style.width = span + 'px';
+    rail.style.transform = 'translateY(-50%) scaleX(' + Math.max(0, Math.min(1, ratio)) + ')';
   }
 
   function countCompletedRequired() {
@@ -2340,7 +2380,7 @@
         if (onWelcome && i < 7 && isStepComplete(i)) el.classList.add('done');
       });
     }
-    updateMobileRail(onWelcome ? 0 : activeIdx);
+    updateMobileRail(activeIdx);
     updateFinalStepLock();
     /* After lock refresh, strip done/draft from locked final step again */
     ['bar7', 'mbar7'].forEach(function (id) {
@@ -2473,6 +2513,7 @@
     syncMobileStickyOffset();
     setupMobileStickyNav();
     syncMobileNavStuck();
+    updateMobileRail(current);
   });
 
   function updateProgressChrome(n) {
@@ -2675,11 +2716,32 @@
       setCheck('contractRead', true);
       setVal('eSigName', 'James R Martinez');
       setVal('eSigDate', new Date().toISOString().slice(0, 10));
+      syncSigPreview();
     }
     drafts[step] = false;
     updateFinalStepLock();
   };
 
+  function syncSigPreview() {
+    var input = document.getElementById('eSigName');
+    var preview = document.getElementById('sigPreview');
+    var meta = document.getElementById('sigMeta');
+    if (!preview) return;
+    var v = input && input.value ? input.value.trim() : '';
+    preview.textContent = v || 'Your signature';
+    preview.classList.toggle('is-empty', !v);
+    if (meta) {
+      meta.textContent = v
+        ? 'Signed ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+    }
+  }
+
+  var eSigNameInput = document.getElementById('eSigName');
+  if (eSigNameInput) {
+    eSigNameInput.addEventListener('input', syncSigPreview);
+    syncSigPreview();
+  }
 
   document.getElementById('regNPN').addEventListener('input', function () {
     this.value = this.value.replace(/[^0-9]/g, '');
@@ -2756,7 +2818,7 @@
       obGoWelcome();
       return;
     }
-    showWelcomeBack(saved);
+    resumeSaved(saved);
   })();
 })();
 
