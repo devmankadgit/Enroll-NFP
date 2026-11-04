@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signing in | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="portal.css">
+</head>
+<body>
+  <div class="p-auth">
+    <div class="p-auth-card" id="authCard">
+      <img class="p-auth-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+      <div id="authOk">
+        <div class="p-spinner" aria-hidden="true"></div>
+        <h1>Signing you in…</h1>
+        <p>Redirecting to AaNeel sign-in and completing your session.</p>
+      </div>
+      <div id="authFail" hidden>
+        <h1>Sign-in could not be completed</h1>
+        <p>Something went wrong while signing you in with AaNeel SSO.</p>
+        <button type="button" class="p-btn p-btn-block" id="tryAgainBtn">Try again</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    var params = new URLSearchParams(location.search);
+    var fail = params.get('fail') === '1';
+    var ok = document.getElementById('authOk');
+    var bad = document.getElementById('authFail');
+    if (fail) {
+      ok.hidden = true;
+      bad.hidden = false;
+    } else {
+      setTimeout(function () {
+        location.href = 'select-carrier.html';
+      }, 1400);
+    }
+    document.getElementById('tryAgainBtn').addEventListener('click', function () {
+      location.href = 'signing-in.html';
+    });
+  </script>
+</body>
+</html>
