@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payer Admin Dashboard | EnrollAxis</title>
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=74">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="../assets/minimal-icons.js"></script>
+<style>
+  .ui-topbar h1,
+  .pad-page-titles h1 {
+    margin: 0;
+    font-size: 1.1875rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .ui-topbar .subtitle,
+  .pad-page-titles .subtitle {
+    margin: 0.2rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--neutral-600);
+    line-height: 1.4;
+  }
+  /* Cobrand: AaNeel Ensure (sidebar top), EnrollAxis (header), Powered by AaNeel (foot) */
+  .ob-customer-logo {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+    background: transparent;
+  }
+  .ob-powered-by {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    width: 100%;
+    max-width: 100%;
+    text-align: right;
+  }
+  .ob-powered-by-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--neutral-600);
+    font-family: var(--font-body);
+    line-height: 1.2;
+  }
+  .ob-powered-by-logo {
+    display: block;
+    height: 24px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: right center;
+  }
+  .ob-topbar-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .ob-header-product {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+    flex-shrink: 1;
+    min-width: 0;
+    line-height: 1;
+  }
+  .ob-header-product-logo {
+    display: block;
+    height: 28px;
+    width: auto;
+    max-width: min(148px, 34vw);
+    object-fit: contain;
+    object-position: right center;
+  }
+  .ob-header-product-ver {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--neutral-600);
+    font-family: var(--font-body);
+    white-space: nowrap;
+  }
+  .ob-topbar-customer-logo {
+    display: none;
+    height: 28px;
+    width: auto;
+    max-width: min(150px, 42vw);
+    object-fit: contain;
+    object-position: left center;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .ob-notify-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: var(--neutral-600);
+    cursor: pointer;
+  }
+  .ob-notify-btn:hover {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary-50) 70%, transparent);
+  }
+  .ob-notify-btn:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .ob-notify-btn i { font-size: 1.05rem; line-height: 1; }
+  .ob-notify-badge {
+    position: absolute;
+    top: 0.05rem;
+    right: 0.05rem;
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.22rem;
+    border-radius: 9999px;
+    background: var(--danger-600);
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 700;
+    font-family: var(--font-body);
+    line-height: 1rem;
+    text-align: center;
+    box-shadow: 0 0 0 2px var(--white);
+  }
+  .ob-user-menu { position: relative; flex-shrink: 0; }
+  .ob-user-menu-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .ob-user-menu-trigger:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .ob-user-avatar {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 9999px;
+    border: 1.5px solid var(--primary-700);
+    background: var(--primary-50);
+    color: var(--primary-800);
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ob-user-menu-trigger:hover .ob-user-avatar { background: var(--primary-100); }
+  .ob-user-menu-panel {
+    position: absolute;
+    top: calc(100% + 0.45rem);
+    right: 0;
+    min-width: 14rem;
+    padding: 0.35rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--popover);
+    color: var(--popover-foreground);
+    box-shadow: var(--shadow-lg);
+    z-index: 70;
+    display: none;
+  }
+  .ob-user-menu.is-open .ob-user-menu-panel { display: block; }
+  .ob-user-menu-header { padding: 0.55rem 0.7rem 0.65rem; }
+  .ob-user-menu-header .name {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    line-height: 1.3;
+  }
+  .ob-user-menu-header .meta {
+    margin: 0.2rem 0 0;
+    font-size: 0.75rem;
+    color: var(--neutral-600);
+    line-height: 1.35;
+  }
+  .ob-user-menu-sep {
+    height: 1px;
+    margin: 0.15rem 0.35rem 0.35rem;
+    background: var(--border);
+    border: 0;
+  }
+  .ob-user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 0;
+    border-radius: calc(var(--radius) - 4px);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.875rem;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .ob-user-menu-item:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+  .ob-user-menu-item [data-icon] {
+    width: 1.125rem;
+    height: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--neutral-600);
+  }
+  .ob-user-menu-item [data-icon] svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .pad-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .pad-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 0;
+    border-radius: calc(var(--radius) - 2px);
+    background: transparent;
+    color: var(--neutral-700);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .pad-nav-item [data-icon] {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--neutral-500);
+  }
+  .pad-nav-item [data-icon] svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .pad-nav-item:hover {
+    background: var(--primary-50);
+    color: var(--primary-800);
+  }
+  .pad-nav-item:hover [data-icon] { color: var(--primary); }
+  .pad-nav-item:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .pad-nav-item.is-active {
+    background: var(--primary-50);
+    color: var(--primary-800);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--primary);
+  }
+  .pad-nav-item.is-active [data-icon] { color: var(--primary); }
+
+  .pad-page-titles { display: none; }
+
+  .pad-view[hidden] { display: none !important; }
+  .pad-dash-intro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    margin: 0 0 1.25rem;
+  }
+  .pad-dash-intro h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+  }
+  .pad-dash-intro p {
+    margin: 0.3rem 0 0;
+    max-width: 38rem;
+    font-size: 0.875rem;
+    color: var(--neutral-600);
+    line-height: 1.5;
+  }
+  .pad-dash-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--neutral-600);
+    white-space: nowrap;
+  }
+  .pad-dash-meta [data-icon] {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--primary);
+  }
+  .pad-dash-meta [data-icon] svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .pad-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  .pad-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 8.5rem;
+    padding: 1rem 1.05rem 1.05rem;
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) + 2px);
+    background: var(--white);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent);
+    text-align: left;
+  }
+  .pad-kpi-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--primary-50);
+    color: var(--primary-700);
+  }
+  .pad-kpi-icon[data-tone="lime"] { background: var(--secondary-50); color: var(--secondary-800); }
+  .pad-kpi-icon[data-tone="warn"] { background: var(--warning-50); color: var(--warning-800); }
+  .pad-kpi-icon[data-tone="danger"] { background: var(--danger-50); color: var(--danger-700); }
+  .pad-kpi-icon[data-tone="info"] { background: var(--info-50); color: var(--info-800); }
+  .pad-kpi-icon[data-tone="slate"] { background: var(--neutral-100); color: var(--neutral-700); }
+  .pad-kpi-icon [data-icon] {
+    width: 1.35rem;
+    height: 1.35rem;
+    display: inline-flex;
+  }
+  .pad-kpi-icon [data-icon] svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+  .pad-kpi-label {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: var(--neutral-700);
+    line-height: 1.35;
+  }
+  .pad-kpi-value {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .pad-kpi-foot {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--neutral-600);
+    line-height: 1.4;
+  }
+
+  .pad-panel-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.85rem;
+  }
+  .pad-panel {
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) + 2px);
+    background: var(--white);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent);
+    overflow: hidden;
+  }
+  .pad-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.95rem 1.1rem;
+    border-bottom: 1px solid var(--base-100);
+  }
+  .pad-panel-head h3 {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+  }
+  .pad-panel-head h3 [data-icon] {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--primary);
+  }
+  .pad-panel-head h3 [data-icon] svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .pad-panel-body { padding: 0.35rem 0.35rem 0.55rem; }
+  .pad-action-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.8rem 0.85rem;
+    border-radius: calc(var(--radius) - 2px);
+  }
+  .pad-action-ico {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--primary-50);
+    color: var(--primary-700);
+  }
+  .pad-action-ico[data-tone="warn"] { background: var(--warning-50); color: var(--warning-800); }
+  .pad-action-ico[data-tone="danger"] { background: var(--danger-50); color: var(--danger-700); }
+  .pad-action-ico [data-icon] {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .pad-action-ico [data-icon] svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .pad-action-copy { min-width: 0; flex: 1; }
+  .pad-action-copy strong {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    line-height: 1.3;
+  }
+  .pad-action-copy span {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: var(--neutral-600);
+    line-height: 1.4;
+  }
+  .pad-action-count {
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    padding-top: 0.2rem;
+  }
+
+  .pad-health {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    padding: 0.85rem 1rem 1.05rem;
+  }
+  .pad-health-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--base-50);
+  }
+  .pad-health-item [data-icon] {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+  .pad-health-item [data-icon] svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+  .pad-health-copy { min-width: 0; flex: 1; }
+  .pad-health-copy strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+  .pad-health-copy span {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    color: var(--neutral-600);
+  }
+  .pad-health-val {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 1100px) {
+    .pad-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pad-panel-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    .ob-topbar-titles { display: none; }
+    .ob-topbar-customer-logo {
+      display: block;
+      margin-right: auto;
+      height: 26px;
+    }
+    .ob-header-product-logo {
+      height: 24px;
+      max-width: min(120px, 32vw);
+    }
+    .ob-header-product-ver { font-size: 0.75rem; }
+    .pad-page-titles {
+      display: block;
+      margin: 0 0 0.9rem;
+      padding: 0.15rem 0 0;
+    }
+    .pad-page-titles h1 { font-size: 1.25rem; line-height: 1.3; }
+  }
+  @media (max-width: 560px) {
+    .pad-kpi-grid { grid-template-columns: 1fr; }
+    .pad-kpi { min-height: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="ui-shell" id="appShell">
+  <button type="button" class="ui-sidebar-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
+  <aside class="ui-sidebar" id="appSidebar">
+    <div class="ui-sidebar-brand">
+      <img class="ob-customer-logo" src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="ui-sidebar-nav" aria-label="Payer Admin">
+      <div class="pad-nav">
+        <button type="button" class="pad-nav-item is-active" id="navDashboard" data-view="dashboard" aria-current="page">
+          <span data-icon="widget-5-bold-duotone" aria-hidden="true"></span>
+          Dashboard
+        </button>
+      </div>
+    </nav>
+    <div class="ui-sidebar-foot">
+      <div class="ob-powered-by">
+        <span class="ob-powered-by-label">Powered by</span>
+        <img class="ob-powered-by-logo" src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+      </div>
+    </div>
+  </aside>
+
+  <div class="ui-main">
+    <header class="ui-topbar">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <img class="ob-topbar-customer-logo" src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
+      <div class="ob-topbar-titles">
+        <h1>Payer Admin Dashboard</h1>
+        <p class="subtitle">Plan administration and operations overview</p>
+      </div>
+      <div class="ob-topbar-actions">
+        <button type="button" class="ob-notify-btn" aria-label="Notifications, 2 unread">
+          <i class="far fa-bell" aria-hidden="true"></i>
+          <span class="ob-notify-badge">2</span>
+        </button>
+        <div class="ob-user-menu" id="padUserMenu">
+          <button type="button" class="ob-user-menu-trigger" id="padUserMenuTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="padUserMenuPanel" aria-label="Account menu">
+            <span class="ob-user-avatar" aria-hidden="true">PA</span>
+          </button>
+          <div class="ob-user-menu-panel" id="padUserMenuPanel" role="menu" hidden>
+            <div class="ob-user-menu-header">
+              <p class="name">Payer Admin</p>
+              <p class="meta">EnrollAxis - Payer Portal</p>
+            </div>
+            <hr class="ob-user-menu-sep">
+            <a class="ob-user-menu-item" role="menuitem" href="../auth-carrier/login.html">
+              <span data-icon="logout-2-bold-duotone" aria-hidden="true"></span>
+              Sign out
+            </a>
+          </div>
+        </div>
+        <div class="ob-header-product">
+          <img class="ob-header-product-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+          <p class="ob-header-product-ver">Version 0.1</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="ui-page">
+      <div class="pad-page-titles">
+        <h1>Payer Admin Dashboard</h1>
+        <p class="subtitle">Plan administration and operations overview</p>
+      </div>
+
+      <section class="pad-view" id="viewDashboard" aria-labelledby="dashHeading">
+        <div class="pad-dash-intro">
+          <div>
+            <h2 id="dashHeading">Operations at a glance</h2>
+            <p>Track agents, agencies, enrollments, and queues that need payer attention. Counts start at zero until live data is connected.</p>
+          </div>
+          <div class="pad-dash-meta">
+            <span data-icon="refresh-bold" aria-hidden="true"></span>
+            Updated just now
+          </div>
+        </div>
+
+        <div class="pad-kpi-grid" role="list">
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" aria-hidden="true"><span data-icon="users-group-rounded-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Active agents</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Ready to sell producers</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="lime" aria-hidden="true"><span data-icon="buildings-2-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Active agencies</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Contracted distribution partners</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="info" aria-hidden="true"><span data-icon="user-id-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Active members</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Book of business total</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" aria-hidden="true"><span data-icon="document-text-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Enrollments MTD</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Submitted this month</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="warn" aria-hidden="true"><span data-icon="hourglass-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">In-flight onboarding</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Cases awaiting payer action</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="danger" aria-hidden="true"><span data-icon="shield-check-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Compliance flags</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">7-day CMS risk items</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="lime" aria-hidden="true"><span data-icon="wallet-money-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Commission approvals</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Pending rule or batch review</p>
+          </article>
+
+          <article class="pad-kpi" role="listitem">
+            <div class="pad-kpi-top">
+              <span class="pad-kpi-icon" data-tone="slate" aria-hidden="true"><span data-icon="lightbulb-bolt-bold-duotone"></span></span>
+            </div>
+            <p class="pad-kpi-label">Open leads</p>
+            <p class="pad-kpi-value">0</p>
+            <p class="pad-kpi-foot">Unassigned or in follow-up</p>
+          </article>
+        </div>
+
+        <div class="pad-panel-grid">
+          <section class="pad-panel" aria-labelledby="queueHeading">
+            <div class="pad-panel-head">
+              <h3 id="queueHeading">
+                <span data-icon="checklist-minimalistic-bold-duotone" aria-hidden="true"></span>
+                Needs attention
+              </h3>
+              <span class="ui-badge ui-badge-secondary">0 open</span>
+            </div>
+            <div class="pad-panel-body">
+              <div class="pad-action-row">
+                <span class="pad-action-ico" aria-hidden="true"><span data-icon="hourglass-bold-duotone"></span></span>
+                <div class="pad-action-copy">
+                  <strong>Onboarding queue</strong>
+                  <span>Applications waiting for payer review or activation</span>
+                </div>
+                <span class="pad-action-count">0</span>
+              </div>
+              <div class="pad-action-row">
+                <span class="pad-action-ico" data-tone="warn" aria-hidden="true"><span data-icon="alarm-bold-duotone"></span></span>
+                <div class="pad-action-copy">
+                  <strong>NIPR alerts</strong>
+                  <span>License or appointment changes to acknowledge</span>
+                </div>
+                <span class="pad-action-count">0</span>
+              </div>
+              <div class="pad-action-row">
+                <span class="pad-action-ico" data-tone="danger" aria-hidden="true"><span data-icon="danger-triangle-bold"></span></span>
+                <div class="pad-action-copy">
+                  <strong>Exceptions &amp; disputes</strong>
+                  <span>Items held for admin decision</span>
+                </div>
+                <span class="pad-action-count">0</span>
+              </div>
+              <div class="pad-action-row">
+                <span class="pad-action-ico" aria-hidden="true"><span data-icon="wallet-money-bold-duotone"></span></span>
+                <div class="pad-action-copy">
+                  <strong>Commission approvals</strong>
+                  <span>Rule changes or payment batches to approve</span>
+                </div>
+                <span class="pad-action-count">0</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="pad-panel" aria-labelledby="healthHeading">
+            <div class="pad-panel-head">
+              <h3 id="healthHeading">
+                <span data-icon="server-square-cloud-bold-duotone" aria-hidden="true"></span>
+                System pulse
+              </h3>
+              <span class="ui-badge ui-badge-success">Quiet</span>
+            </div>
+            <div class="pad-health">
+              <div class="pad-health-item">
+                <span data-icon="cloud-check-bold-duotone" aria-hidden="true"></span>
+                <div class="pad-health-copy">
+                  <strong>Integration warnings</strong>
+                  <span>NIPR, AHIP, and exchange links</span>
+                </div>
+                <span class="pad-health-val">0</span>
+              </div>
+              <div class="pad-health-item">
+                <span data-icon="danger-circle-bold" aria-hidden="true"></span>
+                <div class="pad-health-copy">
+                  <strong>Failed batch jobs</strong>
+                  <span>Overnight and scheduled runs</span>
+                </div>
+                <span class="pad-health-val">0</span>
+              </div>
+              <div class="pad-health-item">
+                <span data-icon="users-group-rounded-bold-duotone" aria-hidden="true"></span>
+                <div class="pad-health-copy">
+                  <strong>Active sessions</strong>
+                  <span>Signed-in portal users right now</span>
+                </div>
+                <span class="pad-health-val">0</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+  var shell = document.getElementById('appShell');
+  var sidebarToggle = document.getElementById('sidebarToggle');
+  var sidebarClose = document.getElementById('sidebarClose');
+  var sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function isMobileShell() {
+    return window.matchMedia('(max-width: 900px)').matches;
+  }
+
+  function setSidebarOpen(open) {
+    if (!shell) return;
+    shell.classList.toggle('sidebar-open', !!open);
+    if (sidebarToggle) {
+      sidebarToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      sidebarToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    document.body.style.overflow = open && isMobileShell() ? 'hidden' : '';
+  }
+
+  function toggleSidebar() {
+    setSidebarOpen(!(shell && shell.classList.contains('sidebar-open')));
+  }
+
+  if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+  if (sidebarClose) sidebarClose.addEventListener('click', function () { setSidebarOpen(false); });
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', function () { setSidebarOpen(false); });
+
+  var userMenu = document.getElementById('padUserMenu');
+  var userMenuTrigger = document.getElementById('padUserMenuTrigger');
+  var userMenuPanel = document.getElementById('padUserMenuPanel');
+
+  function setUserMenuOpen(open) {
+    if (!userMenu || !userMenuTrigger || !userMenuPanel) return;
+    userMenu.classList.toggle('is-open', !!open);
+    userMenuTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) userMenuPanel.removeAttribute('hidden');
+    else userMenuPanel.setAttribute('hidden', '');
+  }
+
+  if (userMenuTrigger) {
+    userMenuTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setUserMenuOpen(!(userMenu && userMenu.classList.contains('is-open')));
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (!userMenu || !userMenu.classList.contains('is-open')) return;
+    if (!userMenu.contains(e.target)) setUserMenuOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      setSidebarOpen(false);
+      setUserMenuOpen(false);
+    }
+  });
+
+  function showView(viewId) {
+    document.querySelectorAll('.pad-view').forEach(function (el) {
+      el.hidden = el.id !== viewId;
+    });
+    document.querySelectorAll('.pad-nav-item').forEach(function (btn) {
+      var active = viewId === 'viewDashboard' && btn.getAttribute('data-view') === 'dashboard';
+      btn.classList.toggle('is-active', active);
+      if (active) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
+    setSidebarOpen(false);
+  }
+
+  document.querySelectorAll('.pad-nav-item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-view');
+      if (!key) return;
+      showView('view' + key.charAt(0).toUpperCase() + key.slice(1));
+    });
+  });
+
+  showView('viewDashboard');
+</script>
+</body>
+</html>
