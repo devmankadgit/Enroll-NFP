@@ -16,6 +16,17 @@
       <img src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
       <button type="button" class="p-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
     </div>
+    <div class="p-role-switch" id="roleSwitch" data-current="member">
+      <button type="button" class="p-role-switch-trigger" id="roleSwitchTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="roleSwitchPanel">
+        <span class="p-role-switch-ico" aria-hidden="true"><i class="fas fa-user" data-role-icon></i></span>
+        <span class="p-role-switch-meta">
+          <span class="p-role-switch-kicker">Current role</span>
+          <span class="p-role-switch-label" data-role-label>Member</span>
+        </span>
+        <span class="p-role-switch-action" aria-hidden="true"><span class="p-role-switch-action-text">Switch</span><i class="fas fa-chevron-down p-role-switch-caret"></i></span>
+      </button>
+      <div class="p-role-switch-panel" id="roleSwitchPanel" role="menu" hidden></div>
+    </div>
     <nav class="p-sidebar-nav" aria-label="Portal">
       <a class="p-nav-item is-active" href="landing-member.html" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i>Home</a>
       <span class="p-nav-item"><i class="fas fa-id-card" aria-hidden="true"></i>My Coverage</span>
@@ -142,6 +153,7 @@
   </div>
 </div>
 <script src="portal-shell.js"></script>
+<script src="portal-role-switch.js"></script>
 <script>
   (function () {
     var params = new URLSearchParams(location.search);

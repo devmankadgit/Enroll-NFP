@@ -12,25 +12,80 @@
 <div class="p-shell" id="appShell">
   <button type="button" class="p-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
   <aside class="p-sidebar" id="appSidebar">
-    <div class="p-sidebar-brand">
-      <img src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
-      <button type="button" class="p-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
-    </div>
-    <nav class="p-sidebar-nav" aria-label="Portal">
-      <a class="p-nav-item is-active" href="landing-carrier.html" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i>Home</a>
-      <span class="p-nav-item"><i class="fas fa-id-card" aria-hidden="true"></i>Onboarding & Producers</span>
-      <span class="p-nav-item"><i class="fas fa-file-medical" aria-hidden="true"></i>Enrollment</span>
-      <span class="p-nav-item"><i class="fas fa-wallet" aria-hidden="true"></i>Commission & Payments</span>
-      <span class="p-nav-item"><i class="fas fa-shield-alt" aria-hidden="true"></i>Compliance</span>
-      <span class="p-nav-item"><i class="fas fa-chart-bar" aria-hidden="true"></i>Reports</span>
-      <span class="p-nav-item"><i class="fas fa-cog" aria-hidden="true"></i>Administration</span>
-    </nav>
-    <div class="p-sidebar-foot">
-      <div class="p-powered-by">
-        <span class="p-powered-by-label">Powered by</span>
-        <img class="p-powered-by-logo" src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+    <div class="p-sidebar-scroll">
+      <div class="p-sidebar-brand">
+        <span class="p-brand-mark">
+          <img src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
+        </span>
+        <button type="button" class="p-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="p-role-switch" id="roleSwitch" data-current="payer-admin">
+        <button type="button" class="p-role-switch-trigger" id="roleSwitchTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="roleSwitchPanel" aria-label="Switch role, current role Payer Admin">
+          <span class="p-role-switch-ico" aria-hidden="true"><i class="fas fa-shield-alt" data-role-icon></i></span>
+          <span class="p-role-switch-meta">
+            <span class="p-role-switch-kicker">Current role</span>
+            <span class="p-role-switch-label" data-role-label>Payer Admin</span>
+          </span>
+          <span class="p-role-switch-action" aria-hidden="true">
+            <span class="p-role-switch-action-text">Switch</span>
+            <i class="fas fa-chevron-down p-role-switch-caret"></i>
+          </span>
+        </button>
+        <div class="p-role-switch-panel" id="roleSwitchPanel" role="menu" hidden></div>
+      </div>
+      <nav class="p-sidebar-nav" aria-label="Payer portals">
+        <div class="p-nav-level" id="navPortals">
+          <button type="button" class="p-nav-item has-arrow" data-portal="payer-admin">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            <span class="p-nav-label">Payer Admin</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-portal="broker-support">
+            <i class="fas fa-headset" aria-hidden="true"></i>
+            <span class="p-nav-label">Broker Support</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-portal="sales-leadership">
+            <i class="fas fa-chart-line" aria-hidden="true"></i>
+            <span class="p-nav-label">Sales Leadership</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-portal="finance">
+            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+            <span class="p-nav-label">Finance User</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-portal="enrollment-ops">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+            <span class="p-nav-label">Enrollment Ops (view only)</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-portal="compliance">
+            <i class="fas fa-gavel" aria-hidden="true"></i>
+            <span class="p-nav-label">Compliance Officer</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="p-nav-level" id="navPortalMenus" hidden>
+          <button type="button" class="p-nav-back" id="navBack">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            <span>Back</span>
+          </button>
+          <p class="p-nav-portal-title" id="navPortalTitle"></p>
+          <div class="p-nav-portal-body" id="navPortalBody"></div>
+        </div>
+      </nav>
+      <div class="p-sidebar-foot">
+        <div class="p-powered-by">
+          <span class="p-powered-by-label">Powered by</span>
+          <img class="p-powered-by-logo" src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+        </div>
       </div>
     </div>
+    <button type="button" class="p-sidebar-rail" id="sidebarRail" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar">
+      <i class="fas fa-chevron-left" aria-hidden="true"></i>
+    </button>
   </aside>
 
   <div class="p-main">
@@ -155,6 +210,8 @@
   </div>
 </div>
 <script src="portal-shell.js"></script>
+<script src="portal-role-switch.js"></script>
+<script src="portal-carrier-nav.js"></script>
 <script>
   (function () {
     var params = new URLSearchParams(location.search);

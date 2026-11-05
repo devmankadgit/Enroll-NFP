@@ -3,6 +3,7 @@
   var toggle = document.getElementById('sidebarToggle');
   var closeBtn = document.getElementById('sidebarClose');
   var backdrop = document.getElementById('sidebarBackdrop');
+  var rail = document.getElementById('sidebarRail');
   var userMenu = document.getElementById('userMenu');
   var userTrigger = document.getElementById('userMenuTrigger');
   var userPanel = document.getElementById('userMenuPanel');
@@ -21,11 +22,33 @@
     document.body.style.overflow = open && isMobile() ? 'hidden' : '';
   }
 
+  function setSidebarCollapsed(collapsed) {
+    if (!shell || isMobile()) return;
+    shell.classList.toggle('sidebar-collapsed', !!collapsed);
+    if (rail) {
+      rail.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      rail.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      rail.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    }
+  }
+
+  window.portalExpandSidebar = function () {
+    setSidebarCollapsed(false);
+  };
+
   if (toggle) toggle.addEventListener('click', function () {
     setSidebarOpen(!(shell && shell.classList.contains('sidebar-open')));
   });
   if (closeBtn) closeBtn.addEventListener('click', function () { setSidebarOpen(false); });
   if (backdrop) backdrop.addEventListener('click', function () { setSidebarOpen(false); });
+  if (rail) {
+    rail.addEventListener('click', function () {
+      setSidebarCollapsed(!(shell && shell.classList.contains('sidebar-collapsed')));
+    });
+  }
+  window.addEventListener('resize', function () {
+    if (isMobile()) setSidebarCollapsed(false);
+  });
 
   function setUserOpen(open) {
     if (!userMenu || !userTrigger || !userPanel) return;

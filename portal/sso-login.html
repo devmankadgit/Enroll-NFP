@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log In | EnrollAxis SSO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  :root {
+    --sso-bg: #eef3f8;
+    --sso-card: #ffffff;
+    --sso-text: #1a2744;
+    --sso-muted: #596579;
+    --sso-border: #c5cedc;
+    --sso-primary: #2f6fed;
+    --sso-primary-hover: #255fd4;
+    --sso-link: #255fd4;
+    --sso-radius: 28px;
+    --sso-field-radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--sso-text);
+    background:
+      radial-gradient(1200px 500px at 20% -10%, rgba(173, 205, 255, 0.45), transparent 60%),
+      radial-gradient(900px 420px at 90% 0%, rgba(255, 214, 196, 0.4), transparent 55%),
+      var(--sso-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  .sso-shell {
+    width: 100%;
+    max-width: 440px;
+  }
+  .sso-card {
+    overflow: hidden;
+    border-radius: var(--sso-radius);
+    background: var(--sso-card);
+    box-shadow:
+      0 18px 50px rgba(36, 64, 120, 0.12),
+      0 2px 8px rgba(36, 64, 120, 0.06);
+  }
+  .sso-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 32px 1.35rem;
+    background:
+      linear-gradient(115deg, rgba(214, 232, 255, 0.85) 0%, rgba(255, 236, 224, 0.7) 55%, rgba(255, 255, 255, 0.55) 100%);
+    border-bottom: 1px solid rgba(215, 222, 232, 0.8);
+    backdrop-filter: blur(10px);
+  }
+  .sso-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+  }
+  .sso-brand img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+  .sso-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 0;
+    background: transparent;
+    color: var(--sso-text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.25rem 0.15rem;
+  }
+  .sso-lang i {
+    font-size: 0.7rem;
+    color: var(--sso-muted);
+  }
+  .sso-card-body {
+    padding: 1.75rem 1.6rem 1.85rem;
+  }
+  .sso-card-body h1 {
+    margin: 0 0 1.35rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--sso-text);
+  }
+  .sso-field {
+    margin-bottom: 1rem;
+  }
+  .sso-field label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--sso-text);
+  }
+  .sso-input-wrap {
+    position: relative;
+  }
+  .sso-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 2.6rem 0.7rem 0.9rem;
+    border: 1px solid var(--sso-border);
+    border-radius: var(--sso-field-radius);
+    background: #fff;
+    color: var(--sso-text);
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .sso-input::placeholder {
+    color: #667085;
+  }
+  .sso-input:focus {
+    border-color: var(--sso-primary);
+    box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+  }
+  .sso-input-ico {
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #596579;
+    font-size: 0.95rem;
+    padding: 0;
+    cursor: default;
+  }
+  .sso-input-ico.is-btn {
+    cursor: pointer;
+  }
+  .sso-forgot {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.15rem 0 1.25rem;
+  }
+  .sso-forgot a {
+    color: var(--sso-link);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .sso-forgot a:hover {
+    text-decoration: underline;
+  }
+  .sso-submit {
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: var(--sso-field-radius);
+    background: var(--sso-primary);
+    color: #fff;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .sso-submit:hover {
+    background: var(--sso-primary-hover);
+  }
+  .sso-submit:focus-visible {
+    outline: 2px solid var(--sso-primary);
+    outline-offset: 2px;
+  }
+  .sso-powered {
+    margin-top: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    text-align: right;
+  }
+  .sso-powered span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5565;
+  }
+  .sso-powered img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+  @media (max-width: 480px) {
+    .sso-card-body {
+      padding: 1.4rem 1.15rem 1.5rem;
+    }
+    .sso-card-body h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="sso-shell">
+    <div class="sso-card">
+      <div class="sso-card-head">
+        <div class="sso-brand">
+          <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+        </div>
+        <button type="button" class="sso-lang" aria-label="Language English">
+          English <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form class="sso-card-body" id="ssoForm" action="signing-in.html" method="get">
+        <h1>Log In</h1>
+        <div class="sso-field">
+          <label for="ssoUser">Username</label>
+          <div class="sso-input-wrap">
+            <input class="sso-input" id="ssoUser" name="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+            <span class="sso-input-ico" aria-hidden="true"><i class="far fa-user"></i></span>
+          </div>
+        </div>
+        <div class="sso-field">
+          <label for="ssoPass">Password</label>
+          <div class="sso-input-wrap">
+            <input class="sso-input" id="ssoPass" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="sso-input-ico is-btn" id="togglePass" aria-label="Show password">
+              <i class="far fa-eye-slash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="sso-forgot">
+          <a href="#" id="forgotLink">Forgot Password?</a>
+        </div>
+        <button type="submit" class="sso-submit">Log In</button>
+      </form>
+    </div>
+    <div class="sso-powered">
+      <span>Powered by</span>
+      <img src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+    </div>
+  </div>
+  <script>
+    (function () {
+      var pass = document.getElementById("ssoPass");
+      var toggle = document.getElementById("togglePass");
+      var form = document.getElementById("ssoForm");
+      var forgot = document.getElementById("forgotLink");
+      if (toggle && pass) {
+        toggle.addEventListener("click", function () {
+          var show = pass.type === "password";
+          pass.type = show ? "text" : "password";
+          toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+          toggle.innerHTML = show
+            ? '<i class="far fa-eye" aria-hidden="true"></i>'
+            : '<i class="far fa-eye-slash" aria-hidden="true"></i>';
+        });
+      }
+      if (forgot) {
+        forgot.addEventListener("click", function (e) {
+          e.preventDefault();
+          alert("Contact your administrator to reset your SSO password.");
+        });
+      }
+      if (form) {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          location.href = "signing-in.html";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
