@@ -6,7 +6,7 @@
 <title>Carrier landing | EnrollAxis</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="portal.css?v=20261106a">
+<link rel="stylesheet" href="portal.css?v=20261106c">
 </head>
 <body>
 <div class="p-shell" id="appShell">
@@ -19,6 +19,7 @@
         </span>
         <button type="button" class="p-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
       </div>
+      <!-- Role switcher temporarily hidden
       <div class="p-role-switch" id="roleSwitch" data-current="payer-admin">
         <button type="button" class="p-role-switch-trigger" id="roleSwitchTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="roleSwitchPanel" aria-label="Switch role, current role Payer Admin">
           <span class="p-role-switch-ico" aria-hidden="true"><i class="fas fa-shield-alt" data-role-icon></i></span>
@@ -33,36 +34,51 @@
         </button>
         <div class="p-role-switch-panel" id="roleSwitchPanel" role="menu" hidden></div>
       </div>
-      <nav class="p-sidebar-nav" aria-label="Payer portals">
+      -->
+      <nav class="p-sidebar-nav" aria-label="Carrier menu">
         <div class="p-nav-level" id="navPortals">
-          <button type="button" class="p-nav-item has-arrow" data-portal="payer-admin">
-            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-            <span class="p-nav-label">Payer Admin</span>
+          <button type="button" class="p-nav-item is-active" data-group="dashboard" aria-current="page">
+            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+            <span class="p-nav-label">Dashboard</span>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-group="agent-producer">
+            <i class="fas fa-id-card" aria-hidden="true"></i>
+            <span class="p-nav-label">Agent &amp; Producer</span>
             <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
           </button>
-          <button type="button" class="p-nav-item has-arrow" data-portal="broker-support">
-            <i class="fas fa-headset" aria-hidden="true"></i>
-            <span class="p-nav-label">Broker Support</span>
+          <button type="button" class="p-nav-item has-arrow" data-group="members-leads">
+            <i class="fas fa-users" aria-hidden="true"></i>
+            <span class="p-nav-label">Members &amp; Leads</span>
             <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
           </button>
-          <button type="button" class="p-nav-item has-arrow" data-portal="sales-leadership">
-            <i class="fas fa-chart-line" aria-hidden="true"></i>
-            <span class="p-nav-label">Sales Leadership</span>
-            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="p-nav-item has-arrow" data-portal="finance">
+          <button type="button" class="p-nav-item has-arrow" data-group="commissions-finance">
             <i class="fas fa-dollar-sign" aria-hidden="true"></i>
-            <span class="p-nav-label">Finance User</span>
+            <span class="p-nav-label">Commissions &amp; Finance</span>
             <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
           </button>
-          <button type="button" class="p-nav-item has-arrow" data-portal="enrollment-ops">
+          <button type="button" class="p-nav-item has-arrow" data-group="training-compliance">
+            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+            <span class="p-nav-label">Training &amp; Compliance</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-group="support-ops">
+            <i class="fas fa-headset" aria-hidden="true"></i>
+            <span class="p-nav-label">Support Operations</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-group="sales-campaigns">
+            <i class="fas fa-chart-line" aria-hidden="true"></i>
+            <span class="p-nav-label">Sales &amp; Campaigns</span>
+            <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="p-nav-item has-arrow" data-group="enrollment-ops">
             <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-            <span class="p-nav-label">Enrollment Ops (view only)</span>
+            <span class="p-nav-label">Enrollment Ops</span>
             <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
           </button>
-          <button type="button" class="p-nav-item has-arrow" data-portal="compliance">
-            <i class="fas fa-gavel" aria-hidden="true"></i>
-            <span class="p-nav-label">Compliance Officer</span>
+          <button type="button" class="p-nav-item has-arrow" data-group="system-config">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+            <span class="p-nav-label">System &amp; Configuration</span>
             <i class="fas fa-chevron-right p-nav-arrow" aria-hidden="true"></i>
           </button>
         </div>
@@ -100,12 +116,12 @@
         </button>
         <div class="p-user-menu" id="userMenu">
           <button type="button" class="p-user-trigger" id="userMenuTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenuPanel" aria-label="Account menu">
-            <span class="p-avatar" aria-hidden="true">PA</span>
+            <span class="p-avatar" aria-hidden="true">PB</span>
           </button>
           <div class="p-user-panel" id="userMenuPanel" role="menu" hidden>
             <div class="p-user-head">
-              <p class="name">Priya Anand</p>
-              <p class="meta">priya.anand@enrollaxis.com</p>
+              <p class="name">Preet B</p>
+              <p class="meta">preet.b@enrollaxis.com</p>
               <p class="meta">Carrier Staff</p>
             </div>
             <hr class="p-user-sep">
@@ -122,68 +138,162 @@
 
     <main class="p-page">
       <div id="landingReady">
-        <h1 class="p-greeting">Welcome, Priya</h1>
-        <p class="p-greeting-sub">EnrollAxis - Carrier Staff</p>
-        <div class="p-info-strip">
-          <i class="fas fa-lock" aria-hidden="true"></i>
-          <span>You are signed in with AaNeel SSO. Your session ends after 15 minutes without activity.</span>
-        </div>
-        <h2 class="p-section-title">Your workspace</h2>
-        <div class="p-card-grid">
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-id-card"></i></span>
-            <h3>Onboarding & Producers</h3>
-            <p>Review producers and onboarding queues</p>
+        <h1 class="p-greeting">Welcome, Preet</h1>
+        <section class="p-portal-block" aria-labelledby="dash-network">
+          <h2 class="p-portal-label" id="dash-network">Producer Network</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Active Agents</p>
+              <p class="p-kpi-value">143</p>
+              <p class="p-kpi-foot">Across all agencies</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Active Agencies</p>
+              <p class="p-kpi-value">24</p>
+              <p class="p-kpi-foot">2 activated this month</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">In-Flight Onboarding</p>
+              <p class="p-kpi-value">10</p>
+              <p class="p-kpi-foot">Cases in progress</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Today's Leads</p>
+              <p class="p-kpi-value">14</p>
+              <p class="p-kpi-foot">7 new - 4 web - 3 referral</p>
+            </article>
           </div>
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-file-medical"></i></span>
-            <h3>Enrollment</h3>
-            <p>Monitor plan enrollment activity</p>
+        </section>
+
+        <section class="p-portal-block" aria-labelledby="dash-broker">
+          <h2 class="p-portal-label" id="dash-broker">Support Desk</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Onboarding Queue</p>
+              <p class="p-kpi-value">12</p>
+              <p class="p-kpi-foot">3 new today</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Support Tickets</p>
+              <p class="p-kpi-value">14</p>
+              <p class="p-kpi-foot">3 high priority</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">NIPR Alerts</p>
+              <p class="p-kpi-value">5</p>
+              <p class="p-kpi-foot">2 critical expirations</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">SLA Compliance</p>
+              <p class="p-kpi-value">94%</p>
+              <p class="p-kpi-foot">+2% vs last week</p>
+            </article>
           </div>
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-wallet"></i></span>
-            <h3>Commission & Payments</h3>
-            <p>Configure and approve commission runs</p>
+        </section>
+
+        <section class="p-portal-block" aria-labelledby="dash-sales">
+          <h2 class="p-portal-label" id="dash-sales">Sales Performance</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Enrollments MTD</p>
+              <p class="p-kpi-value">1,247</p>
+              <p class="p-kpi-foot">+12.3% vs prior month</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Lead Conversion</p>
+              <p class="p-kpi-value">24.8%</p>
+              <p class="p-kpi-foot">+2.1pp vs last month</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Campaign ROI</p>
+              <p class="p-kpi-value">3.2x</p>
+              <p class="p-kpi-foot">+0.4x vs prior quarter</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Cost per Enrollment</p>
+              <p class="p-kpi-value">$187</p>
+              <p class="p-kpi-foot">Down $12 vs last month</p>
+            </article>
           </div>
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
-            <h3>Compliance</h3>
-            <p>Track rules, audits, and risk flags</p>
+        </section>
+
+        <section class="p-portal-block" aria-labelledby="dash-finance">
+          <h2 class="p-portal-label" id="dash-finance">Commissions &amp; Payments</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Total Paid (CY2026)</p>
+              <p class="p-kpi-value">$438,216</p>
+              <p class="p-kpi-foot">Year to date</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Payable This Month</p>
+              <p class="p-kpi-value">$91,200</p>
+              <p class="p-kpi-foot">Estimated Jun 2026</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">HRA Incentives Pending</p>
+              <p class="p-kpi-value">14</p>
+              <p class="p-kpi-foot">Awaiting Finance approval</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Disputes Open</p>
+              <p class="p-kpi-value">3</p>
+              <p class="p-kpi-foot">Avg age 4.2 days</p>
+            </article>
           </div>
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-chart-bar"></i></span>
-            <h3>Reports</h3>
-            <p>Open carrier operational reports</p>
+        </section>
+
+        <section class="p-portal-block" aria-labelledby="dash-enroll">
+          <h2 class="p-portal-label" id="dash-enroll">Enrollment Processing</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Enrollments in Queue</p>
+              <p class="p-kpi-value">28</p>
+              <p class="p-kpi-foot">Awaiting CMS response</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">7-Day Compliance Flags</p>
+              <p class="p-kpi-value">3</p>
+              <p class="p-kpi-foot">Action required</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">Rejection Queue</p>
+              <p class="p-kpi-value">2</p>
+              <p class="p-kpi-foot">Awaiting resolution</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">CMS Compliance Rate</p>
+              <p class="p-kpi-value">92%</p>
+              <p class="p-kpi-foot">Submitted within 7 days</p>
+            </article>
           </div>
-          <div class="p-mod-card">
-            <span class="p-mod-icon" aria-hidden="true"><i class="fas fa-cog"></i></span>
-            <h3>Administration</h3>
-            <p>Manage users, roles, and settings</p>
+        </section>
+
+        <section class="p-portal-block" aria-labelledby="dash-compliance">
+          <h2 class="p-portal-label" id="dash-compliance">Compliance Monitoring</h2>
+          <div class="p-kpi-grid">
+            <article class="p-kpi">
+              <p class="p-kpi-label">Agents on Hold</p>
+              <p class="p-kpi-value">8</p>
+              <p class="p-kpi-foot">2 placed today</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">NIPR Alerts Today</p>
+              <p class="p-kpi-value">3</p>
+              <p class="p-kpi-foot">License changes detected</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">AHIP Expiring in 30 Days</p>
+              <p class="p-kpi-value">12</p>
+              <p class="p-kpi-foot">Action recommended</p>
+            </article>
+            <article class="p-kpi">
+              <p class="p-kpi-label">SOA Compliance Rate</p>
+              <p class="p-kpi-value">98.5%</p>
+              <p class="p-kpi-foot">Target 98%</p>
+            </article>
           </div>
-        </div>
-        <h2 class="p-section-title">At a glance</h2>
-        <div class="p-kpi-grid">
-          <article class="p-kpi">
-            <p class="p-kpi-label">Onboarding & Producers</p>
-            <p class="p-kpi-value">-</p>
-            <p class="p-kpi-foot">Available when Onboarding & Producers goes live</p>
-          </article>
-          <article class="p-kpi">
-            <p class="p-kpi-label">Enrollment</p>
-            <p class="p-kpi-value">-</p>
-            <p class="p-kpi-foot">Available when Enrollment goes live</p>
-          </article>
-          <article class="p-kpi">
-            <p class="p-kpi-label">Commission & Payments</p>
-            <p class="p-kpi-value">-</p>
-            <p class="p-kpi-foot">Available when Commission & Payments goes live</p>
-          </article>
-          <article class="p-kpi">
-            <p class="p-kpi-label">Compliance</p>
-            <p class="p-kpi-value">-</p>
-            <p class="p-kpi-foot">Available when Compliance goes live</p>
-          </article>
-        </div>
+        </section>
       </div>
 
       <div id="landingLoading" hidden>
@@ -210,8 +320,8 @@
   </div>
 </div>
 <script src="portal-shell.js"></script>
-<script src="portal-role-switch.js"></script>
-<script src="portal-carrier-nav.js"></script>
+<!-- <script src="portal-role-switch.js"></script> -->
+<script src="portal-carrier-nav.js?v=20261106b"></script>
 <script>
   (function () {
     var params = new URLSearchParams(location.search);

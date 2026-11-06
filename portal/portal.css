@@ -924,23 +924,31 @@ span.p-nav-item:hover [data-icon] {
   pointer-events: none;
 }
 .p-header-product {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.1rem;
+  align-items: center;
+  justify-content: flex-end;
   line-height: 1;
+  /* Height matches logo only so it centers with notify + avatar */
+  height: 44px;
 }
 .p-header-product-logo {
   height: 28px;
   width: auto;
   max-width: min(148px, 34vw);
   object-fit: contain;
+  display: block;
 }
 .p-header-product-ver {
+  position: absolute;
+  top: calc(50% + 14px);
+  right: 0;
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--p-muted);
+  line-height: 1;
+  white-space: nowrap;
 }
 .p-page {
   flex: 1;
@@ -994,6 +1002,27 @@ span.p-nav-item:hover [data-icon] {
   font-size: 1rem;
   font-weight: 700;
   color: var(--p-text);
+}
+.p-dash-intro {
+  margin: -0.35rem 0 1.25rem;
+  font-size: 14px;
+  color: var(--p-muted);
+  line-height: 1.45;
+}
+.p-portal-block {
+  margin-bottom: 1.5rem;
+}
+.p-portal-block:last-child {
+  margin-bottom: 0;
+}
+.p-portal-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--p-font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--p-muted);
 }
 .p-card-grid {
   display: grid;
