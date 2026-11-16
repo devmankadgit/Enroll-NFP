@@ -1,13 +1,9 @@
 /**
- * Carrier landing - combined thematic menus (all portals) with drill-down groups.
+ * Carrier landing - thematic menus as expand-in-place accordion (no drill-down).
  */
 (function () {
   var navRoot = document.getElementById("navPortals");
-  var navDrill = document.getElementById("navPortalMenus");
-  var navBody = document.getElementById("navPortalBody");
-  var navTitle = document.getElementById("navPortalTitle");
-  var navBack = document.getElementById("navBack");
-  if (!navRoot || !navDrill || !navBody || !navTitle || !navBack) return;
+  if (!navRoot) return;
 
   var ADMIN = "../admin/";
   var BROKER = "../broker-support/";
@@ -35,6 +31,7 @@
   var MENUS = {
     "agent-producer": {
       title: "Agent & Producer",
+      icon: "fa-id-card",
       items: [
         item(ADMIN + "agents.html", "fa-id-card", "Agent Management", { active: true }),
         item(ADMIN + "agent-invitations.html", "fa-paper-plane", "Agent Invitations"),
@@ -59,6 +56,7 @@
     },
     "members-leads": {
       title: "Members & Leads",
+      icon: "fa-users",
       items: [
         item(ADMIN + "leads.html", "fa-users", "Leads & Assignment"),
         item(SALES + "leads.html", "fa-address-book", "View Leads"),
@@ -74,6 +72,7 @@
     },
     "commissions-finance": {
       title: "Commissions & Finance",
+      icon: "fa-dollar-sign",
       items: [
         item(ADMIN + "commission-rules.html", "fa-cogs", "Commission Rules"),
         item(ADMIN + "commission-approval.html", "fa-check-circle", "Commission Approval"),
@@ -103,6 +102,7 @@
     },
     "training-compliance": {
       title: "Training & Compliance",
+      icon: "fa-graduation-cap",
       items: [
         group("fa-graduation-cap", "Training Management", [
           item(ADMIN + "training-admin.html", "fa-chart-line", "Training Package"),
@@ -127,6 +127,7 @@
     },
     "support-ops": {
       title: "Support Operations",
+      icon: "fa-headset",
       items: [
         item(BROKER + "support-cases.html", "fa-inbox", "Support Cases", { badge: "34" }),
         item(BROKER + "sla-tracker.html", "fa-stopwatch", "SLA Tracker"),
@@ -136,6 +137,7 @@
     },
     "sales-campaigns": {
       title: "Sales & Campaigns",
+      icon: "fa-chart-line",
       items: [
         item(SALES + "agencies.html", "fa-building", "View Agencies"),
         item(SALES + "campaign-roi.html", "fa-bullseye", "Campaign ROI"),
@@ -145,6 +147,7 @@
     },
     "enrollment-ops": {
       title: "Enrollment Ops",
+      icon: "fa-clipboard-check",
       items: [
         item(ENROLL + "processing-hub.html", "fa-inbox", "Processing Hub"),
         item(ENROLL + "oec-intake.html", "fa-inbox", "OEC Intake Hub"),
@@ -155,6 +158,7 @@
     },
     "system-config": {
       title: "System & Configuration",
+      icon: "fa-cog",
       items: [
         group("fa-users-cog", "User Management", [
           item(ADMIN + "users.html", "fa-id-card", "User Details"),
@@ -171,6 +175,17 @@
       ]
     }
   };
+
+  var GROUP_ORDER = [
+    "agent-producer",
+    "members-leads",
+    "commissions-finance",
+    "training-compliance",
+    "support-ops",
+    "sales-campaigns",
+    "enrollment-ops",
+    "system-config"
+  ];
 
   function escapeHtml(value) {
     return String(value)
@@ -202,7 +217,7 @@
     );
   }
 
-  function renderGroup(entry) {
+  function renderNestedGroup(entry) {
     var children = (entry.children || [])
       .map(function (child) {
         return renderLink(child);
@@ -226,76 +241,153 @@
     );
   }
 
-  function renderMenu(menu) {
-    return (menu.items || [])
+  function renderMenuItems(items) {
+    return (items || [])
       .map(function (entry) {
-        if (entry.type === "group") return renderGroup(entry);
+        if (entry.type === "group") return renderNestedGroup(entry);
         return renderLink(entry);
       })
       .join("");
   }
 
-  function setRootActive(key) {
-    navRoot.querySelectorAll("[data-group]").forEach(function (btn) {
-      var active = btn.getAttribute("data-group") === key;
-      btn.classList.toggle("is-active", active);
-      if (active) btn.setAttribute("aria-current", "page");
-      else btn.removeAttribute("aria-current");
+  function countBadges(items) {
+    var total = 0;
+    (items || []).forEach(function (entry) {
+      if (entry.type === "group") {
+        total += countBadges(entry.children);
+      } else if (entry.badge) {
+        var n = parseInt(entry.badge, 10);
+        if (!isNaN(n)) total += n;
+      }
+    });
+    return total;
+  }
+
+  function renderAccordion() {
+    var html =
+      '<button type="button" class="p-nav-item is-active" data-group="dashboard" aria-current="page">' +
+      '<i class="fas fa-tachometer-alt" aria-hidden="true"></i>' +
+      '<span class="p-nav-label">Dashboard</span>' +
+      "</button>";
+
+    GROUP_ORDER.forEach(function (key) {
+      var menu = MENUS[key];
+      if (!menu) return;
+      var badgeCount = countBadges(menu.items);
+      var badge =
+        badgeCount > 0
+          ? '<span class="p-nav-badge">' + badgeCount + "</span>"
+          : "";
+      html +=
+        '<div class="p-nav-accordion" data-accordion="' +
+        escapeHtml(key) +
+        '">' +
+        '<button type="button" class="p-nav-item has-arrow p-nav-accordion-trigger" data-group="' +
+        escapeHtml(key) +
+        '" aria-expanded="false" aria-controls="nav-panel-' +
+        escapeHtml(key) +
+        '">' +
+        '<i class="fas ' +
+        escapeHtml(menu.icon) +
+        '" aria-hidden="true"></i>' +
+        '<span class="p-nav-label">' +
+        escapeHtml(menu.title) +
+        "</span>" +
+        badge +
+        '<i class="fas fa-chevron-down p-nav-arrow" aria-hidden="true"></i>' +
+        "</button>" +
+        '<div class="p-nav-panel" id="nav-panel-' +
+        escapeHtml(key) +
+        '" hidden>' +
+        renderMenuItems(menu.items) +
+        "</div>" +
+        "</div>";
+    });
+
+    navRoot.innerHTML = html;
+  }
+
+  function closeAllAccordions(exceptKey) {
+    navRoot.querySelectorAll(".p-nav-accordion").forEach(function (acc) {
+      var key = acc.getAttribute("data-accordion");
+      if (exceptKey && key === exceptKey) return;
+      var trigger = acc.querySelector(".p-nav-accordion-trigger");
+      var panel = acc.querySelector(".p-nav-panel");
+      if (trigger) {
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.classList.remove("is-open");
+      }
+      if (panel) panel.hidden = true;
+      acc.classList.remove("is-open");
     });
   }
 
-  function showRoot(activeKey) {
-    navDrill.hidden = true;
-    navRoot.hidden = false;
-    navBody.innerHTML = "";
-    navTitle.textContent = "";
-    setRootActive(activeKey || "dashboard");
+  function setDashboardActive(on) {
+    var dash = navRoot.querySelector('[data-group="dashboard"]');
+    if (!dash) return;
+    dash.classList.toggle("is-active", !!on);
+    if (on) dash.setAttribute("aria-current", "page");
+    else dash.removeAttribute("aria-current");
   }
 
-  function showGroup(key) {
-    var menu = MENUS[key];
-    if (!menu) return;
+  function openAccordion(key) {
+    var acc = navRoot.querySelector('[data-accordion="' + key + '"]');
+    if (!acc) return;
     if (typeof window.portalExpandSidebar === "function") {
       window.portalExpandSidebar();
     }
-    navTitle.textContent = menu.title;
-    navBody.innerHTML = renderMenu(menu);
-    navRoot.hidden = true;
-    navDrill.hidden = false;
-    setRootActive(key);
-    navBack.focus();
+    closeAllAccordions(key);
+    setDashboardActive(false);
+    var trigger = acc.querySelector(".p-nav-accordion-trigger");
+    var panel = acc.querySelector(".p-nav-panel");
+    if (trigger) {
+      trigger.setAttribute("aria-expanded", "true");
+      trigger.classList.add("is-open");
+    }
+    if (panel) panel.hidden = false;
+    acc.classList.add("is-open");
+  }
+
+  function toggleAccordion(key) {
+    var acc = navRoot.querySelector('[data-accordion="' + key + '"]');
+    if (!acc) return;
+    var trigger = acc.querySelector(".p-nav-accordion-trigger");
+    var open = trigger && trigger.getAttribute("aria-expanded") === "true";
+    if (open) {
+      closeAllAccordions();
+      setDashboardActive(true);
+      return;
+    }
+    openAccordion(key);
   }
 
   navRoot.addEventListener("click", function (event) {
+    var nestedToggle = event.target.closest(".p-nav-toggle");
+    if (nestedToggle && navRoot.contains(nestedToggle)) {
+      event.preventDefault();
+      var groupEl = nestedToggle.closest(".p-nav-group");
+      if (!groupEl) return;
+      var sub = groupEl.querySelector(".p-nav-sub");
+      var open = nestedToggle.getAttribute("aria-expanded") === "true";
+      nestedToggle.setAttribute("aria-expanded", open ? "false" : "true");
+      nestedToggle.classList.toggle("is-open", !open);
+      if (sub) sub.hidden = open;
+      return;
+    }
+
     var btn = event.target.closest("[data-group]");
     if (!btn || !navRoot.contains(btn)) return;
     event.preventDefault();
     var key = btn.getAttribute("data-group");
     if (key === "dashboard") {
-      showRoot("dashboard");
+      closeAllAccordions();
+      setDashboardActive(true);
       var ready = document.getElementById("landingReady");
       if (ready) ready.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
-    showGroup(key);
+    toggleAccordion(key);
   });
 
-  navBack.addEventListener("click", function () {
-    showRoot("dashboard");
-  });
-
-  navBody.addEventListener("click", function (event) {
-    var toggle = event.target.closest(".p-nav-toggle");
-    if (!toggle || !navBody.contains(toggle)) return;
-    event.preventDefault();
-    var groupEl = toggle.closest(".p-nav-group");
-    if (!groupEl) return;
-    var sub = groupEl.querySelector(".p-nav-sub");
-    var open = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", open ? "false" : "true");
-    toggle.classList.toggle("is-open", !open);
-    if (sub) sub.hidden = open;
-  });
-
-  showRoot("dashboard");
+  renderAccordion();
 })();
