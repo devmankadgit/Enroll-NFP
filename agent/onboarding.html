@@ -773,13 +773,15 @@
     flex-shrink: 0;
   }
   .ob-header-product {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.1rem;
+    align-items: center;
+    justify-content: flex-end;
     flex-shrink: 1;
     min-width: 0;
     line-height: 1;
+    /* Height matches notify + avatar so the logo centers with them */
+    height: 2.25rem;
   }
   .ob-header-product-logo {
     display: block;
@@ -790,11 +792,15 @@
     object-position: right center;
   }
   .ob-header-product-ver {
+    position: absolute;
+    top: calc(50% + 14px);
+    right: 0;
     margin: 0;
     font-size: 0.6875rem;
     font-weight: 500;
     color: var(--muted-foreground);
     font-family: var(--font-body);
+    line-height: 1;
     white-space: nowrap;
   }
   .ob-topbar-customer-logo {
