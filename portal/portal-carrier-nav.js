@@ -250,19 +250,6 @@
       .join("");
   }
 
-  function countBadges(items) {
-    var total = 0;
-    (items || []).forEach(function (entry) {
-      if (entry.type === "group") {
-        total += countBadges(entry.children);
-      } else if (entry.badge) {
-        var n = parseInt(entry.badge, 10);
-        if (!isNaN(n)) total += n;
-      }
-    });
-    return total;
-  }
-
   function renderAccordion() {
     var html =
       '<button type="button" class="p-nav-item is-active" data-group="dashboard" aria-current="page">' +
@@ -273,11 +260,6 @@
     GROUP_ORDER.forEach(function (key) {
       var menu = MENUS[key];
       if (!menu) return;
-      var badgeCount = countBadges(menu.items);
-      var badge =
-        badgeCount > 0
-          ? '<span class="p-nav-badge">' + badgeCount + "</span>"
-          : "";
       html +=
         '<div class="p-nav-accordion" data-accordion="' +
         escapeHtml(key) +
@@ -293,7 +275,6 @@
         '<span class="p-nav-label">' +
         escapeHtml(menu.title) +
         "</span>" +
-        badge +
         '<i class="fas fa-chevron-down p-nav-arrow" aria-hidden="true"></i>' +
         "</button>" +
         '<div class="p-nav-panel" id="nav-panel-' +
