@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User Management | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9998;justify-content:center;align-items:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:600px;max-width:92vw;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.modal-box .card-hdr{border-radius:12px 12px 0 0}
+.modal-box .card-body{padding:20px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub sb-sub-open">
+    <a href="users.html" class="active"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>User Management</h4><ol class="breadcrumb-bar"><li>Create, Deactivate, Reset, Bulk Actions &amp; Auto-Provisioning</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active Users</div><div class="stat-val">142</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Deactivated</div><div class="stat-val">18</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Pending Provisioning</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-key"></i></div><div><div class="stat-label">Password Resets (7d)</div><div class="stat-val">7</div></div></div></div>
+    </div>
+
+    <!-- Actions Bar -->
+    <div class="filter-bar">
+      <button class="btn-pr btn-sm" onclick="document.getElementById('create-modal').classList.add('open')"><i class="fas fa-user-plus"></i>Create User</button>
+      <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-upload"></i>Bulk Import (CSV)</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('User List')"><i class="fas fa-download"></i>Export Users</button>
+      <span style="flex:1"></span>
+      <label>Role:</label>
+      <select id="filterRole" onchange="filterUsers()"><option value="">All Roles</option><option>Agent</option><option>Agency Admin</option><option>Enrollment Ops</option><option>Finance</option><option>Compliance</option><option>Platform Admin</option></select>
+      <label>Status:</label>
+      <select id="filterStatus" onchange="filterUsers()"><option value="">All Status</option><option>Active</option><option>Deactivated</option></select>
+      <input type="text" id="userSearch" placeholder="Search name, email, NPN..." style="width:180px" oninput="filterUsers()">
+      <button class="btn-ol btn-sm" onclick="filterUsers()"><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- Users Table -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>All Users (142)</h5><div class="dflex g8"><button class="btn-ol btn-sm" style="color:#c62828" onclick="bulkDeactivate()"><i class="fas fa-user-slash"></i>Bulk Deactivate</button></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','users_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th><input type="checkbox"></th><th>Name</th><th>Email</th><th>Role</th><th>NPN</th><th>Status</th><th>Last Login</th><th>Created</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><input type="checkbox"></td><td>James Martinez</td><td>j.martinez@acme.com</td><td><span class="bdg b-blue">Agent</span></td><td>8823441</td><td><span class="bdg b-green">Active</span></td><td>05 25,2026 9:15 AM</td><td>01 15,2026</td><td><button class="btn-ol btn-sm" onclick="editUser('James','Martinez','j.martinez@acme.com','Agent','8823441','Active','Acme Insurance Group','05 25,2026 9:15 AM','01 15,2026')">Edit</button> <button class="btn-ol btn-sm" onclick="nfpAction('Password reset link sent to j.martinez@acme.com','success')" title="Reset Password"><i class="fas fa-key"></i></button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="nfpAction('Account deactivated for James Martinez. All active sessions terminated.','success')" title="Deactivate"><i class="fas fa-ban"></i></button></td></tr>
+            <tr><td><input type="checkbox"></td><td>Sarah Chen</td><td>s.chen@acme.com</td><td><span class="bdg b-blue">Agent</span></td><td>7719022</td><td><span class="bdg b-green">Active</span></td><td>05 24,2026 4:30 PM</td><td>02 01,2026</td><td><button class="btn-ol btn-sm" onclick="editUser('Sarah','Chen','s.chen@acme.com','Agent','7719022','Active','Acme Insurance Group','05 24,2026 4:30 PM','02 01,2026')">Edit</button> <button class="btn-ol btn-sm" onclick="nfpAction('Password reset link sent to s.chen@acme.com','success')" title="Reset Password"><i class="fas fa-key"></i></button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="nfpAction('Account deactivated for Sarah Chen. All active sessions terminated.','success')" title="Deactivate"><i class="fas fa-ban"></i></button></td></tr>
+            <tr><td><input type="checkbox"></td><td>Angela Perez</td><td>a.perez@goldkidney.com</td><td><span class="bdg b-teal">Enrollment Ops</span></td><td></td><td><span class="bdg b-green">Active</span></td><td>05 25,2026 10:00 AM</td><td>10 01,2025</td><td><button class="btn-ol btn-sm" onclick="editUser('Angela','Perez','a.perez@goldkidney.com','Enrollment Ops','','Active','No Agency (Direct)','05 25,2026 10:00 AM','10 01,2025')">Edit</button> <button class="btn-ol btn-sm" onclick="nfpAction('Password reset link sent to a.perez@goldkidney.com','success')" title="Reset Password"><i class="fas fa-key"></i></button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="nfpAction('Account deactivated for Angela Perez. All active sessions terminated.','success')" title="Deactivate"><i class="fas fa-ban"></i></button></td></tr>
+            <tr><td><input type="checkbox"></td><td>Lisa Rodriguez</td><td>l.rodriguez@goldkidney.com</td><td><span class="bdg b-purple">Finance</span></td><td></td><td><span class="bdg b-green">Active</span></td><td>05 25,2026 8:45 AM</td><td>09 15,2025</td><td><button class="btn-ol btn-sm" onclick="editUser('Lisa','Rodriguez','l.rodriguez@goldkidney.com','Finance','','Active','No Agency (Direct)','05 25,2026 8:45 AM','09 15,2025')">Edit</button> <button class="btn-ol btn-sm" onclick="nfpAction('Password reset link sent to l.rodriguez@goldkidney.com','success')" title="Reset Password"><i class="fas fa-key"></i></button> <button class="btn-ol btn-sm" style="color:#c62828" onclick="nfpAction('Account deactivated for Lisa Rodriguez. All active sessions terminated.','success')" title="Deactivate"><i class="fas fa-ban"></i></button></td></tr>
+            <tr style="opacity:.6"><td><input type="checkbox"></td><td>David Wright</td><td>d.wright@partner.com</td><td><span class="bdg b-blue">Agent</span></td><td>6643091</td><td><span class="bdg b-red">Deactivated</span></td><td>04 01,2026</td><td>03 01,2025</td><td><button class="btn-ol btn-sm" style="color:#1b5e20" onclick="nfpAction('Account reactivated for David Wright. Welcome email with login instructions sent to d.wright@partner.com.','success')"><i class="fas fa-redo"></i>Reactivate</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<!-- Create User Modal Popup -->
+<div class="modal-overlay" id="create-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <div class="card-hdr" style="background:#e3f2fd"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#0d47a1"></i>Create New User</h5><button class="btn-ol btn-sm" onclick="document.getElementById('create-modal').classList.remove('open')" style="margin-left:auto"><i class="fas fa-times"></i></button></div>
+    <div class="card-body" style="font-size:13px">
+      <div class="form-row">
+        <div class="fg"><label>First Name <span style="color:#c62828">*</span></label><input type="text" id="cuFirst" class="form-control form-control-sm" placeholder="John"></div>
+        <div class="fg"><label>Last Name <span style="color:#c62828">*</span></label><input type="text" id="cuLast" class="form-control form-control-sm" placeholder="Smith"></div>
+        <div class="fg"><label>Email <span style="color:#c62828">*</span></label><input type="email" id="cuEmail" class="form-control form-control-sm" placeholder="user@example.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Role <span style="color:#c62828">*</span></label><select id="cuRole"><option value="">Select role...</option><option>Agent</option><option>Agency Admin</option><option>Enrollment Ops</option><option>Finance</option><option>Compliance</option><option>Platform Admin</option></select></div>
+        <div class="fg"><label>NPN (if Agent)</label><input type="text" id="cuNPN" class="form-control form-control-sm" placeholder="10-digit NPN" maxlength="10"></div>
+        <div class="fg"><label>Agency Assignment</label><select id="cuAgency"><option>No Agency (Direct)</option><option>Acme Insurance Group</option><option>Florida Health Partners</option><option>Southeast Benefits</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Provisioning Method</label><select id="cuProvision"><option>Manual — Send welcome email with temp password</option><option>Auto-Provision from onboarding pipeline</option><option>SSO — Link to existing identity provider</option></select></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px;justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillCreateUser()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="document.getElementById('create-modal').classList.remove('open')">Cancel</button>
+          <button class="btn-pr btn-sm" onclick="createUser()"><i class="fas fa-user-plus" style="margin-right:4px"></i>Create User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Edit User Modal -->
+    <div class="card mb16" id="edit-modal" style="display:none">
+      <div class="card-hdr" style="background:#fff8e1"><h5><i class="fas fa-user-edit" style="margin-right:8px;color:#e65100"></i>Edit User</h5><button class="btn-ol btn-sm" onclick="document.getElementById('edit-modal').style.display='none'" style="margin-left:auto"><i class="fas fa-times"></i></button></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>First Name <span style="color:#c62828">*</span></label><input type="text" id="euFirst" class="form-control form-control-sm"></div>
+          <div class="fg"><label>Last Name <span style="color:#c62828">*</span></label><input type="text" id="euLast" class="form-control form-control-sm"></div>
+          <div class="fg"><label>Email <span style="color:#c62828">*</span></label><input type="email" id="euEmail" class="form-control form-control-sm"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Role</label><select id="euRole"><option>Agent</option><option>Agency Admin</option><option>Enrollment Ops</option><option>Finance</option><option>Compliance</option><option>Platform Admin</option></select></div>
+          <div class="fg"><label>NPN</label><input type="text" id="euNPN" class="form-control form-control-sm" maxlength="10"></div>
+          <div class="fg"><label>Status</label><select id="euStatus"><option>Active</option><option>Deactivated</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Agency</label><select id="euAgency"><option>No Agency (Direct)</option><option>Acme Insurance Group</option><option>Florida Health Partners</option><option>Southeast Benefits</option></select></div>
+          <div class="fg"><label>Last Login</label><input type="text" id="euLastLogin" class="form-control form-control-sm" readonly style="background:#f5f5f5"></div>
+          <div class="fg"><label>Created</label><input type="text" id="euCreated" class="form-control form-control-sm" readonly style="background:#f5f5f5"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;justify-content:space-between">
+          <button class="btn-ol btn-sm" onclick="prefillEditUser()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+          <div class="dflex g8">
+            <button class="btn-ol btn-sm" onclick="document.getElementById('edit-modal').style.display='none'">Cancel</button>
+            <button class="btn-pr btn-sm" onclick="saveEditUser()"><i class="fas fa-save" style="margin-right:4px"></i>Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auto-Provisioning Config -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-magic" style="margin-right:8px;color:#4a148c"></i>Auto-Provisioning Rules <span style="font-weight:700;font-size:12px;color:#c62828;margin-left:8px">only for DEVELOPERS</span></h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','users_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Auto-Provisioning:</strong> When an agent completes all onboarding gates, the system automatically creates their portal account, assigns the Agent role, links their NPN, and sends welcome credentials. No manual admin action required.</span></div>
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Trigger</th><th>Auto-Action</th><th>Role Assigned</th><th>Notification</th></tr></thead>
+          <tbody>
+            <tr><td>Onboarding Gate 7 Complete</td><td>Create Agent account</td><td>Agent</td><td>Welcome email + temp password</td></tr>
+            <tr><td>Agency Created</td><td>Create Agency Admin account</td><td>Agency Admin</td><td>Welcome email + setup link</td></tr>
+            <tr><td>Agent Deactivation (contract term)</td><td>Deactivate account, revoke access</td><td></td><td>Deactivation notice email</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function createUser(){
+  var first=document.getElementById('cuFirst').value.trim();
+  var last=document.getElementById('cuLast').value.trim();
+  var email=document.getElementById('cuEmail').value.trim();
+  var role=document.getElementById('cuRole').value;
+  var npn=document.getElementById('cuNPN').value.trim();
+  if(!first||!last||!email||!role){showToast('Please fill First Name, Last Name, Email, and Role','error');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showToast('Please enter a valid email address','error');return;}
+  // Check dupe email (mock: flag if contains "admin")
+  if(email.toLowerCase().includes('admin@')){showToast('An account with this email address already exists.','error');return;}
+  if(!role){showToast('A user account must have at least one role assigned.','error');return;}
+
+  var roleColors={Agent:'b-blue','Agency Admin':'b-blue','Enrollment Ops':'b-teal',Finance:'b-purple',Compliance:'b-purple','Platform Admin':'b-red'};
+  var roleBdg=roleColors[role]||'b-blue';
+  var today=new Date();
+  var dateStr=today.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  var tbody=document.querySelector('.tbl tbody');
+  var tr=document.createElement('tr');
+  var fullName=first+' '+last;
+  var agency=document.getElementById('cuAgency').value;
+  tr.innerHTML='<td><input type="checkbox"></td><td>'+fullName+'</td><td>'+email+'</td><td><span class="bdg '+roleBdg+'">'+role+'</span></td><td>'+(npn||'')+'</td><td><span class="bdg b-green">Active</span></td><td>&mdash;</td><td>'+dateStr+'</td>'
+    +'<td><button class="btn-ol btn-sm" onclick="editUser(\''+first+'\',\''+last+'\',\''+email+'\',\''+role+'\',\''+npn+'\',\'Active\',\''+agency+'\',\'N/A\',\''+dateStr+'\')">Edit</button>'
+    +' <button class="btn-ol btn-sm" onclick="nfpAction(\'Password reset link sent to '+email+'\',\'success\')" title="Reset Password"><i class="fas fa-key"></i></button>'
+    +' <button class="btn-ol btn-sm" style="color:#c62828" onclick="nfpAction(\'Account deactivated for '+fullName+'. All active sessions terminated.\',\'success\')" title="Deactivate"><i class="fas fa-ban"></i></button></td>';
+  tbody.insertBefore(tr,tbody.firstChild);
+
+  showToast('User "'+fullName+'" ('+role+') created. Welcome email sent to '+email,'success');
+  document.getElementById('cuFirst').value='';
+  document.getElementById('cuLast').value='';
+  document.getElementById('cuEmail').value='';
+  document.getElementById('cuRole').value='';
+  document.getElementById('cuNPN').value='';
+  document.getElementById('create-modal').classList.remove('open');
+}
+
+function filterUsers(){
+  var role=(document.getElementById('filterRole')||{}).value||'';
+  var status=(document.getElementById('filterStatus')||{}).value||'';
+  var q=((document.getElementById('userSearch')||{}).value||'').toLowerCase();
+  var cnt=0;
+  document.querySelectorAll('.tbl tbody tr').forEach(function(tr){
+    var text=tr.textContent.toLowerCase();
+    var show=true;
+    if(role && !text.includes(role.toLowerCase())) show=false;
+    if(status==='Active' && text.includes('deactivated')) show=false;
+    if(status==='Deactivated' && !text.includes('deactivated')) show=false;
+    if(q && !text.includes(q)) show=false;
+    tr.style.display=show?'':'none';
+    if(show) cnt++;
+  });
+  showToast('Showing '+cnt+' user(s)','info');
+}
+
+function bulkDeactivate(){
+  var checked=document.querySelectorAll('.tbl tbody input[type=checkbox]:checked');
+  if(!checked.length){showToast('Select at least one user to deactivate','error');return;}
+  showToast(checked.length+' account(s) deactivated. All active sessions terminated.','success');
+  checked.forEach(function(cb){
+    var tr=cb.closest('tr');
+    if(tr){tr.style.opacity='.6';var bdg=tr.querySelector('.bdg.b-green');if(bdg){bdg.className='bdg b-red';bdg.textContent='Deactivated';}}
+  });
+}
+
+
+
+function prefillCreateUser(){
+  document.getElementById('create-modal').classList.add('open');
+  document.getElementById('cuFirst').value='Angela';
+  document.getElementById('cuLast').value='Torres';
+  document.getElementById('cuEmail').value='atorres@flhealthpartners.com';
+  document.getElementById('cuRole').value='Agent';
+  document.getElementById('cuNPN').value='4455667788';
+  document.getElementById('cuAgency').value='Florida Health Partners';
+  document.getElementById('cuProvision').selectedIndex=0;
+  showToast('Create User form prefilled with sample data.','info');
+}
+
+function editUser(first, last, email, role, npn, status, agency, lastLogin, created){
+  document.getElementById('edit-modal').style.display='';
+  document.getElementById('euFirst').value=first||'';
+  document.getElementById('euLast').value=last||'';
+  document.getElementById('euEmail').value=email||'';
+  document.getElementById('euRole').value=role||'Agent';
+  document.getElementById('euNPN').value=npn||'';
+  document.getElementById('euStatus').value=status||'Active';
+  document.getElementById('euAgency').value=agency||'No Agency (Direct)';
+  document.getElementById('euLastLogin').value=lastLogin||'N/A';
+  document.getElementById('euCreated').value=created||'N/A';
+  document.getElementById('edit-modal').scrollIntoView({behavior:'smooth',block:'start'});
+  showToast('Editing user: '+first+' '+last,'info');
+}
+
+function prefillEditUser(){
+  document.getElementById('euFirst').value='James';
+  document.getElementById('euLast').value='Martinez';
+  document.getElementById('euEmail').value='j.martinez@acme.com';
+  document.getElementById('euRole').value='Agent';
+  document.getElementById('euNPN').value='8823441';
+  document.getElementById('euStatus').value='Active';
+  document.getElementById('euAgency').value='Acme Insurance Group';
+  document.getElementById('euLastLogin').value='05 25,2026 9:15 AM';
+  document.getElementById('euCreated').value='01 15,2026';
+  showToast('Edit form prefilled with sample data.','info');
+}
+
+function saveEditUser(){
+  var first=document.getElementById('euFirst').value.trim();
+  var last=document.getElementById('euLast').value.trim();
+  var email=document.getElementById('euEmail').value.trim();
+  if(!first||!last||!email){showToast('First Name, Last Name, and Email are required.','error');return;}
+  showToast('User "'+first+' '+last+'" updated successfully.','success');
+  document.getElementById('edit-modal').style.display='none';
+}
+</script>
+</body>
+</html>

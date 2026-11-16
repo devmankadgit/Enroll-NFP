@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Broker Support — Activation Status (View Only) -->
+<title>Activation Status | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html" class="active"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Activation Status</h4><p style="font-size:12px;color:#5f6368;margin:0">View-only — agents who have passed all onboarding gates and their activation status (activation performed by Admin)</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Activation Status')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Awaiting Activation</div><div class="stat-val">4</div><div class="stat-sub">All gates passed</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-user-plus"></i></div>
+        <div><div class="stat-label">Activated MTD</div><div class="stat-val">18</div><div class="stat-sub"><i class="fas fa-arrow-up" style="color:#2e7d32"></i> +4 vs last month</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div>
+        <div><div class="stat-label">Avg Time to Activate</div><div class="stat-val">1.2 days</div><div class="stat-sub">From gate completion</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-calendar-check"></i></div>
+        <div><div class="stat-label">Activated YTD</div><div class="stat-val">87</div><div class="stat-sub">Target: 120 by Dec</div></div>
+      </div></div>
+    </div>
+
+    <!-- Activation Table -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-hdr"><h6><i class="fas fa-user-check" style="color:#2e7d32;margin-right:8px"></i>Awaiting Activation by Admin — All Gates Passed</h6><span class="badge" style="background:#e8f5e9;color:#2e7d32">4 ready</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency / Level</th><th>States</th><th>Gates Completed</th><th>Onboarding Started</th><th>Ready Since</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Patricia Nguyen</td><td>5521833</td><td>Southwest Medicare (GA)</td><td>FL</td><td><span style="color:#2e7d32;font-weight:700">8/8</span></td><td>05 20,2026</td><td>06 07,2026</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Admin</span></td></tr>
+            <tr><td style="font-weight:600">Robert Martinez</td><td>4432887</td><td>Alliance Health (MGA)</td><td>TX</td><td><span style="color:#2e7d32;font-weight:700">8/8</span></td><td>05 22,2026</td><td>06 08,2026</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Admin</span></td></tr>
+            <tr><td style="font-weight:600">Jennifer Adams</td><td>7756321</td><td>National Benefits (SGA)</td><td>CA, GA</td><td><span style="color:#2e7d32;font-weight:700">8/8</span></td><td>05 25,2026</td><td>06 09,2026</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Admin</span></td></tr>
+            <tr><td style="font-weight:600">Thomas Wright</td><td>8890123</td><td>Premier Insurance (FMO)</td><td>FL, GA</td><td><span style="color:#2e7d32;font-weight:700">8/8</span></td><td>05 18,2026</td><td>06 09,2026</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Pending Admin</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recently Activated -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-history" style="color:#0277bd;margin-right:8px"></i>Recently Activated (Last 7 Days)</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>Activated On</th><th>Activated By</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Sarah Chen</td><td>7719022</td><td>National Benefits (SGA)</td><td>06 08,2026</td><td>System Admin</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td></tr>
+            <tr><td style="font-weight:600">Kevin Nguyen</td><td>9912345</td><td>Alliance Health (MGA)</td><td>06 07,2026</td><td>System Admin</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td></tr>
+            <tr><td style="font-weight:600">Mark Brown</td><td>6612987</td><td>Direct (Individual)</td><td>06 06,2026</td><td>System Admin</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// View-only page — no activation actions
+</script>
+</script>
+</body>
+</html>

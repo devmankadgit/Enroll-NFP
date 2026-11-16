@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OEC Intake Hub | Enrollment Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#00695c}
+.stat-card .stat-num{font-size:28px;font-weight:700;margin-bottom:2px}
+.source-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.source-tabs .tab-btn{padding:8px 16px;border:1px solid #ddd;border-radius:20px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s}
+.source-tabs .tab-btn:hover{border-color:#6a1b9a;color:#6a1b9a}
+.source-tabs .tab-btn.active{background:#6a1b9a;color:#fff;border-color:#6a1b9a}
+.sftp-panel{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:10px;padding:16px 20px;margin-bottom:20px}
+.sftp-panel h6{font-size:13px;font-weight:700;text-transform:uppercase;color:#333;margin-bottom:12px}
+.sftp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.sftp-item{background:#fff;border-radius:8px;padding:12px 16px;border:1px solid #e8e8e8}
+.sftp-item .sftp-source{font-weight:600;font-size:13px;margin-bottom:4px}
+.sftp-item .sftp-detail{font-size:11px;color:#666}
+.sftp-item .sftp-ok{color:#2e7d32}
+.sftp-item .sftp-err{color:#c62828}
+.filter-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;padding:12px 16px;background:#fff;border-radius:8px;border:1px solid #e0e0e0}
+.filter-bar select,.filter-bar input{font-size:13px;padding:6px 10px;border:1px solid #ccc;border-radius:6px}
+.badge-source{font-size:11px;padding:3px 8px;border-radius:12px;font-weight:600}
+.badge-portal{background:#e3f2fd;color:#1565c0}
+.badge-sunfire{background:#fff3e0;color:#e65100}
+.badge-connecture{background:#e8f5e9;color:#2e7d32}
+.badge-gohealth{background:#fce4ec;color:#c62828}
+.badge-manual{background:#f3e5f5;color:#6a1b9a}
+.status-badge{font-size:11px;padding:3px 8px;border-radius:12px;font-weight:600}
+.status-received{background:#e3f2fd;color:#1565c0}
+.status-processing{background:#fff8e1;color:#f57f17}
+.status-validated{background:#e8f5e9;color:#2e7d32}
+.status-error{background:#ffebee;color:#c62828}
+.status-submitted{background:#ede7f6;color:#4a148c}
+.batch-actions{display:flex;gap:10px;margin-bottom:16px}
+.batch-actions button{padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s}
+.btn-validate{background:#2e7d32;color:#fff}.btn-validate:hover{background:#1b5e20}
+.btn-submit-cms{background:#1565c0;color:#fff}.btn-submit-cms:hover{background:#0d47a1}
+table.intake-table{width:100%;border-collapse:collapse;font-size:13px}
+table.intake-table th{background:#f5f5f5;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid #e0e0e0}
+table.intake-table td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:middle}
+table.intake-table tr:hover{background:#fafafa}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-clipboard-check" style="margin-right:8px;opacity:.8"></i>Enrollment Ops</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Enrollment Processing</div>
+    <a href="processing-hub.html"><i class="fas fa-inbox"></i>Processing Hub</a>
+    <a href="oec-intake.html" class="active"><i class="fas fa-inbox"></i>OEC Intake Hub</a>
+    <a href="csnp-review.html"><i class="fas fa-heartbeat"></i>C-SNP Review</a>
+    <a href="compliance-tracker.html"><i class="fas fa-clock"></i>7-Day Compliance</a>
+    <div class="sb-section">Member Services</div>
+    <a href="document-repository.html"><i class="fas fa-folder-open"></i>Document Repository</a>
+    <a href="id-cards.html"><i class="fas fa-id-card"></i>ID Cards</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Wong</div><div class="sb-u-role">Enrollment Ops Manager</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Multi-Source OEC Intake Hub</h4></div>
+    <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-sync"></i>Refresh</button>
+    
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+  <div class="page">
+
+    <!-- Summary Stat Cards -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+      <div class="stat-card">
+        <div class="stat-num" style="color:#1565c0">12</div>
+        <div class="stat-label"><i class="fas fa-inbox"></i> Total in Queue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:#2e7d32">6</div>
+        <div class="stat-label"><i class="fas fa-check-circle"></i> Validated</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:#c62828">2</div>
+        <div class="stat-label"><i class="fas fa-exclamation-triangle"></i> Errors</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:#6a1b9a">3</div>
+        <div class="stat-label"><i class="fas fa-paper-plane"></i> Submitted to CMS Today</div>
+      </div>
+    </div>
+
+    <!-- Source Tabs -->
+    <div class="source-tabs">
+      <button class="tab-btn active" data-source="all">All</button>
+      <button class="tab-btn" data-source="portal">Portal Direct</button>
+      <button class="tab-btn" data-source="sunfire">Sunfire</button>
+      <button class="tab-btn" data-source="connecture">Connecture</button>
+      <button class="tab-btn" data-source="gohealth">GoHealth</button>
+      <button class="tab-btn" data-source="manual">Manual Upload</button>
+    </div>
+
+    <!-- SFTP Sync Status Panel -->
+    <div class="sftp-panel">
+      <h6><i class="fas fa-server" style="margin-right:6px"></i>SFTP Sync Status</h6>
+      <div class="sftp-grid">
+        <div class="sftp-item">
+          <div class="sftp-source"><i class="fas fa-circle sftp-ok" style="font-size:8px;margin-right:6px"></i>Sunfire SFTP</div>
+          <div class="sftp-detail">Last Sync: 03 31,2026 — 08:15 AM</div>
+          <div class="sftp-detail">Files: <strong>4</strong> received &nbsp;|&nbsp; Errors: <span class="sftp-ok"><strong>0</strong></span></div>
+        </div>
+        <div class="sftp-item">
+          <div class="sftp-source"><i class="fas fa-circle sftp-ok" style="font-size:8px;margin-right:6px"></i>Connecture SFTP</div>
+          <div class="sftp-detail">Last Sync: 03 31,2026 — 07:45 AM</div>
+          <div class="sftp-detail">Files: <strong>3</strong> received &nbsp;|&nbsp; Errors: <span class="sftp-ok"><strong>0</strong></span></div>
+        </div>
+        <div class="sftp-item">
+          <div class="sftp-source"><i class="fas fa-circle sftp-err" style="font-size:8px;margin-right:6px"></i>GoHealth SFTP</div>
+          <div class="sftp-detail">Last Sync: 03 31,2026 — 06:30 AM</div>
+          <div class="sftp-detail">Files: <strong>2</strong> received &nbsp;|&nbsp; Errors: <span class="sftp-err"><strong>1</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <select id="filterSource">
+        <option value="">All Sources</option>
+        <option value="portal">Portal Direct</option>
+        <option value="sunfire">Sunfire</option>
+        <option value="connecture">Connecture</option>
+        <option value="gohealth">GoHealth</option>
+        <option value="manual">Manual Upload</option>
+      </select>
+      <select id="filterStatus">
+        <option value="">All Statuses</option>
+        <option value="received">Received</option>
+        <option value="processing">Processing</option>
+        <option value="validated">Validated</option>
+        <option value="error">Error</option>
+        <option value="submitted">Submitted to CMS</option>
+      </select>
+      <input type="date" id="filterDateFrom" title="From Date">
+      <input type="date" id="filterDateTo" title="To Date">
+      <input type="text" id="filterAgent" placeholder="Search Agent NPN..." style="width:160px">
+      <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i> Apply</button>
+      <button class="btn-ol btn-sm" onclick="clearFilters()" style="color:#999"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+
+
+    <!-- Intake Queue Table -->
+    <div style="overflow-x:auto;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <table class="intake-table" id="intakeTable">
+        <thead>
+          <tr>
+            <th style="width:36px"></th>
+            <th>Source</th>
+            <th>Received Date</th>
+            <th>Member Name</th>
+            <th>MBI</th>
+            <th>Agent NPN</th>
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-source="portal" data-status="validated" data-date="2026-03-31" data-agent="19384756">
+            <td></td>
+            <td><span class="badge-source badge-portal"><i class="fas fa-globe"></i> Portal</span></td>
+            <td>03/31/2026</td>
+            <td>Margaret Thompson</td>
+            <td>***-**-4821</td>
+            <td>19384756</td>
+            <td>CKD SNP</td>
+          <td><span class="bdg b-green">Validated</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(0)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-0','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="sunfire" data-status="received" data-date="2026-03-31" data-agent="28473910">
+            <td></td>
+            <td><span class="badge-source badge-sunfire"><i class="fas fa-fire"></i> Sunfire</span></td>
+            <td>03/31/2026</td>
+            <td>Robert Williams</td>
+            <td>***-**-7392</td>
+            <td>28473910</td>
+            <td>ESRD SNP</td>
+          <td><span class="bdg b-blue">Received</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(1)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-1','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="connecture" data-status="validated" data-date="2026-03-31" data-agent="37291048">
+            <td></td>
+            <td><span class="badge-source badge-connecture"><i class="fas fa-link"></i> Connecture</span></td>
+            <td>03/31/2026</td>
+            <td>Patricia Garcia</td>
+            <td>***-**-5614</td>
+            <td>37291048</td>
+            <td>Heart & Diabetes SNP</td>
+          <td><span class="bdg b-green">Validated</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(2)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-2','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="gohealth" data-status="error" data-date="2026-03-31" data-agent="45018273">
+            <td></td>
+            <td><span class="badge-source badge-gohealth"><i class="fas fa-phone-alt"></i> GoHealth</span></td>
+            <td>03/31/2026</td>
+            <td>James Anderson</td>
+            <td>***-**-8903</td>
+            <td>45018273</td>
+            <td>CKD SNP</td>
+          <td><span class="bdg b-red">Error</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(3)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-3','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="portal" data-status="submitted" data-date="2026-03-30" data-agent="19384756">
+            <td></td>
+            <td><span class="badge-source badge-portal"><i class="fas fa-globe"></i> Portal</span></td>
+            <td>03/30/2026</td>
+            <td>Linda Martinez</td>
+            <td>***-**-2156</td>
+            <td>19384756</td>
+            <td>HMO</td>
+          <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Submitted</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(4)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-4','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="sunfire" data-status="processing" data-date="2026-03-30" data-agent="56201839">
+            <td></td>
+            <td><span class="badge-source badge-sunfire"><i class="fas fa-fire"></i> Sunfire</span></td>
+            <td>03/30/2026</td>
+            <td>Charles Davis</td>
+            <td>***-**-6738</td>
+            <td>56201839</td>
+            <td>ESRD SNP</td>
+          <td><span class="bdg b-amber">Processing</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(5)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-5','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="manual" data-status="validated" data-date="2026-03-30" data-agent="63928174">
+            <td></td>
+            <td><span class="badge-source badge-manual"><i class="fas fa-upload"></i> Manual</span></td>
+            <td>03/30/2026</td>
+            <td>Barbara Wilson</td>
+            <td>***-**-3047</td>
+            <td>63928174</td>
+            <td>Heart & Diabetes SNP</td>
+          <td><span class="bdg b-green">Validated</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(6)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-6','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="connecture" data-status="submitted" data-date="2026-03-30" data-agent="37291048">
+            <td></td>
+            <td><span class="badge-source badge-connecture"><i class="fas fa-link"></i> Connecture</span></td>
+            <td>03/30/2026</td>
+            <td>Richard Lee</td>
+            <td>***-**-9281</td>
+            <td>37291048</td>
+            <td>CKD SNP</td>
+          <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Submitted</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(7)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-7','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="gohealth" data-status="validated" data-date="2026-03-29" data-agent="72104938">
+            <td></td>
+            <td><span class="badge-source badge-gohealth"><i class="fas fa-phone-alt"></i> GoHealth</span></td>
+            <td>03/29/2026</td>
+            <td>Susan Taylor</td>
+            <td>***-**-1475</td>
+            <td>72104938</td>
+            <td>HMO</td>
+          <td><span class="bdg b-green">Validated</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(8)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-8','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="sunfire" data-status="validated" data-date="2026-03-29" data-agent="28473910">
+            <td></td>
+            <td><span class="badge-source badge-sunfire"><i class="fas fa-fire"></i> Sunfire</span></td>
+            <td>03/29/2026</td>
+            <td>Joseph Brown</td>
+            <td>***-**-5820</td>
+            <td>28473910</td>
+            <td>ESRD SNP</td>
+          <td><span class="bdg b-green">Validated</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(9)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-9','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="portal" data-status="error" data-date="2026-03-29" data-agent="84019263">
+            <td></td>
+            <td><span class="badge-source badge-portal"><i class="fas fa-globe"></i> Portal</span></td>
+            <td>03/29/2026</td>
+            <td>Dorothy Harris</td>
+            <td>***-**-4093</td>
+            <td>84019263</td>
+            <td>Heart & Diabetes SNP</td>
+          <td><span class="bdg b-red">Error</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(10)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-10','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+          <tr data-source="connecture" data-status="submitted" data-date="2026-03-29" data-agent="37291048">
+            <td></td>
+            <td><span class="badge-source badge-connecture"><i class="fas fa-link"></i> Connecture</span></td>
+            <td>03/29/2026</td>
+            <td>Thomas Clark</td>
+            <td>***-**-7164</td>
+            <td>37291048</td>
+            <td>CKD SNP</td>
+          <td><span class="bdg" style="background:#f3e5f5;color:#6a1b9a">Submitted</span></td><td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="viewEnrollment(11)"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('OEC-11','Member')"><i class="fas fa-comment"></i></button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+      <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+      <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+      <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+    </footer>
+
+    <!-- Enrollment Detail Modal -->
+    <div id="enrollDetailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.45);align-items:center;justify-content:center">
+      <div style="background:#fff;border-radius:12px;width:560px;max-width:94vw;max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #eee">
+          <h5 style="margin:0;font-size:16px;font-weight:700"><i class="fas fa-file-alt" style="margin-right:8px;color:#1565c0"></i>Enrollment Detail</h5>
+          <button onclick="document.getElementById('enrollDetailModal').style.display='none'" style="border:none;background:none;font-size:20px;cursor:pointer;color:#666">&times;</button>
+        </div>
+        <div id="enrollDetailBody" style="padding:20px 24px"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Tab filtering — syncs with filter bar
+document.querySelectorAll('.source-tabs .tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.source-tabs .tab-btn').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+    var source=btn.getAttribute('data-source');
+    document.getElementById('filterSource').value=(source==='all')?'':source;
+    applyFilters();
+  });
+});
+
+function applyFilters(){
+  var source=document.getElementById('filterSource').value;
+  var status=document.getElementById('filterStatus').value;
+  var dateFrom=document.getElementById('filterDateFrom').value;
+  var dateTo=document.getElementById('filterDateTo').value;
+  var agent=document.getElementById('filterAgent').value.trim().toLowerCase();
+  var rows=document.querySelectorAll('#intakeTable tbody tr');
+  var shown=0;
+  rows.forEach(function(row){
+    var show=true;
+    if(source && row.getAttribute('data-source')!==source) show=false;
+    if(status && row.getAttribute('data-status')!==status) show=false;
+    if(dateFrom && row.getAttribute('data-date')<dateFrom) show=false;
+    if(dateTo && row.getAttribute('data-date')>dateTo) show=false;
+    if(agent && row.getAttribute('data-agent').indexOf(agent)===-1) show=false;
+    row.style.display=show?'':'none';
+    if(show) shown++;
+  });
+  // Sync source tabs with dropdown
+  document.querySelectorAll('.source-tabs .tab-btn').forEach(function(b){b.classList.remove('active')});
+  var activeTab=document.querySelector('.source-tabs .tab-btn[data-source="'+(source||'all')+'"]');
+  if(activeTab) activeTab.classList.add('active');
+  showToast('Filters applied \u2014 '+shown+' of '+rows.length+' applications shown.','info');
+}
+
+function clearFilters(){
+  document.getElementById('filterSource').value='';
+  document.getElementById('filterStatus').value='';
+  document.getElementById('filterDateFrom').value='';
+  document.getElementById('filterDateTo').value='';
+  document.getElementById('filterAgent').value='';
+  document.querySelectorAll('.source-tabs .tab-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelector('.source-tabs .tab-btn[data-source="all"]').classList.add('active');
+  var rows=document.querySelectorAll('#intakeTable tbody tr');
+  rows.forEach(function(row){row.style.display='';});
+  showToast('All filters cleared.','info');
+}
+
+var ENROLL_DATA=[
+  {member:'Margaret Thompson',mbi:'***-**-4821',dob:'04/12/1952',source:'Portal',agent:'19384756',agentName:'James Martinez',plan:'CKD SNP',eff:'07/01/2026',received:'03/31/2026',status:'Validated',soaDate:'03/30/2026',notes:'Validated successfully. Ready for CMS submission.'},
+  {member:'Robert Williams',mbi:'***-**-7392',dob:'11/05/1948',source:'Sunfire',agent:'28473910',agentName:'Sarah Chen',plan:'ESRD SNP',eff:'07/01/2026',received:'03/31/2026',status:'Received',soaDate:'03/30/2026',notes:'Received via SFTP. Pending validation.'},
+  {member:'Patricia Garcia',mbi:'***-**-5614',dob:'06/22/1955',source:'Connecture',agent:'37291048',agentName:'David Kim',plan:'Heart & Diabetes SNP',eff:'07/01/2026',received:'03/31/2026',status:'Validated',soaDate:'03/29/2026',notes:'All fields validated. SOA on file.'},
+  {member:'James Anderson',mbi:'***-**-8903',dob:'02/14/1960',source:'GoHealth',agent:'45018273',agentName:'Amy Lopez',plan:'CKD SNP',eff:'07/01/2026',received:'03/31/2026',status:'Error',soaDate:'03/30/2026',notes:'Error: MBI format invalid. Agent notified for correction.'},
+  {member:'Linda Martinez',mbi:'***-**-2156',dob:'08/19/1951',source:'Portal',agent:'19384756',agentName:'James Martinez',plan:'HMO',eff:'07/01/2026',received:'03/30/2026',status:'Submitted',soaDate:'03/29/2026',notes:'Submitted to CMS 03/30. ATN pending.'},
+  {member:'Charles Davis',mbi:'***-**-6738',dob:'01/30/1957',source:'Sunfire',agent:'56201839',agentName:'Mark Taylor',plan:'ESRD SNP',eff:'07/01/2026',received:'03/30/2026',status:'Processing',soaDate:'03/29/2026',notes:'Duplicate check in progress.'},
+  {member:'Barbara Wilson',mbi:'***-**-3047',dob:'12/08/1949',source:'Manual',agent:'63928174',agentName:'Lisa Wong',plan:'Heart & Diabetes SNP',eff:'07/01/2026',received:'03/30/2026',status:'Validated',soaDate:'03/28/2026',notes:'Manual upload validated. Ready for submission.'},
+  {member:'Richard Lee',mbi:'***-**-9281',dob:'05/25/1953',source:'Connecture',agent:'37291048',agentName:'David Kim',plan:'CKD SNP',eff:'07/01/2026',received:'03/30/2026',status:'Submitted',soaDate:'03/29/2026',notes:'CMS submission confirmed. Awaiting ATN.'},
+  {member:'Susan Taylor',mbi:'***-**-1475',dob:'09/03/1958',source:'GoHealth',agent:'72104938',agentName:'Robert Hall',plan:'HMO',eff:'07/01/2026',received:'03/29/2026',status:'Validated',soaDate:'03/28/2026',notes:'Validated. Pending CMS submission batch.'},
+  {member:'Joseph Brown',mbi:'***-**-5820',dob:'03/17/1946',source:'Sunfire',agent:'28473910',agentName:'Sarah Chen',plan:'ESRD SNP',eff:'07/01/2026',received:'03/29/2026',status:'Validated',soaDate:'03/28/2026',notes:'All checks passed. Ready for next batch.'},
+  {member:'Dorothy Harris',mbi:'***-**-4093',dob:'07/11/1954',source:'Portal',agent:'84019263',agentName:'Kevin Nguyen',plan:'Heart & Diabetes SNP',eff:'07/01/2026',received:'03/29/2026',status:'Error',soaDate:'03/28/2026',notes:'Error: Effective date conflict with existing enrollment. Needs resolution.'},
+  {member:'Thomas Clark',mbi:'***-**-7164',dob:'10/29/1950',source:'Connecture',agent:'37291048',agentName:'David Kim',plan:'CKD SNP',eff:'07/01/2026',received:'03/29/2026',status:'Submitted',soaDate:'03/27/2026',notes:'Submitted to CMS. ATN received: ATN-773921.'}
+];
+
+function viewEnrollment(idx){
+  var d=ENROLL_DATA[idx];
+  var statusColors={Validated:'#2e7d32',Received:'#1565c0',Error:'#c62828',Submitted:'#6a1b9a',Processing:'#f57f17'};
+  var html='<table style="width:100%;font-size:13px;border-collapse:collapse">';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555;width:140px">Member</td><td style="padding:8px 12px">'+d.member+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">MBI</td><td style="padding:8px 12px">'+d.mbi+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Date of Birth</td><td style="padding:8px 12px">'+d.dob+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">Source</td><td style="padding:8px 12px">'+d.source+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Agent NPN</td><td style="padding:8px 12px">'+d.agent+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">Agent Name</td><td style="padding:8px 12px">'+d.agentName+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Plan</td><td style="padding:8px 12px">'+d.plan+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">Effective Date</td><td style="padding:8px 12px">'+d.eff+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Received</td><td style="padding:8px 12px">'+d.received+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">SOA Date</td><td style="padding:8px 12px">'+d.soaDate+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Status</td><td style="padding:8px 12px"><span style="color:'+statusColors[d.status]+';font-weight:600">'+d.status+'</span></td></tr>';
+  html+='</table>';
+  html+='<div style="margin-top:14px;padding:12px 14px;background:#f5f5f5;border-radius:8px;font-size:12px"><strong>Notes:</strong> '+d.notes+'</div>';
+  document.getElementById('enrollDetailBody').innerHTML=html;
+  document.getElementById('enrollDetailModal').style.display='flex';
+}
+
+function resolveEnrollment(idx){
+  var d=ENROLL_DATA[idx];
+  var html='<div style="background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px"><i class="fas fa-exclamation-triangle" style="color:#c62828;margin-right:6px"></i><strong>Error:</strong> '+d.notes+'</div>';
+  html+='<table style="width:100%;font-size:13px;border-collapse:collapse">';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555;width:140px">Member</td><td style="padding:8px 12px">'+d.member+'</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">MBI</td><td style="padding:8px 12px">'+d.mbi+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Agent NPN</td><td style="padding:8px 12px">'+d.agent+' ('+d.agentName+')</td></tr>';
+  html+='<tr style="background:#f9f9f9"><td style="padding:8px 12px;font-weight:600;color:#555">Plan</td><td style="padding:8px 12px">'+d.plan+'</td></tr>';
+  html+='<tr><td style="padding:8px 12px;font-weight:600;color:#555">Received</td><td style="padding:8px 12px">'+d.received+'</td></tr>';
+  html+='</table>';
+  html+='<div style="margin-top:16px;border-top:1px solid #eee;padding-top:14px">';
+  html+='<label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:6px">Resolution Comment</label>';
+  html+='<textarea id="resolveComment" rows="3" style="width:100%;border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:13px;resize:vertical" placeholder="Describe the resolution action taken..."></textarea>';
+  html+='<div style="margin-top:12px;display:flex;gap:10px">';
+  html+='<button class="btn-pr btn-sm" onclick="submitResolve('+idx+')" style="background:#2e7d32"><i class="fas fa-check" style="margin-right:4px"></i>Mark Resolved</button>';
+  html+='<button class="btn-ol btn-sm" onclick="document.getElementById(\'enrollDetailModal\').style.display=\'none\'">Cancel</button>';
+  html+='</div></div>';
+  document.getElementById('enrollDetailBody').innerHTML=html;
+  document.getElementById('enrollDetailModal').style.display='flex';
+}
+
+function submitResolve(idx){
+  var comment=document.getElementById('resolveComment').value.trim();
+  if(!comment){showToast('Please enter a resolution comment.','warning');return;}
+  document.getElementById('enrollDetailModal').style.display='none';
+  showToast('Enrollment resolved — '+ENROLL_DATA[idx].member+' marked as corrected.','success');
+}
+
+var commentStore = {};
+
+function openComment(refId, name) {
+  document.getElementById('commentRefId').textContent = refId;
+  document.getElementById('commentName').textContent = name;
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  document.getElementById('commentModal').classList.add('open');
+}
+
+function renderCommentHistory(refId) {
+  var hist = document.getElementById('commentHistory');
+  var comments = commentStore[refId] || [];
+  if (comments.length === 0) {
+    hist.innerHTML = '<div style="font-size:11px;color:#80868b;text-align:center;padding:8px 0">No comments yet</div>';
+    return;
+  }
+  var html = '';
+  comments.forEach(function(c) {
+    html += '<div style="padding:8px 0;border-bottom:1px solid #e8eaed;font-size:12px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+      '<strong style="color:#0d47a1">' + c.user + '</strong>' +
+      '<span style="color:#80868b;font-size:10px">' + c.time + '</span></div>' +
+      '<div style="color:#424242">' + c.text + '</div></div>';
+  });
+  hist.innerHTML = html;
+  hist.scrollTop = hist.scrollHeight;
+}
+
+function submitComment() {
+  var text = document.getElementById('commentText').value.trim();
+  if (!text) { alert('Please enter a comment.'); return; }
+  var refId = document.getElementById('commentRefId').textContent;
+  if (!commentStore[refId]) commentStore[refId] = [];
+  var now = new Date();
+  var timeStr = now.toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  commentStore[refId].push({ user: 'Current User', time: timeStr, text: text });
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  showToast('Comment saved for ' + refId, 'success');
+}
+
+function prefillComment() {
+  document.getElementById('commentText').value = 'Reviewed application. All documentation verified and compliant. No issues found.';
+}
+</script>
+</body>
+</html>

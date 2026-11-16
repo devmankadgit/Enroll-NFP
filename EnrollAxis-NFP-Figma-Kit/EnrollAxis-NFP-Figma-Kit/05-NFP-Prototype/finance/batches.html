@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment Batches | Gold Kidney Finance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btn{padding:10px 18px;border:none;background:none;font-size:12px;font-weight:600;color:#5f6368;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.tab-btn:hover{color:#1a237e}
+.tab-btn.active{color:#1a237e;border-bottom-color:#1a237e}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html" class="active"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Payment Batches & ACH/NACHA</h4><ol class="breadcrumb-bar"><li>ACH/NACHA Generation, PPD/CCD, Pre-Note &amp; Check Disbursement</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Batch Lifecycle Status Banner -->
+    <div style="background:linear-gradient(135deg,#e8f5e9 0%,#e3f2fd 100%);border-radius:12px;padding:18px 24px;margin-bottom:20px;border:1px solid #c8e6c9">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#1a237e">BATCH-2026-05 &mdash; May 2026 Payment Cycle</div>
+          <div style="font-size:12px;color:#5f6368;margin-top:2px">Cut-off: 05 15,2026 &nbsp;|&nbsp; Target Payment Date: 05 17,2026 &nbsp;|&nbsp; Originator: Gold Kidney Health Plan</div>
+        </div>
+        <span class="bdg b-green" style="font-size:12px;padding:6px 14px">Finance Approved</span>
+      </div>
+      <!-- Lifecycle Steps -->
+      <div style="display:flex;align-items:center;gap:0;font-size:11px;font-weight:600">
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1b5e20;color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px"><i class="fas fa-check" style="font-size:10px"></i></div>
+          <div style="color:#1b5e20">Calculated</div>
+        </div>
+        <div style="flex:.6;height:3px;background:#1b5e20;border-radius:2px;margin-top:-14px"></div>
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1b5e20;color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px"><i class="fas fa-check" style="font-size:10px"></i></div>
+          <div style="color:#1b5e20">Deductions</div>
+        </div>
+        <div style="flex:.6;height:3px;background:#1b5e20;border-radius:2px;margin-top:-14px"></div>
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1b5e20;color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px"><i class="fas fa-check" style="font-size:10px"></i></div>
+          <div style="color:#1b5e20">Reviewed</div>
+        </div>
+        <div style="flex:.6;height:3px;background:#1b5e20;border-radius:2px;margin-top:-14px"></div>
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1b5e20;color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px"><i class="fas fa-check" style="font-size:10px"></i></div>
+          <div style="color:#1b5e20">Approved</div>
+        </div>
+        <div style="flex:.6;height:3px;background:#0d47a1;border-radius:2px;margin-top:-14px"></div>
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#0d47a1;color:#fff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px;animation:pulse 1.5s infinite"><i class="fas fa-cog" style="font-size:10px"></i></div>
+          <div style="color:#0d47a1;font-weight:700">Disbursement</div>
+        </div>
+        <div style="flex:.6;height:3px;background:#e0e0e0;border-radius:2px;margin-top:-14px"></div>
+        <div style="flex:1;text-align:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#e0e0e0;color:#9e9e9e;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px"><i class="fas fa-flag-checkered" style="font-size:10px"></i></div>
+          <div style="color:#9e9e9e">Confirmed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="row-grid" style="margin-bottom:20px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Batch Total</div><div class="stat-val">$48,720.00</div><div class="stat-sub">93 line items</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-university"></i></div><div><div class="stat-label">ACH (PPD+CCD)</div><div class="stat-val">89</div><div class="stat-sub">$47,370.00</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-money-check-alt"></i></div><div><div class="stat-label">Paper Checks</div><div class="stat-val">4</div><div class="stat-sub">$2,500.83</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Pre-Note Pending</div><div class="stat-val">2</div><div class="stat-sub">Awaiting bank verification</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-minus-circle"></i></div><div><div class="stat-label">Chargebacks Applied</div><div class="stat-val">$1,150.00</div><div class="stat-sub">3 deductions</div></div></div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:18px">
+      <button class="tab-btn active" onclick="switchTab(this,'tabNACHA')"><i class="fas fa-file-code" style="margin-right:5px"></i>NACHA Generation</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabLineItems')"><i class="fas fa-list-ul" style="margin-right:5px"></i>Line Items</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabChecks')"><i class="fas fa-money-check-alt" style="margin-right:5px"></i>Check Queue</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabState')"><i class="fas fa-map-marked-alt" style="margin-right:5px"></i>State Breakdown</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabHistory')"><i class="fas fa-history" style="margin-right:5px"></i>Batch History</button>
+    </div>
+
+    <!-- TAB 1: NACHA Generation -->
+    <div id="tabNACHA" class="tab-pane active">
+      <div class="card mb16">
+        <div class="card-hdr" style="background:#e3f2fd"><h5><i class="fas fa-file-code" style="margin-right:8px;color:#0d47a1"></i>NACHA File Generation &mdash; BATCH-2026-05</h5><span class="bdg b-blue">Ready to Generate</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','batches_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="row-grid" style="margin-bottom:12px">
+            <div class="col-1"><div style="font-size:11px;color:#5f6368;font-weight:600">Batch ID</div><div style="font-weight:700">BATCH-2026-05</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368;font-weight:600">Payment Date</div><div style="font-weight:700">05 17,2026</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368;font-weight:600">ACH Format</div><div style="font-weight:700">NACHA (PPD + CCD)</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368;font-weight:600">Immediate Origin</div><div style="font-weight:700">Gold Kidney Health Plan</div></div>
+          </div>
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>NACHA Standards:</strong> Individual agents &rarr; PPD (Prearranged Payment &amp; Deposit). Agencies/corporate &rarr; CCD (Corporate Credit or Debit). File includes batch header, entry detail, and batch control records per ACH Operating Rules.</span></div>
+          
+          <table id="tblExport1" class="tbl" style="margin-bottom:14px">
+            <thead><tr><th>Entry Class</th><th>Count</th><th>Total Amount</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bdg b-blue">PPD</span> Individual Agent</td><td>82</td><td style="font-weight:700">$38,450.00</td><td>Commission payments to individual agent bank accounts</td></tr>
+              <tr><td><span class="bdg b-purple">CCD</span> Corporate/Agency</td><td>7</td><td style="font-weight:700">$8,920.00</td><td>Override commissions to agency bank accounts</td></tr>
+              <tr><td><span class="bdg b-amber">PRE</span> Pre-Note ($0.00)</td><td>2</td><td style="font-weight:700">$0.00</td><td>Verification entries for new bank accounts (zero-dollar)</td></tr>
+            </tbody>
+            <tfoot><tr style="background:#f1f8e9"><td colspan="2" style="font-weight:700">Total</td><td style="font-weight:700;color:#1b5e20">$47,370.00</td><td></td></tr></tfoot>
+          </table>
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn-pr btn-sm" onclick="showToast('NACHA file generated: GK_BATCH202605_PPD_CCD.ach (91 entries, $47,370.00). File ready for bank upload.','success')"><i class="fas fa-file-download"></i>Generate NACHA File</button>
+            <button class="btn-ol btn-sm" onclick="showToast('NACHA file preview opened. Showing first 25 entry records with routing/account verification.','info')"><i class="fas fa-eye"></i>Preview File</button>
+            <button class="btn-ol btn-sm" onclick="showToast('Validation complete: 89/91 entries passed. 2 pre-note entries flagged as expected (zero-dollar).','success')"><i class="fas fa-check-double"></i>Validate</button>
+            <button class="btn-ol btn-sm" onclick="showToast('NACHA file submitted to bank SFTP endpoint. Confirmation pending (typically 1-2 hours).','info')"><i class="fas fa-upload"></i>Submit to Bank</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Line Items -->
+    <div id="tabLineItems" class="tab-pane">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-list-ul" style="margin-right:8px;color:#5f6368"></i>Batch Line Items (93 entries)</h5>
+          <div class="dflex g8">
+            <button class="btn-ol btn-sm" onclick="showToast('Filters applied','info')"><i class="fas fa-filter"></i>Filter</button>
+            <button class="btn-ol btn-sm" onclick="showToast('CSV exported: BATCH-2026-05_line_items.csv','success')"><i class="fas fa-download"></i>Export CSV</button>
+            <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','batches_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport2" class="tbl">
+            <thead><tr><th>Payee</th><th>NPN / Entity</th><th>Type</th><th>Commission</th><th>Chargebacks</th><th>Net Amount</th><th>Routing #</th><th>Account</th><th>Pre-Note</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>James Martinez</td><td>8823441</td><td><span class="bdg b-blue">PPD</span></td><td>$601.00</td><td>$0.00</td><td style="font-weight:700">$601.00</td><td>021000021</td><td>****4821</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+              <tr><td>Sarah Chen</td><td>7719022</td><td><span class="bdg b-blue">PPD</span></td><td>$1,256.66</td><td style="color:#c62828">-$100.00</td><td style="font-weight:700">$1,156.66</td><td>026009593</td><td>****7733</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+              <tr><td>Sandra Williams</td><td>7731004</td><td><span class="bdg b-blue">PPD</span></td><td>$1,404.00</td><td style="color:#c62828">-$200.00</td><td style="font-weight:700">$1,204.00</td><td>061000052</td><td>****3901</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+              <tr><td>Acme Insurance Group</td><td>Agency GA-012</td><td><span class="bdg b-purple">CCD</span></td><td>$2,340.00</td><td>$0.00</td><td style="font-weight:700">$2,340.00</td><td>067014822</td><td>****2100</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+              <tr><td>David Chen</td><td>5512290</td><td><span class="bdg b-blue">PPD</span></td><td>$903.00</td><td>$0.00</td><td style="font-weight:700">$903.00</td><td>021000021</td><td>****5578</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+              <tr style="background:#fff8e1"><td>Kevin Nguyen</td><td>9912345</td><td><span class="bdg b-amber">PRE</span></td><td>$601.00</td><td>$0.00</td><td style="font-weight:700;color:#e65100">$0.00 (held)</td><td>061000052</td><td>****8891</td><td><span style="color:#e65100"><i class="fas fa-clock"></i> Pending</span></td><td><span class="bdg b-amber">Pre-Note</span></td></tr>
+              <tr style="background:#fff5f5"><td>Mark Brown</td><td>5521833</td><td><span class="bdg b-red">CHK</span></td><td>$289.00</td><td>$0.00</td><td style="font-weight:700">$289.00</td><td>&mdash;</td><td>&mdash;</td><td><span style="color:#c62828"><i class="fas fa-times-circle"></i> No ACH</span></td><td><span class="bdg b-orange">Check</span></td></tr>
+              <tr><td>Robert Kim</td><td>6620093</td><td><span class="bdg b-blue">PPD</span></td><td>$1,754.00</td><td style="color:#c62828">-$850.00</td><td style="font-weight:700">$904.00</td><td>067014822</td><td>****4420</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Verified</span></td><td><span class="bdg b-green">Ready</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 16px;font-size:12px;color:#5f6368;border-top:1px solid #e8eaed">Showing 7 of 93 entries &nbsp;|&nbsp; Total Chargebacks: <strong style="color:#c62828">-$1,150.00</strong> &nbsp;|&nbsp; Net Batch: <strong style="color:#1b5e20">$48,720.00</strong></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Check Queue -->
+    <div id="tabChecks" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-money-check-alt" style="margin-right:8px;color:#e65100"></i>Check Disbursement Queue (4)</h5>
+          <button class="btn-pr btn-sm" onclick="showToast('All 4 checks (#10241-#10244) sent to printer.','success')"><i class="fas fa-print"></i>Print All</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','batches_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="card-body" style="font-size:13px">
+          <div class="al-warn mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Check Payments:</strong> Agents without verified ACH or who opted for paper check receive mailed payments. $5.00 processing fee applied. Checks mailed 2 business days after batch approval.</span></div>
+          <table id="tblExport3" class="tbl">
+            <thead><tr><th>Payee</th><th>NPN</th><th>Net Amount</th><th>Mailing Address</th><th>Reason</th><th>Check #</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td>Mark Brown</td><td>5521833</td><td style="font-weight:700">$289.00</td><td>456 Oak St, Tampa, FL 33601</td><td>No ACH on file</td><td>10241</td><td><span class="bdg b-amber">Queued</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Check #10241 for Mark Brown sent to printer.','success')"><i class="fas fa-print"></i>Print</button></td></tr>
+              <tr><td>Robert Garcia</td><td>4401289</td><td style="font-weight:700">$578.33</td><td>789 Pine Ave, Orlando, FL 32801</td><td>Pre-note failed (R02)</td><td>10242</td><td><span class="bdg b-amber">Queued</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Check #10242 for Robert Garcia sent to printer.','success')"><i class="fas fa-print"></i>Print</button></td></tr>
+              <tr><td>Patricia Lee</td><td>3390187</td><td style="font-weight:700">$433.50</td><td>123 Elm Rd, Jacksonville, FL 32202</td><td>Agent preference</td><td>10243</td><td><span class="bdg b-amber">Queued</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Check #10243 for Patricia Lee sent to printer.','success')"><i class="fas fa-print"></i>Print</button></td></tr>
+              <tr><td>Southeast Benefits LLC</td><td>Agency</td><td style="font-weight:700">$1,200.00</td><td>500 Corp Blvd, Miami, FL 33125</td><td>Agency preference</td><td>10244</td><td><span class="bdg b-amber">Queued</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Check #10244 for Southeast Benefits LLC sent to printer.','success')"><i class="fas fa-print"></i>Print</button></td></tr>
+            </tbody>
+            <tfoot><tr style="background:#fff8e1"><td colspan="2" style="font-weight:700">Total Checks</td><td style="font-weight:700">$2,500.83</td><td colspan="5"></td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: State Breakdown -->
+    <div id="tabState" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-map-marked-alt" style="margin-right:8px;color:#4a148c"></i>Payment Breakdown by State</h5>
+          <button class="btn-ol btn-sm" onclick="showToast('State reporting file exported for compliance filing.','success')"><i class="fas fa-download"></i>Export for Reporting</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','batches_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Payments grouped by agent state of licensure for multi-state reporting compliance. Required for DOI filing in each state where commissions are disbursed.</span></div>
+          <table id="tblExport4" class="tbl">
+            <thead><tr><th>State</th><th>Agents</th><th>ACH Payments</th><th>Check Payments</th><th>Total Amount</th><th>% of Batch</th><th>State Reporting</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Florida</strong></td><td>62</td><td>59</td><td>3</td><td style="font-weight:700">$32,840.00</td><td>67.4%</td><td><span class="bdg b-green">Filed</span></td></tr>
+              <tr><td><strong>Georgia</strong></td><td>14</td><td>14</td><td>0</td><td style="font-weight:700">$7,290.00</td><td>15.0%</td><td><span class="bdg b-green">Filed</span></td></tr>
+              <tr><td><strong>Texas</strong></td><td>9</td><td>8</td><td>1</td><td style="font-weight:700">$4,820.00</td><td>9.9%</td><td><span class="bdg b-amber">Pending</span></td></tr>
+              <tr><td><strong>California</strong></td><td>5</td><td>5</td><td>0</td><td style="font-weight:700">$2,510.00</td><td>5.2%</td><td><span class="bdg b-green">Filed</span></td></tr>
+              <tr><td><strong>New York</strong></td><td>3</td><td>3</td><td>0</td><td style="font-weight:700">$1,260.00</td><td>2.5%</td><td><span class="bdg b-green">Filed</span></td></tr>
+            </tbody>
+            <tfoot><tr style="background:#f1f8e9"><td style="font-weight:700">Total (5 states)</td><td style="font-weight:700">93</td><td style="font-weight:700">89</td><td style="font-weight:700">4</td><td style="font-weight:700;color:#1b5e20">$48,720.00</td><td>100%</td><td></td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Batch History -->
+    <div id="tabHistory" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>Batch History &amp; Confirmation Log</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport5','batches_Table5')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="table-wrap">
+          <table id="tblExport5" class="tbl">
+            <thead><tr><th>Batch ID</th><th>Cycle</th><th>Payment Date</th><th>Total Amount</th><th>Entries</th><th>ACH</th><th>Checks</th><th>Status</th><th>Approved By</th><th>Confirmed</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><code>BATCH-2026-05</code></td><td>May 2026</td><td>05 17,2026</td><td style="font-weight:700">$48,720.00</td><td>93</td><td>89</td><td>4</td><td><span class="bdg b-blue">Disbursing</span></td><td>David Park</td><td><span style="color:#e65100"><i class="fas fa-clock"></i> Pending</span></td><td><button class="btn-ol btn-sm" onclick="viewBatchDetail('BATCH-2026-05')"><i class="fas fa-eye"></i>View</button></td></tr>
+              <tr><td><code>BATCH-2026-04</code></td><td>Apr 2026</td><td>04 17,2026</td><td style="font-weight:700">$45,112.00</td><td>87</td><td>84</td><td>3</td><td><span class="bdg b-green">Confirmed</span></td><td>Lisa Chen</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Apr 18</span></td><td><button class="btn-ol btn-sm" onclick="viewBatchDetail('BATCH-2026-04')"><i class="fas fa-eye"></i>View</button></td></tr>
+              <tr><td><code>BATCH-2026-03</code></td><td>Mar 2026</td><td>03 17,2026</td><td style="font-weight:700">$42,890.00</td><td>82</td><td>79</td><td>3</td><td><span class="bdg b-green">Confirmed</span></td><td>David Park</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Mar 18</span></td><td><button class="btn-ol btn-sm" onclick="viewBatchDetail('BATCH-2026-03')"><i class="fas fa-eye"></i>View</button></td></tr>
+              <tr><td><code>BATCH-2026-02</code></td><td>Feb 2026</td><td>02 17,2026</td><td style="font-weight:700">$39,650.00</td><td>76</td><td>73</td><td>3</td><td><span class="bdg b-green">Confirmed</span></td><td>David Park</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Feb 18</span></td><td><button class="btn-ol btn-sm" onclick="viewBatchDetail('BATCH-2026-02')"><i class="fas fa-eye"></i>View</button></td></tr>
+              <tr><td><code>BATCH-2026-01</code></td><td>Jan 2026</td><td>01 17,2026</td><td style="font-weight:700">$37,220.00</td><td>71</td><td>68</td><td>3</td><td><span class="bdg b-green">Confirmed</span></td><td>Lisa Chen</td><td><span style="color:#1b5e20"><i class="fas fa-check-circle"></i> Jan 18</span></td><td><button class="btn-ol btn-sm" onclick="viewBatchDetail('BATCH-2026-01')"><i class="fas fa-eye"></i>View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div style="background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:18px 24px;margin-top:20px">
+      <div style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px"><i class="fas fa-bolt" style="margin-right:8px"></i>Batch Actions &mdash; BATCH-2026-05</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-pr btn-sm" onclick="confirmBankSettlement()"><i class="fas fa-check-double"></i>Confirm Bank Settlement</button>
+        <button class="btn-ol btn-sm" onclick="releaseHeldPayments()"><i class="fas fa-unlock"></i>Release Held Payments (2)</button>
+        <button class="btn-ol btn-sm" onclick="voidCheck()"><i class="fas fa-ban"></i>Void Check</button>
+        <button class="btn-ol btn-sm" onclick="reissuePayment()"><i class="fas fa-redo"></i>Reissue Payment</button>
+        <button class="btn-ol btn-sm" onclick="showToast('Batch remittance statements generated for 93 payees. Statements available in agent portals.','success')"><i class="fas fa-file-invoice-dollar"></i>Generate Remittance Statements</button>
+        <button class="btn-ol btn-sm" onclick="showToast('BATCH-2026-05 exported to Excel: batch_2026_05_full.xlsx','success')"><i class="fas fa-file-excel"></i>Export Batch</button>
+        <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="reverseBatch()"><i class="fas fa-exclamation-triangle"></i>Reverse Batch</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CONFIRM BANK SETTLEMENT MODAL ===== -->
+<div class="modal-overlay" id="confirmSettleModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;max-width:520px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-check-double" style="color:#1b5e20;margin-right:8px"></i>Confirm Bank Settlement</h5>
+      <button onclick="closeModal('confirmSettleModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#e8f5e9;border-radius:8px;padding:12px 14px;font-size:13px;margin-bottom:14px">
+        <strong>BATCH-2026-05</strong> | May 2026 | Payment Date: 05 17,2026<br>
+        Total ACH: <strong>$47,370.00</strong> (89 entries) | Checks: <strong>$2,500.83</strong> (4 entries)
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Bank Confirmation Reference <span style="color:#c62828">*</span></label><input type="text" id="bankRef" placeholder="e.g. ACH-CONF-20260517-001" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Confirmed Amount <span style="color:#c62828">*</span></label><input type="number" id="bankAmt" value="47370.00" step="0.01" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Settlement Date</label><input type="date" id="bankDate" value="2026-05-17" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+      <div style="background:#fff8e1;border-radius:8px;padding:10px 14px;font-size:12px;color:#e65100;display:flex;align-items:center;gap:8px"><i class="fas fa-info-circle"></i>Confirming bank settlement will advance the batch to "Confirmed" status. This action is logged in the audit trail and triggers post-payment reconciliation.</div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeModal('confirmSettleModal')">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="submitBankConfirm()"><i class="fas fa-check-double"></i>Confirm Settlement</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RELEASE HELD PAYMENTS MODAL ===== -->
+<div class="modal-overlay" id="releaseHeldModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;max-width:520px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-unlock" style="color:#0d47a1;margin-right:8px"></i>Release Held Payments</h5>
+      <button onclick="closeModal('releaseHeldModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="font-size:13px;margin-bottom:14px">The following payments are currently held (pre-note pending). Release will schedule them for ACH disbursement in the next available window.</div>
+      <table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:14px">
+        <tr style="background:#f8f9fa"><th style="padding:8px;text-align:left;border-bottom:1px solid #e8eaed">Payee</th><th style="padding:8px;text-align:left;border-bottom:1px solid #e8eaed">NPN</th><th style="padding:8px;text-align:right;border-bottom:1px solid #e8eaed">Amount</th><th style="padding:8px;text-align:left;border-bottom:1px solid #e8eaed">Hold Reason</th></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #f0f0f0">Kevin Nguyen</td><td style="padding:8px;border-bottom:1px solid #f0f0f0">9912345</td><td style="padding:8px;text-align:right;border-bottom:1px solid #f0f0f0;font-weight:700">$601.00</td><td style="padding:8px;border-bottom:1px solid #f0f0f0">Pre-note pending</td></tr>
+        <tr><td style="padding:8px">Lisa Park</td><td style="padding:8px">8810245</td><td style="padding:8px;text-align:right;font-weight:700">$347.00</td><td style="padding:8px">Pre-note pending</td></tr>
+      </table>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Release Reason <span style="color:#c62828">*</span></label><textarea id="releaseReason" rows="2" placeholder="Document reason for releasing held payments..." style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></textarea></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeModal('releaseHeldModal')">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="submitReleaseHeld()"><i class="fas fa-unlock"></i>Release 2 Payments ($948.00)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VOID CHECK MODAL ===== -->
+<div class="modal-overlay" id="voidCheckModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;max-width:480px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-ban" style="color:#c62828;margin-right:8px"></i>Void Check</h5>
+      <button onclick="closeModal('voidCheckModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Check Number <span style="color:#c62828">*</span></label>
+        <select id="voidCheckNum" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px">
+          <option value="">-- Select Check --</option>
+          <option value="10241">#10241 - Mark Brown ($289.00)</option>
+          <option value="10242">#10242 - Robert Garcia ($578.33)</option>
+          <option value="10243">#10243 - Patricia Lee ($433.50)</option>
+          <option value="10244">#10244 - Southeast Benefits LLC ($1,200.00)</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Void Reason <span style="color:#c62828">*</span></label><textarea id="voidReason" rows="2" placeholder="Document reason for voiding this check..." style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></textarea></div>
+      <div style="background:#ffebee;border-radius:8px;padding:10px 14px;font-size:12px;color:#c62828;display:flex;align-items:center;gap:8px"><i class="fas fa-exclamation-triangle"></i>Voiding a check is irreversible. A new payment must be reissued separately. Agent will be notified.</div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeModal('voidCheckModal')">Cancel</button>
+      <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="submitVoidCheck()"><i class="fas fa-ban"></i>Void Check</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REISSUE PAYMENT MODAL ===== -->
+<div class="modal-overlay" id="reissueModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;max-width:500px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-redo" style="color:#0d47a1;margin-right:8px"></i>Reissue Payment</h5>
+      <button onclick="closeModal('reissueModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Agent NPN <span style="color:#c62828">*</span></label><input type="text" id="reissueNPN" placeholder="Enter agent NPN..." style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Reissue Amount <span style="color:#c62828">*</span></label><input type="number" id="reissueAmt" step="0.01" placeholder="0.00" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Payment Method</label>
+        <select id="reissueMethod" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px">
+          <option>ACH (Original Method)</option>
+          <option>Paper Check</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Reason for Reissue <span style="color:#c62828">*</span></label><textarea id="reissueReason" rows="2" placeholder="e.g. ACH return, voided check, incorrect amount..." style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></textarea></div>
+      <div style="background:#e3f2fd;border-radius:8px;padding:10px 14px;font-size:12px;color:#0d47a1;display:flex;align-items:center;gap:8px"><i class="fas fa-info-circle"></i>Reissued payments will be included in the next payment batch. Agent will receive a notification.</div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeModal('reissueModal')">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="submitReissue()"><i class="fas fa-redo"></i>Reissue Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REVERSE BATCH MODAL ===== -->
+<div class="modal-overlay" id="reverseBatchModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1200;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;max-width:500px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h5 style="margin:0;font-size:15px"><i class="fas fa-exclamation-triangle" style="color:#c62828;margin-right:8px"></i>Reverse Entire Batch</h5>
+      <button onclick="closeModal('reverseBatchModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#ffebee;border-radius:8px;padding:14px;font-size:13px;color:#c62828;margin-bottom:14px;border:1px solid #ef9a9a">
+        <strong><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>CRITICAL ACTION</strong><br>
+        You are about to reverse <strong>BATCH-2026-05</strong> ($48,720.00 across 93 entries). This will generate ACH reversal entries for all 89 ACH payments and void all 4 pending checks. This action requires dual approval.
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Reversal Reason <span style="color:#c62828">*</span></label><textarea id="reversalReason" rows="3" placeholder="Document the business reason for full batch reversal (minimum 50 characters)..." style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></textarea></div>
+      <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Type "REVERSE" to confirm <span style="color:#c62828">*</span></label><input type="text" id="reverseConfirm" placeholder="Type REVERSE" style="width:100%;padding:8px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeModal('reverseBatchModal')">Cancel</button>
+      <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="submitReverseBatch()"><i class="fas fa-exclamation-triangle"></i>Submit for Dual Approval</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function switchTab(btn, paneId){
+  btn.parentElement.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(paneId).classList.add('active');
+}
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+
+// Modal backdrop close
+document.querySelectorAll('.modal-overlay').forEach(function(o){
+  o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; });
+});
+
+// ===== BOTTOM ACTION BUTTONS =====
+function confirmBankSettlement(){ showModal('confirmSettleModal'); }
+function releaseHeldPayments(){ showModal('releaseHeldModal'); }
+function voidCheck(){ showModal('voidCheckModal'); }
+function reissuePayment(){ showModal('reissueModal'); }
+function reverseBatch(){ showModal('reverseBatchModal'); }
+
+function submitBankConfirm(){
+  var ref = document.getElementById('bankRef').value.trim();
+  var amt = document.getElementById('bankAmt').value;
+  if(!ref){ showToast('Bank confirmation reference is required.','warning'); return; }
+  if(!amt || parseFloat(amt)<=0){ showToast('Confirmed amount is required.','warning'); return; }
+  closeModal('confirmSettleModal');
+  showToast('Bank settlement confirmed for BATCH-2026-05. Reference: '+ref+'. Amount: $'+parseFloat(amt).toFixed(2)+'. Batch status advanced to Confirmed. Post-payment reconciliation triggered.','success');
+}
+
+function submitReleaseHeld(){
+  var reason = document.getElementById('releaseReason').value.trim();
+  if(!reason){ showToast('Release reason is required.','warning'); return; }
+  closeModal('releaseHeldModal');
+  showToast('2 held payments released ($948.00 total). Kevin Nguyen ($601.00) and Lisa Park ($347.00) scheduled for ACH in next window. Agents notified. Action logged.','success');
+}
+
+function submitVoidCheck(){
+  var chk = document.getElementById('voidCheckNum').value;
+  var reason = document.getElementById('voidReason').value.trim();
+  if(!chk){ showToast('Select a check to void.','warning'); return; }
+  if(!reason){ showToast('Void reason is required.','warning'); return; }
+  closeModal('voidCheckModal');
+  showToast('Check #'+chk+' voided successfully. Agent notified. A reissue must be created separately. Action logged in audit trail.','success');
+}
+
+function submitReissue(){
+  var npn = document.getElementById('reissueNPN').value.trim();
+  var amt = document.getElementById('reissueAmt').value;
+  var reason = document.getElementById('reissueReason').value.trim();
+  if(!npn){ showToast('Agent NPN is required.','warning'); return; }
+  if(!amt || parseFloat(amt)<=0){ showToast('Valid reissue amount is required.','warning'); return; }
+  if(!reason){ showToast('Reason for reissue is required.','warning'); return; }
+  closeModal('reissueModal');
+  showToast('Payment reissue of $'+parseFloat(amt).toFixed(2)+' queued for NPN '+npn+' via '+document.getElementById('reissueMethod').value+'. Will be included in next batch. Agent notified.','success');
+}
+
+function submitReverseBatch(){
+  var reason = document.getElementById('reversalReason').value.trim();
+  var confirm = document.getElementById('reverseConfirm').value.trim();
+  if(reason.length<50){ showToast('Reversal reason must be at least 50 characters (currently '+reason.length+').','warning'); return; }
+  if(confirm!=='REVERSE'){ showToast('Type REVERSE to confirm this critical action.','error'); return; }
+  closeModal('reverseBatchModal');
+  showToast('Batch reversal request submitted for BATCH-2026-05. Pending dual approval from Finance Manager (Lisa Chen). ACH reversal entries will be generated upon approval. All agents will be notified.','warning');
+}
+
+function viewBatchDetail(batchId){
+  var info = {
+    'BATCH-2026-05':{cycle:'May 2026',date:'05 17,2026',total:'$48,720.00',entries:93,status:'Disbursing',approver:'David Park'},
+    'BATCH-2026-04':{cycle:'Apr 2026',date:'04 17,2026',total:'$45,112.00',entries:87,status:'Confirmed',approver:'Lisa Chen'},
+    'BATCH-2026-03':{cycle:'Mar 2026',date:'03 17,2026',total:'$42,890.00',entries:82,status:'Confirmed',approver:'David Park'},
+    'BATCH-2026-02':{cycle:'Feb 2026',date:'02 17,2026',total:'$39,650.00',entries:76,status:'Confirmed',approver:'David Park'},
+    'BATCH-2026-01':{cycle:'Jan 2026',date:'01 17,2026',total:'$37,220.00',entries:71,status:'Confirmed',approver:'Lisa Chen'}
+  };
+  var b = info[batchId];
+  if(!b) return;
+  showToast('Viewing '+batchId+' ('+b.cycle+'): '+b.total+' | '+b.entries+' entries | Status: '+b.status+' | Approved by: '+b.approver,'info');
+}
+</script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

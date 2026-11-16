@@ -1,0 +1,138 @@
+{
+  "hook": {
+    "enabled": true,
+    "limits": {
+      "maxFindings": 5,
+      "maxChars": 8000
+    }
+  },
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-26T06:23:54.026Z",
+        "reason": "EnrollAxis design system established body font in shadcn-ui.css"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "agent/onboarding.html"
+        ],
+        "createdAt": "2026-10-26T06:29:34.869Z",
+        "reason": "Agent: full-bleed app shell is intentional for sidebar+main layout; inset would break fixed sidebar chrome"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:05:34.615Z",
+        "reason": "Legacy Bootstrap exam page; pre-existing contrast, not redesigning this pass"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:06:09.451Z",
+        "reason": "Legacy Bootstrap exam page; not redesigning this pass"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:06:09.526Z",
+        "reason": "Legacy Bootstrap exam page; not redesigning this pass"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:06:09.610Z",
+        "reason": "Legacy Bootstrap exam page; not redesigning this pass"
+      },
+      {
+        "rule": "em-dash-overuse",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:06:42.298Z",
+        "reason": "Legacy Bootstrap exam page; not redesigning this pass"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "agent/training-exam.html"
+        ],
+        "createdAt": "2026-10-26T11:06:42.374Z",
+        "reason": "Legacy Bootstrap exam page; not redesigning this pass"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "agent/onboarding.html"
+        ],
+        "createdAt": "2026-10-26T11:24:48.741Z",
+        "reason": "Pre-existing error-token contrast on muted surfaces; segment exam restore does not redesign error palette"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "auth-carrier/login.html"
+        ],
+        "createdAt": "2026-11-04T13:26:58.947Z",
+        "reason": "User asked not to redesign login: pre-existing Bootstrap payer login; only adding dropdown route"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "auth-carrier/login.html"
+        ],
+        "createdAt": "2026-11-04T13:26:59.023Z",
+        "reason": "User asked not to redesign login: pre-existing Bootstrap payer login; only adding dropdown route"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "admin/payer-admin-dashboard.html"
+        ],
+        "createdAt": "2026-11-04T13:45:09.426Z",
+        "reason": "Operate dashboard densifies KPI labels/chips/table headers at 12px floor; detector still flags compact product chrome as tiny-text"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "portal/landing-*.html"
+        ],
+        "createdAt": "2026-11-04T14:09:30.829Z",
+        "reason": "Brief pins Welcome at 24px Poppins and muted 14px role line; Operate landing hierarchy matches that contract"
+      },
+      {
+        "rule": "monotonous-spacing",
+        "value": "*",
+        "files": [
+          "portal/landing-carrier.html"
+        ],
+        "createdAt": "2026-11-07T06:41:49.497Z",
+        "reason": "Dashboard sections intentionally reuse panel spacing utilities; rhythm comes from p-stack-tight/mid/loose wrappers"
+      }
+    ]
+  }
+}

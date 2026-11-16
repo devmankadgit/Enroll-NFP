@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carrier Profile Management | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html" class="active"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Carrier Profile Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Carrier Profile Management</li></ol>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Carrier Summary -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-hospital" style="margin-right:8px;color:#1a237e"></i>Carrier Summary</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','carrier-setup_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Carrier Name</th><th>Carrier ID</th><th>Products/Plans</th><th>States</th><th>Status</th><th>Carrier Admin</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gold Kidney Health Plan</strong></td><td>EAHP-001</td><td>12</td><td>FL, TX, CA, NY</td><td><span class="badge bg-success">Active</span></td><td>Sandra Adams</td><td><button class="btn-ol btn-sm" onclick="configureCarrier('Gold Kidney Health Plan')"><i class="fas fa-cog"></i> Configure</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Products / Plans Grid -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-clipboard-list" style="margin-right:8px;color:#00695c"></i>Products &amp; Plans by Contract &amp; Year</h5></div>
+      <div class="filter-bar" style="border-radius:0;border-left:0;border-right:0;border-top:0;margin-bottom:0">
+        <label>Contract:</label>
+        <select id="fPlanContract" onchange="filterPlans()">
+          <option value="">All Contracts</option><option value="H1234">H1234 — MA-PD</option><option value="H1235">H1235 — D-SNP</option>
+        </select>
+        <label>Plan Year:</label>
+        <select id="fPlanYear" onchange="filterPlans()">
+          <option value="">All Years</option><option value="2026" selected>2026</option><option value="2025">2025</option><option value="2027">2027</option>
+        </select>
+        <label>Status:</label>
+        <select id="fPlanStatus" onchange="filterPlans()">
+          <option value="">All</option><option value="Active">Active</option><option value="Pending">Pending CMS</option><option value="Expired">Expired</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="document.getElementById('fPlanContract').value='';document.getElementById('fPlanYear').value='';document.getElementById('fPlanStatus').value='';filterPlans()"><i class="fas fa-times"></i> Reset</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="plansTable">
+          <thead><tr><th>CMS Contract</th><th>PBP ID</th><th>Plan Name</th><th>Plan Type</th><th>Plan Year</th><th>Service Area</th><th>Effective Date</th><th>Term Date</th><th>Enrollment</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="plansBody">
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL, TX, CA, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>1,842</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2026</td><td>FL, CA</td><td>01 01,2026</td><td>12 31,2026</td><td>956</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>003</td><td><strong>Gold Kidney Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2026</td><td>TX, NY</td><td>01 01,2026</td><td>12 31,2026</td><td>624</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-003','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2026" data-status="Active"><td>H1234</td><td>004</td><td><strong>Gold Kidney Value (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>413</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-004','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-004','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>001</td><td><strong>Gold Kidney Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>FL</td><td>01 01,2026</td><td>12 31,2026</td><td>287</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-001','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2026" data-status="Active"><td>H1235</td><td>002</td><td><strong>Gold Kidney Dual Plus (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2026</td><td>CA</td><td>01 01,2026</td><td>12 31,2026</td><td>196</td><td><span class="badge bg-success">Active</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-002','2026')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1235-002','2026')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2025</td><td>FL, TX, CA, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>1,650</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2025</td><td>FL, CA</td><td>01 01,2025</td><td>12 31,2025</td><td>870</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2025" data-status="Expired"><td>H1234</td><td>003</td><td><strong>Gold Kidney Essential (PPO)</strong></td><td><span class="bdg b-amber">PPO</span></td><td>2025</td><td>TX, NY</td><td>01 01,2025</td><td>12 31,2025</td><td>540</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-003','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1235" data-year="2025" data-status="Expired"><td>H1235</td><td>001</td><td><strong>Gold Kidney Dual Complete (D-SNP)</strong></td><td><span class="bdg b-purple">D-SNP</span></td><td>2025</td><td>FL</td><td>01 01,2025</td><td>12 31,2025</td><td>215</td><td><span class="badge bg-secondary">Expired</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1235-001','2025')" title="View"><i class="fas fa-eye"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>001</td><td><strong>Gold Kidney Premier (HMO)</strong></td><td><span class="bdg b-blue">HMO</span></td><td>2027</td><td>FL, TX, CA, NY, GA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-001','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-001','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+            <tr data-contract="H1234" data-year="2027" data-status="Pending"><td>H1234</td><td>002</td><td><strong>Gold Kidney Select (HMO-POS)</strong></td><td><span class="bdg b-teal">HMO-POS</span></td><td>2027</td><td>FL, CA</td><td>01 01,2027</td><td>12 31,2027</td><td>—</td><td><span class="badge bg-warning text-dark">Pending CMS</span></td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="viewPlanDetail('H1234-002','2027')" title="View"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="editPlan('H1234-002','2027')" title="Edit"><i class="fas fa-edit"></i></button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Carrier Detail -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-id-card" style="margin-right:8px;color:#1a237e"></i>Carrier Profile &mdash; Gold Kidney Health Plan</h5><div class="dflex g8"><button class="btn-pr btn-sm" onclick="saveCarrier('Gold Kidney Health Plan')"><i class="fas fa-save"></i>Save</button></div></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-2">
+            <div class="mb-3"><label class="form-label">Legal Name</label><input type="text" class="form-control" value="Gold Kidney Health Plan, Inc."></div>
+            <div class="mb-3"><label class="form-label">Carrier ID</label><input type="text" class="form-control" value="EAHP-001" readonly></div>
+            <div class="mb-3"><label class="form-label">CMS Contract Number(s)</label><input type="text" class="form-control" value="H1234, H1235"></div>
+            <div class="mb-3"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="ops@enrollaxis.com"></div>
+            <div class="mb-3"><label class="form-label">Contact Phone</label><input type="tel" class="form-control" value="(800) 555-0100"></div>
+          </div>
+          <div class="col-2">
+            <div class="mb-3"><label class="form-label">Operational States</label>
+              <div style="max-height:100px;overflow-y:auto;border:1px solid #ddd;border-radius:6px;padding:8px">
+                <div><input type="checkbox" checked> Florida</div>
+                <div><input type="checkbox" checked> Texas</div>
+                <div><input type="checkbox" checked> California</div>
+                <div><input type="checkbox" checked> New York</div>
+                <div><input type="checkbox"> Georgia</div>
+                <div><input type="checkbox"> Illinois</div>
+              </div>
+            </div>
+            <div class="mb-3"><label class="form-label">Active Plan Year(s)</label><select class="form-control" multiple style="height:60px"><option selected>2026</option><option selected>2025</option></select></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ONBOARD NEW CARRIER MODAL -->
+<div id="onboardModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:660px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-plus-circle" style="margin-right:8px"></i>Onboard New Carrier</h6>
+      <button onclick="document.getElementById('onboardModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div id="onboardErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;display:none;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row"><div class="fg" style="flex:2"><label>Legal Name <span style="color:#c62828">*</span></label><input id="obName" placeholder="e.g. Pacific Health Partners, Inc."></div><div class="fg"><label>Carrier ID <span style="color:#c62828">*</span></label><input id="obId" placeholder="e.g. PHP-003"></div></div>
+      <div class="form-row"><div class="fg"><label>CMS Contract Number <span style="color:#c62828">*</span></label><input id="obContract" placeholder="e.g. H9012"></div><div class="fg"><label>Contact Email <span style="color:#c62828">*</span></label><input id="obEmail" type="email" placeholder="ops@carrier.com"></div></div>
+      <div class="form-row"><div class="fg"><label>Contact Phone</label><input id="obPhone" type="tel" placeholder="(800) 555-0200"></div><div class="fg"><label>Plan Year(s)</label><input id="obYears" placeholder="2026, 2027"></div></div>
+      <div class="form-row"><div class="fg"><label>Operational States <span style="color:#c62828">*</span></label>
+        <div style="max-height:80px;overflow-y:auto;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:12.5px">
+          <div><input type="checkbox" id="obFL"> Florida</div><div><input type="checkbox" id="obTX"> Texas</div><div><input type="checkbox" id="obCA"> California</div><div><input type="checkbox" id="obNY"> New York</div><div><input type="checkbox" id="obGA"> Georgia</div><div><input type="checkbox" id="obIL"> Illinois</div>
+        </div>
+      </div><div class="fg"><label>Carrier Admin Name</label><input id="obAdmin" placeholder="Primary admin contact"></div></div>
+      <div class="form-row"><div class="fg" style="flex:2"><label>Notes</label><textarea id="obNotes" rows="2" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px;font-size:13px" placeholder="Any special onboarding requirements..."></textarea></div></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol btn-sm" onclick="prefillOnboard()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="document.getElementById('onboardModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="saveOnboard()"><i class="fas fa-rocket"></i>Start Onboarding</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIGURE CARRIER MODAL -->
+<div id="configModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:700px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="configTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-cog" style="margin-right:8px"></i>Configure Carrier</h6>
+      <button onclick="document.getElementById('configModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px" id="configBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('configModal').classList.remove('open')">Close</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTINUE SETUP MODAL -->
+<div id="setupModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:680px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="setupTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-tasks" style="margin-right:8px"></i>Onboarding Setup</h6>
+      <button onclick="document.getElementById('setupModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px" id="setupBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('setupModal').classList.remove('open')">Close</button>
+      <button class="btn-pr" onclick="document.getElementById('setupModal').classList.remove('open');showToast('Progress saved. Continue when ready.','success')"><i class="fas fa-arrow-right"></i>Save &amp; Continue Later</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+var carrierData={
+  'Gold Kidney Health Plan':{id:'EAHP-001',contract:'H1234, H1235',states:'FL, TX, CA, NY',years:'2025, 2026',email:'ops@enrollaxis.com',phone:'(800) 555-0100',admin:'Sandra Adams',status:'Active',isolation:'Enforced',plans:'12 Active Plans',agents:'342 Active Agents'}
+};
+
+function openOnboardModal(){
+  document.getElementById('onboardErr').style.display='none';
+  ['obName','obId','obContract','obEmail','obPhone','obYears','obAdmin','obNotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  ['obFL','obTX','obCA','obNY','obGA','obIL'].forEach(function(id){var el=document.getElementById(id);if(el)el.checked=false;});
+  document.getElementById('onboardModal').classList.add('open');
+}
+
+function prefillOnboard(){
+  document.getElementById('obName').value='Pacific Health Partners, Inc.';
+  document.getElementById('obId').value='PHP-003';
+  document.getElementById('obContract').value='H9012';
+  document.getElementById('obEmail').value='onboarding@pacifichealth.com';
+  document.getElementById('obPhone').value='(800) 555-0300';
+  document.getElementById('obYears').value='2026, 2027';
+  document.getElementById('obAdmin').value='Jennifer Lee';
+  document.getElementById('obNotes').value='Multi-state expansion planned for Q3 2026. Requires custom commission tier setup.';
+  document.getElementById('obCA').checked=true;
+  document.getElementById('obFL').checked=true;
+  showToast('Form prefilled with sample data.','info');
+}
+
+function saveOnboard(){
+  var errors=[];
+  if(!document.getElementById('obName').value.trim()) errors.push('Legal Name');
+  if(!document.getElementById('obId').value.trim()) errors.push('Carrier ID');
+  if(!document.getElementById('obContract').value.trim()) errors.push('CMS Contract Number');
+  var em=document.getElementById('obEmail').value.trim();
+  if(!em||!em.includes('@')) errors.push('Valid Contact Email');
+  var anyState=['obFL','obTX','obCA','obNY','obGA','obIL'].some(function(id){return document.getElementById(id).checked;});
+  if(!anyState) errors.push('At least one State');
+  var err=document.getElementById('onboardErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+' is required.</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';return;
+  }
+  err.style.display='none';
+  document.getElementById('onboardModal').classList.remove('open');
+  showToast('Carrier onboarding initiated! Wizard will begin at Step 1.','success');
+}
+
+function configureCarrier(name){
+  var c=carrierData[name];
+  if(!c){showToast('Carrier data not found.','error');return;}
+  document.getElementById('configTitle').innerHTML='<i class="fas fa-cog" style="margin-right:8px"></i>Configure: '+name;
+  document.getElementById('configBody').innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">'+
+    '<div class="stat-card"><div class="stat-label">Carrier ID</div><div class="stat-val" style="font-size:16px">'+c.id+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">CMS Contract</div><div class="stat-val" style="font-size:16px">'+c.contract+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Active Plans</div><div class="stat-val" style="font-size:16px">'+c.plans+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Active Agents</div><div class="stat-val" style="font-size:16px">'+c.agents+'</div></div>'+
+    '</div>'+
+    '<h6 style="font-weight:700;color:#1a237e;margin-bottom:12px">Configuration Details</h6>'+
+    '<div class="form-row"><div class="fg" style="flex:2"><label>Legal Name</label><input value="'+name+', Inc."></div><div class="fg"><label>Status</label><select><option '+(c.status==='Active'?'selected':'')+'>Active</option><option>Inactive</option><option>Onboarding</option></select></div></div>'+
+    '<div class="form-row"><div class="fg"><label>Contact Email</label><input type="email" value="'+c.email+'"></div><div class="fg"><label>Contact Phone</label><input type="tel" value="'+c.phone+'"></div></div>'+
+    '<div class="form-row"><div class="fg"><label>Operational States</label><input value="'+c.states+'"></div><div class="fg"><label>Plan Years</label><input value="'+c.years+'"></div></div>'+
+    '<div class="form-row"><div class="fg"><label>Carrier Admin</label><input value="'+c.admin+'"></div><div class="fg"><label>Data Isolation</label><span class="badge bg-success" style="padding:6px 12px">'+c.isolation+'</span></div></div>';
+  document.getElementById('configModal').classList.add('open');
+}
+
+function continueSetup(name){
+  document.getElementById('setupTitle').innerHTML='<i class="fas fa-tasks" style="margin-right:8px"></i>Onboarding Setup: '+name;
+  document.getElementById('setupBody').innerHTML=
+    '<p style="color:#555;margin-bottom:16px">Complete the remaining steps to finish onboarding <strong>'+name+'</strong>.</p>'+
+    '<div style="display:flex;flex-direction:column;gap:12px">'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#e8f5e9;border-radius:8px;border-left:4px solid #2e7d32"><i class="fas fa-check-circle" style="color:#2e7d32;font-size:18px"></i><div><strong>Step 1: Carrier Profile</strong><div style="font-size:12px;color:#555">Legal name, CMS contract, contact info ? Completed</div></div></div>'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#e8f5e9;border-radius:8px;border-left:4px solid #2e7d32"><i class="fas fa-check-circle" style="color:#2e7d32;font-size:18px"></i><div><strong>Step 2: Plan Data Upload</strong><div style="font-size:12px;color:#555">Plan catalog, benefits, service areas ? Completed</div></div></div>'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#e3f2fd;border-radius:8px;border-left:4px solid #1565c0"><i class="fas fa-spinner fa-spin" style="color:#1565c0;font-size:18px"></i><div><strong>Step 3: Commission Rules</strong><div style="font-size:12px;color:#555">Configure rate tables, override tiers, payment schedules</div></div><button class="btn-pr btn-sm" style="margin-left:auto" onclick="showToast(\'Commission rules wizard opened for '+name+'\',\'info\')"><i class="fas fa-arrow-right"></i>Resume</button></div>'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f5f5f5;border-radius:8px;border-left:4px solid #9e9e9e"><i class="fas fa-circle" style="color:#9e9e9e;font-size:18px"></i><div><strong>Step 4: Compliance Rules</strong><div style="font-size:12px;color:#555">AHIP requirements, SOA rules, licensing</div></div></div>'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f5f5f5;border-radius:8px;border-left:4px solid #9e9e9e"><i class="fas fa-circle" style="color:#9e9e9e;font-size:18px"></i><div><strong>Step 5: Hierarchy Structure</strong><div style="font-size:12px;color:#555">Define producer levels: SFMO > NFMO > FMO > SGA > MGA > GA > Agent</div></div></div>'+
+    '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f5f5f5;border-radius:8px;border-left:4px solid #9e9e9e"><i class="fas fa-circle" style="color:#9e9e9e;font-size:18px"></i><div><strong>Step 6: Admin User Provisioning</strong><div style="font-size:12px;color:#555">Create carrier admin account with appropriate permissions</div></div></div>'+
+    '</div>';
+  document.getElementById('setupModal').classList.add('open');
+}
+
+function deactivateCarrier(name) {
+  if(!confirm('Deactivate ' + name + '?\n\nAll historical records are preserved but no new onboarding or enrollments will be allowed.')) return;
+  showToast(name + ' deactivated. Historical records preserved. Audit entry created.', 'success');
+}
+function saveCarrier(name) {
+  var email = document.querySelector('input[type=email]');
+  if(email && !email.value.includes('@')) { showToast('Please enter a valid contact email.', 'error'); return; }
+  showToast(name + ' configuration saved. Data isolation enforced.', 'success');
+}
+
+function filterPlans(){
+  var contract=document.getElementById('fPlanContract').value;
+  var year=document.getElementById('fPlanYear').value;
+  var status=document.getElementById('fPlanStatus').value;
+  document.querySelectorAll('#plansBody tr').forEach(function(row){
+    var rContract=row.getAttribute('data-contract')||'';
+    var rYear=row.getAttribute('data-year')||'';
+    var rStatus=row.getAttribute('data-status')||'';
+    var show=true;
+    if(contract&&rContract!==contract) show=false;
+    if(year&&rYear!==year) show=false;
+    if(status&&rStatus!==status) show=false;
+    row.style.display=show?'':'none';
+  });
+}
+
+function viewPlanDetail(planId,year){
+  var planInfo={
+    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY',enr26:1842,enr25:1650},
+    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA',enr26:956,enr25:870},
+    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY',enr26:624,enr25:540},
+    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL',enr26:413,enr25:0},
+    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL',enr26:287,enr25:215},
+    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA',enr26:196,enr25:0}
+  };
+  var p=planInfo[planId]||{name:planId,type:'—',area:'—',enr26:0,enr25:0};
+  var enr=year==='2026'?p.enr26:year==='2025'?p.enr25:'—';
+  var statusBadge=year==='2027'?'<span class="badge bg-warning text-dark">Pending CMS</span>':year<='2025'?'<span class="badge bg-secondary">Expired</span>':'<span class="badge bg-success">Active</span>';
+  var parts=planId.split('-');
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">'
+    +'<div class="stat-card"><div class="stat-label">Contract</div><div class="stat-val" style="font-size:16px">'+parts[0]+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">PBP ID</div><div class="stat-val" style="font-size:16px">'+parts[1]+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Plan Year</div><div class="stat-val" style="font-size:16px">'+year+'</div></div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">'
+    +'<div class="stat-card"><div class="stat-label">Plan Name</div><div class="stat-val" style="font-size:14px">'+p.name+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Plan Type</div><div class="stat-val" style="font-size:14px">'+p.type+'</div></div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">'
+    +'<div class="stat-card"><div class="stat-label">Service Area</div><div class="stat-val" style="font-size:13px">'+p.area+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Enrollment</div><div class="stat-val" style="font-size:16px">'+(typeof enr==='number'?enr.toLocaleString():enr)+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Status</div><div class="stat-val">'+statusBadge+'</div></div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'
+    +'<div class="stat-card"><div class="stat-label">Effective Date</div><div class="stat-val" style="font-size:14px">Jan 1, '+year+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Term Date</div><div class="stat-val" style="font-size:14px">Dec 31, '+year+'</div></div>'
+    +'</div>';
+  document.getElementById('configTitle').innerHTML='<i class="fas fa-clipboard-list" style="margin-right:8px;color:#00695c"></i>Plan Detail: '+p.name+' &mdash; PY'+year;
+  document.getElementById('configBody').innerHTML=html;
+  document.querySelector('#configModal .modal-foot').innerHTML='<button class="btn-ol" onclick="document.getElementById(\'configModal\').classList.remove(\'open\')">Close</button>';
+  document.querySelector('#configModal .modal-foot').style.justifyContent='';
+  document.getElementById('configModal').classList.add('open');
+}
+
+function editPlan(planId,year){
+  var planInfo={
+    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
+    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
+    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY'},
+    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL'},
+    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
+    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
+  };
+  var p=planInfo[planId]||{name:'',type:'',area:''};
+  var parts=planId.split('-');
+  var html='<div class="form-row"><div class="fg"><label>CMS Contract</label><input value="'+parts[0]+'" readonly style="background:#f8f9fa"></div><div class="fg"><label>PBP ID</label><input value="'+parts[1]+'" readonly style="background:#f8f9fa"></div><div class="fg"><label>Plan Year</label><input value="'+year+'" readonly style="background:#f8f9fa"></div></div>'
+    +'<div class="form-row"><div class="fg" style="flex:2"><label>Plan Name</label><input id="epName" value="'+p.name+'"></div><div class="fg"><label>Plan Type</label><select id="epType"><option'+(p.type==='HMO'?' selected':'')+'>HMO</option><option'+(p.type==='HMO-POS'?' selected':'')+'>HMO-POS</option><option'+(p.type==='PPO'?' selected':'')+'>PPO</option><option'+(p.type==='D-SNP'?' selected':'')+'>D-SNP</option><option>C-SNP</option></select></div></div>'
+    +'<div class="form-row"><div class="fg"><label>Service Area States</label><input id="epStates" value="'+p.area+'"></div></div>'
+    +'<div class="form-row"><div class="fg"><label>Effective Date</label><input type="date" id="epEffDate" value="'+year+'-01-01"></div><div class="fg"><label>Term Date</label><input type="date" id="epTermDate" value="'+year+'-12-31"></div></div>';
+  document.getElementById('configTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px;color:#1a237e"></i>Edit Plan: '+p.name+' &mdash; PY'+year;
+  document.getElementById('configBody').innerHTML=html;
+  document.querySelector('#configModal .modal-foot').innerHTML='<button class="btn-ol btn-sm" onclick="prefillEditPlan(\''+planId+'\',\''+year+'\')" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button><div class="dflex g8"><button class="btn-ol" onclick="document.getElementById(\'configModal\').classList.remove(\'open\')">Cancel</button><button class="btn-pr" onclick="saveEditPlan()"><i class="fas fa-save"></i> Save Changes</button></div>';
+  document.querySelector('#configModal .modal-foot').style.justifyContent='space-between';
+  document.getElementById('configModal').classList.add('open');
+}
+
+function prefillEditPlan(planId,year){
+  var planInfo={
+    'H1234-001':{name:'Gold Kidney Premier (HMO)',type:'HMO',area:'FL, TX, CA, NY'},
+    'H1234-002':{name:'Gold Kidney Select (HMO-POS)',type:'HMO-POS',area:'FL, CA'},
+    'H1234-003':{name:'Gold Kidney Essential (PPO)',type:'PPO',area:'TX, NY'},
+    'H1234-004':{name:'Gold Kidney Value (HMO)',type:'HMO',area:'FL'},
+    'H1235-001':{name:'Gold Kidney Dual Complete (D-SNP)',type:'D-SNP',area:'FL'},
+    'H1235-002':{name:'Gold Kidney Dual Plus (D-SNP)',type:'D-SNP',area:'CA'}
+  };
+  var p=planInfo[planId]||{name:'',type:'',area:''};
+  document.getElementById('epName').value=p.name;
+  document.getElementById('epType').value=p.type;
+  document.getElementById('epStates').value=p.area;
+  document.getElementById('epEffDate').value=year+'-01-01';
+  document.getElementById('epTermDate').value=year+'-12-31';
+  showToast('Form prefilled with plan data.','info');
+}
+
+function saveEditPlan(){
+  document.getElementById('configModal').classList.remove('open');
+  showToast('Plan configuration saved successfully.','success');
+}
+
+// Apply default filters on load
+filterContracts();
+filterPlans();
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

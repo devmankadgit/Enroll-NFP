@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reconciliation &amp; Commission Audit | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.disc-row{background:#fff8e1}
+.variance-row{background:#ffebee}
+.match-row{background:#f8fffe}
+.variance-cell{color:#c62828;font-weight:700}
+.match-cell{color:#1b5e20;font-weight:700}
+.ach-r01{background:#ffebee;color:#c62828;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.ach-r02{background:#fff3e0;color:#e65100;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.ach-r03{background:#fce4ec;color:#880e4f;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.signoff-badge{background:#e8f5e9;color:#1b5e20;font-weight:600;font-size:11px;padding:2px 10px;border-radius:10px}
+.signoff-pending{background:#fff8e1;color:#e65100;font-weight:600;font-size:11px;padding:2px 10px;border-radius:10px}
+.unmatched-badge{background:#e3f2fd;color:#0d47a1;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html" class="active"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Post-Payment Reconciliation &amp; Commission Audit</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Reconciliation</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i>Export to Excel</button>
+    <button class="btn-pr btn-sm" onclick="runReconciliation()"><i class="fas fa-sync-alt"></i>Run Reconciliation</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+      <span><strong>Reconciliation Policy:</strong> Post-payment reconciliation auto-runs within <strong>1-2 business days</strong> of each payment date (configurable via <a href="../admin/commission-config.html" style="color:#004d40;font-weight:600">Admin &rsaquo; Recon Deadline Config</a>). The system performs a <strong>3-way match</strong>: Calculated Ledger &harr; Payment Batch &harr; Bank ACH/Check Settlement. Data sources include <strong>CMS Monthly Membership Reconciliation (MMR)</strong> files for disenrollment verification. ACH returns and check rejections are auto-detected and reconciled. Variance tolerance: <strong>$0.00</strong> &mdash; all differences must be documented. Records retained <strong>7 years</strong>. Finance sign-off required on each monthly report.</span></div>
+
+    <!-- Summary Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Last Recon Report</div><div class="stat-val">REC-2026-05</div><div class="stat-sub text-muted">Generated 05 21,2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Open Discrepancies</div><div class="stat-val" id="openDiscCount">2</div><div class="stat-sub text-muted">Pending Finance review</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Resolved (MTD)</div><div class="stat-val">5</div><div class="stat-sub text-muted">Zero unexplained variance</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-undo-alt"></i></div><div><div class="stat-label">ACH Returns</div><div class="stat-val" id="achReturnCount">2</div><div class="stat-sub text-muted">Pending reconciliation</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-archive"></i></div><div><div class="stat-label">Reports (CY2026)</div><div class="stat-val">5</div><div class="stat-sub text-muted">7-yr retention active</div></div></div></div>
+    </div>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'tabReports')"><i class="fas fa-file-alt" style="margin-right:5px"></i>Recon Reports</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabDetail')"><i class="fas fa-list-ul" style="margin-right:5px"></i>Line-Item Audit (REC-2026-05)</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabDisc')"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>Discrepancy Queue</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabACH')"><i class="fas fa-undo-alt" style="margin-right:5px"></i>ACH Returns & Exceptions</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabUnmatched')"><i class="fas fa-unlink" style="margin-right:5px"></i>Unmatched Entries</button>
+    </div>
+
+    <!-- ====== TAB 1: RECON REPORTS LIST ====== -->
+    <div id="tabReports" class="tab-pane active">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-file-alt" style="margin-right:8px;color:#004d40"></i>Reconciliation Report History</h5>
+          <span class="text-muted text-sm">Auto-generated 2 business days after each payment date. Retained 7 years.</span>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','reconciliation_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport1" class="tbl">
+            <thead><tr><th>Report ID</th><th>Payment Cycle</th><th>Payment Date</th><th>Batch ID</th><th>Approved Total</th><th>NACHA Total</th><th>Bank Confirmed</th><th>Variance</th><th>Discrepancies</th><th>ACH Returns</th><th>Status</th><th>Finance Sign-Off</th><th>Actions</th></tr></thead>
+            <tbody id="reconTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 2: LINE-ITEM AUDIT ====== -->
+    <div id="tabDetail" class="tab-pane">
+      <div class="card mb16">
+        <div class="card-hdr">
+          <h5><i class="fas fa-list-ul" style="margin-right:8px;color:#004d40"></i>Line-Item Audit — REC-2026-05 (BATCH-2026-05 — May 2026)</h5>
+          <button class="btn-ol btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i>Export</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','reconciliation_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div style="background:#f1f8e9;border-radius:8px;padding:12px 16px;margin:0 0 14px">
+          <div style="font-size:12px;font-weight:700;color:#1b5e20;text-transform:uppercase;margin-bottom:8px"><i class="fas fa-balance-scale" style="margin-right:6px"></i>3-Way Comparison Summary</div>
+          <div class="row-grid" style="gap:8px">
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">Total Calculated</div><div style="font-weight:700;font-size:15px">$87,432.00</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">Total Approved</div><div style="font-weight:700;font-size:15px">$87,432.00</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">NACHA File Total</div><div style="font-weight:700;font-size:15px">$87,169.25</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">Bank Confirmed</div><div style="font-weight:700;font-size:15px;color:#5f6368">Pending</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">Variance (Approved vs NACHA)</div><div style="font-weight:700;font-size:15px;color:#c62828">-$262.75</div></div>
+            <div class="col-1"><div style="font-size:11px;color:#5f6368">Discrepancy Count</div><div style="font-weight:700;font-size:15px;color:#c62828">2</div></div>
+          </div>
+        </div>
+        <div class="filter-bar" style="padding:12px 16px;border-bottom:1px solid #e8eaed">
+          <label>Agent Search</label><input type="text" id="fAuditAgent" placeholder="NPN or Name..." oninput="applyAuditFilter()">
+          <label>Variance Type</label>
+          <select id="fVarianceType" onchange="applyAuditFilter()">
+            <option value="">All</option><option>Match</option><option>Unexplained Variance</option><option>Documented Adjustment</option>
+          </select>
+          <button class="btn-ol btn-sm" onclick="applyAuditFilter()"><i class="fas fa-filter"></i>Filter</button>
+          <button class="btn-ol btn-sm" onclick="document.getElementById('fAuditAgent').value='';document.getElementById('fVarianceType').value='';renderLineItems(lineAudit)"><i class="fas fa-times"></i>Reset</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport2" class="tbl">
+            <thead><tr><th>Agent NPN</th><th>Agent Name</th><th>Calculated</th><th>Approved</th><th>Paid (NACHA)</th><th>Delta (Approved vs Paid)</th><th>Variance Type</th><th>Status</th></tr></thead>
+            <tbody id="lineAuditTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 3: DISCREPANCY QUEUE ====== -->
+    <div id="tabDisc" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-exclamation-triangle" style="margin-right:8px;color:#c62828"></i>Discrepancy Review Queue</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','reconciliation_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="al-warn mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+          <span>Zero variance tolerance — all discrepancies must be documented, resolved, or escalated. <strong>Escalated</strong> discrepancies trigger an email to Finance Manager with full line-item detail.</span></div>
+        <div class="table-wrap">
+          <table id="tblExport3" class="tbl">
+            <thead><tr><th>Discrepancy ID</th><th>Report</th><th>Agent NPN</th><th>Agent Name</th><th>Approved Amt</th><th>Paid Amt</th><th>Delta</th><th>Variance Type</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="discTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 4: ACH RETURNS & EXCEPTIONS ====== -->
+    <div id="tabACH" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-undo-alt" style="margin-right:8px;color:#c62828"></i>ACH Returns &amp; Check Rejections</h5>
+          <button class="btn-ol btn-sm" onclick="showToast('ACH Returns report exported.','info')"><i class="fas fa-download"></i>Export</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','reconciliation_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="al-warn mb16" style="margin:12px 16px 0"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+          <span>ACH returns and returned checks are <strong>auto-detected</strong> from bank settlement files. Returned amounts are reconciled against the payment batch. The affected producer is <strong>notified automatically</strong> and the exception is logged. Sources: Bank ACH Return File, CMS MMR disenrollment data.</span></div>
+        <div class="table-wrap">
+          <table id="tblExport4" class="tbl">
+            <thead><tr><th>Return ID</th><th>Recon Report</th><th>Agent NPN</th><th>Agent Name</th><th>Original Amount</th><th>Return Code</th><th>Return Reason</th><th>Return Date</th><th>Producer Notified</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="achReturnsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB 5: UNMATCHED ENTRIES ====== -->
+    <div id="tabUnmatched" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-unlink" style="margin-right:8px;color:#e65100"></i>Unmatched Entries</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport5','reconciliation_Table5')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="al-info mb16" style="margin:12px 16px 0"><i class="fas fa-info-circle" style="flex-shrink:0"></i>
+          <span>Entries where the commission calculation record does not match a payment batch record, or a payment was disbursed without a corresponding calculation. Disenrollment data sourced from <strong>CMS Monthly Membership Reconciliation (MMR)</strong> files. All unmatched items require Finance investigation.</span></div>
+        <div class="table-wrap">
+          <table id="tblExport5" class="tbl">
+            <thead><tr><th>Entry ID</th><th>Type</th><th>Recon Report</th><th>Agent NPN</th><th>Agent Name</th><th>Enrollment Ref</th><th>Calculated Amt</th><th>Paid Amt</th><th>Source</th><th>Days Open</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="unmatchedTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SIGN-OFF MODAL ===== -->
+<div class="modal-overlay" id="signoffModal">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-hdr">
+      <h5 id="signoffTitle"><i class="fas fa-signature" style="color:#1b5e20;margin-right:8px"></i>Finance Sign-Off</h5>
+      <button class="modal-close" onclick="closeModal('signoffModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="signoffBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('signoffModal')">Cancel</button>
+      <button class="btn-pr" onclick="confirmSignoff()"><i class="fas fa-signature"></i>Confirm Sign-Off</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ACH RETURN DETAIL MODAL ===== -->
+<div class="modal-overlay" id="achDetailModal">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr">
+      <h5 id="achDetailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('achDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="achDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('achDetailModal')">Close</button>
+      <button class="btn-pr" id="achReconcileBtn" onclick="reconcileACHReturn()"><i class="fas fa-check"></i>Reconcile &amp; Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DISCREPANCY RESOLVE MODAL ===== -->
+<div class="modal-overlay" id="discModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5 id="discModalTitle"></h5>
+      <button class="modal-close" onclick="closeModal('discModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="discModalBody"></div>
+    <div class="modal-foot" id="discModalFoot"></div>
+  </div>
+</div>
+
+<!-- ===== RECON DETAIL MODAL ===== -->
+<div class="modal-overlay" id="reconDetailModal">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr">
+      <h5 id="reconDetailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('reconDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="reconDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('reconDetailModal')">Close</button>
+      <button class="btn-ol" onclick="exportExcel()"><i class="fas fa-file-excel"></i>Export</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<script>
+var currentSignoffId = null;
+var currentACHId = null;
+
+var reconReports = [
+  {id:'REC-2026-05',cycle:'May 2026',payDate:'2026-05-17',batch:'BATCH-2026-05',approved:87432.00,nacha:87169.25,bank:null,variance:-262.75,discCount:2,achReturns:2,status:'Open Discrepancies',signedOff:false,signedOffBy:null,signedOffAt:null},
+  {id:'REC-2026-04',cycle:'April 2026',payDate:'2026-04-17',batch:'BATCH-2026-04',approved:81204.50,nacha:81204.50,bank:81204.50,variance:0.00,discCount:0,achReturns:0,status:'Reconciled',signedOff:true,signedOffBy:'David Park',signedOffAt:'2026-04-22 09:14 AM'},
+  {id:'REC-2026-03',cycle:'March 2026',payDate:'2026-03-17',batch:'BATCH-2026-03',approved:76330.00,nacha:76330.00,bank:76330.00,variance:0.00,discCount:0,achReturns:0,status:'Reconciled',signedOff:true,signedOffBy:'David Park',signedOffAt:'2026-03-21 10:30 AM'},
+  {id:'REC-2026-02',cycle:'February 2026',payDate:'2026-02-17',batch:'BATCH-2026-02',approved:68410.00,nacha:68410.00,bank:68410.00,variance:0.00,discCount:0,achReturns:0,status:'Reconciled',signedOff:true,signedOffBy:'Lisa Chen',signedOffAt:'2026-02-21 11:05 AM'},
+  {id:'REC-2026-01',cycle:'January 2026',payDate:'2026-01-17',batch:'BATCH-2026-01',approved:72550.00,nacha:72550.00,bank:72550.00,variance:0.00,discCount:0,achReturns:0,status:'Reconciled',signedOff:true,signedOffBy:'David Park',signedOffAt:'2026-01-22 08:45 AM'},
+];
+
+var lineAudit = [
+  {npn:'8823441',agent:'James Martinez',calculated:1203.00,approved:1203.00,paid:1203.00,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'7719022',agent:'Sarah Chen',calculated:2120.33,approved:2120.33,paid:2120.33,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'9912345',agent:'Kevin Nguyen',calculated:2081.04,approved:2081.04,paid:2081.04,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'5521833',agent:'Mark Brown',calculated:636.24,approved:636.24,paid:636.24,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'6643201',agent:'Angela Torres',calculated:722.92,approved:459.75,paid:197.00,delta:-262.75,varianceType:'Unexplained Variance',status:'Open'},
+  {npn:'4432177',agent:'Patricia Lee',calculated:318.12,approved:318.12,paid:318.12,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'9988811',agent:'HealthFirst Distribution',calculated:2936.88,approved:2936.88,paid:2936.88,delta:0,varianceType:'Match',status:'Reconciled'},
+  {npn:'3318820',agent:'Charles Davis',calculated:694.00,approved:0,paid:0,delta:0,varianceType:'Documented Adjustment',status:'Reconciled (On Hold)'},
+];
+
+var discrepancies = [
+  {id:'DISC-001',report:'REC-2026-05',npn:'6643201',agent:'Angela Torres',approved:459.75,paid:197.00,delta:-262.75,varianceType:'Unexplained Variance',status:'Open',resolutionNotes:''},
+  {id:'DISC-002',report:'REC-2026-05',npn:'9830112',agent:'Thomas Reed',approved:487.50,paid:0,delta:-487.50,varianceType:'Unexplained Variance',status:'Escalated',resolutionNotes:'ACH Return R02 - account closed. Finance Manager notified May 20.'},
+];
+
+var achReturns = [
+  {id:'ACH-R-001',report:'REC-2026-05',npn:'9830112',agent:'Thomas Reed',originalAmt:487.50,returnCode:'R02',returnReason:'Account Closed',returnDate:'2026-05-19',producerNotified:true,notifiedDate:'2026-05-20',status:'Pending Reconciliation',notes:'Bank returned ACH payment. Agent banking info outdated.'},
+  {id:'ACH-R-002',report:'REC-2026-05',npn:'1128803',agent:'Riverside Health Agency',originalAmt:1234.00,returnCode:'R03',returnReason:'No Account / Unable to Locate',returnDate:'2026-05-20',producerNotified:true,notifiedDate:'2026-05-21',status:'Pending Reconciliation',notes:'ACH routing number mismatch. Agent notified to update banking details.'},
+];
+
+var unmatchedEntries = [
+  {id:'UNM-001',type:'Calculated Not Paid',report:'REC-2026-05',npn:'3319082',agent:'Robert Kim',enrollRef:'ENR-2026-0072',calcAmt:694.00,paidAmt:0,source:'Commission Ledger',daysOpen:24,status:'Under Investigation',notes:'Commission calculated for enrollment but payment held due to system flag (invalid enrollment status per CMS MMR).'},
+  {id:'UNM-002',type:'Calculated Not Paid',report:'REC-2026-05',npn:'N/A',agent:'Unattributed',enrollRef:'ENR-2026-0088',calcAmt:694.00,paidAmt:0,source:'CMS MMR File',daysOpen:24,status:'Open',notes:'Enrollment from CMS MMR without agent NPN attribution. Cannot process commission payment.'},
+  {id:'UNM-003',type:'Paid No Calculation',report:'REC-2026-05',npn:'4410092',agent:'Maria Gonzalez',enrollRef:'ENR-2025-0199',calcAmt:0,paidAmt:347.00,source:'NACHA File',daysOpen:10,status:'Open',notes:'Payment found in NACHA file but no matching calculation record in commission ledger. Possible manual override or data sync issue.'},
+];
+
+function reconStatusBadge(s){
+  var m={'Reconciled':'b-green','Open Discrepancies':'b-red','Pending':'b-amber','Signed Off':'b-green'};
+  return '<span class="bdg '+(m[s]||'b-grey')+'">'+s+'</span>';
+}
+function discStatusBadge(s){
+  var m={'Open':'b-red','Escalated':'b-orange','Resolved':'b-green','Reconciled (On Hold)':'b-blue','Pending Reconciliation':'b-amber','Under Investigation':'b-blue','Reconciled':'b-green'};
+  return '<span class="bdg '+(m[s]||'b-grey')+'">'+s+'</span>';
+}
+
+function renderReports(){
+  document.getElementById('reconTbody').innerHTML = reconReports.map(function(r){
+    var varCell = r.variance===0 ? '<span class="match-cell">$0.00</span>' : '<span class="variance-cell">$'+r.variance.toFixed(2)+'</span>';
+    var signoffCell = r.signedOff
+      ? '<span class="signoff-badge"><i class="fas fa-check" style="margin-right:3px"></i>'+r.signedOffBy+'</span><div style="font-size:10px;color:#5f6368">'+r.signedOffAt+'</div>'
+      : '<span class="signoff-pending"><i class="fas fa-clock" style="margin-right:3px"></i>Pending</span>';
+    var actions = '<button class="btn-ol btn-sm" onclick="openReconDetail(\''+r.id+'\')"><i class="fas fa-eye"></i>View</button>';
+    if(!r.signedOff && r.status==='Reconciled'){
+      actions += ' <button class="btn-pr btn-sm" onclick="openSignoff(\''+r.id+'\')"><i class="fas fa-signature"></i>Sign Off</button>';
+    } else if(!r.signedOff && r.discCount>0){
+      actions += ' <button class="btn-ol btn-sm" style="color:#9e9e9e;cursor:not-allowed" disabled title="Resolve all discrepancies before sign-off"><i class="fas fa-lock"></i>Sign Off</button>';
+    }
+    return '<tr class="'+(r.variance!==0?'disc-row':'')+'">'
+      +'<td><code style="font-size:11px">'+r.id+'</code></td>'
+      +'<td>'+r.cycle+'</td>'
+      +'<td>'+r.payDate+'</td>'
+      +'<td><code style="font-size:11px">'+r.batch+'</code></td>'
+      +'<td>$'+r.approved.toFixed(2)+'</td>'
+      +'<td>$'+r.nacha.toFixed(2)+'</td>'
+      +'<td>'+(r.bank!==null?'$'+r.bank.toFixed(2):'<span class="text-muted">Pending</span>')+'</td>'
+      +'<td>'+varCell+'</td>'
+      +'<td>'+(r.discCount>0?'<span style="color:#c62828;font-weight:700">'+r.discCount+'</span>':'0')+'</td>'
+      +'<td>'+(r.achReturns>0?'<span style="color:#c62828;font-weight:700">'+r.achReturns+'</span>':'0')+'</td>'
+      +'<td>'+reconStatusBadge(r.status)+'</td>'
+      +'<td>'+signoffCell+'</td>'
+      +'<td><div class="dflex g8">'+actions+'</div></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function renderLineItems(list){
+  document.getElementById('lineAuditTbody').innerHTML = list.map(function(l){
+    var hasVar = l.varianceType==='Unexplained Variance';
+    var delta = l.delta===0 ? '<span class="match-cell">$0.00</span>' : '<span class="variance-cell">$'+l.delta.toFixed(2)+'</span>';
+    var vtBadge = l.varianceType==='Match' ? '<span class="bdg b-green" style="font-size:11px">Match</span>' :
+      l.varianceType==='Unexplained Variance' ? '<span class="bdg b-red" style="font-size:11px">Unexplained Variance</span>' :
+      '<span class="bdg b-blue" style="font-size:11px">Documented</span>';
+    return '<tr class="'+(hasVar?'variance-row':'match-row')+'">'
+      +'<td><code style="font-size:11px">'+l.npn+'</code></td>'
+      +'<td>'+l.agent+'</td>'
+      +'<td>$'+l.calculated.toFixed(2)+'</td>'
+      +'<td>$'+l.approved.toFixed(2)+'</td>'
+      +'<td>$'+l.paid.toFixed(2)+'</td>'
+      +'<td>'+delta+'</td>'
+      +'<td>'+vtBadge+'</td>'
+      +'<td>'+discStatusBadge(l.status)+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function applyAuditFilter(){
+  var agent=(document.getElementById('fAuditAgent').value||'').toLowerCase();
+  var vt=document.getElementById('fVarianceType').value;
+  renderLineItems(lineAudit.filter(function(l){
+    if(agent && !l.agent.toLowerCase().includes(agent) && !l.npn.includes(agent)) return false;
+    if(vt && l.varianceType!==vt) return false;
+    return true;
+  }));
+}
+
+function renderDisc(){
+  document.getElementById('openDiscCount').textContent = discrepancies.filter(function(d){return d.status==='Open'||d.status==='Escalated';}).length;
+  document.getElementById('discTbody').innerHTML = discrepancies.map(function(d){
+    return '<tr class="'+(d.status==='Open'?'disc-row':d.status==='Escalated'?'variance-row':'')+'">'
+      +'<td><code style="font-size:11px">'+d.id+'</code></td>'
+      +'<td><code style="font-size:11px">'+d.report+'</code></td>'
+      +'<td><code style="font-size:11px">'+d.npn+'</code></td>'
+      +'<td>'+d.agent+'</td>'
+      +'<td>$'+d.approved.toFixed(2)+'</td>'
+      +'<td>$'+d.paid.toFixed(2)+'</td>'
+      +'<td class="variance-cell">$'+d.delta.toFixed(2)+'</td>'
+      +'<td><span class="bdg b-red" style="font-size:11px">'+d.varianceType+'</span></td>'
+      +'<td>'+discStatusBadge(d.status)+'</td>'
+      +'<td><div class="dflex g8">'
+      +'<button class="btn-ol btn-sm" onclick="openDisc(\''+d.id+'\',\'resolve\')"><i class="fas fa-check"></i>Resolve</button>'
+      +(d.status!=='Escalated'?'<button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="openDisc(\''+d.id+'\',\'escalate\')"><i class="fas fa-arrow-up"></i>Escalate</button>':'')
+      +'</div></td></tr>';
+  }).join('');
+}
+
+function renderACHReturns(){
+  document.getElementById('achReturnCount').textContent = achReturns.filter(function(a){return a.status==='Pending Reconciliation';}).length;
+  document.getElementById('achReturnsTbody').innerHTML = achReturns.map(function(a){
+    var codeBadge = a.returnCode==='R01'?'ach-r01':a.returnCode==='R02'?'ach-r02':'ach-r03';
+    return '<tr style="'+(a.status==='Pending Reconciliation'?'background:#fff5f5':'')+'">'
+      +'<td><code style="font-size:11px">'+a.id+'</code></td>'
+      +'<td><code style="font-size:11px">'+a.report+'</code></td>'
+      +'<td><code style="font-size:11px">'+a.npn+'</code></td>'
+      +'<td>'+a.agent+'</td>'
+      +'<td style="font-weight:700">$'+a.originalAmt.toFixed(2)+'</td>'
+      +'<td><span class="'+codeBadge+'">'+a.returnCode+'</span></td>'
+      +'<td style="font-size:12px">'+a.returnReason+'</td>'
+      +'<td>'+a.returnDate+'</td>'
+      +'<td>'+(a.producerNotified?'<span class="bdg b-green" style="font-size:10px"><i class="fas fa-check" style="margin-right:2px"></i>'+a.notifiedDate+'</span>':'<span class="bdg b-red" style="font-size:10px">Not Notified</span>')+'</td>'
+      +'<td>'+discStatusBadge(a.status)+'</td>'
+      +'<td><div class="dflex g8">'
+      +'<button class="btn-ol btn-sm" onclick="openACHDetail(\''+a.id+'\')"><i class="fas fa-eye"></i>View</button>'
+      +(a.status==='Pending Reconciliation'?'<button class="btn-pr btn-sm" onclick="openACHDetail(\''+a.id+'\',true)"><i class="fas fa-check-circle"></i>Reconcile</button>':'')
+      +'</div></td></tr>';
+  }).join('');
+}
+
+function renderUnmatched(){
+  document.getElementById('unmatchedTbody').innerHTML = unmatchedEntries.map(function(u){
+    var typeBadge = u.type==='Calculated Not Paid'
+      ?'<span class="unmatched-badge"><i class="fas fa-calculator" style="margin-right:3px"></i>Calc Not Paid</span>'
+      :'<span class="ach-r01"><i class="fas fa-dollar-sign" style="margin-right:3px"></i>Paid No Calc</span>';
+    return '<tr style="background:#fff8e1">'
+      +'<td><code style="font-size:11px">'+u.id+'</code></td>'
+      +'<td>'+typeBadge+'</td>'
+      +'<td><code style="font-size:11px">'+u.report+'</code></td>'
+      +'<td><code style="font-size:11px">'+u.npn+'</code></td>'
+      +'<td>'+u.agent+'</td>'
+      +'<td><code style="font-size:11px">'+u.enrollRef+'</code></td>'
+      +'<td>'+(u.calcAmt>0?'$'+u.calcAmt.toFixed(2):'--')+'</td>'
+      +'<td>'+(u.paidAmt>0?'$'+u.paidAmt.toFixed(2):'--')+'</td>'
+      +'<td style="font-size:12px">'+u.source+'</td>'
+      +'<td style="font-weight:600">'+u.daysOpen+'</td>'
+      +'<td>'+discStatusBadge(u.status)+'</td>'
+      +'<td><button class="btn-ol btn-sm" onclick="showToast(\'Investigation workflow opened for '+u.id+'. Finance alerted.\',\'info\')"><i class="fas fa-search"></i>Investigate</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function openDisc(id, action){
+  var d=discrepancies.find(function(x){return x.id===id;});
+  document.getElementById('discModalTitle').innerHTML = '<i class="fas fa-'+(action==='escalate'?'arrow-up':'check-circle')+'" style="color:'+(action==='escalate'?'#c62828':'#1b5e20')+';margin-right:8px"></i>'+(action==='escalate'?'Escalate':'Resolve')+' Discrepancy - '+d.id;
+  document.getElementById('discModalBody').innerHTML =
+    '<div style="background:#ffebee;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px">'
+    +'<strong>Agent:</strong> '+d.agent+' ('+d.npn+') &nbsp;|&nbsp; <strong>Report:</strong> '+d.report+'<br>'
+    +'<strong>Approved:</strong> $'+d.approved.toFixed(2)+' &nbsp;|&nbsp; <strong>Paid:</strong> $'+d.paid.toFixed(2)+' &nbsp;|&nbsp;'
+    +'<strong>Delta:</strong> <span style="color:#c62828;font-weight:700">$'+d.delta.toFixed(2)+'</span></div>'
+    +(action==='escalate'?'<div class="al-warn mb16"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span>Escalating will notify the Finance Manager by email with full line-item detail. Action logged in audit trail.</span></div>':'')
+    +'<div class="fg"><label>Resolution Notes <span class="req">*</span></label>'
+    +'<textarea id="discNotes" rows="3" placeholder="Document the explanation or escalation reason...">'+d.resolutionNotes+'</textarea></div>';
+  document.getElementById('discModalFoot').innerHTML =
+    '<button class="btn-ol" onclick="closeModal(\'discModal\')">Cancel</button>'
+    +'<button class="btn-'+(action==='escalate'?'ol" style="color:#c62828;border-color:#c62828':'pr')+'" onclick="confirmDisc(\''+id+'\',\''+action+'\')">'
+    +'<i class="fas fa-'+(action==='escalate'?'arrow-up':'check')+'"></i>'+(action==='escalate'?'Escalate to Manager':'Mark Resolved')
+    +'</button>';
+  showModal('discModal');
+}
+function confirmDisc(id, action){
+  var notes=document.getElementById('discNotes').value.trim();
+  if(!notes){ showToast('Resolution notes are required.','warn'); return; }
+  var d=discrepancies.find(function(x){return x.id===id;});
+  d.status=action==='escalate'?'Escalated':'Resolved';
+  d.resolutionNotes=notes;
+  closeModal('discModal');
+  renderDisc();
+  if(action==='escalate') showToast(d.id+' escalated to Finance Manager. Email sent with full detail. Action logged in audit trail.','warn');
+  else showToast(d.id+' marked Resolved. Notes logged. Reconciliation record updated in audit trail.','success');
+}
+
+// ===== SIGN-OFF =====
+function openSignoff(id){
+  currentSignoffId = id;
+  var r = reconReports.find(function(x){return x.id===id;});
+  document.getElementById('signoffTitle').innerHTML = '<i class="fas fa-signature" style="color:#1b5e20;margin-right:8px"></i>Finance Sign-Off - '+r.id;
+  document.getElementById('signoffBody').innerHTML =
+    '<div style="background:#e8f5e9;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px">'
+    +'<strong>'+r.cycle+'</strong> | Payment Date: '+r.payDate+' | Batch: <code>'+r.batch+'</code><br>'
+    +'Approved: $'+r.approved.toFixed(2)+' | NACHA: $'+r.nacha.toFixed(2)+' | Bank: '+(r.bank!==null?'$'+r.bank.toFixed(2):'Pending')
+    +'<br>Variance: <strong style="color:'+(r.variance===0?'#1b5e20':'#c62828')+'">$'+r.variance.toFixed(2)+'</strong> | Discrepancies: '+r.discCount+'</div>'
+    +'<div class="al-info mb16"><i class="fas fa-shield-alt" style="flex-shrink:0"></i><span>By signing off, you confirm that all commission payments for this cycle have been reconciled, all discrepancies resolved, and the report is accurate. This action is <strong>captured in the audit trail</strong> and cannot be undone.</span></div>'
+    +'<div class="fg"><label>Sign-Off By</label><input type="text" value="David Park (Finance Admin)" class="field-ro" readonly></div>'
+    +'<div class="fg"><label>Sign-Off Date</label><input type="text" value="'+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})+'" class="field-ro" readonly></div>';
+  showModal('signoffModal');
+}
+function confirmSignoff(){
+  var r = reconReports.find(function(x){return x.id===currentSignoffId;});
+  r.signedOff = true;
+  r.signedOffBy = 'David Park';
+  r.signedOffAt = new Date().toLocaleString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  closeModal('signoffModal');
+  renderReports();
+  showToast('Finance sign-off recorded for '+r.id+' ('+r.cycle+'). Sign-off captured in audit trail. Signed by David Park.','success');
+}
+
+// ===== ACH RETURN DETAIL =====
+function openACHDetail(id, reconcileMode){
+  currentACHId = id;
+  var a = achReturns.find(function(x){return x.id===id;});
+  document.getElementById('achDetailTitle').innerHTML = '<i class="fas fa-undo-alt" style="color:#c62828;margin-right:8px"></i>ACH Return - '+a.id;
+  document.getElementById('achDetailBody').innerHTML =
+    '<div class="row-grid" style="gap:8px;margin-bottom:12px">'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Agent</div><div style="font-weight:600">'+a.agent+'</div><div style="font-size:11px;color:#80868b">NPN: '+a.npn+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Original Amount</div><div style="font-size:16px;font-weight:700;color:#c62828">$'+a.originalAmt.toFixed(2)+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Recon Report</div><div style="font-weight:600"><code>'+a.report+'</code></div></div>'
+    +'</div>'
+    +'<div class="row-grid" style="gap:8px;margin-bottom:12px">'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Return Code</div><div style="font-weight:700;color:#c62828">'+a.returnCode+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Return Reason</div><div style="font-weight:600">'+a.returnReason+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Return Date</div><div style="font-weight:600">'+a.returnDate+'</div></div>'
+    +'</div>'
+    +'<div class="fg"><label>Notes / Exception Log</label><textarea rows="3" class="field-ro" readonly>'+a.notes+'</textarea></div>'
+    +'<div style="margin-top:8px;font-size:12px;color:#5f6368"><strong>Producer Notified:</strong> '+(a.producerNotified?'<span style="color:#1b5e20;font-weight:600">Yes ('+a.notifiedDate+')</span>':'<span style="color:#c62828;font-weight:600">No</span>')+' &nbsp;|&nbsp; <strong>Status:</strong> '+discStatusBadge(a.status)+'</div>'
+    +(a.status==='Pending Reconciliation'?'<div class="al-warn" style="margin-top:12px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Returned amount must be reconciled. The exception is logged. Once reconciled, the payment record is updated and the agent ledger reflects the return.</span></div>':'');
+  document.getElementById('achReconcileBtn').style.display = a.status==='Pending Reconciliation'?'inline-flex':'none';
+  showModal('achDetailModal');
+}
+function reconcileACHReturn(){
+  var a = achReturns.find(function(x){return x.id===currentACHId;});
+  a.status = 'Reconciled';
+  closeModal('achDetailModal');
+  renderACHReturns();
+  showToast('ACH Return '+a.id+' reconciled. Returned amount of $'+a.originalAmt.toFixed(2)+' reconciled against payment batch. Producer '+a.agent+' notified. Exception logged in audit trail.','success');
+}
+
+function openReconDetail(id){
+  var r=reconReports.find(function(x){return x.id===id;});
+  document.getElementById('reconDetailTitle').innerHTML='<i class="fas fa-balance-scale" style="color:#004d40;margin-right:8px"></i>'+r.id+' - '+r.cycle+' Reconciliation Report';
+
+  var discHtml = '';
+  if (r.discCount > 0) {
+    var relatedDiscs = discrepancies.filter(function(d){ return d.report === r.id; });
+    var discRows = relatedDiscs.map(function(d){
+      var statusColor = d.status === 'Open' ? '#c62828' : d.status === 'Escalated' ? '#e65100' : '#1b5e20';
+      var statusBg = d.status === 'Open' ? '#ffebee' : d.status === 'Escalated' ? '#fff3e0' : '#e8f5e9';
+      return '<div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;margin-bottom:10px;background:#fff">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
+        +'<div style="display:flex;align-items:center;gap:10px">'
+        +'<div style="width:36px;height:36px;border-radius:50%;background:'+statusBg+';display:flex;align-items:center;justify-content:center"><i class="fas fa-user" style="color:'+statusColor+'"></i></div>'
+        +'<div><div style="font-weight:700;font-size:13px">'+d.agent+'</div><div style="font-size:11px;color:#5f6368">NPN: '+d.npn+' | '+d.id+'</div></div>'
+        +'</div>'
+        +'<span class="bdg" style="background:'+statusBg+';color:'+statusColor+';font-size:10px;font-weight:700">'+d.status+'</span>'
+        +'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;font-size:12px;margin-bottom:10px">'
+        +'<div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Approved</span>$'+d.approved.toFixed(2)+'</div>'
+        +'<div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Paid (NACHA)</span>$'+d.paid.toFixed(2)+'</div>'
+        +'<div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Delta</span><strong style="color:#c62828">-$'+Math.abs(d.delta).toFixed(2)+'</strong></div>'
+        +'<div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Type</span><span class="bdg b-red" style="font-size:10px">'+d.varianceType+'</span></div>'
+        +'</div>'
+        +(d.resolutionNotes ? '<div style="font-size:11px;padding:8px 10px;background:#f8f9fa;border-radius:4px;border-left:3px solid '+statusColor+'"><strong>Notes:</strong> '+d.resolutionNotes+'</div>' : '<div style="font-size:11px;padding:8px 10px;background:#fff3e0;border-radius:4px;border-left:3px solid #e65100"><strong>Action Required:</strong> Investigate variance and document resolution or escalate to Finance Manager.</div>')
+        +'</div>';
+    }).join('');
+    discHtml = '<div style="margin-top:16px;padding-top:14px;border-top:1px solid #e8eaed">'
+      +'<div style="font-size:13px;font-weight:700;margin-bottom:10px;color:#c62828"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Discrepancies ('+relatedDiscs.length+')</div>'
+      +discRows+'</div>';
+  }
+
+  var signoffHtml = '<div style="margin-top:16px;padding-top:14px;border-top:1px solid #e8eaed">'
+    +'<div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#004d40"><i class="fas fa-signature" style="margin-right:6px"></i>Finance Sign-Off</div>';
+  if(r.signedOff){
+    signoffHtml += '<div style="background:#e8f5e9;border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:6px"></i><strong>Signed off by '+r.signedOffBy+'</strong> on '+r.signedOffAt+'. Captured in audit trail.</div>';
+  } else {
+    signoffHtml += '<div style="background:#fff8e1;border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas fa-clock" style="color:#e65100;margin-right:6px"></i><strong>Pending sign-off.</strong> '+(r.discCount>0?'All discrepancies must be resolved before sign-off.':'Report is ready for Finance sign-off.')+'</div>';
+  }
+  signoffHtml += '</div>';
+
+  document.getElementById('reconDetailBody').innerHTML=
+    '<div class="row-grid" style="gap:8px;margin-bottom:14px">'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Payment Cycle</div><div style="font-weight:600">'+r.cycle+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Payment Date</div><div style="font-weight:600">'+r.payDate+'</div></div>'
+    +'<div class="col-1"><div style="font-size:11px;color:#5f6368">Batch ID</div><div style="font-weight:600"><code>'+r.batch+'</code></div></div>'
+    +'</div>'
+    +'<div class="row-grid" style="gap:8px;margin-bottom:14px">'
+    +'<div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:10px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Total Approved</div><div style="font-weight:700;font-size:16px;color:#1b5e20">$'+r.approved.toFixed(2)+'</div></div>'
+    +'<div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9"><div style="font-size:11px;color:#5f6368">NACHA File Total</div><div style="font-weight:700;font-size:16px;color:#0d47a1">$'+r.nacha.toFixed(2)+'</div></div>'
+    +'<div class="col-1" style="'+(r.bank!==null?'background:#e8f5e9;border:1px solid #a5d6a7':'background:#f5f5f5;border:1px solid #e0e0e0')+';border-radius:8px;padding:10px"><div style="font-size:11px;color:#5f6368">Bank Confirmed</div><div style="font-weight:700;font-size:16px;color:'+(r.bank!==null?'#1b5e20':'#9e9e9e')+'">'+(r.bank!==null?'$'+r.bank.toFixed(2):'Pending')+'</div></div>'
+    +'<div class="col-1" style="'+(r.variance===0?'background:#e8f5e9;border:1px solid #a5d6a7':'background:#ffebee;border:1px solid #ef9a9a')+';border-radius:8px;padding:10px"><div style="font-size:11px;color:#5f6368">Variance</div><div style="font-weight:700;font-size:16px;color:'+(r.variance===0?'#1b5e20':'#c62828')+'">$'+r.variance.toFixed(2)+'</div></div>'
+    +'</div>'
+    +'<div style="font-size:13px;margin-bottom:8px"><strong>Discrepancies:</strong> <span style="color:'+(r.discCount>0?'#c62828':'#1b5e20')+';font-weight:700">'+r.discCount+'</span> &nbsp;|&nbsp; <strong>ACH Returns:</strong> <span style="color:'+(r.achReturns>0?'#c62828':'#1b5e20')+';font-weight:700">'+r.achReturns+'</span> &nbsp;|&nbsp; <strong>Status:</strong> '+reconStatusBadge(r.status)+'</div>'
+    +discHtml
+    +signoffHtml;
+  showModal('reconDetailModal');
+}
+
+function runReconciliation(){
+  showToast('Reconciliation run queued for BATCH-2026-06. Post-payment recon will auto-run within 1-2 business days of payment date. Report will be generated and available for Finance sign-off.','info');
+}
+function exportExcel(){
+  showToast('Reconciliation Report exported to Excel. File retained per 7-year policy.','success');
+}
+
+function switchTab(btn, paneId){
+  btn.parentElement.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  btn.closest('.page').querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  document.getElementById(paneId).classList.add('active');
+}
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToast(msg, type){
+  type=type||'info';
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+c[type]+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block'; setTimeout(function(){t.style.display='none';},5000);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; });});
+renderReports(); renderLineItems(lineAudit); renderDisc(); renderACHReturns(); renderUnmatched();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Export Panel | Compliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.export-section{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.export-section h6{font-weight:700;color:#880e4f;font-size:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #f1f3f4;padding-bottom:8px;margin-bottom:14px}
+.fmt-card{border:1px solid #e8eaed;border-radius:8px;padding:14px 16px;cursor:pointer;transition:all .15s;text-align:center}
+.fmt-card:hover{border-color:#880e4f;background:#fce4ec}
+.fmt-card.sel{border-color:#880e4f;background:#fce4ec}
+.fmt-card i{font-size:24px;margin-bottom:6px;display:block}
+.fmt-card .fmt-name{font-weight:700;font-size:12px}
+.fmt-card .fmt-desc{font-size:11px;color:#5f6368;margin-top:2px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html" class="active"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Compliance Data Export Panel</h4></div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="al-warn mb16"><i class="fas fa-lock" style="flex-shrink:0"></i><span><strong>PHI Handling Notice:</strong> Exports containing PHI must be transmitted only via approved secure channels. All export activity is logged in the audit trail. Do not distribute PHI exports via email unless encrypted ZIP format is selected.</span></div>
+
+    <div class="row-grid">
+      <div class="col-3">
+        <!-- Filters -->
+        <div class="export-section">
+          <h6>Filter Dimensions</h6>
+
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="fg"><label style="font-size:12px;font-weight:600">Date Range</label>
+              <div class="dflex g8"><input type="date" class="form-control form-control-sm" value="2026-01-01"><span style="align-self:center;font-size:12px">to</span><input type="date" class="form-control form-control-sm" value="2026-05-24"></div>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="fg"><label style="font-size:12px;font-weight:600">Portal / Action Type (Multi-Select)</label>
+              <select class="form-select form-select-sm" multiple style="height:100px">
+                <option>Agent Portal</option>
+                <option>Admin Portal</option>
+                <option>Finance Portal</option>
+                <option>Enrollment Ops</option>
+                <option>Member Portal</option>
+                <option>Agency Admin</option>
+                <option>Compliance</option>
+              </select>
+            </div>
+            <div class="fg"><label style="font-size:12px;font-weight:600">Action Type (Multi-Select)</label>
+              <select class="form-select form-select-sm" multiple style="height:100px">
+                <option selected>All Actions</option>
+                <option>PHI Accessed</option>
+                <option>Enrollment Submitted</option>
+                <option>SOA Created</option>
+                <option>Commission Rule Changed</option>
+                <option>Incentive Approved / Rejected</option>
+                <option>Batch Approved / Released</option>
+                <option>HRA Submitted</option>
+                <option>C-SNP Verified</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="fg"><label style="font-size:12px;font-weight:600">Agent / Agency</label>
+              <select class="form-select form-select-sm">
+                <option>All Agents &amp; Agencies</option>
+                <option>James Martinez — NPN 8823441</option>
+                <option>Sarah Chen — NPN 7712309</option>
+                <option>Michael Torres — NPN 9934221</option>
+                <option>HealthFirst Distribution (AGY-001)</option>
+                <option>SunState Insurance (AGY-002)</option>
+              </select>
+            </div>
+            <div class="fg"><label style="font-size:12px;font-weight:600">Plan</label>
+              <select class="form-select form-select-sm">
+                <option>All Plans</option>
+                <option>StarPlus ESRD SNP 2026</option>
+                <option>KidneyCare CKD SNP 2026</option>
+                <option>HeartCare H&amp;D SNP 2026</option>
+                <option>BrightChoice HMO 2026</option>
+                <option>DiabetesCare SNP 2026</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="fg"><label style="font-size:12px;font-weight:600">State</label>
+              <select class="form-select form-select-sm">
+                <option>All States</option>
+                <option>FL — Florida</option>
+                <option>GA — Georgia</option>
+                <option>TX — Texas</option>
+              </select>
+            </div>
+            <div class="fg"><label style="font-size:12px;font-weight:600">Member Condition</label>
+              <select class="form-select form-select-sm">
+                <option>All Conditions</option>
+                <option>ESRD (End Stage Renal Disease)</option>
+                <option>CKD (Chronic Kidney Disease)</option>
+                <option>Heart Failure &amp; Diabetes</option>
+                <option>Diabetes Only</option>
+                <option>No Chronic Condition</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fg" style="margin-bottom:12px">
+            <label style="font-size:12px;font-weight:600">PHI Masking</label>
+            <div class="dflex g16" style="margin-top:6px">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="phi" value="masked" checked style="accent-color:#880e4f">Mask PHI in export (MBI/DOB shown as ***)</label>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="phi" value="full" style="accent-color:#880e4f">Include full PHI (requires 2FA confirmation)</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Export Format -->
+        <div class="export-section">
+          <h6>Export Format</h6>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div class="fmt-card sel" onclick="document.querySelectorAll('.fmt-card').forEach(c=>c.classList.remove('sel'));this.classList.add('sel')">
+              <i class="fas fa-file-csv" style="color:#2e7d32"></i>
+              <div class="fmt-name">CSV</div>
+              <div class="fmt-desc">Spreadsheet-ready flat file</div>
+            </div>
+            <div class="fmt-card" onclick="document.querySelectorAll('.fmt-card').forEach(c=>c.classList.remove('sel'));this.classList.add('sel')">
+              <i class="fas fa-file-pdf" style="color:#c62828"></i>
+              <div class="fmt-name">PDF Report</div>
+              <div class="fmt-desc">Formatted compliance report</div>
+            </div>
+            <div class="fmt-card" onclick="document.querySelectorAll('.fmt-card').forEach(c=>c.classList.remove('sel'));this.classList.add('sel')">
+              <i class="fas fa-file-archive" style="color:#6a1b9a"></i>
+              <div class="fmt-name">Encrypted ZIP</div>
+              <div class="fmt-desc">Password-protected archive (PHI safe)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dflex g8" style="justify-content:flex-end">
+          <button class="btn-ol" onclick="nfpSubmit('Preview generated: 3,841 records matching filters.')"><i class="fas fa-eye"></i>Preview Results</button>
+          <button class="btn-pr" onclick="nfpExport('Export initiated. File will be available in Recent Exports within 60 seconds. Export ID: EXP-2026-0038')"><i class="fas fa-download"></i>Generate Export</button>
+        </div>
+      </div>
+
+      <!-- Recent Exports -->
+      <div class="col-1">
+        <div class="card">
+          <div class="card-hdr"><h5>Recent Exports</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','export-panel_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table id="tblExport1" class="tbl">
+              <thead><tr><th>Export ID</th><th>Requested By</th><th>Timestamp</th><th>Filters Applied</th><th>Format</th><th>Records</th><th>PHI</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><code>EXP-2026-0037</code></td>
+                  <td>K. Foster</td>
+                  <td>May 23 16:00</td>
+                  <td><span class="bdg b-green">CSV</span></td>
+                  <td>3,841</td>
+                  <td><span class="bdg b-green">Masked</span></td>
+                  <td><span class="bdg b-green">Ready</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="navPrev()"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr>
+                  <td><code>EXP-2026-0036</code></td>
+                  <td>K. Foster</td>
+                  <td>May 15 09:30</td>
+                  <td>PHI Accessed Events — All Agents</td>
+                  <td><span class="bdg b-red">PDF</span></td>
+                  <td>47</td>
+                  <td><span class="bdg b-red">Full PHI — 2FA</span></td>
+                  <td><span class="bdg b-green">Ready</span></td>
+                  <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr>
+                  <td><code>EXP-2026-0035</code></td>
+                  <td>K. Foster</td>
+                  <td>May 10 14:00</td>
+                  <td>Commission Changes — JanMay 2026</td>
+                  <td><span class="bdg b-purple">Encrypted ZIP</span></td>
+                  <td>18</td>
+                  <td><span class="bdg b-green">Masked</span></td>
+                  <td><span class="bdg b-green">Ready</span></td>
+                  <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr>
+                  <td><code>EXP-2026-0034</code></td>
+                  <td>K. Foster</td>
+                  <td>May 1 08:15</td>
+                  <td><span class="bdg b-green">CSV</span></td>
+                  <td>3,102</td>
+                  <td><span class="bdg b-green">Masked</span></td>
+                  <td><span class="bdg b-green">Ready</span></td>
+                  <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

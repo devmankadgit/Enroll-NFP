@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-129 Enrollment Audit Trail & Compliance Export - Frontend -->
+<title>Enrollment Audit Trail | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#00695c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-clipboard-check" style="margin-right:8px;opacity:.8"></i>Enrollment Ops</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Enrollment Processing</div>
+    <a href="processing-hub.html"><i class="fas fa-inbox"></i>Processing Hub</a>
+    <a href="oec-intake.html"><i class="fas fa-inbox"></i>OEC Intake Hub</a>
+    <a href="csnp-review.html"><i class="fas fa-heartbeat"></i>C-SNP Review</a>
+    <a href="compliance-tracker.html"><i class="fas fa-clock"></i>7-Day Compliance</a>
+    <div class="sb-section">Member Services</div>
+    <a href="document-repository.html"><i class="fas fa-folder-open"></i>Document Repository</a>
+    <a href="id-cards.html"><i class="fas fa-id-card"></i>ID Cards</a>
+    <a href="audit-trail.html" class="active"><i class="fas fa-history"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Wong</div><div class="sb-u-role">Enrollment Ops Manager</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Enrollment Audit Trail</h4><ol class="breadcrumb-bar"><li>Enrollment Ops</li><li>Audit Trail</li></ol></div>
+    <button class="btn-ol btn-sm" onclick="exportAudit()"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-list"></i></div><div><div class="stat-label">Total Audit Events</div><div class="stat-val">2,847</div><div class="stat-sub text-muted">Last 90 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-file-medical"></i></div><div><div class="stat-label">Enrollment Actions</div><div class="stat-val">1,204</div><div class="stat-sub text-muted">17 lifecycle types</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Compliance Flags</div><div class="stat-val">23</div><div class="stat-sub text-muted">7-day breach events</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-shield-alt"></i></div><div><div class="stat-label">PHI Access Events</div><div class="stat-val">156</div><div class="stat-sub text-muted">Unmasked views</div></div></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar mb16">
+      <select><option>All Action Types</option><option>Enrollment Created</option><option>Enrollment Submitted</option><option>CMS Submitted</option><option>CMS Accepted</option><option>CMS Rejected</option><option>Enrollment Resubmitted</option><option>Enrollment Cancelled</option><option>Disenrollment</option><option>SOA Signed</option><option>SOA Expired</option><option>BEQ Check</option><option>PQAT Completed</option><option>C-SNP Verified</option><option>Document Uploaded</option><option>Document Viewed</option><option>PHI Unmasked</option><option>Status Changed</option></select>
+      <select><option>All Sources</option><option>Agent Portal</option><option>DTC (Web)</option><option>SFTP Batch</option><option>Manual Entry</option></select>
+      <select><option>All Users</option><option>James Martinez</option><option>Sarah Chen</option><option>Rachel Wong</option><option>System</option></select>
+      <input type="date" value="2026-01-01" style="border:1px solid #dadce0;border-radius:6px;padding:6px 10px;font-size:13px">
+      <input type="date" value="2026-06-18" style="border:1px solid #dadce0;border-radius:6px;padding:6px 10px;font-size:13px">
+      <input type="text" placeholder="Search Enrollment ID, MBI, Member Name..." style="border:1px solid #dadce0;border-radius:6px;padding:6px 10px;font-size:13px;min-width:240px">
+      <button class="btn-pr btn-sm"><i class="fas fa-search"></i>Search</button>
+    </div>
+
+    <!-- Audit Trail Table -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:6px;color:#00695c"></i>Audit Events</h5><span style="font-size:11px;color:#5f6368">Immutable log — 17 lifecycle action types tracked | PHI masked on export</span></div>
+      <div style="overflow-x:auto">
+        <table class="table table-hover" style="font-size:13px">
+          <thead><tr><th>Timestamp</th><th>Enrollment ID</th><th>Action</th><th>Member</th><th>User</th><th>Source</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="white-space:nowrap">06 18,2026 09:14 AM</td>
+              <td>ENR-2026-05231</td>
+              <td><span style="background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">CMS Submitted</span></td>
+              <td>****-****-JK89</td>
+              <td>System</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Auto-submitted to CMS within 24h of application. Day 1 of 7-day clock started.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 18,2026 08:47 AM</td>
+              <td>ENR-2026-05231</td>
+              <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Enrollment Created</span></td>
+              <td>****-****-JK89</td>
+              <td>James Martinez</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Broker-assisted enrollment. SOA verified. BEQ passed. Plan: GK Complete Care C-SNP.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 17,2026 03:22 PM</td>
+              <td>ENR-2026-05198</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">CMS Accepted</span></td>
+              <td>****-****-LM45</td>
+              <td>System</td>
+              <td>SFTP Batch</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('CMS acceptance received via 834 response file. ID card auto-generated.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 17,2026 02:11 PM</td>
+              <td>ENR-2026-05102</td>
+              <td><span style="background:#ffebee;color:#c62828;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">CMS Rejected</span></td>
+              <td>****-****-NP67</td>
+              <td>System</td>
+              <td>SFTP Batch</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Rejection code: 123 — Duplicate enrollment. Previous plan not terminated. Moved to review queue.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 17,2026 11:30 AM</td>
+              <td>ENR-2026-05198</td>
+              <td><span style="background:#e0f2f1;color:#00695c;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">C-SNP Verified</span></td>
+              <td>****-****-LM45</td>
+              <td>Rachel Wong</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('ESRD verification: clinical documentation reviewed and approved. Valid for 12-month cycle.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 17,2026 10:05 AM</td>
+              <td>ENR-2026-05190</td>
+              <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">SOA Signed</span></td>
+              <td>****-****-QR12</td>
+              <td>System</td>
+              <td>DTC (Web)</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Digital SOA via DocuSign. DTC flow — EnrollmentSessionId: DTC-2026-8847.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 16,2026 04:55 PM</td>
+              <td>ENR-2026-05102</td>
+              <td><span style="background:#fce4ec;color:#b71c1c;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">7-Day Breach</span></td>
+              <td>****-****-NP67</td>
+              <td>System</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('7-day CMS submission deadline exceeded. Compliance alert sent to Enrollment Ops Manager.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 16,2026 02:30 PM</td>
+              <td>ENR-2026-05180</td>
+              <td><span style="background:#e8eaf6;color:#283593;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">PHI Unmasked</span></td>
+              <td>****-****-AB34</td>
+              <td>Rachel Wong</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Fields unmasked: MBI, SSN, DOB. Purpose: Enrollment verification. Duration: 45 seconds.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 16,2026 10:12 AM</td>
+              <td>ENR-2026-05175</td>
+              <td><span style="background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Resubmitted</span></td>
+              <td>****-****-CD56</td>
+              <td>Sarah Chen</td>
+              <td>Agent Portal</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Enrollment resubmitted after CMS rejection (invalid PBP). Corrected plan code applied. Within 14-day window.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap">06 15,2026 09:00 AM</td>
+              <td>ENR-2026-05160</td>
+              <td><span style="background:#fce4ec;color:#b71c1c;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Disenrollment</span></td>
+              <td>****-****-EF78</td>
+              <td>System</td>
+              <td>SFTP Batch</td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="alert('Voluntary disenrollment. Rapid disenrollment flag: within 3-month window. Chargeback initiated for agent EN-8823441.')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('AUDIT','Record')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:#5f6368">Showing 1–10 of 2,847 events</span>
+        <div style="display:flex;gap:4px">
+          <button class="btn-ol btn-sm" disabled>Previous</button>
+          <button class="btn-pr btn-sm" style="min-width:32px">1</button>
+          <button class="btn-ol btn-sm" style="min-width:32px">2</button>
+          <button class="btn-ol btn-sm" style="min-width:32px">3</button>
+          <button class="btn-ol btn-sm">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Info -->
+    <div style="margin-top:12px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;font-size:12px;color:#e65100;display:flex;align-items:flex-start;gap:10px">
+      <i class="fas fa-info-circle" style="margin-top:2px"></i>
+      <span>Exports are RBAC-scoped. PHI fields (MBI, SSN, DOB) are automatically masked in exported files. Maximum export: 100,000 rows per request. Available formats: CSV, JSON.</span>
+    </div>
+
+  </div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var commentStore = {};
+
+function openComment(refId, name) {
+  document.getElementById('commentRefId').textContent = refId;
+  document.getElementById('commentName').textContent = name;
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  document.getElementById('commentModal').classList.add('open');
+}
+
+function renderCommentHistory(refId) {
+  var hist = document.getElementById('commentHistory');
+  var comments = commentStore[refId] || [];
+  if (comments.length === 0) {
+    hist.innerHTML = '<div style="font-size:11px;color:#80868b;text-align:center;padding:8px 0">No comments yet</div>';
+    return;
+  }
+  var html = '';
+  comments.forEach(function(c) {
+    html += '<div style="padding:8px 0;border-bottom:1px solid #e8eaed;font-size:12px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+      '<strong style="color:#0d47a1">' + c.user + '</strong>' +
+      '<span style="color:#80868b;font-size:10px">' + c.time + '</span></div>' +
+      '<div style="color:#424242">' + c.text + '</div></div>';
+  });
+  hist.innerHTML = html;
+  hist.scrollTop = hist.scrollHeight;
+}
+
+function submitComment() {
+  var text = document.getElementById('commentText').value.trim();
+  if (!text) { alert('Please enter a comment.'); return; }
+  var refId = document.getElementById('commentRefId').textContent;
+  if (!commentStore[refId]) commentStore[refId] = [];
+  var now = new Date();
+  var timeStr = now.toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  commentStore[refId].push({ user: 'Current User', time: timeStr, text: text });
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  showToast('Comment saved for ' + refId, 'success');
+}
+
+function prefillComment() {
+  document.getElementById('commentText').value = 'Reviewed application. All documentation verified and compliant. No issues found.';
+}
+</script>
+<script>
+function exportAudit(){
+  var fmt=prompt('Export format: csv or json?','csv');
+  if(!fmt)return;
+  fmt=fmt.toLowerCase();
+  if(fmt!=='csv'&&fmt!=='json'){alert('Invalid format. Use csv or json.');return;}
+  alert('Exporting 2,847 audit events as '+fmt.toUpperCase()+'.\nPHI fields will be masked (****last4).\nFile will download shortly.');
+}
+</script>
+</body>
+</html>

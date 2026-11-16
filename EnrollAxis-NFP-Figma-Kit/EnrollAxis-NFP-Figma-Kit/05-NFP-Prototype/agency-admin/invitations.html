@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invitation Tracking | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html" class="active"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Contracting Invitations</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Invitations</li></ol>
+    </div>
+    <button class="btn-pr btn-sm" onclick="document.getElementById('inviteModal').style.display='flex'"><i class="fas fa-plus"></i>Send Invitation</button>
+    <button class="btn-ol btn-sm" onclick="document.getElementById('bulkInviteModal').style.display='flex'" style="margin-left:6px"><i class="fas fa-upload"></i> Bulk Invite</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fbe9e7;color:#e65100"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Total Sent</div><div class="stat-val">24</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Accepted</div><div class="stat-val">18</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Sent (Awaiting)</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Expired / Rejected</div><div class="stat-val">3</div></div></div></div>
+    </div>
+
+    <!-- Invitation List -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>All Invitations</h5><div class="dflex g8" style="flex-wrap:wrap"><select class="form-control" style="width:130px" id="invFilterStatus" onchange="filterInvitations()"><option>All Status</option><option>Draft</option><option>Sent</option><option>Opened</option><option>Accepted</option><option>Expired</option><option>Cancelled</option><option>Rejected</option></select><input type="date" class="form-control" style="width:130px" id="invFilterFrom" oninput="filterInvitations()" title="From date"><input type="date" class="form-control" style="width:130px" id="invFilterTo" oninput="filterInvitations()" title="To date"><input type="text" class="tb-search" id="invFilterSearch" oninput="filterInvitations()" placeholder="Search name/email—" style="max-width:160px"></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','invitations_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Invited Agent/Agency</th><th>Email</th><th>Sent Date</th><th>Expires</th><th>Status</th><th>Hierarchy Position</th><th></th></tr></thead><tbody id="invTableBody">
+            <tr style="background:#f8f9fa;border-left:3px solid #9e9e9e"><td>Jennifer Adams</td><td>jadams@email.com</td><td>—</td><td>—</td><td><span class="badge bg-light text-dark" style="border:1px solid #bdbdbd">Draft</span></td><td>Agent under GA-001</td><td><button class="btn-ol btn-sm" onclick="nfpSubmit('Draft invitation sent to Jennifer Adams')">Send Now</button> <button class="btn-ol btn-sm" onclick="nfpAction('Editing draft invitation','info')">Edit</button></td></tr>
+            <tr><td>Michael Torres</td><td>mtorres@email.com</td><td>05 22,2026</td><td>05 25,2026</td><td><span class="badge bg-primary">Sent</span></td><td>Agent under GA-001</td><td><button class="btn-ol btn-sm" onclick="nfpSubmit('Invitation re-sent to Michael Torres. New expiry: 72 hours. Tracking: INV-2026-0090')">Resend</button> <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="if(confirm('Cancel invitation for Michael Torres?'))this.closest('tr').querySelector('.badge').className='badge bg-secondary',this.closest('tr').querySelector('.badge').textContent='Cancelled'">Cancel</button></td></tr>
+            <tr><td>Sarah Johnson</td><td>sjohnson@email.com</td><td>05 20,2026</td><td>05 23,2026</td><td><span class="badge bg-info">Opened</span></td><td>Agent under GA-001</td><td><button class="btn-ol btn-sm">Remind</button> <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="if(confirm('Cancel invitation for Sarah Johnson?'))this.closest('tr').querySelector('.badge').className='badge bg-secondary',this.closest('tr').querySelector('.badge').textContent='Cancelled'">Cancel</button></td></tr>
+            <tr><td>Premier Health Agency</td><td>admin@premierhealth.com</td><td>05 18,2026</td><td>05 21,2026</td><td><span class="badge bg-success">Accepted</span></td><td>Sub-GA under GA-001</td><td><a href="onboarding-cases.html" class="btn-ol btn-sm">View Case</a></td></tr>
+            <tr><td>Kevin Williams</td><td>kwilliams@email.com</td><td>05 15,2026</td><td>05 18,2026</td><td><span class="badge bg-success">Accepted</span></td><td>Agent under GA-001</td><td><a href="onboarding-cases.html" class="btn-ol btn-sm">View Case</a></td></tr>
+            <tr><td>Amy Chen</td><td>achen@email.com</td><td>05 10,2026</td><td>05 13,2026</td><td><span class="badge bg-danger">Expired</span></td><td>Agent under GA-001</td><td><button class="btn-ol btn-sm" onclick="nfpSubmit('Invitation re-sent to Amy Chen. New expiry: 72 hours.')"><i class="fas fa-redo" style="margin-right:3px"></i>Re-Send</button></td></tr>
+            <tr style="background:#fff3e0"><td>Thomas Wright</td><td>twright@email.com</td><td>05 05,2026</td><td>05 08,2026</td><td><span class="badge bg-dark">Rejected</span></td><td>Agent under GA-001</td><td><button class="btn-ol btn-sm" onclick="nfpAction('Viewing rejection reason: Agent declined — already contracted with another carrier','info')"><i class="fas fa-eye"></i> Reason</button></td></tr>
+            <tr><td>David Martinez</td><td>dmartinez@email.com</td><td>05 08,2026</td><td>05 11,2026</td><td><span class="badge bg-secondary">Cancelled</span></td><td>Agent under GA-001</td><td>—</td></tr>
+          <tr id="invNoResults" style="display:none"><td colspan="7" style="text-align:center;padding:18px;color:#999"><i class="fas fa-search"></i> No invitations match the current filters.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PO-05: Invitation Activity Log -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Invitation Activity Log</h5><span style="font-size:10px;color:#5f6368">Real-time tracking of state transitions</span></div>
+      <div style="padding:12px;font-size:12px;max-height:220px;overflow-y:auto">
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 26,2026 09:12</span>
+          <span style="background:#e8eaf6;color:#1a237e;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">OPENED</span>
+          <span>Sarah Johnson opened the invitation link (IP: 104.28.xx.xx)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 24,2026 14:30</span>
+          <span style="background:#e8f5e9;color:#1b5e20;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">ACCEPTED</span>
+          <span>Kevin Williams accepted invitation and started onboarding (Case #OB-2026-0091)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 22,2026 10:45</span>
+          <span style="background:#e3f2fd;color:#0d47a1;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">SENT</span>
+          <span>Michael Torres — invitation sent by Rachel Vargas (INV-2026-0088)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 18,2026 08:00</span>
+          <span style="background:#e8f5e9;color:#1b5e20;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">ACCEPTED</span>
+          <span>Premier Health Agency accepted ? Onboarding case created (Case #OB-2026-0087)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 13,2026 00:00</span>
+          <span style="background:#ffebee;color:#c62828;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">EXPIRED</span>
+          <span>Amy Chen — invitation expired after 72 hours (auto-flagged)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 08,2026 11:22</span>
+          <span style="background:#333;color:#fff;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">REJECTED</span>
+          <span>Thomas Wright rejected — Reason: Already contracted with another carrier</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f1f3f4">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 08,2026 09:15</span>
+          <span style="background:#f5f5f5;color:#616161;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">CANCELLED</span>
+          <span>David Martinez — cancelled by Rachel Vargas (reason: duplicate of existing agent)</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:6px 0">
+          <span style="color:#5f6368;white-space:nowrap;min-width:130px">05 05,2026 14:00</span>
+          <span style="background:#f8f9fa;color:#757575;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap">DRAFT</span>
+          <span>Jennifer Adams — draft invitation created by Rachel Vargas</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payer-Initiated Invitations Section -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-building" style="margin-right:6px;color:#1565c0"></i>Payer-Initiated Invitations</h5><span class="badge bg-info" style="font-size:11px">Sent by Carrier Admin</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','invitations_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div style="padding:12px;font-size:13px;background:#e3f2fd;border-radius:0 0 8px 8px">
+        <p style="margin:0 0 8px"><i class="fas fa-info-circle" style="color:#1565c0"></i> These invitations were initiated by the payer/carrier admin and assigned to your agency hierarchy. The agent will appear under your downline upon acceptance.</p>
+        <table id="tblExport2" class="tbl" style="font-size:12px">
+          <thead><tr><th>Agent Name</th><th>Email</th><th>Initiated By</th><th>Sent Date</th><th>Hierarchy Assignment</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Robert Kim</td><td>rkim@agency.com</td><td>Carrier Admin (Gold Kidney)</td><td>05 24,2026</td><td>Agent under GA-001</td><td><span class="badge bg-primary">Sent</span></td></tr>
+            <tr><td>Lisa Park</td><td>lpark@email.com</td><td>Carrier Admin (Gold Kidney)</td><td>05 23,2026</td><td>Agent under GA-001</td><td><span class="badge bg-success">Accepted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Invite Modal -->
+<div class="modal-overlay" id="inviteModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5>Send Contracting Invitation</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div id="invErr" class="al-danger" style="display:none;margin-bottom:10px"></div>
+      <div class="mb-3"><label class="form-label">Invitation Source</label><select id="invSource" class="form-control"><option selected>Agency-Driven (Upline sends)</option><option>Payer-Initiated (Carrier admin sends)</option></select></div>
+      <div class="mb-3"><label class="form-label">Invitee Type</label><select id="invType" class="form-control"><option>Individual Agent</option><option>Agency (Sub-GA/MGA)</option></select></div>
+      <div class="mb-3"><label class="form-label">Hierarchy Placement</label><select id="invHierarchy" class="form-control"><option value="" selected>Select hierarchy placement</option><option>GA - 10	General Agency (Level 10)</option><option>MGA - 20	Managing General Agency (Level 20)</option><option>SGA - 30	Senior General Agency (Level 30)</option><option>FMO - 40	Field Marketing Organization (Level 40)</option><option>NFMO - 50	National Field Marketing Organization (Level 50)</option><option>SFMO - 60</option></select><small style="color:#666;font-size:11px">Recipient will see this hierarchy assignment during onboarding</small></div>
+      <div class="mb-3"><label class="form-label">Full Name <span class="text-danger">*</span></label><input type="text" id="invName" class="form-control" placeholder="Agent or agency name"></div>
+      <div class="mb-3"><label class="form-label">Email Address <span class="text-danger">*</span></label><input type="email" id="invEmail" class="form-control" placeholder="email@example.com"></div>
+      <div class="mb-3"><label class="form-label">NPN (if known)</label><input type="text" id="invNPN" class="form-control" placeholder="8-10 digit NPN"><small style="color:#666;font-size:11px">System will check for duplicates before sending</small></div>
+      <div class="mb-3"><label class="form-label">Role Type</label><select id="invRole" class="form-control"><option selected>Agent / Broker</option><option>Sub-Agency Admin</option></select></div>
+      <div class="mb-3"><label class="form-label">Personal Message (optional)</label><textarea id="invMessage" class="form-control" rows="2" placeholder="Optional message included in the invitation email"></textarea></div>
+      <div style="background:#e8f5e9;border-radius:6px;padding:10px;font-size:12px;margin-bottom:12px">
+        <i class="fas fa-info-circle" style="color:#2e7d32"></i> The invitation will contain a unique tokenized link. Recipient clicks the link to start the onboarding form with hierarchy placement pre-populated.
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillInvitation()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+        <button class="btn-pr" onclick="submitInvitation()"><i class="fas fa-paper-plane"></i> Send Invitation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Invite Modal -->
+<div class="modal-overlay" id="bulkInviteModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5><i class="fas fa-upload" style="margin-right:6px"></i>Bulk Invite Agents</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Upload CSV File <span class="text-danger">*</span></label>
+        <input type="file" class="form-control" accept=".csv,.xlsx">
+        <small style="color:#666;font-size:11px">Accepted: .csv, .xlsx — Max 500 rows per batch</small>
+      </div>
+      <div style="background:#f5f5f5;border-radius:6px;padding:12px;margin-bottom:12px">
+        <strong style="font-size:12px">Required CSV Columns:</strong>
+        <table style="font-size:11px;width:100%;margin-top:6px;border-collapse:collapse">
+          <tr><td style="padding:2px 6px;border:1px solid #e0e0e0"><code>full_name</code></td><td style="padding:2px 6px;border:1px solid #e0e0e0">Agent or agency name</td></tr>
+          <tr><td style="padding:2px 6px;border:1px solid #e0e0e0"><code>email</code></td><td style="padding:2px 6px;border:1px solid #e0e0e0">Email address</td></tr>
+          <tr><td style="padding:2px 6px;border:1px solid #e0e0e0"><code>npn</code></td><td style="padding:2px 6px;border:1px solid #e0e0e0">NPN (optional)</td></tr>
+          <tr><td style="padding:2px 6px;border:1px solid #e0e0e0"><code>type</code></td><td style="padding:2px 6px;border:1px solid #e0e0e0">Individual / Agency</td></tr>
+        </table>
+      </div>
+      <div class="mb-3"><label class="form-label">Default Hierarchy Placement</label><select class="form-control"><option selected>Select hierarchy placement</option><option>GA - 10	General Agency (Level 10)</option><option>MGA - 20	Managing General Agency (Level 20)</option><option>SGA - 30	Senior General Agency (Level 30)</option><option>FMO - 40	Field Marketing Organization (Level 40)</option><option>NFMO - 50	National Field Marketing Organization (Level 50)</option><option>SFMO - 60</option></select></div>
+      <a href="#" onclick="nfpSubmit('Downloading template: bulk_invite_template.csv')" style="font-size:12px"><i class="fas fa-download"></i> Download CSV Template</a>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="nfpSubmit('Bulk upload processed!\n\n— 12 valid rows found\n— 1 duplicate NPN skipped\n— 11 invitations queued for sending\n\nInvitations will be sent within 5 minutes.')"><i class="fas fa-paper-plane"></i> Upload & Send All</button>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<script>
+function prefillInvitation(){
+  document.getElementById('invSource').selectedIndex=0;
+  document.getElementById('invType').selectedIndex=0;
+  document.getElementById('invHierarchy').selectedIndex=1;
+  document.getElementById('invName').value='Michael Torres';
+  document.getElementById('invEmail').value='mtorres@insurepro.com';
+  document.getElementById('invNPN').value='88103456';
+  document.getElementById('invRole').selectedIndex=0;
+  document.getElementById('invMessage').value='Hi Michael, we have an opening in our downline for the FL market. Looking forward to working with you!';
+  document.getElementById('invErr').style.display='none';
+  showToast('Form prefilled with sample data.','info');
+}
+
+function submitInvitation(){
+  var name=document.getElementById('invName').value.trim();
+  var email=document.getElementById('invEmail').value.trim();
+  var errBox=document.getElementById('invErr');
+  var errs=[];
+  if(!name) errs.push('Full Name is required.');
+  if(!email) errs.push('Email Address is required.');
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push('Please enter a valid email address.');
+  if(errs.length){
+    errBox.innerHTML='<i class="fas fa-exclamation-circle" style="margin-right:6px"></i>'+errs.join(' ');
+    errBox.style.display='block';
+    return;
+  }
+  errBox.style.display='none';
+  document.getElementById('inviteModal').style.display='none';
+  showToast('Invitation sent successfully!\n\nStatus: Pending\nExpires: 72 hours\nTracking ID: INV-2026-0089','success');
+}
+function filterInvitations() {
+  var status = document.getElementById('invFilterStatus').value.toLowerCase();
+  var fromDate = document.getElementById('invFilterFrom').value;
+  var toDate = document.getElementById('invFilterTo').value;
+  var search = document.getElementById('invFilterSearch').value.toLowerCase();
+  var rows = document.querySelectorAll('#invTableBody tr:not(#invNoResults)');
+
+  function parseSentDate(text) {
+    if (!text) return null;
+    var t = text.trim();
+    if (t === '—' || t === '-') return null;
+    var d = new Date(t);
+    return isNaN(d) ? null : d;
+  }
+
+  var from = fromDate ? new Date(fromDate + 'T00:00:00') : null;
+  var to = toDate ? new Date(toDate + 'T23:59:59') : null;
+
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length < 5) return;
+    var name = cells[0].textContent.toLowerCase();
+    var email = cells[1].textContent.toLowerCase();
+    var sentDate = cells[2].textContent.trim();
+    var rowStatus = cells[4].textContent.trim().toLowerCase();
+    var sent = parseSentDate(sentDate);
+    var show = true;
+
+    if (status && status !== 'all status' && rowStatus !== status) show = false;
+    if (search && !name.includes(search) && !email.includes(search)) show = false;
+
+    if (from) {
+      if (!sent || sent < from) show = false;
+    }
+
+    if (to) {
+      if (!sent || sent > to) show = false;
+    }
+
+    row.style.display = show ? '' : 'none';
+  });
+
+  var visible = Array.from(rows).filter(function(r){ return r.style.display !== 'none'; }).length;
+  var noResults = document.getElementById('invNoResults');
+  if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+}
+</script>
+</body>
+</html>
+

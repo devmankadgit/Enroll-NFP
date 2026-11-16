@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulletin Board | Agency Admin | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../assets/nfp.css" rel="stylesheet">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="dflex ai-center g8">
+      <span class="text-bold">Gold Kidney Health Plan</span>
+      <span class="text-muted text-sm">&nbsp;|&nbsp; Bulletin Board</span>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-pr" data-bs-toggle="modal" data-bs-target="#createBulletinModal"><i class="fas fa-plus"></i> Create Bulletin</button>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="row-grid col-4 mb16">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+      <div class="stat-val">4</div>
+      <div class="stat-label">Total Active Bulletins</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="color:#c62828"><i class="fas fa-exclamation-triangle"></i></div>
+      <div class="stat-val">2</div>
+      <div class="stat-label">Urgent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-eye"></i></div>
+      <div class="stat-val">76%</div>
+      <div class="stat-label">Avg Read Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-calendar-times"></i></div>
+      <div class="stat-val">1</div>
+      <div class="stat-label">Expired This Month</div>
+    </div>
+  </div>
+
+  <!-- Bulletins Table -->
+  <div class="card">
+    <div class="card-hdr">
+      <span class="text-bold">Active Bulletins</span>
+      <div class="dflex g8">
+        <select class="fg" style="max-width:160px">
+          <option>All Priorities</option>
+          <option>Urgent</option>
+          <option>Normal</option>
+        </select>
+        <select class="fg" style="max-width:160px">
+          <option>All Audiences</option>
+          <option>All Agents</option>
+          <option>Specific Teams</option>
+          <option>New Agents Only</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','bulletin-board_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Title</th>
+              <th>Audience</th>
+              <th>Display Period</th>
+              <th>Read Rate</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-left:4px solid #c62828">
+              <td><span class="bdg b-red">Urgent</span></td>
+              <td class="text-bold">AEP 2027 Kickoff — Mandatory Training Reminder</td>
+              <td>All Agents</td>
+              <td>May 20 – 06 30,2026</td>
+              <td><span class="text-bold">89%</span> <span class="text-muted text-sm">(42/47 read)</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>
+                <button class="btn-ol" onclick="showToast('Opening editor…')"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol" onclick="nfpDelete('Expire this bulletin?')"><i class="fas fa-clock"></i></button>
+                <button class="btn-ol al-danger" onclick="nfpDelete('Delete this bulletin permanently?')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="bdg b-green">Normal</span></td>
+              <td>New C-SNP Plan Added to Portfolio (H1234-004)</td>
+              <td>All Agents</td>
+              <td>May 15 – 07 15,2026</td>
+              <td><span class="text-bold">72%</span> <span class="text-muted text-sm">(34/47 read)</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>
+                <button class="btn-ol" onclick="showToast('Opening editor…')"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol" onclick="nfpDelete('Expire this bulletin?')"><i class="fas fa-clock"></i></button>
+                <button class="btn-ol al-danger" onclick="nfpDelete('Delete this bulletin permanently?')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr style="border-left:4px solid #c62828">
+              <td><span class="bdg b-red">Urgent</span></td>
+              <td class="text-bold">Compliance Alert: Updated SOA Requirements Effective June 1</td>
+              <td>All Agents</td>
+              <td>May 22 – 06 15,2026</td>
+              <td><span class="text-bold">45%</span> <span class="text-muted text-sm">(21/47 read)</span></td>
+              <td><span class="bdg b-amber">Low Read</span></td>
+              <td>
+                <button class="btn-ol" onclick="showToast('Opening editor…')"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol" onclick="nfpDelete('Expire this bulletin?')"><i class="fas fa-clock"></i></button>
+                <button class="btn-ol al-danger" onclick="nfpDelete('Delete this bulletin permanently?')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="bdg b-green">Normal</span></td>
+              <td>Welcome Package Updated for New Recruits</td>
+              <td>New Agents Only</td>
+              <td>May 1 – 12 31,2026</td>
+              <td><span class="text-bold">100%</span> <span class="text-muted text-sm">(5/5 read)</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>
+                <button class="btn-ol" onclick="showToast('Opening editor…')"><i class="fas fa-edit"></i></button>
+                <button class="btn-ol" onclick="nfpDelete('Expire this bulletin?')"><i class="fas fa-clock"></i></button>
+                <button class="btn-ol al-danger" onclick="nfpDelete('Delete this bulletin permanently?')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+    <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+    <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+    <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+  </footer>
+</div>
+
+<!-- Create Bulletin Modal -->
+<div class="modal fade" id="createBulletinModal" tabindex="-1" aria-labelledby="createBulletinLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createBulletinLabel"><i class="fas fa-plus-circle"></i> Create Bulletin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row mb16">
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Title <span class="text-muted">(max 100 characters)</span></label>
+            <input type="text" class="fg" maxlength="100" placeholder="Enter bulletin title…">
+          </div>
+        </div>
+        <div class="form-row mb16">
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Body <span class="text-muted">(max 1000 characters)</span></label>
+            <textarea class="fg" rows="5" maxlength="1000" placeholder="Enter bulletin content…"></textarea>
+          </div>
+        </div>
+        <div class="form-row mb16">
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Priority</label>
+            <select class="fg">
+              <option value="normal">Normal</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Target Audience</label>
+            <select class="fg">
+              <option value="all">All Agents</option>
+              <option value="teams">Specific Teams</option>
+              <option value="new">New Agents Only</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row mb16">
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Display Start Date</label>
+            <input type="date" class="fg">
+          </div>
+          <div class="fg">
+            <label class="text-bold text-sm mb8">Display End Date</label>
+            <input type="date" class="fg">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn-pr" onclick="nfpSubmit('Bulletin published successfully!')"><i class="fas fa-paper-plane"></i> Publish Bulletin</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

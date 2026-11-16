@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Integration Hub | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html" class="active"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Integration Hub</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Integration Hub</li></ol>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Health Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active</div><div class="stat-val">5</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Degraded</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Down</div><div class="stat-val">0</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-pause-circle"></i></div><div><div class="stat-label">Disabled</div><div class="stat-val">1</div></div></div></div>
+    </div>
+
+    <!-- Integration List -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>All Integrations</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','integrations_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Integration</th><th>Type</th><th>Endpoint</th><th>Status</th><th>Avg Response</th><th>Error Rate</th><th>Last Success</th><th>Fallback</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>NIPR License Verification</strong></td><td>REST API (Sync)</td><td>api.nipr.com/v2/license</td>
+              <td><span class="badge bg-warning text-dark">Degraded</span></td><td>1,240ms</td><td>2.3%</td><td>2 min ago</td>
+              <td><span class="badge bg-info">Manual Upload</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('NIPR License Verification')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>AHIP Certification</strong></td><td>REST API (Sync)</td><td>api.ahip.org/cert/verify</td>
+              <td><span class="badge bg-success">Active</span></td><td>320ms</td><td>0.1%</td><td>5 min ago</td>
+              <td><span class="badge bg-info">Manual Upload</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('AHIP Certification')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>CMS Enrollment Submission</strong></td><td>Batch (SFTP)</td><td>sftp.cms.gov/enrollments</td>
+              <td><span class="badge bg-success">Active</span></td><td></td><td>0%</td><td>Today 6:00 AM</td>
+              <td><span class="badge bg-secondary">None</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('CMS Enrollment Submission')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>ACH / NACHA Payment</strong></td><td>Batch File</td><td>bank.ach-gateway.com</td>
+              <td><span class="badge bg-success">Active</span></td><td></td><td>0%</td><td>05 17,2026</td>
+              <td><span class="badge bg-secondary">None</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('ACH / NACHA Payment')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>OEC Vendor (Channel 1)</strong></td><td>REST API (Sync)</td><td>api.oecvendor.com/v1</td>
+              <td><span class="badge bg-success">Active</span></td><td>180ms</td><td>0%</td><td>1 min ago</td>
+              <td><span class="badge bg-info">Alternate Channel</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('OEC Vendor (Channel 1)')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>IBR Background Check</strong></td><td>REST API (Async)</td><td>api.ibr-screening.com/check</td>
+              <td><span class="badge bg-success">Active</span></td><td>450ms</td><td>0.5%</td><td>22 min ago</td>
+              <td><span class="badge bg-info">Manual Review</span></td>
+              <td><button class="btn-ol btn-sm" onclick="configureIntegration('IBR Background Check')">Configure</button></td>
+            </tr>
+            <tr>
+              <td><strong>DUO Partner API</strong></td><td>REST API (Sync)</td><td>partner.duo-health.com/api</td>
+              <td><span class="badge bg-secondary">Disabled</span></td><td></td><td></td><td>04 30,2026</td>
+              <td><span class="badge bg-secondary">N/A</span></td>
+              <td><button class="btn-ol btn-sm" onclick="enableIntegration('DUO Partner API')">Enable</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Configure Integration Modal -->
+<div class="modal-overlay" id="cfgModal" style="display:none">
+<div class="modal-box" style="max-width:680px">
+<div class="modal-hdr"><h5 id="cfgModalTitle"><i class="fas fa-cog" style="margin-right:8px"></i>Configure Integration</h5><button class="modal-close" onclick="document.getElementById('cfgModal').style.display='none'">&times;</button></div>
+<div id="cfgModalBody" style="padding:20px;max-height:70vh;overflow-y:auto"></div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="configureIntegration(cfgCurrentName)" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <div>
+    <button class="btn-ol btn-sm" onclick="testConnection()"><i class="fas fa-vial"></i> Test Connection</button>
+    <button class="btn-ol" onclick="document.getElementById('cfgModal').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="saveCfgModal()"><i class="fas fa-save"></i> Save Changes</button>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Add Integration Modal -->
+<div class="modal-overlay" id="addIntegrationModal" style="display:none">
+<div class="modal-box" style="max-width:620px">
+<div class="modal-hdr"><h5><i class="fas fa-plug" style="margin-right:8px"></i>Add New Integration</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body">
+  <div id="intModalAlertZone" style="display:none" class="mb-2"></div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Integration Name <span class="req">*</span></label><input id="intName" class="form-control" maxlength="80" placeholder="e.g. E&O Insurance Verification"></div>
+    <div class="fg"><label>Integration Type <span class="req">*</span></label>
+      <select id="intType" class="form-control">
+        <option value="">-- Select Type --</option>
+        <option value="REST API (Sync)">REST API (Sync)</option>
+        <option value="REST API (Async)">REST API (Async)</option>
+        <option value="Batch (SFTP)">Batch (SFTP)</option>
+        <option value="Batch File">Batch File</option>
+        <option value="Webhook">Webhook</option>
+      </select>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Endpoint URL <span class="req">*</span></label><input id="intEndpoint" class="form-control" placeholder="https://api.example.com/v1/verify"></div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Auth Method <span class="req">*</span></label>
+      <select id="intAuth" class="form-control">
+        <option value="">-- Select Auth --</option>
+        <option value="API Key (Header)">API Key (Header)</option>
+        <option value="OAuth 2.0">OAuth 2.0 (Client Credentials)</option>
+        <option value="Basic Auth">Basic Auth</option>
+        <option value="None">None (Public)</option>
+      </select>
+    </div>
+    <div class="fg"><label>Timeout (ms)</label><input id="intTimeout" class="form-control" type="number" min="500" max="30000" placeholder="5000" value="5000"></div>
+  </div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Retry Attempts</label><input id="intRetry" class="form-control" type="number" min="0" max="10" placeholder="3" value="3"></div>
+    <div class="fg"><label>Fallback Behaviour</label>
+      <select id="intFallback" class="form-control" onchange="toggleAddFallbackUpload(this.value)">
+        <option value="Manual Entry">Enable Manual Entry</option>
+        <option value="Manual Upload">Manual Upload</option>
+        <option value="Queue for Retry">Queue for Retry</option>
+        <option value="Block Operation">Block Operation</option>
+        <option value="None">None</option>
+      </select>
+    </div>
+  </div>
+  <div id="addFallbackUploadWrap" style="display:none;margin-bottom:12px">
+    <div class="fg"><label>Fallback Upload File</label><input type="file" id="intFallbackFile" class="form-control" accept=".csv,.xlsx,.pdf,.txt"><p style="font-size:10px;color:#888;margin:4px 0 0">Upload a fallback data file (CSV, XLSX, PDF, or TXT) to use when integration is unavailable.</p></div>
+  </div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Error Rate Alert (%)</label><input id="intErrorRate" class="form-control" type="number" min="0" max="100" placeholder="2" value="2"></div>
+    <div class="fg"><label>Initial Status</label>
+      <select id="intStatus" class="form-control">
+        <option value="Disabled">Disabled (configure first)</option>
+        <option value="Active">Active</option>
+      </select>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Description <small style="color:#5f6368">(optional, max 200 chars)</small></label>
+    <textarea id="intDesc" class="form-control" maxlength="200" rows="2" placeholder="Brief description of this integration..."></textarea>
+  </div>
+</div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="prefillIntegration()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <div>
+    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="saveNewIntegration()"><i class="fas fa-save"></i> Save Integration</button>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+function showAlert(zone, msg, type) {
+  if(!zone) return;
+  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
+  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var icons = {danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
+  zone.innerHTML = '<div style="background:'+colors[type]+';border:1px solid '+borders[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+icons[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
+  zone.style.display='block';
+  setTimeout(function(){zone.style.display='none';},5000);
+}
+
+function openAddIntegrationModal() {
+  document.getElementById('intName').value='';
+  document.getElementById('intType').value='';
+  document.getElementById('intEndpoint').value='';
+  document.getElementById('intAuth').value='';
+  document.getElementById('intTimeout').value='5000';
+  document.getElementById('intRetry').value='3';
+  document.getElementById('intFallback').value='Manual Entry';
+  document.getElementById('intErrorRate').value='2';
+  document.getElementById('intStatus').value='Disabled';
+  document.getElementById('intDesc').value='';
+  document.getElementById('intModalAlertZone').style.display='none';
+  document.getElementById('addIntegrationModal').style.display='flex';
+}
+
+function prefillIntegration() {
+  document.getElementById('intName').value='E&O Insurance Verification';
+  document.getElementById('intType').value='REST API (Sync)';
+  document.getElementById('intEndpoint').value='https://api.eo-verify.com/v2/validate';
+  document.getElementById('intAuth').value='OAuth 2.0';
+  document.getElementById('intTimeout').value='4000';
+  document.getElementById('intRetry').value='2';
+  document.getElementById('intFallback').value='Manual Entry';
+  document.getElementById('intErrorRate').value='3';
+  document.getElementById('intStatus').value='Disabled';
+  document.getElementById('intDesc').value='Verifies agent Errors & Omissions insurance coverage during onboarding and annual renewal.';
+  showAlert(document.getElementById('intModalAlertZone'), 'Form prefilled with sample data for testing.', 'info');
+}
+
+function saveNewIntegration() {
+  var alertZone = document.getElementById('intModalAlertZone');
+  var name = document.getElementById('intName').value.trim();
+  var type = document.getElementById('intType').value;
+  var endpoint = document.getElementById('intEndpoint').value.trim();
+  var auth = document.getElementById('intAuth').value;
+  var timeout = parseInt(document.getElementById('intTimeout').value)||0;
+
+  if(!name){showAlert(alertZone,'Integration Name is required.','danger');return;}
+  if(!type){showAlert(alertZone,'Please select an Integration Type.','danger');return;}
+  if(!endpoint){showAlert(alertZone,'Endpoint URL is required.','danger');return;}
+  if(!/^https?:\/\/.+/.test(endpoint) && !/^sftp[.:].+/.test(endpoint)){
+    showAlert(alertZone,'Endpoint must be a valid URL (https:// or sftp.).','danger');return;
+  }
+  if(!auth){showAlert(alertZone,'Please select an Auth Method.','danger');return;}
+  if(timeout<500||timeout>30000){showAlert(alertZone,'Timeout must be between 500 and 30,000 ms.','danger');return;}
+
+  // Check duplicate name
+  var existing = document.querySelectorAll('.tbl tbody tr td:first-child strong');
+  for(var i=0;i<existing.length;i++){
+    if(existing[i].textContent.trim().toLowerCase()===name.toLowerCase()){
+      showAlert(alertZone,'An integration named "'+name+'" already exists.','danger');return;
+    }
+  }
+
+  document.getElementById('addIntegrationModal').style.display='none';
+  showToast('Integration "'+name+'" created successfully as '+document.getElementById('intStatus').value+'.','success');
+}
+
+var cfgCurrentName = '';
+var CFG_DATA = {
+  'NIPR License Verification': {endpoint:'https://api.nipr.com/v2/license',auth:'API Key (Header)',apiKey:'nipr_sk_live_abc123',timeout:5000,retry:3,rateLimit:60,fallback:'Manual Upload',alertThreshold:1000,errorRate:2,appointEndpoint:'https://api.nipr.com/v2/appointments/submit',trackEndpoint:'https://api.nipr.com/v2/appointments/status',submissionMode:'Real-time (per agent)',autoSubmit:'Yes',webhookUrl:'https://portal.goldkidney.com/api/v1/nipr/webhook',alerts:['Suspension','Revocation','Reinstatement','Expiration','New License']},
+  'AHIP Certification': {endpoint:'https://api.ahip.org/cert/verify',auth:'OAuth 2.0 (Client Credentials)',clientId:'goldkidney_prod_client_id',clientSecret:'ahip_secret_xyz',timeout:5000,lookupKey:'NPN',fallback:'Manual Certificate Upload',autoVerify:'Yes',planYear:'2026',validFrom:'2025-07-01',validTo:'2026-09-30',renewalReminder:'60 days before expiry',gracePeriod:14},
+  'CMS Enrollment Submission': {endpoint:'sftp.cms.gov/enrollments',auth:'SSH Key',timeout:10000,retry:2,fallback:'Queue for Retry',schedule:'Daily 6:00 AM',fileFormat:'CMS 834 (Fixed-width)',encryption:'PGP Encrypted'},
+  'ACH / NACHA Payment': {endpoint:'bank.ach-gateway.com',auth:'API Key (Header)',apiKey:'ach_prod_key_xyz',timeout:8000,retry:1,fallback:'None',schedule:'On-demand (batch trigger)',fileFormat:'NACHA ACH Format'},
+  'OEC Vendor (Channel 1)': {endpoint:'https://api.oecvendor.com/v1',auth:'OAuth 2.0',clientId:'gk_oec_client',clientSecret:'oec_secret_xyz',timeout:5000,retry:3,fallback:'Alternate Channel',rateLimit:120},
+  'IBR Background Check': {endpoint:'sftp.ibr-screening.com',auth:'SSH Key (uploaded)',port:22,username:'goldkidney_prod',outbound:'/submissions/',inbound:'/results/',archive:'/archive/',encryption:'PGP Encrypted',fileFormat:'CSV (pipe-delimited)',filePattern:'GK_BGC_SUBMIT_{YYYYMMDD}_{SEQ}.csv',trigger:'After training completion',schedule:'Immediate (on trigger)',pickupSchedule:'Every 2 hours',onPass:'Auto-advance onboarding gate',onFail:'Block onboarding + notify compliance'}
+};
+
+function configureIntegration(name) {
+  cfgCurrentName = name;
+  var d = CFG_DATA[name];
+  if(!d){ showToast('Configuration not available for '+name,'info'); return; }
+  document.getElementById('cfgModalTitle').innerHTML = '<i class="fas fa-cog" style="margin-right:8px;color:#1a237e"></i>Configure: '+name;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  html += field('Endpoint URL', 'text', d.endpoint);
+  html += field('Auth Method', 'select', d.auth, ['API Key (Header)','OAuth 2.0 (Client Credentials)','SSH Key','Basic Auth','None']);
+  if(d.apiKey) html += field('API Key', 'password', d.apiKey);
+  if(d.clientId) html += field('Client ID', 'text', d.clientId);
+  if(d.clientSecret) html += field('Client Secret', 'password', d.clientSecret);
+  html += field('Timeout (ms)', 'number', d.timeout||5000);
+  html += field('Retry Attempts', 'number', d.retry||3);
+  if(d.rateLimit) html += field('Rate Limit (req/min)', 'number', d.rateLimit);
+  html += field('Fallback Behaviour', 'select', d.fallback||'None', ['Manual Upload','Manual Certificate Upload','Enable Manual Entry','Queue for Retry','Block Operation','Alternate Channel','None'], 'fallbackSelect');
+  var showUpload = (d.fallback && (d.fallback.indexOf('Manual')>-1 || d.fallback.indexOf('Upload')>-1));
+  html += '<div id="fallbackUploadWrap" style="grid-column:1/-1;display:'+(showUpload?'block':'none')+';margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:3px">Fallback Upload File</label><input type="file" class="form-control" style="font-size:12px" accept=".csv,.xlsx,.pdf,.txt"><p style="font-size:10px;color:#888;margin:4px 0 0">Upload a fallback data file (CSV, XLSX, PDF, or TXT) to use when integration is unavailable.</p></div>';
+  if(d.errorRate!==undefined) html += field('Error Rate Alert (%)', 'number', d.errorRate);
+  if(d.alertThreshold) html += field('Alert Threshold (ms)', 'number', d.alertThreshold);
+  if(d.schedule) html += field('Schedule', 'text', d.schedule);
+  if(d.fileFormat) html += field('File Format', 'text', d.fileFormat);
+  if(d.encryption) html += field('Encryption', 'select', d.encryption, ['PGP Encrypted','None']);
+  if(d.port) html += field('Port', 'number', d.port);
+  if(d.username) html += field('Username', 'text', d.username);
+  if(d.outbound) html += field('Outbound Folder', 'text', d.outbound);
+  if(d.inbound) html += field('Inbound Folder', 'text', d.inbound);
+  if(d.filePattern) html += field('File Naming Pattern', 'text', d.filePattern);
+  if(d.trigger) html += field('Auto-Submit Trigger', 'select', d.trigger, ['After training completion','After onboarding form submit','Manual only']);
+  if(d.pickupSchedule) html += field('Pickup Schedule', 'select', d.pickupSchedule, ['Every hour','Every 2 hours','Every 4 hours','Daily (8:00 AM)']);
+  if(d.onPass) html += field('On Pass Result', 'select', d.onPass, ['Auto-advance onboarding gate','Notify admin for review']);
+  if(d.onFail) html += field('On Fail Result', 'select', d.onFail, ['Block onboarding + notify compliance','Flag for manual review']);
+  if(d.lookupKey) html += field('Lookup Key', 'select', d.lookupKey, ['NPN','Name + DOB','Email']);
+  if(d.autoVerify) html += field('Auto-Verify on Onboarding', 'select', d.autoVerify, ['Yes','No']);
+  if(d.planYear) html += field('Current Plan Year', 'text', d.planYear);
+  if(d.validFrom) html += field('Certificate Valid From', 'date', d.validFrom);
+  if(d.validTo) html += field('Certificate Valid To', 'date', d.validTo);
+  if(d.renewalReminder) html += field('Renewal Reminder', 'select', d.renewalReminder, ['30 days before expiry','60 days before expiry','90 days before expiry']);
+  if(d.gracePeriod) html += field('Grace Period (days)', 'number', d.gracePeriod);
+  if(d.webhookUrl) html += field('Webhook URL', 'text', d.webhookUrl);
+  if(d.appointEndpoint) html += field('Appointment Endpoint', 'text', d.appointEndpoint);
+  if(d.trackEndpoint) html += field('Tracking Endpoint', 'text', d.trackEndpoint);
+  html += '</div>';
+  document.getElementById('cfgModalBody').innerHTML = html;
+  document.getElementById('cfgModal').style.display = 'flex';
+}
+function field(label, type, value, options, id) {
+  var h = '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:#5f6368;display:block;margin-bottom:3px">'+label+'</label>';
+  if(type==='select'){
+    var idAttr = id ? ' id="'+id+'"' : '';
+    var onChange = id==='fallbackSelect' ? ' onchange="toggleFallbackUpload(this.value)"' : '';
+    h += '<select class="form-control" style="font-size:12px"'+idAttr+onChange+'>';
+    var opts = options||[];
+    var matched = false;
+    opts.forEach(function(o){ if(o===value) matched=true; h += '<option'+(o===value?' selected':'')+'>'+o+'</option>'; });
+    if(!matched && value) h += '<option selected>'+value+'</option>';
+    h += '</select>';
+  } else if(type==='password'){
+    h += '<div style="position:relative"><input type="password" class="form-control" style="font-size:12px;padding-right:32px" value="'+escAttr(value)+'"><button type="button" onclick="togglePwd(this)" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:none;color:#5f6368;cursor:pointer"><i class="fas fa-eye"></i></button></div>';
+  } else {
+    h += '<input type="'+type+'" class="form-control" style="font-size:12px" value="'+escAttr(value)+'">';
+  }
+  h += '</div>';
+  return h;
+}
+function escAttr(v){ return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function togglePwd(btn){ var inp=btn.parentElement.querySelector('input'); if(inp.type==='password'){inp.type='text';btn.innerHTML='<i class="fas fa-eye-slash"></i>';}else{inp.type='password';btn.innerHTML='<i class="fas fa-eye"></i>';} }
+function toggleFallbackUpload(val){ var el=document.getElementById('fallbackUploadWrap'); if(el) el.style.display=(val.indexOf('Manual')>-1||val.indexOf('Upload')>-1)?'block':'none'; }
+function toggleAddFallbackUpload(val){ var el=document.getElementById('addFallbackUploadWrap'); if(el) el.style.display=(val.indexOf('Manual')>-1||val.indexOf('Upload')>-1)?'block':'none'; }
+function testConnection(){
+  showToast('Testing connection for '+cfgCurrentName+'... Success! (200 OK)','success');
+}
+function saveCfgModal(){
+  document.getElementById('cfgModal').style.display='none';
+  showToast(cfgCurrentName+' configuration saved. Changes take effect immediately.','success');
+}
+function enableIntegration(name) {
+  if(!confirm('Enable ' + name + '?\nThe integration will be activated and begin processing requests.')) return;
+  showToast(name + ' enabled. Integration is now active.', 'success');
+}
+function disableIntegration(name) {
+  if(!confirm('Disable ' + name + '?\nAll pending requests will use the configured fallback.')) return;
+  showToast(name + ' disabled. Fallback behaviour is now active. Audit entry created.', 'info');
+}
+function saveIntegration(name) {
+  var endpoints = document.querySelectorAll('input[value^="https://"], input[value^="http://"], input[value^="sftp."]');
+  showToast(name + ' integration settings saved. Changes take effect immediately.', 'success');
+}
+function toggleSecret(btn, fieldId) {
+  var inp = document.getElementById(fieldId);
+  if(!inp) return;
+  var showing = inp.type === 'text';
+  inp.type = showing ? 'password' : 'text';
+  btn.innerHTML = showing ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+}
+function replaceFile(type) {
+  showToast('File upload dialog opened. Select a new ' + type + ' file to replace the current one.', 'info');
+}
+function exportLog() { nfpExport('NIPR Call Log'); }
+function viewPayload(method, status, ms) {
+  nfpAction('Call Log Entry\n\nMethod: ' + method + '\nHTTP Status: ' + status + '\nResponse Time: ' + ms + 'ms\n\nRequest/response payload preview available in full audit log.', status === '200' ? 'info' : 'warning');
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

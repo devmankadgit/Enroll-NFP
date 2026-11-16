@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Analytics | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
+.modal-box{background:#fff;border-radius:12px;width:90%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-hdr h5{margin:0;font-size:15px;font-weight:700}
+.modal-foot{padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#5f6368;line-height:1}
+/* Analytics Widgets */
+.score-hero{background:#fff;border:1px solid #e0e0e0;border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.score-hero .score-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:5px solid}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.metric-tile{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px;transition:box-shadow .2s}
+.metric-tile:hover{box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.metric-tile .m-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.metric-tile .m-val{font-size:20px;font-weight:700;line-height:1.2}
+.metric-tile .m-label{font-size:11px;color:#5f6368;margin-top:2px}
+.metric-tile .m-sub{font-size:10.5px;margin-top:3px}
+.section-title{font-size:13px;font-weight:700;color:#004d40;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html" class="active"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Compliance Analytics — Module Dashboard</h4></div>
+    <select id="periodFilter" style="padding:4px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+      <option>Last 30 Days</option><option>Last 90 Days</option><option selected>Year to Date</option><option>Last 12 Months</option>
+    </select>
+    <button class="btn-ol btn-sm" onclick="nfpExport()"><i class="fas fa-download"></i>Export Report</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Hero Score + Period -->
+    <div style="display:flex;gap:16px;align-items:stretch;margin-bottom:18px;flex-wrap:wrap">
+      <div class="score-hero" style="flex:1;min-width:280px">
+        <div class="score-ring" style="color:#004d40;border-color:#004d40">94.2%</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#1a1a1a">Overall Compliance Score</div>
+          <div style="font-size:11.5px;color:#5f6368;margin-top:4px"><i class="fas fa-arrow-up" style="color:#2e7d32;margin-right:3px"></i>Up 2.1% from prior period &bull; 165 active agents</div>
+          <div style="font-size:10.5px;color:#80868b;margin-top:4px">Target: 95% &bull; Gap: 0.8%</div>
+        </div>
+      </div>
+      <div class="score-hero" style="min-width:200px">
+        <div>
+          <div style="font-size:11px;color:#80868b;text-transform:uppercase;letter-spacing:.5px">Needs Attention</div>
+          <div style="font-size:28px;font-weight:700;color:#c62828;line-height:1.3">7</div>
+          <div style="font-size:11px;color:#5f6368">4 holds &bull; 2 expired &bull; 1 exclusion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metric Tiles: Grouped -->
+    <div class="section-title"><i class="fas fa-th-large"></i>Key Compliance Metrics</div>
+    <div class="metric-grid" style="margin-bottom:20px">
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#e0f2f1;color:#004d40"><i class="fas fa-id-badge"></i></div>
+        <div><div class="m-val">92%</div><div class="m-label">Agent Credentials</div><div class="m-sub" style="color:#f57c00">12 expiring within 30d</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-signature"></i></div>
+        <div><div class="m-val">98.5%</div><div class="m-label">SOA Compliance</div><div class="m-sub" style="color:#2e7d32"><i class="fas fa-check-circle"></i> Above 98% target</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clipboard-check"></i></div>
+        <div><div class="m-val">88%</div><div class="m-label">PQAT Compliance</div><div class="m-sub" style="color:#c62828"><i class="fas fa-arrow-down"></i> 3% below target</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-graduation-cap"></i></div>
+        <div><div class="m-val">96%</div><div class="m-label">Training Completion</div><div class="m-sub" style="color:#5f6368">Active agents certified</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-bell"></i></div>
+        <div><div class="m-val">18</div><div class="m-label">NIPR Alerts</div><div class="m-sub" style="color:#2e7d32">12 resolved &bull; 6 open</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-pause-circle"></i></div>
+        <div><div class="m-val">4</div><div class="m-label">Active Holds</div><div class="m-sub" style="color:#c62828">2 high priority</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#ede7f6;color:#6a1b9a"><i class="fas fa-ban"></i></div>
+        <div><div class="m-val">1</div><div class="m-label">OIG/SAM Exclusions</div><div class="m-sub" style="color:#5f6368">Last check: Jun 1</div></div>
+      </div>
+      <div class="metric-tile">
+        <div class="m-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-redo"></i></div>
+        <div><div class="m-val">3</div><div class="m-label">Reactivation Queue</div><div class="m-sub" style="color:#5f6368">Pending review</div></div>
+      </div>
+    </div>
+
+    <!-- Charts: 2-column -->
+    <div class="section-title"><i class="fas fa-chart-line"></i>Trends &amp; Breakdown</div>
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5>Compliance Trends (6-Month)</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="trendChart" height="180"></canvas></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5>NIPR Alert Breakdown</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="niprChart" height="180"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5>Agent Credentials Status</h5></div>
+          <div class="card-body" style="padding:16px;display:flex;align-items:center;gap:20px">
+            <canvas id="credChart" height="160" style="max-width:160px"></canvas>
+            <div style="font-size:11px;line-height:2.2">
+              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2e7d32;margin-right:6px;vertical-align:middle"></span>Active &amp; Valid (142)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f57c00;margin-right:6px;vertical-align:middle"></span>Expiring 30d (12)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#c62828;margin-right:6px;vertical-align:middle"></span>Expired/Suspended (3)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1565c0;margin-right:6px;vertical-align:middle"></span>Pending Verification (8)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5>SOA Compliance Rate Over Time</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="soaChart" height="160"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commission Compliance -->
+    <div class="section-title"><i class="fas fa-dollar-sign"></i>Commission Compliance Flags</div>
+    <div class="card">
+      <div class="card-hdr"><h5>Flagged Transactions</h5><span style="font-size:11px;color:#5f6368">Chargebacks, retroactive recovery, renewal continuity</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','analytics_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Flag Type</th><th>Agent</th><th>NPN</th><th>Details</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="bdg b-red">Retroactive Recovery</span></td>
+              <td>Robert Chen</td><td>4421098</td>
+              <td style="font-size:11px">Agent found unlicensed at time of sale (May 2026). All commissions for affected enrollments subject to full recovery.</td>
+              <td style="font-weight:700;color:#c62828">$2,340</td>
+              <td><span class="bdg b-amber">Under Review</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openFlagDetail(0)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><span class="bdg b-amber">Rapid Disenrollment</span></td>
+              <td>K. Adams</td><td>3398712</td>
+              <td style="font-size:11px">Member disenrolled within 90 days of enrollment. Chargeback assessment triggered per policy.</td>
+              <td style="font-weight:700;color:#e65100">$780</td>
+              <td><span class="bdg b-blue">Chargeback Pending</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openFlagDetail(1)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><span class="bdg b-green">Renewal Continuity</span></td>
+              <td>M. Torres</td><td>6623109</td>
+              <td style="font-size:11px">Agent terminated (voluntary). PMPM renewal commissions preserved for 42 active members. Routed to upline per hierarchy config.</td>
+              <td style="font-weight:700;color:#2e7d32">$3,150/mo</td>
+              <td><span class="bdg b-green">Confirmed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openFlagDetail(2)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><span class="bdg b-blue">Rate Compliance</span></td>
+              <td>J. Martinez</td><td>8823441</td>
+              <td style="font-size:11px">CMS rate validation passed. Initial commission $640, renewal PMPM $32.50 — matches CMS-published maximums for CY2026.</td>
+              <td style="font-weight:700;color:#1565c0">$640 init</td>
+              <td><span class="bdg b-green">Validated</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openFlagDetail(3)"><i class="fas fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:8px 16px;font-size:11px;color:#5f6368;border-top:1px solid #f1f3f4">
+        <i class="fas fa-info-circle" style="margin-right:4px;color:#004d40"></i><strong>Policy:</strong> Terminated agents (non-fraud) retain earned commissions. Renewal PMPM continues to agent/upline per hierarchy config. Retroactive non-compliance (e.g., unlicensed at sale) triggers full recovery of affected commissions.
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Commission Flag Detail Modal -->
+<div class="modal-overlay" id="flagModal" style="display:none">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5 id="flagModalTitle"><i class="fas fa-flag" style="margin-right:6px;color:#004d40"></i>Flag Detail</h5>
+      <button onclick="closeFlagModal()" class="modal-close">&times;</button>
+    </div>
+    <div id="flagModalBody" style="padding:20px"></div>
+    <div class="modal-foot">
+      <button class="btn-ol btn-sm" onclick="closeFlagModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Compliance Trends
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Overall',data:[91,92,93,93.5,94,94.2],borderColor:'#004d40',fill:false,tension:.3},{label:'License',data:[94,95,95,96,96,96],borderColor:'#1565c0',fill:false,tension:.3},{label:'AHIP',data:[89,90,91,92,93,93],borderColor:'#6a1b9a',fill:false,tension:.3}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:85,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
+
+// Agent Credentials Status
+new Chart(document.getElementById('credChart'),{type:'doughnut',data:{labels:['Active & Valid','Expiring (30d)','Expired/Suspended','Pending Verification'],datasets:[{data:[142,12,3,8],backgroundColor:['#2e7d32','#f57c00','#c62828','#1565c0']}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+
+// NIPR Analytics
+new Chart(document.getElementById('niprChart'),{type:'bar',data:{labels:['License Expired','License Suspended','CE Incomplete','Not Found','Expiring Soon'],datasets:[{label:'Alerts',data:[5,3,4,2,4],backgroundColor:['#c62828','#e65100','#f57c00','#757575','#1565c0'],borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});
+
+// SOA Compliance
+new Chart(document.getElementById('soaChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'SOA Rate',data:[97.5,98.0,98.2,98.3,98.4,98.5],borderColor:'#2e7d32',backgroundColor:'rgba(46,125,50,0.1)',fill:true,tension:.3},{label:'Target',data:[98,98,98,98,98,98],borderColor:'#c62828',borderDash:[5,5],fill:false}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:96,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
+
+// Commission Flag Detail Popup
+var FLAG_DATA = [
+  {title:'Retroactive Recovery — Robert Chen',agent:'Robert Chen',npn:'4421098',flag:'Retroactive Recovery',status:'Under Review',amount:'$2,340',color:'#c62828',
+   details:'Agent found unlicensed in FL at time of sale (May 12–19, 2026). NIPR confirmed license was suspended 05 10,2026.',
+   timeline:['May 25 — NIPR alert triggered compliance hold','May 25 — Commission hold placed on 6 affected enrollments','May 26 — Finance notified for retroactive recovery assessment','Pending — Final recovery amount pending enrollment verification'],
+   action:'Full commission recovery for all enrollments written during unlicensed period. Agent notified. Upline (Premier Health Agency) copied.'},
+  {title:'Rapid Disenrollment — K. Adams',agent:'K. Adams',npn:'3398712',flag:'Rapid Disenrollment',status:'Chargeback Pending',amount:'$780',color:'#e65100',
+   details:'Member (ID: MBR-2026-4412) disenrolled within 47 days of enrollment. Chargeback window is 90 days per policy.',
+   timeline:['Apr 8 — Enrollment effective','May 25 — Member voluntary disenrollment received','May 26 — Chargeback automatically triggered by system','Pending — Chargeback to be applied in next commission cycle'],
+   action:'Initial commission of $780 will be charged back in the June 2026 commission cycle. Agent will see debit on remittance statement.'},
+  {title:'Renewal Continuity — M. Torres',agent:'M. Torres',npn:'6623109',flag:'Renewal Continuity',status:'Confirmed',amount:'$3,150/mo',color:'#2e7d32',
+   details:'Agent voluntarily terminated 05 20,2026. Per policy, earned renewal PMPM commissions are preserved for 42 active members and routed to upline.',
+   timeline:['May 20 — Agent termination (voluntary, non-fraud)','May 20 — Renewal commission routing updated to upline GA','May 21 — Upline (Pacific Insurance Group) confirmed receipt','Ongoing — $3,150/mo PMPM continues per hierarchy config'],
+   action:'No recovery needed. Renewal commissions preserved per non-fraud termination policy. Upline receives ongoing PMPM payments.'},
+  {title:'Rate Compliance — J. Martinez',agent:'J. Martinez',npn:'8823441',flag:'Rate Compliance',status:'Validated',amount:'$640 initial',color:'#1565c0',
+   details:'CMS rate validation passed for CY2026. Initial commission $640, renewal PMPM $32.50 — both within CMS-published maximums.',
+   timeline:['Jan 15 — CMS publishes CY2026 maximum rates','Feb 1 — System rate config updated by Finance Admin','May 27 — Automated rate compliance check passed','No action required'],
+   action:'All commission rates are within CMS maximums. No regulatory risk identified.'}
+];
+
+function openFlagDetail(idx){
+  var f = FLAG_DATA[idx];
+  var html = '<div style="margin-bottom:14px"><span class="bdg" style="background:'+f.color+'22;color:'+f.color+'">'+f.flag+'</span> <span class="bdg" style="background:#f1f3f4;color:#3c4043">'+f.status+'</span></div>'
+    +'<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:14px">'
+    +'<tr><td style="padding:5px 8px;color:#80868b;width:100px">Agent</td><td style="padding:5px 8px;font-weight:600">'+f.agent+'</td></tr>'
+    +'<tr><td style="padding:5px 8px;color:#80868b">NPN</td><td style="padding:5px 8px;font-family:monospace">'+f.npn+'</td></tr>'
+    +'<tr><td style="padding:5px 8px;color:#80868b">Amount</td><td style="padding:5px 8px;font-weight:700;color:'+f.color+'">'+f.amount+'</td></tr>'
+    +'</table>'
+    +'<div style="font-size:12px;margin-bottom:6px;font-weight:600;color:#004d40"><i class="fas fa-info-circle" style="margin-right:5px"></i>Details</div>'
+    +'<div style="font-size:12px;color:#3c4043;margin-bottom:14px;padding:8px 12px;background:#f8f9fa;border-radius:6px">'+f.details+'</div>'
+    +'<div style="font-size:12px;margin-bottom:6px;font-weight:600;color:#004d40"><i class="fas fa-stream" style="margin-right:5px"></i>Timeline</div>'
+    +'<ul style="font-size:11px;color:#3c4043;padding-left:16px;margin-bottom:14px">'+f.timeline.map(function(t){return '<li style="margin-bottom:4px">'+t+'</li>';}).join('')+'</ul>'
+    +'<div style="font-size:12px;margin-bottom:6px;font-weight:600;color:#004d40"><i class="fas fa-gavel" style="margin-right:5px"></i>Resolution / Action</div>'
+    +'<div style="font-size:12px;color:#3c4043;padding:8px 12px;background:#e8f5e9;border-radius:6px">'+f.action+'</div>';
+  document.getElementById('flagModalTitle').innerHTML = '<i class="fas fa-flag" style="margin-right:6px;color:'+f.color+'"></i>'+f.title;
+  document.getElementById('flagModalBody').innerHTML = html;
+  document.getElementById('flagModal').style.display = 'flex';
+}
+function closeFlagModal(){ document.getElementById('flagModal').style.display = 'none'; }
+document.getElementById('flagModal').addEventListener('click',function(e){if(e.target===this)closeFlagModal();});
+</script>
+</body>
+</html>

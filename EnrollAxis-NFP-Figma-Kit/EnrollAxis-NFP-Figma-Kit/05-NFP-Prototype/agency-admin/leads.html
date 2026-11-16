@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Leads | Gold Kidney Agency Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html" class="active" id="sbn-leads"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns" id="sbn-campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>My Leads</h4><ol class="breadcrumb-bar"><li>Agency Lead Management &amp; Assignments</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- ------------------------------------------ -->
+    <!-- SECTION: Campaign Management              -->
+    <!-- ------------------------------------------ -->
+    <div id="section-camps" style="display:none">
+      <div class="row-grid" style="margin-bottom:16px">
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-bullhorn"></i></div><div><div class="stat-label">Active Campaigns</div><div class="stat-val">4</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Leads Generated</div><div class="stat-val">287</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Total Enrolled</div><div class="stat-val">23</div></div></div></div>
+        <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Avg Conversion Rate</div><div class="stat-val">8.0%</div></div></div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <span style="font-size:13px;color:#5f6368">Manage and track all agency campaigns</span>
+        <button class="btn-pr btn-sm" onclick="openNewCampaignModal()"><i class="fas fa-plus"></i>New Campaign</button>
+      </div>
+      <div class="filter-bar" style="margin-bottom:14px">
+        <label>Status:</label>
+        <select id="camp-status" onchange="filterCampaigns()">
+          <option value="">All Status</option><option value="Active">Active</option><option value="Paused">Paused</option><option value="Completed">Completed</option>
+        </select>
+        <label>Type:</label>
+        <select id="camp-type" onchange="filterCampaigns()">
+          <option value="">All Types</option><option value="Digital">Digital</option><option value="Direct Mail">Direct Mail</option><option value="Event">Event</option><option value="Referral">Referral</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="filterCampaigns()"><i class="fas fa-filter"></i>Apply</button>
+        <button class="btn-ol btn-sm" onclick="resetCampFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-hdr">
+          <h5><i class="fas fa-bullhorn" style="margin-right:8px;color:#e65100"></i>All Campaigns</h5>
+          <button class="btn-ol btn-sm" onclick="exportCampaigns()"><i class="fas fa-download"></i>Export</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','leads_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport1" class="tbl">
+            <thead><tr><th>Campaign Name</th><th>Type</th><th>Status</th><th>Leads</th><th>Contacted</th><th>Enrolled</th><th>Conv. Rate</th><th>Start Date</th><th>Actions</th></tr></thead>
+            <tbody id="campTableBody">
+              <tr data-status="Active" data-type="Digital">
+                <td><strong>Spring ESRD Outreach 2026</strong></td><td><span class="bdg b-blue">Digital</span></td><td><span class="bdg b-green">Active</span></td><td>112</td><td>89</td><td>11</td><td>9.8%</td><td>03 01,2026</td>
+                <td><button class="btn-ol btn-sm" onclick="showCampDetails('Spring ESRD Outreach 2026','Digital','Active','112','89','11','9.8%','03 01,2026','Targeting ESRD patients in FL and TX for StarPlus ESRD SNP. Facebook and Google Ads.')">Details</button> <button class="btn-ol btn-sm" onclick="viewCampLeads('Spring ESRD Outreach 2026')">Leads</button></td>
+              </tr>
+              <tr data-status="Active" data-type="Direct Mail">
+                <td><strong>CKD Awareness Mailer Q2</strong></td><td><span class="bdg b-purple">Direct Mail</span></td><td><span class="bdg b-green">Active</span></td><td>78</td><td>54</td><td>6</td><td>7.7%</td><td>04 15,2026</td>
+                <td><button class="btn-ol btn-sm" onclick="showCampDetails('CKD Awareness Mailer Q2','Direct Mail','Active','78','54','6','7.7%','04 15,2026','Direct mail campaign targeting CKD Stage 3-5 patients across FL and TX.')">Details</button> <button class="btn-ol btn-sm" onclick="viewCampLeads('CKD Awareness Mailer Q2')">Leads</button></td>
+              </tr>
+              <tr data-status="Active" data-type="Event">
+                <td><strong>Community Health Fair May</strong></td><td><span class="bdg b-teal">Event</span></td><td><span class="bdg b-green">Active</span></td><td>45</td><td>45</td><td>3</td><td>6.7%</td><td>05 10,2026</td>
+                <td><button class="btn-ol btn-sm" onclick="showCampDetails('Community Health Fair May','Event','Active','45','45','3','6.7%','05 10,2026','Booth at Miami Community Health Fair. Lead collection via tablet sign-up forms.')">Details</button> <button class="btn-ol btn-sm" onclick="viewCampLeads('Community Health Fair May')">Leads</button></td>
+              </tr>
+              <tr data-status="Active" data-type="Referral">
+                <td><strong>Nephrologist Referral Program</strong></td><td><span class="bdg b-amber">Referral</span></td><td><span class="bdg b-green">Active</span></td><td>52</td><td>38</td><td>3</td><td>5.8%</td><td>02 01,2026</td>
+                <td><button class="btn-ol btn-sm" onclick="showCampDetails('Nephrologist Referral Program','Referral','Active','52','38','3','5.8%','02 01,2026','Partnership with 12 nephrology practices in FL and TX. Physicians refer qualifying Medicare patients.')">Details</button> <button class="btn-ol btn-sm" onclick="viewCampLeads('Nephrologist Referral Program')">Leads</button></td>
+              </tr>
+              <tr id="campNoResults" style="display:none"><td colspan="9" style="text-align:center;color:#666;padding:16px">No campaigns match the selected filters.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#5f6368"></i>Campaign Performance Summary</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+            <div style="text-align:center;padding:16px;background:#fff3e0;border-radius:10px"><div style="font-size:22px;font-weight:700;color:#e65100">287</div><div style="color:#5f6368;font-size:12px">Total Leads</div></div>
+            <div style="text-align:center;padding:16px;background:#e8f5e9;border-radius:10px"><div style="font-size:22px;font-weight:700;color:#1b5e20">226</div><div style="color:#5f6368;font-size:12px">Contacted</div></div>
+            <div style="text-align:center;padding:16px;background:#e3f2fd;border-radius:10px"><div style="font-size:22px;font-weight:700;color:#0d47a1">23</div><div style="color:#5f6368;font-size:12px">Enrolled</div></div>
+            <div style="text-align:center;padding:16px;background:#f3e5f5;border-radius:10px"><div style="font-size:22px;font-weight:700;color:#4a148c">8.0%</div><div style="color:#5f6368;font-size:12px">Avg Conversion</div></div>
+          </div>
+          <div style="margin-top:16px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span style="width:160px;font-weight:600">Spring ESRD Outreach</span><div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:9.8%;background:#e65100;height:100%;border-radius:20px"></div></div><span style="width:48px;text-align:right;color:#e65100;font-weight:600">9.8%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span style="width:160px;font-weight:600">CKD Mailer Q2</span><div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:7.7%;background:#7b1fa2;height:100%;border-radius:20px"></div></div><span style="width:48px;text-align:right;color:#7b1fa2;font-weight:600">7.7%</span></div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span style="width:160px;font-weight:600">Health Fair May</span><div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:6.7%;background:#00796b;height:100%;border-radius:20px"></div></div><span style="width:48px;text-align:right;color:#00796b;font-weight:600">6.7%</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><span style="width:160px;font-weight:600">Nephrologist Referral</span><div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:5.8%;background:#f57f17;height:100%;border-radius:20px"></div></div><span style="width:48px;text-align:right;color:#f57f17;font-weight:600">5.8%</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /section-camps -->
+
+    <!-- ------------------------------------------ -->
+    <!-- SECTION: Leads & Assignment               -->
+    <!-- ------------------------------------------ -->
+    <div id="section-leads">
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-calendar-day"></i></div><div><div class="stat-label">Today's Leads</div><div class="stat-val">8</div><div class="stat-sub">New today</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">SOA Pending</div><div class="stat-val">14</div><div class="stat-sub">Awaiting signature</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-phone-alt"></i></div><div><div class="stat-label">Follow-up Due</div><div class="stat-val">9</div><div class="stat-sub">Due today/tomorrow</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Overdue</div><div class="stat-val">3</div><div class="stat-sub">Past follow-up date</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Enrollment Rate</div><div class="stat-val">14.3%</div><div class="stat-sub">23 Enrolled / 161 contacted</div></div></div></div>
+    </div>
+
+    <!-- My Leads -->
+    <div class="card mb16">
+      <div class="card-hdr">
+        <h5><i class="fas fa-users" style="margin-right:8px;color:#e65100"></i>My Leads</h5>
+        <div class="dflex g8">
+          <button class="btn-pr btn-sm" onclick="document.getElementById('addLeadModal').style.display='flex'"><i class="fas fa-plus"></i>Add New Lead</button>
+          <button class="btn-ol btn-sm" onclick="nfpExport('Leads')"><i class="fas fa-download"></i>Export</button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar" style="border-radius:0;border-left:0;border-right:0;border-top:0;margin-bottom:0">
+        <select id="lf-status" onchange="filterLeads()">
+          <option value="">All Status</option>
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Interested">Interested</option>
+          <option value="Enrolled">Enrolled</option>
+          <option value="Lost">Lost</option>
+        </select>
+        <select id="lf-source" onchange="filterLeads()">
+          <option value="">All Sources</option>
+          <option value="Web Form">Web Form</option>
+          <option value="TV Campaign">TV Campaign</option>
+          <option value="Mailer">Mailer</option>
+          <option value="Broker Referral">Broker Referral</option>
+          <option value="Phone">Phone</option>
+        </select>
+        <select id="lf-campaign" onchange="filterLeads()">
+          <option value="">All Campaigns</option>
+          <option value="AEP 2026 FL Digital">AEP 2026 FL Digital</option>
+          <option value="OEC 2026 TV">OEC 2026 TV</option>
+          <option value="DTC Mailer">DTC Mailer</option>
+          <option value="Broker Referral Program">Broker Referral Program</option>
+        </select>
+        <select id="lf-state" onchange="filterLeads()">
+          <option value="">All States</option>
+          <option value="FL">FL</option>
+          <option value="TX">TX</option>
+          <option value="GA">GA</option>
+          <option value="NY">NY</option>
+        </select>
+        <select id="lf-priority" onchange="filterLeads()">
+          <option value="">All Priority</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <input type="text" id="lf-search" class="tb-search" placeholder="Search name, phone, email..." oninput="filterLeads()" style="min-width:180px">
+        <button class="btn-pr btn-sm" onclick="filterLeads()"><i class="fas fa-filter"></i>Apply Filters</button>
+        <button class="btn-ol btn-sm" onclick="resetLeadFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+
+      <div class="table-wrap">
+      <div class="card-hdr" style="justify-content:flex-end"><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','leads_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <table id="tblExport2" class="tbl">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
+              <th>Lead Name</th><th>DOB</th><th>Gender</th><th>Medicare ID</th><th>Phone</th><th>State</th><th>Source</th><th>Campaign</th><th>Status</th><th>Priority</th><th>Assigned To</th><th>Assigned Date</th><th>Next Follow-up</th><th>Last Contact Outcome</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div style="padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4;flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;color:#5f6368" id="leadPageInfo">Showing 1-10 of 40 leads</div>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" id="prevBtn" onclick="changePage(-1)" disabled><i class="fas fa-chevron-left"></i>Previous</button>
+          <span id="pageNums" style="display:flex;gap:4px;align-items:center"></span>
+          <button class="btn-ol btn-sm" id="nextBtn" onclick="changePage(1)"><i class="fas fa-chevron-right"></i>Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campaign Performance -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#4a148c"></i>Campaign Performance</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','leads_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport3" class="tbl">
+          <thead><tr><th>Campaign</th><th>Total Leads</th><th>Contacted</th><th>Interested</th><th>Enrolled</th><th>Conversion %</th><th>Avg Days to Enroll</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><strong>AEP 2026 FL Digital</strong></td><td>98</td><td>82</td><td>54</td><td>28</td><td style="color:#1b5e20;font-weight:600">28.6%</td><td>14 days</td><td><button class="btn-ol btn-sm" onclick="showCampaignDetails('AEP 2026 FL Digital',98,82,54,28,'28.6%',14,'FL','Web Form, TV')">Details</button></td></tr>
+            <tr><td><strong>OEC 2026 TV</strong></td><td>64</td><td>45</td><td>28</td><td>12</td><td style="color:#e65100;font-weight:600">18.8%</td><td>21 days</td><td><button class="btn-ol btn-sm" onclick="showCampaignDetails('OEC 2026 TV',64,45,28,12,'18.8%',21,'FL, TX','TV Campaign')">Details</button></td></tr>
+            <tr><td><strong>DTC Mailer</strong></td><td>28</td><td>18</td><td>11</td><td>5</td><td>17.9%</td><td>28 days</td><td><button class="btn-ol btn-sm" onclick="showCampaignDetails('DTC Mailer',28,18,11,5,'17.9%',28,'FL, GA','Mailer')">Details</button></td></tr>
+            <tr><td><strong>Broker Referral Program</strong></td><td>22</td><td>20</td><td>15</td><td>12</td><td style="color:#1b5e20;font-weight:600">54.5%</td><td>7 days</td><td><button class="btn-ol btn-sm" onclick="showCampaignDetails('Broker Referral Program',22,20,15,12,'54.5%',7,'FL, TX, GA','Broker Referral')">Details</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    </div><!-- /section-leads -->
+
+  </div>
+</div>
+
+<!-- Lead Detail Modal -->
+<div class="modal-overlay" id="leadDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-hdr"><h5><i class="fas fa-user" style="margin-right:8px;color:#e65100"></i><span id="ldName">Lead Detail</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>Phone:</strong> <span id="ldPhone"></span></p>
+          <p><strong>Email:</strong> <span id="ldEmail"></span></p>
+          <p><strong>State:</strong> <span id="ldState"></span></p>
+          <p><strong>Source:</strong> <span id="ldSource"></span></p>
+          <p><strong>Campaign:</strong> <span id="ldCampaign"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Status:</strong> <span id="ldStatus"></span></p>
+          <p><strong>Priority:</strong> <span id="ldPriority"></span></p>
+          <p><strong>Assigned To:</strong> <span id="ldAssigned"></span></p>
+          <p><strong>Last Contact:</strong> <span id="ldLastContact"></span></p>
+        </div>
+      </div>
+      <div style="margin-top:10px"><strong>Notes:</strong><br><span id="ldNotes" style="font-size:13px;color:#5f6368"></span></div>
+      <div class="dflex g8" style="margin-top:14px;flex-wrap:wrap">
+        <button class="btn-pr btn-sm" onclick="nfpSubmit('Contact logged for this lead'); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-phone"></i>Log Contact</button>
+        <button class="btn-ol btn-sm" onclick="nfpSubmit('Lead reassigned'); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-exchange-alt"></i>Reassign</button>
+        <button class="btn-ol btn-sm" onclick="nfpSubmit('Enrollment started for this lead'); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-file-medical"></i>Start Enrollment</button>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button></div>
+  </div>
+</div>
+
+<!-- Campaign Detail Modal -->
+<div class="modal-overlay" id="campaignModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-bullhorn" style="margin-right:8px;color:#4a148c"></i><span id="cmName">Campaign Details</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>Total Leads:</strong> <span id="cmTotal"></span></p>
+          <p><strong>Contacted:</strong> <span id="cmContacted"></span></p>
+          <p><strong>Interested:</strong> <span id="cmInterested"></span></p>
+          <p><strong>Enrolled:</strong> <span id="cmEnrolled"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Conversion Rate:</strong> <span id="cmConv"></span></p>
+          <p><strong>Avg Days to Enroll:</strong> <span id="cmDays"></span> days</p>
+          <p><strong>Target States:</strong> <span id="cmStates"></span></p>
+          <p><strong>Source Channels:</strong> <span id="cmChannels"></span></p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-pr" onclick="viewLeadsForCampaign()"><i class="fas fa-users"></i> View Leads for This Campaign</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var LEADS_PER_PAGE = 10;
+var currentPage = 1;
+var filteredLeads = [];
+var activeCampaign = '';
+
+var ALL_LEADS = [
+  {id:1,dob:'03/15/1959',gender:'F',medicareId:'1EG4-TE5-MK72',name:'Linda Martinez',phone:'(305) 555-1234',email:'linda.m@email.com',state:'FL',source:'Web Form',campaign:'AEP 2026 FL Digital',status:'New',priority:'High',assignedTo:'J. Martinez',lastContact:'May 26',assignedDate:'May 20',nextFollowup:'May 28',lastOutcome:'Voicemail left',notes:'Interested in Medicare Advantage. Lives in Miami-Dade. Turning 65 in August.'},
+  {id:2,dob:'07/22/1961',gender:'M',medicareId:'2RK7-QA3-NP41',name:'Robert Johnson',phone:'(786) 555-2345',email:'rjohnson@email.com',state:'FL',source:'TV Campaign',campaign:'OEC 2026 TV',status:'Contacted',priority:'High',assignedTo:'S. Chen',lastContact:'May 25',assignedDate:'May 18',nextFollowup:'May 27',lastOutcome:'Spoke - interested',notes:'Turning 65 in July. Very interested in CKD SNP options.'},
+  {id:3,dob:'11/08/1958',gender:'F',medicareId:'3TF9-BJ8-WL63',name:'Patricia Williams',phone:'(954) 555-3456',email:'pwilliams@email.com',state:'FL',source:'Broker Referral',campaign:'Broker Referral Program',status:'Interested',priority:'High',assignedTo:'J. Martinez',lastContact:'May 24',assignedDate:'May 17',nextFollowup:'May 26',lastOutcome:'Appointment set',notes:'Referred by Dr. Smith office. CKD Stage 3. High priority.'},
+  {id:4,dob:'01/30/1960',gender:'M',medicareId:'4WX2-PL5-SK84',name:'Charles Davis',phone:'(561) 555-4567',email:'cdavis@email.com',state:'FL',source:'Web Form',campaign:'AEP 2026 FL Digital',status:'New',priority:'Medium',assignedTo:'M. Torres',lastContact:'May 25',assignedDate:'May 22',nextFollowup:'May 29',lastOutcome:'No answer',notes:'Requested info on plan options. Has ESRD.'},
+  {id:5,dob:'05/14/1957',gender:'F',medicareId:'5AB1-MN9-QR05',name:'Barbara Wilson',phone:'(305) 555-5678',email:'bwilson@email.com',state:'FL',source:'Mailer',campaign:'DTC Mailer',status:'Contacted',priority:'Medium',assignedTo:'S. Chen',lastContact:'May 23',assignedDate:'May 19',nextFollowup:'May 27',lastOutcome:'Callback requested',notes:'Responded to mailer. Interested but has existing coverage through employer until Dec.'},
+  {id:6,dob:'09/03/1962',gender:'M',medicareId:'6CD3-WX7-TU26',name:'Thomas Anderson',phone:'(786) 555-6789',email:'tanderson@email.com',state:'TX',source:'Web Form',campaign:'AEP 2026 FL Digital',status:'Interested',priority:'High',assignedTo:'J. Martinez',lastContact:'May 22',assignedDate:'May 16',nextFollowup:'May 25',lastOutcome:'Interested - needs info',notes:'Relocating to FL in September. Wants Medicare Advantage.'},
+  {id:7,dob:'02/28/1956',gender:'F',medicareId:'7EF5-YZ1-VW47',name:'Susan Taylor',phone:'(713) 555-7890',email:'staylor@email.com',state:'TX',source:'Broker Referral',campaign:'Broker Referral Program',status:'Enrolled',priority:'Low',assignedTo:'M. Torres',lastContact:'May 21',assignedDate:'May 14',nextFollowup:'—',lastOutcome:'Enrolled',notes:'Successfully enrolled in StarPlus ESRD SNP effective 06 01,2026.'},
+  {id:8,dob:'08/11/1963',gender:'M',medicareId:'8GH7-AB3-XY68',name:'David Brown',phone:'(305) 555-8901',email:'dbrown@email.com',state:'FL',source:'TV Campaign',campaign:'OEC 2026 TV',status:'New',priority:'Medium',assignedTo:'Unassigned',lastContact:'May 20',assignedDate:'—',nextFollowup:'May 24',lastOutcome:'Needs callback',notes:'Saw TV ad. Left voicemail. Needs callback.'},
+  {id:9,dob:'12/05/1959',gender:'F',medicareId:'9IJ9-CD5-YZ89',name:'Nancy Garcia',phone:'(954) 555-9012',email:'ngarcia@email.com',state:'FL',source:'Web Form',campaign:'DTC Mailer',status:'Contacted',priority:'Low',assignedTo:'S. Chen',lastContact:'May 19',assignedDate:'May 12',nextFollowup:'May 26',lastOutcome:'Not ready yet',notes:'Initial contact made. Not yet ready to switch plans.'},
+  {id:10,dob:'04/19/1961',gender:'M',medicareId:'1KL1-EF7-AB01',name:'Michael Thomas',phone:'(561) 555-0123',email:'mthomas@email.com',state:'GA',source:'Phone',campaign:'AEP 2026 FL Digital',status:'Lost',priority:'Low',assignedTo:'J. Martinez',lastContact:'May 18',assignedDate:'May 10',nextFollowup:'—',lastOutcome:'Chose competitor',notes:'Decided to stay with current plan. May revisit at AEP.'},
+  {id:11,dob:'06/25/1958',gender:'F',medicareId:'2MN3-GH9-BC12',name:'Dorothy Anderson',phone:'(305) 555-1122',email:'danderson@email.com',state:'FL',source:'Web Form',campaign:'AEP 2026 FL Digital',status:'New',priority:'High',assignedTo:'S. Chen',lastContact:'May 26',assignedDate:'May 21',nextFollowup:'May 28',lastOutcome:'Initial contact',notes:'New inquiry. ESRD patient looking for comprehensive coverage.'},
+  {id:12,dob:'10/02/1960',gender:'M',medicareId:'3OP5-IJ1-CD23',name:'William Jackson',phone:'(786) 555-2233',email:'wjackson@email.com',state:'FL',source:'Mailer',campaign:'DTC Mailer',status:'Contacted',priority:'High',assignedTo:'M. Torres',lastContact:'May 25',assignedDate:'May 20',nextFollowup:'May 27',lastOutcome:'Spoke - very interested',notes:'Responded to DTC mailer. Has multiple chronic conditions.'},
+  {id:13,dob:'03/17/1957',gender:'F',medicareId:'4QR7-KL3-DE34',name:'Sandra White',phone:'(954) 555-3344',email:'swhite@email.com',state:'TX',source:'TV Campaign',campaign:'OEC 2026 TV',status:'Interested',priority:'Medium',assignedTo:'J. Martinez',lastContact:'May 24',assignedDate:'May 18',nextFollowup:'May 26',lastOutcome:'Wants comparison',notes:'Interested in HeartCare H&D SNP. Spouse also eligible.'},
+  {id:14,dob:'07/08/1962',gender:'M',medicareId:'5ST9-MN5-EF45',name:'James Harris',phone:'(561) 555-4455',email:'jharris@email.com',state:'FL',source:'Web Form',campaign:'Broker Referral Program',status:'New',priority:'Medium',assignedTo:'S. Chen',lastContact:'May 23',assignedDate:'May 17',nextFollowup:'May 25',lastOutcome:'Voicemail left',notes:'Broker submitted referral. Needs follow-up call.'},
+  {id:15,dob:'11/21/1959',gender:'F',medicareId:'6UV1-OP7-FG56',name:'Lisa Martin',phone:'(305) 555-5566',email:'lmartin@email.com',state:'FL',source:'Broker Referral',campaign:'AEP 2026 FL Digital',status:'Contacted',priority:'High',assignedTo:'J. Martinez',lastContact:'May 22',assignedDate:'May 15',nextFollowup:'May 24',lastOutcome:'Appointment set',notes:'High-potential lead. CKD Stage 4. Very interested in SNP.'},
+  {id:16,dob:'01/14/1956',gender:'M',medicareId:'7WX3-QR9-GH67',name:'Joseph Thompson',phone:'(786) 555-6677',email:'jthompson@email.com',state:'GA',source:'Phone',campaign:'OEC 2026 TV',status:'Enrolled',priority:'Low',assignedTo:'M. Torres',lastContact:'May 21',assignedDate:'May 13',nextFollowup:'—',lastOutcome:'Enrolled',notes:'Enrolled in KidneyCare CKD SNP effective 06 01,2026.'},
+  {id:17,dob:'05/30/1963',gender:'F',medicareId:'8YZ5-ST1-HI78',name:'Karen Martinez',phone:'(713) 555-7788',email:'kmartinez@email.com',state:'TX',source:'Web Form',campaign:'DTC Mailer',status:'New',priority:'Medium',assignedTo:'Unassigned',lastContact:'May 20',assignedDate:'—',nextFollowup:'May 24',lastOutcome:'Awaiting assignment',notes:'Online form submission. Awaiting assignment.'},
+  {id:18,dob:'09/12/1958',gender:'M',medicareId:'9AB7-UV3-IJ89',name:'Steven Robinson',phone:'(305) 555-8899',email:'srobinson@email.com',state:'FL',source:'Mailer',campaign:'AEP 2026 FL Digital',status:'Interested',priority:'High',assignedTo:'S. Chen',lastContact:'May 19',assignedDate:'May 12',nextFollowup:'May 23',lastOutcome:'Very interested',notes:'Very interested. Wants plan comparison before deciding.'},
+  {id:19,dob:'02/06/1961',gender:'F',medicareId:'1CD9-WX5-KL90',name:'Betty Clark',phone:'(954) 555-9900',email:'bclark@email.com',state:'FL',source:'TV Campaign',campaign:'OEC 2026 TV',status:'Contacted',priority:'Low',assignedTo:'J. Martinez',lastContact:'May 18',assignedDate:'May 11',nextFollowup:'May 22',lastOutcome:'Not urgent',notes:'Initial contact. Interested but not urgent.'},
+  {id:20,dob:'08/23/1960',gender:'M',medicareId:'2EF1-YZ7-LM01',name:'Paul Rodriguez',phone:'(561) 555-0011',email:'prodriguez@email.com',state:'TX',source:'Web Form',campaign:'Broker Referral Program',status:'Lost',priority:'Medium',assignedTo:'M. Torres',lastContact:'May 17',assignedDate:'May 10',nextFollowup:'—',lastOutcome:'Chose competitor',notes:'Chose competitor plan. Document for future AEP outreach.'},
+  {id:21,dob:'12/18/1957',gender:'F',medicareId:'3GH3-AB9-MN12',name:'Helen Lewis',phone:'(305) 555-1133',email:'hlewis@email.com',state:'FL',source:'Phone',campaign:'AEP 2026 FL Digital',status:'New',priority:'High',assignedTo:'S. Chen',lastContact:'May 25',assignedDate:'May 20',nextFollowup:'May 27',lastOutcome:'Initial contact',notes:'Called in after seeing billboard ad. Interested in ESRD SNP.'},
+  {id:22,dob:'04/05/1962',gender:'M',medicareId:'4IJ5-CD1-NO23',name:'Mark Lee',phone:'(786) 555-2244',email:'mlee@email.com',state:'FL',source:'Web Form',campaign:'DTC Mailer',status:'Contacted',priority:'Medium',assignedTo:'J. Martinez',lastContact:'May 24',assignedDate:'May 19',nextFollowup:'May 26',lastOutcome:'Needs dental info',notes:'Submitted web form. Needs info on dental/vision benefits.'},
+  {id:23,dob:'06/14/1959',gender:'F',medicareId:'5KL7-EF3-OP34',name:'Donna Walker',phone:'(954) 555-3355',email:'dwalker@email.com',state:'GA',source:'TV Campaign',campaign:'OEC 2026 TV',status:'Interested',priority:'High',assignedTo:'M. Torres',lastContact:'May 23',assignedDate:'May 18',nextFollowup:'May 25',lastOutcome:'Very motivated',notes:'Very motivated. Has Heart Disease. Comparing 2 plans.'},
+  {id:24,dob:'10/27/1963',gender:'M',medicareId:'6MN9-GH5-PQ45',name:'Chris Hall',phone:'(561) 555-4466',email:'chall@email.com',state:'FL',source:'Mailer',campaign:'AEP 2026 FL Digital',status:'New',priority:'Low',assignedTo:'S. Chen',lastContact:'May 22',assignedDate:'May 17',nextFollowup:'May 24',lastOutcome:'No urgency',notes:'Mailer response. No urgency noted.'},
+  {id:25,dob:'03/09/1958',gender:'F',medicareId:'7OP1-IJ7-QR56',name:'Maria Allen',phone:'(305) 555-5577',email:'mallen@email.com',state:'TX',source:'Web Form',campaign:'Broker Referral Program',status:'Enrolled',priority:'High',assignedTo:'J. Martinez',lastContact:'May 21',assignedDate:'May 15',nextFollowup:'—',lastOutcome:'Enrolled',notes:'Enrolled in HeartCare H&D SNP. Great referral outcome.'},
+  {id:26,dob:'07/31/1961',gender:'M',medicareId:'8QR3-KL9-ST67',name:'Jason Young',phone:'(786) 555-6688',email:'jyoung@email.com',state:'FL',source:'Broker Referral',campaign:'DTC Mailer',status:'Contacted',priority:'Medium',assignedTo:'Unassigned',lastContact:'May 20',assignedDate:'—',nextFollowup:'May 24',lastOutcome:'Call scheduled',notes:'Broker referral pending assignment. Call scheduled.'},
+  {id:27,dob:'11/16/1960',gender:'M',medicareId:'9ST5-MN1-UV78',name:'Angela King',phone:'(713) 555-7799',email:'aking@email.com',state:'TX',source:'Phone',campaign:'AEP 2026 FL Digital',status:'New',priority:'Low',assignedTo:'M. Torres',lastContact:'May 19',assignedDate:'May 12',nextFollowup:'May 23',lastOutcome:'Early stage',notes:'Inbound call. Early exploration stage.'},
+  {id:28,dob:'01/22/1957',gender:'M',medicareId:'1UV7-OP3-WX89',name:'Frank Wright',phone:'(305) 555-8800',email:'fwright@email.com',state:'FL',source:'Web Form',campaign:'OEC 2026 TV',status:'Interested',priority:'Medium',assignedTo:'S. Chen',lastContact:'May 18',assignedDate:'May 11',nextFollowup:'May 22',lastOutcome:'Diabetic - interested',notes:'Submitted form. Diabetic. Interested in chronic condition coverage.'},
+  {id:29,dob:'05/08/1962',gender:'F',medicareId:'2WX9-QR5-YZ90',name:'Melissa Scott',phone:'(954) 555-9911',email:'mscott@email.com',state:'FL',source:'Mailer',campaign:'DTC Mailer',status:'Contacted',priority:'High',assignedTo:'J. Martinez',lastContact:'May 17',assignedDate:'May 10',nextFollowup:'May 21',lastOutcome:'Appt scheduled',notes:'Follow-up call completed. Appointment scheduled for next week.'},
+  {id:30,dob:'09/25/1959',gender:'M',medicareId:'3YZ1-ST7-AB01',name:'Kevin Green',phone:'(561) 555-0022',email:'kgreen@email.com',state:'GA',source:'TV Campaign',campaign:'Broker Referral Program',status:'Lost',priority:'Low',assignedTo:'M. Torres',lastContact:'May 16',assignedDate:'May 09',nextFollowup:'—',lastOutcome:'Out of area',notes:'Did not qualify due to out-of-service-area.'},
+  {id:31,dob:'02/13/1963',gender:'F',medicareId:'4AB3-UV9-BC12',name:'Carol Adams',phone:'(305) 555-1144',email:'cadams@email.com',state:'FL',source:'Web Form',campaign:'AEP 2026 FL Digital',status:'New',priority:'Medium',assignedTo:'S. Chen',lastContact:'May 24',assignedDate:'May 19',nextFollowup:'May 26',lastOutcome:'3 months to eligible',notes:'New web inquiry. Medicare-eligible in 3 months.'},
+  {id:32,dob:'08/04/1958',gender:'M',medicareId:'5CD5-WX1-DE23',name:'Daniel Baker',phone:'(786) 555-2255',email:'dbaker@email.com',state:'FL',source:'Phone',campaign:'OEC 2026 TV',status:'Contacted',priority:'High',assignedTo:'J. Martinez',lastContact:'May 23',assignedDate:'May 18',nextFollowup:'May 25',lastOutcome:'Very interested',notes:'Very interested. ESRD and CKD dual condition. Priority follow-up.'},
+  {id:33,dob:'12/29/1961',gender:'F',medicareId:'6EF7-YZ3-EF34',name:'Frances Carter',phone:'(954) 555-3366',email:'fcarter@email.com',state:'TX',source:'Mailer',campaign:'DTC Mailer',status:'Interested',priority:'Medium',assignedTo:'M. Torres',lastContact:'May 22',assignedDate:'May 17',nextFollowup:'May 24',lastOutcome:'Comparing plans',notes:'Responded to mailer. Comparing plans carefully.'},
+  {id:34,dob:'04/16/1960',gender:'M',medicareId:'7GH9-AB5-FG45',name:'George Mitchell',phone:'(561) 555-4477',email:'gmitchell@email.com',state:'FL',source:'Web Form',campaign:'Broker Referral Program',status:'New',priority:'High',assignedTo:'Unassigned',lastContact:'May 21',assignedDate:'—',nextFollowup:'May 25',lastOutcome:'Needs assignment',notes:'High-value broker referral. Needs urgent assignment.'},
+  {id:35,dob:'06/07/1957',gender:'F',medicareId:'8IJ1-CD7-GH56',name:'Anna Perez',phone:'(305) 555-5588',email:'aperez@email.com',state:'GA',source:'TV Campaign',campaign:'AEP 2026 FL Digital',status:'Enrolled',priority:'Low',assignedTo:'S. Chen',lastContact:'May 20',assignedDate:'May 14',nextFollowup:'—',lastOutcome:'Enrolled',notes:'Successfully enrolled. Happy customer.'},
+  {id:36,dob:'10/11/1962',gender:'M',medicareId:'9KL3-EF9-HI67',name:'Joshua Roberts',phone:'(786) 555-6699',email:'jroberts@email.com',state:'FL',source:'Broker Referral',campaign:'OEC 2026 TV',status:'Contacted',priority:'Medium',assignedTo:'J. Martinez',lastContact:'May 19',assignedDate:'May 13',nextFollowup:'May 23',lastOutcome:'Broker referred',notes:'Broker-referred. Initial call went well.'},
+  {id:37,dob:'03/24/1959',gender:'F',medicareId:'1MN5-GH1-IJ78',name:'Stephanie Turner',phone:'(713) 555-7700',email:'sturner@email.com',state:'TX',source:'Web Form',campaign:'DTC Mailer',status:'New',priority:'High',assignedTo:'M. Torres',lastContact:'May 18',assignedDate:'May 12',nextFollowup:'May 21',lastOutcome:'High priority',notes:'High-priority web form. Dialysis patient looking for coverage.'},
+  {id:38,dob:'07/18/1963',gender:'M',medicareId:'2OP7-IJ3-KL89',name:'Eric Phillips',phone:'(305) 555-8811',email:'ephillips@email.com',state:'FL',source:'Mailer',campaign:'AEP 2026 FL Digital',status:'Interested',priority:'Low',assignedTo:'S. Chen',lastContact:'May 17',assignedDate:'May 11',nextFollowup:'May 21',lastOutcome:'Interested low urgency',notes:'Interested but not urgent. Schedule follow-up in 2 weeks.'},
+  {id:39,dob:'11/02/1958',gender:'F',medicareId:'3QR9-KL5-LM90',name:'Nicole Campbell',phone:'(954) 555-9922',email:'ncampbell@email.com',state:'FL',source:'Web Form',campaign:'Broker Referral Program',status:'Contacted',priority:'Medium',assignedTo:'Unassigned',lastContact:'May 16',assignedDate:'—',nextFollowup:'May 22',lastOutcome:'Needs agent',notes:'Web referral. Needs agent assignment.'},
+  {id:40,dob:'01/28/1961',gender:'M',medicareId:'4ST1-MN7-NO01',name:'Benjamin Parker',phone:'(561) 555-0033',email:'bparker@email.com',state:'GA',source:'Phone',campaign:'OEC 2026 TV',status:'Lost',priority:'Low',assignedTo:'J. Martinez',lastContact:'May 15',assignedDate:'May 08',nextFollowup:'—',lastOutcome:'Not eligible this year',notes:'Not eligible for current year. Add to next AEP pipeline.'}
+];
+
+function getStatusBadge(s) {
+  var m = {New:'b-blue',Contacted:'b-teal',Interested:'b-amber',Enrolled:'b-green',Lost:'b-grey'};
+  return '<span class="bdg '+(m[s]||'b-grey')+'">'+s+'</span>';
+}
+function getPriorityBadge(p) {
+  var m = {High:'b-red',Medium:'b-amber',Low:'b-grey'};
+  return '<span class="bdg '+(m[p]||'b-grey')+'">'+p+'</span>';
+}
+
+function filterLeads() {
+  var status = document.getElementById('lf-status').value;
+  var source = document.getElementById('lf-source').value;
+  var campaign = document.getElementById('lf-campaign').value;
+  var state = document.getElementById('lf-state').value;
+  var priority = document.getElementById('lf-priority').value;
+  var search = document.getElementById('lf-search').value.toLowerCase();
+
+  filteredLeads = ALL_LEADS.filter(function(l) {
+    if (status && l.status !== status) return false;
+    if (source && l.source !== source) return false;
+    if (campaign && l.campaign !== campaign) return false;
+    if (state && l.state !== state) return false;
+    if (priority && l.priority !== priority) return false;
+    if (search && !l.name.toLowerCase().includes(search) && !l.phone.includes(search) && !l.email.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  currentPage = 1;
+  renderLeadsTable();
+}
+
+function resetLeadFilters() {
+  document.getElementById('lf-status').value = '';
+  document.getElementById('lf-source').value = '';
+  document.getElementById('lf-campaign').value = '';
+  document.getElementById('lf-state').value = '';
+  document.getElementById('lf-priority').value = '';
+  document.getElementById('lf-search').value = '';
+  filteredLeads = ALL_LEADS.slice();
+  currentPage = 1;
+  renderLeadsTable();
+}
+
+function renderLeadsTable() {
+  var tbody = document.getElementById('leadsTableBody');
+  var total = filteredLeads.length;
+  var start = (currentPage - 1) * LEADS_PER_PAGE;
+  var end = Math.min(start + LEADS_PER_PAGE, total);
+  var pageLeads = filteredLeads.slice(start, end);
+
+  if (pageLeads.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="16" style="text-align:center;padding:24px;color:#80868b"><i class="fas fa-search"></i> No leads match the current filters.</td></tr>';
+  } else {
+    tbody.innerHTML = pageLeads.map(function(l) {
+      var assignStyle = l.assignedTo === 'Unassigned' ? 'color:#c62828;font-weight:600' : '';
+      return '<tr>' +
+        '<td><input type="checkbox" class="lead-cb" data-id="'+l.id+'"></td>' +
+        '<td class="text-bold">'+l.name+'</td>' +
+        '<td>'+(l.dob||'')+'</td>' +
+        '<td>'+(l.gender||'')+'</td>' +
+        '<td><code>'+(l.medicareId||'')+'</code></td>' +
+        '<td>'+l.phone+'</td>' +
+        '<td>'+l.state+'</td>' +
+        '<td>'+l.source+'</td>' +
+        '<td>'+l.campaign+'</td>' +
+        '<td>'+getStatusBadge(l.status)+'</td>' +
+        '<td>'+getPriorityBadge(l.priority)+'</td>' +
+        '<td style="'+assignStyle+'">'+l.assignedTo+'</td>' +
+        '<td>'+(l.assignedDate||'')+'</td>' +
+        '<td>'+(l.nextFollowup||'')+'</td>' +
+        '<td>'+(l.lastOutcome||'')+'</td>' +
+        '<td><button class="btn-ol btn-sm" onclick="viewLead('+l.id+')">View</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  // Update pagination info
+  var infoEl = document.getElementById('leadPageInfo');
+  if (total === 0) {
+    infoEl.textContent = 'No leads found';
+  } else {
+    infoEl.textContent = 'Showing '+(start+1)+'-'+end+' of '+total+' leads';
+  }
+
+  // Update pagination buttons
+  var totalPages = Math.max(1, Math.ceil(total / LEADS_PER_PAGE));
+  document.getElementById('prevBtn').disabled = currentPage <= 1;
+  document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+
+  // Page numbers
+  var pageNums = document.getElementById('pageNums');
+  pageNums.innerHTML = '';
+  var startPg = Math.max(1, currentPage - 2);
+  var endPg = Math.min(totalPages, currentPage + 2);
+  for (var p = startPg; p <= endPg; p++) {
+    var btn = document.createElement('button');
+    btn.textContent = p;
+    btn.className = 'btn-ol btn-sm';
+    if (p === currentPage) { btn.style.background = '#e65100'; btn.style.color = '#fff'; btn.style.borderColor = '#e65100'; }
+    btn.setAttribute('data-pg', p);
+    btn.onclick = (function(pg){ return function(){ currentPage = pg; renderLeadsTable(); }; })(p);
+    pageNums.appendChild(btn);
+  }
+}
+
+function changePage(dir) {
+  var total = filteredLeads.length;
+  var totalPages = Math.ceil(total / LEADS_PER_PAGE);
+  currentPage = Math.max(1, Math.min(totalPages, currentPage + dir));
+  renderLeadsTable();
+}
+
+function viewLead(id) {
+  var l = ALL_LEADS.find(function(x){ return x.id === id; });
+  if (!l) return;
+  document.getElementById('ldName').textContent = l.name;
+  document.getElementById('ldPhone').textContent = l.phone;
+  document.getElementById('ldEmail').textContent = l.email;
+  document.getElementById('ldState').textContent = l.state;
+  document.getElementById('ldSource').textContent = l.source;
+  document.getElementById('ldCampaign').textContent = l.campaign;
+  document.getElementById('ldStatus').innerHTML = getStatusBadge(l.status);
+  document.getElementById('ldPriority').innerHTML = getPriorityBadge(l.priority);
+  document.getElementById('ldAssigned').textContent = l.assignedTo;
+  document.getElementById('ldLastContact').textContent = l.lastContact;
+  document.getElementById('ldNotes').textContent = l.notes;
+  document.getElementById('leadDetailModal').style.display = 'flex';
+}
+
+function showCampaignDetails(name, total, contacted, interested, enrolled, conv, days, states, channels) {
+  activeCampaign = name;
+  document.getElementById('cmName').textContent = name;
+  document.getElementById('cmTotal').textContent = total;
+  document.getElementById('cmContacted').textContent = contacted;
+  document.getElementById('cmInterested').textContent = interested;
+  document.getElementById('cmEnrolled').textContent = enrolled;
+  document.getElementById('cmConv').textContent = conv;
+  document.getElementById('cmDays').textContent = days;
+  document.getElementById('cmStates').textContent = states;
+  document.getElementById('cmChannels').textContent = channels;
+  document.getElementById('campaignModal').style.display = 'flex';
+}
+
+function viewLeadsForCampaign() {
+  document.getElementById('campaignModal').style.display = 'none';
+  showSection('leads');
+  document.getElementById('lf-campaign').value = activeCampaign;
+  filterLeads();
+  document.querySelector('.card').scrollIntoView({behavior:'smooth'});
+}
+
+function toggleSelectAll(cb) {
+  document.querySelectorAll('.lead-cb').forEach(function(c){ c.checked = cb.checked; });
+}
+
+function showSection(section) {
+  var camps = document.getElementById('section-camps');
+  var leads = document.getElementById('section-leads');
+  var sbnC = document.getElementById('sbn-campaigns');
+  var sbnL = document.getElementById('sbn-leads');
+  var h4 = document.querySelector('.topbar-left h4');
+  if (section === 'campaigns') {
+    if (camps) camps.style.display = '';
+    if (leads) leads.style.display = 'none';
+    if (sbnC) sbnC.classList.add('active');
+    if (sbnL) sbnL.classList.remove('active');
+    if (h4) h4.textContent = 'Campaign Management';
+  } else {
+    if (leads) leads.style.display = '';
+    if (camps) camps.style.display = 'none';
+    if (sbnL) sbnL.classList.add('active');
+    if (sbnC) sbnC.classList.remove('active');
+    if (h4) h4.textContent = 'Leads & Assignment';
+  }
+}
+
+var _currentCampName = '';
+function filterCampaigns() {
+  var status = document.getElementById('camp-status').value;
+  var type = document.getElementById('camp-type').value;
+  var rows = document.querySelectorAll('#campTableBody tr:not(#campNoResults)');
+  var noResults = document.getElementById('campNoResults');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var show = (!status || row.dataset.status === status) && (!type || row.dataset.type === type);
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (noResults) noResults.style.display = visible ? 'none' : '';
+  if (typeof showToast === 'function') showToast(visible + ' campaign(s) match the filters', 'success');
+}
+function resetCampFilters() {
+  document.getElementById('camp-status').value = '';
+  document.getElementById('camp-type').value = '';
+  document.querySelectorAll('#campTableBody tr:not(#campNoResults)').forEach(function(r){ r.style.display = ''; });
+  var nr = document.getElementById('campNoResults'); if (nr) nr.style.display = 'none';
+  if (typeof showToast === 'function') showToast('Filters cleared', 'success');
+}
+function showCampDetails(name, type, status, leads, contacted, enrolled, conv, start, desc) {
+  _currentCampName = name;
+  document.getElementById('cdTitle').textContent = name;
+  document.getElementById('cdType').textContent = type;
+  document.getElementById('cdStatus').textContent = status;
+  document.getElementById('cdLeads').textContent = leads;
+  document.getElementById('cdContacted').textContent = contacted;
+  document.getElementById('cdEnrolled').textContent = enrolled;
+  document.getElementById('cdConv').textContent = conv;
+  document.getElementById('cdStart').textContent = start;
+  document.getElementById('cdDesc').textContent = desc;
+  document.getElementById('campDetailsModal').style.display = 'flex';
+}
+function viewCampLeads(campaignName) {
+  showSection('leads');
+  var sel = document.getElementById('lf-campaign');
+  if (sel) { sel.value = campaignName; filterLeads(); }
+  setTimeout(function(){ var c = document.querySelector('.card'); if(c) c.scrollIntoView({behavior:'smooth'}); }, 100);
+}
+function viewCampLeadsFromModal() {
+  document.getElementById('campDetailsModal').style.display = 'none';
+  viewCampLeads(_currentCampName);
+}
+function openNewCampaignModal() { document.getElementById('newCampModal').style.display = 'flex'; }
+function prefillCampaign(){
+  document.getElementById('newCampName').value='Summer CKD Awareness Drive 2026';
+  document.getElementById('newCampType').value='Digital';
+  document.getElementById('newCampRegion').value='Florida';
+  document.getElementById('newCampDate').value='2026-07-01';
+  document.getElementById('newCampGoal').value='150';
+  document.getElementById('newCampDesc').value='Targeted digital outreach for CKD-eligible Medicare beneficiaries in South Florida. Focus on Facebook, Google Ads, and community health portal placements. Goal: 150 qualified leads for Q3 enrollment period.';
+  document.getElementById('campErr').style.display='none';
+  if(typeof showToast==='function') showToast('Form prefilled with sample data.','info');
+}
+function createCampaign() {
+  var name = document.getElementById('newCampName').value.trim();
+  var date = document.getElementById('newCampDate').value;
+  var errBox = document.getElementById('campErr');
+  var errs = [];
+  if (!name) errs.push('Campaign Name is required.');
+  if (!date) errs.push('Start Date is required.');
+  if (errs.length) { errBox.innerHTML='<i class="fas fa-exclamation-circle" style="margin-right:6px"></i>'+errs.join(' '); errBox.style.display='block'; return; }
+  errBox.style.display='none';
+  document.getElementById('newCampModal').style.display = 'none';
+  if (typeof showToast === 'function') showToast('Campaign created: ' + name, 'success');
+}
+function exportCampaigns() {
+  var rows = [['Campaign Name','Type','Status','Leads','Contacted','Enrolled','Conversion Rate','Start Date']];
+  document.querySelectorAll('#campTableBody tr').forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length >= 8) rows.push(Array.from(cells).slice(0,8).map(function(c){ return c.textContent.trim(); }));
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'campaigns.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  if (typeof showToast === 'function') showToast('Campaign data exported successfully', 'success');
+}
+
+// Initialize
+filteredLeads = ALL_LEADS.slice();
+document.addEventListener('DOMContentLoaded', function(){
+  var urlParams = new URLSearchParams(window.location.search);
+  var tabParam = urlParams.get('tab');
+  if (tabParam === 'campaigns') {
+    showSection('campaigns');
+  } else {
+    showSection('leads');
+    var campParam = urlParams.get('campaign');
+    if (campParam) {
+      var sel = document.getElementById('lf-campaign');
+      if (sel) {
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === campParam || sel.options[i].text === campParam) { sel.selectedIndex = i; break; }
+        }
+        filterLeads();
+        setTimeout(function(){ var tbl = document.querySelector('.tbl'); if (tbl) tbl.scrollIntoView({behavior:'smooth', block:'start'}); }, 300);
+      }
+    }
+  }
+  renderLeadsTable();
+});
+</script>
+<!-- Campaign Details Modal -->
+<div class="modal-overlay" id="campDetailsModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-bullhorn" style="margin-right:8px;color:#e65100"></i><span id="cdTitle">Campaign Details</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Type</div><div style="font-weight:600" id="cdType"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Status</div><div style="font-weight:600" id="cdStatus"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Leads Generated</div><div style="font-size:20px;font-weight:700;color:#e65100" id="cdLeads"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Enrolled</div><div style="font-size:20px;font-weight:700;color:#1b5e20" id="cdEnrolled"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Contacted</div><div style="font-weight:600" id="cdContacted"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Conversion Rate</div><div style="font-weight:600;color:#e65100" id="cdConv"></div></div>
+      </div>
+      <div style="margin-bottom:12px"><div style="font-size:11px;color:#5f6368;margin-bottom:4px">Start Date</div><div id="cdStart"></div></div>
+      <div><div style="font-size:11px;color:#5f6368;margin-bottom:4px">Campaign Description</div><div id="cdDesc" style="font-size:13px;line-height:1.6;color:#3c4043"></div></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-pr" onclick="viewCampLeadsFromModal()"><i class="fas fa-users"></i> View Leads</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Campaign Modal -->
+<div class="modal-overlay" id="newCampModal" style="display:none">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr"><h5><i class="fas fa-plus" style="margin-right:8px;color:#e65100"></i>New Campaign</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div id="campErr" class="al-danger" style="display:none;margin-bottom:10px"></div>
+      <div class="mb-3"><label class="form-label">Campaign Name <span class="text-danger">*</span></label><input type="text" class="form-control" id="newCampName" placeholder="e.g. Summer CKD Outreach 2026"></div>
+      <div class="mb-3"><label class="form-label">Campaign Type</label><select class="form-control" id="newCampType"><option>Digital</option><option>Direct Mail</option><option>Event</option><option>Referral</option></select></div>
+      <div class="mb-3"><label class="form-label">Target Region</label><select class="form-control" id="newCampRegion"><option>Florida</option><option>Texas</option><option>Florida &amp; Texas</option><option>Nationwide</option></select></div>
+      <div class="mb-3"><label class="form-label">Start Date <span class="text-danger">*</span></label><input type="date" class="form-control" id="newCampDate"></div>
+      <div class="mb-3"><label class="form-label">Lead Goal</label><input type="number" class="form-control" id="newCampGoal" placeholder="Number of leads to generate"></div>
+      <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="newCampDesc" rows="3" placeholder="Campaign goals, target audience, outreach strategy..."></textarea></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillCampaign()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+        <button class="btn-pr" onclick="createCampaign()"><i class="fas fa-save"></i> Create Campaign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Lead Modal -->
+<div class="modal-overlay" id="addLeadModal" style="display:none">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#e65100"></i>Add New Lead</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="nlFirst" placeholder="e.g. John"></div>
+        <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="nlLast" placeholder="e.g. Smith"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date" id="nlDOB"></div>
+        <div class="fg"><label>Gender</label><select id="nlGender" class="form-control"><option value="">-- Select --</option><option>Male</option><option>Female</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Medicare ID</label><input type="text" id="nlMedicareId" placeholder="e.g. 1EG4-TE5-MK72"></div>
+        <div class="fg"><label>Phone <span class="req">*</span></label><input type="text" id="nlPhone" placeholder="(305) 555-0000"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Email</label><input type="email" id="nlEmail" placeholder="email@example.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Preferred Language</label><select id="nlLanguage" class="form-control"><option>English</option><option>Spanish</option><option>Creole</option><option>Portuguese</option><option>Other</option></select></div>
+        <div class="fg"><label>Preferred Contact Method</label><select id="nlContactMethod" class="form-control"><option>Phone</option><option>Email</option><option>Text/SMS</option><option>Mail</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Address 1 <span class="req">*</span></label><input type="text" id="nlAddress1" class="form-control" placeholder="Street address"></div>
+        <div class="fg"><label>Address 2</label><input type="text" id="nlAddress2" class="form-control" placeholder="Apt, Suite, Unit"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>ZIP Code <span class="req">*</span></label><input type="text" id="nlZip2" class="form-control" placeholder="33101" maxlength="5" oninput="nfpZipLookup(this,'nlCity2','nlState2','nlCounty2')"></div>
+        <div class="fg"><label>City <span class="req">*</span></label><input type="text" id="nlCity2" class="form-control" placeholder="Auto-filled from ZIP"></div>
+        <div class="fg"><label>State <span class="req">*</span></label><input type="text" id="nlState2" class="form-control" placeholder="Auto-filled from ZIP"></div>
+        <div class="fg"><label>County</label><input type="text" id="nlCounty2" class="form-control" readonly placeholder="Auto-filled from ZIP" style="background:#f8f9fa"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Source</label><select id="nlSource" class="form-control"><option>Web Form</option><option>TV Campaign</option><option>Mailer</option><option>Broker Referral</option><option>Phone</option><option>Community Event</option></select></div>
+        <div class="fg"><label>Priority</label><select id="nlPriority" class="form-control"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Assign To</label><select id="nlAssign" class="form-control"><option value="">-- Select Agent to Assign --</option><option>J. Martinez</option><option>S. Chen</option><option>M. Torres</option></select></div>
+        <div class="fg"><label>Campaign</label><select id="nlCampaign" class="form-control"><option value="">-- Select Campaign --</option><option>AEP 2026 FL Digital</option><option>OEC 2026 TV</option><option>DTC Mailer</option><option>Broker Referral Program</option></select></div>
+      </div>
+      <div class="mb-3"><label class="form-label">Notes</label><textarea id="nlNotes" class="form-control" rows="2" placeholder="Any additional notes about this lead..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="submitNewLead()"><i class="fas fa-save" style="margin-right:4px"></i>Save Lead</button>
+    </div>
+  </div>
+</div>
+<script>
+function submitNewLead() {
+  var first = document.getElementById('nlFirst').value.trim();
+  var last = document.getElementById('nlLast').value.trim();
+  var phone = document.getElementById('nlPhone').value.trim();
+  var state = document.getElementById('nlState').value;
+  if (!first || !last || !phone || !state) { showToast('Please fill all required fields (Name, Phone, State)', 'error'); return; }
+  document.getElementById('addLeadModal').style.display = 'none';
+  showToast('Lead "' + first + ' ' + last + '" added successfully and assigned to queue.', 'success');
+}
+</script>
+
+</body>
+</html>

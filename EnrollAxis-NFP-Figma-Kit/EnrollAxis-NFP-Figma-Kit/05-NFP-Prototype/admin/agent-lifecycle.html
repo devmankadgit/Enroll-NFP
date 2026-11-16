@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Lifecycle | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.status-badge{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.st-pending{background:#fff3e0;color:#e65100}
+.st-active{background:#e8f5e9;color:#2e7d32}
+.st-inactive{background:#f5f5f5;color:#616161}
+.st-hold{background:#fff8e1;color:#f57f17}
+.st-suspended{background:#fce4ec;color:#c62828}
+.st-terminated{background:#ffebee;color:#b71c1c}
+.lifecycle-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px;background:#f8f9fa;border-radius:8px;margin-bottom:16px}
+.flow-node{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;min-width:100px}
+.flow-arrow{color:#9e9e9e;font-size:14px}
+.transition-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #f0f0f0;font-size:13px}
+.transition-row:hover{background:#f8f9fa}
+.trigger-chip{padding:2px 8px;border-radius:4px;font-size:11px;background:#e3f2fd;color:#1565c0}
+.lc-status{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ls-pending{background:#e8f0fe;color:#1a237e}.ls-active{background:#e8f5e9;color:#1b5e20}
+.ls-inactive{background:#f1f3f4;color:#616161}.ls-hold{background:#fff8e1;color:#e65100}
+.ls-suspended{background:#fce4ec;color:#b71c1c}.ls-terminated{background:#3c4043;color:#fff}
+.inactivity-row td{background:#fffde7}
+.slide-over{position:fixed;top:0;right:0;width:680px;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(0,0,0,.18);z-index:1050;overflow-y:auto;display:none}
+.slide-over.open{display:block}.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1040}.overlay-bg.open{display:block}
+.so-hdr{position:sticky;top:0;background:#fff;border-bottom:2px solid #e8eaed;padding:14px 22px;z-index:10;display:flex;align-items:center;justify-content:space-between}
+/* KPI row */
+.kpi-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.kpi-card{flex:1;min-width:130px;background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center}
+.kpi-val{font-size:28px;font-weight:800;line-height:1.1;margin-bottom:4px}
+.kpi-lbl{font-size:11px;font-weight:600;color:#5f6368}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Agent Lifecycle &amp; Status Management</h4>
+      <ol class="breadcrumb-bar"><li>Status Transitions &nbsp;|&nbsp; Allowed Rules Enforced &nbsp;|&nbsp; History Timeline &nbsp;|&nbsp; 11/12-Month Inactivity Monitor</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('transitionModal').style.display='flex'"><i class="fas fa-exchange-alt"></i> Manual Transition</button>
+      <button class="btn-pr btn-sm" onclick="document.getElementById('auditLogSection').scrollIntoView({behavior:'smooth'})"><i class="fas fa-history"></i> Audit Log</button>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPI Row -->
+    <div class="kpi-row" style="margin-bottom:16px">
+      <div class="kpi-card"><div class="kpi-val" style="color:#1b5e20">2</div><div class="kpi-lbl">Active</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#616161">1</div><div class="kpi-lbl">Inactive</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#e65100">2</div><div class="kpi-lbl">Compliance Hold</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#b71c1c">1</div><div class="kpi-lbl">Suspended</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#f57f17">1</div><div class="kpi-lbl">11-Month Warning</div></div>
+      <div class="kpi-card"><div class="kpi-val" style="color:#3c4043">1</div><div class="kpi-lbl">Terminated</div></div>
+    </div>
+    <!-- Filter + Agent Roster -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <input class="form-control" id="fSearch" placeholder="Search agent name or NPN..." style="width:240px" oninput="filterTable()">
+      <select class="form-control" id="fStatus" style="width:180px" onchange="filterTable()">
+        <option value="">All Statuses</option>
+        <option>Pending</option><option>Active</option><option>Inactive</option><option>Compliance Hold</option><option>Suspended</option><option>Terminated</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="document.getElementById('fSearch').value='';document.getElementById('fStatus').value='';filterTable()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-hdr"><h5><i class="fas fa-users" style="margin-right:6px"></i>Agent Roster</h5><span id="rosterCount" style="font-size:11px;color:#9e9e9e"></span></div>
+      <div class="table-wrap"><table class="tbl" id="rosterTable">
+        <thead><tr><th>Agent</th><th>NPN</th><th>Status</th><th>Last Enrollment</th><th>Inactivity</th><th>Upline</th><th>Last Change</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr data-name="robert chen" data-status="Compliance Hold"><td><strong>Robert Chen</strong></td><td><code style="font-size:11px">12345678</code></td><td><span class="lc-status ls-hold">Compliance Hold</span></td><td>2026-03-15</td><td>2.4 mo</td><td>Southeast Agency</td><td>2026-05-27</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('robert-chen','Robert Chen','12345678','Compliance Hold')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Robert Chen','12345678','Compliance Hold')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr data-name="amy foster" data-status="Active"><td><strong>Amy Foster</strong></td><td><code style="font-size:11px">87654321</code></td><td><span class="lc-status ls-active">Active</span></td><td>2026-05-20</td><td>0.2 mo</td><td>Southeast Agency</td><td>2026-04-01</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('amy-foster','Amy Foster','87654321','Active')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Amy Foster','87654321','Active')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr data-name="carlos reyes" data-status="Inactive"><td><strong>Carlos Reyes</strong></td><td><code style="font-size:11px">11223344</code></td><td><span class="lc-status ls-inactive">Inactive</span></td><td>2025-04-10</td><td>13.5 mo</td><td>Mid-Atlantic Producers</td><td>2026-04-10</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('carlos-reyes','Carlos Reyes','11223344','Inactive')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Carlos Reyes','11223344','Inactive')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr data-name="diana nguyen" data-status="Compliance Hold"><td><strong>Diana Nguyen</strong></td><td><code style="font-size:11px">99887766</code></td><td><span class="lc-status ls-hold">Compliance Hold</span></td><td>2026-02-28</td><td>3 mo</td><td>Mid-Atlantic Producers</td><td>2026-05-26</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('diana-nguyen','Diana Nguyen','99887766','Compliance Hold')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Diana Nguyen','99887766','Compliance Hold')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr data-name="kevin park" data-status="Suspended"><td><strong>Kevin Park</strong></td><td><code style="font-size:11px">55443322</code></td><td><span class="lc-status ls-suspended">Suspended</span></td><td>2025-10-01</td><td>7.9 mo</td><td>Northeast Brokers</td><td>2026-03-01</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('kevin-park','Kevin Park','55443322','Suspended')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Kevin Park','55443322','Suspended')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr class="inactivity-row" data-name="thomas wright" data-status="Active"><td><strong>Thomas Wright</strong> <span style="background:#fff8e1;color:#e65100;border-radius:5px;padding:1px 7px;font-size:10px;font-weight:700">? 11-Month Warning</span></td><td><code style="font-size:11px">44556677</code></td><td><span class="lc-status ls-active">Active</span></td><td>2025-06-01</td><td style="color:#e65100;font-weight:700">11.9 mo ?</td><td>Peach State Agency</td><td>2026-05-01</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('thomas-wright','Thomas Wright','44556677','Active')"><i class="fas fa-history"></i> History</button> <button class="btn-ol btn-sm" style="font-size:11px" onclick="openTransModal('Thomas Wright','44556677','Active')"><i class="fas fa-exchange-alt"></i> Change</button></td></tr>
+          <tr data-name="patricia silva" data-status="Terminated"><td><strong>Patricia Silva</strong></td><td><code style="font-size:11px">88776655</code></td><td><span class="lc-status ls-terminated">Terminated</span></td><td>2024-01-15</td><td>N/A</td><td>Southeast Agency</td><td>2026-01-15</td><td><button class="btn-ol btn-sm" style="font-size:11px" onclick="viewHistory('patricia-silva','Patricia Silva','88776655','Terminated')"><i class="fas fa-history"></i> History</button></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- Lifecycle Status Flow Diagram -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-project-diagram" style="margin-right:6px;color:#1565c0"></i>Lifecycle Status Flow</h5></div>
+      <div style="padding:16px">
+        <div class="lifecycle-flow">
+          <div class="flow-node st-pending"><i class="fas fa-hourglass-half"></i> Pending</div>
+          <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="flow-node st-active"><i class="fas fa-check-circle"></i> Active</div>
+          <div class="flow-arrow"><i class="fas fa-arrows-alt-h"></i></div>
+          <div class="flow-node st-inactive"><i class="fas fa-pause-circle"></i> Inactive</div>
+          <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="flow-node st-hold"><i class="fas fa-hand-paper"></i> Compliance Hold</div>
+          <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="flow-node st-suspended"><i class="fas fa-ban"></i> Suspended</div>
+          <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="flow-node st-terminated"><i class="fas fa-skull-crossbones"></i> Terminated</div>
+        </div>
+        <div style="font-size:11px;color:#757575;margin-top:8px"><i class="fas fa-info-circle"></i> Terminated is a final state — no re-entry without a new full onboarding cycle. All other statuses may transition back to Active via appropriate workflows.</div>
+      </div>
+    </div>
+
+    <!-- Allowed Transitions Configuration -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Allowed Transitions & Triggers</h5><button class="btn-ol btn-sm" onclick="document.getElementById('addTransitionModal').style.display='flex'"><i class="fas fa-plus"></i> Add Rule</button></div>
+      <div style="padding:0">
+        <div class="transition-row" style="background:#f5f5f5;font-weight:600;font-size:12px">
+          <div style="width:180px">From Status</div>
+          <div style="width:30px"></div>
+          <div style="width:180px">To Status</div>
+          <div style="flex:1">Trigger</div>
+          <div style="width:80px">Type</div>
+          <div style="width:100px">Actions</div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-pending">Pending</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="flex:1"><span class="trigger-chip">Auto</span> All onboarding gates passed</div>
+          <div style="width:80px"><span style="font-size:11px;color:#2e7d32">Automated</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-pending">Pending</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Admin override approval</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-inactive">Inactive</span></div>
+          <div style="flex:1"><span class="trigger-chip">Auto</span> 12 months no enrollment activity</div>
+          <div style="width:80px"><span style="font-size:11px;color:#2e7d32">Automated</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-hold">Compliance Hold</span></div>
+          <div style="flex:1"><span class="trigger-chip">Auto</span> NIPR license alert received</div>
+          <div style="width:80px"><span style="font-size:11px;color:#2e7d32">Automated</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-hold">Compliance Hold</span></div>
+          <div style="flex:1"><span class="trigger-chip">Auto</span> AHIP certification non-renewal</div>
+          <div style="width:80px"><span style="font-size:11px;color:#2e7d32">Automated</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-hold">Compliance Hold</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Admin compliance action</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-inactive">Inactive</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Admin action (with re-verification)</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-hold">Compliance Hold</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Compliance review & clearance</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Active / Inactive / Hold</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-suspended">Suspended</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Admin disciplinary action</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-suspended">Suspended</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-active">Active</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Compliance resolved + admin re-verification</div>
+          <div style="width:80px"><span style="font-size:11px;color:#1565c0">Manual</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+        <div class="transition-row">
+          <div style="width:180px"><span class="status-badge st-active">Any Status</span></div>
+          <div style="width:30px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></div>
+          <div style="width:180px"><span class="status-badge st-terminated">Terminated</span></div>
+          <div style="flex:1"><span class="trigger-chip">Manual</span> Admin action or auto-termination rule</div>
+          <div style="width:80px"><span style="font-size:11px;color:#c62828">Both</span></div>
+          <div style="width:100px"><button class="btn-ol btn-sm" onclick="document.getElementById('editTransitionModal').style.display='flex'">Edit</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Status Changes -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Recent Status Transitions</h5><div class="dflex g8"><select class="form-control" style="width:130px"><option>All Types</option><option>Automated</option><option>Manual</option><option>System Event</option></select><input type="text" class="tb-search" placeholder="Search agent" style="max-width:180px"><button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-download"></i> Export</button></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','agent-lifecycle_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Agent</th><th>NPN</th><th>From</th><th>To</th><th>Trigger</th><th>Triggered By</th><th>Date/Time</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Alex Rivera</td><td>6601234</td><td><span class="status-badge st-pending">Pending</span></td><td><span class="status-badge st-active">Active</span></td><td>All onboarding gates passed</td><td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-robot"></i> System</span></td><td>05 25,2026 09:14 AM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+            <tr><td>James Chen</td><td>8823441</td><td><span class="status-badge st-active">Active</span></td><td><span class="status-badge st-hold">Compliance Hold</span></td><td>NIPR License Expired — FL</td><td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-robot"></i> NIPR Alert</span></td><td>05 24,2026 02:00 AM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+            <tr><td>Sarah Kim</td><td>7712099</td><td><span class="status-badge st-hold">Compliance Hold</span></td><td><span class="status-badge st-active">Active</span></td><td>Compliance review & clearance</td><td><span style="font-size:11px;color:#1565c0"><i class="fas fa-user"></i> Sandra Adams</span></td><td>05 23,2026 03:22 PM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+            <tr><td>David Martinez</td><td>5509871</td><td><span class="status-badge st-inactive">Inactive</span></td><td><span class="status-badge st-terminated">Terminated</span></td><td>12-month inactivity auto-termination</td><td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-robot"></i> Rule Engine</span></td><td>05 22,2026 02:00 AM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+            <tr><td>Maria Rodriguez</td><td>9934122</td><td><span class="status-badge st-active">Active</span></td><td><span class="status-badge st-suspended">Suspended</span></td><td>Admin disciplinary action</td><td><span style="font-size:11px;color:#1565c0"><i class="fas fa-user"></i> Sandra Adams</span></td><td>05 21,2026 11:45 AM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+            <tr><td>Kevin Park</td><td>4478923</td><td><span class="status-badge st-active">Active</span></td><td><span class="status-badge st-hold">Compliance Hold</span></td><td>AHIP certification non-renewal</td><td><span style="font-size:11px;color:#2e7d32"><i class="fas fa-robot"></i> System</span></td><td>05 20,2026 02:00 AM</td><td><button class="btn-ol btn-sm" onclick="document.getElementById('detailModal').style.display='flex'">Detail</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="card mb16" id="auditLogSection">
+      <div class="card-hdr" style="flex-wrap:wrap;gap:8px">
+        <h5><i class="fas fa-history" style="margin-right:6px;color:#1a237e"></i>Transition Audit Log</h5>
+        <div style="display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap">
+          <label style="font-size:11px;color:#5f6368;font-weight:600">From</label>
+          <input type="date" class="form-control" style="width:140px;font-size:12px" value="2026-05-01">
+          <label style="font-size:11px;color:#5f6368;font-weight:600">To</label>
+          <input type="date" class="form-control" style="width:140px;font-size:12px" value="2026-05-25">
+          <button class="btn-ol btn-sm"><i class="fas fa-download"></i> Export</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Agent</th>
+              <th>From</th>
+              <th></th>
+              <th>To</th>
+              <th>Trigger</th>
+              <th>Type</th>
+              <th>By</th>
+              <th>Notified</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-25 09:14</td>
+              <td><strong>Alex Rivera</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 6601234</span></td>
+              <td><span class="lc-status ls-pending" style="font-size:10px">Pending</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-active" style="font-size:10px">Active</span></td>
+              <td style="font-size:11px">Onboarding complete — all gates passed</td>
+              <td><span style="background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Auto</span></td>
+              <td style="font-size:11px">System</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Upline</td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-24 02:00</td>
+              <td><strong>James Chen</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 8823441</span></td>
+              <td><span class="lc-status ls-active" style="font-size:10px">Active</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-hold" style="font-size:10px">Compliance Hold</span></td>
+              <td style="font-size:11px">NIPR Alert — FL license expired</td>
+              <td><span style="background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Auto</span></td>
+              <td style="font-size:11px">NIPR Webhook</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Compliance, Upline</td>
+            </tr>
+            <tr>
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-23 15:22</td>
+              <td><strong>Sarah Kim</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 7712099</span></td>
+              <td><span class="lc-status ls-hold" style="font-size:10px">Compliance Hold</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-active" style="font-size:10px">Active</span></td>
+              <td style="font-size:11px">NIPR reinstatement confirmed</td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Manual</span></td>
+              <td style="font-size:11px">Sandra Adams</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Upline</td>
+            </tr>
+            <tr style="background:#ffebee">
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-22 02:00</td>
+              <td><strong>David Martinez</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 5509871</span></td>
+              <td><span class="lc-status ls-inactive" style="font-size:10px">Inactive</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-terminated" style="font-size:10px">Terminated</span></td>
+              <td style="font-size:11px">Auto-termination — 12-month inactivity rule</td>
+              <td><span style="background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Auto</span></td>
+              <td style="font-size:11px">System</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Upline, OEC</td>
+            </tr>
+            <tr style="background:#ffebee">
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-21 11:45</td>
+              <td><strong>Maria Rodriguez</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 9934122</span></td>
+              <td><span class="lc-status ls-active" style="font-size:10px">Active</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-suspended" style="font-size:10px">Suspended</span></td>
+              <td style="font-size:11px">SOA compliance investigation pending</td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Manual</span></td>
+              <td style="font-size:11px">Sandra Adams</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Compliance</td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-size:11px;color:#5f6368;white-space:nowrap">2026-05-20 02:00</td>
+              <td><strong>Kevin Park</strong><br><span style="font-size:10px;font-family:monospace;color:#9e9e9e">NPN 4478923</span></td>
+              <td><span class="lc-status ls-active" style="font-size:10px">Active</span></td>
+              <td style="color:#9e9e9e;font-size:11px;padding:0 4px"><i class="fas fa-arrow-right"></i></td>
+              <td><span class="lc-status ls-hold" style="font-size:10px">Compliance Hold</span></td>
+              <td style="font-size:11px">AHIP certification expired</td>
+              <td><span style="background:#e8f5e9;color:#1b5e20;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600">Auto</span></td>
+              <td style="font-size:11px">System</td>
+              <td style="font-size:10px;color:#5f6368">Agent, Upline</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay + History Slide-Over -->
+<div class="overlay-bg" id="overBg" onclick="closeSlide()"></div>
+<div class="slide-over" id="historySlide">
+  <div class="so-hdr">
+    <div><div style="font-size:15px;font-weight:700;color:#1a237e" id="historyTitle"></div><div style="font-size:11px;color:#9e9e9e;margin-top:2px" id="historySub"></div></div>
+    <button onclick="closeSlide()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#9e9e9e">&times;</button>
+  </div>
+  <div style="padding:22px" id="historyBody"></div>
+</div>
+
+<!-- Manual Transition Modal -->
+<div class="modal-overlay" id="transitionModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-exchange-alt" style="margin-right:6px"></i>Manual Status Transition</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Agent</label>
+        <input type="text" class="form-control" id="transAgentInput" readonly style="background:#f8f9fa;font-weight:600">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Current Status</label>
+        <input type="text" class="form-control" id="transCurrentStatusInput" readonly style="background:#fff8e1;font-weight:600">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Transition To <span class="text-danger">*</span></label>
+        <select class="form-control" id="transNewStatusSel" onchange="transNewStatusChanged()">
+          <option value="">— Select Target Status —</option>
+          <option>Active</option>
+          <option>Inactive</option>
+          <option>Compliance Hold</option>
+          <option>Suspended</option>
+          <option>Terminated</option>
+        </select>
+        <small style="color:#666;font-size:11px"><i class="fas fa-info-circle" style="margin-right:3px"></i>Only allowed transitions from current status are enforced</small>
+      </div>
+      <div id="transInvalidMsg" style="display:none;background:#fce4ec;border:1px solid #ef9a9a;padding:8px 12px;border-radius:6px;font-size:12px;color:#b71c1c;margin-bottom:8px"></div>
+      <div id="transWarnBox" style="display:none;background:#fff3e0;border:1px solid #ffcc80;padding:8px 12px;border-radius:6px;font-size:12px;color:#bf360c;margin-bottom:8px"></div>
+      <div id="transReasonWrap" style="display:none" class="mb-3">
+        <label class="form-label">Reason / Justification <span class="text-danger">*</span> <span style="font-size:11px;font-weight:400;color:#9e9e9e">(min 30 characters)</span></label>
+        <textarea class="form-control" id="transReasonTxt" rows="3" placeholder="Provide justification for this status change (required for audit trail)..." oninput="updateTransCount()"></textarea>
+        <div style="display:flex;justify-content:space-between;margin-top:3px">
+          <div id="transReasonErrMsg" style="display:none;font-size:11px;color:#c62828"><i class="fas fa-exclamation-circle" style="margin-right:3px"></i>Minimum 30 characters required.</div>
+          <div id="transReasonCnt" style="font-size:11px;color:#9e9e9e;margin-left:auto">0 / 30 min</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Notifications</label>
+        <div style="font-size:12px;margin-bottom:4px"><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="notifyAgent" checked> Notify Agent (email + portal)</label></div>
+        <div style="font-size:12px;margin-bottom:4px"><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="notifyUpline" checked> Notify Upline Agency</label></div>
+        <div style="font-size:12px"><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="notifyOec" checked> Update OEC Feed</label></div>
+      </div>
+      <div style="background:#f8f9fa;padding:10px 12px;border-radius:6px;font-size:12px;color:#5f6368">
+        <i class="fas fa-history" style="margin-right:4px"></i>This action will be permanently recorded in the audit log.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="applyTransition()"><i class="fas fa-check"></i> Apply Transition</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Transition Rule Modal -->
+<div class="modal-overlay" id="addTransitionModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5>Add Transition Rule</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">From Status <span class="text-danger">*</span></label><select class="form-control"><option>Pending</option><option selected>Active</option><option>Inactive</option><option>Compliance Hold</option><option>Suspended</option></select></div>
+      <div class="mb-3"><label class="form-label">To Status <span class="text-danger">*</span></label><select class="form-control"><option>Active</option><option>Inactive</option><option selected>Compliance Hold</option><option>Suspended</option><option>Terminated</option></select></div>
+      <div class="mb-3"><label class="form-label">Trigger Type <span class="text-danger">*</span></label><select class="form-control"><option selected>Automated (System Event)</option><option>Manual (Admin Action)</option><option>Both</option></select></div>
+      <div class="mb-3"><label class="form-label">Trigger Description <span class="text-danger">*</span></label><input type="text" class="form-control" placeholder="e.g., Background check failure"></div>
+      <div class="mb-3"><label class="form-label">Notification Template</label><select class="form-control"><option>Standard Status Change</option><option>Compliance Hold Notice</option><option>Suspension Notice</option><option>Termination Notice</option></select></div>
+      <div class="mb-3"><label class="form-label">Required Approvals</label><select class="form-control"><option>None (Immediate)</option><option>1 Approver</option><option>2 Approvers</option></select></div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button><button class="btn-pr" onclick="nfpSubmit('Transition rule created successfully.')"><i class="fas fa-plus"></i> Create Rule</button></div>
+  </div>
+</div>
+
+<!-- Edit Transition Rule Modal -->
+<div class="modal-overlay" id="editTransitionModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5>Edit Transition Rule</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">From Status</label><input type="text" class="form-control" value="Active" readonly></div>
+      <div class="mb-3"><label class="form-label">To Status</label><input type="text" class="form-control" value="Compliance Hold" readonly></div>
+      <div class="mb-3"><label class="form-label">Trigger Type</label><select class="form-control"><option selected>Automated (System Event)</option><option>Manual (Admin Action)</option><option>Both</option></select></div>
+      <div class="mb-3"><label class="form-label">Trigger Description</label><input type="text" class="form-control" value="NIPR license alert received"></div>
+      <div class="mb-3"><label class="form-label">Notification Template</label><select class="form-control"><option>Standard Status Change</option><option selected>Compliance Hold Notice</option><option>Suspension Notice</option><option>Termination Notice</option></select></div>
+      <div class="mb-3"><label class="form-label">Required Approvals</label><select class="form-control"><option selected>None (Immediate)</option><option>1 Approver</option><option>2 Approvers</option></select></div>
+      <div class="mb-3"><label class="form-label">Status</label><select class="form-control"><option selected>Active</option><option>Disabled</option></select></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#c62828;border-color:#c62828" onclick="if(confirm('Delete this transition rule?'))this.closest('.modal-overlay').style.display='none'"><i class="fas fa-trash"></i> Delete</button>
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="nfpSave('Transition rule updated.')"><i class="fas fa-save"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Transition Detail Modal -->
+<div class="modal-overlay" id="detailModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5>Transition Detail</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <table style="width:100%;font-size:13px;border-collapse:collapse">
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;width:140px;color:#757575">Agent</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0"><strong>James Chen</strong> (NPN: 8823441)</td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">From Status</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0"><span class="status-badge st-active">Active</span></td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">To Status</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0"><span class="status-badge st-hold">Compliance Hold</span></td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">Trigger</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0">NIPR License Expired — State: FL</td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">Trigger Source</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0"><i class="fas fa-robot" style="color:#2e7d32"></i> NIPR Alert Webhook (Alert ID: NIPR-2026-04821)</td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">Date/Time</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0">05 24,2026, 02:00:14 AM ET</td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">Notifications Sent</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0">Agent (email), Compliance Team (portal), Upline (email)</td></tr>
+        <tr><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0;color:#757575">Access Restrictions Applied</td><td style="padding:6px 8px;border-bottom:1px solid #f0f0f0">Enrollment submission blocked, lead assignment paused</td></tr>
+        <tr><td style="padding:6px 8px;color:#757575">OEC Feed Impact</td><td style="padding:6px 8px">Agent marked as "Not Ready to Sell" in next daily feed</td></tr>
+      </table>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button><button class="btn-ol" onclick="document.getElementById('transitionModal').style.display='flex';this.closest('.modal-overlay').style.display='none'"><i class="fas fa-exchange-alt"></i> Initiate New Transition</button></div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var TRANSITIONS={Pending:['Active'],Active:['Inactive','Compliance Hold','Suspended','Terminated'],Inactive:['Active','Suspended','Terminated'],'Compliance Hold':['Active','Suspended','Terminated'],Suspended:['Active','Terminated'],Terminated:[]};
+var STATUS_CLS={Pending:'ls-pending',Active:'ls-active',Inactive:'ls-inactive','Compliance Hold':'ls-hold',Suspended:'ls-suspended',Terminated:'ls-terminated'};
+var REQUIRE_REASON=['Suspended','Terminated'];
+var _transCurrentStatus='';
+
+var HISTORY_DATA={
+'robert-chen':[{ts:'2026-01-10 09:00',from:'Pending',to:'Active',by:'System',reason:'All onboarding gates passed.',ref:'OB-2026-00045'},{ts:'2026-05-27 08:32',from:'Active',to:'Compliance Hold',by:'System',reason:'NIPR Suspension alert received for GA.',ref:'NPA-2026-001'}],
+'amy-foster':[{ts:'2026-02-01 10:00',from:'Pending',to:'Active',by:'System',reason:'All onboarding gates passed.',ref:'OB-2026-00046'}],
+'carlos-reyes':[{ts:'2025-03-01 09:00',from:'Pending',to:'Active',by:'System',reason:'Gates passed.',ref:'OB-2025-00021'},{ts:'2026-04-10 09:00',from:'Active',to:'Inactive',by:'System ? Inactivity Rule',reason:'12 months no enrollment activity detected.',ref:'RULE-INACTIVITY-12M'}],
+'diana-nguyen':[{ts:'2025-11-01 09:00',from:'Pending',to:'Active',by:'System',reason:'Gates passed.',ref:'OB-2025-00099'},{ts:'2026-05-26 10:05',from:'Active',to:'Compliance Hold',by:'System',reason:'NIPR Revocation alert NC.',ref:'NPA-2026-004'}],
+'kevin-park':[{ts:'2025-06-15 09:00',from:'Pending',to:'Active',by:'System',reason:'Gates passed.',ref:'OB-2025-00077'},{ts:'2026-03-01 11:00',from:'Active',to:'Suspended',by:'Sandra Adams',reason:'Administrative suspension pending investigation.',ref:'COMP-2026-0088'}],
+'thomas-wright':[{ts:'2024-06-01 09:00',from:'Pending',to:'Active',by:'System',reason:'Gates passed.',ref:'OB-2024-00012'},{ts:'2026-05-01 08:00',from:'Active',to:'Active',by:'System ? 11-Month Warning',reason:'11-month inactivity warning sent. Auto-Inactive on 2026-06-01 if no enrollment.',ref:'RULE-INACT-WARN'}],
+'patricia-silva':[{ts:'2023-03-01 09:00',from:'Pending',to:'Active',by:'System',reason:'Gates passed.',ref:'OB-2023-00008'},{ts:'2026-01-15 10:00',from:'Active',to:'Terminated',by:'Sandra Adams',reason:'Agent voluntarily terminated. Records preserved per retention policy.',ref:'TERM-2026-0001'}]
+};
+function filterTable(){
+  var s=document.getElementById('fSearch').value.toLowerCase();
+  var st=document.getElementById('fStatus').value;
+  var rows=document.querySelectorAll('#rosterTable tbody tr');
+  var count=0;
+  rows.forEach(function(r){
+    var nm=r.getAttribute('data-name')||'';
+    var rs=r.getAttribute('data-status')||'';
+    var show=((!s||nm.includes(s))&&(!st||rs===st));
+    r.style.display=show?'':'none';
+    if(show) count++;
+  });
+  document.getElementById('rosterCount').textContent=count+' agent(s)';
+}
+function viewHistory(id,name,npn,status){
+  var hist=HISTORY_DATA[id]||[];
+  document.getElementById('historyTitle').textContent=name+' ? Status History';
+  document.getElementById('historySub').textContent='NPN: '+npn+' | Current: '+status;
+  var scls=STATUS_CLS[status]||'ls-pending';
+  var html='<div style="margin-bottom:14px"><span class="lc-status '+scls+'">'+status+'</span></div>';
+  html+='<div style="font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:12px">Status Transition Timeline</div>';
+  var rev=[].concat(hist).reverse();
+  rev.forEach(function(h,i){
+    var fromC=STATUS_CLS[h.from]||'ls-pending';
+    var toC=STATUS_CLS[h.to]||'ls-pending';
+    var last=i===rev.length-1;
+    html+='<div style="display:flex;gap:12px;margin-bottom:10px"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:10px;height:10px;border-radius:50%;background:'+(i===0?'#1b5e20':'#1a237e')+';flex-shrink:0;margin-top:5px"></div>'+(last?'':'<div style="width:2px;background:#e8eaed;margin-left:4px;flex:1;min-height:18px"></div>')+'</div><div style="flex:1;background:#f8f9fa;border-radius:8px;padding:10px"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span class="lc-status '+fromC+'" style="font-size:10px">'+h.from+'</span><i class="fas fa-arrow-right" style="color:#9e9e9e;font-size:10px"></i><span class="lc-status '+toC+'" style="font-size:10px">'+h.to+'</span></div><div style="font-size:11px;color:#5f6368;margin-bottom:3px">'+h.ts+' UTC &bull; '+h.by+'</div><div style="font-size:11px;color:#3c4043">'+h.reason+'</div><div style="font-size:10px;color:#9e9e9e;margin-top:2px">Ref: <code>'+h.ref+'</code></div></div></div>';
+  });
+  if(status==='Terminated') html+='<div style="background:#f1f3f4;border-radius:8px;padding:10px 14px;font-size:12px;color:#616161;margin-top:12px"><i class="fas fa-info-circle" style="margin-right:6px"></i>Agent is Terminated. Re-entry requires a new full onboarding cycle.</div>';
+  if(status==='Active'&&id==='thomas-wright') html+='<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;font-size:12px;color:#e65100;margin-top:12px"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i><strong>11-Month Warning Active.</strong> Auto-Inactive transition on 2026-06-01 if no new enrollment submitted.</div>';
+  document.getElementById('historyBody').innerHTML=html;
+  document.getElementById('historySlide').classList.add('open');
+  document.getElementById('overBg').classList.add('open');
+}
+function openTransModal(name,npn,currentStatus){
+  _transCurrentStatus=currentStatus;
+  document.getElementById('transAgentInput').value=name+' (NPN: '+npn+')';
+  document.getElementById('transCurrentStatusInput').value=currentStatus;
+  document.getElementById('transNewStatusSel').value='';
+  document.getElementById('transReasonWrap').style.display='none';
+  document.getElementById('transWarnBox').style.display='none';
+  document.getElementById('transInvalidMsg').style.display='none';
+  document.getElementById('transReasonTxt').value='';
+  document.getElementById('transReasonCnt').textContent='0 / 30 min';
+  document.getElementById('transitionModal').style.display='flex';
+}
+function transNewStatusChanged(){
+  var v=document.getElementById('transNewStatusSel').value;
+  var allowed=TRANSITIONS[_transCurrentStatus]||[];
+  var warn=document.getElementById('transWarnBox');
+  var inv=document.getElementById('transInvalidMsg');
+  document.getElementById('transReasonWrap').style.display=REQUIRE_REASON.includes(v)?'block':'none';
+  if(v&&!allowed.includes(v)){
+    inv.style.display='block';
+    inv.textContent='Invalid transition: '+_transCurrentStatus+' ? '+v+' is not allowed by the lifecycle state machine.';
+    warn.style.display='none';
+  } else {
+    inv.style.display='none';
+    if(v==='Terminated'){warn.style.display='block';warn.innerHTML='<i class="fas fa-ban"></i> WARNING: Termination is permanent. No re-entry without new onboarding cycle.';}
+    else if(v==='Suspended'){warn.style.display='block';warn.innerHTML='<i class="fas fa-lock"></i> Agent sessions terminated. Login returns: Account Suspended.';}
+    else{warn.style.display='none';}
+  }
+}
+function updateTransCount(){
+  var v=document.getElementById('transReasonTxt').value;
+  var el=document.getElementById('transReasonCnt');
+  el.textContent=v.length+' / 30 min';
+  el.style.color=v.length>=30?'#1b5e20':'#b71c1c';
+}
+function applyTransition(){
+  var newStatus=document.getElementById('transNewStatusSel').value;
+  var allowed=TRANSITIONS[_transCurrentStatus]||[];
+  if(!newStatus){showToast('Please select a target status.','#e65100');return;}
+  if(!allowed.includes(newStatus)){showToast('Invalid transition: '+_transCurrentStatus+' ? '+newStatus+'. Not in allowed list.','#b71c1c');return;}
+  if(REQUIRE_REASON.includes(newStatus)){
+    var r=document.getElementById('transReasonTxt').value.trim();
+    if(r.length<30){document.getElementById('transReasonErrMsg').style.display='block';return;}
+    document.getElementById('transReasonErrMsg').style.display='none';
+  }
+  var agentName=document.getElementById('transAgentInput').value;
+  document.getElementById('transitionModal').style.display='none';
+  showToast('Status transition applied: '+agentName+' ? '+newStatus+'. Notifications sent. Audit entry created.','#1b5e20');
+  console.log('[AUDIT] LifecycleTransition | Agent:'+agentName+' | From:'+_transCurrentStatus+' | To:'+newStatus+' | By:Sandra Adams');
+}
+function closeSlide(){document.getElementById('historySlide').classList.remove('open');document.getElementById('overBg').classList.remove('open');}
+function showToast(msg,color){var el=document.getElementById('toastEl');if(!el){el=document.createElement('div');el.id='toastEl';el.style.cssText='display:none;position:fixed;bottom:28px;right:24px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px;padding:12px 22px;color:#fff';document.body.appendChild(el);}el.textContent=msg;el.style.background=color||'#1b5e20';el.style.display='block';setTimeout(function(){el.style.display='none';},4000);}
+filterTable();
+</script>
+</html>

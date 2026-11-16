@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agency Admin Dashboard | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Agency Dashboard — HealthFirst Distribution</h4>
+      <div class="text-sm text-muted">AGY-001 — Miami, FL &nbsp;|&nbsp; As of 05 24,2026</div>
+    </div>
+    <button class="btn-pr btn-sm" onclick="document.getElementById('dashInviteModal').style.display='flex'" style="margin-right:6px"><i class="fas fa-paper-plane"></i>Send Invitation</button>
+    <button class="btn-ol btn-sm" onclick="exportAgencyReport()"><i class="fas fa-download"></i>Export Agency Report</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+      <div class="stat-card"><div class="stat-icon" style="background:#fbe9e7;color:#e65100"><i class="fas fa-users"></i></div><div><div class="stat-label">Active Agents</div><div class="stat-val">3</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#f57f17"><i class="fas fa-address-book"></i></div><div><div class="stat-label">Total BoB Members</div><div class="stat-val">57</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-medical"></i></div><div><div class="stat-label">Enrollments MTD</div><div class="stat-val">5</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-tasks"></i></div><div><div class="stat-label">Open Action Items</div><div class="stat-val">11</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Agency YTD Commissions</div><div class="stat-val">$27,841</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-id-badge"></i></div><div><div class="stat-label">License Expiring</div><div class="stat-val">2</div><div class="stat-sub">Within 60 days</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-graduation-cap"></i></div><div><div class="stat-label">Training Due</div><div class="stat-val">1</div><div class="stat-sub">AHIP renewal pending</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#e0f2f1;color:#00695c"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Ready to Sell</div><div class="stat-val">2</div><div class="stat-sub">Agents RTS certified</div></div></div>
+    </div>
+
+    <!-- Lead & Enrollment Activity Widgets -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:16px">
+      <div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">Today's Leads</div><div class="stat-val">7</div><div class="stat-sub">3 new, 4 reassigned</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">SOA Pending</div><div class="stat-val">4</div><div class="stat-sub">Awaiting member signature</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-clock"></i></div><div><div class="stat-label">Follow-up Due</div><div class="stat-val">9</div><div class="stat-sub">5 today, 4 tomorrow</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#b71c1c"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Overdue</div><div class="stat-val">3</div><div class="stat-sub">Past scheduled follow-up</div></div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-chart-pie"></i></div><div><div class="stat-label">Enrollment Rate</div><div class="stat-val">40%</div><div class="stat-sub">17 enrolled of 42 leads</div></div></div>
+    </div>
+
+    <div class="row-grid">
+      <!-- Agent Performance Table -->
+      <div class="col-3">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Downline Agent Performance — May 2026</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','dashboard_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table id="tblExport1" class="tbl">
+              <thead>
+                <tr><th>Agent</th><th>NPN</th><th>States</th><th>Active BoB</th><th>Enrollments Month-To-Date</th><th>Leads Assigned</th><th>SOA Completed</th><th>Members Enrolled</th><th>Open Actions</th><th>HRA Pending</th><th>C-SNP Due</th><th>YTD Commissions</th><th>Status</th><th></th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-bold">James Martinez</td>
+                  <td>8823441</td>
+                  <td>FL, GA</td>
+                  <td>24</td>
+                  <td>2</td>
+                  <td>18</td>
+                  <td>12</td>
+                  <td>8</td>
+                  <td><span class="bdg b-amber">6</span></td>
+                  <td><span class="bdg b-amber">3</span></td>
+                  <td><span class="bdg b-red">2 (overdue risk)</span></td>
+                  <td class="text-bold">$11,284</td>
+                  <td><span class="bdg b-green">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewAgentPerf('James Martinez','8823441','FL, GA',24,2,6,3,'2 overdue','$11,284','Active')">View</button></td>
+                </tr>
+                <tr>
+                  <td class="text-bold">Sarah Chen</td>
+                  <td>7712309</td>
+                  <td>FL, GA, TX</td>
+                  <td>19</td>
+                  <td>2</td>
+                  <td>14</td>
+                  <td>10</td>
+                  <td>6</td>
+                  <td><span class="bdg b-amber">3</span></td>
+                  <td><span class="bdg b-amber">2</span></td>
+                  <td>0</td>
+                  <td class="text-bold">$9,327</td>
+                  <td><span class="bdg b-green">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewAgentPerf('Sarah Chen','7712309','FL, GA, TX',19,2,3,2,'None','$9,327','Active')">View</button></td>
+                </tr>
+                <tr>
+                  <td class="text-bold">Michael Torres</td>
+                  <td>9934221</td>
+                  <td>TX, FL</td>
+                  <td>14</td>
+                  <td>1</td>
+                  <td>10</td>
+                  <td>6</td>
+                  <td>3</td>
+                  <td><span class="bdg b-grey">2</span></td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td class="text-bold">$7,230</td>
+                  <td><span class="bdg b-green">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewAgentPerf('Michael Torres','9934221','TX, FL',14,1,2,1,'None','$7,230','Active')">View</button></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr style="background:#fff8e1;font-weight:600">
+                  <td>Agency Total</td><td colspan="2"></td><td>57</td><td>5</td><td>42</td><td>28</td><td>17</td><td>11</td><td>6</td><td>2</td><td>$27,841</td><td></td><td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Alerts -->
+      <div class="col-1">
+        <div class="card">
+          <div class="card-hdr"><h5>Agency Alerts</h5></div>
+          <div class="card-body" style="padding:14px">
+            <div class="al-danger mb8"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span><strong>C-SNP Risk:</strong> James Martinez has 2 C-SNP re-verifications approaching deadline (Dorothy Henderson — Jun 1, Robert Nguyen — Jun 30).</span></div>
+            <div class="al-warn mb8"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>6 HRA incentives pending across all downline agents.</span></div>
+            <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>AEP planning window opens in 3 months. Review campaign readiness with all agents.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts & Reports Section -->
+    <div class="row-grid" style="margin-top:16px;margin-bottom:40px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="color:#e65100;margin-right:6px"></i>Agent Performance Comparison</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="agentPerfChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-line" style="color:#2e7d32;margin-right:6px"></i>Agency Revenue Trend</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="revenueTrendChart" height="200"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// Agent Performance Comparison - Grouped Bar
+new Chart(document.getElementById('agentPerfChart'), {
+  type: 'bar',
+  data: {
+    labels: ['James Martinez','Maria Lopez','Lisa Park'],
+    datasets: [
+      { label: 'Enrollments', data: [5, 3, 1], backgroundColor: '#1565c0', borderRadius: 4 },
+      { label: 'BoB Members', data: [32, 18, 7], backgroundColor: '#e65100', borderRadius: 4 }
+    ]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+});
+
+// Agency Revenue Trend - Line
+new Chart(document.getElementById('revenueTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [{
+      label: 'Commission ($)',
+      data: [3800, 4200, 4500, 4900, 5441, 5800],
+      borderColor: '#2e7d32',
+      backgroundColor: 'rgba(46,125,50,0.1)',
+      fill: true,
+      tension: 0.4
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Agent Detail Modal -->
+<div class="modal-overlay" id="agentDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h5><i class="fas fa-user-tie" style="margin-right:8px;color:#e65100"></i><span id="mdAgentName">Agent Detail</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="row-grid">
+        <div class="col-2">
+          <p><strong>NPN:</strong> <span id="mdNPN"></span></p>
+          <p><strong>Licensed States:</strong> <span id="mdStates"></span></p>
+          <p><strong>Active BoB Members:</strong> <span id="mdBoB"></span></p>
+          <p><strong>Enrollments MTD:</strong> <span id="mdEnr"></span></p>
+          <p><strong>Status:</strong> <span id="mdStatus"></span></p>
+        </div>
+        <div class="col-2">
+          <p><strong>Open Action Items:</strong> <span id="mdActions"></span></p>
+          <p><strong>HRA Pending:</strong> <span id="mdHRA"></span></p>
+          <p><strong>C-SNP Risk:</strong> <span id="mdCSNP"></span></p>
+          <p><strong>YTD Commissions:</strong> <span id="mdYTD"></span></p>
+        </div>
+      </div>
+      <div class="dflex g8" style="margin-top:14px;flex-wrap:wrap">
+        <a href="agents.html" class="btn-ol btn-sm"><i class="fas fa-user-tie"></i> Full Profile</a>
+        <a href="bob.html" class="btn-ol btn-sm"><i class="fas fa-address-book"></i> View BoB</a>
+        <a href="action-items.html" class="btn-ol btn-sm"><i class="fas fa-tasks"></i> Action Items</a>
+        <a href="commissions.html" class="btn-ol btn-sm"><i class="fas fa-dollar-sign"></i> Commissions</a>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button></div>
+  </div>
+</div>
+
+<!-- Dashboard Send Invitation Modal -->
+<div class="modal-overlay" id="dashInviteModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-paper-plane" style="margin-right:8px;color:#e65100"></i>Send Contracting Invitation</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Full Name <span class="text-danger">*</span></label><input type="text" class="form-control" id="diName" value="Angela Rivera"></div>
+      <div class="mb-3"><label class="form-label">Email Address <span class="text-danger">*</span></label><input type="email" class="form-control" id="diEmail" value="angela.rivera@premiermedicare.com"></div>
+      <div class="mb-3"><label class="form-label">NPN (if known)</label><input type="text" class="form-control" id="diNPN" value="6634821"></div>
+      <div class="mb-3"><label class="form-label">Role Type</label><select class="form-control"><option selected>Agent / Broker</option><option>Sub-Agency Admin</option></select></div>
+      <div class="mb-3"><label class="form-label">Licensed States</label><input type="text" class="form-control" value="FL, TX, GA" readonly style="background:#f8f8f8"></div>
+      <div class="mb-3"><label class="form-label">Contracting Hierarchy</label><input type="text" class="form-control" value="HealthFirst Distribution (GA-001) → Agent" readonly style="background:#f8f8f8"></div>
+      <div class="mb-3"><label class="form-label">Expiry</label><select class="form-control"><option>48 hours</option><option selected>72 hours (default)</option><option>7 days</option></select></div>
+      <div style="background:#e8f5e9;border-radius:6px;padding:10px;font-size:12px"><i class="fas fa-info-circle" style="color:#2e7d32"></i> Invitation sent with a unique tokenized link. Recipient placed under HealthFirst Distribution (GA-001). NIPR license data pre-verified.</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="sendDashInvite()"><i class="fas fa-paper-plane"></i> Send Invitation</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function viewAgentPerf(name, npn, states, bob, enr, actions, hra, csnp, ytd, status) {
+  document.getElementById('mdAgentName').textContent = name;
+  document.getElementById('mdNPN').textContent = npn;
+  document.getElementById('mdStates').textContent = states;
+  document.getElementById('mdBoB').textContent = bob;
+  document.getElementById('mdEnr').textContent = enr;
+  document.getElementById('mdActions').textContent = actions;
+  document.getElementById('mdHRA').textContent = hra;
+  document.getElementById('mdCSNP').textContent = csnp;
+  document.getElementById('mdYTD').textContent = ytd;
+  document.getElementById('mdStatus').textContent = status;
+  document.getElementById('agentDetailModal').style.display = 'flex';
+}
+function exportAgencyReport() {
+  var csv = "Agency Report - HealthFirst Distribution (GA-001)\nGenerated: 05 27,2026\n\nAgent,NPN,States,Active BoB,Enrollments MTD,Open Actions,HRA Pending,C-SNP Risk,YTD Commissions,Status\n";
+  csv += "James Martinez,8823441,\"FL, GA\",24,2,6,3,2 overdue,$11284,Active\n";
+  csv += "Sarah Chen,7712309,\"FL, GA, TX\",19,2,3,2,None,$9327,Active\n";
+  csv += "Michael Torres,9934221,\"TX, FL\",14,1,2,1,None,$7230,Active\n";
+  csv += "\nAgency Total,,,57,5,11,6,2,$27841,\n";
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'agency-report-may-2026.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('Agency Report downloaded: agency-report-may-2026.csv', 'success');
+}
+function sendDashInvite() {
+  var name = document.getElementById('diName').value.trim();
+  var email = document.getElementById('diEmail').value.trim();
+  if (!name || !email) { showToast('Please enter name and email address', 'error'); return; }
+  document.getElementById('dashInviteModal').style.display = 'none';
+  showToast('Invitation sent to ' + name + ' (' + email + ') — Tracking ID: INV-2026-0090', 'success');
+}
+</script>
+</body>
+</html>
+
+

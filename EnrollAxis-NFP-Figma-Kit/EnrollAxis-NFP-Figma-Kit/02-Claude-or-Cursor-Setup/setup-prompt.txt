@@ -1,0 +1,134 @@
+I am a UI/UX designer. Help me capture screens from our NFP HTML prototype into Figma as editable
+layers, using the same setup and conventions our team already uses. Follow these steps.
+
+INPUTS
+- NFP prototype folder: <full path to the NFP folder on my computer>
+- Figma file: https://www.figma.com/design/OH54yXEIQt5vwYEF6wfFQS  (fileKey OH54yXEIQt5vwYEF6wfFQS)
+- Flow to capture: <for example "Agency Onboarding" or "Commissions">
+
+1. CHECK THE FIGMA CONNECTION
+   Use the Figma MCP tool whoami. Tell me the account and plan. If the plan is Starter, warn me:
+   Starter allows about 20 calls a month and 3 pages per file.
+
+2. CREATE THE CAPTURE TOOLS
+   If the kit folder 03-Capture-Tools exists, use the scripts in it. Otherwise make a folder named
+   figma-capture OUTSIDE the NFP folder and save the two scripts below into it exactly as given:
+   serve.py and open_captures.py. On Windows use "python" instead of "python3".
+
+3. START THE PREVIEW SERVER (in the background)
+   python3 <capture tools folder>/serve.py "<NFP folder>" 8090
+   Check http://localhost:8090/<some page>.html loads and contains "capture.js".
+   The NFP files must never be edited.
+
+4. FIND EVERY SCREEN AND STATE IN THE FLOW
+   Read the flow's HTML pages. Many pages are wizards that show one step at a time. Find the
+   JavaScript function that switches steps and list one capture per step and per important
+   sub-screen. Known examples:
+   - agent/onboarding.html: obGoTo(0) .. obGoTo(6); step 8 needs
+     canOpenFinalStep=function(){return true};obGoTo(7)
+     training segments: obGoTo(4);openSegmentScreen(0) .. openSegmentScreen(3)
+   - agent/onboarding-form.html: goToStep(1) .. goToStep(10)
+   Before capturing, verify each step in headless Chrome (--dump-dom) so the right section is
+   active. Show me the list and wait for my OK before writing anything to Figma.
+
+5. CAPTURE
+   For each screen, call generate_figma_design with the fileKey (no captureId) to get a capture ID.
+   Then run, in one command for all screens:
+     python3 <capture tools folder>/open_captures.py "<page>?run=<url-encoded js>|<captureId>" ...
+   Encode ; as %3B, = as %3D, { as %7B, } as %7D, spaces as %20.
+   Then poll generate_figma_design with fileKey + captureId until each one is completed.
+   Never open capture links in my normal browser. Background tabs pause and captures stay pending.
+
+6. ORGANISE IN FIGMA (use_figma tool; read the figma-use skill first)
+   - Rename each frame "CODE · Screen name". Use a 3-letter flow code plus a 2-digit step
+     (e.g. AGO-03). Sub-screens use CODE.n (e.g. AGO-05.2).
+   - Group frames into Sections named "NN-X · Part name", left to right in user-journey order,
+     with 240 px gaps.
+   - At the top of each section, place an instance of the "Annotation/Flow Header" component
+     (Annotation Kit page) and fill Eyebrow, Title, Description and Meta (entry, exit, screen count).
+   - Above each frame, place an "Annotation/Screen Label" instance (Code, Title, Source) with the
+     Status pill set to "NFP Reference". Put "Annotation/Flow Arrow" instances between frames.
+     Add an "Annotation/Note" under a screen only when something needs explaining.
+   - Canvas: page background #121212, section fill #1E1E1E.
+   - Update the Read Me: page index and a change log line with today's date.
+
+7. RULES
+   - Do not use emojis or long dashes (—) in any Figma names or text you write.
+   - Ask me before every write to Figma.
+   - Keep each use_figma script small and return the IDs it changed.
+   - If a call fails because of a plan limit, stop and tell me. Do not retry in a loop.
+
+=== serve.py ===
+# Serves the NFP prototype and injects Figma's capture script into every HTML page.
+# Source files are never modified. Usage: python3 serve.py <nfp_dir> [port]
+import http.server, os, sys
+from functools import partial
+
+TAG = b'<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>'
+# Optional ?run=<js> in the URL: runs that JS after load, so a wizard step or hidden
+# state can be shown before Figma captures it (e.g. ?run=obGoTo(3)).
+RUN = b'''<script>window.addEventListener("load",function(){var r=new URLSearchParams(location.search).get("run");
+if(r)setTimeout(function(){try{(0,eval)(r);window.scrollTo(0,0)}catch(e){console.error("run failed",e)}},300)})</script>'''
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def send_head(self):
+        path = self.translate_path(self.path)
+        if os.path.isdir(path):
+            path = os.path.join(path, "index.html")
+        if not path.endswith(".html") or not os.path.isfile(path):
+            return super().send_head()
+        with open(path, "rb") as f:
+            body = f.read()
+        body = body.replace(b"</head>", TAG + RUN + b"</head>", 1) if b"</head>" in body else TAG + RUN + body
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        import io
+        return io.BytesIO(body)
+
+root = os.path.abspath(sys.argv[1])
+port = int(sys.argv[2]) if len(sys.argv) > 2 else 8090
+http.server.ThreadingHTTPServer(("127.0.0.1", port), partial(Handler, directory=root)).serve_forever()
+
+=== open_captures.py ===
+# Captures NFP pages into Figma using headless Chrome (background tabs in a normal
+# browser pause, so captures never fire there). One Chrome per page, run in parallel.
+# Needs serve.py running on port 8090.
+# Usage: python3 open_captures.py "<path?run=js>|<captureId>" ...
+import os, shutil, subprocess, sys, tempfile, time, urllib.parse
+
+def find_chrome():
+    candidates = [
+        os.environ.get("CHROME_PATH", ""),
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        os.path.expandvars(r"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%LocalAppData%\Google\Chrome\Application\chrome.exe"),
+    ]
+    for name in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser", "chrome"):
+        found = shutil.which(name)
+        if found:
+            candidates.append(found)
+    for c in candidates:
+        if c and os.path.isfile(c):
+            return c
+    sys.exit("Google Chrome not found. Install it or set CHROME_PATH to chrome's full path.")
+
+CHROME = find_chrome()
+BASE = "http://localhost:8090/"
+procs = []
+for arg in sys.argv[1:]:
+    page, cid = arg.rsplit("|", 1)
+    ep = urllib.parse.quote(f"https://mcp.figma.com/mcp/capture/{cid}/submit?bindVariables=true", safe="")
+    url = f"{BASE}{page}#figmacapture={cid}&figmaendpoint={ep}&figmadelay=3000"
+    procs.append(subprocess.Popen([CHROME, "--headless=new", "--disable-gpu", "--window-size=1440,900",
+        f"--user-data-dir={tempfile.mkdtemp(prefix='figcap-')}", url],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
+    print("started", page)
+    time.sleep(1)
+time.sleep(30)
+for p in procs:
+    p.terminate()
+print("done")

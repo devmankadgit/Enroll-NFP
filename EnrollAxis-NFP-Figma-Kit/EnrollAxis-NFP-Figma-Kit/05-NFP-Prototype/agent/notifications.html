@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}.notif-item{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid #f1f3f4;cursor:pointer;transition:background .15s}.notif-item:hover{background:#f8f9fa}.notif-item.unread{background:#e3f2fd;border-left:3px solid #0d47a1}.notif-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}.notif-body{flex:1}.notif-title{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:2px}.notif-desc{font-size:12px;color:#5f6368;line-height:1.4}.notif-time{font-size:11px;color:#80868b;margin-top:4px}.notif-dot{width:8px;height:8px;border-radius:50%;background:#0d47a1;flex-shrink:0;margin-top:6px}.filter-pills{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}.filter-pills button{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid #e8eaed;background:#fff;color:#5f6368;cursor:pointer}.filter-pills button.active{background:#0d47a1;color:#fff;border-color:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html" class="active"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Notification Center</h4><ol class="breadcrumb-bar"><li>In-App Notifications</li></ol></div>
+    <button class="btn-ol btn-sm" onclick="nfpAction('All notifications marked as read','info')"><i class="fas fa-check-double"></i>Mark All Read</button>
+    <a href="profile.html" class="btn-ol btn-sm"><i class="fas fa-cog"></i>Preferences</a>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-bell"></i></div><div><div class="stat-label">Unread</div><div class="stat-val">7</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-users"></i></div><div><div class="stat-label">Lead Notifications</div><div class="stat-val">3</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-file-medical"></i></div><div><div class="stat-label">Enrollment</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Commission</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-shield-alt"></i></div><div><div class="stat-label">Compliance</div><div class="stat-val">1</div></div></div></div>
+    </div>
+
+    <!-- Filter Pills -->
+    <div class="filter-pills" id="notifFilters">
+      <button class="active" data-filter="all">All (7)</button>
+      <button data-filter="lead"><i class="fas fa-users" style="margin-right:4px"></i>Lead</button>
+      <button data-filter="enrollment"><i class="fas fa-file-medical" style="margin-right:4px"></i>Enrollment</button>
+      <button data-filter="commission"><i class="fas fa-dollar-sign" style="margin-right:4px"></i>Commission</button>
+      <button data-filter="compliance"><i class="fas fa-shield-alt" style="margin-right:4px"></i>Compliance</button>
+      <button data-filter="action-item"><i class="fas fa-tasks" style="margin-right:4px"></i>Action Item</button>
+      <button data-filter="system"><i class="fas fa-cog" style="margin-right:4px"></i>System</button>
+    </div>
+
+    <!-- Notification List -->
+    <div class="card">
+      <div class="card-hdr"><h5>Recent Notifications</h5></div>
+      <div>
+        <!-- Unread -->
+        <div class="notif-item unread" data-category="lead" onclick="location.href='leads.html'">
+          <div class="notif-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-plus"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">New Lead Assigned: Dorothy Henderson</div>
+            <div class="notif-desc">Lead from AEP 2026 FL digital form auto-assigned to you via round-robin. ZIP: 33139 (Miami-Dade, FL). Health: ESRD.</div>
+            <div class="notif-time">2 minutes ago</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="enrollment" onclick="location.href='enrollment-status.html'">
+          <div class="notif-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-check-circle"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Enrollment CMS Accepted: Thomas Rivera (APP-2026-1248)</div>
+            <div class="notif-desc">CMS has accepted the enrollment application. Member is now Active in CKD SNP Silver plan effective 07 01,2026. ID card generation initiated.</div>
+            <div class="notif-time">15 minutes ago</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="lead" onclick="location.href='leads.html'">
+          <div class="notif-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Follow-Up Overdue: Linda Park</div>
+            <div class="notif-desc">Your follow-up with Linda Park was due 05 24,2026 and is now overdue (1 day). Status: New. Next action: Initial contact call.</div>
+            <div class="notif-time">1 hour ago</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="commission" onclick="location.href='commissions.html'">
+          <div class="notif-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-dollar-sign"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Commission Payment Processed: April 2026</div>
+            <div class="notif-desc">Your April 2026 commission payment of $601.00 has been processed via ACH. Payment includes: 1 Initial enrollment ($578.33 prorated) + 1 HRA incentive ($25.00). View statement.</div>
+            <div class="notif-time">3 hours ago</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="action-item" onclick="location.href='action-items.html'">
+          <div class="notif-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-circle"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">HRA Due: Susan Walsh — 3 days remaining</div>
+            <div class="notif-desc">HRA for Susan Walsh must be submitted by 05 28,2026 (14-day window from application signature). Complete now to earn $25.00 HRA incentive.</div>
+            <div class="notif-time">5 hours ago</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="compliance">
+          <div class="notif-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-shield-alt"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">AHIP Certification Renewal Reminder</div>
+            <div class="notif-desc">Your AHIP certification expires in 45 days (07 09,2026). Renew before expiration to maintain Ready to Sell status. This is a mandatory notification.</div>
+            <div class="notif-time">Yesterday at 9:00 AM</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <div class="notif-item unread" data-category="lead" onclick="location.href='leads.html'">
+          <div class="notif-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-exchange-alt"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Lead Reassigned From You: Mark Davis</div>
+            <div class="notif-desc">Lead Mark Davis has been reassigned from you to Sarah Chen by Agency Admin. Reason: Territory rebalancing. Original lead assignment May 15.</div>
+            <div class="notif-time">Yesterday at 2:30 PM</div>
+          </div>
+          <div class="notif-dot"></div>
+        </div>
+
+        <!-- Read -->
+        <div class="notif-item" data-category="system">
+          <div class="notif-icon" style="background:#f0f2f5;color:#5f6368"><i class="fas fa-cog"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">New Training Package Available: AEP 2027 Certification</div>
+            <div class="notif-desc">A new training package "AEP 2027 AHIP + Gold Kidney Product Training" has been published. Complete by Sep 30 to sell during AEP 2027.</div>
+            <div class="notif-time">2 days ago</div>
+          </div>
+        </div>
+
+        <div class="notif-item" data-category="enrollment">
+          <div class="notif-icon" style="background:#f0f2f5;color:#5f6368"><i class="fas fa-file-medical"></i></div>
+          <div class="notif-body">
+            <div class="notif-title">Enrollment Submitted: Frank Johnson (APP-2026-1249)</div>
+            <div class="notif-desc">Enrollment application submitted to CMS. ATN pending. 7-day compliance clock started.</div>
+            <div class="notif-time">May 19 at 11:45 AM</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;border-top:1px solid #f1f3f4;text-align:center">
+        <button class="btn-ol btn-sm" onclick="nfpSave('Changes')">Load More Notifications</button>
+      </div>
+    </div>
+
+    <!-- Notification Preferences -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-cog" style="margin-right:8px;color:#5f6368"></i>Notification Preferences</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','notifications_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Mandatory notifications (Compliance, Account Security) cannot be opted out. Preferences saved per category.</span></div>
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Category</th><th>In-Portal</th><th>Email</th><th>SMS</th><th>Opt-Out</th></tr></thead>
+          <tbody>
+            <tr><td>Lead Assignments &amp; Updates</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+            <tr><td>Enrollment Status Changes</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+            <tr><td>Commission &amp; Payment</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+            <tr><td>Action Item Reminders</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+            <tr><td><strong>Compliance (Mandatory)</strong></td><td><input type="checkbox" checked disabled></td><td><input type="checkbox" checked disabled></td><td><input type="checkbox" disabled></td><td><input type="checkbox" disabled title="Cannot opt out"></td></tr>
+            <tr><td><strong>Account Security (Mandatory)</strong></td><td><input type="checkbox" checked disabled></td><td><input type="checkbox" checked disabled></td><td><input type="checkbox" disabled></td><td><input type="checkbox" disabled title="Cannot opt out"></td></tr>
+            <tr><td>Daily Action Item Digest</td><td></td><td><input type="checkbox" checked></td><td></td><td><input type="checkbox"></td></tr>
+          </tbody>
+        </table>
+        <button class="btn-pr btn-sm" style="margin-top:12px"><i class="fas fa-save"></i>Save Preferences</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+document.querySelectorAll('#notifFilters button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('#notifFilters button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var filter = btn.dataset.filter;
+    var items = document.querySelectorAll('.notif-item');
+    var count = 0;
+    items.forEach(function(item){
+      if(filter === 'all' || item.dataset.category === filter){
+        item.style.display = '';
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    if(typeof showToast === 'function') showToast(count + ' notification(s) shown', 'info');
+  });
+});
+</script>
+</body>
+</html>

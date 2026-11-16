@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PQAT Health Questionnaire | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}.plan-card{background:#fff;border:2px solid #e8eaed;border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s}.plan-card:hover{border-color:#0d47a1;box-shadow:0 4px 12px rgba(13,71,161,.12)}.plan-card.recommended{border-color:#1b5e20;background:#f1f8e9}.plan-card .plan-name{font-size:14px;font-weight:700;margin-bottom:4px}.plan-card .plan-match{font-size:11px;padding:2px 8px;border-radius:10px;display:inline-block}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Plan Qualification Assessment Tool (PQAT)</h4><ol class="breadcrumb-bar"><li>Health Questionnaire &amp; Plan Recommendation (No Agent Override)</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- PQAT Deadline + Save-Resume Banner -->
+    <div style="display:flex;gap:12px;align-items:stretch;margin-bottom:16px;flex-wrap:wrap">
+      <div class="al-warn" style="flex:1;min-width:220px;border:1px solid #e65100">
+        <i class="fas fa-clock" style="flex-shrink:0;color:#e65100"></i>
+        <span><strong>PQAT Completion Deadline:</strong> <strong>07 28,2026</strong> (60 days from enrollment effective date 06 01,2026). <span id="pqatCountdown" style="color:#c62828;font-weight:700"></span></span>
+      </div>
+      <div id="resumePrompt" style="display:none;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 14px;font-size:13px;align-items:center;gap:10px;flex-shrink:0">
+        <i class="fas fa-history" style="color:#0d47a1"></i>
+        <span>Saved draft found.</span>
+        <button class="btn-pr btn-sm" onclick="resumePQAT()">Resume</button>
+        <button class="btn-ol btn-sm" onclick="discardDraft()">Discard</button>
+      </div>
+    </div>
+    <!-- Beneficiary Info -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-user" style="margin-right:8px;color:#0d47a1"></i>Beneficiary Information</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Beneficiary Name</label><input type="text" class="form-control form-control-sm" value="Thomas Rivera" readonly style="background:#f8f9fa"></div>
+          <div class="fg"><label>MBI</label><input type="text" class="form-control form-control-sm" value="2KF7-AB3-QR91" readonly style="background:#f8f9fa"></div>
+          <div class="fg"><label>DOB</label><input type="text" class="form-control form-control-sm" value="07/22/1951" readonly style="background:#f8f9fa"></div>
+          <div class="fg"><label>County</label><input type="text" class="form-control form-control-sm" value="Miami-Dade, FL" readonly style="background:#f8f9fa"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Questionnaire -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-clipboard-list" style="margin-right:8px;color:#4a148c"></i>Health Condition Questionnaire</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div style="margin-bottom:16px">
+          <div style="font-weight:600;margin-bottom:8px">1. Primary Kidney Condition <span style="color:#c62828">*</span></div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+            <label style="padding:8px 12px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="radio" name="kidney" checked> Chronic Kidney Disease (CKD)  Stage 3a (eGFR 4559)</label>
+            <label style="padding:8px 12px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="radio" name="kidney"> Chronic Kidney Disease (CKD)  Stage 3b (eGFR 3044)</label>
+            <label style="padding:8px 12px;background:#fff3e0;border-radius:6px;cursor:pointer"><input type="radio" name="kidney"> Chronic Kidney Disease (CKD)  Stage 4 (eGFR 1529)</label>
+            <label style="padding:8px 12px;background:#fce4ec;border-radius:6px;cursor:pointer"><input type="radio" name="kidney"> End-Stage Renal Disease (ESRD)  Dialysis (eGFR &lt; 15)</label>
+            <label style="padding:8px 12px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="radio" name="kidney"> Kidney Transplant Recipient</label>
+            <label style="padding:8px 12px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="radio" name="kidney"> No kidney condition (standard MA only)</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div style="font-weight:600;margin-bottom:8px">2. Comorbid Conditions (select all that apply)</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" checked> Type 2 Diabetes</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> Hypertension</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" checked> Cardiovascular Disease</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> Heart Failure</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> COPD</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> None of the above</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div style="font-weight:600;margin-bottom:8px">3. Current Treatment <span style="color:#c62828">*</span></div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" checked> Under nephrologist care</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> On dialysis (hemodialysis / peritoneal)</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox"> Transplant evaluation list</label>
+            <label style="padding:6px 10px;background:#f8f9fa;border-radius:6px;cursor:pointer"><input type="checkbox" checked> Prescription medication for kidney disease</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div style="font-weight:600;margin-bottom:8px">4. Most Recent eGFR Value</div>
+          <div class="form-row">
+            <div class="fg"><label>eGFR</label><input type="number" class="form-control form-control-sm" value="22" min="1" max="120"></div>
+            <div class="fg"><label>Test Date</label><input type="date" class="form-control form-control-sm" value="2026-04-15"></div>
+            <div class="fg"><label>Lab Provider</label><input type="text" class="form-control form-control-sm" value="Quest Diagnostics"></div>
+          </div>
+        </div>
+
+        <button class="btn-pr btn-sm" onclick="generateRec()"><i class="fas fa-calculator"></i>Generate Plan Recommendation</button>
+        <button class="btn-ol btn-sm" onclick="savePQATProgress()" style="margin-left:4px"><i class="fas fa-save"></i>Save Progress</button>
+        <span id="saveDraftMsg" style="display:none;font-size:12px;color:#1b5e20;margin-left:8px"><i class="fas fa-check-circle"></i> Draft saved.</span>
+      </div>
+    </div>
+
+    <!-- Additional Clinical Fields -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-pills" style="margin-right:8px;color:#6a1b9a"></i>Additional Clinical Information</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg" style="flex:2"><label>Current Medications <span style="font-size:11px;color:#5f6368">(list all, or type brand/generic name)</span></label>
+            <textarea id="pqatMeds" rows="3" placeholder="e.g., Lisinopril 10mg, Furosemide 40mg, Erythropoietin injections, Phosphate binders..."></textarea>
+          </div>
+          <div class="fg"><label>Health Status Self-Assessment <span class="req">*</span></label>
+            <select id="pqatStatus">
+              <option value="">&#8212; Select &#8212;</option>
+              <option>Excellent &#8212; Active, minimal symptoms</option>
+              <option>Good &#8212; Managing condition well</option>
+              <option>Fair &#8212; Some daily limitations</option>
+              <option>Poor &#8212; Significant daily limitations</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-weight:600;margin-bottom:8px">Preferred Specialist(s)</div>
+          <div id="specialistList">
+            <div class="specialist-row form-row" style="margin-bottom:6px">
+              <div class="fg"><label style="font-size:11.5px">Specialist Name</label><input placeholder="e.g., Dr. Angela Reyes"></div>
+              <div class="fg"><label style="font-size:11.5px">Specialty</label><input placeholder="e.g., Nephrology"></div>
+              <button type="button" onclick="removeSpecialist(this)" style="align-self:flex-end;background:none;border:1px solid #e0e0e0;border-radius:6px;padding:6px 10px;cursor:pointer;color:#c62828"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <button class="btn-ol btn-sm" onclick="addSpecialist()" style="margin-top:4px"><i class="fas fa-plus"></i>Add Specialist</button>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Preferred Hospital</label><input id="pqatHospital" placeholder="e.g., Jackson Memorial Hospital"></div>
+          <div class="fg"><label>Preferred Pharmacy</label><input id="pqatPharmacy" placeholder="e.g., CVS #1482, 8400 NW 27th Ave"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan Recommendation Engine Output -->
+    <div class="card mb16" style="border:2px solid #1b5e20">
+      <div class="card-hdr" style="background:#e8f5e9"><h5><i class="fas fa-magic" style="margin-right:8px;color:#1b5e20"></i>Plan Recommendation Results</h5><span class="bdg b-green">Based on PQAT Responses</span></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+          <div class="plan-card recommended">
+            <div style="font-size:10px;text-transform:uppercase;color:#1b5e20;font-weight:700;margin-bottom:4px">&#11088; RECOMMENDED</div>
+            <div class="plan-name">CKD SNP Gold</div>
+            <div style="font-size:12px;color:#5f6368;margin-bottom:6px">Chronic Special Needs Plan</div>
+            <div class="plan-match" style="background:#c8e6c9;color:#1b5e20">98% Match</div>
+            <div style="margin:6px 0;background:#e8f5e9;border-radius:6px;padding:5px 10px;font-size:12px;text-align:center;font-weight:600;color:#1b5e20"><i class="fas fa-chart-bar" style="margin-right:4px"></i>PQAT Fit Score: <strong>94%</strong></div>
+            <ul style="text-align:left;font-size:11px;margin-top:8px;padding-left:16px;color:#5f6368">
+              <li>Nephrology specialist coverage</li>
+              <li>$0 dialysis copay</li>
+              <li>Renal diet meal benefit</li>
+              <li>Care coordination included</li>
+            </ul>
+            <button class="btn-pr btn-sm" style="margin-top:10px;width:100%" onclick="selectPlan('CKD SNP Gold',1)">Select This Plan</button>
+          </div>
+          <div class="plan-card">
+            <div class="plan-name">CKD SNP Silver</div>
+            <div style="font-size:12px;color:#5f6368;margin-bottom:6px">Chronic Special Needs Plan</div>
+            <div class="plan-match" style="background:#e3f2fd;color:#0d47a1">85% Match</div>
+            <div style="margin:6px 0;background:#e3f2fd;border-radius:6px;padding:5px 10px;font-size:12px;text-align:center;font-weight:600;color:#0d47a1"><i class="fas fa-chart-bar" style="margin-right:4px"></i>PQAT Fit Score: <strong>81%</strong></div>
+            <ul style="text-align:left;font-size:11px;margin-top:8px;padding-left:16px;color:#5f6368">
+              <li>Nephrology specialist coverage</li>
+              <li>$25 dialysis copay</li>
+              <li>Standard formulary</li>
+            </ul>
+            <button class="btn-ol btn-sm" style="margin-top:10px;width:100%" onclick="selectPlan('CKD SNP Silver',2)">Select This Plan</button>
+          </div>
+          <div class="plan-card">
+            <div class="plan-name">ESRD Platinum</div>
+            <div style="font-size:12px;color:#5f6368;margin-bottom:6px">End-Stage Renal Disease SNP</div>
+            <div class="plan-match" style="background:#fff8e1;color:#e65100">72% Match</div>
+            <div style="margin:6px 0;background:#fff8e1;border-radius:6px;padding:5px 10px;font-size:12px;text-align:center;font-weight:600;color:#e65100"><i class="fas fa-chart-bar" style="margin-right:4px"></i>PQAT Fit Score: <strong>68%</strong></div>
+            <ul style="text-align:left;font-size:11px;margin-top:8px;padding-left:16px;color:#5f6368">
+              <li>Full dialysis coverage</li>
+              <li>Transplant coordination</li>
+              <li>Higher premium</li>
+            </ul>
+            <button class="btn-ol btn-sm" style="margin-top:10px;width:100%" onclick="selectPlan('ESRD Platinum',3)">Select This Plan</button>
+          </div>
+        </div>
+
+        <!-- Override reason modal (inline) -->
+        <div id="overridePanel" style="display:none;padding:14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin-bottom:12px">
+          <div style="font-weight:700;color:#e65100;margin-bottom:8px"><i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Plan Override &#8212; Non-Recommended Plan Selected</div>
+          <p style="font-size:13px">You selected <strong id="overridePlanName"></strong>, which is not in the top 3 PQAT-recommended plans. Please document your clinical reason for this selection (minimum 20 characters). This will be logged in the audit trail.</p>
+          <label style="font-size:12.5px">Override Reason <span class="req">*</span></label>
+          <textarea id="overrideReason" rows="2" placeholder="Clinical justification for selecting this plan over the PQAT recommendations (min 20 chars)..."></textarea>
+          <div id="overrideErr" style="color:#c62828;font-size:12px;margin-top:4px;display:none"></div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn-pr btn-sm" onclick="confirmPlanOverride()"><i class="fas fa-check"></i>Confirm Override &amp; Proceed</button>
+            <button class="btn-ol btn-sm" onclick="document.getElementById('overridePanel').style.display='none'">Cancel</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn-ol btn-sm" onclick="nfpExport('PQAT Report PDF')"><i class="fas fa-file-pdf"></i>Save PQAT Report</button>
+          <button class="btn-ol btn-sm" style="color:#e65100;border-color:#e65100" onclick="nfpAction('Clinical review requested','info')"><i class="fas fa-flag"></i>Request Clinical Review</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Countdown to PQAT deadline (07 28,2026)
+(function(){
+  var deadline=new Date('2026-07-28');
+  var today=new Date('2026-05-29');
+  var diff=Math.ceil((deadline-today)/(1000*60*60*24));
+  var el=document.getElementById('pqatCountdown');
+  if(el) el.textContent=diff+' days remaining.';
+  // Check for saved draft
+  if(localStorage.getItem('pqatDraft')){
+    var rp=document.getElementById('resumePrompt');
+    if(rp) rp.style.display='flex';
+  }
+})();
+
+function generateRec(){
+  nfpAction('Plan recommendation generated based on PQAT responses. CKD SNP Gold — 94% PQAT Fit Score.','success');
+}
+
+function savePQATProgress(){
+  var data={meds:document.getElementById('pqatMeds')?document.getElementById('pqatMeds').value:'',hospital:document.getElementById('pqatHospital')?document.getElementById('pqatHospital').value:'',pharmacy:document.getElementById('pqatPharmacy')?document.getElementById('pqatPharmacy').value:'',status:document.getElementById('pqatStatus')?document.getElementById('pqatStatus').value:'',ts:new Date().toLocaleString()};
+  localStorage.setItem('pqatDraft',JSON.stringify(data));
+  var msg=document.getElementById('saveDraftMsg');
+  if(msg){msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3000);}
+}
+
+function resumePQAT(){
+  var draft=JSON.parse(localStorage.getItem('pqatDraft')||'{}');
+  if(draft.meds&&document.getElementById('pqatMeds')) document.getElementById('pqatMeds').value=draft.meds;
+  if(draft.hospital&&document.getElementById('pqatHospital')) document.getElementById('pqatHospital').value=draft.hospital;
+  if(draft.pharmacy&&document.getElementById('pqatPharmacy')) document.getElementById('pqatPharmacy').value=draft.pharmacy;
+  if(draft.status&&document.getElementById('pqatStatus')) document.getElementById('pqatStatus').value=draft.status;
+  document.getElementById('resumePrompt').style.display='none';
+  nfpAction('Draft from '+draft.ts+' restored.','success');
+}
+
+function discardDraft(){
+  localStorage.removeItem('pqatDraft');
+  document.getElementById('resumePrompt').style.display='none';
+}
+
+function addSpecialist(){
+  var list=document.getElementById('specialistList');
+  var row=document.createElement('div');
+  row.className='specialist-row form-row';
+  row.style.marginBottom='6px';
+  row.innerHTML='<div class="fg"><label style="font-size:11.5px">Specialist Name</label><input placeholder="e.g., Dr. John Nguyen"></div><div class="fg"><label style="font-size:11.5px">Specialty</label><input placeholder="e.g., Cardiology"></div><button type="button" onclick="removeSpecialist(this)" style="align-self:flex-end;background:none;border:1px solid #e0e0e0;border-radius:6px;padding:6px 10px;cursor:pointer;color:#c62828"><i class="fas fa-times"></i></button>';
+  list.appendChild(row);
+}
+
+function removeSpecialist(btn){
+  var rows=document.querySelectorAll('#specialistList .specialist-row');
+  if(rows.length>1) btn.closest('.specialist-row').remove();
+}
+
+// Plan selection — show override reason if not top-3
+function selectPlan(name,rank){
+  if(rank<=3){
+    nfpSubmit('Plan selected: '+name+'. PQAT Fit Score logged. Proceeding to enrollment.');
+  } else {
+    document.getElementById('overridePlanName').textContent=name;
+    document.getElementById('overridePanel').style.display='block';
+    document.getElementById('overridePanel').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
+function confirmPlanOverride(){
+  var reason=document.getElementById('overrideReason').value.trim();
+  var errDiv=document.getElementById('overrideErr');
+  if(reason.length<20){errDiv.textContent='Override reason must be at least 20 characters (current: '+reason.length+').';errDiv.style.display='block';return;}
+  errDiv.style.display='none';
+  document.getElementById('overridePanel').style.display='none';
+  nfpSubmit('Plan override confirmed. Reason logged to audit trail. Proceeding to enrollment.');
+}
+</script>
+</body>
+</html>

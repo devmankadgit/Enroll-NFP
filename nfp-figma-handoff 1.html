@@ -1,0 +1,502 @@
+<title>NFP to Figma Handoff</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky contents rail on the left, one reading column on the right; stacks on phones */
+:root {
+  --bg: #F4F6F9; --surface: #FFFFFF; --ink: #0F1B2D; --muted: #55627A; --line: #DCE2EB;
+  --accent: #0B3A82; --accent-soft: #E6EEFA; --code-bg: #0F1B2D; --code-ink: #E3EAF5;
+  --warn-bg: #FFF6E5; --warn-ink: #7A4A00; --ok-bg: #E9F7EF; --ok-ink: #0E6B3A;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0D131D; --surface: #151D2A; --ink: #E7ECF4; --muted: #9AA7BC; --line: #26324A;
+  --accent: #8DB4F5; --accent-soft: #1A2A47; --code-bg: #070B12; --code-ink: #DCE5F3;
+  --warn-bg: #2E2410; --warn-ink: #F3C878; --ok-bg: #10291C; --ok-ink: #8FDCB0; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0D131D; --surface: #151D2A; --ink: #E7ECF4; --muted: #9AA7BC; --line: #26324A;
+  --accent: #8DB4F5; --accent-soft: #1A2A47; --code-bg: #070B12; --code-ink: #DCE5F3;
+  --warn-bg: #2E2410; --warn-ink: #F3C878; --ok-bg: #10291C; --ok-ink: #8FDCB0; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 16px/1.65 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px }
+.shell { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; align-items: start }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); font-size: 14px }
+nav.toc p { font: 600 12px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; counter-reset: s }
+nav.toc a { color: var(--muted); text-decoration: none; display: block; padding: 4px 10px; border-radius: 6px }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--accent-soft); outline: none }
+main { min-width: 0; display: grid; gap: 56px }
+header.top { display: grid; gap: 14px; padding-bottom: 32px; border-bottom: 1px solid var(--line) }
+.eyebrow { font: 600 12px/1 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(34px, 5vw, 52px)/1.05 var(--display); margin: 0; text-wrap: balance; letter-spacing: -.01em }
+h2 { font: 700 28px/1.2 var(--display); margin: 0 0 8px; text-wrap: balance; scroll-margin-top: 24px }
+h3 { font: 600 18px/1.35 var(--body); margin: 24px 0 6px }
+p { margin: 0 0 12px; max-width: 68ch }
+.lede { font-size: 19px; color: var(--muted); max-width: 64ch }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 14px; color: var(--muted) }
+.meta b { color: var(--ink); font-weight: 600 }
+a { color: var(--accent) }
+section { display: grid; gap: 4px; min-width: 0 }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px }
+.fact b { display: block; font: 700 30px/1 var(--display); font-variant-numeric: tabular-nums; margin-bottom: 6px }
+.fact span { font-size: 14px; color: var(--muted) }
+.tbl { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface) }
+table { border-collapse: collapse; width: 100%; font-size: 15px }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font: 600 12px/1.3 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--bg) }
+tr:last-child td { border-bottom: 0 }
+td code, p code, li code { font: 500 .88em var(--mono); background: var(--accent-soft); padding: 1px 6px; border-radius: 4px; white-space: nowrap }
+ol.steps { counter-reset: st; list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 14px; max-width: 72ch }
+ol.steps > li { counter-increment: st; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px }
+ol.steps > li::before { content: counter(st); font: 600 14px/34px var(--body); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent) }
+ul { margin: 8px 0 12px; padding-left: 22px; max-width: 70ch }
+li { margin-bottom: 6px }
+.callout { border-radius: 10px; padding: 14px 18px; margin: 12px 0; max-width: 76ch }
+.callout.warn { background: var(--warn-bg); color: var(--warn-ink) }
+.callout.ok { background: var(--ok-bg); color: var(--ok-ink) }
+.callout p:last-child { margin: 0 }
+.code { position: relative; margin: 12px 0; min-width: 0 }
+.code pre { background: var(--code-bg); color: var(--code-ink); font: 13.5px/1.6 var(--mono); padding: 18px 20px; border-radius: 10px; overflow-x: auto; margin: 0; white-space: pre }
+.code .label { font: 600 12px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block }
+.copy { position: absolute; right: 10px; top: 30px; font: 500 13px var(--body); padding: 6px 12px; border-radius: 6px; border: 1px solid #3A4A66; background: #1C2A40; color: #E3EAF5; cursor: pointer }
+.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0 }
+.flow .node { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 14px; flex: 1 1 150px; min-width: 0 }
+.flow .node b { display: block; font-size: 15px; margin-bottom: 2px }
+.flow .arrow { color: var(--muted); font-size: 20px }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 13px var(--body); padding: 3px 10px; border-radius: 999px }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50% ; background: currentColor }
+.p1 { background: #EFF8FF; color: #175CD3 } .p2 { background: #FFFAEB; color: #B54708 } .p3 { background: #ECFDF3; color: #067647 } .p4 { background: #F4F3FF; color: #5925DC }
+@media (max-width: 860px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 24px } nav.toc { position: static } nav.toc ol { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important } }
+html { scroll-behavior: smooth }
+</style>
+
+<div class="shell">
+<nav class="toc" aria-label="Contents">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#summary">1. Summary</a></li>
+    <li><a href="#tour">2. Tour of the Figma file</a></li>
+    <li><a href="#screens">3. Screen list</a></li>
+    <li><a href="#daily">4. Working in the file</a></li>
+    <li><a href="#pending">5. Pending cleanup</a></li>
+    <li><a href="#questions">6. Open questions</a></li>
+    <li><a href="#how">7. How the capture works</a></li>
+    <li><a href="#setup">8. Set it up yourself</a></li>
+    <li><a href="#claude">9. Give this to your Claude</a></li>
+    <li><a href="#trouble">10. Troubleshooting</a></li>
+    <li><a href="#glossary">11. Glossary</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="top">
+  <span class="eyebrow">EnrollAxis · Agent &amp; Broker Portal · Design handoff</span>
+  <h1>NFP prototype to Figma: Agent Onboarding</h1>
+  <p class="lede">Everything you need to pick up the Figma file of the NFP Agent Onboarding screens: what is in it, how it is organised, what still needs doing, and how to capture more screens yourself, by hand or with your own Claude.</p>
+  <div class="meta">
+    <span>For <b>UI/UX design team</b></span>
+    <span>Date <b>14 Oct 2026</b></span>
+    <span>File version <b>v0.1</b></span>
+    <span>Figma file <b><a href="https://www.figma.com/design/OH54yXEIQt5vwYEF6wfFQS" target="_blank" rel="noopener">Open in Figma</a></b></span>
+  </div>
+</header>
+
+<section id="summary">
+  <h2>1. Summary</h2>
+  <p>The NFP prototype is a set of HTML pages. We moved the whole Agent Onboarding flow into Figma as <b>editable layers</b>, not screenshots. That means every text, box and button can be selected and changed in Figma.</p>
+  <p>Many NFP pages are step-by-step wizards where only one step is visible at a time. We captured <b>every step and sub-screen as its own frame</b>, then named, labelled and grouped them in the order a user goes through them.</p>
+  <div class="facts">
+    <div class="fact"><b>24</b><span>screens captured</span></div>
+    <div class="fact"><b>4</b><span>flow sections</span></div>
+    <div class="fact"><b>3</b><span>Figma pages</span></div>
+    <div class="fact"><b>5</b><span>annotation components</span></div>
+  </div>
+  <div class="callout warn"><p><b>Important:</b> the captured screens are a <b>reference of the current NFP</b>. They are not the new design. The redesign should be built with the AaNeel shadcn/ui design system, using these frames as the layout guide.</p></div>
+</section>
+
+<section id="tour">
+  <h2>2. Tour of the Figma file</h2>
+  <h3>Pages</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Page</th><th>What is on it</th></tr></thead>
+    <tbody>
+      <tr><td>Cover &amp; Read Me</td><td>Cover frame (project, flow, version, date) and a Read Me frame (purpose, page index, naming rules, status legend, open questions, change log).</td></tr>
+      <tr><td>01 · Agent Onboarding</td><td>All 24 screens, in 4 sections, in user-journey order.</td></tr>
+      <tr><td>Annotation Kit</td><td>The reusable labelling components used on the flow page.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The file is on the Figma <b>Starter</b> plan, which allows only 3 pages. On a Professional plan, each flow should get its own page (02 · Agency Onboarding, 03 · Commissions, and so on).</p>
+
+  <h3>Sections on the flow page</h3>
+  <p>Each section starts with a <b>Flow Header</b> card that explains the flow, where it starts, where it ends and how many screens it has. Screens run left to right with an arrow between each step.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Section</th><th>What it shows</th><th>Screens</th></tr></thead>
+    <tbody>
+      <tr><td><code>01-A</code> Pre-Onboarding</td><td>How an agent enters: accept an invitation, or register on their own</td><td>2</td></tr>
+      <tr><td><code>01-B</code> Agent Onboarding Wizard</td><td>The main 8-step onboarding, from invitation to Ready to Sell</td><td>8</td></tr>
+      <tr><td><code>01-C</code> Training Segments</td><td>The 4 training and exam screens opened from step 5</td><td>4</td></tr>
+      <tr><td><code>01-D</code> Agent Onboarding Form</td><td>A second, 9-step version of onboarding inside the Agent Portal</td><td>10</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Naming rules</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Pattern</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Page</td><td><code>NN · Flow name</code></td><td><code>01 · Agent Onboarding</code></td></tr>
+      <tr><td>Section</td><td><code>NN-X · Part name</code></td><td><code>01-B · Agent Onboarding Wizard</code></td></tr>
+      <tr><td>Screen frame</td><td><code>CODE · Screen name</code></td><td><code>AOW-03 · W-9, Tax &amp; Payment</code></td></tr>
+      <tr><td>Sub-screen</td><td><code>CODE.n · Screen name</code></td><td><code>AOW-05.2 · Training Segment 2</code></td></tr>
+      <tr><td>Component</td><td><code>Annotation/Name</code></td><td><code>Annotation/Screen Label</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Flow codes: <code>PRE</code> pre-onboarding, <code>AOW</code> agent onboarding wizard, <code>AOF</code> agent onboarding form. Pick a new 3-letter code for every new flow.</p>
+
+  <h3>Annotation Kit</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr><td>Flow Header</td><td>Top of every section. Edit Eyebrow, Title, Description and Meta in the right panel.</td></tr>
+      <tr><td>Screen Label</td><td>Above every screen: code badge, title, status pill and the NFP source page.</td></tr>
+      <tr><td>Status Pill</td><td>4 variants: <span class="pill p1">NFP Reference</span> <span class="pill p2">In Design</span> <span class="pill p3">Ready for Dev</span> <span class="pill p4">Approved</span></td></tr>
+      <tr><td>Note</td><td>Yellow card for a short designer or developer note under a screen.</td></tr>
+      <tr><td>Flow Arrow</td><td>Arrow between screens to show the order.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Edit these through component properties in the right panel. <b>Do not detach them</b>, so a change to the main component updates every copy.</p>
+</section>
+
+<section id="screens">
+  <h2>3. Screen list</h2>
+  <p>"Source" is the NFP page and the step the screen came from.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Code</th><th>Screen</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td><code>PRE-01</code></td><td>Accept Contracting Invitation</td><td>auth/invite-accept.html</td></tr>
+      <tr><td><code>PRE-02</code></td><td>Agent Self-Registration</td><td>auth/agent-registration.html</td></tr>
+      <tr><td><code>AOW-01</code></td><td>Invitation &amp; Registration</td><td>agent/onboarding.html · Step 1</td></tr>
+      <tr><td><code>AOW-02</code></td><td>Personal &amp; Business Info</td><td>agent/onboarding.html · Step 2</td></tr>
+      <tr><td><code>AOW-03</code></td><td>W-9, Tax &amp; Payment</td><td>agent/onboarding.html · Step 3</td></tr>
+      <tr><td><code>AOW-04</code></td><td>AHIP, States &amp; License Verification</td><td>agent/onboarding.html · Step 4</td></tr>
+      <tr><td><code>AOW-05</code></td><td>Training &amp; Certification</td><td>agent/onboarding.html · Step 5</td></tr>
+      <tr><td><code>AOW-05.1</code> to <code>.4</code></td><td>Training Segment 1 to 4</td><td>agent/onboarding.html · Step 5, segment screens</td></tr>
+      <tr><td><code>AOW-06</code></td><td>Background &amp; Sanctions Check</td><td>agent/onboarding.html · Step 6</td></tr>
+      <tr><td><code>AOW-07</code></td><td>Contract Execution</td><td>agent/onboarding.html · Step 7</td></tr>
+      <tr><td><code>AOW-08</code></td><td>Ready to Sell (Submission Complete)</td><td>agent/onboarding.html · Step 8</td></tr>
+      <tr><td><code>AOF-01</code></td><td>Invitation</td><td>agent/onboarding-form.html · Step 1</td></tr>
+      <tr><td><code>AOF-02</code></td><td>Personal Info</td><td>agent/onboarding-form.html · Step 2</td></tr>
+      <tr><td><code>AOF-03</code></td><td>NPN &amp; License Verification</td><td>agent/onboarding-form.html · Step 3</td></tr>
+      <tr><td><code>AOF-04</code></td><td>State Selections</td><td>agent/onboarding-form.html · Step 4</td></tr>
+      <tr><td><code>AOF-05</code></td><td>Lines of Business</td><td>agent/onboarding-form.html · Step 5</td></tr>
+      <tr><td><code>AOF-06</code></td><td>AHIP Certification</td><td>agent/onboarding-form.html · Step 6</td></tr>
+      <tr><td><code>AOF-07</code></td><td>Tax / W-9</td><td>agent/onboarding-form.html · Step 7</td></tr>
+      <tr><td><code>AOF-08</code></td><td>Payment Preferences</td><td>agent/onboarding-form.html · Step 8</td></tr>
+      <tr><td><code>AOF-09</code></td><td>Review &amp; Submit</td><td>agent/onboarding-form.html · Step 9</td></tr>
+      <tr><td><code>AOF-10</code></td><td>Submission Confirmation</td><td>agent/onboarding-form.html · Final</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="daily">
+  <h2>4. Working in the file</h2>
+  <h3>Track progress</h3>
+  <p>Click the status pill on a screen label and change the <b>Status</b> variant in the right panel: NFP Reference, then In Design, then Ready for Dev, then Approved.</p>
+
+  <h3>Start a redesign of a screen</h3>
+  <ol class="steps">
+    <li><span>Duplicate the captured frame (Cmd + D) and keep the original untouched as the reference.</span></li>
+    <li><span>Rebuild the copy with AaNeel design system components, using the original for layout and content.</span></li>
+    <li><span>Set its status pill to In Design, and to Ready for Dev when it is handed over.</span></li>
+  </ol>
+
+  <h3>Make a colour version of the flow</h3>
+  <ol class="steps">
+    <li><span>Select a section, for example <code>01-B</code>, and duplicate it. Drag the copy below and rename it, for example <code>01-B · Agent Onboarding Wizard (Teal theme)</code>.</span></li>
+    <li><span>With the copy selected, look at <b>Selection colors</b> in the right panel. It lists every colour used in all the screens.</span></li>
+    <li><span>Click the NFP blues (<code>#0D47A1</code>, <code>#1565C0</code>, <code>#0277BD</code>) and change each to the new colour. Every screen in the copy updates at once.</span></li>
+  </ol>
+
+  <h3>Capture an extra state yourself (popups, tabs, errors)</h3>
+  <p>When a page is opened through the capture link, a dark <b>Send to Figma</b> toolbar appears at the top of the browser:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Entire screen</td><td>Sends the whole page, as it looks right now, to the Figma file.</td></tr>
+      <tr><td>Select element</td><td>Lets you click one part (a card, a table, a popup) and send only that.</td></tr>
+      <tr><td>Open file</td><td>Opens the Figma file the captures go into.</td></tr>
+      <tr><td>X</td><td>Hides the toolbar.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Open the popup, tab or error you need, then press Entire screen or Select element. After that, name it and move it into the right section using the naming rules.</p>
+  <p>The first page needs a capture link created through the Figma connection, so ask the developer or your Claude for one (see section 9).</p>
+</section>
+
+<section id="pending">
+  <h2>5. Pending cleanup (v0.2)</h2>
+  <p>We planned these changes, but Figma's Starter plan blocked further automated edits. They are not applied yet. You can do them by hand in about 10 minutes:</p>
+  <ol class="steps">
+    <li><span><b>Darker background.</b> On every page, click empty canvas and set the page background to <code>#121212</code>. Select each section and set its fill to <code>#1E1E1E</code>. White screens then stand out clearly.</span></li>
+    <li><span><b>Label text colour.</b> On the Annotation Kit page, open <b>Annotation/Screen Label</b>. Set the Title text to <code>#FFFFFF</code> and the Source text to <code>#98A2B3</code>. All 24 labels update.</span></li>
+    <li><span><b>Remove emojis</b> from the page names: <code>Cover &amp; Read Me</code>, <code>01 · Agent Onboarding</code>, <code>Annotation Kit</code>. Also from the Read Me text.</span></li>
+    <li><span><b>Remove long dashes (—)</b> from labels, headers, notes and the Read Me. Use Cmd + F, search for <code>—</code>, and replace each with <code>:</code>, a comma, or brackets. Rename section <code>01-A · Pre-Onboarding: Invitation &amp; Registration</code> and frames <code>AOW-08 · Ready to Sell (Submission Complete)</code> and <code>AOF-10 · Submission Confirmation</code>.</span></li>
+    <li><span>Add a Read Me change log line: <code>14 Oct 2026 · v0.2: Removed emojis and long dashes; dark canvas.</code></span></li>
+  </ol>
+  <div class="callout warn"><p>Leave the long dashes <b>inside the captured screens</b> as they are. They are the NFP prototype's own text, and the screens should keep matching the NFP.</p></div>
+</section>
+
+<section id="questions">
+  <h2>6. Open questions</h2>
+  <ul>
+    <li><b>Which onboarding is final?</b> The NFP has two versions: the 8-step wizard (01-B) and the 9-step form (01-D). The BA needs to confirm before redesign starts.</li>
+    <li><b>"?" in AOF headings.</b> Some headings show "?" where a dash should be. This is an encoding bug in the NFP prototype, not in Figma.</li>
+    <li><b>AOW-08 Ready to Sell.</b> The prototype locks this step until steps 1 to 7 are complete. It was captured with the lock bypassed to show the final state.</li>
+    <li><b>Logo.</b> Still to be shared by Vishal.</li>
+  </ul>
+</section>
+
+<section id="how">
+  <h2>7. How the capture works</h2>
+  <p>Figma offers a free connector called the <b>Figma MCP server</b>. It lets an AI assistant (Claude, in Claude Code or Cursor) read and write a Figma file for you. One of its features turns a web page open in a browser into editable Figma layers.</p>
+  <div class="flow" role="img" aria-label="NFP files go to the preview server, then a browser, then Figma">
+    <div class="node"><b>NFP files</b>The HTML prototype folder on your computer</div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="node"><b>Preview server</b>A small script that shows the pages and adds Figma's capture code</div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="node"><b>Browser</b>Opens each page at the right step and sends it</div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="node"><b>Figma file</b>The page arrives as editable frames</div>
+  </div>
+  <ul>
+    <li><b>The NFP files are never changed.</b> The preview server adds Figma's capture code only while serving the page.</li>
+    <li><b>Wizard steps.</b> The preview server can open a page directly at a given step (for example step 3), so every step gets its own frame.</li>
+    <li><b>Hidden browser.</b> Captures run in a hidden Chrome window. In a normal browser, background tabs pause and the capture never finishes.</li>
+    <li><b>After capture</b>, Claude renames the frames, groups them into sections and adds the labels.</li>
+  </ul>
+</section>
+
+<section id="setup">
+  <h2>8. Set it up yourself</h2>
+  <h3>What you need</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Figma <b>Professional</b> plan with a <b>Full</b> seat</td><td>The Starter plan allows only about 20 Figma connector calls a month and 3 pages per file. One flow alone uses far more.</td></tr>
+      <tr><td>Edit access to the Figma file</td><td>So captures can land in it.</td></tr>
+      <tr><td>The NFP prototype folder</td><td>Included in the kit zip as <code>05-NFP-Prototype</code> (October 2026 version, 181 pages).</td></tr>
+      <tr><td>Claude Code or Cursor</td><td>The assistant that drives the capture.</td></tr>
+      <tr><td>Google Chrome and Python 3</td><td>Chrome runs the hidden browser. Python runs the preview server. On Windows, install Python from python.org and tick "Add python.exe to PATH".</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Connect Figma to your assistant</h3>
+  <p><b>In Claude Code</b>, run this once in the terminal:</p>
+  <div class="code"><pre id="c-cc">claude mcp add --transport http figma https://mcp.figma.com/mcp</pre><button class="copy" type="button" data-target="c-cc">Copy</button></div>
+  <p>Then start Claude, type <code>/mcp</code>, choose <b>figma</b>, pick Authenticate and log in with your Figma account in the browser.</p>
+  <p><b>In Cursor</b>, open Settings, then MCP, then Add new MCP server, and paste:</p>
+  <div class="code"><pre id="c-cursor">{
+  "mcpServers": {
+    "figma": { "url": "https://mcp.figma.com/mcp" }
+  }
+}</pre><button class="copy" type="button" data-target="c-cursor">Copy</button></div>
+  <p>Cursor shows a Login button next to the server. Log in with your Figma account.</p>
+  <div class="callout ok"><p><b>Check it works:</b> ask your assistant "Who am I logged in as in Figma?" It should reply with your Figma name and plan.</p></div>
+
+  <h3>Then let Claude do the rest</h3>
+  <p>Copy the whole block in section 9 and paste it into your Claude. It contains the instructions and both scripts, so Claude can rebuild the setup and capture any flow in the same style.</p>
+</section>
+
+<section id="claude">
+  <h2>9. Give this to your Claude</h2>
+  <p>Paste everything below into Claude Code or Cursor. Replace the two values in angle brackets first. If you have the kit zip, the same text is in <code>02-Claude-or-Cursor-Setup/setup-prompt.txt</code> and the scripts are already in <code>03-Capture-Tools</code>.</p>
+  <div class="code"><span class="label">Instructions for Claude</span><pre id="c-prompt">I am a UI/UX designer. Help me capture screens from our NFP HTML prototype into Figma as editable
+layers, using the same setup and conventions our team already uses. Follow these steps.
+
+INPUTS
+- NFP prototype folder: &lt;full path to the NFP folder on my computer&gt;
+- Figma file: https://www.figma.com/design/OH54yXEIQt5vwYEF6wfFQS  (fileKey OH54yXEIQt5vwYEF6wfFQS)
+- Flow to capture: &lt;for example "Agency Onboarding" or "Commissions"&gt;
+
+1. CHECK THE FIGMA CONNECTION
+   Use the Figma MCP tool whoami. Tell me the account and plan. If the plan is Starter, warn me:
+   Starter allows about 20 calls a month and 3 pages per file.
+
+2. CREATE THE CAPTURE TOOLS
+   If the kit folder 03-Capture-Tools exists, use the scripts in it. Otherwise make a folder named
+   figma-capture OUTSIDE the NFP folder and save the two scripts below into it exactly as given:
+   serve.py and open_captures.py. On Windows use "python" instead of "python3".
+
+3. START THE PREVIEW SERVER (in the background)
+   python3 &lt;capture tools folder&gt;/serve.py "&lt;NFP folder&gt;" 8090
+   Check http://localhost:8090/&lt;some page&gt;.html loads and contains "capture.js".
+   The NFP files must never be edited.
+
+4. FIND EVERY SCREEN AND STATE IN THE FLOW
+   Read the flow's HTML pages. Many pages are wizards that show one step at a time. Find the
+   JavaScript function that switches steps and list one capture per step and per important
+   sub-screen. Known examples:
+   - agent/onboarding.html: obGoTo(0) .. obGoTo(6); step 8 needs
+     canOpenFinalStep=function(){return true};obGoTo(7)
+     training segments: obGoTo(4);openSegmentScreen(0) .. openSegmentScreen(3)
+   - agent/onboarding-form.html: goToStep(1) .. goToStep(10)
+   Before capturing, verify each step in headless Chrome (--dump-dom) so the right section is
+   active. Show me the list and wait for my OK before writing anything to Figma.
+
+5. CAPTURE
+   For each screen, call generate_figma_design with the fileKey (no captureId) to get a capture ID.
+   Then run, in one command for all screens:
+     python3 &lt;capture tools folder&gt;/open_captures.py "&lt;page&gt;?run=&lt;url-encoded js&gt;|&lt;captureId&gt;" ...
+   Encode ; as %3B, = as %3D, { as %7B, } as %7D, spaces as %20.
+   Then poll generate_figma_design with fileKey + captureId until each one is completed.
+   Never open capture links in my normal browser. Background tabs pause and captures stay pending.
+
+6. ORGANISE IN FIGMA (use_figma tool; read the figma-use skill first)
+   - Rename each frame "CODE · Screen name". Use a 3-letter flow code plus a 2-digit step
+     (e.g. AGO-03). Sub-screens use CODE.n (e.g. AGO-05.2).
+   - Group frames into Sections named "NN-X · Part name", left to right in user-journey order,
+     with 240 px gaps.
+   - At the top of each section, place an instance of the "Annotation/Flow Header" component
+     (Annotation Kit page) and fill Eyebrow, Title, Description and Meta (entry, exit, screen count).
+   - Above each frame, place an "Annotation/Screen Label" instance (Code, Title, Source) with the
+     Status pill set to "NFP Reference". Put "Annotation/Flow Arrow" instances between frames.
+     Add an "Annotation/Note" under a screen only when something needs explaining.
+   - Canvas: page background #121212, section fill #1E1E1E.
+   - Update the Read Me: page index and a change log line with today's date.
+
+7. RULES
+   - Do not use emojis or long dashes (—) in any Figma names or text you write.
+   - Ask me before every write to Figma.
+   - Keep each use_figma script small and return the IDs it changed.
+   - If a call fails because of a plan limit, stop and tell me. Do not retry in a loop.
+
+=== serve.py ===
+# Serves the NFP prototype and injects Figma's capture script into every HTML page.
+# Source files are never modified. Usage: python3 serve.py &lt;nfp_dir&gt; [port]
+import http.server, os, sys
+from functools import partial
+
+TAG = b'&lt;script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async&gt;&lt;/script&gt;'
+# Optional ?run=&lt;js&gt; in the URL: runs that JS after load, so a wizard step or hidden
+# state can be shown before Figma captures it (e.g. ?run=obGoTo(3)).
+RUN = b'''&lt;script&gt;window.addEventListener("load",function(){var r=new URLSearchParams(location.search).get("run");
+if(r)setTimeout(function(){try{(0,eval)(r);window.scrollTo(0,0)}catch(e){console.error("run failed",e)}},300)})&lt;/script&gt;'''
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def send_head(self):
+        path = self.translate_path(self.path)
+        if os.path.isdir(path):
+            path = os.path.join(path, "index.html")
+        if not path.endswith(".html") or not os.path.isfile(path):
+            return super().send_head()
+        with open(path, "rb") as f:
+            body = f.read()
+        body = body.replace(b"&lt;/head&gt;", TAG + RUN + b"&lt;/head&gt;", 1) if b"&lt;/head&gt;" in body else TAG + RUN + body
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        import io
+        return io.BytesIO(body)
+
+root = os.path.abspath(sys.argv[1])
+port = int(sys.argv[2]) if len(sys.argv) &gt; 2 else 8090
+http.server.ThreadingHTTPServer(("127.0.0.1", port), partial(Handler, directory=root)).serve_forever()
+
+=== open_captures.py ===
+# Captures NFP pages into Figma using headless Chrome (background tabs in a normal
+# browser pause, so captures never fire there). One Chrome per page, run in parallel.
+# Needs serve.py running on port 8090.
+# Usage: python3 open_captures.py "&lt;path?run=js&gt;|&lt;captureId&gt;" ...
+import os, shutil, subprocess, sys, tempfile, time, urllib.parse
+
+def find_chrome():
+    candidates = [
+        os.environ.get("CHROME_PATH", ""),
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        os.path.expandvars(r"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
+        os.path.expandvars(r"%LocalAppData%\Google\Chrome\Application\chrome.exe"),
+    ]
+    for name in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser", "chrome"):
+        found = shutil.which(name)
+        if found:
+            candidates.append(found)
+    for c in candidates:
+        if c and os.path.isfile(c):
+            return c
+    sys.exit("Google Chrome not found. Install it or set CHROME_PATH to chrome's full path.")
+
+CHROME = find_chrome()
+BASE = "http://localhost:8090/"
+procs = []
+for arg in sys.argv[1:]:
+    page, cid = arg.rsplit("|", 1)
+    ep = urllib.parse.quote(f"https://mcp.figma.com/mcp/capture/{cid}/submit?bindVariables=true", safe="")
+    url = f"{BASE}{page}#figmacapture={cid}&amp;figmaendpoint={ep}&amp;figmadelay=3000"
+    procs.append(subprocess.Popen([CHROME, "--headless=new", "--disable-gpu", "--window-size=1440,900",
+        f"--user-data-dir={tempfile.mkdtemp(prefix='figcap-')}", url],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
+    print("started", page)
+    time.sleep(1)
+time.sleep(30)
+for p in procs:
+    p.terminate()
+print("done")</pre><button class="copy" type="button" data-target="c-prompt">Copy</button></div>
+</section>
+
+<section id="trouble">
+  <h2>10. Troubleshooting</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>What you see</th><th>Why</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Capture stays "pending"</td><td>The page was opened in a normal browser tab in the background, which pauses it</td><td>Use the hidden Chrome script (open_captures.py), or keep that tab in front</td></tr>
+      <tr><td>"Tool call limit on the Starter plan"</td><td>The monthly Figma connector limit is used up</td><td>Upgrade to Professional with a Full seat, or wait for the monthly reset</td></tr>
+      <tr><td>"Starter plan only comes with 3 pages"</td><td>Figma page limit</td><td>Add new flows as sections on the existing flow page, or upgrade</td></tr>
+      <tr><td>Text looks different from the prototype</td><td>The font is not installed on the computer running Figma</td><td>Install Poppins and the fonts used by the NFP</td></tr>
+      <tr><td>Only step 1 of a wizard was captured</td><td>Captures take the page as it first loads</td><td>Capture each step using the ?run= step function (section 9, step 4)</td></tr>
+      <tr><td>A file:// link does not capture</td><td>Figma capture only works on a web address</td><td>Always use the preview server at localhost:8090</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="glossary">
+  <h2>11. Glossary</h2>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td><b>NFP</b></td><td>The clickable HTML prototype of the EnrollAxis portal (about 181 pages).</td></tr>
+      <tr><td><b>MCP server</b></td><td>A connector that lets an AI assistant work with another tool. The Figma MCP server lets Claude read and edit Figma files.</td></tr>
+      <tr><td><b>Capture</b></td><td>Turning a web page into editable Figma layers.</td></tr>
+      <tr><td><b>Preview server</b></td><td>A small script that shows the NFP pages in a browser and adds Figma's capture code to them.</td></tr>
+      <tr><td><b>Frame</b></td><td>One screen in Figma.</td></tr>
+      <tr><td><b>Section</b></td><td>A labelled area on the Figma canvas that groups the frames of one part of a flow.</td></tr>
+      <tr><td><b>Component / instance</b></td><td>A reusable element (the main one) and its copies. Changing the main one updates every copy.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</main>
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = document.getElementById(btn.dataset.target);
+    var text = pre.innerText;
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(pre);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected: press Cmd + C';
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+});
+</script>

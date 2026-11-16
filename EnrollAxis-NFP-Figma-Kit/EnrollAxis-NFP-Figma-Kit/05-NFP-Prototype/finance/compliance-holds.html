@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Holds | Finance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#2e7d32}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html" class="active"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Compliance Holds</h4><p style="font-size:12px;color:#5f6368;margin:0">Agents with commission payments held due to compliance violations or expired certifications</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Compliance Holds')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-shield-alt"></i></div>
+        <div><div class="stat-label">Active Holds</div><div class="stat-val">5</div><div class="stat-sub">Agents on payment hold</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-dollar-sign"></i></div>
+        <div><div class="stat-label">Total Held</div><div class="stat-val">$6,420</div><div class="stat-sub">Across all held agents</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-certificate"></i></div>
+        <div><div class="stat-label">AHIP Expired</div><div class="stat-val">3</div><div class="stat-sub">Certification lapsed</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Released This Month</div><div class="stat-val">2</div><div class="stat-sub">Compliance resolved</div></div>
+      </div></div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div class="card-hdr"><h6><i class="fas fa-shield-alt" style="color:#c62828;margin-right:8px"></i>Agents on Compliance Hold</h6><span class="badge" style="background:#ffebee;color:#c62828">5 active holds</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Agency</th><th>Hold Reason</th><th>Commission Held</th><th>Hold Since</th><th>Days</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr style="background:#ffebee">
+              <td style="font-weight:600">Kevin Patel</td>
+              <td>6612009</td>
+              <td>Alliance Health Partners</td>
+              <td><span class="badge" style="background:#f3e5f5;color:#6a1b9a">AHIP Expired</span></td>
+              <td style="font-weight:600">$1,840</td>
+              <td>07 15,2026</td>
+              <td style="color:#c62828;font-weight:600">19</td>
+              <td><span class="badge" style="background:#ffebee;color:#c62828">Held</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Reminder sent to Kevin Patel - AHIP renewal required','success')">Notify</button></td>
+            </tr>
+            <tr style="background:#ffebee">
+              <td style="font-weight:600">Sandra Williams</td>
+              <td>4421887</td>
+              <td>Premier Insurance Group</td>
+              <td><span class="badge" style="background:#f3e5f5;color:#6a1b9a">AHIP Expired</span></td>
+              <td style="font-weight:600">$1,560</td>
+              <td>07 20,2026</td>
+              <td style="color:#c62828;font-weight:600">14</td>
+              <td><span class="badge" style="background:#ffebee;color:#c62828">Held</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Reminder sent to Sandra Williams - AHIP renewal required','success')">Notify</button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:600">Marcus Lee</td>
+              <td>5538221</td>
+              <td>Southwest Medicare Solutions</td>
+              <td><span class="badge" style="background:#ffebee;color:#c62828">State License Lapsed</span></td>
+              <td style="font-weight:600">$1,200</td>
+              <td>07 28,2026</td>
+              <td>6</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Under Review</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Reminder sent to Marcus Lee - license renewal required','success')">Notify</button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:600">Rachel Adams</td>
+              <td>7729443</td>
+              <td>National Benefits Group</td>
+              <td><span class="badge" style="background:#f3e5f5;color:#6a1b9a">AHIP Expired</span></td>
+              <td style="font-weight:600">$1,020</td>
+              <td>08 01,2026</td>
+              <td>2</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Reminder sent to Rachel Adams - AHIP renewal required','success')">Notify</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Tom Nguyen</td>
+              <td>8834562</td>
+              <td>Coastal Health Advisors</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">E&O Insurance Lapsed</span></td>
+              <td style="font-weight:600">$800</td>
+              <td>08 02,2026</td>
+              <td>1</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><button class="btn-ol btn-sm" onclick="showToast('Reminder sent to Tom Nguyen - E&O insurance renewal required','success')">Notify</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="al-info" style="margin-top:16px;font-size:12px">
+      <i class="fas fa-info-circle" style="flex-shrink:0"></i>
+      <span><strong>Policy:</strong> Commission payments are automatically held when an agent's AHIP certification, state license, or E&O insurance lapses. Payments are released to the next batch once compliance is restored and verified by the Compliance team. Holds over 90 days are escalated for termination review.</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

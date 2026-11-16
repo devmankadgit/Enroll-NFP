@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calc Audit Trail | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn.active{color:#2e7d32;border-bottom-color:#2e7d32;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.immutable-banner{background:#1a237e;color:#fff;padding:8px 16px;border-radius:6px;font-size:12.5px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.param-box{background:#f5f5f5;border:1px solid #e0e0e0;border-radius:6px;padding:8px 12px;font-size:11.5px;font-family:monospace;white-space:pre-wrap;max-height:110px;overflow:auto}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1050;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:10px;max-width:780px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 8px 40px rgba(0,0,0,.22)}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html" class="active"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Calculation Audit Trail</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Calc Audit Trail</li></ol>
+    </div>
+    <div class="dflex g8">
+      <span class="bdg b-teal" style="font-size:11px;padding:4px 10px"><i class="fas fa-lock" style="margin-right:5px"></i>7-Year Retention Policy</span>
+      <button class="btn-ol btn-sm" onclick="runGapCheck()"><i class="fas fa-search"></i>Gap Check</button>
+      <button class="btn-pr btn-sm" onclick="exportAudit()"><i class="fas fa-file-csv"></i>Export CSV</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="immutable-banner"><i class="fas fa-lock" style="flex-shrink:0;font-size:16px"></i>
+      <span><strong>Immutability Guarantee:</strong> All audit records are <strong>INSERT-only</strong>. PATCH, PUT, and DELETE operations return HTTP 403 Forbidden. Sequential Audit Record ID gap detection is available on-demand via the Gap Check button. Audit records are retained for <strong>7 years</strong> per CMS compliance requirements.</span>
+    </div>
+
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'tabSearch')"><i class="fas fa-search" style="margin-right:5px"></i>Search Audit Records</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabGap')"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>Gap Check Report</button>
+    </div>
+
+    <!-- ====== SEARCH ====== -->
+    <div id="tabSearch" class="tab-pane active">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:8px;color:#5f6368"></i>Search Filters</h5>
+          <button class="btn-ol btn-sm" onclick="resetAuditFilters()"><i class="fas fa-times"></i>Clear</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:12px 16px">
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Enrollment ID / MBI</label><input id="fEnrollId" type="text" placeholder="e.g. ENR-2026-0041" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Agent NPN</label><input id="fNPN" type="text" placeholder="e.g. 8823441" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Event Type</label>
+            <select id="fEventType" multiple style="width:100%;height:auto;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px">
+              <option>Initial Commission Calc</option><option>Renewal Commission Calc</option><option>HRA Commission Calc</option>
+              <option>Override Commission Calc</option><option>Chargeback Calc</option><option>True-Up Calc</option><option>Manual Override Calc</option>
+            </select>
+          </div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Calc Date From</label><input id="fDateFrom" type="date" value="2026-05-01" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Calc Date To</label><input id="fDateTo" type="date" value="2026-05-29" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Plan Year</label><select id="fPlanYear" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"><option value="">All</option><option>2026</option><option>2025</option></select></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Enrollment State</label><select id="fEnrState" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"><option value="">All</option><option>FL</option><option>AZ</option><option>TX</option></select></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Config Version</label><input id="fConfigVer" type="text" placeholder="e.g. v3.1.2" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+          <div><label class="text-sm" style="display:block;margin-bottom:3px;font-weight:600">Calc Run ID</label><input id="fCalcRunId" type="text" placeholder="e.g. RUN-2026-05-29" style="width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px"></div>
+        </div>
+        <div style="padding:0 16px 12px;display:flex;gap:8px">
+          <div class="dflex g8 aic">
+          <label style="font-size:12.5px;font-weight:600;white-space:nowrap">Carrier</label>
+          <select id="fCarrier" style="border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;font-size:13px;min-width:160px">
+            <option value="">All Carriers</option>
+            <option value="GKHP">Gold Kidney (GKHP)</option>
+            <option value="Humana">Humana</option>
+            <option value="UnitedHealth">UnitedHealth</option>
+            <option value="Aetna">Aetna</option>
+            <option value="BCBS">BCBS</option>
+            <option value="Cigna">Cigna</option>
+          </select>
+        </div>
+          <button class="btn-pr btn-sm" onclick="runAuditSearch()"><i class="fas fa-search"></i>Search</button>
+          <span class="text-muted text-sm" id="auditResultCount" style="align-self:center"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-fingerprint" style="margin-right:8px;color:#2e7d32"></i>Audit Records</h5>
+          <span class="text-muted text-sm">Read-Only — INSERT-only store</span>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','calc-audit_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tblExport1" class="tbl">
+            <thead><tr><th>Audit Record ID</th><th>Calc Run ID</th><th>Event Type</th><th>Agent NPN</th><th>Enrollment ID</th><th>Config Version</th><th>Net Output</th><th>Timestamp</th><th>Detail</th></tr></thead>
+            <tbody id="auditTbody"></tbody>
+          </table>
+        </div>
+        <div style="padding:10px 16px;border-top:1px solid #e8eaed;display:flex;gap:8px">
+          <button class="btn-ol btn-sm" onclick="exportAudit()"><i class="fas fa-file-csv"></i>Export CSV</button>
+          <span class="text-muted text-sm" style="align-self:center">CSV streaming: target 60s for 100,000 records. Export will download as file.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== GAP CHECK ====== -->
+    <div id="tabGap" class="tab-pane">
+      <div class="card">
+        <div class="card-hdr"><h5><i class="fas fa-exclamation-triangle" style="margin-right:8px;color:#e65100"></i>Sequential ID Gap Check</h5>
+          <button class="btn-pr btn-sm" onclick="runGapCheck()"><i class="fas fa-play"></i>Run Gap Check</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','calc-audit_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Gap Check verifies that the sequential Audit Record ID sequence is unbroken. Any gap could indicate a deletion attempt or system error and triggers a compliance alert. Last gap check was run automatically during nightly batch close.</span></div>
+        <div id="gapResults">
+          <div class="al-success mb16"><i class="fas fa-check-circle" style="flex-shrink:0"></i><span><strong>Gap Check Passed (last run: 05 29,2026 02:14 AM)</strong><br>Audit Record IDs AUD-2026-00001 through AUD-2026-01841 — no gaps detected. Sequence integrity confirmed.</span></div>
+          <div class="table-wrap"><table id="tblExport2" class="tbl"><thead><tr><th>Check Run</th><th>Range</th><th>Records Checked</th><th>Gaps Found</th><th>Status</th><th>Run By</th></tr></thead>
+            <tbody><tr><td>05 29,2026 02:14 AM</td><td>AUD-2026-00001 — AUD-2026-01841</td><td>1,841</td><td>0</td><td><span class="bdg b-green" style="font-size:11px">Pass</span></td><td>System (Nightly)</td></tr>
+            <tr><td>05 28,2026 02:11 AM</td><td>AUD-2026-00001 — AUD-2026-01798</td><td>1,798</td><td>0</td><td><span class="bdg b-green" style="font-size:11px">Pass</span></td><td>System (Nightly)</td></tr></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIT DETAIL MODAL -->
+<div id="auditDetailModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700"><i class="fas fa-fingerprint" style="margin-right:8px;color:#004d40"></i>Audit Record Detail</h6><button onclick="closeModal('auditDetailModal')" style="border:none;background:none;font-size:20px;cursor:pointer;color:#5f6368">&times;</button></div>
+    <div class="modal-body" id="auditDetailBody"></div>
+    <div class="modal-foot"><button class="btn-ol btn-sm" onclick="closeModal('auditDetailModal')">Close</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+const auditRecords=[
+  {
+    id:'AUD-2026-01841',runId:'RUN-2026-05-29-A',event:'Renewal Commission Calc',npn:'8823441',agent:'James Martinez',enrollId:'ENR-2026-0041',mbi:'1C2C3DA4EF5',planYear:'2026',configVer:'v3.1.2',state:'FL',
+    inputs:{enrollmentYear:2,commTier:'Renewal',pmpm:28.92,planType:'HMO-MAPD-002',carrierCode:'GKHP',memberCnt:5},
+    rules:['Rule R-041: Tier=Renewal ? PMPM rate=$28.92 — member_months','Rule R-102: State FL ? 0% withholding','Rule R-005: No active chargeback offsets'],
+    outputs:{grossComm:144.60,chargebackOffset:0,stateWithholding:0,netComm:144.60},
+    meta:{calcTS:'2026-05-29 01:42:15',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal ESRD'},
+    netOut:'$144.60',ts:'2026-05-29 01:42:15'
+  },
+  {
+    id:'AUD-2026-01840',runId:'RUN-2026-05-29-A',event:'Initial Commission Calc',npn:'7719022',agent:'Sarah Chen',enrollId:'ENR-2026-0148',mbi:'9F8G7HJ6KL5',planYear:'2026',configVer:'v3.1.2',state:'FL',
+    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'GKHP',memberCnt:1},
+    rules:['Rule R-001: Tier=Initial ? flat fee $694.00','Rule R-102: State FL ? 0% withholding','Rule R-003: SEP AEP — AEP enrollment ? full Initial fee'],
+    outputs:{grossComm:694.00,chargebackOffset:0,stateWithholding:0,netComm:694.00},
+    meta:{calcTS:'2026-05-29 01:41:57',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'1 — Initial Non-ESRD'},
+    netOut:'$694.00',ts:'2026-05-29 01:41:57'
+  },
+  {
+    id:'AUD-2026-01830',runId:'RUN-2026-05-29-A',event:'Chargeback Calc',npn:'5521833',agent:'Mark Brown',enrollId:'ENR-2026-0092',mbi:'2M3N4PQ5RS6',planYear:'2026',configVer:'v3.1.2',state:'FL',
+    inputs:{enrollmentYear:1,commTier:'Initial',pmpm:null,planType:'HMO-MAPD-001',carrierCode:'GKHP',memberCnt:1,chargebackReason:'Rapid Disenrollment < 90 days'},
+    rules:['Rule R-201: Chargeback triggered — Rapid Disenrollment','Rule R-202: Chargeback amount = 100% of Initial fee paid ($246.12)','Rule R-203: Agent carried forward balance — partial offset applied'],
+    outputs:{grossComm:-246.12,chargebackOffset:246.12,stateWithholding:0,netComm:-246.12},
+    meta:{calcTS:'2026-05-29 01:40:12',batchId:'BATCH-2026-05',operatorId:'SYSTEM',cmsMmrClass:'1 — Initial Non-ESRD'},
+    netOut:'-$246.12',ts:'2026-05-29 01:40:12'
+  },
+  {
+    id:'AUD-2026-01712',runId:'RUN-2026-04-17-A',event:'HRA Commission Calc',npn:'8823441',agent:'James Martinez',enrollId:'ENR-2026-0041',mbi:'1C2C3DA4EF5',planYear:'2026',configVer:'v3.1.1',state:'FL',
+    inputs:{enrollmentYear:2,commTier:'Renewal',hraCompleted:true,planType:'HMO-MAPD-002',carrierCode:'GKHP'},
+    rules:['Rule R-301: HRA Completion verified — CMS attestation on file','Rule R-302: HRA fee $25.00 — one per member per plan year','Rule R-102: State FL ? 0% withholding'],
+    outputs:{grossComm:25.00,chargebackOffset:0,stateWithholding:0,netComm:25.00},
+    meta:{calcTS:'2026-04-17 02:11:33',batchId:'BATCH-2026-04',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal ESRD'},
+    netOut:'$25.00',ts:'2026-04-17 02:11:33'
+  },
+  {
+    id:'AUD-2026-01541',runId:'RUN-2026-03-20-A',event:'Renewal Commission Calc',npn:'9912345',agent:'Kevin Nguyen',enrollId:'ENR-2026-0201',mbi:'7T8U9VW0XY1',planYear:'2026',configVer:'v3.1.0',state:'TX',
+    inputs:{enrollmentYear:3,commTier:'Lifetime',pmpm:28.92,planType:'HMO-MAPD-003',carrierCode:'GKHP',memberCnt:4},
+    rules:['Rule R-041: Tier auto-elevated to Lifetime at Enrollment Year 3','Rule R-043: Lifetime PMPM = same rate as Renewal ($28.92) — Lifetime designation for compliance reporting only','Rule R-104: State TX ? 0% withholding'],
+    outputs:{grossComm:115.68,chargebackOffset:0,stateWithholding:0,netComm:115.68},
+    meta:{calcTS:'2026-03-20 01:53:01',batchId:'BATCH-2026-03',operatorId:'SYSTEM',cmsMmrClass:'6 — Renewal Non-ESRD, Year 3+'},
+    netOut:'$115.68',ts:'2026-03-20 01:53:01'
+  }
+];
+
+let displayedRecords=[...auditRecords];
+
+function renderAuditTable(records){
+  document.getElementById('auditTbody').innerHTML=records.map(r=>`<tr>
+    <td><code style="font-size:11px">${r.id}</code></td>
+    <td><code style="font-size:11px">${r.runId}</code></td>
+    <td><span class="bdg ${r.event.includes('Chargeback')?'b-red':r.event.includes('Initial')?'b-blue':r.event.includes('HRA')?'b-teal':'b-green'}" style="font-size:11px">${r.event}</span></td>
+    <td><code style="font-size:11px">${r.npn}</code><br><span class="text-sm">${r.agent}</span></td>
+    <td><code style="font-size:11px">${r.enrollId}</code></td>
+    <td><code style="font-size:11px">${r.configVer}</code></td>
+    <td style="font-weight:700;color:${r.outputs.netComm<0?'#c62828':'#1b5e20'}">${r.netOut}</td>
+    <td style="font-size:12px">${r.ts}</td>
+    <td><button class="btn-ol btn-sm" onclick="openAuditDetail('${r.id}')"><i class="fas fa-eye"></i></button></td>
+  </tr>`).join('');
+  document.getElementById('auditResultCount').textContent=`${records.length} record(s) shown`;
+}
+
+function runAuditSearch(){
+  const enrollId=(document.getElementById('fEnrollId').value||'').trim().toLowerCase();
+  const npn=(document.getElementById('fNPN').value||'').trim();
+  const selEvents=Array.from(document.getElementById('fEventType').selectedOptions).map(o=>o.value);
+  const dateFrom=document.getElementById('fDateFrom').value;
+  const dateTo=document.getElementById('fDateTo').value;
+  const enrState=document.getElementById('fEnrState').value;
+  const planYear=document.getElementById('fPlanYear').value;
+  const configVer=(document.getElementById('fConfigVer').value||'').trim().toLowerCase();
+  const calcRunId=(document.getElementById('fCalcRunId').value||'').trim().toLowerCase();
+  const carrier=document.getElementById('fCarrier').value;
+
+  if(dateFrom&&dateTo&&dateFrom>dateTo){showToast('End date must be after start date.','warning');return;}
+
+  let filtered=auditRecords.filter(r=>{
+    if(enrollId&&!r.enrollId.toLowerCase().includes(enrollId)&&!r.mbi.toLowerCase().includes(enrollId)) return false;
+    if(npn&&!r.npn.includes(npn)) return false;
+    if(selEvents.length&&!selEvents.includes(r.event)) return false;
+    if(enrState&&r.state!==enrState) return false;
+    if(planYear&&r.planYear!==planYear) return false;
+    if(configVer&&!r.configVer.toLowerCase().includes(configVer)) return false;
+    if(calcRunId&&!r.runId.toLowerCase().includes(calcRunId)) return false;
+    if(carrier&&(!r.inputs||!r.inputs.carrierCode||r.inputs.carrierCode!==carrier)) return false;
+    return true;
+  });
+  displayedRecords=filtered;
+  renderAuditTable(filtered);
+  showToast(`Search complete. ${filtered.length} record(s) found.`,filtered.length?'success':'info');
+}
+
+function resetAuditFilters(){
+  ['fEnrollId','fNPN','fDateFrom','fDateTo','fConfigVer','fCalcRunId'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fEventType').querySelectorAll('option').forEach(o=>o.selected=false);
+  document.getElementById('fPlanYear').value='';
+  document.getElementById('fEnrState').value='';
+  document.getElementById('fCarrier').value='';
+  renderAuditTable(auditRecords);
+}
+
+function openAuditDetail(id){
+  const r=auditRecords.find(a=>a.id===id);
+  if(!r) return;
+  document.getElementById('auditDetailBody').innerHTML=`
+    <div class="row-grid mb16">
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Audit Record ID</div><div class="stat-val" style="font-size:14px"><code>${r.id}</code></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Calc Run ID</div><div class="stat-val" style="font-size:14px"><code>${r.runId}</code></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Config Version</div><div class="stat-val" style="font-size:14px"><code>${r.configVer}</code></div></div></div>
+    </div>
+    <div class="form-sect" style="margin-bottom:12px"><strong>Triggering Event</strong></div>
+    <div class="al-info mb16"><i class="fas fa-bolt" style="flex-shrink:0"></i><span><strong>${r.event}</strong> &nbsp;|&nbsp; Agent: ${r.agent} (NPN: ${r.npn}) &nbsp;|&nbsp; Enrollment: ${r.enrollId} &nbsp;|&nbsp; MBI: <code>${r.mbi}</code> &nbsp;|&nbsp; State: ${r.state} &nbsp;|&nbsp; Plan Year: ${r.planYear}</span></div>
+    <div class="form-sect" style="margin-bottom:8px"><strong>Input Parameters</strong></div>
+    <div class="param-box mb16">${JSON.stringify(r.inputs,null,2)}</div>
+    <div class="form-sect" style="margin-bottom:8px"><strong>Rules Applied</strong></div>
+    <ul style="font-size:13px;line-height:1.7;margin-bottom:12px">${r.rules.map(rule=>`<li>${rule}</li>`).join('')}</ul>
+    <div class="form-sect" style="margin-bottom:8px"><strong>Calculated Output</strong></div>
+    <div class="row-grid mb16">
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Gross Commission</div><div class="stat-val" style="color:#1b5e20">$${r.outputs.grossComm.toFixed(2)}</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Chargeback Offset</div><div class="stat-val" style="color:${r.outputs.chargebackOffset?'#c62828':'#80868b'}">($${r.outputs.chargebackOffset.toFixed(2)})</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">State Withholding</div><div class="stat-val" style="color:#5f6368">($${r.outputs.stateWithholding.toFixed(2)})</div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-label">Net Commission</div><div class="stat-val" style="color:${r.outputs.netComm<0?'#c62828':'#1b5e20'};font-weight:700">$${r.outputs.netComm.toFixed(2)}</div></div></div>
+    </div>
+    <div class="form-sect" style="margin-bottom:8px"><strong>Metadata</strong></div>
+    <div class="param-box">${JSON.stringify(r.meta,null,2)}</div>
+    <table id="tblExport3" class="tbl" style="font-size:12.5px;margin-top:12px;margin-bottom:12px"><tbody>
+<tr><th colspan="2" style="background:#f3e5f5;color:#4a148c;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">True-Up / Adjustment Fields</th></tr>
+<tr><td>Original Ledger Entry ID</td><td>${r.originalLedgerId||'<span class="text-muted">&mdash; (Not a true-up)</span>'}</td></tr>
+<tr><td>Original Amount</td><td>${r.originalAmt!==undefined?'$'+r.originalAmt.toFixed(2):'<span class="text-muted">&mdash;</span>'}</td></tr>
+<tr><td>Adjustment Amount</td><td>${r.adjustAmt!==undefined?'<span style="color:'+(r.adjustAmt>=0?'#1b5e20':'#c62828')+';font-weight:700">'+(r.adjustAmt>=0?'+':'')+'$'+Math.abs(r.adjustAmt).toFixed(2)+'</span>':'<span class="text-muted">&mdash;</span>'}</td></tr>
+<tr><td>Net Change</td><td>${r.netChange!==undefined?'<strong style="color:'+(r.netChange>=0?'#1b5e20':'#c62828')+'">'+(r.netChange>=0?'+':'')+'$'+Math.abs(r.netChange).toFixed(2)+'</strong>':'<span class="text-muted">&mdash;</span>'}</td></tr>
+<tr><td>Reclassification Reason</td><td>${r.reclassReason||'<span class="text-muted">N/A</span>'}</td></tr>
+<tr><th colspan="2" style="background:#e3f2fd;color:#0d47a1;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Calculation Inputs &amp; Source Data</th></tr>
+<tr><td>Source System</td><td>${r.sourceSystem||'CMS MMR'}</td></tr>
+<tr><td>Actual Effective Date (Input)</td><td>${r.actualEffDate||r.effectiveDate||'<span class="text-muted">&mdash;</span>'}</td></tr>
+<tr><td>Rate Table Used</td><td>${r.rateTable||'2026 MA Base Rate Schedule v3.1'}</td></tr>
+<tr><td>Proration Formula Applied</td><td>${r.prorationFormula||'(Coverage Days &divide; 30) &times; Monthly Rate'}</td></tr>
+<tr><td>State-Specific Rate Applied</td><td>${r.stateRateApplied?'<span class="bdg b-green" style="font-size:11px">Yes</span>':'<span class="bdg b-grey" style="font-size:11px">No</span>'}</td></tr>
+<tr><td>Hierarchy Chain Snapshot</td><td><code style="font-size:11px">${r.hierarchyChain||'Agent &rarr; SGA &rarr; GA &rarr; FMO'}</code></td></tr>
+<tr><td>Override Amounts (per level)</td><td>${r.overrideBreakdown||'Agent: $694.00 | SGA: $45.00 | GA: $100.00 | FMO: $135.00'}</td></tr>
+<tr><td>Total Payout per Hierarchy Node</td><td>${r.totalPayoutByNode||'Agent: $694 | SGA: $45 | GA: $100 | FMO: $135 | Total: $974'}</td></tr>
+<tr><td>Ledger Entry ID</td><td><code>${r.ledgerId||'LED-'+r.id.replace('AUD','')}</code></td></tr>
+    </tbody></table>
+    <div class="al-warn" style="margin-top:14px"><i class="fas fa-lock" style="flex-shrink:0"></i><span>This record is <strong>immutable</strong>. All modification attempts (PATCH/PUT/DELETE) return <code>HTTP 403 Forbidden</code>. Record stored in INSERT-only audit store per CMS compliance.</span></div>
+  `;
+  document.getElementById('auditDetailModal').classList.add('open');
+}
+
+function runGapCheck(){
+  switchTab(document.querySelectorAll('.tab-btn')[1],'tabGap');
+  showToast('Gap Check completed. No sequence gaps detected in AUD-2026-00001 through AUD-2026-01841.','success');
+}
+
+function exportAudit(){
+  showToast(`Audit Trail CSV export queued. Streaming ${displayedRecords.length} record(s). Target: 60s for 100,000 records. Export will download when ready.`,'info');
+}
+
+function switchTab(btn,paneId){btn.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');btn.closest('.page').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById(paneId).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+renderAuditTable(auditRecords);
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

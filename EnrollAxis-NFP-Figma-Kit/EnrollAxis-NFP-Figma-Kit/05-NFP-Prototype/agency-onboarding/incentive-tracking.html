@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Internal Incentive Tracking | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-shield" style="margin-right:8px;opacity:.8"></i>Admin Portal</div></div>
+  <div class="sb-nav">
+    <a href="../admin/dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agency Onboarding</div>
+    <a href="review-queue.html"><i class="fas fa-clipboard-check"></i>Review Queue</a>
+    <a href="tfn-mapping.html"><i class="fas fa-phone"></i>TFN Mapping</a>
+    <a href="genesis-integration.html"><i class="fas fa-plug"></i>Genesis</a>
+    <a href="incentive-tracking.html" class="active"><i class="fas fa-gift"></i>Incentives</a>  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">AW</div><div><div class="sb-u-name">Amy White</div><div class="sb-u-role">System Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Internal Incentive Tracking</h4><ol class="breadcrumb-bar"><li>Incentive Rules, Earnings Calculation & Payroll Export</li></ol></div>
+  </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Incentives (MTD)</div><div class="stat-val">$8,450</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Eligible Staff</div><div class="stat-val">12</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-trophy"></i></div><div><div class="stat-label">Bonuses Earned</div><div class="stat-val">8</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-file-export"></i></div><div><div class="stat-label">Last Payroll Export</div><div class="stat-val">May 15</div></div></div></div>
+    </div>
+
+    <!-- Incentive Rules -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-cogs" style="margin-right:8px;color:#0d47a1"></i>Active Incentive Rules</h5><button class="btn-pr btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-plus"></i>Add Rule</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','incentive-tracking_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Rule Name</th><th>Applies To</th><th>Trigger</th><th>Amount</th><th>Cap</th><th>Period</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Enrollment Bonus</td><td>Internal Sales Staff</td><td>Each confirmed enrollment</td><td>$75 per enrollment</td><td>$2,000/mo</td><td>Monthly</td><td><span class="bdg b-green">Active</span></td></tr>
+            <tr><td>HRA Completion Bonus</td><td>Internal Sales Staff</td><td>HRA submitted within 14-day window</td><td>$25 per HRA</td><td>$500/mo</td><td>Monthly</td><td><span class="bdg b-green">Active</span></td></tr>
+            <tr><td>AEP Volume Accelerator</td><td>Internal Sales Staff</td><td>= 10 enrollments in AEP month</td><td>$500 flat bonus</td><td>1x per AEP</td><td>AEP (OctDec)</td><td><span class="bdg b-blue">Seasonal</span></td></tr>
+            <tr><td>Quality Score Bonus</td><td>Enrollment Ops</td><td>Error rate &lt; 2% for month</td><td>$200 flat</td><td>$200/mo</td><td>Monthly</td><td><span class="bdg b-green">Active</span></td></tr>
+            <tr><td>Lead Conversion SPF</td><td>Call Center Staff</td><td>Lead ? Enrollment within 30 days</td><td>$50 per conversion</td><td>$1,500/mo</td><td>Monthly</td><td><span class="bdg b-green">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Staff Earnings -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-users" style="margin-right:8px;color:#4a148c"></i>Staff Incentive Earnings (May 2026)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','incentive-tracking_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport2" class="tbl">
+          <thead><tr><th>Employee</th><th>Department</th><th>Enrollments</th><th>HRAs</th><th>Bonuses</th><th>Total Incentive</th><th>Cap Status</th></tr></thead>
+          <tbody>
+            <tr><td>Lisa Martinez</td><td>Internal Sales</td><td>12  $75</td><td>8  $25</td><td>AEP Accel: $500</td><td style="font-weight:700;color:#1b5e20">$1,600</td><td><span class="bdg b-amber">At cap ($2K)</span></td></tr>
+            <tr><td>Mark Johnson</td><td>Internal Sales</td><td>9  $75</td><td>6  $25</td><td></td><td style="font-weight:700;color:#1b5e20">$825</td><td>OK</td></tr>
+            <tr><td>Sarah Williams</td><td>Call Center</td><td></td><td></td><td>7 conversions  $50</td><td style="font-weight:700;color:#1b5e20">$350</td><td>OK</td></tr>
+            <tr><td>Karen Lee</td><td>Enrollment Ops</td><td></td><td></td><td>Quality: $200</td><td style="font-weight:700;color:#1b5e20">$200</td><td>OK</td></tr>
+          </tbody>
+          <tfoot><tr style="background:#f0f2f5;font-weight:700"><td colspan="5">Total</td><td style="color:#1b5e20">$2,975</td><td></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Payroll Export -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-file-export" style="margin-right:8px;color:#00695c"></i>Payroll Export</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Export Period <span style="color:#c62828">*</span></label>
+            <select><option>May 2026 (current)</option><option>April 2026</option><option>March 2026</option></select>
+          </div>
+          <div class="fg"><label>Export Format <span style="color:#c62828">*</span></label>
+            <select><option>ADP Payroll CSV</option><option>Paychex CSV</option><option>Generic CSV (Employee ID, Amount, Code)</option><option>QuickBooks IIF</option></select>
+          </div>
+          <div class="fg"><label>Earnings Code</label><input type="text" value="INCENTIVE" style="max-width:150px"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Include</label>
+            <div><label><input type="checkbox" checked> Staff with earnings &gt; $0 only</label></div>
+            <div><label><input type="checkbox" checked> Include department breakdown</label></div>
+            <div><label><input type="checkbox"> Include detailed line items</label></div>
+          </div>
+        </div>
+        <div class="dflex g8" style="margin-top:12px">
+          <button class="btn-pr btn-sm"><i class="fas fa-download"></i>Generate Payroll Export</button>
+          <button class="btn-ol btn-sm"><i class="fas fa-eye"></i>Preview</button>
+        </div>
+        <div class="al-info" style="margin-top:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Export locks incentive amounts for the period. Adjustments after export require a correction entry in the next period.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

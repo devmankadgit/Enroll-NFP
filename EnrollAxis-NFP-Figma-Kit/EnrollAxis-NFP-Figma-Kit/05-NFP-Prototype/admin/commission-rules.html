@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Rules & Rate Configuration | Carrier Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}.cfg-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.cfg-item{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:12px}.cfg-item label{font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}.cfg-item .val{font-size:18px;font-weight:700;color:#1a1a2e}.cfg-item .sub{font-size:11px;color:#80868b;margin-top:2px}.ovr-tbl td,.ovr-tbl th{padding:8px 12px;font-size:12.5px}.tab-nav{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}.tab-nav button{background:none;border:none;padding:10px 20px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}.tab-nav button.active{color:#1a237e;border-bottom-color:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html" class="active"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Commission Rules &amp; Rate Configuration</h4></div>
+    <input type="text" class="tb-search" placeholder="Search rules, agents, configs...">
+    <a href="notifications-config.html" class="tb-btn"><i class="fas fa-bell"></i></a>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>CMS Compliance:</strong> All rates must remain within CMS maximum allowable compensation limits. Changes require dual-approval and take effect based on configured effective date. Config version referenced on every ledger entry.</span></div>
+
+    <div class="tab-nav">
+      <button class="active" onclick="showTab('rates')">Base Rate Config</button>
+      <button onclick="showTab('overrides')">Override Hierarchy</button>
+      <button onclick="showTab('triggers')">Commission Triggers</button>
+      <button onclick="showTab('eligibility')">Eligibility Pipeline</button>
+      <button onclick="showTab('history')">Change History</button>
+    </div>
+
+    <!-- TAB 1: Base Rate Configuration -->
+    <div id="tab-rates">
+      <div class="card mb16">
+        <div class="card-hdr">
+          <h5><i class="fas fa-sliders-h" style="margin-right:8px;color:#1a237e"></i>Active Rate Configuration — CY2026 (Gold Kidney Health Plan)</h5>
+          <div class="dflex g8">
+            <span class="bdg b-green">Active</span>
+            <span class="bdg b-blue">Config v2026.3 — Effective 01 01,2026</span>
+            <button class="btn-ol btn-sm" onclick="openAddYearConfig()"><i class="fas fa-plus-circle"></i>Add New Year Configuration</button>
+            <button class="btn-ol btn-sm" data-bs-toggle="modal" data-bs-target="#previewImpactModal"><i class="fas fa-chart-line"></i>Preview Impact</button>
+            <button class="btn-pr btn-sm" data-bs-toggle="modal" data-bs-target="#editConfigModal"><i class="fas fa-edit"></i>Edit Configuration</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <h6 style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Base Commission Rates</h6>
+          <div class="cfg-grid">
+            <div class="cfg-item"><label>Base Initial Enrollment Rate (Annual)</label><div class="val">$694.00</div><div class="sub">Monthly prorated: $57.83/month</div></div>
+            <div class="cfg-item"><label>Base Renewal PMPM Rate</label><div class="val">$28.92/mo</div><div class="sub">Annual: $347.04</div></div>
+            <div class="cfg-item"><label>HRA Completion Incentive</label><div class="val">$25.00</div><div class="sub">Per completed HRA within 14-day window</div></div>
+            <div class="cfg-item"><label>Healthy Visit — ESRD</label><div class="val">$375.00</div><div class="sub">Per DUO-confirmed visit</div></div>
+            <div class="cfg-item"><label>Healthy Visit — CKD/Heart &amp; Diabetes</label><div class="val">$275.00</div><div class="sub">Per DUO-confirmed visit</div></div>
+            <div class="cfg-item"><label>Rapid Disenrollment Chargeback Window</label><div class="val">3 months</div><div class="sub">Full initial clawback if disenrolled within window</div></div>
+          </div>
+
+          <h6 style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px;margin:20px 0 12px">Operational Parameters</h6>
+          <div class="cfg-grid">
+            <div class="cfg-item"><label>Payment Cycle Cutoff Day</label><div class="val">15th</div><div class="sub">Of each month</div></div>
+            <div class="cfg-item"><label>Payment Processing Day</label><div class="val">17th</div><div class="sub">ACH/Check generation date</div></div>
+            <div class="cfg-item"><label>Finance Approval SLA</label><div class="val">2 days</div><div class="sub">Business days for batch approval</div></div>
+            <div class="cfg-item"><label>Commission Dispute Window</label><div class="val">120 days</div><div class="sub">From payment date</div></div>
+            <div class="cfg-item"><label>Dispute Acknowledgment SLA</label><div class="val">5 biz days</div><div class="sub">From submission</div></div>
+            <div class="cfg-item"><label>Dispute Resolution SLA</label><div class="val">30 days</div><div class="sub">From acknowledgment</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Override Max Rates per Hierarchy Level -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-layer-group" style="margin-right:8px;color:#4a148c"></i>Override Max Rates — Per Hierarchy Level (CY2026)</h5><button class="btn-pr btn-sm" data-bs-toggle="modal" data-bs-target="#editOverridesModal"><i class="fas fa-edit"></i>Edit Override Tiers</button></div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Override cascade: each present hierarchy level receives up to its configured max. If a level is absent, the next upline receives roll-up (own max + absent level's max, subject to configurable cap).</span></div>
+          <table class="tbl ovr-tbl">
+            <thead><tr><th>Hierarchy Level</th><th>Initial Override Max</th><th>Renewal Override Max</th><th>Roll-Up Eligible</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bdg b-blue">GA</span> General Agent</td><td>$100.00</td><td>$45.00</td><td>Yes</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('GA','General Agent',100,45,true)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+              <tr><td><span class="bdg b-purple">MGA</span> Managing General Agent</td><td>$200.00</td><td>$75.00</td><td>Yes</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('MGA','Managing General Agent',200,75,true)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+              <tr><td><span class="bdg b-teal">SGA</span> Senior General Agent</td><td>$225.00</td><td>$105.00</td><td>Yes</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('SGA','Senior General Agent',225,105,true)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+              <tr><td><span class="bdg b-amber">FMO</span> Field Marketing Org</td><td>$275.00</td><td>$135.00</td><td>Yes</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('FMO','Field Marketing Org',275,135,true)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+              <tr><td><span class="bdg b-red">NFMO</span> National FMO</td><td>$350.00</td><td>$150.00</td><td>Yes</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('NFMO','National FMO',350,150,true)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+              <tr><td><span class="bdg b-grey">SFMO</span> Super FMO</td><td>$400.00</td><td>$165.00</td><td>No (Top Level)</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editOverrideRow('SFMO','Super FMO',400,165,false)"><i class="fas fa-pencil-alt"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- State-Specific Rate Overrides -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-map-marker-alt" style="margin-right:8px;color:#e65100"></i>State-Specific Rate Overrides</h5><button class="btn-ol btn-sm" onclick="openStateOverride()"><i class="fas fa-plus"></i>Add State Override</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-rules_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>If no state override exists, carrier-level default applies. Activation blocked if rate exceeds CMS compensation limit for that state.</span></div>
+          <table class="tbl" id="tblExport1">
+            <thead><tr><th>State</th><th>Initial Rate Override</th><th>Renewal Rate Override</th><th>CMS Max</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>California (CA)</td><td>$710.00</td><td>$29.58/mo</td><td>$740.00</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editStateOverride('CA')"><i class="fas fa-edit"></i></button></td></tr>
+              <tr><td>New York (NY)</td><td>$680.00</td><td>$28.33/mo</td><td>$720.00</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editStateOverride('NY')"><i class="fas fa-edit"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Override Hierarchy Cascade (US-6.5, US-6.4) -->
+    <div id="tab-overrides" style="display:none">
+      <div class="card mb16">
+        <div class="card-hdr"><h5>Override Cascade — Sample Calculation</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','commission-rules_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body">
+          <h6 style="font-size:13px;font-weight:600;margin-bottom:12px">Enrollment ENR-2026-0512 (Initial  $694.00 base)</h6>
+          <table class="tbl" id="tblExport2">
+            <thead><tr><th>Level</th><th>Organization</th><th>NPN</th><th>Override Amount</th><th>Max Allowed</th><th>Roll-Up</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bdg b-blue">Agent</span></td><td>James Martinez</td><td>8823441</td><td style="font-weight:700;color:#1b5e20">$694.00 (base)</td><td></td><td></td><td><span class="bdg b-green">Calculated</span></td></tr>
+              <tr><td><span class="bdg b-blue">GA</span></td><td>Florida Health Partners</td><td>7714200</td><td style="font-weight:700">$95.00</td><td>$100.00</td><td>None</td><td><span class="bdg b-green">Calculated</span></td></tr>
+              <tr><td><span class="bdg b-purple">MGA</span></td><td><em> ABSENT </em></td><td></td><td style="color:#80868b">$0.00</td><td>$200.00</td><td style="color:#e65100">↑ Rolls to SGA</td><td><span class="bdg b-amber">Roll-Up</span></td></tr>
+              <tr><td><span class="bdg b-teal">SGA</span></td><td>Southeast Distribution Group</td><td>5502100</td><td style="font-weight:700">$400.00</td><td>$425.00</td><td>+$200 from MGA</td><td><span class="bdg b-green">Calculated (w/ rollup)</span></td></tr>
+              <tr><td><span class="bdg b-amber">FMO</span></td><td>Premier Health Marketing</td><td>4401000</td><td style="font-weight:700">$275.00</td><td>$275.00</td><td>None</td><td><span class="bdg b-green">Capped at Maximum</span></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;padding:12px;background:#e8f5e9;border-radius:8px;font-size:13px"><strong>Total Commission Cost:</strong> $694 + $95 + $400 + $275 = <strong style="color:#1b5e20;font-size:16px">$1,464.00</strong></div>
+        </div>
+      </div>
+
+      <!-- Initial vs Renewal Classification -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-calculator" style="margin-right:8px;color:#1a237e"></i>Initial vs. Renewal Classification &amp; Proration</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','commission-rules_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body">
+          <table class="tbl" id="tblExport3">
+            <thead><tr><th>Classification</th><th>Criteria</th><th>Rate</th><th>Proration</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bdg b-blue">Initial</span></td><td>New enrollment; no prior Active enrollment for same MBI+plan in prior plan year</td><td>$694.00 annual</td><td>$694  (months remaining / 12); effective month = full month</td></tr>
+              <tr><td><span class="bdg b-green">Renewal</span></td><td>Enrollment rolled over Active from prior year</td><td>$28.92/mo PMPM</td><td>None — flat monthly</td></tr>
+            </tbody>
+          </table>
+          <div style="background:#f8f9fa;border-radius:8px;padding:12px;font-size:12.5px;margin-top:12px">
+            <strong>Proration Example:</strong> Effective 03 01,2026 ? 10 months remaining ? $694 — 10/12 = <strong>$578.33</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Commission Triggers -->
+    <div id="tab-triggers" style="display:none">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-bolt" style="margin-right:8px;color:#e65100"></i>Commission Trigger Configuration</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport4','commission-rules_Table4')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Triggers cause the calculation engine to run. Changes take effect on NEXT cycle. Cannot disable Annual Renewal on Jan 1.</span></div>
+          <table class="tbl" id="tblExport4">
+            <thead><tr><th>Trigger Name</th><th>Description</th><th>Enabled</th><th>Last Modified</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><strong>CMS Enrollment Confirmation</strong></td><td>New enrollment confirmed via ATN</td><td><span class="bdg b-green">Enabled</span></td><td>01 01,2026 — Sandra Adams</td><td><button class="btn-ol btn-sm"><i class="fas fa-toggle-on"></i></button></td></tr>
+              <tr><td><strong>MMR File Receipt</strong></td><td>Monthly membership: reclassifications, disenrollments</td><td><span class="bdg b-green">Enabled</span></td><td>01 01,2026 — Sandra Adams</td><td><button class="btn-ol btn-sm"><i class="fas fa-toggle-on"></i></button></td></tr>
+              <tr><td><strong>Patient Activation Event</strong></td><td>HRA completion or Healthy Visit (DUO-confirmed)</td><td><span class="bdg b-green">Enabled</span></td><td>01 01,2026 — Sandra Adams</td><td><button class="btn-ol btn-sm"><i class="fas fa-toggle-on"></i></button></td></tr>
+              <tr><td><strong>Annual Renewal Date</strong></td><td>Jan 1 automatic renewal for active enrollments</td><td><span class="bdg b-green">Enabled</span></td><td>01 01,2026 — Sandra Adams</td><td><button class="btn-ol btn-sm"><i class="fas fa-toggle-on"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-clone" style="margin-right:8px;color:#c62828"></i>Duplicate Prevention Rules</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport5','commission-rules_Table5')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+        <div class="card-body">
+          <table class="tbl" id="tblExport5">
+            <thead><tr><th>Rule Type</th><th>Max Count</th><th>Action on Duplicate</th></tr></thead>
+            <tbody>
+              <tr><td>HRA Incentive per Member per Plan Year</td><td>1</td><td>Block  "HRA already submitted for plan year [Y]"</td></tr>
+              <tr><td>Healthy Visit Incentive per Member</td><td>1 per event type</td><td>Block  "Visit incentive already paid"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Eligibility Pipeline (US-6.2, US-6.11) -->
+    <div id="tab-eligibility" style="display:none">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-tasks" style="margin-right:8px;color:#1a237e"></i>Commission Eligibility Pipeline</h5></div>
+        <div class="card-body">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+            <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:22px;color:#0d47a1"><i class="fas fa-arrow-right"></i></div><div style="font-size:11px;font-weight:600;margin-top:4px">1. Event</div></div>
+            <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:22px;color:#1b5e20"><i class="fas fa-user-check"></i></div><div style="font-size:11px;font-weight:600;margin-top:4px">2. NPN Check</div></div>
+            <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:22px;color:#e65100"><i class="fas fa-id-card"></i></div><div style="font-size:11px;font-weight:600;margin-top:4px">3. License</div></div>
+            <div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:22px;color:#4a148c"><i class="fas fa-certificate"></i></div><div style="font-size:11px;font-weight:600;margin-top:4px">4. Appointment</div></div>
+            <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:22px;color:#1b5e20"><i class="fas fa-calculator"></i></div><div style="font-size:11px;font-weight:600;margin-top:4px">5. Calculate</div></div>
+          </div>
+
+          <!-- Critical Business Rules -->
+          <div class="al-warn mb16" style="background:#fff3e0;border:1px solid #ffcc80"><i class="fas fa-gavel" style="flex-shrink:0;color:#e65100"></i><span><strong>Critical Business Rules:</strong></span></div>
+          <table class="tbl mb16" style="font-size:12px">
+            <thead><tr><th>Rule</th><th>Description</th><th>Behavior</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Eligibility Reference Date</strong></td>
+                <td>Commission eligibility is determined by the agent's active status on the <strong>application date</strong> (date enrollment form was signed/submitted)</td>
+                <td>The member's actual effective date (always 1st of a future month) is <strong>NOT</strong> the reference date. System stores application date on each enrollment record for validation.</td>
+              </tr>
+              <tr>
+                <td><strong>Effective = Term Date</strong></td>
+                <td>If a member's actual effective date equals their term date</td>
+                <td>Member is included in the BoB but generates <strong>$0.00 commission</strong>. Ledger entry created with status "Skipped &mdash; Zero Duration".</td>
+              </tr>
+              <tr>
+                <td><strong>Chargeback Handling</strong></td>
+                <td>Rapid disenrollment within configured window triggers chargeback</td>
+                <td>Chargeback posted as a <strong>negative commission entry</strong> in the ledger. Member <strong>remains in the BoB</strong> even after chargeback (historical record preserved).</td>
+              </tr>
+              <tr>
+                <td><strong>BoB Membership Persistence</strong></td>
+                <td>Once confirmed in the Book of Business, the member record persists</td>
+                <td>Disenrollment or chargeback does not remove member from BoB. Status changes to "Termed" or "Chargedback" but record remains for compliance/audit.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Two-Step Calculation Sequence -->
+          <h6 style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px;margin:20px 0 12px">Commission Calculation &mdash; Two-Step Sequence</h6>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div style="background:#e3f2fd;border:2px solid #42a5f5;border-radius:10px;padding:14px">
+              <div style="font-size:13px;font-weight:700;color:#0d47a1;margin-bottom:8px"><i class="fas fa-book" style="margin-right:6px"></i>Step 1 &mdash; Book of Business Membership Check</div>
+              <ul style="margin:0;padding-left:16px;font-size:12px;line-height:2;color:#424242">
+                <li>Member enters BoB at <strong>application submission</strong></li>
+                <li>BoB membership maintained for ALL enrollments regardless of subsequent status</li>
+                <li>Requested effective date stored at application time</li>
+                <li>CMS Approved Date (<strong>Actual Effective Date</strong>) set upon CMS confirmation</li>
+                <li><strong>Term Date</strong> = date plan coverage ends</li>
+                <li>Actual Effective Date &amp; Term Date govern <strong>commission eligibility</strong>, not BoB inclusion</li>
+              </ul>
+            </div>
+            <div style="background:#e8f5e9;border:2px solid #66bb6a;border-radius:10px;padding:14px">
+              <div style="font-size:13px;font-weight:700;color:#1b5e20;margin-bottom:8px"><i class="fas fa-calculator" style="margin-right:6px"></i>Step 2 &mdash; Commission Rule Application</div>
+              <ul style="margin:0;padding-left:16px;font-size:12px;line-height:2;color:#424242">
+                <li>Apply rules in defined sequence:<br><strong>1.</strong> Initial/Renewal classification<br><strong>2.</strong> Proration (by actual effective month)<br><strong>3.</strong> CMS standard commission calculation<br><strong>4.</strong> Override cascade (per hierarchy level)<br><strong>5.</strong> Patient activation fees (HRA &amp; Healthy Visit)</li>
+                <li>Effective Date = Term Date &rarr; $0.00 commission</li>
+                <li>Chargebacks = negative entries; member stays in BoB</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- BoB as Primary Input -->
+          <h6 style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px;margin:20px 0 12px">Book of Business (BoB) &mdash; Agent Transaction Ledger</h6>
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>The BoB is the agent's <strong>complete enrollment transaction ledger</strong>. Monthly commission calculations use the active BoB as the <strong>primary input source</strong> rather than re-deriving from raw enrollment events &mdash; ensuring calculation efficiency and consistency.</span></div>
+          <table class="tbl mb16" style="font-size:12px">
+            <thead><tr><th>BoB Entry State</th><th>Description</th><th>Commission Impact</th></tr></thead>
+            <tbody>
+              <tr><td><span class="bdg b-green">Active</span></td><td>Enrolled member with active plan coverage</td><td>Generates ongoing initial or renewal commission</td></tr>
+              <tr><td><span class="bdg b-red">Disenrolled / Termed</span></td><td>Member terminated or disenrolled from plan</td><td>Generates chargeback entry (negative) if within rapid disenrollment window</td></tr>
+              <tr><td><span class="bdg b-grey">Cancelled / CMS-Rejected</span></td><td>Application cancelled or rejected by CMS</td><td>Recorded with <strong>$0.00 commission</strong> and rejection reason code</td></tr>
+            </tbody>
+          </table>
+
+          <!-- Operational: Parallel Runs & Batch -->
+          <h6 style="font-size:12px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.5px;margin:20px 0 12px">Calculation Engine Operations</h6>
+          <table class="tbl mb16" style="font-size:12px">
+            <thead><tr><th>Capability</th><th>Description</th><th>Config</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Batch Calculation Window</strong></td><td>Process all calculations by the 15th of each month to enable payment by the 17th</td><td>Cutoff day &amp; processing day configurable in Base Rate Config tab</td></tr>
+              <tr><td><strong>Parallel Calculation Runs</strong></td><td>Support parallel calculation runs for <strong>validation against legacy system output</strong>. Produces comparison report showing deltas.</td><td>Enable via toggle; results stored in audit log for reconciliation</td></tr>
+              <tr><td><strong>Fully Configurable Rules</strong></td><td>Commission rates, override tiers, incentive amounts, and all calculation rules configurable without IT engagement</td><td>Edit Configuration modal; dual-approval required for activation</td></tr>
+            </tbody>
+          </table>
+
+          <h6 style="font-size:12px;font-weight:600;margin:12px 0 8px">Ledger Entry Schema:</h6>
+          <table class="tbl" id="tblExport6" style="font-size:12px">
+            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Ledger Entry ID</td><td>UUID</td><td>Unique identifier</td></tr>
+              <tr><td>Payment Cycle</td><td>YYYY-MM</td><td>Calculation period</td></tr>
+              <tr><td>Enrollment ID / Member ID</td><td>Reference</td><td>Linked enrollment</td></tr>
+              <tr><td>Agent NPN / Name</td><td>String</td><td>Producing agent</td></tr>
+              <tr><td>Application Date</td><td>Date</td><td>Date enrollment form was signed/submitted (eligibility reference date)</td></tr>
+              <tr><td>Actual Effective Date (CMS Approved)</td><td>Date</td><td>CMS-confirmed effective date (always 1st of month)</td></tr>
+              <tr><td>Term Date</td><td>Date</td><td>Date plan coverage ends (null if active)</td></tr>
+              <tr><td>Commission Type</td><td>Enum</td><td>Initial / Renewal / HRA / Healthy Visit / Chargeback</td></tr>
+              <tr><td>Applied Rule</td><td>String</td><td>Rule name/ID that produced this entry (e.g., "Initial-Proration-10mo")</td></tr>
+              <tr><td>Base Rate Used</td><td>Currency</td><td>From config version at event date</td></tr>
+              <tr><td>Prorated Flag / Months</td><td>Boolean/Int</td><td>Whether proration applied</td></tr>
+              <tr><td>Calculated Base Commission</td><td>Currency</td><td>Agent earned amount (negative for chargebacks)</td></tr>
+              <tr><td>Override Hierarchy Entries</td><td>Array</td><td>Per level: Name, NPN, Override Amount</td></tr>
+              <tr><td>Total Payable</td><td>Currency</td><td>Base + all overrides</td></tr>
+              <tr><td>Calculation Date</td><td>Timestamp</td><td>When calculation engine processed this entry</td></tr>
+              <tr><td>Config Version Referenced</td><td>String</td><td>Rate config active at triggering event</td></tr>
+              <tr><td>Calculation Status</td><td>Enum</td><td>Calculated / Error / Skipped-Zero Duration / Skipped-Chargeback / On Hold</td></tr>
+              <tr><td>Rejection Reason</td><td>String</td><td>For CMS-rejected/cancelled entries (null if active)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Change History (US-6.1, US-6.11) -->
+    <div id="tab-history" style="display:none">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#1a237e"></i>Rate Configuration Change History</h5>
+          <div class="dflex g8"><button class="btn-ol btn-sm" onclick="initiateRollback()"><i class="fas fa-undo"></i>Rollback (Dual-Approval)</button></div>
+        </div>
+        <div class="card-body">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Dual-approval: submitting user cannot approve. Rollback requires dual-approval + reason.</span></div>
+          <table class="tbl" id="tblExport7">
+            <thead><tr><th>Version</th><th>Plan Year</th><th>Status</th><th>Created By</th><th>Approved By</th><th>Effective</th><th></th></tr></thead>
+            <tbody id="rateHistoryBody">
+              <tr><td><code>v2026.3</code></td><td>2026</td><td><span class="bdg b-green">Active</span></td><td>Sandra Adams &mdash; Dec 15</td><td>Michael Chen &mdash; Dec 16</td><td>01 01,2026</td><td><button class="btn-ol btn-sm" onclick="viewVersion('v2026.3')"><i class="fas fa-eye"></i></button></td></tr>
+              <tr><td><code>v2027.1</code></td><td>2027</td><td><span class="bdg b-amber">Pending Approval</span></td><td>Sandra Adams &mdash; May 22</td><td>&mdash;</td><td>01 01,2027</td><td><button class="btn-pr btn-sm" onclick="reviewVersion('v2027.1')"><i class="fas fa-check"></i>Review</button></td></tr>
+              <tr><td><code>v2026.2</code></td><td>2026</td><td><span class="bdg b-grey">Archived</span></td><td>Sandra Adams &mdash; Nov 20</td><td>Michael Chen &mdash; Nov 21</td><td>&mdash;</td><td><button class="btn-ol btn-sm" onclick="viewVersion('v2026.2')"><i class="fas fa-eye"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Year Configuration Modal -->
+<div class="modal fade" id="addYearConfigModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-plus-circle" style="color:#1a237e;margin-right:8px"></i>Add Commission Rules &amp; Rate Configuration</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Creates a new plan-year configuration version in <strong>Pending Approval</strong> status. Dual-approval is required before activation.</span></div>
+        <div class="form-row">
+          <div class="fg"><label>Plan Year <span class="req">*</span></label><input type="number" id="addCfgPlanYear" min="2026" max="2035" placeholder="e.g. 2028"></div>
+          <div class="fg"><label>Carrier <span class="req">*</span></label><select id="addCfgCarrier"><option selected>Gold Kidney Health Plan</option></select></div>
+          <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="addCfgEffectiveDate"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Base Initial Rate (Annual) <span class="req">*</span></label><input type="number" id="addCfgBaseInitial" step="0.01" placeholder="694.00"></div>
+          <div class="fg"><label>Base Renewal PMPM <span class="req">*</span></label><input type="number" id="addCfgBaseRenewal" step="0.01" placeholder="28.92"></div>
+          <div class="fg"><label>HRA Incentive <span class="req">*</span></label><input type="number" id="addCfgHra" step="0.01" placeholder="25.00"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Healthy Visit ESRD <span class="req">*</span></label><input type="number" id="addCfgHvEsrd" step="0.01" placeholder="375.00"></div>
+          <div class="fg"><label>Healthy Visit CKD/H&amp;D <span class="req">*</span></label><input type="number" id="addCfgHvCkd" step="0.01" placeholder="275.00"></div>
+          <div class="fg"><label>Chargeback Window (months) <span class="req">*</span></label><input type="number" id="addCfgChargeback" min="1" max="12" placeholder="3"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Dispute Window (days)</label><input type="number" id="addCfgDispute" placeholder="120"></div>
+          <div class="fg"><label>Cutoff Day (1-28)</label><input type="number" id="addCfgCutoff" min="1" max="28" placeholder="15"></div>
+          <div class="fg"><label>Processing Day</label><input type="number" id="addCfgProcessing" placeholder="17"></div>
+        </div>
+        <div class="fg"><label>Change Notes / Business Justification <span class="req">*</span></label><textarea rows="2" id="addCfgNotes" placeholder="Explain annual rate changes and rationale (minimum 20 characters)..."></textarea></div>
+        <div style="margin-top:8px"><label><input type="checkbox" id="addCfgAck"> I confirm this configuration is for a new plan-year/effective-date and must go through payer dual-approval</label></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillAddYearConfig()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+        <div class="dflex g8">
+          <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-pr" onclick="submitAddYearConfig()"><i class="fas fa-paper-plane"></i>Create &amp; Submit for Approval</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- State Override Modal -->
+<div class="modal fade" id="stateOverrideModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 id="stateOvrTitle" style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-map-marker-alt" style="color:#e65100;margin-right:8px"></i>Add State Override</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="form-row">
+          <div class="fg"><label>State <span class="req">*</span></label><select id="stOvrState"><option value="">Select State</option><option value="FL">Florida (FL)</option><option value="TX">Texas (TX)</option><option value="CA">California (CA)</option><option value="NY">New York (NY)</option><option value="GA">Georgia (GA)</option><option value="IL">Illinois (IL)</option><option value="AZ">Arizona (AZ)</option></select></div>
+          <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="stOvrDate"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Initial Rate Override ($) <span class="req">*</span></label><input type="number" id="stOvrInit" step="0.01" placeholder="e.g. 710.00"></div>
+          <div class="fg"><label>Renewal Rate Override ($/mo) <span class="req">*</span></label><input type="number" id="stOvrRen" step="0.01" placeholder="e.g. 29.58"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>CMS Max Limit ($)</label><input type="number" id="stOvrCmsMax" step="0.01" placeholder="e.g. 740.00"></div>
+          <div class="fg"><label>Status</label><select id="stOvrStatus"><option>Active</option><option>Inactive</option></select></div>
+        </div>
+        <div class="fg" style="margin-top:8px"><label>Justification</label><textarea rows="2" id="stOvrNotes" placeholder="Reason for state-specific rate (required for approval)..."></textarea></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillStateOverride()" style="color:#e65100"><i class="fas fa-magic"></i> Prefill</button>
+        <div class="dflex g8">
+          <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-pr" onclick="submitStateOverride()"><i class="fas fa-paper-plane"></i>Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Impact Modal -->
+<div class="modal fade" id="versionDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 id="versionDetailTitle" style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-eye" style="color:#1a237e;margin-right:8px"></i>Version Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px" id="versionDetailBody"></div>
+      <div class="modal-footer"><button class="btn-ol" data-bs-dismiss="modal">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Rollback Modal -->
+<div class="modal fade" id="rollbackModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-undo" style="color:#c62828;margin-right:8px"></i>Rollback Configuration</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>Warning:</strong> Rollback requires dual-approval. You cannot approve your own rollback request. Active version will revert to the selected prior version.</span></div>
+        <div class="form-row">
+          <div class="fg"><label>Rollback To <span class="req">*</span></label><select id="rollbackTarget"><option value="v2026.2">v2026.2 &mdash; PY2026 (Archived)</option></select></div>
+          <div class="fg"><label>Current Active</label><input type="text" value="v2026.3 &mdash; PY2026" disabled style="background:#f8f9fa"></div>
+        </div>
+        <div class="fg" style="margin-top:12px"><label>Rollback Reason <span class="req">*</span></label><textarea rows="3" id="rollbackReason" placeholder="Explain why this rollback is necessary (min 20 characters)..."></textarea></div>
+        <div style="margin-top:8px"><label><input type="checkbox" id="rollbackAck"> I acknowledge this will revert all active rates and overrides to the selected version. Pending calculations will use the rolled-back configuration.</label></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-pr" style="background:#c62828" onclick="submitRollback()"><i class="fas fa-undo"></i> Submit Rollback for Approval</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Review Pending Version Modal -->
+<div class="modal fade" id="reviewVersionModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-check-circle" style="color:#e65100;margin-right:8px"></i>Review &amp; Approve: <span id="reviewVersionId">v2027.1</span></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px" id="reviewVersionBody">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Dual-Approval:</strong> You are reviewing a configuration submitted by another user. Approve to activate on the effective date, or reject with a reason.</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+          <div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:12px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Submitted By</div><div style="font-size:14px;font-weight:700;margin-top:4px">Sandra Adams</div><div style="font-size:11px;color:#80868b">05 22,2026</div></div>
+          <div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:12px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Plan Year</div><div style="font-size:14px;font-weight:700;margin-top:4px">2027</div><div style="font-size:11px;color:#80868b">Effective 01 01,2027</div></div>
+          <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div style="font-size:14px;font-weight:700;color:#e65100;margin-top:4px">Pending Approval</div><div style="font-size:11px;color:#80868b">Awaiting dual-approval</div></div>
+        </div>
+        <h6 style="font-weight:700;color:#1a237e;margin-bottom:10px"><i class="fas fa-dollar-sign" style="margin-right:6px"></i>Proposed Rates</h6>
+        <table class="tbl" id="tblExport8" style="font-size:12.5px;margin-bottom:16px"><tbody>
+          <tr><td style="font-weight:600">Base Initial (Annual)</td><td>$694.00</td><td style="font-weight:600">Base Renewal (PMPM)</td><td>$28.92/mo</td></tr>
+          <tr><td style="font-weight:600">HRA Incentive</td><td>$25.00</td><td style="font-weight:600">Healthy Visit ESRD</td><td>$375.00</td></tr>
+          <tr><td style="font-weight:600">Healthy Visit CKD/H&D</td><td>$275.00</td><td style="font-weight:600">Chargeback Window</td><td>3 months</td></tr>
+        </tbody></table>
+        <h6 style="font-weight:700;color:#4a148c;margin-bottom:10px"><i class="fas fa-layer-group" style="margin-right:6px"></i>Override Tiers (Initial / Renewal)</h6>
+        <table class="tbl" id="tblExport9" style="font-size:12.5px;margin-bottom:16px"><thead><tr><th>GA</th><th>MGA</th><th>SGA</th><th>FMO</th><th>NFMO</th><th>SFMO</th></tr></thead>
+          <tbody><tr><td>$110 / $48</td><td>$215 / $80</td><td>$240 / $112</td><td>$290 / $142</td><td>$365 / $158</td><td>$420 / $175</td></tr></tbody></table>
+        <h6 style="font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-file-alt" style="margin-right:6px"></i>Change Notes</h6>
+        <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;font-size:13px;color:#333">Annual rate adjustment for PY2027 per approved commission schedule. Reflects CMS benchmark increase and competitive market analysis.</div>
+        <div class="fg" style="margin-top:16px"><label>Reviewer Comments <small>(optional)</small></label><textarea rows="2" id="reviewComments" placeholder="Add comments for audit trail..."></textarea></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+        <div class="dflex g8">
+          <button class="btn-ol" style="color:#c62828;border-color:#c62828" onclick="rejectVersion()"><i class="fas fa-times"></i> Reject</button>
+          <button class="btn-pr" onclick="approveVersion()"><i class="fas fa-check"></i> Approve &amp; Activate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Impact Modal (existing) -->
+<div class="modal fade" id="previewImpactModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-chart-line" style="color:#1a237e;margin-right:8px"></i>Preview Impact — Proposed Rate Change</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="cfg-grid">
+          <div class="cfg-item"><label>Est. Initial Liability</label><div class="val" style="color:#1b5e20">$41,640</div><div class="sub">60 initials  $694</div></div>
+          <div class="cfg-item"><label>Est. Renewal Liability (Monthly)</label><div class="val" style="color:#0d47a1">$6,936</div><div class="sub">240 renewals  $28.92/mo</div></div>
+          <div class="cfg-item"><label>Est. Override Cascade Cost</label><div class="val" style="color:#e65100">$28,500</div><div class="sub">All hierarchy overrides</div></div>
+        </div>
+        <div style="margin-top:16px;padding:14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px"><strong>Delta vs. Current:</strong> +$2,400/month projected increase due to 2027 adjustment.</div>
+      </div>
+      <div class="modal-footer"><button class="btn-ol" data-bs-dismiss="modal">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Config Modal -->
+<div class="modal fade" id="editConfigModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-edit" style="color:#1a237e;margin-right:8px"></i>Edit Rate Configuration</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Changes require dual-approval. You cannot approve your own changes. Mid-year corrections need justification (min 20 chars).</span></div>
+        <div class="form-row">
+          <div class="fg"><label>Plan Year <span class="req">*</span></label><select><option>2026</option><option selected>2027</option></select></div>
+          <div class="fg"><label>Carrier <span class="req">*</span></label><select><option>Gold Kidney Health Plan</option></select></div>
+          <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" value="2027-01-01"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Base Initial Rate (Annual)</label><input type="number" value="694.00" step="0.01"></div>
+          <div class="fg"><label>Base Renewal PMPM</label><input type="number" value="28.92" step="0.01"></div>
+          <div class="fg"><label>HRA Incentive</label><input type="number" value="25.00" step="0.01"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Healthy Visit ESRD</label><input type="number" value="375.00" step="0.01"></div>
+          <div class="fg"><label>Healthy Visit CKD/H&amp;D</label><input type="number" value="275.00" step="0.01"></div>
+          <div class="fg"><label>Chargeback Window (months, 1-12)</label><input type="number" value="3" min="1" max="12"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Dispute Window (days, 1-365)</label><input type="number" value="120"></div>
+          <div class="fg"><label>Cutoff Day (1-28)</label><input type="number" value="15" min="1" max="28"></div>
+          <div class="fg"><label>Processing Day</label><input type="number" value="17"></div>
+        </div>
+        <div class="fg"><label>Change Notes / Justification</label><textarea rows="2" placeholder="Required for mid-year corrections (min 20 chars)..."></textarea></div>
+        <div style="margin-top:8px"><label><input type="checkbox"> I acknowledge this affects future calculations per effective date</label></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillEditConfig()" style="color:#1a237e"><i class="fas fa-magic"></i> Prefill</button>
+        <div class="dflex g8">
+          <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-ol"><i class="fas fa-chart-line"></i>Preview Impact</button>
+          <button class="btn-pr" onclick="submitRateConfig()"><i class="fas fa-paper-plane"></i>Submit for Approval</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Override Tiers Modal (bulk) -->
+<div class="modal fade" id="editOverridesModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-layer-group" style="color:#4a148c;margin-right:8px"></i>Edit Override Max Rates &mdash; All Hierarchy Levels</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Changes require dual-approval. New rates take effect per configured effective date. Existing calculated commissions are not retroactively affected.</span></div>
+        <div class="form-row" style="margin-bottom:8px">
+          <div class="fg"><label>Plan Year <span class="req">*</span></label><select id="ovrPlanYear"><option>2026</option><option>2027</option></select></div>
+          <div class="fg"><label>Effective Date <span class="req">*</span></label><input type="date" id="ovrEffDate" value="2026-01-01"></div>
+        </div>
+        <table class="tbl" id="tblExport10" style="font-size:12px">
+          <thead><tr><th>Level</th><th>Initial Override Max ($)</th><th>Renewal Override Max ($)</th><th>Roll-Up Eligible</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GA</strong> General Agent</td><td><input type="number" id="ovrGA_init" value="100" step="0.01" style="width:100px"></td><td><input type="number" id="ovrGA_ren" value="45" step="0.01" style="width:100px"></td><td><select id="ovrGA_roll"><option selected>Yes</option><option>No</option></select></td></tr>
+            <tr><td><strong>MGA</strong> Managing General Agent</td><td><input type="number" id="ovrMGA_init" value="200" step="0.01" style="width:100px"></td><td><input type="number" id="ovrMGA_ren" value="75" step="0.01" style="width:100px"></td><td><select id="ovrMGA_roll"><option selected>Yes</option><option>No</option></select></td></tr>
+            <tr><td><strong>SGA</strong> Senior General Agent</td><td><input type="number" id="ovrSGA_init" value="225" step="0.01" style="width:100px"></td><td><input type="number" id="ovrSGA_ren" value="105" step="0.01" style="width:100px"></td><td><select id="ovrSGA_roll"><option selected>Yes</option><option>No</option></select></td></tr>
+            <tr><td><strong>FMO</strong> Field Marketing Org</td><td><input type="number" id="ovrFMO_init" value="275" step="0.01" style="width:100px"></td><td><input type="number" id="ovrFMO_ren" value="135" step="0.01" style="width:100px"></td><td><select id="ovrFMO_roll"><option selected>Yes</option><option>No</option></select></td></tr>
+            <tr><td><strong>NFMO</strong> National FMO</td><td><input type="number" id="ovrNFMO_init" value="350" step="0.01" style="width:100px"></td><td><input type="number" id="ovrNFMO_ren" value="150" step="0.01" style="width:100px"></td><td><select id="ovrNFMO_roll"><option selected>Yes</option><option>No</option></select></td></tr>
+            <tr><td><strong>SFMO</strong> Super FMO</td><td><input type="number" id="ovrSFMO_init" value="400" step="0.01" style="width:100px"></td><td><input type="number" id="ovrSFMO_ren" value="165" step="0.01" style="width:100px"></td><td><select id="ovrSFMO_roll"><option>Yes</option><option selected>No</option></select></td></tr>
+          </tbody>
+        </table>
+        <div class="fg" style="margin-top:12px"><label>Change Notes / Justification</label><textarea rows="2" id="ovrNotes" placeholder="Reason for override tier changes (required for approval)..."></textarea></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillOverrideTiers()" style="color:#4a148c"><i class="fas fa-magic"></i> Prefill</button>
+        <div class="dflex g8">
+          <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-pr" onclick="submitOverrideTiers()"><i class="fas fa-paper-plane"></i>Submit for Approval</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Single Override Row Modal -->
+<div class="modal fade" id="editSingleOverrideModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header"><h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-pencil-alt" style="color:#4a148c;margin-right:8px"></i>Edit Override &mdash; <span id="singleOvrLevel"></span></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <div class="modal-body" style="padding:20px">
+        <div class="form-row">
+          <div class="fg"><label>Initial Override Max ($) <span class="req">*</span></label><input type="number" id="singleOvrInit" step="0.01"></div>
+          <div class="fg"><label>Renewal Override Max ($) <span class="req">*</span></label><input type="number" id="singleOvrRen" step="0.01"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Roll-Up Eligible</label><select id="singleOvrRoll"><option>Yes</option><option>No</option></select></div>
+          <div class="fg"><label>Effective Date</label><input type="date" id="singleOvrDate" value="2026-01-01"></div>
+        </div>
+        <div class="fg" style="margin-top:8px"><label>Justification</label><textarea rows="2" id="singleOvrNotes" placeholder="Reason for change..."></textarea></div>
+      </div>
+      <div class="modal-footer" style="justify-content:space-between">
+        <button class="btn-ol btn-sm" onclick="prefillSingleOverride()" style="color:#4a148c"><i class="fas fa-magic"></i> Prefill</button>
+        <div class="dflex g8">
+          <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-pr" onclick="submitSingleOverride()"><i class="fas fa-check"></i>Submit for Approval</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showTab(t){document.querySelectorAll('[id^="tab-"]').forEach(el=>el.style.display='none');document.getElementById('tab-'+t).style.display='block';document.querySelectorAll('.tab-nav button').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}
+
+function formatLongDate(dateStr){
+  var d=new Date(dateStr+'T00:00:00');
+  if(Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function formatShortDate(dateStr){
+  var d=new Date(dateStr+'T00:00:00');
+  if(Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+function clearAddConfigValidation(){
+  ['addCfgPlanYear','addCfgEffectiveDate','addCfgBaseInitial','addCfgBaseRenewal','addCfgHra','addCfgHvEsrd','addCfgHvCkd','addCfgChargeback','addCfgNotes']
+    .forEach(function(id){
+      var el=document.getElementById(id);
+      if(el) el.style.borderColor='';
+    });
+}
+
+function openAddYearConfig(){
+  clearAddConfigValidation();
+  document.getElementById('addCfgPlanYear').value='';
+  document.getElementById('addCfgCarrier').value='Gold Kidney Health Plan';
+  document.getElementById('addCfgEffectiveDate').value='';
+  document.getElementById('addCfgBaseInitial').value='';
+  document.getElementById('addCfgBaseRenewal').value='';
+  document.getElementById('addCfgHra').value='';
+  document.getElementById('addCfgHvEsrd').value='';
+  document.getElementById('addCfgHvCkd').value='';
+  document.getElementById('addCfgChargeback').value='';
+  document.getElementById('addCfgDispute').value='';
+  document.getElementById('addCfgCutoff').value='';
+  document.getElementById('addCfgProcessing').value='';
+  document.getElementById('addCfgNotes').value='';
+  document.getElementById('addCfgAck').checked=false;
+  new bootstrap.Modal(document.getElementById('addYearConfigModal')).show();
+}
+
+function prefillAddYearConfig(){
+  document.getElementById('addCfgPlanYear').value='2028';
+  document.getElementById('addCfgEffectiveDate').value='2028-01-01';
+  document.getElementById('addCfgBaseInitial').value='725.00';
+  document.getElementById('addCfgBaseRenewal').value='30.21';
+  document.getElementById('addCfgHra').value='27.00';
+  document.getElementById('addCfgHvEsrd').value='390.00';
+  document.getElementById('addCfgHvCkd').value='285.00';
+  document.getElementById('addCfgChargeback').value='3';
+  document.getElementById('addCfgDispute').value='120';
+  document.getElementById('addCfgCutoff').value='15';
+  document.getElementById('addCfgProcessing').value='17';
+  document.getElementById('addCfgNotes').value='Annual CY2028 configuration aligned to CMS compensation updates and market competitiveness for Gold Kidney distribution channels.';
+  document.getElementById('addCfgAck').checked=true;
+  clearAddConfigValidation();
+  if(typeof showToast==='function') showToast('Form prefilled with sample new-year configuration data.','info');
+}
+
+function getNextVersionForYear(year){
+  var maxPatch=0;
+  Object.keys(versionData).forEach(function(v){
+    var m=v.match(/^v(\d{4})\.(\d+)$/);
+    if(m&&m[1]===String(year)){
+      maxPatch=Math.max(maxPatch,parseInt(m[2],10)||0);
+    }
+  });
+  return 'v'+year+'.'+(maxPatch+1);
+}
+
+function submitAddYearConfig(){
+  clearAddConfigValidation();
+
+  var planYear=document.getElementById('addCfgPlanYear').value.trim();
+  var effectiveDate=document.getElementById('addCfgEffectiveDate').value;
+  var baseInitial=document.getElementById('addCfgBaseInitial').value;
+  var baseRenewal=document.getElementById('addCfgBaseRenewal').value;
+  var hra=document.getElementById('addCfgHra').value;
+  var hvEsrd=document.getElementById('addCfgHvEsrd').value;
+  var hvCkd=document.getElementById('addCfgHvCkd').value;
+  var chargeback=document.getElementById('addCfgChargeback').value;
+  var dispute=document.getElementById('addCfgDispute').value||'120';
+  var cutoff=document.getElementById('addCfgCutoff').value||'15';
+  var processing=document.getElementById('addCfgProcessing').value||'17';
+  var notes=document.getElementById('addCfgNotes').value.trim();
+  var ack=document.getElementById('addCfgAck').checked;
+
+  var missing=[];
+  if(!planYear) missing.push('addCfgPlanYear');
+  if(!effectiveDate) missing.push('addCfgEffectiveDate');
+  if(!baseInitial) missing.push('addCfgBaseInitial');
+  if(!baseRenewal) missing.push('addCfgBaseRenewal');
+  if(!hra) missing.push('addCfgHra');
+  if(!hvEsrd) missing.push('addCfgHvEsrd');
+  if(!hvCkd) missing.push('addCfgHvCkd');
+  if(!chargeback) missing.push('addCfgChargeback');
+  if(!notes||notes.length<20) missing.push('addCfgNotes');
+  if(missing.length){
+    missing.forEach(function(id){var el=document.getElementById(id);if(el) el.style.borderColor='#c62828';});
+    alert('Please complete all required fields. Justification must be at least 20 characters.');
+    return;
+  }
+
+  if(String(planYear)!==effectiveDate.slice(0,4)){
+    alert('Plan Year must match Effective Date year for a new-year configuration.');
+    document.getElementById('addCfgPlanYear').style.borderColor='#c62828';
+    document.getElementById('addCfgEffectiveDate').style.borderColor='#c62828';
+    return;
+  }
+
+  if(!ack){
+    alert('Please acknowledge dual-approval before submitting.');
+    return;
+  }
+
+  var duplicate=Object.keys(versionData).some(function(k){
+    var d=versionData[k];
+    return String(d.planYear)===String(planYear)&&d.effectiveRaw===effectiveDate;
+  });
+  if(duplicate){
+    alert('A configuration already exists for this Plan Year and Effective Date. Please edit the existing version instead.');
+    return;
+  }
+
+  var newVersion=getNextVersionForYear(planYear);
+  var createdBy='Sandra Adams';
+  var today=new Date();
+  var createdShort=today.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+  versionData[newVersion]={
+    version:newVersion,
+    planYear:String(planYear),
+    status:'Pending Approval',
+    createdBy:createdBy,
+    createdDate:createdShort+', '+today.getFullYear(),
+    approvedBy:'&mdash;',
+    approvedDate:'&mdash;',
+    effective:formatLongDate(effectiveDate),
+    effectiveRaw:effectiveDate,
+    rates:{
+      initial:'$'+Number(baseInitial).toFixed(2),
+      renewal:'$'+Number(baseRenewal).toFixed(2)+'/mo',
+      hra:'$'+Number(hra).toFixed(2),
+      hvEsrd:'$'+Number(hvEsrd).toFixed(2),
+      hvCkd:'$'+Number(hvCkd).toFixed(2),
+      chargeback:String(chargeback)+' months',
+      dispute:String(dispute)+' days',
+      cutoff:String(cutoff)+'th',
+      processing:String(processing)+'th'
+    },
+    overrides:{GA:'Pending',MGA:'Pending',SGA:'Pending',FMO:'Pending',NFMO:'Pending',SFMO:'Pending'},
+    changes:notes
+  };
+
+  var tbody=document.getElementById('rateHistoryBody');
+  if(tbody){
+    var row=document.createElement('tr');
+    row.innerHTML='<td><code>'+newVersion+'</code></td>'+
+      '<td>'+planYear+'</td>'+
+      '<td><span class="bdg b-amber">Pending Approval</span></td>'+
+      '<td>'+createdBy+' &mdash; '+createdShort+'</td>'+
+      '<td>&mdash;</td>'+
+      '<td>'+formatLongDate(effectiveDate)+'</td>'+
+      '<td><button class="btn-pr btn-sm" onclick="reviewVersion(\''+newVersion+'\')"><i class="fas fa-check"></i>Review</button></td>';
+    var firstPendingRow=tbody.querySelector('tr:nth-child(2)');
+    if(firstPendingRow){
+      tbody.insertBefore(row,firstPendingRow);
+    }else{
+      tbody.appendChild(row);
+    }
+  }
+
+  bootstrap.Modal.getInstance(document.getElementById('addYearConfigModal')).hide();
+  if(typeof showToast==='function') showToast(newVersion+' created and submitted for dual-approval.','success');
+  showTab('history');
+  var historyBtn=document.querySelector('.tab-nav button:nth-child(5)');
+  if(historyBtn){
+    document.querySelectorAll('.tab-nav button').forEach(function(btn){btn.classList.remove('active');});
+    historyBtn.classList.add('active');
+  }
+}
+
+function editOverrideRow(level, name, init, ren, rollUp){
+  document.getElementById('singleOvrLevel').textContent=level+' \u2014 '+name;
+  document.getElementById('singleOvrInit').value=init;
+  document.getElementById('singleOvrRen').value=ren;
+  document.getElementById('singleOvrRoll').value=rollUp?'Yes':'No';
+  document.getElementById('singleOvrNotes').value='';
+  new bootstrap.Modal(document.getElementById('editSingleOverrideModal')).show();
+}
+
+function submitSingleOverride(){
+  var init=document.getElementById('singleOvrInit').value;
+  var ren=document.getElementById('singleOvrRen').value;
+  if(!init||!ren){alert('Initial and Renewal rates are required.');return;}
+  bootstrap.Modal.getInstance(document.getElementById('editSingleOverrideModal')).hide();
+  if(typeof showToast==='function') showToast('Override tier change submitted for approval','success');
+}
+
+function submitOverrideTiers(){
+  var notes=document.getElementById('ovrNotes').value.trim();
+  if(!notes){document.getElementById('ovrNotes').style.borderColor='#c62828';alert('Justification is required for override tier changes.');return;}
+  document.getElementById('ovrNotes').style.borderColor='';
+  bootstrap.Modal.getInstance(document.getElementById('editOverridesModal')).hide();
+  if(typeof showToast==='function') showToast('All override tier changes submitted for dual-approval','success');
+}
+
+function submitRateConfig(){
+  bootstrap.Modal.getInstance(document.getElementById('editConfigModal')).hide();
+  if(typeof showToast==='function') showToast('Rate configuration submitted for dual-approval.','success');
+}
+
+var stateOvrData={
+  'CA':{state:'CA',date:'2026-01-01',init:'710.00',ren:'29.58',cmsMax:'740.00',status:'Active',notes:'California requires higher rate due to elevated cost of living and competitive market. Approved per CMS state benchmark.'},
+  'NY':{state:'NY',date:'2026-01-01',init:'680.00',ren:'28.33',cmsMax:'720.00',status:'Active',notes:'New York rate adjustment per regional market analysis. Below CMS maximum threshold.'}
+};
+
+function openStateOverride(){
+  document.getElementById('stateOvrTitle').innerHTML='<i class="fas fa-map-marker-alt" style="color:#e65100;margin-right:8px"></i>Add State Override';
+  document.getElementById('stOvrState').value='';
+  document.getElementById('stOvrDate').value='';
+  document.getElementById('stOvrInit').value='';
+  document.getElementById('stOvrRen').value='';
+  document.getElementById('stOvrCmsMax').value='';
+  document.getElementById('stOvrStatus').value='Active';
+  document.getElementById('stOvrNotes').value='';
+  document.getElementById('stOvrState').disabled=false;
+  new bootstrap.Modal(document.getElementById('stateOverrideModal')).show();
+}
+
+function editStateOverride(state){
+  var d=stateOvrData[state];
+  var stateNames={'CA':'California (CA)','NY':'New York (NY)','FL':'Florida (FL)','TX':'Texas (TX)','GA':'Georgia (GA)'};
+  document.getElementById('stateOvrTitle').innerHTML='<i class="fas fa-edit" style="color:#e65100;margin-right:8px"></i>Edit State Override: '+(stateNames[state]||state);
+  document.getElementById('stOvrState').value=state;
+  document.getElementById('stOvrState').disabled=true;
+  document.getElementById('stOvrDate').value=d?d.date:'';
+  document.getElementById('stOvrInit').value=d?d.init:'';
+  document.getElementById('stOvrRen').value=d?d.ren:'';
+  document.getElementById('stOvrCmsMax').value=d?d.cmsMax:'';
+  document.getElementById('stOvrStatus').value=d?d.status:'Active';
+  document.getElementById('stOvrNotes').value=d?d.notes:'';
+  new bootstrap.Modal(document.getElementById('stateOverrideModal')).show();
+}
+
+function prefillStateOverride(){
+  document.getElementById('stOvrState').value='TX';
+  document.getElementById('stOvrDate').value='2027-01-01';
+  document.getElementById('stOvrInit').value='700.00';
+  document.getElementById('stOvrRen').value='29.17';
+  document.getElementById('stOvrCmsMax').value='735.00';
+  document.getElementById('stOvrStatus').value='Active';
+  document.getElementById('stOvrNotes').value='Texas market expansion for PY2027. Rate set below CMS maximum to allow competitive positioning while maintaining margin.';
+  if(typeof showToast==='function') showToast('Form prefilled with sample data.','info');
+}
+
+function submitStateOverride(){
+  var state=document.getElementById('stOvrState').value;
+  var init=document.getElementById('stOvrInit').value;
+  var ren=document.getElementById('stOvrRen').value;
+  if(!state||!init||!ren){alert('State, Initial Rate, and Renewal Rate are required.');return;}
+  bootstrap.Modal.getInstance(document.getElementById('stateOverrideModal')).hide();
+  if(typeof showToast==='function') showToast('State override submitted for approval.','success');
+}
+
+function prefillEditConfig(){
+  var body=document.querySelector('#editConfigModal .modal-body');
+  var inputs=body.querySelectorAll('input[type=number]');
+  var vals=[694.00,28.92,25.00,375.00,275.00,3,120,15,17];
+  inputs.forEach(function(inp,i){if(vals[i]!==undefined) inp.value=vals[i];});
+  var selects=body.querySelectorAll('select');
+  if(selects[0]) selects[0].value='2027';
+  if(selects[1]) selects[1].value='Gold Kidney Health Plan';
+  var dateInput=body.querySelector('input[type=date]');
+  if(dateInput) dateInput.value='2027-01-01';
+  var ta=body.querySelector('textarea');
+  if(ta) ta.value='Annual rate adjustment for PY2027 per approved commission schedule. Reflects CMS benchmark increase and competitive market analysis.';
+  var cb=body.querySelector('input[type=checkbox]');
+  if(cb) cb.checked=true;
+  if(typeof showToast==='function') showToast('Form prefilled with sample data.','info');
+}
+
+function prefillOverrideTiers(){
+  document.getElementById('ovrPlanYear').value='2027';
+  document.getElementById('ovrEffDate').value='2027-01-01';
+  document.getElementById('ovrGA_init').value='110';
+  document.getElementById('ovrGA_ren').value='48';
+  document.getElementById('ovrMGA_init').value='215';
+  document.getElementById('ovrMGA_ren').value='80';
+  document.getElementById('ovrSGA_init').value='240';
+  document.getElementById('ovrSGA_ren').value='112';
+  document.getElementById('ovrFMO_init').value='290';
+  document.getElementById('ovrFMO_ren').value='142';
+  document.getElementById('ovrNFMO_init').value='365';
+  document.getElementById('ovrNFMO_ren').value='158';
+  document.getElementById('ovrSFMO_init').value='420';
+  document.getElementById('ovrSFMO_ren').value='175';
+  document.getElementById('ovrNotes').value='PY2027 override tier increase of ~5-8% across all levels to align with base rate adjustment and retain competitive distribution partnerships.';
+  if(typeof showToast==='function') showToast('Form prefilled with sample data.','info');
+}
+
+function prefillSingleOverride(){
+  document.getElementById('singleOvrInit').value='290';
+  document.getElementById('singleOvrRen').value='142';
+  document.getElementById('singleOvrRoll').value='Yes';
+  document.getElementById('singleOvrDate').value='2027-01-01';
+  document.getElementById('singleOvrNotes').value='Adjusted to match PY2027 competitive tier structure per approved rate schedule.';
+  if(typeof showToast==='function') showToast('Form prefilled with sample data.','info');
+}
+
+var versionData={
+  'v2026.3':{
+    version:'v2026.3',planYear:'2026',status:'Active',createdBy:'Sandra Adams',createdDate:'12 15,2025',approvedBy:'Michael Chen',approvedDate:'12 16,2025',effective:'01 01,2026',
+    effectiveRaw:'2026-01-01',
+    rates:{initial:'$694.00',renewal:'$28.92/mo',hra:'$25.00',hvEsrd:'$375.00',hvCkd:'$275.00',chargeback:'3 months',dispute:'120 days',cutoff:'15th',processing:'17th'},
+    overrides:{GA:'$100 / $45',MGA:'$200 / $75',SGA:'$225 / $105',FMO:'$275 / $135',NFMO:'$350 / $150',SFMO:'$400 / $165'},
+    changes:'Annual rate configuration for PY2026. Adjusted HRA incentive from $20 to $25. Added Healthy Visit ESRD/CKD tiers. Updated override cascade to include SFMO level.'
+  },
+  'v2027.1':{
+    version:'v2027.1',planYear:'2027',status:'Pending Approval',createdBy:'Sandra Adams',createdDate:'05 22,2026',approvedBy:'&mdash;',approvedDate:'&mdash;',effective:'01 01,2027',effectiveRaw:'2027-01-01',
+    rates:{initial:'$694.00',renewal:'$28.92/mo',hra:'$25.00',hvEsrd:'$375.00',hvCkd:'$275.00',chargeback:'3 months',dispute:'120 days',cutoff:'15th',processing:'17th'},
+    overrides:{GA:'$110 / $48',MGA:'$215 / $80',SGA:'$240 / $112',FMO:'$290 / $142',NFMO:'$365 / $158',SFMO:'$420 / $175'},
+    changes:'Annual rate adjustment for PY2027 per approved commission schedule. Reflects CMS benchmark increase and competitive market analysis.'
+  },
+  'v2026.2':{
+    version:'v2026.2',planYear:'2026',status:'Archived',createdBy:'Sandra Adams',createdDate:'11 20,2025',approvedBy:'Michael Chen',approvedDate:'11 21,2025',effective:'(Superseded)',
+    effectiveRaw:'2025-11-20',
+    rates:{initial:'$680.00',renewal:'$27.50/mo',hra:'$20.00',hvEsrd:'$350.00',hvCkd:'$250.00',chargeback:'3 months',dispute:'90 days',cutoff:'15th',processing:'17th'},
+    overrides:{GA:'$95 / $42',MGA:'$190 / $70',SGA:'$215 / $100',FMO:'$265 / $130',NFMO:'$340 / $145',SFMO:'$385 / $160'},
+    changes:'Draft rate schedule for PY2026. Initial submission before final CMS benchmark adjustment. Superseded by v2026.3 after benchmark confirmation.'
+  }
+};
+
+function initiateRollback(){
+  document.getElementById('rollbackReason').value='';
+  var cb=document.getElementById('rollbackAck'); if(cb) cb.checked=false;
+  new bootstrap.Modal(document.getElementById('rollbackModal')).show();
+}
+
+function submitRollback(){
+  var reason=document.getElementById('rollbackReason').value.trim();
+  var ack=document.getElementById('rollbackAck').checked;
+  if(!reason||reason.length<20){alert('Rollback reason is required (minimum 20 characters).');return;}
+  if(!ack){alert('You must acknowledge the rollback impact before submitting.');return;}
+  bootstrap.Modal.getInstance(document.getElementById('rollbackModal')).hide();
+  if(typeof showToast==='function') showToast('Rollback request submitted for dual-approval. Another admin must approve before activation.','success');
+}
+
+function reviewVersion(ver){
+  document.getElementById('reviewVersionId').textContent=ver;
+  document.getElementById('reviewComments').value='';
+  new bootstrap.Modal(document.getElementById('reviewVersionModal')).show();
+}
+
+function approveVersion(){
+  bootstrap.Modal.getInstance(document.getElementById('reviewVersionModal')).hide();
+  if(typeof showToast==='function') showToast('Version approved! Configuration will activate on effective date (01 01,2027).','success');
+}
+
+function rejectVersion(){
+  var comments=document.getElementById('reviewComments').value.trim();
+  if(!comments){alert('Please provide a reason for rejection in the comments field.');return;}
+  bootstrap.Modal.getInstance(document.getElementById('reviewVersionModal')).hide();
+  if(typeof showToast==='function') showToast('Version rejected. Submitter will be notified with your comments.','info');
+}
+
+function viewVersion(ver){
+  var d=versionData[ver];
+  if(!d){if(typeof showToast==='function') showToast('Version data not found.','error');return;}
+  document.getElementById('versionDetailTitle').innerHTML='<i class="fas fa-eye" style="color:#1a237e;margin-right:8px"></i>Version: '+d.version+' &mdash; PY'+d.planYear;
+  var statusColor=d.status==='Active'?'#1b5e20':d.status==='Archived'?'#616161':'#e65100';
+  document.getElementById('versionDetailBody').innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">'+
+    '<div class="stat-card"><div class="stat-label">Status</div><div class="stat-val" style="font-size:14px;color:'+statusColor+'">'+d.status+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Created By</div><div class="stat-val" style="font-size:13px">'+d.createdBy+'<br><span style="font-size:11px;color:#5f6368">'+d.createdDate+'</span></div></div>'+
+    '<div class="stat-card"><div class="stat-label">Approved By</div><div class="stat-val" style="font-size:13px">'+d.approvedBy+'<br><span style="font-size:11px;color:#5f6368">'+d.approvedDate+'</span></div></div>'+
+    '</div>'+
+    '<h6 style="font-weight:700;color:#1a237e;margin-bottom:10px"><i class="fas fa-dollar-sign" style="margin-right:6px"></i>Rate Configuration</h6>'+
+    '<table class="tbl" id="tblExport11" style="font-size:12.5px;margin-bottom:16px"><tbody>'+
+    '<tr><td style="font-weight:600">Base Initial (Annual)</td><td>'+d.rates.initial+'</td><td style="font-weight:600">Base Renewal (PMPM)</td><td>'+d.rates.renewal+'</td></tr>'+
+    '<tr><td style="font-weight:600">HRA Incentive</td><td>'+d.rates.hra+'</td><td style="font-weight:600">Healthy Visit ESRD</td><td>'+d.rates.hvEsrd+'</td></tr>'+
+    '<tr><td style="font-weight:600">Healthy Visit CKD/H&D</td><td>'+d.rates.hvCkd+'</td><td style="font-weight:600">Chargeback Window</td><td>'+d.rates.chargeback+'</td></tr>'+
+    '<tr><td style="font-weight:600">Dispute Window</td><td>'+d.rates.dispute+'</td><td style="font-weight:600">Cutoff / Processing</td><td>'+d.rates.cutoff+' / '+d.rates.processing+'</td></tr>'+
+    '</tbody></table>'+
+    '<h6 style="font-weight:700;color:#4a148c;margin-bottom:10px"><i class="fas fa-layer-group" style="margin-right:6px"></i>Override Tiers (Initial / Renewal)</h6>'+
+    '<table class="tbl" id="tblExport12" style="font-size:12.5px;margin-bottom:16px"><thead><tr><th>GA</th><th>MGA</th><th>SGA</th><th>FMO</th><th>NFMO</th><th>SFMO</th></tr></thead>'+
+    '<tbody><tr><td>'+d.overrides.GA+'</td><td>'+d.overrides.MGA+'</td><td>'+d.overrides.SGA+'</td><td>'+d.overrides.FMO+'</td><td>'+d.overrides.NFMO+'</td><td>'+d.overrides.SFMO+'</td></tr></tbody></table>'+
+    '<h6 style="font-weight:700;color:#333;margin-bottom:8px"><i class="fas fa-file-alt" style="margin-right:6px"></i>Change Notes</h6>'+
+    '<div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;font-size:13px;color:#333">'+d.changes+'</div>'+
+    '<div style="margin-top:12px;font-size:11px;color:#9e9e9e"><i class="fas fa-calendar" style="margin-right:4px"></i>Effective Date: '+d.effective+'</div>';
+  new bootstrap.Modal(document.getElementById('versionDetailModal')).show();
+}
+</script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

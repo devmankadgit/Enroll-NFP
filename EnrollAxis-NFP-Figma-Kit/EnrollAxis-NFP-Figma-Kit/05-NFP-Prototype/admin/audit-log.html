@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit Log | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.filter-panel{background:#f8f9ff;border:1px solid #e8eaed;border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.filter-panel .form-label{font-size:11px;font-weight:600;color:#5f6368;margin-bottom:3px}
+.filter-panel select,.filter-panel input{font-size:12px}
+.audit-tbl td,.audit-tbl th{font-size:11.5px;padding:7px 10px;white-space:nowrap}
+.audit-tbl td.wrap-col{white-space:normal;min-width:120px;max-width:180px;word-break:break-word}
+.result-ok{color:#1b5e20;font-weight:600}
+.result-fail{color:#c62828;font-weight:600}
+.immutable-banner{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:12px;color:#1b5e20;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
+.pagination-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:#5f6368;margin-top:12px}
+.pg-btn{background:none;border:1px solid #d0d5dd;border-radius:5px;padding:4px 10px;font-size:12px;cursor:pointer;color:#1a237e}
+.pg-btn:disabled{opacity:.4;cursor:default}
+.pg-btn.active{background:#1a237e;color:#fff;border-color:#1a237e}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html" class="active"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Unified Audit Log</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Audit Log</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="exportAuditLog('csv')"><i class="fas fa-file-csv"></i>Export CSV</button>
+      <button class="btn-ol btn-sm" onclick="exportAuditLog('json')"><i class="fas fa-file-code"></i>Export JSON</button>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-list-alt"></i></div><div><div class="stat-label">Total Entries (7 yrs)</div><div class="stat-val">1,482,304</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Success (Today)</div><div class="stat-val">2,841</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Failures (Today)</div><div class="stat-val">12</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-user-shield"></i></div><div><div class="stat-label">Retention Policy</div><div class="stat-val">7 Years</div></div></div></div>
+    </div>
+
+    <!-- Immutability Banner -->
+    <div class="immutable-banner">
+      <i class="fas fa-lock" style="margin-top:1px;flex-shrink:0"></i>
+      <span><strong>Immutable Record:</strong> Audit log entries cannot be edited or deleted. Any modification attempt returns HTTP 403. All entries are cryptographically signed and replicated to a write-once cold storage tier. Retention policy: 7 years from event timestamp.</span>
+    </div>
+
+    <!-- Filter Panel -->
+    <div class="filter-panel">
+      <div style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px"><i class="fas fa-filter" style="margin-right:6px"></i>Filters</div>
+      <div class="row-grid" style="gap:10px;margin-bottom:10px">
+        <div class="col-2">
+          <label class="form-label">Date Range — From</label>
+          <input type="date" id="fDateFrom" class="form-control form-control-sm" value="2026-05-23" oninput="searchAuditLog()">
+        </div>
+        <div class="col-2">
+          <label class="form-label">Date Range — To</label>
+          <input type="date" id="fDateTo" class="form-control form-control-sm" value="2026-05-30" oninput="searchAuditLog()">
+        </div>
+        <div class="col-2">
+          <label class="form-label">Module</label>
+          <select id="fModule" class="form-control form-control-sm" onchange="searchAuditLog()">
+            <option value="">All Modules</option>
+            <option>Users &amp; Access</option>
+            <option>Commission</option>
+            <option>Enrollment</option>
+            <option>Onboarding</option>
+            <option>Compliance</option>
+            <option>Integrations</option>
+            <option>Templates</option>
+            <option>Training</option>
+            <option>Overrides</option>
+            <option>System</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label class="form-label">Event Type</label>
+          <select id="fEventType" class="form-control form-control-sm" onchange="searchAuditLog()">
+            <option value="">All Event Types</option>
+            <option>CREATE</option>
+            <option>UPDATE</option>
+            <option>DELETE</option>
+            <option>LOGIN</option>
+            <option>LOGOUT</option>
+            <option>APPROVE</option>
+            <option>DENY</option>
+            <option>EXPORT</option>
+            <option>CONFIG_CHANGE</option>
+            <option>ACCESS_DENIED</option>
+            <option>SYSTEM</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-grid" style="gap:10px;margin-bottom:10px">
+        <div class="col-2">
+          <label class="form-label">Entity Type</label>
+          <select id="fEntityType" class="form-control form-control-sm" onchange="searchAuditLog()">
+            <option value="">All Entity Types</option>
+            <option>Agent</option>
+            <option>Agency</option>
+            <option>Member</option>
+            <option>Enrollment</option>
+            <option>Commission</option>
+            <option>Role</option>
+            <option>User</option>
+            <option>Template</option>
+            <option>Integration</option>
+            <option>Override</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label class="form-label">Entity ID</label>
+          <input type="text" id="fEntityId" class="form-control form-control-sm" placeholder="e.g. NPN 8823441, ENR-001234" oninput="searchAuditLog()">
+        </div>
+        <div class="col-2">
+          <label class="form-label">Performed By (User)</label>
+          <input type="text" id="fUser" class="form-control form-control-sm" placeholder="Email or name" oninput="searchAuditLog()">
+        </div>
+        <div class="col-2">
+          <label class="form-label">IP Address</label>
+          <input type="text" id="fIp" class="form-control form-control-sm" placeholder="e.g. 192.168.1.10" oninput="searchAuditLog()">
+        </div>
+      </div>
+      <div class="row-grid" style="gap:10px;align-items:flex-end">
+        <div class="col-2">
+          <label class="form-label">Result</label>
+          <select id="fResult" class="form-control form-control-sm" onchange="searchAuditLog()">
+            <option value="">All Results</option>
+            <option>Success</option>
+            <option>Failed</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label class="form-label">Notes Full-Text Search</label>
+          <input type="text" id="fNotes" class="form-control form-control-sm" placeholder="Search notes field..." oninput="searchAuditLog()">
+        </div>
+        <div class="col-2" style="display:flex;gap:8px;padding-top:16px">
+          <button class="btn-pr btn-sm" onclick="searchAuditLog()"><i class="fas fa-search"></i>Search</button>
+          <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i>Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-list-alt" style="margin-right:8px;color:#1a237e"></i>Audit Entries</h5>
+        <div style="font-size:12px;color:#5f6368" id="auditResultMeta">Showing entries 1—100 of 2,853 (filtered)</div>
+      </div>
+      <div class="table-wrap" style="overflow-x:auto">
+        <table class="tbl audit-tbl" id="auditTable">
+          <thead>
+            <tr>
+              <th>Entry ID</th>
+              <th>Timestamp (UTC)</th>
+              <th>Module</th>
+              <th>Event Type</th>
+              <th>Entity Type</th>
+              <th>Entity ID</th>
+              <th>Entity Name</th>
+              <th>Action</th>
+              <th>Performed By</th>
+              <th>Role</th>
+              <th>IP Address</th>
+              <th>Result</th>
+              <th class="wrap-col">Old Value</th>
+              <th class="wrap-col">New Value</th>
+              <th class="wrap-col">Notes</th>
+            </tr>
+          </thead>
+          <tbody id="auditTbody">
+            <tr>
+              <td>AUD-20260530-08412</td>
+              <td>2026-05-30 14:02:11</td>
+              <td>Overrides</td>
+              <td><span class="bdg b-purple">APPROVE</span></td>
+              <td>Override</td>
+              <td>OVR-2026-041</td>
+              <td>J. Martinez Commission Rate</td>
+              <td>Override approved</td>
+              <td>k.white@goldkidney.com</td>
+              <td>Platform Admin</td>
+              <td>10.0.1.5</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">Pending</td>
+              <td class="wrap-col">Active — Exp: 08 23,2026</td>
+              <td class="wrap-col">Urgent — same-day review</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08401</td>
+              <td>2026-05-30 13:57:44</td>
+              <td>Users &amp; Access</td>
+              <td><span class="bdg b-blue">UPDATE</span></td>
+              <td>User</td>
+              <td>USR-00291</td>
+              <td>d.wright@partner.com</td>
+              <td>Role changed</td>
+              <td>k.white@goldkidney.com</td>
+              <td>Platform Admin</td>
+              <td>10.0.1.5</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">Agent</td>
+              <td class="wrap-col">Agency Admin</td>
+              <td class="wrap-col"></td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08388</td>
+              <td>2026-05-30 13:45:02</td>
+              <td>Commission</td>
+              <td><span class="bdg b-teal">CONFIG_CHANGE</span></td>
+              <td>Commission</td>
+              <td>RULE-COMM-007</td>
+              <td>Gold Kidney HMO Initial Rate</td>
+              <td>Rate updated</td>
+              <td>s.adams@goldkidney.com</td>
+              <td>Carrier Admin</td>
+              <td>10.0.2.12</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">$578</td>
+              <td class="wrap-col">$610</td>
+              <td class="wrap-col">AEP 2027 rate adjustment</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08375</td>
+              <td>2026-05-30 13:30:19</td>
+              <td>Enrollment</td>
+              <td><span class="bdg b-green">CREATE</span></td>
+              <td>Enrollment</td>
+              <td>ENR-2026-088241</td>
+              <td>Member: R. Thompson</td>
+              <td>Enrollment submitted</td>
+              <td>j.martinez@acmeins.com</td>
+              <td>Agent</td>
+              <td>192.168.5.88</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">—</td>
+              <td class="wrap-col">Pending CMS</td>
+              <td class="wrap-col">D-SNP Gold Kidney HMO 2026</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08361</td>
+              <td>2026-05-30 13:18:55</td>
+              <td>Integrations</td>
+              <td><span class="bdg b-amber">SYSTEM</span></td>
+              <td>Integration</td>
+              <td>INT-NIPR</td>
+              <td>NIPR License Verification</td>
+              <td>Connection degraded</td>
+              <td>SYSTEM</td>
+              <td>System</td>
+              <td>—</td>
+              <td class="result-fail">Failed</td>
+              <td class="wrap-col">Active (240ms avg)</td>
+              <td class="wrap-col">Degraded (1240ms avg)</td>
+              <td class="wrap-col">Response time exceeded 1000ms threshold</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08352</td>
+              <td>2026-05-30 13:05:31</td>
+              <td>Users &amp; Access</td>
+              <td><span class="bdg b-red">ACCESS_DENIED</span></td>
+              <td>User</td>
+              <td>USR-00188</td>
+              <td>t.nguyen@acmeins.com</td>
+              <td>Attempted role upgrade</td>
+              <td>t.nguyen@acmeins.com</td>
+              <td>Agent</td>
+              <td>72.44.21.100</td>
+              <td class="result-fail">Failed</td>
+              <td class="wrap-col">—</td>
+              <td class="wrap-col">—</td>
+              <td class="wrap-col">Insufficient permissions — HTTP 403</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08340</td>
+              <td>2026-05-30 12:55:08</td>
+              <td>Training</td>
+              <td><span class="bdg b-blue">UPDATE</span></td>
+              <td>Agent</td>
+              <td>NPN-8823441</td>
+              <td>James Martinez</td>
+              <td>Training completed</td>
+              <td>j.martinez@acmeins.com</td>
+              <td>Agent</td>
+              <td>192.168.5.88</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">In Progress</td>
+              <td class="wrap-col">Complete — Score: 92%</td>
+              <td class="wrap-col">Gold Kidney 2026 Product Training</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08329</td>
+              <td>2026-05-30 12:40:22</td>
+              <td>System</td>
+              <td><span class="bdg b-teal">CONFIG_CHANGE</span></td>
+              <td>Integration</td>
+              <td>INT-NIPR</td>
+              <td>NIPR API Config</td>
+              <td>Alert threshold updated</td>
+              <td>s.adams@goldkidney.com</td>
+              <td>Carrier Admin</td>
+              <td>10.0.2.12</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">Threshold: 2000ms</td>
+              <td class="wrap-col">Threshold: 1000ms</td>
+              <td class="wrap-col"></td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08318</td>
+              <td>2026-05-30 12:22:47</td>
+              <td>Compliance</td>
+              <td><span class="bdg b-green">CREATE</span></td>
+              <td>Template</td>
+              <td>TMPL-SOA-v3.2</td>
+              <td>SOA Template v3.2</td>
+              <td>Template approved</td>
+              <td>k.white@goldkidney.com</td>
+              <td>Platform Admin</td>
+              <td>10.0.1.5</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">Draft</td>
+              <td class="wrap-col">Active</td>
+              <td class="wrap-col">Replaces SOA v3.1 effective immediately</td>
+            </tr>
+            <tr>
+              <td>AUD-20260530-08301</td>
+              <td>2026-05-30 12:01:00</td>
+              <td>Users &amp; Access</td>
+              <td><span class="bdg b-blue">LOGIN</span></td>
+              <td>User</td>
+              <td>USR-00001</td>
+              <td>k.white@goldkidney.com</td>
+              <td>Admin login</td>
+              <td>k.white@goldkidney.com</td>
+              <td>Platform Admin</td>
+              <td>10.0.1.5</td>
+              <td class="result-ok">Success</td>
+              <td class="wrap-col">—</td>
+              <td class="wrap-col">Session started</td>
+              <td class="wrap-col">MFA verified</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-bar" style="padding:0 12px 12px">
+        <button class="pg-btn" disabled onclick="auditPage(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="pg-btn active">1</button>
+        <button class="pg-btn" onclick="auditPage(2)">2</button>
+        <button class="pg-btn" onclick="auditPage(3)">3</button>
+        <span style="margin:0 4px">—</span>
+        <button class="pg-btn" onclick="auditPage(29)">29</button>
+        <button class="pg-btn" onclick="auditPage(1)"><i class="fas fa-chevron-right"></i></button>
+        <span style="margin-left:auto">Page size: 100 entries</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 30,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+
+<script>
+// -------------------------------------------------------
+// US-9.8  Unified Audit Log  — all interactions
+// Immutable: no edit/delete allowed
+// -------------------------------------------------------
+
+function searchAuditLog() {
+  var module   = document.getElementById('fModule').value;
+  var evType   = document.getElementById('fEventType').value;
+  var entType  = document.getElementById('fEntityType').value;
+  var entId    = document.getElementById('fEntityId').value.trim();
+  var user     = document.getElementById('fUser').value.trim();
+  var ip       = document.getElementById('fIp').value.trim();
+  var result   = document.getElementById('fResult').value;
+  var notes    = document.getElementById('fNotes').value.trim();
+  var from     = document.getElementById('fDateFrom').value;
+  var to       = document.getElementById('fDateTo').value;
+
+  var rows = document.querySelectorAll('#auditTbody tr');
+  var visible = 0;
+  rows.forEach(function(r) {
+    var cells = r.querySelectorAll('td');
+    var rowModule   = cells[2] ? cells[2].textContent : '';
+    var rowEvType   = cells[3] ? cells[3].textContent : '';
+    var rowEntType  = cells[4] ? cells[4].textContent : '';
+    var rowEntId    = cells[5] ? cells[5].textContent : '';
+    var rowUser     = cells[8] ? cells[8].textContent : '';
+    var rowIp       = cells[10] ? cells[10].textContent : '';
+    var rowResult   = cells[11] ? cells[11].textContent.trim() : '';
+    var rowNotes    = cells[14] ? cells[14].textContent.toLowerCase() : '';
+
+    var show = true;
+    if(module   && !rowModule.includes(module))        show = false;
+    if(evType   && !rowEvType.includes(evType))        show = false;
+    if(entType  && !rowEntType.includes(entType))      show = false;
+    if(entId    && !rowEntId.toLowerCase().includes(entId.toLowerCase()))  show = false;
+    if(user     && !rowUser.toLowerCase().includes(user.toLowerCase()))    show = false;
+    if(ip       && !rowIp.includes(ip))                show = false;
+    if(result   && !rowResult.toLowerCase().includes(result.toLowerCase())) show = false;
+    if(notes    && !rowNotes.includes(notes.toLowerCase()))                 show = false;
+
+    r.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+
+  document.getElementById('auditResultMeta').textContent =
+    'Showing ' + visible + ' of ' + rows.length + ' entries in current page';
+  showToast('Search complete. ' + visible + ' entr' + (visible === 1 ? 'y' : 'ies') + ' match your filters.', 'info');
+}
+
+function clearFilters() {
+  ['fModule','fEventType','fEntityType','fResult'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  ['fEntityId','fUser','fIp','fNotes'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('fDateFrom').value = '2026-05-23';
+  document.getElementById('fDateTo').value   = '2026-05-30';
+  document.querySelectorAll('#auditTbody tr').forEach(function(r) { r.style.display = ''; });
+  document.getElementById('auditResultMeta').textContent = 'Showing entries 1\u2013100 of 2,853 (filtered)';
+  showToast('Filters cleared.', 'info');
+}
+
+function exportAuditLog(fmt) {
+  var rowCount = 0;
+  document.querySelectorAll('#auditTbody tr').forEach(function(r) {
+    if(r.style.display !== 'none') rowCount++;
+  });
+  if(rowCount === 0) { showToast('No entries match the current filters. Adjust filters before exporting.', 'error'); return; }
+  if(rowCount > 100000) { showToast('Export cap is 100,000 records. Narrow your date range or add filters.', 'error'); return; }
+  showToast('Exporting ' + rowCount + ' audit entr' + (rowCount === 1 ? 'y' : 'ies') + ' as ' + fmt.toUpperCase() + '. Download will start shortly.', 'success');
+}
+
+function auditPage(n) {
+  showToast('Loading audit log page ' + n + '\u2026', 'info');
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

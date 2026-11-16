@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Rate Configuration | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.rate-table th{background:#f8f9fa;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#5f6368;padding:8px 12px}
+.rate-table td{padding:9px 12px;font-size:13px;border-bottom:1px solid #f1f3f4}
+.rate-table tr:last-child td{border-bottom:0}
+.preview-panel{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px;margin-top:12px}
+.preview-panel h6{color:#1b5e20;font-weight:700;margin-bottom:12px;font-size:13px}
+.field-ro{background:#f8f9fa;color:#5f6368;cursor:default}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html" class="active"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Rate Configuration</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Rate Configuration</li></ol>
+    </div>
+    <button class="btn-pr btn-sm" onclick="openNew()"><i class="fas fa-plus"></i>New Rate Config</button>
+    <button class="btn-ol btn-sm" onclick="openWeeklyReport()"><i class="fas fa-calendar-week"></i>Weekly Report</button>
+    <button class="btn-ol btn-sm" onclick="nfpExport('Rate Configs')"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Active Configs</div><div class="stat-val">1</div><div class="stat-sub text-muted">CY2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Pending Approval</div><div class="stat-val">1</div><div class="stat-sub text-muted">CY2027</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f1f3f4;color:#5f6368"><i class="fas fa-pencil-alt"></i></div><div><div class="stat-label">Drafts</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#880e4f"><i class="fas fa-archive"></i></div><div><div class="stat-label">Archived</div><div class="stat-val">3</div><div class="stat-sub text-muted">CY2023—2025</div></div></div></div>
+    </div>
+
+    <div class="filter-bar mb16">
+      <label>Plan Year</label>
+      <select id="fPlanYear" onchange="applyFilters()">
+        <option value="">All Years</option>
+        <option value="2024">2024</option><option value="2025">2025</option>
+        <option value="2026">2026</option><option value="2027">2027</option>
+      </select>
+      <label>Carrier</label>
+      <select id="fCarrier" onchange="applyFilters()">
+        <option value="">All Carriers</option><option>Gold Kidney Health Plan</option>
+      </select>
+      <label>Status</label>
+      <select id="fStatus" onchange="applyFilters()">
+        <option value="">All Statuses</option><option>Draft</option>
+        <option>Pending Approval</option><option>Active</option><option>Archived</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i>Filter</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-sliders-h" style="margin-right:8px;color:#004d40"></i>Rate Configuration Records</h5>
+        <span class="text-muted text-sm">Versioned by Plan Year + Carrier + Effective Date. Calculation engine always uses the version active at the triggering event date.</span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-config_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Config ID</th><th>Plan Year</th><th>Carrier</th><th>Effective Date</th><th>Base Initial</th><th>Base Renewal PMPM</th><th>Status</th><th>Submitted By</th><th>Approval</th><th>Actions</th></tr></thead>
+          <tbody id="configTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NEW / EDIT CONFIG MODAL ===== -->
+<div class="modal-overlay" id="newConfigModal">
+  <div class="modal-box" style="max-width:860px">
+    <div class="modal-hdr">
+      <h5 id="newConfigTitle"><i class="fas fa-plus-circle" style="color:#004d40;margin-right:8px"></i>New Rate Configuration</h5>
+      <button class="modal-close" onclick="closeModal('newConfigModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab(this,'tabPlan')">Plan Info &amp; Base Rates</button>
+        <button class="tab-btn" onclick="switchTab(this,'tabOverrides')">Override Max Rates</button>
+        <button class="tab-btn" onclick="switchTab(this,'tabStates')">State-Specific Rates</button>
+        <button class="tab-btn" onclick="switchTab(this,'tabNotes')">Notes &amp; Submission</button>
+      </div>
+
+      <!-- Tab 1 -->
+      <div id="tabPlan" class="tab-pane active">
+        <div class="form-row">
+          <div class="fg"><label>Plan Year <span class="req">*</span></label>
+            <select id="cfgPlanYear" required><option value="">Select...</option><option>2026</option><option>2027</option><option>2028</option></select></div>
+          <div class="fg"><label>Carrier <span class="req">*</span></label>
+            <select id="cfgCarrier" required><option value="">Select...</option><option>Gold Kidney Health Plan</option></select></div>
+          <div class="fg"><label>Effective Date <span class="req">*</span></label>
+            <input type="date" id="cfgEffDate" required onchange="checkMidYear()"></div>
+        </div>
+        <div id="midYearWarn" style="display:none" class="al-warn mb16">
+          <i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i>
+          <span><strong>Mid-Year Correction Detected.</strong> A justification note (min 20 characters) is required.<br>
+          <label style="margin-top:6px;display:flex;align-items:center;gap:8px"><input type="checkbox" id="midYearAck"><strong>I acknowledge this is a mid-year correction</strong></label></span>
+        </div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Monthly Prorated Initial Rate is auto-calculated (Annual — 12) and read-only. CY2026 defaults shown.</span></div>
+        <div class="form-row">
+          <div class="fg"><label>Base Initial Rate — Annual <span class="req">*</span></label><input type="number" id="cfgBaseInitial" value="694.00" step="0.01" min="0.01" required oninput="updateProrated()"></div>
+          <div class="fg"><label>Monthly Prorated Initial (Auto)</label><input type="text" id="cfgMonthlyProrated" value="$57.83" readonly class="field-ro"></div>
+          <div class="fg"><label>Base Renewal PMPM <span class="req">*</span></label><input type="number" id="cfgBaseRenewal" value="28.92" step="0.01" min="0.01" required></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>HRA Completion Incentive ($)</label><input type="number" id="cfgHRA" value="25.00" step="0.01" min="0"></div>
+          <div class="fg"><label>Healthy Visit — ESRD ($)</label><input type="number" id="cfgHVESRD" value="375.00" step="0.01" min="0"></div>
+          <div class="fg"><label>Healthy Visit — CKD / Heart &amp; Diabetes ($)</label><input type="number" id="cfgHVCKD" value="275.00" step="0.01" min="0"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Chargeback Window (months, 1—12)</label><input type="number" id="cfgCBWindow" value="3" min="1" max="12"></div>
+          <div class="fg"><label>Dispute Window (days, 1—365)</label><input type="number" id="cfgDispWindow" value="120" min="1" max="365"></div>
+          <div class="fg"><label>Cutoff Day of Month (1—28)</label><input type="number" id="cfgCutoff" value="15" min="1" max="28"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Payment Processing Day</label><input type="number" id="cfgPayDay" value="17" min="1" max="28"></div>
+          <div class="fg"><label>Finance Approval SLA (days)</label><input type="number" id="cfgFinSLA" value="2" min="1"></div>
+          <div class="fg"><label>Dispute Ack SLA (biz days)</label><input type="number" id="cfgAckSLA" value="5" min="1"></div>
+          <div class="fg"><label>Dispute Resolution SLA (days)</label><input type="number" id="cfgResSLA" value="30" min="1"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2 -->
+      <div id="tabOverrides" class="tab-pane">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Maximum override amounts per hierarchy level. All amounts must be positive numbers.</span></div>
+        <table class="tbl rate-table">
+          <thead><tr><th>Hierarchy Level</th><th>Initial Override Max ($)</th><th>Renewal Override Max ($/mo)</th></tr></thead>
+          <tbody id="ovrTbody">
+            <tr><td><strong>GA</strong> — General Agent</td><td><input type="number" class="ovr-inp ovr-i" data-level="GA" value="100.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="GA" value="45.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+            <tr><td><strong>MGA</strong> — Managing GA</td><td><input type="number" class="ovr-inp ovr-i" data-level="MGA" value="200.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="MGA" value="75.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+            <tr><td><strong>SGA</strong> — Senior GA</td><td><input type="number" class="ovr-inp ovr-i" data-level="SGA" value="225.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="SGA" value="105.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+            <tr><td><strong>FMO</strong> — Field Marketing Org</td><td><input type="number" class="ovr-inp ovr-i" data-level="FMO" value="275.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="FMO" value="135.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+            <tr><td><strong>NFMO</strong> — National FMO</td><td><input type="number" class="ovr-inp ovr-i" data-level="NFMO" value="350.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="NFMO" value="150.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+            <tr><td><strong>SFMO</strong> — Super FMO</td><td><input type="number" class="ovr-inp ovr-i" data-level="SFMO" value="400.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td><td><input type="number" class="ovr-inp ovr-r" data-level="SFMO" value="165.00" step="0.01" min="0.01" style="width:100%;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tab 3 -->
+      <div id="tabStates" class="tab-pane">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>State-specific overrides are optional. If no state rate is configured, the carrier-level default applies. Activation blocked if configured rate exceeds CMS compensation limit for that state.</span></div>
+        <div style="margin-bottom:10px"><button class="btn-ol btn-sm" onclick="addStateRow()"><i class="fas fa-plus"></i>Add State Override</button></div>
+        <table class="tbl rate-table">
+          <thead><tr><th>State</th><th>Base Initial Override ($)</th><th>Base Renewal PMPM Override ($)</th><th>CMS Limit (Read-Only)</th><th>Status</th><th></th></tr></thead>
+          <tbody id="stateRateTbody">
+            <tr id="stateRateEmpty"><td colspan="6" style="text-align:center;color:#9aa0a6;padding:18px;font-size:13px"><i class="fas fa-info-circle" style="margin-right:6px"></i>No state overrides configured. Carrier default applies to all states.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tab 4 -->
+      <div id="tabNotes" class="tab-pane">
+        <div class="fg" style="margin-bottom:16px">
+          <label>Change Notes <span class="text-muted" style="font-weight:400;text-transform:none">(optional; required min 20 chars for mid-year corrections)</span></label>
+          <textarea id="cfgNotes" rows="4" placeholder="Describe the reason for this rate configuration or change..."></textarea>
+        </div>
+        <div class="al-warn">
+          <i class="fas fa-shield-alt" style="flex-shrink:0"></i>
+          <span><strong>Dual Approval Required:</strong> Config changes require two Finance Admins. After saving as Draft, submit for approval. The submitting user <strong>cannot</strong> be the approver. Config changes are fully audit-logged with before/after values per field.</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillConfig()"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('newConfigModal')">Cancel</button>
+        <button class="btn-ol" onclick="saveConfigDraft()"><i class="fas fa-save"></i>Save as Draft</button>
+        <button class="btn-pr" onclick="saveAndSubmit()"><i class="fas fa-paper-plane"></i>Save &amp; Submit for Approval</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DETAIL MODAL ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box" style="max-width:900px">
+    <div class="modal-hdr">
+      <h5 id="detailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('detailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+    <div class="modal-foot" id="detailFoot"></div>
+  </div>
+</div>
+
+<!-- ===== APPROVE MODAL ===== -->
+<div class="modal-overlay" id="approveModal">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-check-circle" style="color:#1b5e20;margin-right:8px"></i>Approve Rate Configuration</h5>
+      <button class="modal-close" onclick="closeModal('approveModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13.5px;margin-bottom:14px">You are about to <strong>approve</strong> this rate configuration. It will become <strong>Active</strong> and any previously Active config for the same Plan Year + Carrier will be automatically <strong>Archived</strong>.</p>
+      <div class="al-warn"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Dual approval required. You are confirming as the second approver. Ensure all rate parameters have been reviewed. This action is audit-logged.</span></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('approveModal')">Cancel</button>
+      <button class="btn-pr" style="background:#1b5e20" onclick="confirmApprove()"><i class="fas fa-check"></i>Confirm Approval</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REJECT MODAL ===== -->
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-times-circle" style="color:#c62828;margin-right:8px"></i>Reject Rate Configuration</h5>
+      <button class="modal-close" onclick="closeModal('rejectModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg"><label>Rejection Reason <span class="req">*</span></label><textarea id="rejectReason" rows="3" placeholder="Provide reason for rejection (required)..."></textarea></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillReject()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('rejectModal')">Cancel</button>
+        <button class="btn-danger" onclick="confirmReject()"><i class="fas fa-times"></i>Reject &amp; Return to Draft</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const CURRENT_USER = 'David Park';
+let pendingApproveId = null, pendingRejectId = null, editingId = null;
+
+const configs = [
+  { id:'RC-2026-01', planYear:'2026', carrier:'Gold Kidney Health Plan', effectiveDate:'2026-01-01', status:'Active',
+    submittedBy:'Sarah Chen', approvedBy:'David Park', approvedDate:'01 02,2026',
+    changeNotes:'CY2026 base rates per CMS annual guidance.',
+    baseInitial:694.00, baseRenewal:28.92, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
+    chargebackWindow:3, disputeWindow:120, cutoffDay:15, payDay:17, financeSLA:2, ackSLA:5, resSLA:30,
+    overrides:[{level:'GA',initial:100,renewal:45},{level:'MGA',initial:200,renewal:75},{level:'SGA',initial:225,renewal:105},
+               {level:'FMO',initial:275,renewal:135},{level:'NFMO',initial:350,renewal:150},{level:'SFMO',initial:400,renewal:165}],
+    stateRates:[],
+    auditLog:[
+      {date:'01 02,2026 10:15 AM',user:'David Park',action:'Approved',detail:'Config activated for CY2026.'},
+      {date:'12 28,2025 3:44 PM',user:'Sarah Chen',action:'Submitted for Approval',detail:'Rates set per CMS annual guidance.'},
+      {date:'12 20,2025 9:00 AM',user:'Sarah Chen',action:'Created Draft',detail:'New CY2026 config created.'}
+    ]
+  },
+  { id:'RC-2027-01', planYear:'2027', carrier:'Gold Kidney Health Plan', effectiveDate:'2027-01-01', status:'Pending Approval',
+    submittedBy:'David Park', approvedBy:null, approvedDate:null,
+    changeNotes:'CY2027 rate update per CMS preliminary guidance. Base initial +$18.00, renewal +$0.83/mo.',
+    baseInitial:712.00, baseRenewal:29.75, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
+    chargebackWindow:3, disputeWindow:120, cutoffDay:15, payDay:17, financeSLA:2, ackSLA:5, resSLA:30,
+    overrides:[{level:'GA',initial:100,renewal:45},{level:'MGA',initial:200,renewal:75},{level:'SGA',initial:225,renewal:105},
+               {level:'FMO',initial:275,renewal:135},{level:'NFMO',initial:350,renewal:150},{level:'SFMO',initial:400,renewal:165}],
+    stateRates:[],
+    auditLog:[
+      {date:'05 20,2026 2:30 PM',user:'David Park',action:'Submitted for Approval',detail:'CY2027 rates submitted for dual approval.'},
+      {date:'05 15,2026 11:00 AM',user:'David Park',action:'Created Draft',detail:'New CY2027 config created.'}
+    ]
+  },
+  { id:'RC-2026-MYC', planYear:'2026', carrier:'Gold Kidney Health Plan', effectiveDate:'2026-07-01', status:'Draft',
+    submittedBy:'Lisa Rodriguez', approvedBy:null, approvedDate:null,
+    changeNotes:'Mid-year correction for Florida state-specific CMS limit adjustment.',
+    baseInitial:694.00, baseRenewal:28.92, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
+    chargebackWindow:3, disputeWindow:120, cutoffDay:15, payDay:17, financeSLA:2, ackSLA:5, resSLA:30,
+    overrides:[{level:'GA',initial:100,renewal:45},{level:'MGA',initial:200,renewal:75},{level:'SGA',initial:225,renewal:105},
+               {level:'FMO',initial:275,renewal:135},{level:'NFMO',initial:350,renewal:150},{level:'SFMO',initial:400,renewal:165}],
+    stateRates:[{state:'FL',initialOverride:680.00,renewalOverride:28.00,cmsLimit:694.00,status:'Active'}],
+    auditLog:[
+      {date:'05 25,2026 4:00 PM',user:'Lisa Rodriguez',action:'Created Draft',detail:'Mid-year FL state rate correction.'}
+    ]
+  },
+  { id:'RC-2025-01', planYear:'2025', carrier:'Gold Kidney Health Plan', effectiveDate:'2025-01-01', status:'Archived',
+    submittedBy:'Sarah Chen', approvedBy:'Lisa Rodriguez', approvedDate:'01 03,2025',
+    changeNotes:'CY2025 base rates.',
+    baseInitial:651.00, baseRenewal:27.13, hraIncentive:25.00, hvESRD:375.00, hvCKD:275.00,
+    chargebackWindow:3, disputeWindow:120, cutoffDay:15, payDay:17, financeSLA:2, ackSLA:5, resSLA:30,
+    overrides:[{level:'GA',initial:100,renewal:45},{level:'MGA',initial:200,renewal:75},{level:'SGA',initial:225,renewal:105},
+               {level:'FMO',initial:275,renewal:135},{level:'NFMO',initial:350,renewal:150},{level:'SFMO',initial:400,renewal:165}],
+    stateRates:[],
+    auditLog:[
+      {date:'01 03,2025 9:00 AM',user:'Lisa Rodriguez',action:'Approved',detail:'CY2025 config activated.'},
+      {date:'12 27,2024 5:00 PM',user:'Sarah Chen',action:'Submitted for Approval',detail:''},
+      {date:'12 18,2024 10:00 AM',user:'Sarah Chen',action:'Created Draft',detail:'New CY2025 config.'}
+    ]
+  }
+];
+
+function badge(s){
+  const m={'Active':'b-green','Pending Approval':'b-amber','Draft':'b-grey','Archived':'b-red','Inactive':'b-red'};
+  return `<span class="bdg ${m[s]||'b-grey'}">${s}</span>`;
+}
+
+function renderTable(list){
+  document.getElementById('configTbody').innerHTML = list.map(c=>{
+    const isArchived = c.status==='Archived';
+    const canApprove = c.status==='Pending Approval' && c.submittedBy!==CURRENT_USER;
+    const selfPending = c.status==='Pending Approval' && c.submittedBy===CURRENT_USER;
+    const approvalCell = c.approvedBy
+      ? `<span style="color:#1b5e20;font-size:12px"><i class="fas fa-check-circle"></i> ${c.approvedBy}<br><span style="color:#80868b">${c.approvedDate}</span></span>`
+      : selfPending
+        ? `<span style="color:#e65100;font-size:12px"><i class="fas fa-clock"></i> Awaiting peer</span>`
+        : `<span class="text-muted" style="font-size:12px">—</span>`;
+    return `<tr style="${isArchived?'opacity:.6':''}">
+      <td><code style="font-size:12px">${c.id}</code></td>
+      <td><strong>${c.planYear}</strong></td>
+      <td style="font-size:12.5px">${c.carrier}</td>
+      <td>${c.effectiveDate}</td>
+      <td><strong>$${c.baseInitial.toFixed(2)}</strong></td>
+      <td>$${c.baseRenewal.toFixed(2)}/mo</td>
+      <td>${badge(c.status)}</td>
+      <td style="font-size:12.5px">${c.submittedBy}</td>
+      <td>${approvalCell}</td>
+      <td><div class="dflex g8" style="flex-wrap:wrap">
+        <button class="btn-ol btn-sm" onclick="openDetail('${c.id}')"><i class="fas fa-eye"></i>View</button>
+        <button class="btn-ol btn-sm" onclick="openCompare('${c.id}')"><i class="fas fa-columns"></i>Compare</button>
+        ${c.status==='Draft'?`<button class="btn-ol btn-sm" onclick="openEdit('${c.id}')"><i class="fas fa-edit"></i>Edit</button>`:''}
+        ${c.status==='Draft'?`<button class="btn-pr btn-sm" onclick="submitForApproval('${c.id}')"><i class="fas fa-paper-plane"></i>Submit</button>`:''}
+        ${canApprove?`<button class="btn-pr btn-sm" style="background:#1b5e20" onclick="openApprove('${c.id}')"><i class="fas fa-check"></i>Approve</button>`:''}
+        ${canApprove?`<button class="btn-danger btn-sm" onclick="openReject('${c.id}')"><i class="fas fa-times"></i>Reject</button>`:''}
+        ${isArchived?`<button class="btn-ol btn-sm" onclick="openRollback('${c.id}')"><i class="fas fa-history"></i>Rollback</button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function applyFilters(){
+  const py=document.getElementById('fPlanYear').value;
+  const cr=document.getElementById('fCarrier').value;
+  const st=document.getElementById('fStatus').value;
+  renderTable(configs.filter(c=>(!py||c.planYear===py)&&(!cr||c.carrier===cr)&&(!st||c.status===st)));
+}
+function resetFilters(){
+  document.getElementById('fPlanYear').value='';
+  document.getElementById('fCarrier').value='';
+  document.getElementById('fStatus').value='';
+  renderTable(configs);
+}
+
+function openDetail(id){
+  const c = configs.find(x=>x.id===id); if(!c) return;
+  document.getElementById('detailTitle').innerHTML = `<i class="fas fa-sliders-h" style="color:#004d40;margin-right:8px"></i>${c.id} &nbsp;${badge(c.status)}`;
+  const overHtml = `<table class="tbl rate-table"><thead><tr><th>Level</th><th>Initial Override Max</th><th>Renewal Override Max</th></tr></thead><tbody>
+    ${c.overrides.map(o=>`<tr><td><strong>${o.level}</strong></td><td>$${o.initial.toFixed(2)}</td><td>$${o.renewal.toFixed(2)}/mo</td></tr>`).join('')}</tbody></table>`;
+  const stateHtml = c.stateRates&&c.stateRates.length
+    ? `<table class="tbl rate-table"><thead><tr><th>State</th><th>Initial Override</th><th>Renewal Override</th><th>CMS Limit</th><th>Status</th></tr></thead><tbody>
+        ${c.stateRates.map(s=>`<tr><td><strong>${s.state}</strong></td><td>$${s.initialOverride.toFixed(2)}</td><td>$${s.renewalOverride.toFixed(2)}</td><td>$${s.cmsLimit.toFixed(2)}</td><td>${badge(s.status)}</td></tr>`).join('')}</tbody></table>`
+    : `<div class="text-muted" style="font-size:13px;padding:8px"><i class="fas fa-info-circle" style="margin-right:6px"></i>No state-specific overrides — carrier default applies to all states.</div>`;
+  const auditHtml = `<ul class="timeline">${c.auditLog.map(a=>`<li class="tl-item"><div class="tl-time">${a.date}</div><div><strong>${a.action}</strong>${a.detail?` — ${a.detail}`:''}</div><div class="tl-by">by ${a.user}</div></li>`).join('')}</ul>`;
+
+  document.getElementById('detailBody').innerHTML = `
+    <div class="tab-btns">
+      <button class="tab-btn active" onclick="switchTab(this,'dtRates')">Base Rates</button>
+      <button class="tab-btn" onclick="switchTab(this,'dtOverrides')">Override Maxes</button>
+      <button class="tab-btn" onclick="switchTab(this,'dtStates')">State Rates</button>
+      <button class="tab-btn" onclick="switchTab(this,'dtAudit')">Audit Log</button>
+    </div>
+    <div id="dtRates" class="tab-pane active">
+      <div class="row-grid mb16" style="gap:12px">
+        <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Plan Year</div><div style="font-size:17px;font-weight:700">${c.planYear}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Carrier</div><div style="font-size:14px;font-weight:600">${c.carrier}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Effective Date</div><div style="font-size:14px;font-weight:600">${c.effectiveDate}</div></div>
+        <div class="col-1"><div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Submitted By</div><div style="font-size:13px">${c.submittedBy}</div></div>
+      </div>
+      <table class="tbl rate-table" style="margin-bottom:12px">
+        <thead><tr><th>Rate Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Base Initial Enrollment Rate (Annual)</td><td><strong>$${c.baseInitial.toFixed(2)}</strong></td></tr>
+          <tr><td>Monthly Prorated Initial Rate (auto)</td><td>$${(c.baseInitial/12).toFixed(2)}/month</td></tr>
+          <tr><td>Base Renewal PMPM</td><td><strong>$${c.baseRenewal.toFixed(2)}/month</strong></td></tr>
+          <tr><td>HRA Completion Incentive</td><td>$${c.hraIncentive.toFixed(2)}</td></tr>
+          <tr><td>Healthy Visit Incentive — ESRD</td><td>$${c.hvESRD.toFixed(2)}</td></tr>
+          <tr><td>Healthy Visit Incentive — CKD / Heart &amp; Diabetes</td><td>$${c.hvCKD.toFixed(2)}</td></tr>
+          <tr><td>Rapid Disenrollment Chargeback Window</td><td>${c.chargebackWindow} months</td></tr>
+          <tr><td>Commission Dispute Window</td><td>${c.disputeWindow} days</td></tr>
+          <tr><td>Payment Cycle Cutoff Day</td><td>${c.cutoffDay}th of month</td></tr>
+          <tr><td>Payment Processing Day</td><td>${c.payDay}th of month</td></tr>
+          <tr><td>Finance Approval SLA</td><td>${c.financeSLA} days</td></tr>
+          <tr><td>Dispute Acknowledgment SLA</td><td>${c.ackSLA} business days</td></tr>
+          <tr><td>Dispute Resolution SLA</td><td>${c.resSLA} days</td></tr>
+        </tbody>
+      </table>
+      ${c.changeNotes?`<div class="al-info" style="margin-bottom:12px"><i class="fas fa-sticky-note" style="flex-shrink:0"></i><span><strong>Change Notes:</strong> ${c.changeNotes}</span></div>`:''}
+      ${c.status!=='Archived'?`<button class="btn-ol btn-sm" onclick="togglePreview('${c.id}')"><i class="fas fa-calculator"></i>Preview Impact</button>`:''}
+      <div id="prevPanel_${c.id}" style="display:none">
+        <div class="preview-panel">
+          <h6><i class="fas fa-chart-bar" style="margin-right:6px"></i>Impact Preview — Based on 487 active enrollments as of 05 28,2026</h6>
+          <div class="row-grid" style="gap:10px;margin-bottom:12px">
+            <div class="col-1" style="background:#fff;border-radius:8px;padding:12px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Est. Initial Liability</div><div style="font-size:17px;font-weight:700;color:#1b5e20">$${(c.baseInitial*487*0.18).toLocaleString('en-US',{minimumFractionDigits:2})}</div></div>
+            <div class="col-1" style="background:#fff;border-radius:8px;padding:12px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Est. Renewal Liability (Annual)</div><div style="font-size:17px;font-weight:700;color:#1b5e20">$${(c.baseRenewal*487*0.82*12).toLocaleString('en-US',{minimumFractionDigits:2})}</div></div>
+            <div class="col-1" style="background:#fff;border-radius:8px;padding:12px;border:1px solid #a5d6a7"><div style="font-size:11px;color:#5f6368">Est. Override Cascade Cost</div><div style="font-size:17px;font-weight:700;color:#1b5e20">$${(487*85.50).toLocaleString('en-US',{minimumFractionDigits:2})}</div></div>
+            <div class="col-1" style="background:#fff;border-radius:8px;padding:12px;border:1px solid ${c.status==='Active'?'#a5d6a7':'#ffe082'}"><div style="font-size:11px;color:#5f6368">Delta vs Active Config</div><div style="font-size:17px;font-weight:700;color:${c.status==='Active'?'#1b5e20':'#e65100'}">${c.status==='Active'?'Current Active':'— +$4,812 (+3.2%)'}</div></div>
+          </div>
+          <table class="tbl rate-table"><thead><tr><th>Hierarchy Level</th><th>Est. Override Cost (Annual)</th><th>Enrollments Applied</th></tr></thead>
+          <tbody>
+            <tr><td>Agent Base (Renewal)</td><td>$${(c.baseRenewal*487*12).toLocaleString('en-US',{minimumFractionDigits:0})}</td><td>487</td></tr>
+            <tr><td>GA Override</td><td>$${(487*45).toLocaleString('en-US',{minimumFractionDigits:0})}</td><td>487</td></tr>
+            <tr><td>FMO Override</td><td>$${(487*135).toLocaleString('en-US',{minimumFractionDigits:0})}</td><td>487</td></tr>
+          </tbody></table>
+          <div style="font-size:11px;color:#5f6368;margin-top:8px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Calculation basis: 487 active enrollments as of 05 28,2026. Preview only — not saved.</div>
+        </div>
+      </div>
+    </div>
+    <div id="dtOverrides" class="tab-pane">${overHtml}</div>
+    <div id="dtStates" class="tab-pane">${stateHtml}</div>
+    <div id="dtAudit" class="tab-pane"><p style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Change History (per-field audit)</p>${auditHtml}</div>
+  `;
+
+  const canApprove = c.status==='Pending Approval' && c.submittedBy!==CURRENT_USER;
+  const selfPending = c.status==='Pending Approval' && c.submittedBy===CURRENT_USER;
+  document.getElementById('detailFoot').innerHTML = `
+    <button class="btn-ol" onclick="closeModal('detailModal')">Close</button>
+    ${c.status==='Draft'?`<button class="btn-ol" onclick="closeModal('detailModal');openEdit('${c.id}')"><i class="fas fa-edit"></i>Edit Draft</button><button class="btn-pr" onclick="closeModal('detailModal');submitForApproval('${c.id}')"><i class="fas fa-paper-plane"></i>Submit for Approval</button>`:''}
+    ${selfPending?`<span style="font-size:12px;color:#e65100;align-self:center"><i class="fas fa-lock" style="margin-right:4px"></i>You submitted this — awaiting peer approval</span>`:''}
+    ${canApprove?`<button class="btn-danger" onclick="closeModal('detailModal');openReject('${c.id}')"><i class="fas fa-times"></i>Reject</button><button class="btn-pr" style="background:#1b5e20" onclick="closeModal('detailModal');openApprove('${c.id}')"><i class="fas fa-check"></i>Approve</button>`:''}
+  `;
+  showModal('detailModal');
+}
+
+function openEdit(id){
+  editingId = id;
+  const c = configs.find(x=>x.id===id); if(!c) return;
+  document.getElementById('newConfigTitle').innerHTML = `<i class="fas fa-edit" style="color:#004d40;margin-right:8px"></i>Edit Rate Configuration — ${c.id}`;
+  document.getElementById('cfgPlanYear').value = c.planYear;
+  document.getElementById('cfgCarrier').value = c.carrier;
+  document.getElementById('cfgEffDate').value = c.effectiveDate;
+  document.getElementById('cfgBaseInitial').value = c.baseInitial;
+  document.getElementById('cfgMonthlyProrated').value = '$'+(c.baseInitial/12).toFixed(2);
+  document.getElementById('cfgBaseRenewal').value = c.baseRenewal;
+  document.getElementById('cfgHRA').value = c.hraIncentive;
+  document.getElementById('cfgHVESRD').value = c.hvESRD;
+  document.getElementById('cfgHVCKD').value = c.hvCKD;
+  document.getElementById('cfgCBWindow').value = c.chargebackWindow;
+  document.getElementById('cfgDispWindow').value = c.disputeWindow;
+  document.getElementById('cfgCutoff').value = c.cutoffDay;
+  document.getElementById('cfgPayDay').value = c.payDay;
+  document.getElementById('cfgNotes').value = c.changeNotes||'';
+  document.getElementById('midYearWarn').style.display = 'none';
+  showModal('newConfigModal');
+}
+
+function openNew(){
+  editingId = null;
+  document.getElementById('newConfigTitle').innerHTML = '<i class="fas fa-plus-circle" style="color:#004d40;margin-right:8px"></i>New Rate Configuration';
+  ['cfgPlanYear','cfgCarrier','cfgEffDate'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cfgBaseInitial').value='694.00'; document.getElementById('cfgMonthlyProrated').value='$57.83';
+  document.getElementById('cfgBaseRenewal').value='28.92'; document.getElementById('cfgHRA').value='25.00';
+  document.getElementById('cfgHVESRD').value='375.00'; document.getElementById('cfgHVCKD').value='275.00';
+  document.getElementById('cfgCBWindow').value='3'; document.getElementById('cfgDispWindow').value='120';
+  document.getElementById('cfgCutoff').value='15'; document.getElementById('cfgPayDay').value='17';
+  document.getElementById('cfgFinSLA').value='2'; document.getElementById('cfgAckSLA').value='5'; document.getElementById('cfgResSLA').value='30';
+  document.getElementById('cfgNotes').value=''; document.getElementById('midYearWarn').style.display='none';
+  // Clear state rows
+  document.getElementById('stateRateTbody').innerHTML='<tr id="stateRateEmpty"><td colspan="6" style="text-align:center;color:#9aa0a6;padding:18px;font-size:13px"><i class="fas fa-info-circle" style="margin-right:6px"></i>No state overrides configured.</td></tr>';
+  showModal('newConfigModal');
+}
+
+function checkMidYear(){
+  const d=document.getElementById('cfgEffDate').value;
+  const py=document.getElementById('cfgPlanYear').value;
+  const isMid = d && py && !d.endsWith('-01-01');
+  document.getElementById('midYearWarn').style.display = isMid ? 'flex' : 'none';
+}
+function updateProrated(){
+  const v = parseFloat(document.getElementById('cfgBaseInitial').value)||0;
+  document.getElementById('cfgMonthlyProrated').value = '$'+(v/12).toFixed(2);
+}
+
+function validateConfig(){
+  const py=document.getElementById('cfgPlanYear').value;
+  const cr=document.getElementById('cfgCarrier').value;
+  const ed=document.getElementById('cfgEffDate').value;
+  const bi=parseFloat(document.getElementById('cfgBaseInitial').value);
+  const br=parseFloat(document.getElementById('cfgBaseRenewal').value);
+  const cb=parseInt(document.getElementById('cfgCBWindow').value);
+  const dw=parseInt(document.getElementById('cfgDispWindow').value);
+  const cd=parseInt(document.getElementById('cfgCutoff').value);
+  if(!py){showToast('Please select a Plan Year.','warn');return false;}
+  if(!cr){showToast('Please select a Carrier.','warn');return false;}
+  if(!ed){showToast('Please enter an Effective Date.','warn');return false;}
+  if(isNaN(bi)||bi<=0){showToast('Base Initial Rate must be a positive number.','warn');return false;}
+  if(isNaN(br)||br<=0){showToast('Base Renewal PMPM must be a positive number.','warn');return false;}
+  if(isNaN(cb)||cb<1||cb>12){showToast('Chargeback window must be between 1 and 12 months.','warn');return false;}
+  if(isNaN(dw)||dw<1||dw>365){showToast('Dispute window must be between 1 and 365 days.','warn');return false;}
+  if(isNaN(cd)||cd<1||cd>28){showToast('Cutoff day must be between 1 and 28.','warn');return false;}
+  const isMid = ed && py && !ed.endsWith('-01-01');
+  if(isMid){
+    const ack = document.getElementById('midYearAck');
+    if(!ack||!ack.checked){showToast('You must acknowledge this is a mid-year correction.','warn');return false;}
+    if((document.getElementById('cfgNotes').value||'').trim().length<20){showToast('Mid-year corrections require a justification note of at least 20 characters.','warn');return false;}
+  }
+  for(const inp of document.querySelectorAll('.ovr-inp')){
+    if(parseFloat(inp.value)<=0){showToast('Override amount must be a positive number.','warn');inp.focus();return false;}
+  }
+  return true;
+}
+
+function saveConfigDraft(){
+  if(!validateConfig()) return;
+  closeModal('newConfigModal');
+  showToast('Rate configuration saved as Draft.','success');
+}
+function saveAndSubmit(){
+  if(!validateConfig()) return;
+  closeModal('newConfigModal');
+  showToast('Rate configuration saved and submitted for approval. Awaiting second Finance Admin approval.','success');
+}
+
+function prefillConfig(){
+  document.getElementById('cfgPlanYear').value = '2027';
+  document.getElementById('cfgCarrier').value = 'Gold Kidney Health Plan';
+  document.getElementById('cfgEffDate').value = '2027-01-01';
+  document.getElementById('cfgBaseInitial').value = '720.00';
+  document.getElementById('cfgBaseRenewal').value = '30.50';
+  document.getElementById('cfgHRA').value = '30.00';
+  document.getElementById('cfgHVESRD').value = '400.00';
+  document.getElementById('cfgHVCKD').value = '300.00';
+  document.getElementById('cfgCBWindow').value = '3';
+  document.getElementById('cfgDispWindow').value = '120';
+  document.getElementById('cfgCutoff').value = '15';
+  document.getElementById('cfgPayDay').value = '17';
+  document.getElementById('cfgFinSLA').value = '2';
+  document.getElementById('cfgAckSLA').value = '5';
+  document.getElementById('cfgResSLA').value = '30';
+  document.getElementById('cfgNotes').value = 'CY2027 rate update — adjusted Initial and PMPM per carrier filing approval.';
+  updateProrated();
+  showToast('Form prefilled with sample CY2027 rate data', 'info');
+}
+
+function submitForApproval(id){
+  const c=configs.find(x=>x.id===id); if(!c) return;
+  c.status='Pending Approval';
+  renderTable(configs);
+  showToast(`Config ${id} submitted for approval. Awaiting peer review.`,'success');
+}
+
+function openApprove(id){
+  const c=configs.find(x=>x.id===id);
+  if(c&&c.submittedBy===CURRENT_USER){showToast('You cannot approve changes you submitted.','warn');return;}
+  pendingApproveId=id;
+  showModal('approveModal');
+}
+function confirmApprove(){
+  if(!pendingApproveId) return;
+  const c=configs.find(x=>x.id===pendingApproveId);
+  if(c){
+    configs.forEach(x=>{if(x.id!==c.id&&x.planYear===c.planYear&&x.carrier===c.carrier&&x.status==='Active')x.status='Archived';});
+    c.status='Active'; c.approvedBy=CURRENT_USER;
+    c.approvedDate=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    c.auditLog.unshift({date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}),user:CURRENT_USER,action:'Approved',detail:'Config activated. Prior config archived.'});
+  }
+  closeModal('approveModal'); renderTable(configs);
+  showToast(`Config ${pendingApproveId} approved and activated. Prior config archived.`,'success');
+  pendingApproveId=null;
+}
+
+function openReject(id){ pendingRejectId=id; document.getElementById('rejectReason').value=''; showModal('rejectModal'); }
+function prefillReject(){
+  document.getElementById('rejectReason').value='Rate schedule has incorrect tier brackets for SGA level. Per CY2026 contract, SGA override should be 3.5% not 4.0%. Please revise and resubmit.';
+  showToast('Reject form prefilled with sample data','info');
+}
+function confirmReject(){
+  const reason=document.getElementById('rejectReason').value.trim();
+  if(!reason){showToast('Please provide a rejection reason.','warn');return;}
+  const c=configs.find(x=>x.id===pendingRejectId);
+  if(c){
+    c.status='Draft';
+    c.auditLog.unshift({date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}),user:CURRENT_USER,action:'Rejected',detail:reason});
+  }
+  closeModal('rejectModal'); renderTable(configs);
+  showToast(`Config ${pendingRejectId} rejected and returned to Draft.`,'warn');
+  pendingRejectId=null;
+}
+
+function togglePreview(id){
+  const p=document.getElementById('prevPanel_'+id);
+  if(p) p.style.display=p.style.display==='none'?'block':'none';
+}
+
+function addStateRow(){
+  const tb=document.getElementById('stateRateTbody');
+  const empty=document.getElementById('stateRateEmpty'); if(empty) empty.remove();
+  const states=['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+  const opts=states.map(s=>`<option>${s}</option>`).join('');
+  const row=document.createElement('tr');
+  row.innerHTML=`<td><select style="width:80px;border:1px solid #e8eaed;border-radius:6px;padding:4px 6px;font-size:13px">${opts}</select></td>
+    <td><input type="number" placeholder="—" step="0.01" min="0" style="width:110px;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td>
+    <td><input type="number" placeholder="—" step="0.01" min="0" style="width:110px;border:1px solid #e8eaed;border-radius:6px;padding:5px 8px;font-size:13px"></td>
+    <td><span class="text-muted" style="font-size:12px">$694.00</span></td>
+    <td><select style="width:90px;border:1px solid #e8eaed;border-radius:6px;padding:4px 6px;font-size:13px"><option>Active</option><option>Inactive</option></select></td>
+    <td><button class="btn-danger btn-sm" style="padding:3px 8px" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button></td>`;
+  tb.appendChild(row);
+}
+
+function openWeeklyReport(){
+  showToast('Weekly Rate Configuration Summary Report emailed to Finance team. Report date: 05 29,2026. Includes 1 Pending Approval, 1 Draft, 1 Active config.','info');
+}
+
+function openCompare(id){
+  const a = configs.find(x=>x.id===id);
+  const others = configs.filter(x=>x.id!==id);
+  const opts = others.map(c=>`<option value="${c.id}">${c.id} — ${c.planYear} (${c.status})</option>`).join('');
+  document.getElementById('compareATitle').textContent = `${a.id} (${a.planYear} — ${a.status})`;
+  document.getElementById('compareBSelect').innerHTML = `<option value="">— Select config to compare —</option>${opts}`;
+  document.getElementById('compareBody').innerHTML = '';
+  window._compareA = id;
+  showModal('compareModal');
+}
+function runCompare(){
+  const bId = document.getElementById('compareBSelect').value;
+  if(!bId){ showToast('Please select a second config to compare.','warn'); return; }
+  const a = configs.find(x=>x.id===window._compareA);
+  const b = configs.find(x=>x.id===bId);
+  const row=(label,va,vb)=>{
+    const diff = va!==vb;
+    return `<tr><td style="font-size:12.5px;font-weight:600;color:#5f6368">${label}</td>
+      <td style="font-size:13px;${diff?'background:#fff8e1':''}"><strong>${va}</strong></td>
+      <td style="font-size:13px;${diff?'background:#e8f5e9':''}"><strong>${vb}</strong></td></tr>`;
+  };
+  document.getElementById('compareBody').innerHTML = `
+    <table id="tblExport2" class="tbl" style="margin-top:8px">
+      <thead><tr><th>Field</th><th>${a.id} — ${a.planYear}</th><th>${b.id} — ${b.planYear}</th></tr></thead>
+      <tbody>
+        ${row('Status',a.status,b.status)}
+        ${row('Effective Date',a.effectiveDate,b.effectiveDate)}
+        ${row('Base Initial Rate','$'+a.baseInitial.toFixed(2),'$'+b.baseInitial.toFixed(2))}
+        ${row('Base Renewal PMPM','$'+a.baseRenewal.toFixed(2)+'/mo','$'+b.baseRenewal.toFixed(2)+'/mo')}
+        ${row('HRA Incentive','$'+a.hraIncentive.toFixed(2),'$'+b.hraIncentive.toFixed(2))}
+        ${row('Healthy Visit (ESRD)','$'+a.hvESRD.toFixed(2),'$'+b.hvESRD.toFixed(2))}
+        ${row('Healthy Visit (CKD)','$'+a.hvCKD.toFixed(2),'$'+b.hvCKD.toFixed(2))}
+        ${row('Chargeback Window',a.chargebackWindow+' months',b.chargebackWindow+' months')}
+        ${row('Dispute Window',a.disputeWindow+' days',b.disputeWindow+' days')}
+        ${row('Cutoff Day',a.cutoffDay,b.cutoffDay)}
+        ${row('Payment Day',a.payDay,b.payDay)}
+        ${row('Submitted By',a.submittedBy,b.submittedBy)}
+        ${row('Approved By',a.approvedBy||'—',b.approvedBy||'—')}
+      </tbody>
+    </table>`;
+}
+
+function openRollback(id){
+  const c = configs.find(x=>x.id===id);
+  document.getElementById('rollbackConfigName').textContent = c.id+' — '+c.planYear+' ('+c.status+')';
+  document.getElementById('rollbackDetail').innerHTML = `
+    <div style="background:#fff8e1;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px">
+      <strong>Base Initial:</strong> $${c.baseInitial.toFixed(2)} &nbsp;|&nbsp;
+      <strong>Base Renewal PMPM:</strong> $${c.baseRenewal.toFixed(2)}/mo &nbsp;|&nbsp;
+      <strong>Effective Date:</strong> ${c.effectiveDate}
+    </div>`;
+  document.getElementById('rollbackReason').value='';
+  document.getElementById('rollbackCoApprover').value='';
+  window._rollbackId=id;
+  showModal('rollbackModal');
+}
+function prefillRollback(){
+  document.getElementById('rollbackReason').value='CY2026 override tiers were incorrectly applied. Rolling back to prior config (RC-2025-02) until corrected rates are submitted and approved per Finance policy FIN-0042.';
+  document.getElementById('rollbackCoApprover').value='Lisa Chen \u2014 Finance Manager';
+  showToast('Rollback form prefilled with sample data','info');
+}
+function submitRollback(){
+  const reason=document.getElementById('rollbackReason').value.trim();
+  const coApprover=document.getElementById('rollbackCoApprover').value;
+  if(!reason||reason.length<20){ showToast('Rollback reason must be at least 20 characters.','warn'); return; }
+  if(!coApprover){ showToast('A co-approver is required for rollback (dual-approval).','warn'); return; }
+  const c=configs.find(x=>x.id===window._rollbackId);
+  closeModal('rollbackModal');
+  showToast(`Rollback request for ${c.id} submitted for co-approval by ${coApprover}. Dual-approval is required. Co-approver notified.`,'info');
+}
+
+function switchTab(btn, paneId){
+  const container = btn.closest('.tab-btns').parentElement;
+  container.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  container.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  const pane = container.querySelector('#'+paneId);
+  if(pane) pane.classList.add('active');
+}
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToast(msg, type='info'){
+  const t=document.getElementById('toast');
+  const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]||'#0d47a1'};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;
+  t.style.display='block'; setTimeout(()=>t.style.display='none',3800);
+}
+function nfpExport(label){ showToast(`${label} export started. File will download shortly.`,'info'); }
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
+renderTable(configs);
+</script>
+<!-- ===== COMPARE MODAL (US-6.12) ===== -->
+<div class="modal-overlay" id="compareModal">
+  <div class="modal-box" style="max-width:860px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-columns" style="color:#004d40;margin-right:8px"></i>Side-by-Side Rate Config Comparison</h5>
+      <button class="modal-close" onclick="closeModal('compareModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row" style="align-items:flex-end;margin-bottom:14px">
+        <div class="fg"><label>Config A (selected)</label><input type="text" id="compareATitle" class="field-ro" readonly></div>
+        <div class="fg"><label>Config B (compare against)</label><select id="compareBSelect" onchange="runCompare()"><option>— Select —</option></select></div>
+      </div>
+      <div id="compareBody"></div>
+      <div class="al-info" style="margin-top:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Highlighted cells indicate differences between the two configurations. Yellow = Config A value, Green = Config B value.</span></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('compareModal')">Close</button>
+      <button class="btn-ol" onclick="nfpExport('Config Comparison')"><i class="fas fa-download"></i>Export Comparison</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ROLLBACK MODAL (US-6.12) ===== -->
+<div class="modal-overlay" id="rollbackModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-history" style="color:#e65100;margin-right:8px"></i>Rollback to Prior Configuration</h5>
+      <button class="modal-close" onclick="closeModal('rollbackModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i>
+        <span>Rolling back to a prior configuration <strong>requires dual-approval</strong> (different submitter and approver). The rollback config will become Active and the current Active config will be Archived. This action is audit-logged.</span></div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">Rolling back to: <span id="rollbackConfigName" style="color:#004d40"></span></div>
+      <div id="rollbackDetail"></div>
+      <div class="fg"><label>Rollback Reason <span class="req">*</span></label>
+        <textarea id="rollbackReason" rows="3" placeholder="Document the reason for this rollback (min 20 characters)..."></textarea></div>
+      <div class="fg"><label>Co-Approver <span class="req">*</span></label>
+        <select id="rollbackCoApprover">
+          <option value="">— Select second Finance reviewer —</option>
+          <option>Lisa Chen — Finance Manager</option>
+          <option>Mark Evans — Finance Admin</option>
+          <option>Priya Nair — Finance Admin</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillRollback()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" onclick="closeModal('rollbackModal')">Cancel</button>
+      <button class="btn-danger" onclick="submitRollback()"><i class="fas fa-history"></i>Submit Rollback for Co-Approval</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

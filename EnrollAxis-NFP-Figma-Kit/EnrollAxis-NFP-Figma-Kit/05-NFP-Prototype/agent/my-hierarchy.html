@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Upline Hierarchy | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+.tree-node{padding:10px 14px;margin:4px 0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;gap:10px}
+.tree-node:hover{background:#e3f2fd}
+.tree-indent{margin-left:32px}
+.tree-indent-2{margin-left:64px}
+.tree-indent-3{margin-left:96px}
+.upline-chain{display:flex;flex-direction:column;gap:2px}
+.upline-chain .connector{width:2px;height:16px;background:#bdbdbd;margin-left:20px}
+.highlight-me{background:#e3f2fd;border-color:#0d47a1;border-width:2px}
+.info-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+.info-row:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html" class="active"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-name" style="font-weight:700;color:#0d47a1;font-size:15px;margin-bottom:2px"><i class="fas fa-kidneys" style="margin-right:6px"></i>Gold Kidney</div>
+      <h4>My Upline Hierarchy</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>My Upline</li></ol>
+    </div>
+    <div class="dflex g8 ai-center">
+      <a href="notifications.html" class="tb-btn"><i class="fas fa-bell"></i><span class="n-dot"></span></a>
+      <a href="profile.html" class="tb-btn" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user"></i></a>
+      <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- PO-03 Access Scope Notice -->
+    <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#0d47a1;display:flex;align-items:flex-start;gap:10px">
+      <i class="fas fa-shield-alt" style="margin-top:2px;flex-shrink:0"></i>
+      <div>
+        <strong>PO-03 — Access Scope:</strong> As an individual agent, you can see only your own data and your direct upline (GA). FMO and carrier information shown here is limited to contact details only. You cannot view upline production data, commission overrides, or other agents' information. Agency admins see the full downline subtree; this restricted view applies to agent-level users only.
+      </div>
+    </div>
+
+    <!-- My Upline Chain -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-sitemap" style="margin-right:6px;color:#0d47a1"></i>My Hierarchy Position</h5><span style="font-size:10px;color:#5f6368;background:#f1f3f4;padding:3px 8px;border-radius:10px">View: Own Data + Direct Upline</span></div>
+      <div class="card-body">
+        <p style="font-size:12px;color:#757575;margin-bottom:12px">This shows your position in the hierarchy and your direct upline (General Agency). You cannot navigate or view other agents, downline, or upline production data.</p>
+
+        <!-- Level 0: Carrier -->
+        <div class="upline-chain">
+          <div class="tree-node" style="background:#f3e5f5;border-color:#7b1fa2;cursor:default">
+            <i class="fas fa-hospital" style="color:#7b1fa2;font-size:20px"></i>
+            <div style="flex:1">
+              <strong>Gold Kidney Health Plan</strong> <span class="badge bg-dark">Carrier</span><br>
+              <small class="text-muted">Medicare Advantage Plan — All States</small>
+            </div>
+          </div>
+          <div class="connector"></div>
+
+          <!-- Level 1: FMO -->
+          <div class="tree-indent">
+            <div class="tree-node" style="background:#fff8e1;border-color:#f57f17;cursor:pointer" onclick="showToast('FMO Profile: National Medicare Partners (FMO-101)','info')">
+              <i class="fas fa-landmark" style="color:#f57f17;font-size:18px"></i>
+              <div style="flex:1">
+                <strong>National Medicare Partners</strong> <span class="badge bg-info text-dark">FMO</span><br>
+                <small class="text-muted">FMO-101 — Field Marketing Organization — FL, TX, CA, AZ</small>
+              </div>
+              <div style="text-align:right;font-size:12px">
+                <div><i class="fas fa-envelope" style="margin-right:4px"></i>operations@natlmedicare.com</div>
+                <div><i class="fas fa-phone" style="margin-right:4px"></i>(800) 555-1234</div>
+              </div>
+              <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+            </div>
+            <div class="connector" style="margin-left:52px"></div>
+
+            <!-- Level 2: GA (Agency) -->
+            <div class="tree-indent">
+              <div class="tree-node" style="background:#fff3e0;border-color:#e65100;cursor:pointer" onclick="showToast('Agency Profile: HealthFirst Distribution (GA-001)','info')">
+                <i class="fas fa-building" style="color:#e65100;font-size:18px"></i>
+                <div style="flex:1">
+                  <strong>HealthFirst Distribution</strong> <span class="badge bg-warning text-dark">GA</span><br>
+                  <small class="text-muted">GA-001 — General Agency — FL, TX — Rachel Vargas (Admin)</small>
+                </div>
+                <div style="text-align:right;font-size:12px">
+                  <div><i class="fas fa-envelope" style="margin-right:4px"></i>rachel@healthfirstdist.com</div>
+                  <div><i class="fas fa-phone" style="margin-right:4px"></i>(305) 555-8899</div>
+                </div>
+                <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+              </div>
+              <div class="connector" style="margin-left:52px"></div>
+
+              <!-- Level 3: ME (Agent) -->
+              <div class="tree-indent">
+                <div class="tree-node highlight-me" style="cursor:pointer" onclick="window.location.href='profile.html'">
+                  <i class="fas fa-user-tie" style="color:#0d47a1;font-size:18px"></i>
+                  <div style="flex:1">
+                    <strong>James Martinez (You)</strong> <span class="badge bg-success">Active</span><br>
+                    <small class="text-muted">NPN 8823441 — Licensed Agent — FL, TX</small>
+                  </div>
+                  <div style="text-align:right;font-size:12px">
+                    <div><strong>32</strong> <small>BoB Members</small></div>
+                    <div><strong>$8,247</strong> <small>Commission YTD</small></div>
+                  </div>
+                  <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upline Details Card -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-info-circle" style="margin-right:6px;color:#1565c0"></i>Upline Details</h5></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <!-- Direct Upline (GA) -->
+          <div>
+            <h6 style="font-size:13px;margin-bottom:8px;color:#e65100"><i class="fas fa-building" style="margin-right:4px"></i>Direct Upline — General Agency</h6>
+            <div class="info-row"><span>Agency Name:</span><strong>HealthFirst Distribution</strong></div>
+            <div class="info-row"><span>Agency ID:</span><strong>GA-001</strong></div>
+            <div class="info-row"><span>Admin Contact:</span><strong>Rachel Vargas</strong></div>
+            <div class="info-row"><span>Email:</span><strong>rachel@healthfirstdist.com</strong></div>
+            <div class="info-row"><span>Phone:</span><strong>(305) 555-8899</strong></div>
+            <div class="info-row"><span>Commission Routing:</span><strong>Direct to Agent; Override to GA</strong></div>
+            <div class="info-row"><span>States:</span><strong>FL, TX</strong></div>
+          </div>
+
+          <!-- FMO -->
+          <div>
+            <h6 style="font-size:13px;margin-bottom:8px;color:#f57f17"><i class="fas fa-landmark" style="margin-right:4px"></i>FMO — Field Marketing Organization</h6>
+            <div class="info-row"><span>FMO Name:</span><strong>National Medicare Partners</strong></div>
+            <div class="info-row"><span>FMO ID:</span><strong>FMO-101</strong></div>
+            <div class="info-row"><span>Contact:</span><strong>operations@natlmedicare.com</strong></div>
+            <div class="info-row"><span>Phone:</span><strong>(800) 555-1234</strong></div>
+            <div class="info-row"><span>Override Tier:</span><strong>Tier 2 (GA level)</strong></div>
+            <div class="info-row"><span>Plan Year:</span><strong>2026</strong></div>
+            <div class="info-row"><span>States:</span><strong>FL, TX, CA, AZ</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commission Flow -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-route" style="margin-right:6px;color:#2e7d32"></i>Commission Flow</h5></div>
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px">
+          <div style="background:#f3e5f5;padding:8px 14px;border-radius:6px;text-align:center"><i class="fas fa-hospital" style="color:#7b1fa2"></i><br><strong>Carrier</strong><br><small>Pays Commission</small></div>
+          <i class="fas fa-arrow-right" style="color:#bdbdbd"></i>
+          <div style="background:#fff8e1;padding:8px 14px;border-radius:6px;text-align:center"><i class="fas fa-landmark" style="color:#f57f17"></i><br><strong>FMO</strong><br><small>Receives Override</small></div>
+          <i class="fas fa-arrow-right" style="color:#bdbdbd"></i>
+          <div style="background:#fff3e0;padding:8px 14px;border-radius:6px;text-align:center"><i class="fas fa-building" style="color:#e65100"></i><br><strong>GA</strong><br><small>Receives Override</small></div>
+          <i class="fas fa-arrow-right" style="color:#bdbdbd"></i>
+          <div style="background:#e3f2fd;padding:8px 14px;border-radius:6px;text-align:center;border:2px solid #0d47a1"><i class="fas fa-user-tie" style="color:#0d47a1"></i><br><strong>You</strong><br><small>Receives Base Commission</small></div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:6px;font-size:12px">
+          <strong>Your Commission Structure:</strong>
+          <ul style="margin:6px 0 0 16px;padding:0">
+            <li>MA HMO/PPO Initial: <strong>$600</strong> per enrollment</li>
+            <li>MA HMO/PPO Renewal: <strong>$300</strong> per renewal</li>
+            <li>PDP Initial: <strong>$100</strong> per enrollment</li>
+            <li>PDP Renewal: <strong>$50</strong> per renewal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Upline Action -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-envelope" style="margin-right:6px;color:#0d47a1"></i>Contact My Upline</h5></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Subject</label>
+            <select class="form-control" style="margin-bottom:8px">
+              <option>Commission Inquiry</option>
+              <option>Contracting Question</option>
+              <option>Lead Request</option>
+              <option>Marketing Materials</option>
+              <option>Training Support</option>
+              <option>Other</option>
+            </select>
+            <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Message</label>
+            <textarea class="form-control" rows="3" placeholder="Type your message to your agency admin..."></textarea>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Send To</label>
+            <div style="font-size:13px;padding:8px;background:#f8f9fa;border-radius:6px;margin-bottom:8px">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px">
+                <input type="radio" name="sendTo" checked> Rachel Vargas — GA Admin (rachel@healthfirstdist.com)
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                <input type="radio" name="sendTo"> National Medicare Partners — FMO (operations@natlmedicare.com)
+              </label>
+            </div>
+            <button class="btn-pr" style="margin-top:8px"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

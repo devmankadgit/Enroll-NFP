@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOA Management | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}.soa-status{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600}</style>
+</head>
+
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html" class="active"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Scope of Appointment (SOA)</h4><ol class="breadcrumb-bar"><li>48-Hour Rule, Digital Signature, Plan Types &amp; Expiry</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- 48-Hour Rule Banner -->
+    <div class="al-warn mb16" style="border:1px solid #e65100">
+      <i class="fas fa-clock" style="flex-shrink:0"></i>
+      <span><strong>CMS 48-Hour Rule:</strong> The SOA must be signed by the beneficiary at least 48 hours before the scheduled appointment, unless the beneficiary initiates contact. Walk-in/inbound exceptions auto-flag the 48-hour waiver. SOA expires 12 months from signature date.</span>
+    </div>
+
+    <!-- Create SOA Button -->
+    <div style="margin-bottom:16px">
+      <button class="btn-pr" onclick="var f=document.getElementById('soaFormPanel');if(f.style.display==='none'){f.style.display='block';this.innerHTML='<i class=\'fas fa-minus-circle\' style=\'margin-right:6px\'></i>Hide Create SOA Form';}else{f.style.display='none';this.innerHTML='<i class=\'fas fa-plus-circle\' style=\'margin-right:6px\'></i>Create SOA';}"><i class="fas fa-plus-circle" style="margin-right:6px"></i>Create SOA</button>
+    </div>
+
+    <!-- New SOA Form (collapsed by default) -->
+    <div class="card mb16" id="soaFormPanel" style="display:none">
+      <div class="card-hdr"><h5><i class="fas fa-plus-circle" style="margin-right:8px;color:#0d47a1"></i>Create SOA</h5><button onclick="prefillSOA()" class="btn-ol btn-sm" style="background:#fff3e0;border-color:#fb8c00;color:#e65100;display:flex;align-items:center;gap:6px"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body" style="font-size:13px">
+        <div id="soaErr" class="al-danger mb16" style="display:none"></div>
+        <div class="form-row">
+          <div class="fg"><label>Beneficiary First Name <span style="color:#c62828">*</span></label><input id="soaFirst" type="text" class="form-control form-control-sm" placeholder="e.g., Dorothy"></div>
+          <div class="fg"><label>Beneficiary Last Name <span style="color:#c62828">*</span></label><input id="soaLast" type="text" class="form-control form-control-sm" placeholder="e.g., Henderson"></div>
+          <div class="fg"><label>Beneficiary Phone</label><input id="soaPhone" type="tel" class="form-control form-control-sm" placeholder="(305) 555-0123"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Appointment Date &amp; Time <span style="color:#c62828">*</span></label><input id="soaDate" type="datetime-local" class="form-control form-control-sm"></div>
+          <div class="fg"><label>Appointment Type <span style="color:#c62828">*</span></label>
+            <select id="soaType">
+              <option value="">Select...</option>
+              <option>In-Person (Agent-Initiated)</option>
+              <option>Telephonic (Agent-Initiated)</option>
+              <option>In-Person (Beneficiary-Initiated / Walk-in)</option>
+              <option>Telephonic (Beneficiary-Initiated / Inbound)</option>
+            </select>
+          </div>
+          <div class="fg"><label>Contact Initiated By <span style="color:#c62828">*</span></label>
+            <select id="soaInitiator">
+              <option>Agent (48-hour rule applies)</option>
+              <option selected>Beneficiary (48-hour waiver eligible)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Plan Type Checkboxes -->
+        <div id="soaPlans" style="margin-top:12px;padding:12px;background:#f8f9fa;border-radius:6px">
+          <div style="font-weight:600;margin-bottom:8px">Plan Types to Discuss (check all that apply) <span style="color:#c62828">*</span></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px">
+            <label><input type="checkbox" checked> Medicare Advantage (MA)</label>
+            <label><input type="checkbox"> Medicare Advantage Prescription Drug (MAPD)</label>
+            <label><input type="checkbox" checked> Chronic Special Needs Plan (C-SNP)</label>
+            <label><input type="checkbox"> Dual Special Needs Plan (D-SNP)</label>
+            <label><input type="checkbox"> Prescription Drug Plan (PDP)</label>
+            <label><input type="checkbox"> Medicare Supplement (Medigap)</label>
+            <label><input type="checkbox"> Hospital Indemnity</label>
+            <label><input type="checkbox"> Dental / Vision / Hearing</label>
+          </div>
+        </div>
+
+        <!-- Digital Signature -->
+        <div style="margin-top:12px;padding:12px;background:#e3f2fd;border-radius:6px;border:1px solid #90caf9">
+          <div style="font-weight:600;margin-bottom:8px"><i class="fas fa-signature" style="margin-right:6px;color:#0d47a1"></i>Beneficiary Digital Signature</div>
+          <div style="font-size:12px;color:#5f6368;margin-bottom:8px">The beneficiary must sign to confirm consent. Signature captures: name, timestamp, IP address (if remote), and device info.</div>
+          <div style="border:2px dashed #90caf9;border-radius:6px;height:80px;display:flex;align-items:center;justify-content:center;background:#fff;color:#5f6368;font-size:12px;cursor:pointer">
+            <i class="fas fa-pen" style="margin-right:8px"></i>Click or tap here to sign (or type full legal name)
+          </div>
+          <div class="form-row" style="margin-top:8px">
+            <div class="fg"><label>Typed Name (if unable to draw)</label><input id="soaSigName" type="text" class="form-control form-control-sm" placeholder="Full legal name"></div>
+            <div class="fg"><label>Signature Method</label>
+              <select id="soaSigMethod"><option>Draw on screen</option><option>Typed name attestation</option><option>Paper scan upload</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Attestation -->
+        <div style="margin-top:12px;padding:10px;background:#f8f9fa;border-radius:6px;font-size:12px">
+          <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+            <input id="soaAttest" type="checkbox" style="margin-top:2px">
+            <span>I, <strong>James Martinez (NPN 8823441)</strong>, attest that this SOA was obtained in compliance with CMS marketing guidelines. I confirm the beneficiary was informed of the plan types to be discussed and provided consent prior to the appointment.</span>
+          </label>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn-pr btn-sm" onclick="saveSOA()"><i class="fas fa-save"></i>Save &amp; Send to Beneficiary</button>
+          <button class="btn-ol btn-sm" onclick="nfpExport('SOA PDF document')"><i class="fas fa-file-pdf"></i>Generate PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Existing SOAs -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-list" style="margin-right:8px;color:#5f6368"></i>My SOA Records</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','soa-form_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Beneficiary</th><th>Appointment Date</th><th>Signed Date</th><th>Plans Discussed</th><th>Initiated By</th><th>48-hr Compliant</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Dorothy Henderson</td>
+              <td>05 24,2026 2:00 PM</td>
+              <td>05 22,2026 10:15 AM</td>
+              <td>MA, C-SNP</td>
+              <td>Beneficiary</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Waiver</span></td>
+              <td>05 22,2027</td>
+              <td><span class="soa-status" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i>Valid</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Opening SOA detail','info')"><i class="fas fa-eye"></i></button> <button class="btn-ol btn-sm" onclick="nfpExport('SOA PDF')"><i class="fas fa-file-pdf"></i></button></td>
+            </tr>
+            <tr>
+              <td>Thomas Rivera</td>
+              <td>05 20,2026 10:00 AM</td>
+              <td>05 18,2026 3:30 PM</td>
+              <td>MA, C-SNP, PDP</td>
+              <td>Agent</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> 48+ hrs</span></td>
+              <td>05 18,2027</td>
+              <td><span class="soa-status" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i>Valid</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Opening SOA detail','info')"><i class="fas fa-eye"></i></button> <button class="btn-ol btn-sm" onclick="nfpExport('SOA PDF')"><i class="fas fa-file-pdf"></i></button></td>
+            </tr>
+            <tr>
+              <td>Nancy Collins</td>
+              <td>05 28,2026 11:00 AM</td>
+              <td><em>Pending signature</em></td>
+              <td>MA, C-SNP</td>
+              <td>Agent</td>
+              <td><span class="bdg b-amber"><i class="fas fa-clock"></i> Awaiting</span></td>
+              <td></td>
+              <td><span class="soa-status" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i>Pending</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpSend('SOA resent to Nancy Collins')"><i class="fas fa-paper-plane"></i>Resend</button></td>
+            </tr>
+            <tr style="opacity:.6">
+              <td>Robert Lin</td>
+              <td>05 10,2025 9:00 AM</td>
+              <td>05 08,2025 1:00 PM</td>
+              <td>MA</td>
+              <td>Agent</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> 48+ hrs</span></td>
+              <td style="color:#c62828;font-weight:600">05 08,2026 (EXPIRED)</td>
+              <td><span class="soa-status" style="background:#fce4ec;color:#c62828"><i class="fas fa-ban"></i>Expired</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Creating renewal SOA for Robert Lin','info')">Renew</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Expiry Logic Info -->
+    <div class="al-info" style="margin-top:16px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>SOA Expiry Logic:</strong> SOAs are valid for 12 months from signature date. Expired SOAs cannot be used for enrollment — a new SOA must be created. System auto-flags SOAs expiring within 30 days. SOA is required before any enrollment submission.</span></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function prefillSOA(){
+  // Mandatory text fields
+  var f=document.getElementById('soaFirst'); if(f) f.value='Dorothy';
+  var l=document.getElementById('soaLast'); if(l) l.value='Henderson';
+  var ph=document.getElementById('soaPhone'); if(ph) ph.value='(305) 555-0199';
+
+  // Appointment date — set to 2 days from now (satisfies 48-hr rule)
+  var appt=new Date(); appt.setDate(appt.getDate()+2);
+  var pad=function(n){return String(n).padStart(2,'0');};
+  var apptStr=appt.getFullYear()+'-'+pad(appt.getMonth()+1)+'-'+pad(appt.getDate())+'T10:00';
+  var d=document.getElementById('soaDate'); if(d) d.value=apptStr;
+
+  // Selects
+  var t=document.getElementById('soaType'); if(t) t.value='In-Person (Beneficiary-Initiated / Walk-in)';
+  var ini=document.getElementById('soaInitiator'); if(ini) ini.value='Beneficiary (48-hour waiver eligible)';
+
+  // Plan type checkboxes — check MA and C-SNP (first and third)
+  var planCbs=document.querySelectorAll('#soaPlans input[type=checkbox]');
+  planCbs.forEach(function(cb,i){ cb.checked = (i===0||i===2); });
+
+  // Digital signature
+  var sig=document.getElementById('soaSigName'); if(sig) sig.value='Dorothy Henderson';
+  var sm=document.getElementById('soaSigMethod'); if(sm) sm.value='Typed name attestation';
+
+  // Agent attestation
+  var att=document.getElementById('soaAttest'); if(att) att.checked=true;
+
+  // Flash button feedback
+  var btn=document.querySelector('button[onclick="prefillSOA()"]');
+  if(btn){
+    btn.innerHTML='<i class="fas fa-check"></i> Prefilled!';
+    btn.style.background='#e8f5e9';btn.style.borderColor='#2e7d32';btn.style.color='#1b5e20';
+    setTimeout(function(){
+      btn.innerHTML='<i class="fas fa-magic"></i> Prefill Data';
+      btn.style.background='#fff3e0';btn.style.borderColor='#fb8c00';btn.style.color='#e65100';
+    },2500);
+  }
+  if(typeof showToast==='function') showToast('Sample data prefilled for Create SOA','success');
+}
+
+function saveSOA(){
+  var errBox=document.getElementById('soaErr');
+  var first=document.getElementById('soaFirst').value.trim();
+  var last=document.getElementById('soaLast').value.trim();
+  var apptDate=document.getElementById('soaDate').value;
+  var apptType=document.getElementById('soaType').value;
+  var initiator=document.getElementById('soaInitiator').value;
+  var attest=document.getElementById('soaAttest').checked;
+  var sigName=document.getElementById('soaSigName').value.trim();
+  var sigMethod=document.getElementById('soaSigMethod').value;
+
+  // Check plan types
+  var planChecks=document.querySelectorAll('#soaPlans input[type=checkbox]');
+  var anyPlanChecked=false;
+  planChecks.forEach(function(cb){if(cb.checked) anyPlanChecked=true;});
+
+  // Clear previous highlights
+  ['soaFirst','soaLast','soaDate','soaType'].forEach(function(id){
+    document.getElementById(id).style.border='';
+  });
+  document.getElementById('soaPlans').style.border='';
+  errBox.style.display='none';
+
+  var errors=[];
+  if(!first){errors.push('Beneficiary First Name is required');document.getElementById('soaFirst').style.border='1.5px solid #c62828';}
+  if(!last){errors.push('Beneficiary Last Name is required');document.getElementById('soaLast').style.border='1.5px solid #c62828';}
+  if(!apptDate){errors.push('Appointment Date & Time is required');document.getElementById('soaDate').style.border='1.5px solid #c62828';}
+  if(!apptType){errors.push('Appointment Type is required');document.getElementById('soaType').style.border='1.5px solid #c62828';}
+  if(!anyPlanChecked){errors.push('At least one Plan Type must be selected');document.getElementById('soaPlans').style.border='1.5px solid #c62828';}
+  if(!attest){errors.push('Agent attestation checkbox must be checked');}
+
+  // Signature validation: if method is "Typed name attestation", typed name is required
+  if(sigMethod==='Typed name attestation' && !sigName){
+    errors.push('Typed signature name is required when using typed name attestation');
+    document.getElementById('soaSigName').style.border='1.5px solid #c62828';
+  }
+
+  // 48-hour rule check
+  if(apptDate && initiator.indexOf('Agent')===0){
+    var apptTime=new Date(apptDate).getTime();
+    var nowTime=Date.now();
+    var diffHours=(apptTime-nowTime)/(1000*60*60);
+    if(diffHours<48){
+      errors.push('CMS 48-Hour Rule Violation: Appointment must be at least 48 hours from now when agent-initiated. Current gap: '+Math.max(0,Math.round(diffHours))+' hours.');
+      document.getElementById('soaDate').style.border='1.5px solid #c62828';
+    }
+  }
+
+  if(errors.length>0){
+    errBox.style.display='flex';
+    errBox.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix the following:</strong><ul style="margin:4px 0 0;padding-left:18px">'+errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+    errBox.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  // Success
+  errBox.style.display='none';
+  nfpSubmit('SOA for '+first+' '+last+' saved & sent to beneficiary for e-signature. Appointment: '+apptDate.replace('T',' ')+'.');
+}
+</script>
+</body>
+</html>

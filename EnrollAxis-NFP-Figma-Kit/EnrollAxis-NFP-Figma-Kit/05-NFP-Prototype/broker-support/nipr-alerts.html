@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — NIPR Alerts -->
+<title>NIPR Alerts | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html" class="active"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>NIPR License Alerts</h4><p style="font-size:12px;color:#5f6368;margin:0">Real-time NIPR subscription alerts — license expirations, revocations, and state changes</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpAction('Trigger Batch NIPR Sync')"><i class="fas fa-sync"></i>Sync Now</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('NIPR Alerts')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-circle"></i></div>
+        <div><div class="stat-label">Critical Alerts</div><div class="stat-val">2</div><div class="stat-sub">License expired / revoked</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div>
+        <div><div class="stat-label">Expiring Soon</div><div class="stat-val">3</div><div class="stat-sub">Within 30 days</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-sync-alt"></i></div>
+        <div><div class="stat-label">Last NIPR Sync</div><div class="stat-val">2h ago</div><div class="stat-sub">06 09,2026 08:30</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-shield-alt"></i></div>
+        <div><div class="stat-label">Active Licenses</div><div class="stat-val">312</div><div class="stat-sub">Across 342 agents</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar" style="margin-top:20px">
+      <select id="fSeverity"><option>All Severities</option><option>Critical</option><option>Warning</option><option>Info</option></select>
+      <select id="fState"><option>All States</option><option>Florida</option><option>Georgia</option><option>Texas</option><option>California</option></select>
+      <select id="fAction"><option>All Action Status</option><option>Unprocessed</option><option>In Progress</option><option>Resolved</option></select>
+      <input type="text" id="fSearch" placeholder="Search by agent or NPN..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:180px">
+    </div>
+
+    <!-- Alerts Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-bell" style="color:#c62828;margin-right:8px"></i>Active NIPR Alerts</h6><span class="badge" style="background:#fce4ec;color:#c62828">5 pending</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" id="niprTable" style="font-size:13px">
+          <thead><tr><th>Severity</th><th>Agent</th><th>NPN</th><th>State</th><th>Alert Type</th><th>Details</th><th>Received</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr style="background:#fff5f5"><td><span class="badge" style="background:#ffcdd2;color:#c62828">Critical</span></td><td style="font-weight:600">Kevin Patel</td><td>7823410</td><td>FL</td><td>License Expired</td><td>FL Health license expired 06 01,2026. Agent auto-placed on compliance hold.</td><td>Jun 2</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Unprocessed</span></td><td><button class="btn-pr btn-sm" onclick="showProcess('Kevin Patel','7823410','FL','License Expired','Critical','FL Health license expired 06 01,2026. Agent auto-placed on compliance hold. Selling privileges suspended. Agent must renew license with FL DOI before reactivation. Compliance hold auto-applied per policy GK-LIC-002.','Jun 2','Unprocessed')">Process</button></td></tr>
+            <tr style="background:#fff5f5"><td><span class="badge" style="background:#ffcdd2;color:#c62828">Critical</span></td><td style="font-weight:600">Thomas Lee</td><td>2234567</td><td>FL</td><td>License Revoked</td><td>State board revoked license — compliance review required immediately.</td><td>Jun 7</td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">In Progress</span></td><td><button class="btn-pr btn-sm" onclick="showProcess('Thomas Lee','2234567','FL','License Revoked','Critical','FL state board revoked Health license effective 06 05,2026. Reason: Failure to meet CE requirements. Agent placed on immediate compliance hold. Requires full reinstatement from FL DOI before any selling activity. Supervisor notified.','Jun 7','In Progress')">Process</button></td></tr>
+            <tr><td><span class="badge" style="background:#fff3e0;color:#e65100">Warning</span></td><td style="font-weight:600">Amanda Garcia</td><td>5590812</td><td>GA</td><td>Expiring in 14 days</td><td>GA Health license expires 06 23,2026. Renewal reminder sent.</td><td>Jun 9</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Unprocessed</span></td><td><button class="btn-ol btn-sm" onclick="showRemind('Amanda Garcia','5590812','GA','Expiring in 14 days','GA Health license expires 06 23,2026. Agent has been sent automated 30-day and 14-day reminders. No action taken yet. If not renewed by Jun 20, compliance hold will be auto-applied 3 days before expiry.')">Remind</button></td></tr>
+            <tr><td><span class="badge" style="background:#fff3e0;color:#e65100">Warning</span></td><td style="font-weight:600">Michael Brown</td><td>5590812</td><td>TX</td><td>Expiring in 21 days</td><td>TX Health license expires 06 30,2026.</td><td>Jun 9</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Unprocessed</span></td><td><button class="btn-ol btn-sm" onclick="showRemind('Michael Brown','5590812','TX','Expiring in 21 days','TX Health license expires 06 30,2026. 30-day automated reminder was sent Jun 1. No renewal confirmation received yet. Agent currently active — no hold applied. Next reminder scheduled for Jun 16 (14-day notice).')">Remind</button></td></tr>
+            <tr><td><span class="badge" style="background:#e3f2fd;color:#0277bd">Info</span></td><td style="font-weight:600">David Chen</td><td>4478122</td><td>CA</td><td>State Appointment Change</td><td>CA appointment confirmed after re-submission. License active.</td><td>Jun 8</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Resolved</span></td><td><button class="btn-ol btn-sm" onclick="showNiprView('David Chen','4478122','CA','State Appointment Change','Info','CA state appointment was temporarily suspended due to missing renewal documentation. Agent resubmitted on Jun 7 and CA DOI confirmed reinstatement Jun 8. License status: Active. No further action needed.','Jun 8','Resolved')">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NIPR Alert Detail Modal -->
+<div id="niprModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-bell" style="color:#c62828;margin-right:8px"></i><span id="nmTitle">NIPR Alert</span></h6>
+      <button onclick="closeNiprModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div id="nmSevBanner" style="border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="nmAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="nmNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">State</div><div id="nmState" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Alert Type</div><div id="nmType" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Received</div><div id="nmDate" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Status</div><div id="nmStatus" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Details & Recommended Action</div>
+        <div id="nmNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div id="nmActions" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeNiprModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var rows=document.querySelectorAll('#niprTable tbody tr');
+var fSeverity=document.getElementById('fSeverity');
+var fState=document.getElementById('fState');
+var fAction=document.getElementById('fAction');
+var fSearch=document.getElementById('fSearch');
+
+function applyFilters(){
+  rows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var sevText=cells[0]?cells[0].textContent.trim():'';
+    var stateText=cells[3]?cells[3].textContent.trim():'';
+    var statusText=cells[7]?cells[7].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var search=fSearch.value.trim().toLowerCase();
+    var show=true;
+    if(fSeverity.value!=='All Severities'&&sevText.indexOf(fSeverity.value)<0) show=false;
+    if(fState.value!=='All States'){
+      var stateMap={'Florida':'FL','Georgia':'GA','Texas':'TX','California':'CA'};
+      if(stateText.indexOf(stateMap[fState.value]||'')<0) show=false;
+    }
+    if(fAction.value!=='All Action Status'&&statusText.indexOf(fAction.value)<0) show=false;
+    if(search&&rowText.indexOf(search)<0) show=false;
+    row.style.display=show?'':'none';
+  });
+  showToast('Filters applied','info');
+}
+fSeverity.addEventListener('change',applyFilters);
+fState.addEventListener('change',applyFilters);
+fAction.addEventListener('change',applyFilters);
+fSearch.addEventListener('input',applyFilters);
+
+// NIPR Modal functions
+function openNiprModal(agent,npn,state,type,severity,notes,date,status){
+  document.getElementById('nmAgent').textContent=agent;
+  document.getElementById('nmNPN').textContent=npn;
+  document.getElementById('nmState').textContent=state;
+  document.getElementById('nmType').textContent=type;
+  document.getElementById('nmDate').textContent=date||'—';
+  document.getElementById('nmStatus').textContent=status||'—';
+  document.getElementById('nmNotes').textContent=notes;
+  var banner=document.getElementById('nmSevBanner');
+  if(severity==='Critical'){banner.style.background='#ffcdd2';banner.style.color='#c62828';banner.innerHTML='<i class="fas fa-exclamation-circle" style="margin-right:6px"></i>Critical Alert — Immediate Action Required';}
+  else if(severity==='Warning'){banner.style.background='#fff3e0';banner.style.color='#e65100';banner.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>Warning — Action Recommended';}
+  else{banner.style.background='#e3f2fd';banner.style.color='#0277bd';banner.innerHTML='<i class="fas fa-info-circle" style="margin-right:6px"></i>Informational Alert';}
+  document.getElementById('niprModal').style.display='flex';
+}
+function closeNiprModal(){document.getElementById('niprModal').style.display='none';}
+document.getElementById('niprModal').addEventListener('click',function(e){if(e.target===this)closeNiprModal();});
+
+function showProcess(agent,npn,state,type,severity,notes,date,status){
+  openNiprModal(agent,npn,state,type,severity,notes,date,status);
+  document.getElementById('nmTitle').textContent='Process Alert — '+agent;
+  document.getElementById('nmActions').innerHTML='<button class="btn-pr btn-sm" onclick="showToast(\'Alert marked as processed. Compliance hold confirmed.\',\'success\');closeNiprModal()"><i class="fas fa-check" style="margin-right:4px"></i>Mark Processed</button><button class="btn-ol btn-sm" onclick="showToast(\'Agent notified of license issue\',\'info\')"><i class="fas fa-envelope" style="margin-right:4px"></i>Notify Agent</button><button class="btn-ol btn-sm" onclick="showToast(\'Escalated to compliance team\',\'warning\')"><i class="fas fa-arrow-up" style="margin-right:4px"></i>Escalate</button><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showToast(\'Compliance hold applied\',\'warning\');closeNiprModal()"><i class="fas fa-ban" style="margin-right:4px"></i>Apply Hold</button>';
+}
+function showRemind(agent,npn,state,type,notes){
+  openNiprModal(agent,npn,state,type,'Warning',notes,'Jun 9','Unprocessed');
+  document.getElementById('nmTitle').textContent='Renewal Reminder — '+agent;
+  document.getElementById('nmActions').innerHTML='<button class="btn-pr btn-sm" onclick="showToast(\'Renewal reminder sent to \'+document.getElementById(\'nmAgent\').textContent,\'success\');closeNiprModal()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Reminder Now</button><button class="btn-ol btn-sm" onclick="showToast(\'Agent phone number copied\',\'info\')"><i class="fas fa-phone" style="margin-right:4px"></i>Call Agent</button><button class="btn-ol btn-sm" onclick="showToast(\'Escalated to agency admin\',\'info\')"><i class="fas fa-building" style="margin-right:4px"></i>Notify Agency</button>';
+}
+function showNiprView(agent,npn,state,type,severity,notes,date,status){
+  openNiprModal(agent,npn,state,type,severity,notes,date,status);
+  document.getElementById('nmTitle').textContent='Alert Detail — '+agent;
+  document.getElementById('nmActions').innerHTML='<button class="btn-ol btn-sm" onclick="showToast(\'Alert details copied\',\'info\')"><i class="fas fa-copy" style="margin-right:4px"></i>Copy Details</button><button class="btn-ol btn-sm" onclick="showToast(\'Audit log opened\',\'info\')"><i class="fas fa-history" style="margin-right:4px"></i>View Audit Log</button>';
+}
+</script>
+</body>
+</html>

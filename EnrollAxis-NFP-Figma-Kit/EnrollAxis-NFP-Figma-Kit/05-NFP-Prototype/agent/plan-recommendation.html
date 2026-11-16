@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan Recommendation | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}
+.rec-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.rec-top{background:#fff8e1;color:#e65100;border:1px solid #ffe082}
+.score-bar{height:6px;border-radius:3px;background:#e8eaed;margin-top:5px}
+.score-fill{height:6px;border-radius:3px;background:#0d47a1}
+.plan-benefit{display:flex;align-items:flex-start;gap:8px;font-size:13px;padding:5px 0;border-bottom:1px solid #f8f9fa}
+.plan-benefit i{color:#2e7d32;font-size:12px;margin-top:2px;width:14px}
+.ineligible-plan{opacity:.5;filter:grayscale(60%)}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Plan Recommendation ? Frank Johnson</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="pqat.html">PQAT</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Plan Recommendation</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpApprove('Item')"><i class="fas fa-print"></i>Print</button>
+      <a href="enrollment.html" class="btn-pr"><i class="fas fa-file-medical"></i>Proceed to Enrollment</a>
+    </div>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-robot" style="flex-shrink:0"></i><span><strong>AI-Assisted Recommendation.</strong> Based on PQAT responses: ESRD diagnosis, dialysis confirmed, ZIP 33127 (FL), Medicare Parts A+B+D, LIS Level 4, Medicaid dual eligible. Sorted by fit score.</span></div>
+
+    <!-- Member Summary Strip -->
+    <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div class="dflex ai-center g8"><div class="avatar">FJ</div><div><div class="text-bold">Frank Johnson</div><div class="text-sm text-muted">DOB: 07/08/1952 ? Miami-Dade, FL 33127</div></div></div>
+      <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+        <span class="chip">ESRD</span><span class="chip">Dialysis</span><span class="chip">Dual Eligible</span><span class="chip">LIS Lvl 4</span>
+      </div>
+    </div>
+
+    <!-- Plan Cards ? Eligible -->
+    <div style="font-size:13px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Eligible Plans</div>
+
+    <div class="row-grid" style="margin-bottom:16px">
+      <!-- Plan 1: Best Match -->
+      <div class="plan-card" style="border:2px solid #0d47a1;position:relative">
+        <div style="position:absolute;top:-1px;right:12px"><span class="rec-badge rec-top"><i class="fas fa-star" style="margin-right:4px"></i>Best Match</span></div>
+        <div style="margin-bottom:10px">
+          <div class="plan-name">StarPlus ESRD SNP 2026</div>
+          <div class="plan-id">GK-ESRD-2026 ? HMO-SNP ? FL, GA</div>
+          <span class="bdg b-purple" style="margin-top:6px;display:inline-block">ESRD C-SNP</span>
+        </div>
+        <div class="dflex ai-center g6" style="margin-bottom:8px">
+          <div class="plan-premium">$0.00</div>
+          <div class="text-muted text-sm">/month</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;color:#80868b;margin-bottom:3px">Fit Score</div>
+          <div class="dflex ai-center g8">
+            <div class="plan-score">97</div>
+            <div style="flex:1"><div class="score-bar"><div class="score-fill" style="width:97%"></div></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>$0 premium with LIS Level 4 (Full Extra Help)</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>Integrated dialysis center coordination</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>ESRD-specific care management program</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>$0 dialysis co-pay at in-network centers</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>Full formulary ? Epogen, Sevelamer, Calcitriol covered</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>Transportation benefit ? 30 trips/year</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>MOOP: $3,400/year</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>DaVita Kidney Care Miami NW ? In-Network ?</div>
+        </div>
+        <a href="enrollment.html" class="btn-pr" style="width:100%;margin-top:12px;justify-content:center"><i class="fas fa-play"></i>Enroll in This Plan</a>
+      </div>
+
+      <!-- Plan 2 -->
+      <div class="plan-card">
+        <div style="margin-bottom:10px">
+          <div class="plan-name">BrightChoice HMO 2026</div>
+          <div class="plan-id">GK-HMO-2026 ? HMO ? FL, GA, TX</div>
+          <span class="bdg b-grey" style="margin-top:6px;display:inline-block">Standard HMO</span>
+        </div>
+        <div class="dflex ai-center g6" style="margin-bottom:8px">
+          <div class="plan-premium">$0.00</div>
+          <div class="text-muted text-sm">/month (LIS-subsidized)</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;color:#80868b;margin-bottom:3px">Fit Score</div>
+          <div class="dflex ai-center g8">
+            <div class="plan-score" style="color:#e65100">68</div>
+            <div style="flex:1"><div class="score-bar"><div class="score-fill" style="width:68%;background:#e65100"></div></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>$0 premium (LIS subsidized)</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>General medical benefits</div>
+          <div class="plan-benefit" style="color:#c62828"><i class="fas fa-times-circle" style="color:#c62828"></i>No ESRD-specific care management</div>
+          <div class="plan-benefit" style="color:#c62828"><i class="fas fa-times-circle" style="color:#c62828"></i>Higher dialysis co-pay ($25/visit)</div>
+          <div class="plan-benefit" style="color:#c62828"><i class="fas fa-times-circle" style="color:#c62828"></i>No integrated dialysis coordination</div>
+          <div class="plan-benefit"><i class="fas fa-check-circle"></i>MOOP: $4,200/year</div>
+        </div>
+        <button class="btn-ol" style="width:100%;margin-top:12px;justify-content:center">Select This Plan</button>
+      </div>
+    </div>
+
+    <!-- Ineligible Plans -->
+    <div style="font-size:13px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Not Eligible</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <div class="ineligible-plan" style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;min-width:240px">
+        <i class="fas fa-times-circle" style="color:#c62828;font-size:16px"></i>
+        <div><div class="text-bold">KidneyCare CKD SNP 2026</div><div class="text-sm text-muted">Requires CKD diagnosis. Frank has ESRD (progressed beyond CKD threshold).</div></div>
+      </div>
+      <div class="ineligible-plan" style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;min-width:240px">
+        <i class="fas fa-times-circle" style="color:#c62828;font-size:16px"></i>
+        <div><div class="text-bold">HeartCare Heart &amp; Diabetes SNP 2026</div><div class="text-sm text-muted">Requires CHF or CVD diagnosis. Not confirmed in PQAT assessment.</div></div>
+      </div>
+      <div class="ineligible-plan" style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;min-width:240px">
+        <i class="fas fa-times-circle" style="color:#c62828;font-size:16px"></i>
+        <div><div class="text-bold">DiabetesCare SNP 2026</div><div class="text-sm text-muted">Only available in TX. Beneficiary ZIP is in FL (Miami-Dade county).</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

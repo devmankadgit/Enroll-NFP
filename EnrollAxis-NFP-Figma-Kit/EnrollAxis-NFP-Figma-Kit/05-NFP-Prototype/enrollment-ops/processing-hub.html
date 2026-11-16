@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enrollment Processing Hub | Enrollment Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#00695c}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:540px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:20px}
+.modal-foot{padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px}
+.slide-panel{position:fixed;top:0;right:-560px;width:540px;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(0,0,0,.18);z-index:9000;overflow-y:auto;transition:right .3s ease;padding:0}
+.slide-panel.open{right:0}
+.slide-panel-hdr{padding:18px 20px;border-bottom:1px solid #e8eaed;background:#f8f9fa;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1}
+.slide-panel-body{padding:20px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-clipboard-check" style="margin-right:8px;opacity:.8"></i>Enrollment Ops</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Enrollment Processing</div>
+    <a href="processing-hub.html" class="active"><i class="fas fa-inbox"></i>Processing Hub</a>
+    <a href="oec-intake.html"><i class="fas fa-inbox"></i>OEC Intake Hub</a>
+    <a href="csnp-review.html"><i class="fas fa-heartbeat"></i>C-SNP Review</a>
+    <a href="compliance-tracker.html"><i class="fas fa-clock"></i>7-Day Compliance</a>
+    <div class="sb-section">Member Services</div>
+    <a href="document-repository.html"><i class="fas fa-folder-open"></i>Document Repository</a>
+    <a href="id-cards.html"><i class="fas fa-id-card"></i>ID Cards</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Wong</div><div class="sb-u-role">Enrollment Ops Manager</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Multi-Source OEC Intake &amp; Centralized Processing Hub</h4><ol class="breadcrumb-bar"><li></li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Stat Cards -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-inbox"></i></div><div><div class="stat-label">Total Pending</div><div class="stat-val">47</div><div class="stat-sub">Across all sources</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">At Risk (Day 5+)</div><div class="stat-val">8</div><div class="stat-sub stat-dn">Nearing 7-day deadline</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">CMS Rejected</div><div class="stat-val">3</div><div class="stat-sub">Needs resubmission</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Submitted Today</div><div class="stat-val">12</div><div class="stat-sub stat-up">+ 4 vs yesterday</div></div></div></div>
+    </div>
+
+    <!-- Source Intake Indicators -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-plug" style="margin-right:8px;color:#00695c"></i>Intake Sources</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:12px;text-align:center"><div style="font-size:20px;color:#0d47a1"><i class="fas fa-user-tie"></i></div><div style="font-size:12px;font-weight:600;margin-top:4px">Broker-Assisted</div><div style="font-size:18px;font-weight:700">18</div></div>
+          <div class="col-1" style="background:#f3e5f5;border-radius:8px;padding:12px;text-align:center"><div style="font-size:20px;color:#4a148c"><i class="fas fa-desktop"></i></div><div style="font-size:12px;font-weight:600;margin-top:4px">DTC (Direct)</div><div style="font-size:18px;font-weight:700">12</div></div>
+          <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:12px;text-align:center"><div style="font-size:20px;color:#e65100"><i class="fas fa-file-upload"></i></div><div style="font-size:12px;font-weight:600;margin-top:4px">OEC Vendor SFTP</div><div style="font-size:18px;font-weight:700">14</div></div>
+          <div class="col-1" style="background:#e8f5e9;border-radius:8px;padding:12px;text-align:center"><div style="font-size:20px;color:#1b5e20"><i class="fas fa-keyboard"></i></div><div style="font-size:12px;font-weight:600;margin-top:4px">Manual Entry</div><div style="font-size:18px;font-weight:700">3</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <label>Source:</label>
+      <select id="fSource"><option value="">All Sources</option><option value="Broker">Broker-Assisted</option><option value="DTC">DTC</option><option value="SFTP">OEC Vendor SFTP</option><option value="Manual">Manual Entry</option></select>
+      <label>Status:</label>
+      <select id="fStatus"><option value="">All Statuses</option><option value="Draft">Draft</option><option value="Submitted">Submitted</option><option value="Pending CMS">Pending CMS</option><option value="CMS Accepted">CMS Accepted</option><option value="CMS Rejected">CMS Rejected</option><option value="Duplicate">Duplicate</option></select>
+      <label>Agent:</label>
+      <select id="fAgent"><option value="">All Agents</option><option value="8823441">James Martinez</option><option value="7714200">Sarah Chen</option></select>
+      <label>Plan Year:</label>
+      <select id="fYear"><option value="">All</option><option value="2026">2026</option><option value="2027">2027</option></select>
+      <label>State:</label>
+      <select id="fState"><option value="">All</option><option value="FL">FL</option><option value="GA">GA</option><option value="TX">TX</option></select>
+      <input type="date" id="fDateFrom" style="width:130px">
+      <span style="font-size:12px;color:#5f6368">to</span>
+      <input type="date" id="fDateTo" style="width:130px">
+      <input type="text" id="fSearch" placeholder="Search name, App ID..." style="width:180px" oninput="filterTable()">
+      <button class="btn-ol btn-sm" onclick="filterTable()"><i class="fas fa-filter"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()" style="color:#c62828;border-color:#c62828"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Processing Hub Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>Enrollment Applications (47 pending)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','processing-hub_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr><th>Application ID</th><th>Member Name</th><th>Source</th><th>Plan</th><th>Effective Date</th><th>App Date</th><th>Status</th><th>Days</th><th>Assigned To</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="hubBody">
+            <tr data-source="Broker" data-status="Pending CMS" data-risk="At Risk" data-agent="8823441" data-year="2027" data-appdate="2026-05-20">
+              <td><code>APP-2026-1247</code></td><td><a href="#" onclick="openDetail('APP-2026-1247','Linda Park','***-**-4821','Broker','8823441','ESRD C-SNP Gold','01 01,2027','May 20','Pending CMS','5','At Risk');return false" style="color:#00695c;text-decoration:none;border-bottom:1px dashed #00695c;font-weight:600" title="View member details">Linda Park</a></td><td><span class="bdg b-blue">Broker</span></td><td>ESRD C-SNP Gold</td><td>01 01,2027</td><td>May 20</td><td><span class="bdg b-amber">Pending CMS</span></td><td style="font-weight:700">5</td>
+              <td><span style="font-size:11px">Rachel Wong</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDetail('APP-2026-1247','Linda Park','***-**-4821','Broker','8823441','ESRD C-SNP Gold','01 01,2027','May 20','Pending CMS','5','At Risk')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('APP-2026-1247','Linda Park')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-source="DTC" data-status="CMS Accepted" data-risk="Safe" data-agent="" data-year="2026" data-appdate="2026-05-22">
+              <td><code>APP-2026-1248</code></td><td><a href="#" onclick="openDetail('APP-2026-1248','Thomas Rivera','***-**-7733','DTC','','CKD SNP Silver','07 01,2026','May 22','CMS Accepted','','Safe');return false" style="color:#00695c;text-decoration:none;border-bottom:1px dashed #00695c;font-weight:600" title="View member details">Thomas Rivera</a></td><td><span class="bdg b-purple">DTC</span></td><td>CKD SNP Silver</td><td>07 01,2026</td><td>May 22</td><td><span class="bdg b-green">CMS Accepted</span></td><td></td>
+              <td><span style="font-size:11px">David Kim</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDetail('APP-2026-1248','Thomas Rivera','***-**-7733','DTC','','CKD SNP Silver','07 01,2026','May 22','CMS Accepted','','Safe')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('APP-2026-1248','Thomas Rivera')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-source="Broker" data-status="CMS Rejected" data-risk="Breached" data-agent="8823441" data-year="2027" data-appdate="2026-05-18" style="background:#ffebee">
+              <td><code>APP-2026-1249</code></td><td><a href="#" onclick="openDetail('APP-2026-1249','Frank Johnson','***-**-9102','Broker','8823441','ESRD C-SNP Platinum','01 01,2027','May 18','CMS Rejected','7','Breached');return false" style="color:#00695c;text-decoration:none;border-bottom:1px dashed #00695c;font-weight:600" title="View member details">Frank Johnson</a></td><td><span class="bdg b-blue">Broker</span></td><td>ESRD C-SNP Platinum</td><td>01 01,2027</td><td>May 18</td><td><span class="bdg b-red">CMS Rejected</span></td><td style="color:#c62828;font-weight:700">7</td>
+              <td><span style="font-size:11px">Rachel Wong</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDetail('APP-2026-1249','Frank Johnson','***-**-9102','Broker','8823441','ESRD C-SNP Platinum','01 01,2027','May 18','CMS Rejected','7','Breached')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('APP-2026-1249','Frank Johnson')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-source="SFTP" data-status="Duplicate" data-risk="Safe" data-agent="7714200" data-year="2026" data-appdate="2026-05-23">
+              <td><code>APP-2026-1250</code></td><td><a href="#" onclick="openDetail('APP-2026-1250','Grace Kim','***-**-5540','SFTP','7714200','H&D SNP Gold','08 01,2026','May 23','Duplicate','2','Safe');return false" style="color:#00695c;text-decoration:none;border-bottom:1px dashed #00695c;font-weight:600" title="View member details">Grace Kim</a></td><td><span class="bdg b-amber">SFTP</span></td><td>H&amp;D SNP Gold</td><td>08 01,2026</td><td>May 23</td><td><span class="bdg b-amber">Duplicate Detected</span></td><td>2</td>
+              <td><span style="font-size:11px">Unassigned</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDetail('APP-2026-1250','Grace Kim','***-**-5540','SFTP','7714200','H&D SNP Gold','08 01,2026','May 23','Duplicate','2','Safe')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('APP-2026-1250','Grace Kim')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-source="Broker" data-status="Submitted" data-risk="Safe" data-agent="8823441" data-year="2026" data-appdate="2026-05-24">
+              <td><code>APP-2026-1251</code></td><td><a href="#" onclick="openDetail('APP-2026-1251','Nancy Collins','***-**-3312','Broker','8823441','CKD SNP Gold','07 01,2026','May 24','Submitted','1','Safe');return false" style="color:#00695c;text-decoration:none;border-bottom:1px dashed #00695c;font-weight:600" title="View member details">Nancy Collins</a></td><td><span class="bdg b-blue">Broker</span></td><td>CKD SNP Gold</td><td>07 01,2026</td><td>May 24</td><td><span class="bdg b-blue">Submitted</span></td><td>1</td>
+              <td><span style="font-size:11px">David Kim</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDetail('APP-2026-1251','Nancy Collins','***-**-3312','Broker','8823441','CKD SNP Gold','07 01,2026','May 24','Submitted','1','Safe')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('APP-2026-1251','Nancy Collins')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <span class="text-sm text-muted" id="filterCount">Showing 5 of 5</span>
+        <div class="dflex g8"><button class="btn-ol btn-sm" onclick="showToast('Previous page','info')">&#8592; Prev</button><span class="btn-ol btn-sm" style="background:#f0f2f5">1 / 10</span><button class="btn-pr btn-sm" onclick="showToast('Next page','info')">Next &#8594;</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE PANEL: Application Details -->
+<div id="detailPanel" class="slide-panel">
+  <div class="slide-panel-hdr">
+    <div><h6 style="margin:0;font-weight:700;font-size:14px"><i class="fas fa-file-medical" style="margin-right:8px;color:#00695c"></i>Application Details</h6>
+    <div style="font-size:11px;color:#5f6368" id="dpAppId"></div></div>
+    <button onclick="document.getElementById('detailPanel').classList.remove('open')" style="background:none;border:none;font-size:22px;cursor:pointer;color:#5f6368">&times;</button>
+  </div>
+  <div class="slide-panel-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12.5px;margin-bottom:16px">
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Member</div><div style="font-weight:600" id="dpMember"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">MBI</div><div style="font-family:monospace;font-weight:600" id="dpMbi"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Source</div><div id="dpSource"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Agent NPN</div><div id="dpAgent"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Plan</div><div id="dpPlan"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Effective Date</div><div id="dpEffDate"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Application Date</div><div id="dpAppDate"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Status</div><div id="dpStatus"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Days to Deadline</div><div id="dpDays" style="font-weight:700"></div></div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px"><div style="font-size:10px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Risk Level</div><div id="dpRisk"></div></div>
+    </div>
+
+    <!-- Enrichment Applied -->
+    <div style="margin-top:16px;font-size:12px;font-weight:700;color:#424242;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Enrichment Applied</div>
+    <div style="font-size:12px">
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f1f3f4"><i class="fas fa-tag" style="color:#0d47a1"></i>Plan Year: <strong>CY2027</strong></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f1f3f4"><i class="fas fa-sitemap" style="color:#4a148c"></i>Hierarchy: Agent &rarr; GA-2201 (HealthFirst) &rarr; FMO-1001 &rarr; SFMO-2024-001</div>
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f1f3f4"><i class="fas fa-dollar-sign" style="color:#2e7d32"></i>Commission Trigger: <strong>Initial</strong> ($694.00)</div>
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 0"><i class="fas fa-share-alt" style="color:#e65100"></i>Downstream: Commission Engine, Member Profile</div>
+    </div>
+
+    <!-- Audit Log for this application -->
+    <div style="margin-top:16px;font-size:12px;font-weight:700;color:#424242;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Processing Audit Events</div>
+    <div style="font-size:12px">
+      <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span style="color:#80868b;min-width:100px">May 29, 09:12</span><span>Application received from intake pipeline</span></div>
+      <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span style="color:#80868b;min-width:100px">May 29, 09:12</span><span>Validation pipeline passed</span></div>
+      <div style="padding:6px 0;border-bottom:1px solid #f1f3f4;display:flex;gap:8px"><span style="color:#80868b;min-width:100px">May 29, 09:13</span><span>Queued for CMS submission</span></div>
+      <div style="padding:6px 0;display:flex;gap:8px"><span style="color:#80868b;min-width:100px">May 29, 10:45</span><span>OEC submission initiated</span></div>
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('detailPanel').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+<div id="panelBackdrop" onclick="document.getElementById('detailPanel').classList.remove('open')" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:8999"></div>
+
+<!-- RESOLVE DUPLICATE MODAL -->
+<div id="dupModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#e65100"><i class="fas fa-code-branch" style="margin-right:8px"></i>Resolve Duplicate Enrollment</h6><button onclick="document.getElementById('dupModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-warn" style="margin-bottom:14px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Potential duplicate detected for <strong id="dupMember"></strong> (<strong id="dupMbi"></strong>). Same MBI + Plan (<strong id="dupPlan"></strong>) + Effective Date (<strong id="dupEffDate"></strong>). Review both applications before processing.</span></div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px">This Application: <code id="dupAppId"></code></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px">
+        <div><strong>Existing Application:</strong> <code>APP-2026-1203</code></div>
+        <div>Status: <span class="bdg b-blue">Submitted</span></div>
+        <div>Submitted: 05 15,2026 via Broker (Agent NPN: 8823441)</div>
+      </div>
+      <div class="fg" style="margin-bottom:10px"><label>Resolution Action <span class="req">*</span></label>
+        <select id="dupAction">
+          <option value="">&#8212; Select action &#8212;</option>
+          <option value="keep-new">Keep New Application — Cancel Existing</option>
+          <option value="keep-existing">Keep Existing Application — Dismiss New</option>
+          <option value="merge">Merge — Use New Data on Existing Record</option>
+        </select>
+      </div>
+      <div class="fg"><label>Resolution Notes <span class="req">*</span></label><textarea id="dupNotes" rows="2" placeholder="Required: explain why this action was taken..."></textarea></div>
+      <div id="dupErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillDupResolve()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+      <div>
+        <button class="btn-ol" onclick="document.getElementById('dupModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="confirmResolveDup()"><i class="fas fa-check"></i>Confirm Resolution</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MANUAL ELIGIBILITY OVERRIDE MODAL -->
+<div id="overrideModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:600px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#00695c"><i class="fas fa-user-shield" style="margin-right:8px"></i>Manual Eligibility Override</h6><button onclick="document.getElementById('overrideModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-warn" style="margin-bottom:14px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>Audit-Logged Action:</strong> Manual eligibility overrides are permanently recorded in the compliance audit trail with your user ID, timestamp, and justification. This action cannot be undone.</span></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px">
+        <div><strong>Application:</strong> <code id="ovrAppId"></code></div>
+        <div><strong>Member:</strong> <span id="ovrMember"></span></div>
+        <div><strong>MBI:</strong> <code id="ovrMbi"></code></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Override Reason <span class="req">*</span></label>
+        <select id="ovrReason">
+          <option value="">&#8212; Select reason &#8212;</option>
+          <option value="SEP Documentation Received">SEP Documentation Received (not in system)</option>
+          <option value="CMS Directive">CMS Directive / Regulatory Guidance</option>
+          <option value="County Boundary Exception">County Boundary Exception</option>
+          <option value="System Error Correction">System Error Correction</option>
+          <option value="Physician Attestation Override">Physician Attestation Override (C-SNP)</option>
+          <option value="Other">Other (explain below)</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Documented Justification <span class="req">*</span> <span style="font-size:11px;color:#80868b">(min 30 characters)</span></label>
+        <textarea id="ovrJustification" rows="4" placeholder="Provide detailed justification for this manual override. Include supporting evidence references, authorization source, and any case/ticket numbers..."></textarea>
+        <div id="ovrCharCount" style="font-size:11px;color:#c62828;text-align:right;margin-top:3px">0 / 30 minimum</div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Supporting Reference <span style="font-size:11px;color:#80868b">(optional)</span></label>
+        <input type="text" id="ovrReference" placeholder="e.g. CMS letter ref, ticket ID, physician fax confirmation #">
+      </div>
+      <div id="ovrErr" class="al-danger" style="display:none;margin-bottom:0"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('overrideModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="submitOverride()"><i class="fas fa-check-circle"></i>Apply Override &amp; Log</button>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIGN WORK ITEM MODAL -->
+<div id="assignModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#4a148c"><i class="fas fa-user-tag" style="margin-right:8px"></i>Assign Work Item</h6><button onclick="document.getElementById('assignModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px">
+        <div><strong>Application:</strong> <code id="assignAppId"></code></div>
+        <div><strong>Member:</strong> <span id="assignMember"></span></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Assign To <span class="req">*</span></label>
+        <select id="assignTo">
+          <option value="">&#8212; Select team member &#8212;</option>
+          <option value="Rachel Wong">Rachel Wong (Manager)</option>
+          <option value="David Kim">David Kim (Sr. Processor)</option>
+          <option value="Maria Santos">Maria Santos (Processor)</option>
+          <option value="James Lee">James Lee (Processor)</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Priority</label>
+        <select id="assignPriority">
+          <option value="Normal">Normal</option>
+          <option value="High">High</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+      </div>
+      <div class="fg"><label>Notes</label><textarea id="assignNotes" rows="2" placeholder="Optional assignment notes..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('assignModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="confirmAssign()"><i class="fas fa-check"></i>Assign</button>
+    </div>
+  </div>
+</div>
+
+<!-- ESCALATE MODAL -->
+<div id="escalateModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#e65100"><i class="fas fa-arrow-up" style="margin-right:8px"></i>Escalate Processing Issue</h6><button onclick="document.getElementById('escalateModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#fff8e1;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px;border:1px solid #ffe082">
+        <div><strong>Application:</strong> <code id="escAppId"></code></div>
+        <div><strong>Member:</strong> <span id="escMember"></span></div>
+        <div><strong>Reason:</strong> <span id="escReason" style="color:#e65100;font-weight:600"></span></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Escalation Level <span class="req">*</span></label>
+        <select id="escLevel">
+          <option value="">&#8212; Select level &#8212;</option>
+          <option value="Supervisor">Supervisor Review</option>
+          <option value="Manager">Manager Escalation</option>
+          <option value="Compliance">Compliance Team</option>
+          <option value="CMS Liaison">CMS Liaison</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Escalation Reason <span class="req">*</span></label>
+        <select id="escType">
+          <option value="">&#8212; Select reason &#8212;</option>
+          <option value="SLA Breach">SLA Breach / At Risk</option>
+          <option value="CMS Rejection">CMS Rejection - Complex Resolution</option>
+          <option value="Missing Documentation">Missing Documentation - Agent Unresponsive</option>
+          <option value="System Error">System Error / Technical Issue</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Details <span class="req">*</span></label><textarea id="escDetails" rows="3" placeholder="Describe the issue and what resolution is needed..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('escalateModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" style="background:#e65100" onclick="confirmEscalate()"><i class="fas fa-arrow-up"></i>Escalate</button>
+    </div>
+  </div>
+</div>
+
+<!-- CMS REJECTION RESOLUTION MODAL -->
+<div id="rejectResolveModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-times-circle" style="margin-right:8px"></i>Resolve CMS Rejection</h6><button onclick="document.getElementById('rejectResolveModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-danger" style="margin-bottom:14px"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span><strong>CMS Rejection:</strong> This enrollment was rejected by CMS. Review the rejection reason and take corrective action before resubmission.</span></div>
+      <div style="background:#ffebee;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px;border:1px solid #ef9a9a">
+        <div><strong>Application:</strong> <code id="rejAppId"></code></div>
+        <div><strong>Member:</strong> <span id="rejMember"></span></div>
+        <div><strong>Rejection Code:</strong> <span id="rejCode" style="color:#c62828;font-weight:700"></span></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Resolution Action <span class="req">*</span></label>
+        <select id="rejAction">
+          <option value="">&#8212; Select action &#8212;</option>
+          <option value="Correct & Resubmit">Correct Data &amp; Resubmit to CMS</option>
+          <option value="SEP Override">Apply SEP Override &amp; Resubmit</option>
+          <option value="Request Agent Info">Request Additional Info from Agent</option>
+          <option value="Cancel Enrollment">Cancel Enrollment (Member Ineligible)</option>
+          <option value="CMS Appeal">File CMS Appeal</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label>Correction Details <span class="req">*</span></label><textarea id="rejDetails" rows="3" placeholder="Describe what was corrected or why resubmission is appropriate..."></textarea></div>
+      <div class="fg" style="margin-bottom:12px"><label>Supporting Document</label><input type="file" id="rejDoc" style="font-size:12px"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('rejectResolveModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" style="background:#c62828" onclick="confirmRejectResolve()"><i class="fas fa-redo"></i>Submit Resolution</button>
+    </div>
+  </div>
+</div>
+
+<!-- DOCUMENT REVIEW MODAL -->
+<div id="docReviewModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#00695c"><i class="fas fa-file-alt" style="margin-right:8px"></i>Document Review</h6><button onclick="document.getElementById('docReviewModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px;font-size:12.5px;margin-bottom:14px">
+        <div><strong>Application:</strong> <code id="docAppId"></code></div>
+        <div><strong>Member:</strong> <span id="docMember"></span></div>
+      </div>
+      <div style="font-size:12.5px;font-weight:600;margin-bottom:8px">Required Documents</div>
+      <table class="tbl" style="font-size:12px;margin-bottom:14px">
+        <thead><tr><th>Document</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Enrollment Application (Model Form)</td><td><span class="bdg b-green">Received</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Opening document viewer...','info')"><i class="fas fa-eye"></i>View</button></td></tr>
+          <tr><td>Scope of Appointment (SOA)</td><td><span class="bdg b-green">Received</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Opening document viewer...','info')"><i class="fas fa-eye"></i>View</button></td></tr>
+          <tr><td>Physician Attestation (C-SNP)</td><td><span class="bdg b-amber">Pending</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Requesting document from agent...','info')"><i class="fas fa-envelope"></i>Request</button></td></tr>
+          <tr><td>Lab Results (eGFR)</td><td><span class="bdg b-green">Received</span></td><td><button class="btn-ol btn-sm" onclick="showToast('Opening document viewer...','info')"><i class="fas fa-eye"></i>View</button></td></tr>
+        </tbody>
+      </table>
+      <div class="fg"><label>Review Notes</label><textarea id="docNotes" rows="2" placeholder="Add review notes..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('docReviewModal').classList.remove('open')">Close</button>
+      <button class="btn-ol" style="color:#e65100;border-color:#e65100" onclick="showToast('Document request sent to agent via email.','success');document.getElementById('docReviewModal').classList.remove('open')"><i class="fas fa-envelope"></i>Request Missing Docs</button>
+      <button class="btn-pr" onclick="showToast('Documents validated. Application cleared for processing.','success');document.getElementById('docReviewModal').classList.remove('open')"><i class="fas fa-check"></i>Validate Complete</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- COMMENT MODAL -->
+<div id="commentModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#0d47a1"><i class="fas fa-comment" style="margin-right:8px"></i>Add Comment</h6>
+      <button onclick="document.getElementById('commentModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13px;margin-bottom:12px">Adding comment for <strong id="commentRefId"></strong> &mdash; <strong id="commentName"></strong></p>
+      <div class="fg"><label>Comment <span class="req">*</span></label><textarea id="commentText" rows="4" placeholder="Enter your comment..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('commentModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="submitComment()"><i class="fas fa-paper-plane"></i>Submit Comment</button>
+    </div>
+  </div>
+</div>
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var dupTarget={};
+
+var commentStore = {};
+
+function openComment(refId, name) {
+  document.getElementById('commentRefId').textContent = refId;
+  document.getElementById('commentName').textContent = name;
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  document.getElementById('commentModal').classList.add('open');
+}
+
+function renderCommentHistory(refId) {
+  var hist = document.getElementById('commentHistory');
+  var comments = commentStore[refId] || [];
+  if (comments.length === 0) {
+    hist.innerHTML = '<div style="font-size:11px;color:#80868b;text-align:center;padding:8px 0">No comments yet</div>';
+    return;
+  }
+  var html = '';
+  comments.forEach(function(c) {
+    html += '<div style="padding:8px 0;border-bottom:1px solid #e8eaed;font-size:12px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+      '<strong style="color:#0d47a1">' + c.user + '</strong>' +
+      '<span style="color:#80868b;font-size:10px">' + c.time + '</span></div>' +
+      '<div style="color:#424242">' + c.text + '</div></div>';
+  });
+  hist.innerHTML = html;
+  hist.scrollTop = hist.scrollHeight;
+}
+
+function submitComment() {
+  var text = document.getElementById('commentText').value.trim();
+  if (!text) { alert('Please enter a comment.'); return; }
+  var refId = document.getElementById('commentRefId').textContent;
+  if (!commentStore[refId]) commentStore[refId] = [];
+  var now = new Date();
+  var timeStr = now.toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  commentStore[refId].push({ user: 'Current User', time: timeStr, text: text });
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  showToast('Comment saved for ' + refId, 'success');
+}
+
+function prefillComment() {
+  document.getElementById('commentText').value = 'Reviewed application. All documentation verified and compliant. No issues found.';
+}
+
+function openDetail(appId,member,mbi,source,agent,plan,effDate,appDate,status,days,risk){
+  document.getElementById('dpAppId').textContent=appId;
+  document.getElementById('dpMember').textContent=member;
+  document.getElementById('dpMbi').textContent=mbi;
+  document.getElementById('dpSource').textContent=source;
+  document.getElementById('dpAgent').textContent=agent||'— (Direct)';
+  document.getElementById('dpPlan').textContent=plan;
+  document.getElementById('dpEffDate').textContent=effDate;
+  document.getElementById('dpAppDate').textContent=appDate;
+  document.getElementById('dpStatus').textContent=status;
+  document.getElementById('dpDays').textContent=days||'—';
+  document.getElementById('dpRisk').textContent=risk;
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('panelBackdrop').style.display='block';
+}
+document.getElementById('detailPanel').addEventListener('transitionend',function(){
+  if(!this.classList.contains('open')) document.getElementById('panelBackdrop').style.display='none';
+});
+
+function openResolveDup(appId,member,mbi,plan,effDate){
+  dupTarget={appId:appId,member:member};
+  document.getElementById('dupAppId').textContent=appId;
+  document.getElementById('dupMember').textContent=member;
+  document.getElementById('dupMbi').textContent=mbi;
+  document.getElementById('dupPlan').textContent=plan;
+  document.getElementById('dupEffDate').textContent=effDate;
+  document.getElementById('dupAction').value='';
+  document.getElementById('dupNotes').value='';
+  document.getElementById('dupErr').style.display='none';
+  document.getElementById('dupModal').classList.add('open');
+}
+function confirmResolveDup(){
+  var action=document.getElementById('dupAction').value;
+  var notes=document.getElementById('dupNotes').value.trim();
+  var err=document.getElementById('dupErr');
+  var errs=[];
+  if(!action) errs.push('Please select a resolution action.');
+  if(!notes) errs.push('Resolution notes are required.');
+  if(notes && notes.length<10) errs.push('Resolution notes must be at least 10 characters.');
+  if(errs.length){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>'+errs.join('<br>')+'</div>';err.style.display='flex';return;}
+  err.style.display='none';
+  document.getElementById('dupModal').classList.remove('open');
+  var labels={'keep-new':'Kept new application, cancelled existing','keep-existing':'Dismissed new application, kept existing','merge':'Merged records'};
+  showToast('Duplicate resolved for '+dupTarget.member+' ('+dupTarget.appId+'): '+labels[action]+'. Logged in audit trail.','success');
+}
+
+function prefillDupResolve(){
+  document.getElementById('dupAction').value='keep-new';
+  document.getElementById('dupNotes').value='Agent confirmed new enrollment supersedes prior submission. Updated member address verified via phone call. Old application no longer needed.';
+  var err=document.getElementById('dupErr');
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing.</div>';
+  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},5000);
+}
+
+function openOverrideModal(){
+  var appId=document.getElementById('dpAppId').textContent;
+  var member=document.getElementById('dpMember').textContent;
+  var mbi=document.getElementById('dpMbi').textContent;
+  document.getElementById('ovrAppId').textContent=appId;
+  document.getElementById('ovrMember').textContent=member;
+  document.getElementById('ovrMbi').textContent=mbi;
+  document.getElementById('ovrReason').value='';
+  document.getElementById('ovrJustification').value='';
+  document.getElementById('ovrReference').value='';
+  document.getElementById('ovrCharCount').textContent='0 / 30 minimum';
+  document.getElementById('ovrCharCount').style.color='#c62828';
+  document.getElementById('ovrErr').style.display='none';
+  document.getElementById('overrideModal').classList.add('open');
+}
+document.getElementById('ovrJustification').addEventListener('input',function(){
+  var len=this.value.length;
+  var ct=document.getElementById('ovrCharCount');
+  ct.textContent=len+' / 30 minimum';
+  ct.style.color=len>=30?'#1b5e20':'#c62828';
+});
+function submitOverride(){
+  var reason=document.getElementById('ovrReason').value;
+  var justification=document.getElementById('ovrJustification').value.trim();
+  var err=document.getElementById('ovrErr');
+  var errs=[];
+  if(!reason) errs.push('Please select an override reason.');
+  if(!justification) errs.push('Documented justification is required.');
+  else if(justification.length<30) errs.push('Justification must be at least 30 characters (currently '+justification.length+').');
+  if(errs.length){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>'+errs.join('<br>')+'</div>';err.style.display='flex';return;}
+  err.style.display='none';
+  document.getElementById('overrideModal').classList.remove('open');
+  var appId=document.getElementById('ovrAppId').textContent;
+  showToast('Eligibility override applied to '+appId+'. Reason: '+reason+'. Logged in audit trail with justification.','success');
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});});
+
+function filterTable(){
+  var source=document.getElementById('fSource').value;
+  var status=document.getElementById('fStatus').value;
+  var riskEl=document.getElementById('fRisk');
+  var risk=riskEl?riskEl.value:'';
+  var agent=document.getElementById('fAgent').value;
+  var year=document.getElementById('fYear').value;
+  var dateFrom=document.getElementById('fDateFrom').value;
+  var dateTo=document.getElementById('fDateTo').value;
+  var search=document.getElementById('fSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#hubBody tr');
+  var shown=0;
+  rows.forEach(function(r){
+    var show=true;
+    if(source && r.dataset.source!==source) show=false;
+    if(status && r.dataset.status!==status) show=false;
+    if(risk && r.dataset.risk!==risk) show=false;
+    if(agent && r.dataset.agent!==agent) show=false;
+    if(year && r.dataset.year!==year) show=false;
+    if(dateFrom && r.dataset.appdate<dateFrom) show=false;
+    if(dateTo && r.dataset.appdate>dateTo) show=false;
+    if(search && r.textContent.toLowerCase().indexOf(search)<0) show=false;
+    r.style.display=show?'':'none';
+    if(show) shown++;
+  });
+  document.getElementById('filterCount').textContent='Showing '+shown+' of '+rows.length;
+  if(shown===0) showToast('No applications match the selected filters.','warn');
+}
+
+function resetFilters(){
+  document.getElementById('fSource').value='';
+  document.getElementById('fStatus').value='';
+  var riskEl=document.getElementById('fRisk');
+  if(riskEl) riskEl.value='';
+  document.getElementById('fAgent').value='';
+  document.getElementById('fYear').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fDateFrom').value='';
+  document.getElementById('fDateTo').value='';
+  document.getElementById('fSearch').value='';
+  var rows=document.querySelectorAll('#hubBody tr');
+  rows.forEach(function(r){r.style.display='';});
+  document.getElementById('filterCount').textContent='Showing '+rows.length+' of '+rows.length;
+  showToast('Filters cleared.','info');
+}
+
+// === ASSIGN WORK ITEM ===
+function openAssignModal(appId, member){
+  document.getElementById('assignAppId').textContent=appId;
+  document.getElementById('assignMember').textContent=member;
+  document.getElementById('assignTo').value='';
+  document.getElementById('assignPriority').value='Normal';
+  document.getElementById('assignNotes').value='';
+  document.getElementById('assignModal').classList.add('open');
+}
+function confirmAssign(){
+  var assignee=document.getElementById('assignTo').value;
+  if(!assignee){showToast('Please select a team member to assign.','warn');return;}
+  var appId=document.getElementById('assignAppId').textContent;
+  document.getElementById('assignModal').classList.remove('open');
+  showToast('Application '+appId+' assigned to '+assignee+'. Notification sent.','success');
+}
+
+// === ESCALATE ===
+function openEscalateModal(appId, member, reason){
+  document.getElementById('escAppId').textContent=appId;
+  document.getElementById('escMember').textContent=member;
+  document.getElementById('escReason').textContent=reason||'';
+  document.getElementById('escLevel').value='';
+  document.getElementById('escType').value='';
+  document.getElementById('escDetails').value='';
+  document.getElementById('escalateModal').classList.add('open');
+}
+function confirmEscalate(){
+  var level=document.getElementById('escLevel').value;
+  var type=document.getElementById('escType').value;
+  var details=document.getElementById('escDetails').value.trim();
+  if(!level||!type||!details){showToast('Please fill all required escalation fields.','warn');return;}
+  var appId=document.getElementById('escAppId').textContent;
+  document.getElementById('escalateModal').classList.remove('open');
+  showToast('Escalation created for '+appId+' &rarr; '+level+'. Ticket #ESC-'+Math.floor(1000+Math.random()*9000)+' opened.','success');
+}
+
+// === CMS REJECTION RESOLUTION ===
+function openRejectResolve(appId, member, code){
+  document.getElementById('rejAppId').textContent=appId;
+  document.getElementById('rejMember').textContent=member;
+  document.getElementById('rejCode').textContent=code;
+  document.getElementById('rejAction').value='';
+  document.getElementById('rejDetails').value='';
+  document.getElementById('rejectResolveModal').classList.add('open');
+}
+function confirmRejectResolve(){
+  var action=document.getElementById('rejAction').value;
+  var details=document.getElementById('rejDetails').value.trim();
+  if(!action||!details){showToast('Please select a resolution action and provide details.','warn');return;}
+  var appId=document.getElementById('rejAppId').textContent;
+  document.getElementById('rejectResolveModal').classList.remove('open');
+  if(action==='Correct & Resubmit'||action==='SEP Override'){
+    showToast(appId+' correction applied. Resubmission to CMS queued. You will be notified when CMS responds.','success');
+  } else if(action==='Cancel Enrollment'){
+    showToast(appId+' enrollment cancelled. Agent and member will be notified.','warn');
+  } else {
+    showToast(appId+' resolution action recorded: '+action+'. Logged in audit trail.','success');
+  }
+}
+
+// === DOCUMENT REVIEW ===
+function openDocReview(appId, member){
+  document.getElementById('docAppId').textContent=appId;
+  document.getElementById('docMember').textContent=member;
+  document.getElementById('docNotes').value='';
+  document.getElementById('docReviewModal').classList.add('open');
+}
+
+// === SUBMIT TO CMS ===
+function submitToCMS(appId, member){
+  if(confirm('Submit '+appId+' ('+member+') to CMS for processing?\n\nThis will initiate the 7-day compliance clock.')){
+    showToast(appId+' submitted to CMS. Compliance clock started. Status updated to Pending CMS.','success');
+  }
+}
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

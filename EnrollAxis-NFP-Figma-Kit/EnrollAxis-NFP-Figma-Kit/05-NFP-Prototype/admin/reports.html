@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reports | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html" class="active"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Report Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Reports</li></ol>
+    </div>
+    <button class="btn-pr btn-sm" onclick="openCreateReportModal()"><i class="fas fa-plus"></i>Create Custom Report</button>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Report Categories -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-file-medical"></i></div><div><div class="stat-label">Enrollment Reports</div><div class="stat-val">8</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Commission Reports</div><div class="stat-val">6</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-shield-alt"></i></div><div><div class="stat-label">Compliance Reports</div><div class="stat-val">5</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Performance Reports</div><div class="stat-val">4</div></div></div></div>
+    </div>
+
+    <!-- Standard Reports -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Standard Reports</h5><select id="rptCatFilter" class="form-control" style="width:160px" onchange="filterReports()"><option>All Categories</option><option>Enrollment</option><option>Commission</option><option>Compliance</option><option>Performance</option></select><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','reports_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Report Name</th><th>Category</th><th>Schedule</th><th>Last Run</th><th>Format</th><th>Access</th><th></th></tr></thead>
+          <tbody>
+            <tr id="rpt-monthly-enrollment"><td><strong>Monthly Enrollment Summary</strong></td><td>Enrollment</td><td>Monthly (1st)</td><td>05 01,2026</td><td>Excel, PDF</td><td>Admin, Sales Leadership</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Monthly Enrollment Summary')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Monthly Enrollment Summary')">Schedule</button></div></td></tr>
+            <tr id="rpt-cms-status"><td><strong>CMS Submission Status</strong></td><td>Enrollment</td><td>Daily</td><td>Today 7:00 AM</td><td>Excel</td><td>Enrollment Ops, Admin</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('CMS Submission Status')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('CMS Submission Status')">Schedule</button></div></td></tr>
+            <tr id="rpt-commission-batch"><td><strong>Commission Batch Summary</strong></td><td>Commission</td><td>Monthly (17th)</td><td>05 17,2026</td><td>Excel, PDF</td><td>Finance, Admin</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Commission Batch Summary')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Commission Batch Summary')">Schedule</button></div></td></tr>
+            <tr id="rpt-agent-compliance"><td><strong>Agent Compliance Status</strong></td><td>Compliance</td><td>Weekly (Mon)</td><td>05 20,2026</td><td>Excel</td><td>Compliance, Admin</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Agent Compliance Status')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Agent Compliance Status')">Schedule</button></div></td></tr>
+            <tr id="rpt-lead-conversion"><td><strong>Lead Conversion by Source</strong></td><td>Performance</td><td>On Demand</td><td>05 22,2026</td><td>Excel, PDF</td><td>Sales Leadership</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Lead Conversion by Source')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Lead Conversion by Source')">Schedule</button></div></td></tr>
+            <tr id="rpt-hra-completion"><td><strong>HRA Completion Rates</strong></td><td>Performance</td><td>Monthly</td><td>05 01,2026</td><td>Excel</td><td>Admin, Compliance</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('HRA Completion Rates')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('HRA Completion Rates')">Schedule</button></div></td></tr>
+            <tr id="rpt-agent-ranking"><td><strong>Agent Production Ranking</strong></td><td>Performance</td><td>On Demand</td><td>05 23,2026</td><td>Excel, PDF</td><td>Sales Leadership, Agency Admins</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Agent Production Ranking')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Agent Production Ranking')">Schedule</button></div></td></tr>
+            <tr id="rpt-active-agent-summary"><td><strong>Active Agent Summary (Ready to Sell)</strong></td><td>Performance</td><td>Weekly (Mon)</td><td>07 21,2026</td><td>Excel, PDF</td><td>Admin, Sales Leadership, Agency Admins</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Active Agent Summary (Ready to Sell)')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Active Agent Summary (Ready to Sell)')">Schedule</button></div></td></tr>
+            <tr id="rpt-training-summary"><td><strong>Training Summary Report</strong><div style="font-size:10px;color:#5f6368;margin-top:2px">Completed (Pass/Fail), In Progress, Pending, Expired</div></td><td>Compliance</td><td>Weekly (Mon)</td><td>07 21,2026</td><td>Excel, PDF</td><td>Admin, Compliance, Agency Admins</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('Training Summary Report')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('Training Summary Report')">Schedule</button></div></td></tr>
+            <tr id="rpt-ach-recon"><td><strong>ACH Payment Reconciliation</strong></td><td>Commission</td><td>Monthly (18th)</td><td>05 18,2026</td><td>Excel</td><td>Finance</td><td><div class="dflex g8"><button class="btn-ol btn-sm" onclick="runReport('ACH Payment Reconciliation')">Run</button><button class="btn-ol btn-sm" onclick="scheduleReport('ACH Payment Reconciliation')">Schedule</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scheduled Deliveries -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Scheduled Deliveries</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','reports_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Report</th><th>Frequency</th><th>Next Run</th><th>Recipients</th><th>Format</th><th></th></tr></thead>
+          <tbody id="schedTbody">
+            <tr><td>Monthly Enrollment Summary</td><td>Monthly (1st, 7:00 AM)</td><td>06 01,2026</td><td>admin@enrollaxis.com, leadership@enrollaxis.com</td><td>Excel</td><td><button class="btn-ol btn-sm" onclick="editSchedule(this)">Edit</button></td></tr>
+            <tr><td>Agent Compliance Status</td><td>Weekly (Mon, 8:00 AM)</td><td>05 27,2026</td><td>compliance@enrollaxis.com</td><td>Excel</td><td><button class="btn-ol btn-sm" onclick="editSchedule(this)">Edit</button></td></tr>
+            <tr><td>CMS Submission Status</td><td>Daily (7:00 AM)</td><td>Tomorrow</td><td>enrollment-ops@enrollaxis.com</td><td>Excel</td><td><button class="btn-ol btn-sm" onclick="editSchedule(this)">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Custom Report Builder -->
+    <div class="card">
+      <div class="card-hdr"><h5>Custom Report Builder</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-2">
+            <div class="mb-3"><label class="form-label">Report Name</label>
+              <select id="crbReportName" class="form-control">
+                <option value="">-- Select a Standard Report --</option>
+                <option>Monthly Enrollment Summary</option>
+                <option>CMS Submission Status</option>
+                <option>Commission Batch Summary</option>
+                <option>Agent Compliance Status</option>
+                <option>Lead Conversion by Source</option>
+                <option>HRA Completion Rates</option>
+                <option>Agent Production Ranking</option>
+                <option>Active Agent Summary (Ready to Sell)</option>
+                <option>Training Summary Report</option>
+                <option>ACH Payment Reconciliation</option>
+              </select>
+            </div>
+            <div class="mb-3"><label class="form-label">Data Source</label><select class="form-control"><option>Enrollments</option><option>Commissions</option><option>Agents</option><option>Leads</option><option>HRA Completions</option></select></div>
+            <div class="mb-3"><label class="form-label">Date Range</label>
+              <div class="dflex g8"><input type="date" class="form-control"><input type="date" class="form-control"></div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="mb-3"><label class="form-label">Columns</label>
+              <div style="max-height:120px;overflow-y:auto;border:1px solid #ddd;border-radius:6px;padding:8px">
+                <div><input type="checkbox" checked> Agent Name</div>
+                <div><input type="checkbox" checked> NPN</div>
+                <div><input type="checkbox" checked> State</div>
+                <div><input type="checkbox" checked> Plan Type</div>
+                <div><input type="checkbox"> Member Name</div>
+                <div><input type="checkbox" checked> Status</div>
+                <div><input type="checkbox"> Effective Date</div>
+                <div><input type="checkbox" checked> Amount</div>
+              </div>
+            </div>
+            <div class="mb-3"><label class="form-label">Export Format</label><select class="form-control"><option>Excel (.xlsx)</option><option>PDF</option><option>CSV</option></select></div>
+            <button class="btn-pr btn-sm" onclick="generateReport()"><i class="fas fa-play"></i>Generate Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Custom Report Modal -->
+<div class="modal-overlay" id="createReportModal" style="display:none">
+<div class="modal-box" style="max-width:620px">
+<div class="modal-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px"></i>Create Custom Report</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body">
+  <div id="rptModalAlertZone" style="display:none" class="mb-2"></div>
+  <div class="fg mb-3"><label>Report Name <span class="req">*</span></label><input id="rptName" class="form-control" maxlength="80" placeholder="e.g. Agent Retention by Agency"></div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Category <span class="req">*</span></label>
+      <select id="rptCategory" class="form-control">
+        <option value="">-- Select Category --</option>
+        <option value="Enrollment">Enrollment</option>
+        <option value="Commission">Commission</option>
+        <option value="Compliance">Compliance</option>
+        <option value="Performance">Performance</option>
+        <option value="Operations">Operations</option>
+      </select>
+    </div>
+    <div class="fg"><label>Output Format <span class="req">*</span></label>
+      <select id="rptFormat" class="form-control">
+        <option value="">-- Select Format --</option>
+        <option value="Excel">Excel</option>
+        <option value="PDF">PDF</option>
+        <option value="Excel, PDF">Excel &amp; PDF</option>
+        <option value="CSV">CSV</option>
+      </select>
+    </div>
+  </div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Schedule <span class="req">*</span></label>
+      <select id="rptSchedule" class="form-control">
+        <option value="">-- Select Schedule --</option>
+        <option value="On Demand">On Demand</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly (Monday)</option>
+        <option value="Monthly">Monthly (1st)</option>
+        <option value="Quarterly">Quarterly</option>
+      </select>
+    </div>
+    <div class="fg"><label>Access Level <span class="req">*</span></label>
+      <select id="rptAccess" class="form-control">
+        <option value="">-- Select Access --</option>
+        <option value="Admin Only">Admin Only</option>
+        <option value="Admin, Sales Leadership">Admin, Sales Leadership</option>
+        <option value="Finance, Admin">Finance, Admin</option>
+        <option value="Compliance, Admin">Compliance, Admin</option>
+        <option value="All Roles">All Roles</option>
+      </select>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Columns / Data Fields <span class="req">*</span></label>
+    <div id="rptColumnsBox" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;background:#f8f9fa;border-radius:6px;border:1px solid #e8eaed;margin-top:4px;font-size:12px">
+      <label><input type="checkbox" value="Agent Name"> Agent Name</label>
+      <label><input type="checkbox" value="NPN"> NPN</label>
+      <label><input type="checkbox" value="Agency"> Agency</label>
+      <label><input type="checkbox" value="Hierarchy Level"> Hierarchy Level</label>
+      <label><input type="checkbox" value="State"> State</label>
+      <label><input type="checkbox" value="Enrollment Count"> Enrollment Count</label>
+      <label><input type="checkbox" value="Commission Amount"> Commission Amount</label>
+      <label><input type="checkbox" value="Compliance Status"> Compliance Status</label>
+      <label><input type="checkbox" value="License Expiry"> License Expiry</label>
+      <label><input type="checkbox" value="AHIP Status"> AHIP Status</label>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Description <small style="color:#5f6368">(optional, max 200 chars)</small></label>
+    <textarea id="rptDesc" class="form-control" maxlength="200" rows="2" placeholder="Brief description of the report purpose..."></textarea>
+  </div>
+</div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="prefillReport()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <div>
+    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="saveCustomReport()"><i class="fas fa-save"></i> Create Report</button>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Schedule Report Modal -->
+<div class="modal-overlay" id="scheduleModal" style="display:none">
+<div class="modal-box" style="max-width:560px">
+<div class="modal-hdr"><h5><i class="fas fa-clock" style="margin-right:8px;color:#1a237e"></i>Schedule Report Delivery</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body" style="padding:20px">
+  <div id="schAlertZone" style="display:none" class="mb-2"></div>
+  <div class="fg mb-3"><label>Report Name</label><input id="schReportName" class="form-control" readonly style="background:#f5f5f5;font-weight:600"></div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Frequency <span class="req">*</span></label>
+      <select id="schFrequency" class="form-control" onchange="toggleSchDay()">
+        <option value="">-- Select Frequency --</option>
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Monthly">Monthly</option>
+        <option value="Quarterly">Quarterly</option>
+        <option value="One-Time">One-Time</option>
+      </select>
+    </div>
+    <div class="fg" id="schDayGroup" style="display:none"><label>Day <span class="req">*</span></label>
+      <select id="schDay" class="form-control">
+        <option value="Monday">Monday</option><option value="Tuesday">Tuesday</option><option value="Wednesday">Wednesday</option><option value="Thursday">Thursday</option><option value="Friday">Friday</option>
+      </select>
+    </div>
+    <div class="fg" id="schDateGroup" style="display:none"><label>Date <span class="req">*</span></label>
+      <select id="schDate" class="form-control">
+        <option value="1st">1st</option><option value="5th">5th</option><option value="10th">10th</option><option value="15th">15th</option><option value="17th">17th</option><option value="Last Day">Last Day</option>
+      </select>
+    </div>
+  </div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Delivery Time <span class="req">*</span></label>
+      <select id="schTime" class="form-control">
+        <option value="6:00 AM">6:00 AM</option><option value="7:00 AM" selected>7:00 AM</option><option value="8:00 AM">8:00 AM</option><option value="9:00 AM">9:00 AM</option><option value="12:00 PM">12:00 PM</option><option value="5:00 PM">5:00 PM</option>
+      </select>
+    </div>
+    <div class="fg"><label>Output Format</label>
+      <select id="schFormat" class="form-control">
+        <option value="Excel">Excel (.xlsx)</option><option value="PDF">PDF</option><option value="Excel, PDF">Excel &amp; PDF</option><option value="CSV">CSV</option>
+      </select>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Recipient Emails <span class="req">*</span> <small style="color:#5f6368">(comma-separated, max 20)</small></label>
+    <input id="schRecipients" class="form-control" placeholder="e.g. admin@goldkidney.com, compliance@goldkidney.com">
+  </div>
+  <div class="fg mb-3"><label>CC Recipients <small style="color:#5f6368">(optional)</small></label>
+    <input id="schCC" class="form-control" placeholder="e.g. manager@goldkidney.com">
+  </div>
+  <div class="fg"><label>Notes <small style="color:#5f6368">(optional)</small></label>
+    <textarea id="schNotes" class="form-control" rows="2" maxlength="200" placeholder="Special instructions or comments..."></textarea>
+  </div>
+</div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="prefillSchedule()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+  <div>
+    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="saveSchedule()"><i class="fas fa-calendar-check"></i> Save Schedule</button>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+function showAlert(zone, msg, type) {
+  if(!zone) return;
+  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
+  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var icons = {danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
+  zone.innerHTML = '<div style="background:'+colors[type]+';border:1px solid '+borders[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+icons[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
+  zone.style.display='block';
+  setTimeout(function(){zone.style.display='none';},5000);
+}
+
+function openCreateReportModal() {
+  document.getElementById('rptName').value='';
+  document.getElementById('rptCategory').value='';
+  document.getElementById('rptFormat').value='';
+  document.getElementById('rptSchedule').value='';
+  document.getElementById('rptAccess').value='';
+  document.getElementById('rptDesc').value='';
+  document.querySelectorAll('#rptColumnsBox input[type=checkbox]').forEach(function(cb){cb.checked=false;});
+  document.getElementById('rptModalAlertZone').style.display='none';
+  document.getElementById('createReportModal').style.display='flex';
+}
+
+function prefillReport() {
+  document.getElementById('rptName').value='Agent Retention by Agency';
+  document.getElementById('rptCategory').value='Performance';
+  document.getElementById('rptFormat').value='Excel, PDF';
+  document.getElementById('rptSchedule').value='Monthly';
+  document.getElementById('rptAccess').value='Admin, Sales Leadership';
+  document.getElementById('rptDesc').value='Monthly report tracking agent retention rates grouped by agency with year-over-year comparison.';
+  var cols = ['Agent Name','Agency','Hierarchy Level','State','Enrollment Count'];
+  document.querySelectorAll('#rptColumnsBox input[type=checkbox]').forEach(function(cb){
+    cb.checked = cols.indexOf(cb.value) > -1;
+  });
+  showAlert(document.getElementById('rptModalAlertZone'), 'Form prefilled with sample data for testing.', 'info');
+}
+
+function saveCustomReport() {
+  var alertZone = document.getElementById('rptModalAlertZone');
+  var name = document.getElementById('rptName').value.trim();
+  var category = document.getElementById('rptCategory').value;
+  var format = document.getElementById('rptFormat').value;
+  var schedule = document.getElementById('rptSchedule').value;
+  var access = document.getElementById('rptAccess').value;
+  var checked = document.querySelectorAll('#rptColumnsBox input[type=checkbox]:checked');
+
+  if(!name){showAlert(alertZone,'Report Name is required.','danger');return;}
+  if(!category){showAlert(alertZone,'Please select a Category.','danger');return;}
+  if(!format){showAlert(alertZone,'Please select an Output Format.','danger');return;}
+  if(!schedule){showAlert(alertZone,'Please select a Schedule.','danger');return;}
+  if(!access){showAlert(alertZone,'Please select an Access Level.','danger');return;}
+  if(checked.length===0){showAlert(alertZone,'Please select at least one data column.','danger');return;}
+
+  // Check duplicate name
+  var existing = document.querySelectorAll('.tbl tbody tr td:first-child strong');
+  for(var i=0;i<existing.length;i++){
+    if(existing[i].textContent.trim().toLowerCase()===name.toLowerCase()){
+      showAlert(alertZone,'A report named "'+name+'" already exists.','danger');return;
+    }
+  }
+
+  document.getElementById('createReportModal').style.display='none';
+  showToast('Custom report "'+name+'" created with '+checked.length+' columns. Schedule: '+schedule+'.','success');
+}
+
+function runReport(name) {
+  showToast('Running \"' + name + '\"\u2026 Report will open when ready.', 'info');
+}
+function scheduleReport(name) {
+  editingScheduleRow=null;
+  document.getElementById('schReportName').value=name;
+  document.getElementById('schFrequency').value='';
+  document.getElementById('schTime').value='7:00 AM';
+  document.getElementById('schFormat').value='Excel';
+  document.getElementById('schRecipients').value='';
+  document.getElementById('schCC').value='';
+  document.getElementById('schNotes').value='';
+  document.getElementById('schDayGroup').style.display='none';
+  document.getElementById('schDateGroup').style.display='none';
+  document.getElementById('schAlertZone').style.display='none';
+  document.getElementById('scheduleModal').style.display='flex';
+}
+function toggleSchDay(){
+  var freq=document.getElementById('schFrequency').value;
+  document.getElementById('schDayGroup').style.display=(freq==='Weekly')?'':'none';
+  document.getElementById('schDateGroup').style.display=(freq==='Monthly'||freq==='Quarterly')?'':'none';
+}
+function prefillSchedule(){
+  document.getElementById('schFrequency').value='Weekly';
+  toggleSchDay();
+  document.getElementById('schDay').value='Monday';
+  document.getElementById('schTime').value='7:00 AM';
+  document.getElementById('schFormat').value='Excel, PDF';
+  document.getElementById('schRecipients').value='admin@goldkidney.com, compliance@goldkidney.com';
+  document.getElementById('schCC').value='leadership@goldkidney.com';
+  document.getElementById('schNotes').value='Auto-generated weekly delivery for management review.';
+  showAlert(document.getElementById('schAlertZone'),'Schedule prefilled with sample data.','info');
+}
+function saveSchedule(){
+  var alertZone=document.getElementById('schAlertZone');
+  var freq=document.getElementById('schFrequency').value;
+  var recip=document.getElementById('schRecipients').value.trim();
+  if(!freq){showAlert(alertZone,'Please select a frequency.','danger');return;}
+  if(!recip){showAlert(alertZone,'At least one recipient email is required.','danger');return;}
+  var emails=recip.split(',').map(function(e){return e.trim();}).filter(function(e){return e;});
+  if(emails.length>20){showAlert(alertZone,'Maximum 20 recipients allowed.','danger');return;}
+  var name=document.getElementById('schReportName').value;
+  var time=document.getElementById('schTime').value;
+  var format=document.getElementById('schFormat').value;
+  var detail=freq;
+  if(freq==='Weekly') detail+=' ('+document.getElementById('schDay').value+', '+time+')';
+  else if(freq==='Monthly'||freq==='Quarterly') detail+=' ('+document.getElementById('schDate').value+', '+time+')';
+  else detail+=' ('+time+')';
+  // Update existing row or add new row in Scheduled Deliveries
+  if(editingScheduleRow){
+    var cells=editingScheduleRow.querySelectorAll('td');
+    cells[1].textContent=detail;
+    cells[3].textContent=emails.join(', ');
+    cells[4].textContent=format;
+    editingScheduleRow=null;
+    document.getElementById('scheduleModal').style.display='none';
+    showToast('"'+name+'" schedule updated. '+detail+'. Delivery to '+emails.length+' recipient(s).','success');
+  } else {
+    var tbody=document.getElementById('schedTbody');
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+name+'</td><td>'+detail+'</td><td>Next scheduled</td><td>'+emails.join(', ')+'</td><td>'+format+'</td><td><button class="btn-ol btn-sm" onclick="editSchedule(this)">Edit</button></td>';
+    tbody.appendChild(tr);
+    document.getElementById('scheduleModal').style.display='none';
+    showToast('"'+name+'" scheduled '+detail+'. Delivery to '+emails.length+' recipient(s).','success');
+  }
+}
+var editingScheduleRow=null;
+function editSchedule(btn) {
+  var row=btn.closest('tr');
+  var cells=row.querySelectorAll('td');
+  var name=cells[0].textContent.trim();
+  var freqText=cells[1].textContent.trim();
+  var recipients=cells[3].textContent.trim();
+  var format=cells[4].textContent.trim();
+  editingScheduleRow=row;
+  document.getElementById('schReportName').value=name;
+  // Parse frequency
+  var freq='',day='',date='',time='7:00 AM';
+  if(freqText.indexOf('Daily')===0) freq='Daily';
+  else if(freqText.indexOf('Weekly')===0) freq='Weekly';
+  else if(freqText.indexOf('Monthly')===0) freq='Monthly';
+  else if(freqText.indexOf('Quarterly')===0) freq='Quarterly';
+  // Parse day/date from parentheses
+  var pMatch=freqText.match(/\(([^)]+)\)/);
+  if(pMatch){
+    var parts=pMatch[1].split(',').map(function(s){return s.trim();});
+    if(freq==='Weekly'&&parts[0]){var dayMap={Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday'};day=dayMap[parts[0]]||parts[0];}
+    if((freq==='Monthly'||freq==='Quarterly')&&parts[0]) date=parts[0];
+    if(parts[1]) time=parts[1];
+    if(freq==='Daily'&&parts[0]) time=parts[0];
+  }
+  document.getElementById('schFrequency').value=freq;
+  toggleSchDay();
+  if(freq==='Weekly') document.getElementById('schDay').value=day;
+  if(freq==='Monthly'||freq==='Quarterly') document.getElementById('schDate').value=date;
+  document.getElementById('schTime').value=time;
+  document.getElementById('schFormat').value=format;
+  document.getElementById('schRecipients').value=recipients;
+  document.getElementById('schCC').value='';
+  document.getElementById('schNotes').value='';
+  document.getElementById('schAlertZone').style.display='none';
+  document.getElementById('scheduleModal').style.display='flex';
+}
+function generateReport() {
+  var name = document.getElementById('crbReportName').value;
+  if(!name) { showToast('Please select a report name.', 'error'); return; }
+  var checked = document.querySelectorAll('.card-body input[type=checkbox]:checked');
+  if(!checked.length) { showToast('Please select at least one column.', 'error'); return; }
+  showToast('Generating \"' + name + '\" with ' + checked.length + ' columns\u2026 Download will start shortly.', 'success');
+}
+function filterReports() {
+  var cat = document.getElementById('rptCatFilter').value;
+  document.querySelectorAll('#rpt-monthly-enrollment,#rpt-cms-status,#rpt-commission-batch,#rpt-agent-compliance,#rpt-lead-conversion,#rpt-hra-completion,#rpt-agent-ranking,#rpt-active-agent-summary,#rpt-training-summary,#rpt-ach-recon').forEach(function(r) {
+    var rowCat = r.querySelectorAll('td')[1].textContent.trim();
+    r.style.display = (cat === 'All Categories' || rowCat === cat) ? '' : 'none';
+  });
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

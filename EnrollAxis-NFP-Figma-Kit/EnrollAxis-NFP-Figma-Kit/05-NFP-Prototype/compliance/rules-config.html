@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compliance Rules Configuration | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}
+.rule-card{border:1px solid #e0e0e0;border-radius:8px;padding:14px;margin-bottom:12px}
+.rule-card h6{font-size:13px;font-weight:700;margin-bottom:8px}
+.rule-field{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:12px}
+.rule-field:last-child{border-bottom:none}
+.rule-field label{min-width:200px;font-weight:600;color:#424242}
+.rule-field input,.rule-field select{padding:4px 8px;border:1px solid #e0e0e0;border-radius:4px;font-size:12px}
+.rule-field input[type="number"]{width:80px}
+.sim-result{background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:12px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html" class="active"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Compliance Rules Configuration</h4></div>
+    <button class="btn-ol btn-sm" onclick="runSimulation()"><i class="fas fa-flask"></i>Run Simulation</button>
+    <button class="btn-pr btn-sm" onclick="nfpSave()"><i class="fas fa-save"></i>Save Changes</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Rule Configuration:</strong> Changes take effect on the configured effective date. Use <strong>Simulation Mode</strong> to model the impact of rule changes on the active agent population before activation. All rule changes are logged with approver and effective date in the audit trail.</span></div>
+
+    <!-- AHIP Rules -->
+    <div class="rule-card">
+      <h6><i class="fas fa-certificate" style="color:#1565c0;margin-right:6px"></i>AHIP Renewal Deadlines & Grace Periods</h6>
+      <div class="rule-field"><label>AHIP Renewal Deadline</label><span>Before start of new plan year</span></div>
+      <div class="rule-field"><label>Grace Period (days)</label><input type="number" id="ahipGrace" value="14" min="0" max="60"><span style="color:#5f6368;font-size:11px">Days after deadline before Compliance Hold is applied</span></div>
+      <div class="rule-field"><label>Expiry Warning Threshold (days)</label><input type="number" id="ahipWarn" value="30" min="7" max="90"><span style="color:#5f6368;font-size:11px">Days before expiry to send renewal reminder</span></div>
+      <div class="rule-field"><label>Auto-Hold on Non-Renewal</label><select id="ahipAutoHold"><option value="yes" selected>Yes — Auto Compliance Hold</option><option value="no">No — Manual Review</option></select></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="ahipEffDate" value="2027-01-01"><span style="color:#5f6368;font-size:11px">Rule change takes effect on this date</span></div>
+    </div>
+
+    <!-- Background Check -->
+    <div class="rule-card">
+      <h6><i class="fas fa-user-shield" style="color:#6a1b9a;margin-right:6px"></i>Background Check Repetition</h6>
+      <div class="rule-field"><label>Initial Check Required</label><span>Yes — During onboarding (IBR vendor)</span></div>
+      <div class="rule-field"><label>Repeat Frequency (months)</label><input type="number" id="bgFreq" value="36" min="12" max="60"><span style="color:#5f6368;font-size:11px">Months between background check refreshes</span></div>
+      <div class="rule-field"><label>On Fail Action</label><select id="bgFailAction"><option value="hold" selected>Route to Compliance Review Queue</option><option value="reject">Auto-Reject (Immediate Termination)</option></select></div>
+      <div class="rule-field"><label>Vendor Delay Threshold (days)</label><input type="number" id="bgDelay" value="10" min="5" max="30"><span style="color:#5f6368;font-size:11px">Days before escalation on pending result</span></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="bgEffDate" value="2026-07-01"></div>
+    </div>
+
+    <!-- SOA Validity -->
+    <div class="rule-card">
+      <h6><i class="fas fa-file-signature" style="color:#2e7d32;margin-right:6px"></i>SOA Validity Period</h6>
+      <div class="rule-field"><label>Minimum Days Before Enrollment</label><input type="number" id="soaMinDays" value="2" min="0" max="14"><span style="color:#5f6368;font-size:11px">SOA must be captured at least this many days before enrollment conversation</span></div>
+      <div class="rule-field"><label>SOA Validity Window (days)</label><input type="number" id="soaValidity" value="365" min="30" max="730"><span style="color:#5f6368;font-size:11px">Days after SOA execution that it remains valid</span></div>
+      <div class="rule-field"><label>Reject if SOA After Enrollment</label><select><option value="yes" selected>Yes — Reject and flag for compliance review</option><option value="no">No — Warn only</option></select></div>
+      <div class="rule-field"><label>Retention Period (years)</label><input type="number" value="10" min="10" max="15" disabled><span style="color:#5f6368;font-size:11px">CMS minimum: 10 years (not configurable below 10)</span></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="soaEffDate" value="2026-07-01"></div>
+    </div>
+
+    <!-- CSNP Re-verification -->
+    <div class="rule-card">
+      <h6><i class="fas fa-heartbeat" style="color:#c62828;margin-right:6px"></i>C-SNP Re-verification Frequency</h6>
+      <div class="rule-field"><label>Re-verification Frequency (months)</label><input type="number" id="csnpFreq" value="12" min="6" max="24"><span style="color:#5f6368;font-size:11px">Months between C-SNP eligibility re-verifications</span></div>
+      <div class="rule-field"><label>Advance Notice (days)</label><input type="number" id="csnpNotice" value="60" min="30" max="90"><span style="color:#5f6368;font-size:11px">Days before due date to notify agent</span></div>
+      <div class="rule-field"><label>On Miss: Auto-Disenroll</label><select id="csnpMissAction"><option value="hold" selected>Place on Hold — 30 day cure period</option><option value="disenroll">Auto-Disenroll after grace</option></select></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="csnpEffDate" value="2026-07-01"></div>
+    </div>
+
+    <!-- State Appointment -->
+    <div class="rule-card">
+      <h6><i class="fas fa-landmark" style="color:#e65100;margin-right:6px"></i>State Appointment Renewal Triggers</h6>
+      <div class="rule-field"><label>Renewal Check Frequency</label><select><option>Annually (before license expiry)</option><option>Semi-annually</option><option>Quarterly</option></select></div>
+      <div class="rule-field"><label>Pre-Expiry Warning (days)</label><input type="number" id="apptWarn" value="60" min="30" max="120"><span style="color:#5f6368;font-size:11px">Days before appointment expiry to alert agent</span></div>
+      <div class="rule-field"><label>Block Enrollment on Expired Appointment</label><select><option value="yes" selected>Yes — Block until renewed</option><option value="no">No — Warn only</option></select></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="apptEffDate" value="2026-07-01"></div>
+    </div>
+
+    <!-- NIPR Monitoring -->
+    <div class="rule-card">
+      <h6><i class="fas fa-satellite-dish" style="color:#004d40;margin-right:6px"></i>NIPR Monitoring Frequency & Alert Thresholds</h6>
+      <div class="rule-field"><label>Monitoring Frequency</label><select id="niprFreq"><option value="daily" selected>Daily (6:00 AM UTC)</option><option value="twice">Twice Daily</option><option value="weekly">Weekly</option></select></div>
+      <div class="rule-field"><label>Alert on License Suspension</label><select><option selected>Immediate — Auto Compliance Hold + notifications</option><option>Manual review first</option></select></div>
+      <div class="rule-field"><label>OEC Feed Update SLA (hours)</label><input type="number" id="niprOecSla" value="24" min="1" max="72"><span style="color:#5f6368;font-size:11px">Hours after alert to update OEC vendor feed with inactive status</span></div>
+      <div class="rule-field"><label>Notify Parties</label><span>Agent + Upline Agency Admin + Compliance Team</span></div>
+      <div class="rule-field"><label>Effective Date</label><input type="date" id="niprEffDate" value="2026-07-01"></div>
+    </div>
+
+    <!-- Simulation Panel -->
+    <div class="card mt16" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-flask" style="margin-right:6px;color:#6a1b9a"></i>Simulation Mode</h5><span style="font-size:11px;color:#5f6368">Model impact of rule changes before activation</span></div>
+      <div class="card-body" style="padding:14px">
+        <div style="font-size:12px;color:#424242;margin-bottom:10px">Click <strong>"Run Simulation"</strong> to see how proposed rule changes would affect the current active agent population. Results are read-only and do not apply any changes.</div>
+        <div id="simResults" style="display:none">
+          <div class="sim-result">
+            <div style="font-weight:700;font-size:13px;margin-bottom:8px"><i class="fas fa-chart-bar" style="margin-right:6px"></i>Simulation Results (Proposed Changes vs Current Rules)</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+              <div style="background:#fff;border-radius:6px;padding:10px;border:1px solid #ce93d8">
+                <div style="font-size:11px;color:#5f6368">AHIP Grace Period: 7→14 days</div>
+                <div style="font-size:16px;font-weight:700;color:#6a1b9a">4 agents</div>
+                <div style="font-size:10px;color:#424242">Would avoid immediate Compliance Hold</div>
+              </div>
+              <div style="background:#fff;border-radius:6px;padding:10px;border:1px solid #ce93d8">
+                <div style="font-size:11px;color:#5f6368">Background Check Repeat: 24→36 months</div>
+                <div style="font-size:16px;font-weight:700;color:#6a1b9a">22 agents</div>
+                <div style="font-size:10px;color:#424242">Checks deferred to next cycle</div>
+              </div>
+              <div style="background:#fff;border-radius:6px;padding:10px;border:1px solid #ce93d8">
+                <div style="font-size:11px;color:#5f6368">SOA Validity: 180→365 days</div>
+                <div style="font-size:16px;font-weight:700;color:#6a1b9a">0 agents</div>
+                <div style="font-size:10px;color:#424242">No current SOA expirations affected</div>
+              </div>
+              <div style="background:#fff;border-radius:6px;padding:10px;border:1px solid #ce93d8">
+                <div style="font-size:11px;color:#5f6368">C-SNP Notice: 30→60 days</div>
+                <div style="font-size:16px;font-weight:700;color:#6a1b9a">5 members</div>
+                <div style="font-size:10px;color:#424242">Would receive earlier notifications</div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#5f6368;margin-top:10px"><i class="fas fa-info-circle" style="margin-right:4px"></i>Simulation run at 06 09,2026 10:32 AM by Diana Murphy. Results valid until rule values change.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Log -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:6px;color:#424242"></i>Recent Rule Changes</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','rules-config_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Date</th><th>Rule</th><th>Change</th><th>Effective</th><th>Approved By</th></tr></thead>
+          <tbody>
+            <tr><td>05 15,2026</td><td>AHIP Grace Period</td><td>7 days → 14 days</td><td>01 01,2027</td><td>Diana Murphy</td></tr>
+            <tr><td>04 20,2026</td><td>NIPR Monitoring</td><td>Weekly → Daily</td><td>05 01,2026</td><td>Sandra Adams</td></tr>
+            <tr><td>03 10,2026</td><td>Background Check Repeat</td><td>24 months → 36 months</td><td>04 01,2026</td><td>Diana Murphy</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function runSimulation(){
+  document.getElementById('simResults').style.display='block';
+  showToast('Simulation complete. Impact analysis shown below.','success');
+}
+</script>
+</body>
+</html>

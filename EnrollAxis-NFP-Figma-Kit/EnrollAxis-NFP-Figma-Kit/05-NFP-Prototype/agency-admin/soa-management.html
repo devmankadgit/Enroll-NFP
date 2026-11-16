@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOA Management | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html" class="active"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>SOA Management</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>SOA Management</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="exportSOAs()"><i class="fas fa-download"></i>Export</button>
+      <button class="btn-pr btn-sm" onclick="openNewSOAModal()"><i class="fas fa-plus"></i>New SOA</button>
+    </div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Stats Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">Total SOAs</div><div class="stat-val">124</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Consent Sent</div><div class="stat-val">12</div><div class="stat-sub">Awaiting response</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#f57f17"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending Signature</div><div class="stat-val">8</div><div class="stat-sub">Consent received, not signed</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Signed &amp; Enrolled</div><div class="stat-val">89</div><div class="stat-sub">Successfully enrolled</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#880e4f"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Cancelled / Invalid</div><div class="stat-val">4</div><div class="stat-sub">3 expired, 1 cancelled</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <label>Agent:</label>
+      <select id="soa-agent" onchange="filterSOAs()">
+        <option value="">All Agents</option>
+        <option value="James Martinez">James Martinez (8823441)</option>
+        <option value="Sarah Chen">Sarah Chen (7719022)</option>
+        <option value="Kevin Nguyen">Kevin Nguyen (9912345)</option>
+      </select>
+      <label>Status:</label>
+      <select id="soa-status" onchange="filterSOAs()">
+        <option value="">All Status</option>
+        <option value="Signed">Signed</option>
+        <option value="Pending">Pending Signature</option>
+        <option value="Consent Sent">Consent Sent</option>
+        <option value="Expired">Expired</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Invalid">Invalid</option>
+      </select>
+      <label>Method:</label>
+      <select id="soa-method" onchange="filterSOAs()">
+        <option value="">All Methods</option>
+        <option value="In-Person">In-Person</option>
+        <option value="Phone">Phone</option>
+        <option value="Mail">Mail</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="filterSOAs()"><i class="fas fa-filter"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetSOAFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Consent Workflow Legend -->
+    <div class="al-info" style="margin-bottom:16px;font-size:13px">
+      <i class="fas fa-info-circle"></i>&nbsp;
+      <strong>SOA Consent Workflow:</strong>&nbsp;
+      <span style="margin-right:12px"><i class="fas fa-paper-plane" style="color:#1565c0"></i> Send Consent</span>
+      <span style="margin-right:12px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></span>
+      <span style="margin-right:12px"><i class="fas fa-inbox" style="color:#e65100"></i> Receive Consent</span>
+      <span style="margin-right:12px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></span>
+      <span style="margin-right:12px"><i class="fas fa-signature" style="color:#2e7d32"></i> Member Signs</span>
+      <span style="margin-right:12px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></span>
+      <span style="margin-right:12px"><i class="fas fa-calendar-check" style="color:#6a1b9a"></i> Appointment</span>
+      <span style="margin-right:12px"><i class="fas fa-arrow-right" style="color:#9e9e9e"></i></span>
+      <span><i class="fas fa-user-check" style="color:#1b5e20"></i> Enrollment</span>
+    </div>
+
+    <!-- Status Legend -->
+    <div style="margin-bottom:16px;font-size:12px;padding:10px 14px;background:#f8f9fa;border-radius:8px;border:1px solid #e0e0e0">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:8px">
+        <strong style="font-size:11px;text-transform:uppercase;color:#5f6368;letter-spacing:.5px">SOA Status:</strong>
+        <span><span class="bdg b-green">Signed</span> Member signed consent</span>
+        <span><span class="bdg b-amber">Pending</span> Awaiting member action</span>
+        <span><span class="bdg b-blue">Consent Sent</span> Sent, not yet received</span>
+        <span><span class="bdg b-red">Cancelled</span> Appointment cancelled</span>
+        <span><span class="bdg b-red">Expired</span> Past valid window</span>
+        <span><span class="bdg b-red">Invalid</span> Compliance issue</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+        <strong style="font-size:11px;text-transform:uppercase;color:#5f6368;letter-spacing:.5px">Enrollment:</strong>
+        <span><span class="bdg b-green">Enrolled</span> Member enrolled</span>
+        <span><span class="bdg b-grey">Not Enrolled</span> Did not enroll</span>
+        <span><span class="bdg b-amber">Pending</span> Decision pending</span>
+      </div>
+    </div>
+
+    <!-- SOA Table -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-file-signature" style="margin-right:8px;color:#e65100"></i>Scope of Appointment Records</h5>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" onclick="exportSOAs()"><i class="fas fa-download"></i>Export</button>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('soaTable','soa-management_soaTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="soaTable">
+          <thead>
+            <tr>
+              <th>SOA #</th>
+              <th>Member Name</th>
+              <th>Agent</th>
+              <th>Contact Method</th>
+              <th>Appointment Date</th>
+              <th>Consent Sent</th>
+              <th>Consent Received</th>
+              <th>Member Signed</th>
+              <th>Status</th>
+              <th>Enrollment Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="soaTableBody">
+            <tr data-agent="James Martinez" data-status="Signed" data-method="In-Person">
+              <td>SOA-2026-0041</td><td>Dorothy Henderson</td><td>James Martinez</td><td>In-Person</td><td>11 10,2025</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 8</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 9</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 10</span></td>
+              <td><span class="bdg b-green">Signed</span></td>
+              <td><span class="bdg b-green">Enrolled</span></td>
+              <td><button class="btn-ol btn-sm" onclick="generateSOAPDF('SOA-2026-0041','Dorothy Henderson','James Martinez','In-Person','11 10,2025','Signed')"><i class="fas fa-file-pdf"></i>PDF</button></td>
+            </tr>
+            <tr data-agent="James Martinez" data-status="Signed" data-method="Phone">
+              <td>SOA-2026-0038</td><td>Susan Walsh</td><td>James Martinez</td><td>Phone</td><td>11 06,2025</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 3</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 4</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Nov 6</span></td>
+              <td><span class="bdg b-green">Signed</span></td>
+              <td><span class="bdg b-green">Enrolled</span></td>
+              <td><button class="btn-ol btn-sm" onclick="generateSOAPDF('SOA-2026-0038','Susan Walsh','James Martinez','Phone','11 06,2025','Signed')"><i class="fas fa-file-pdf"></i>PDF</button></td>
+            </tr>
+            <tr data-agent="Sarah Chen" data-status="Signed" data-method="In-Person">
+              <td>SOA-2026-0035</td><td>Frank Johnson</td><td>Sarah Chen</td><td>In-Person</td><td>10 28,2025</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 25</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 26</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 28</span></td>
+              <td><span class="bdg b-green">Signed</span></td>
+              <td><span class="bdg b-grey">Not Enrolled</span></td>
+              <td><button class="btn-ol btn-sm" onclick="generateSOAPDF('SOA-2026-0035','Frank Johnson','Sarah Chen','In-Person','10 28,2025','Signed')"><i class="fas fa-file-pdf"></i>PDF</button></td>
+            </tr>
+            <tr data-agent="Kevin Nguyen" data-status="Signed" data-method="Mail">
+              <td>SOA-2026-0032</td><td>Maria Santos</td><td>Kevin Nguyen</td><td>Mail</td><td>10 25,2025</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 18</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 22</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Oct 25</span></td>
+              <td><span class="bdg b-green">Signed</span></td>
+              <td><span class="bdg b-green">Enrolled</span></td>
+              <td><button class="btn-ol btn-sm" onclick="generateSOAPDF('SOA-2026-0032','Maria Santos','Kevin Nguyen','Mail','10 25,2025','Signed')"><i class="fas fa-file-pdf"></i>PDF</button></td>
+            </tr>
+            <tr data-agent="James Martinez" data-status="Pending" data-method="Phone">
+              <td>SOA-2026-0044</td><td>Robert Kim</td><td>James Martinez</td><td>Phone</td><td>05 25,2026</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 18</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 20</span></td>
+              <td><span class="bdg b-amber"><i class="fas fa-clock"></i> Pending</span></td>
+              <td><span class="bdg b-amber">Pending</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openConsentWorkflow('SOA-2026-0044','Robert Kim','James Martinez','Phone','05 25,2026')" style="margin-right:4px"><i class="fas fa-signature"></i>Consent</button><button class="btn-ol btn-sm" onclick="sendSOAReminder('Robert Kim')"><i class="fas fa-bell"></i>Remind</button></td>
+            </tr>
+            <tr data-agent="Sarah Chen" data-status="Consent Sent" data-method="In-Person">
+              <td>SOA-2026-0045</td><td>Linda Park</td><td>Sarah Chen</td><td>In-Person</td><td>06 05,2026</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 22</span></td>
+              <td><span class="bdg b-amber"><i class="fas fa-clock"></i> Waiting</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><span class="bdg b-blue">Consent Sent</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openConsentWorkflow('SOA-2026-0045','Linda Park','Sarah Chen','In-Person','06 05,2026')" style="margin-right:4px"><i class="fas fa-signature"></i>Consent</button><button class="btn-ol btn-sm" onclick="sendSOAReminder('Linda Park')"><i class="fas fa-bell"></i>Remind</button></td>
+            </tr>
+            <tr data-agent="Kevin Nguyen" data-status="Cancelled" data-method="Phone">
+              <td>SOA-2026-0046</td><td>Thomas Rivera</td><td>Kevin Nguyen</td><td>Phone</td><td>05 28,2026</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 20</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 22</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><span class="bdg b-red">Cancelled</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openNewSOAModal()"><i class="fas fa-redo"></i>Reschedule</button></td>
+            </tr>
+            <tr data-agent="Kevin Nguyen" data-status="Expired" data-method="Mail">
+              <td>SOA-2025-0018</td><td>Grace Kim</td><td>Kevin Nguyen</td><td>Mail</td><td>01 12,2025</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Jan 3</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Jan 8</span></td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> Jan 10</span></td>
+              <td><span class="bdg b-red">Expired</span></td>
+              <td><span class="bdg b-green">Enrolled</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openNewSOAModal()"><i class="fas fa-redo"></i>Renew</button></td>
+            </tr>
+            <tr data-agent="Sarah Chen" data-status="Invalid" data-method="In-Person">
+              <td>SOA-2026-0039</td><td>James Wheeler</td><td>Sarah Chen</td><td>In-Person</td><td>05 15,2026</td>
+              <td><span class="bdg b-green"><i class="fas fa-check"></i> May 10</span></td>
+              <td><span class="bdg b-red"><i class="fas fa-times"></i> Invalid</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><span class="bdg b-red">Invalid</span></td>
+              <td><span class="bdg b-grey">—</span></td>
+              <td><button class="btn-ol btn-sm" onclick="openNewSOAModal()"><i class="fas fa-redo"></i>Redo</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New SOA Modal -->
+<div class="modal-overlay" id="newSOAModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5><i class="fas fa-file-signature" style="margin-right:8px;color:#e65100"></i>New Scope of Appointment</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-info mb-3"><i class="fas fa-info-circle"></i>&nbsp; CMS requires a signed SOA before discussing Medicare Advantage plan details. This creates an SOA record for compliance tracking.</div>
+      <div class="mb-3"><label class="form-label">Member Name</label><input type="text" class="form-control" id="soaMemberName" placeholder="Full legal name"></div>
+      <div class="mb-3"><label class="form-label">Member Phone</label><input type="tel" class="form-control" id="soaMemberPhone" placeholder="(xxx) xxx-xxxx"></div>
+      <div class="mb-3"><label class="form-label">Assigned Agent</label>
+        <select class="form-control" id="soaAgent">
+          <option>James Martinez (8823441)</option>
+          <option>Sarah Chen (7719022)</option>
+          <option>Kevin Nguyen (9912345)</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Contact Method</label>
+        <select class="form-control" id="soaContactMethod">
+          <option>In-Person</option>
+          <option>Phone</option>
+          <option>Mail</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Date of Contact</label><input type="date" class="form-control" id="soaContactDate"></div>
+      <div class="mb-3"><label class="form-label">Appointment Date <span class="text-danger">*</span></label><input type="date" class="form-control" id="soaApptDate"></div>
+      <div class="mb-3"><label class="form-label">Send Consent to Member</label>
+        <select class="form-control" id="soaConsentMethod">
+          <option>Email</option>
+          <option>Mail</option>
+          <option>In-Person (at appointment)</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Plans to Discuss</label>
+        <div style="font-size:13px">
+          <label style="margin-right:16px"><input type="checkbox" id="soaChkMA" checked> Medicare Advantage Plans</label>
+          <label style="margin-right:16px"><input type="checkbox" id="soaChkPDP"> Prescription Drug Plans</label>
+          <label><input type="checkbox" id="soaChkSupp"> Supplemental Benefits</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillSOA()"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+      <div>
+        <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+        <button class="btn-pr" onclick="createNewSOA()"><i class="fas fa-save"></i> Create SOA Record</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF Preview Modal -->
+<div class="modal-overlay" id="pdfPreviewModal" style="display:none">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr"><h5><i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>SOA Document Preview</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body" id="pdfPreviewContent" style="font-family:Georgia,serif;font-size:13px;line-height:1.7;color:#222">
+      <!-- Populated by generateSOAPDF() -->
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-pr" onclick="downloadSOAPDF()"><i class="fas fa-download"></i> Download PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member Consent & Signature Workflow Modal -->
+<div class="modal-overlay" id="consentWorkflowModal" style="display:none;z-index:1100">
+  <div class="modal-box" style="max-width:720px;width:95%">
+    <div class="modal-hdr"><h5><i class="fas fa-signature" style="margin-right:8px;color:#e65100"></i>Member Consent &amp; Signature Workflow</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body" style="padding:20px">
+
+      <!-- SOA Info Header -->
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px">
+        <div><strong>SOA #:</strong> <span id="cwSOA"></span></div>
+        <div><strong>Member:</strong> <span id="cwMember"></span></div>
+        <div><strong>Agent:</strong> <span id="cwAgent"></span></div>
+        <div><strong>Method:</strong> <span id="cwMethod"></span></div>
+        <div><strong>Appt Date:</strong> <span id="cwApptDate"></span></div>
+      </div>
+
+      <!-- Step Progress -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:20px">
+        <div id="cwStep1Ind" style="display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#e65100;color:#fff"><i class="fas fa-paper-plane"></i> 1. Send Consent</div>
+        <i class="fas fa-chevron-right" style="color:#ccc;font-size:10px"></i>
+        <div id="cwStep2Ind" style="display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#f1f3f4;color:#5f6368"><i class="fas fa-inbox"></i> 2. Receive Consent</div>
+        <i class="fas fa-chevron-right" style="color:#ccc;font-size:10px"></i>
+        <div id="cwStep3Ind" style="display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#f1f3f4;color:#5f6368"><i class="fas fa-signature"></i> 3. Signature</div>
+      </div>
+
+      <!-- Step 1: Send Consent -->
+      <div id="cwStep1" style="border:1.5px solid #e8eaf6;border-radius:10px;padding:16px">
+        <h6 style="font-weight:700;color:#1a237e;margin-bottom:12px"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Step 1: Send Consent to Member</h6>
+        <p style="font-size:12px;color:#5f6368;margin-bottom:12px">CMS requires that members provide written consent <strong>before</strong> discussing any Medicare Advantage plan details. Send the consent form to the member using their preferred method.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label class="form-label" style="font-size:12px">Consent Delivery Method</label>
+            <select class="form-control" id="cwConsentMethod"><option>Email</option><option>Mail</option><option>In-Person</option><option>Phone (verbal)</option></select>
+          </div>
+          <div><label class="form-label" style="font-size:12px">Date Sent</label>
+            <input type="date" class="form-control" id="cwConsentSentDate">
+          </div>
+        </div>
+        <div class="mb-3"><label class="form-label" style="font-size:12px">Member Email / Address</label>
+          <input type="text" class="form-control" id="cwMemberContact" placeholder="Email or mailing address for consent delivery">
+        </div>
+        <div class="mb-3"><label class="form-label" style="font-size:12px">Topics to be Discussed</label>
+          <div style="font-size:12px;display:flex;gap:16px;flex-wrap:wrap">
+            <label><input type="checkbox" checked> Medicare Advantage (MA/MAPD)</label>
+            <label><input type="checkbox"> Prescription Drug Plans (PDP)</label>
+            <label><input type="checkbox"> CSNP (Special Needs)</label>
+            <label><input type="checkbox"> Supplemental Benefits</label>
+          </div>
+        </div>
+        <button class="btn-pr" onclick="cwGoToStep(2)"><i class="fas fa-arrow-right" style="margin-right:4px"></i>Mark Consent Sent &amp; Continue</button>
+      </div>
+
+      <!-- Step 2: Receive Consent -->
+      <div id="cwStep2" style="display:none;border:1.5px solid #e8eaf6;border-radius:10px;padding:16px">
+        <h6 style="font-weight:700;color:#1a237e;margin-bottom:12px"><i class="fas fa-inbox" style="margin-right:6px"></i>Step 2: Confirm Consent Received from Member</h6>
+        <p style="font-size:12px;color:#5f6368;margin-bottom:12px">Confirm that the member has acknowledged the scope of appointment. The member must agree to the topics before the appointment can proceed.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label class="form-label" style="font-size:12px">Date Consent Received</label>
+            <input type="date" class="form-control" id="cwConsentRecvDate">
+          </div>
+          <div><label class="form-label" style="font-size:12px">Received Via</label>
+            <select class="form-control" id="cwRecvMethod"><option>Email Reply</option><option>Signed Form Returned</option><option>Verbal Acknowledgment</option><option>In-Person at Appointment</option></select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label style="font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cwConsentAck" style="margin-top:3px">
+            <span>I confirm the member has acknowledged and agreed to the scope of appointment topics listed above. The member understands this does not obligate them to enroll in any plan.</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ol" onclick="cwGoToStep(1)"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back</button>
+          <button class="btn-pr" onclick="cwGoToStep(3)" id="cwStep2Btn" disabled style="opacity:.5;cursor:not-allowed"><i class="fas fa-arrow-right" style="margin-right:4px"></i>Consent Received &amp; Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Member Signature -->
+      <div id="cwStep3" style="display:none;border:1.5px solid #e8eaf6;border-radius:10px;padding:16px">
+        <h6 style="font-weight:700;color:#1a237e;margin-bottom:12px"><i class="fas fa-signature" style="margin-right:6px"></i>Step 3: Member Signature Capture</h6>
+        <p style="font-size:12px;color:#5f6368;margin-bottom:12px">Capture the member's signature on the SOA form. This must be obtained <strong>before</strong> the scheduled appointment. Without signature, the appointment cannot proceed.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label class="form-label" style="font-size:12px">Signature Method</label>
+            <select class="form-control" id="cwSigMethod"><option>E-Signature (Digital)</option><option>Wet Signature (Paper)</option><option>Verbal Recorded Consent</option></select>
+          </div>
+          <div><label class="form-label" style="font-size:12px">Date Signed</label>
+            <input type="date" class="form-control" id="cwSignedDate">
+          </div>
+        </div>
+        <!-- Signature Pad Area -->
+        <div style="margin-bottom:12px">
+          <label class="form-label" style="font-size:12px">Member Signature</label>
+          <div id="cwSigPad" style="border:2px dashed #c5cae9;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;cursor:crosshair;background:#fafafa;position:relative" onclick="simulateSignature()">
+            <span id="cwSigPlaceholder" style="color:#9e9e9e;font-size:13px"><i class="fas fa-pen-fancy" style="margin-right:6px"></i>Click here to capture signature (or upload signed document)</span>
+            <span id="cwSigCaptured" style="display:none;font-family:'Brush Script MT',cursive;font-size:32px;color:#1a237e"></span>
+          </div>
+        </div>
+        <div class="mb-3"><label class="form-label" style="font-size:12px">Upload Signed Document <small class="text-muted">(optional — if wet signature)</small></label>
+          <input type="file" class="form-control" id="cwSigUpload" accept=".pdf,.jpg,.png">
+        </div>
+        <div class="mb-3">
+          <label style="font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cwSigConfirm" style="margin-top:3px" onchange="toggleCompleteBtn()">
+            <span>I confirm the member's signature was obtained <strong>before</strong> the scheduled appointment and the member was not under duress. This SOA is valid for 12 months from the date of signature.</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ol" onclick="cwGoToStep(2)"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back</button>
+          <button class="btn-pr" id="cwCompleteBtn" disabled style="opacity:.5;cursor:not-allowed;background:#1b5e20" onclick="completeConsentWorkflow()"><i class="fas fa-check-circle" style="margin-right:4px"></i>Complete &mdash; Consent &amp; Signature Captured</button>
+        </div>
+      </div>
+
+      <!-- Compliance Notice -->
+      <div style="margin-top:16px;background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 14px;font-size:11px;color:#e65100">
+        <i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>
+        <strong>CMS Compliance:</strong> A valid SOA with member consent and signature must be obtained at least 48 hours before any in-person appointment (phone/mail appointments: before discussion begins). Failure to comply may result in disciplinary action.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var _currentSOA = {};
+
+function filterSOAs() {
+  var agent = document.getElementById('soa-agent').value;
+  var status = document.getElementById('soa-status').value;
+  var method = document.getElementById('soa-method').value;
+  var rows = document.querySelectorAll('#soaTableBody tr');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var ra = row.dataset.agent || '';
+    var rs = row.dataset.status || '';
+    var rm = row.dataset.method || '';
+    var show = (!agent || ra === agent) && (!status || rs === status) && (!method || rm === method);
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  showToast(visible + ' SOA record(s) match the filters', 'success');
+}
+
+function resetSOAFilters() {
+  document.getElementById('soa-agent').value = '';
+  document.getElementById('soa-status').value = '';
+  document.getElementById('soa-method').value = '';
+  document.querySelectorAll('#soaTableBody tr').forEach(function(r){ r.style.display = ''; });
+  showToast('Filters cleared', 'success');
+}
+
+function openNewSOAModal() {
+  document.getElementById('newSOAModal').style.display = 'flex';
+}
+
+function createNewSOA() {
+  var name = document.getElementById('soaMemberName').value.trim();
+  var date = document.getElementById('soaContactDate').value;
+  var apptDate = document.getElementById('soaApptDate').value;
+  if (!name) { showToast('Please enter member name', 'error'); return; }
+  if (!apptDate) { showToast('Please select an appointment date', 'error'); return; }
+  document.getElementById('newSOAModal').style.display = 'none';
+  var refNum = 'SOA-2026-' + (Math.floor(Math.random()*90)+46).toString().padStart(4,'0');
+  showToast('SOA record created: ' + refNum + ' for ' + name + '. Consent will be sent to member via ' + document.getElementById('soaConsentMethod').value + '.', 'success');
+}
+
+function prefillSOA() {
+  var name = document.getElementById('soaMemberName');
+  var phone = document.getElementById('soaMemberPhone');
+  var agent = document.getElementById('soaAgent');
+  var method = document.getElementById('soaContactMethod');
+  var date = document.getElementById('soaContactDate');
+  var chkMA = document.getElementById('soaChkMA');
+  var chkPDP = document.getElementById('soaChkPDP');
+  var chkSupp = document.getElementById('soaChkSupp');
+  if (!name || !phone) return;
+  name.value = 'Dorothy Henderson';
+  phone.value = '(305) 555-0172';
+  agent.value = 'Sarah Chen (7719022)';
+  method.value = 'Phone';
+  date.value = '2026-06-08';
+  chkMA.checked = true;
+  chkPDP.checked = true;
+  chkSupp.checked = false;
+  showToast('Form prefilled with sample data', 'info');
+}
+
+function generateSOAPDF(soaNum, member, agent, method, date, status) {
+  _currentSOA = {soaNum:soaNum, member:member, agent:agent, method:method, date:date, status:status};
+  var html = '<div style="text-align:center;margin-bottom:20px">' +
+    '<div style="font-size:18px;font-weight:700;color:#1a237e">GOLD KIDNEY HEALTH PLAN, INC.</div>' +
+    '<div style="font-size:14px;font-weight:600;margin-top:4px">SCOPE OF APPOINTMENT (SOA)</div>' +
+    '<div style="font-size:12px;color:#5f6368;margin-top:2px">CMS-Required Pre-Appointment Documentation</div>' +
+    '</div>' +
+    '<hr style="border-color:#e0e0e0;margin:12px 0">' +
+    '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+    '<tr><td style="padding:6px 0;color:#5f6368;width:40%"><strong>SOA Reference #:</strong></td><td>' + soaNum + '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#5f6368"><strong>Member Name:</strong></td><td>' + member + '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#5f6368"><strong>Assigned Agent:</strong></td><td>' + agent + '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#5f6368"><strong>Contact Method:</strong></td><td>' + method + '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#5f6368"><strong>Date of Contact:</strong></td><td>' + date + '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#5f6368"><strong>Status:</strong></td><td>' + status + '</td></tr>' +
+    '</table>' +
+    '<hr style="border-color:#e0e0e0;margin:12px 0">' +
+    '<div style="margin-bottom:10px"><strong>Plans Discussed:</strong></div>' +
+    '<div style="margin-left:12px;font-size:13px"><div>&#9746; Medicare Advantage Plans (Gold Kidney Health Plan)</div><div>&#9744; Prescription Drug Plans (Part D)</div><div>&#9744; Supplemental Benefits</div></div>' +
+    '<hr style="border-color:#e0e0e0;margin:12px 0">' +
+    '<div style="font-size:12px;color:#5f6368;margin-top:8px">By signing below, the beneficiary agrees that the topics listed above will be discussed during the appointment. This does not obligate the beneficiary to enroll in any plan.</div>' +
+    '<div style="margin-top:24px;display:flex;justify-content:space-between">' +
+    '<div style="text-align:center"><div style="border-top:1px solid #333;padding-top:4px;width:200px">Member Signature</div></div>' +
+    '<div style="text-align:center"><div style="border-top:1px solid #333;padding-top:4px;width:200px">Date</div></div>' +
+    '</div>' +
+    '<div style="margin-top:12px;font-size:11px;color:#9e9e9e;text-align:center">Generated: ' + new Date().toLocaleDateString() + ' | Gold Kidney Health Plan &mdash; Agency Admin</div>';
+  document.getElementById('pdfPreviewContent').innerHTML = html;
+  document.getElementById('pdfPreviewModal').style.display = 'flex';
+}
+
+function downloadSOAPDF() {
+  var soa = _currentSOA;
+  var content = 'GOLD KIDNEY HEALTH PLAN, INC.\nSCOPE OF APPOINTMENT (SOA)\n';
+  content += '=======================================\n';
+  content += 'SOA Reference #: ' + soa.soaNum + '\n';
+  content += 'Member Name: ' + soa.member + '\n';
+  content += 'Assigned Agent: ' + soa.agent + '\n';
+  content += 'Contact Method: ' + soa.method + '\n';
+  content += 'Date of Contact: ' + soa.date + '\n';
+  content += 'Status: ' + soa.status + '\n';
+  content += '=======================================\n';
+  content += 'Plans Discussed: Medicare Advantage Plans\n';
+  content += '=======================================\n';
+  content += 'Generated: ' + new Date().toLocaleDateString() + '\n';
+  var blob = new Blob([content], {type:'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = soa.soaNum + '-' + soa.member.replace(/\s+/g,'-') + '.pdf.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  document.getElementById('pdfPreviewModal').style.display = 'none';
+  showToast('SOA document downloaded: ' + soa.soaNum, 'success');
+}
+
+function sendSOAReminder(member) {
+  showToast('Reminder sent to ' + member + ' for SOA signature', 'success');
+}
+
+/* ========== CONSENT & SIGNATURE WORKFLOW ========== */
+var _cwData = {};
+
+function openConsentWorkflow(soaNum, member, agent, method, apptDate) {
+  _cwData = {soaNum:soaNum, member:member, agent:agent, method:method, apptDate:apptDate};
+  document.getElementById('cwSOA').textContent = soaNum;
+  document.getElementById('cwMember').textContent = member;
+  document.getElementById('cwAgent').textContent = agent;
+  document.getElementById('cwMethod').textContent = method;
+  document.getElementById('cwApptDate').textContent = apptDate;
+  // Reset to step 1
+  cwGoToStep(1);
+  // Reset fields
+  document.getElementById('cwConsentSentDate').value = '';
+  document.getElementById('cwMemberContact').value = '';
+  document.getElementById('cwConsentRecvDate').value = '';
+  document.getElementById('cwConsentAck').checked = false;
+  document.getElementById('cwSignedDate').value = '';
+  document.getElementById('cwSigConfirm').checked = false;
+  document.getElementById('cwSigPlaceholder').style.display = '';
+  document.getElementById('cwSigCaptured').style.display = 'none';
+  document.getElementById('cwSigPad').style.borderColor = '#c5cae9';
+  document.getElementById('cwStep2Btn').disabled = true;
+  document.getElementById('cwStep2Btn').style.opacity = '.5';
+  document.getElementById('cwStep2Btn').style.cursor = 'not-allowed';
+  document.getElementById('cwCompleteBtn').disabled = true;
+  document.getElementById('cwCompleteBtn').style.opacity = '.5';
+  document.getElementById('cwCompleteBtn').style.cursor = 'not-allowed';
+  document.getElementById('consentWorkflowModal').style.display = 'flex';
+}
+
+function cwGoToStep(step) {
+  document.getElementById('cwStep1').style.display = step===1 ? 'block' : 'none';
+  document.getElementById('cwStep2').style.display = step===2 ? 'block' : 'none';
+  document.getElementById('cwStep3').style.display = step===3 ? 'block' : 'none';
+  // Update indicators
+  var colors = {active:'background:#e65100;color:#fff', done:'background:#e8f5e9;color:#1b5e20', pending:'background:#f1f3f4;color:#5f6368'};
+  document.getElementById('cwStep1Ind').style.cssText = 'display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;' + (step===1?colors.active:(step>1?colors.done:colors.pending));
+  document.getElementById('cwStep2Ind').style.cssText = 'display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;' + (step===2?colors.active:(step>2?colors.done:colors.pending));
+  document.getElementById('cwStep3Ind').style.cssText = 'display:flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;' + (step===3?colors.active:colors.pending);
+
+  if(step===2) {
+    // Enable step 2 button based on checkbox
+    document.getElementById('cwConsentAck').onchange = function() {
+      var btn = document.getElementById('cwStep2Btn');
+      btn.disabled = !this.checked;
+      btn.style.opacity = this.checked ? '1' : '.5';
+      btn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
+    };
+  }
+}
+
+function simulateSignature() {
+  var name = _cwData.member || 'Member';
+  document.getElementById('cwSigPlaceholder').style.display = 'none';
+  document.getElementById('cwSigCaptured').style.display = '';
+  document.getElementById('cwSigCaptured').textContent = name;
+  document.getElementById('cwSigPad').style.borderColor = '#1b5e20';
+  document.getElementById('cwSigPad').style.borderStyle = 'solid';
+  document.getElementById('cwSigPad').style.background = '#f1f8e9';
+  if(!document.getElementById('cwSignedDate').value) {
+    document.getElementById('cwSignedDate').value = new Date().toISOString().split('T')[0];
+  }
+  showToast('Signature captured for ' + name, 'success');
+}
+
+function toggleCompleteBtn() {
+  var chk = document.getElementById('cwSigConfirm').checked;
+  var hasSig = document.getElementById('cwSigCaptured').style.display !== 'none';
+  var btn = document.getElementById('cwCompleteBtn');
+  var enabled = chk && hasSig;
+  btn.disabled = !enabled;
+  btn.style.opacity = enabled ? '1' : '.5';
+  btn.style.cursor = enabled ? 'pointer' : 'not-allowed';
+}
+
+function completeConsentWorkflow() {
+  document.getElementById('consentWorkflowModal').style.display = 'none';
+  showToast('SOA ' + _cwData.soaNum + ': Consent & Signature workflow complete for ' + _cwData.member + '. Appointment is now authorized to proceed.', 'success');
+}
+
+function exportSOAs() {
+  var rows = [['SOA #','Member Name','Agent','Contact Method','Appointment Date','Consent Sent','Consent Received','Member Signed','Status','Enrollment Status']];
+  document.querySelectorAll('#soaTableBody tr').forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length >= 10) {
+      rows.push([cells[0].textContent.trim(),cells[1].textContent.trim(),cells[2].textContent.trim(),cells[3].textContent.trim(),cells[4].textContent.trim(),cells[5].textContent.trim(),cells[6].textContent.trim(),cells[7].textContent.trim(),cells[8].textContent.trim(),cells[9].textContent.trim()]);
+    }
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'soa-records-may-2026.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  showToast('SOA records exported successfully', 'success');
+}
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 27,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>
+

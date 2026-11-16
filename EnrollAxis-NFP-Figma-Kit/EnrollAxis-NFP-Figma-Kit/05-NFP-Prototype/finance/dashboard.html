@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finance Admin Dashboard | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#2e7d32}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Finance Admin Dashboard</h4></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Data')"><i class="fas fa-download"></i>Export Report</button>
+      <button class="btn-pr btn-sm"><i class="fas fa-play"></i>Run Batch</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Stats Row 1 -->
+    <div class="row-grid" style="margin-bottom:12px">
+      <div class="col-1"><a href="batch-review.html" style="text-decoration:none;color:inherit"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-money-bill-wave"></i></div><div><div class="stat-label">Total Paid (CY2026)</div><div class="stat-val">$438,216</div></div></div></div>
+      <div class="col-1"><a href="manual-adjustments.html" style="text-decoration:none;color:inherit"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-calendar-check"></i></div><div><div class="stat-label">Last Batch Paid</div><div class="stat-val">$87,432</div><div class="stat-sub text-muted">BATCH-2026-05 — May 17</div></div></a></div></div>
+      <div class="col-1"><a href="chargebacks.html" style="text-decoration:none;color:inherit"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-calendar-alt"></i></div><div><div class="stat-label">Total Payable This Month</div><div class="stat-val">$91,200</div><div class="stat-sub text-muted">Estimated (Jun 2026)</div></div></div></div>
+      <div class="col-1"><a href="hra-review.html" style="text-decoration:none;color:inherit"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">HRA Incentives Pending</div><div class="stat-val">14</div><div class="stat-sub text-muted">Awaiting Finance approval</div></div></a></div></div>
+    </div>
+    <!-- Stats Row 2 -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><a href="chargebacks.html" style="text-decoration:none;color:inherit"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-bolt"></i></div><div><div class="stat-label">Chargebacks (MTD)</div><div class="stat-val">$0</div><div class="stat-sub" style="color:#2e7d32">No chargebacks this month</div></div></a></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-undo"></i></div><div><div class="stat-label">Pending Chargebacks</div><div class="stat-val">2</div><div class="stat-sub text-muted">Awaiting confirmation</div></div></a></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-gavel"></i></div><div><div class="stat-label">Disputes Open</div><div class="stat-val">3</div><div class="stat-sub text-muted">Avg age: 4.2 days</div></div></a></div></div>
+      <div class="col-1"><div class="stat-card" id="liabilityTile" style="border-left:3px solid #2e7d32"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-file-invoice-dollar"></i></div><div style="flex:1"><div class="stat-label">Commission Liability <span id="liabilityBadge" class="bdg b-green" style="font-size:10px;margin-left:4px;vertical-align:middle">Live</span></div><div class="stat-val" id="liabilityVal">$112,843.00</div><div class="stat-sub text-muted" id="liabilityMeta">Accrued + Calculated (Jun cycle)</div><div style="margin-top:4px;display:flex;align-items:center;gap:6px"><span class="text-muted" id="liabilityRefreshTs" style="font-size:10px">Refreshed: 05 29,2026 10:47 AM</span><button onclick="refreshLiability()" style="font-size:10px;padding:1px 8px;border:1px solid #2e7d32;background:#fff;border-radius:4px;color:#2e7d32;cursor:pointer"><i class="fas fa-sync-alt"></i></button></div></div></div></div>
+    </div>
+
+    <!-- CM-18: Near Real-Time Processing SLA -->
+    <div class="al-info mb16" style="font-size:12px"><i class="fas fa-clock" style="flex-shrink:0"></i><span><strong>Near Real-Time SLA (CM-18):</strong> New commission entries visible within <strong>15 minutes</strong> of CMS confirmation processing. Chargebacks visible within <strong>1 hour</strong> of MMR processing. Patient activation fees visible within <strong>15 minutes</strong> of incentive trigger. Finance liability totals update with each batch calculation run. <em>Visibility layer only — actual payment remains batch-processed (17th of month).</em></span></div>
+
+    <!-- Pending Actions -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-exclamation-circle" style="margin-right:6px;color:#c62828"></i>Pending Actions</h5><span class="bdg b-red" style="font-size:10px">8 items</span></div>
+      <div style="padding:0">
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-amber" style="font-size:10px">BATCH APPROVAL</span>
+          <span style="font-size:13px;flex:1">BATCH-2026-06 (Jun 2026, $91,200 est.) needs final approval before payment run</span>
+          <a href="batch-review.html" class="btn-ol btn-sm" style="font-size:10px">Review Batch</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px;background:#fff3e0">
+          <span class="bdg b-orange" style="font-size:10px">HIERARCHY TRANSFER</span>
+          <span style="font-size:13px;flex:1"><strong>Agent James Rivera (NPN 7744221)</strong> transferred from Florida Health Partners â†’ Southeast Distribution Group. <em>2 open batch entries affected in BATCH-2026-06.</em> Override cascade recalculation required.</span>
+          <button class="btn-ol btn-sm" style="font-size:10px" onclick="reviewImpact('rivera')">Review Impact</button>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px;background:#fff3e0">
+          <span class="bdg b-orange" style="font-size:10px">HIERARCHY TRANSFER</span>
+          <span style="font-size:13px;flex:1"><strong>Agent Kevin Patel (NPN 6612009)</strong> reassigned under new GA. Open renewal commission in BATCH-2026-06 may need override re-routing.</span>
+          <button class="btn-ol btn-sm" style="font-size:10px" onclick="reviewImpact('patel')">Review Impact</button>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px;background:#ffebee">
+          <span class="bdg b-red" style="font-size:10px">PAYMENT HOLD</span>
+          <span style="font-size:13px;flex:1"><strong>6 agents</strong> have commission payments on hold — banking details missing or invalid. Total held: <strong>$4,164.00</strong></span>
+          <a href="banking-gap.html" class="btn-ol btn-sm" style="font-size:10px">Banking Gap</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px;background:#fce4ec">
+          <span class="bdg b-red" style="font-size:10px">INACTIVE EXCEPTION</span>
+          <span style="font-size:13px;flex:1"><strong>2 incentive triggers skipped</strong> — broker inactive at time of payment. Exceptions logged for Finance review.</span>
+          <button class="btn-ol btn-sm" style="font-size:10px" onclick="viewExceptions()">View Exceptions</button>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-red" style="font-size:10px">DISCREPANCY</span>
+          <span style="font-size:13px;flex:1">3 discrepancy queue items pending resolution</span>
+          <a href="reconciliation.html" class="btn-ol btn-sm" style="font-size:10px">Open Queue</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-orange" style="font-size:10px">ACH RETURN</span>
+          <span style="font-size:13px;flex:1">1 ACH return requires banking info update from agent</span>
+          <a href="ach-nacha.html" class="btn-ol btn-sm" style="font-size:10px">ACH &amp; NACHA</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-purple" style="font-size:10px">RECONCILIATION</span>
+          <span style="font-size:13px;flex:1">2 reconciliation exceptions from May 2026 batch unresolved</span>
+          <a href="reconciliation.html" class="btn-ol btn-sm" style="font-size:10px">Review</a>
+        </div>
+        <div style="padding:10px 16px;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-blue" style="font-size:10px">DISPUTE</span>
+          <span style="font-size:13px;flex:1">3 open commission disputes awaiting finance team response</span>
+          <a href="disputes.html" class="btn-ol btn-sm" style="font-size:10px">Dispute Queue</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-grid">
+      <!-- Batch Schedule -->
+      <div class="col-3">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Commission Batch Schedule — CY2026</h5><a href="batches.html" class="btn-ol btn-sm">View All Batches</a><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','dashboard_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table id="tblExport1" class="tbl">
+              <thead>
+                <tr><th>Batch Ref</th><th>Period</th><th>Agents Paid</th><th>Base Commissions</th><th>HRA Incentives</th><th>Visit Incentives</th><th>Total</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:#fffde7">
+                  <td><code>BATCH-2026-06</code></td><td>Jun 2026</td><td>143</td>
+                  <td>$74,200 (est)</td><td>$8,750 (est)</td><td>$8,250 (est)</td>
+                  <td class="text-bold">$91,200 (est)</td>
+                  <td><span class="bdg b-amber">Processing — Pay Jun 17</span></td>
+                </tr>
+                <tr>
+                  <td><code>BATCH-2026-05</code></td><td>May 2026</td><td>143</td>
+                  <td>$71,882</td><td>$8,350</td><td>$7,200</td>
+                  <td class="text-bold">$87,432</td>
+                  <td><span class="bdg b-green">Paid May 17</span></td>
+                </tr>
+                <tr>
+                  <td><code>BATCH-2026-04</code></td><td>Apr 2026</td><td>141</td>
+                  <td>$68,560</td><td>$7,900</td><td>$5,650</td>
+                  <td class="text-bold">$82,110</td>
+                  <td><span class="bdg b-green">Paid Apr 17</span></td>
+                </tr>
+                <tr>
+                  <td><code>BATCH-2026-03</code></td><td>Mar 2026</td><td>138</td>
+                  <td>$64,220</td><td>$6,300</td><td>$9,750</td>
+                  <td class="text-bold">$80,270</td>
+                  <td><span class="bdg b-green">Paid Mar 17</span></td>
+                </tr>
+                <tr>
+                  <td><code>BATCH-2026-02</code></td><td>Feb 2026</td><td>132</td>
+                  <td>$60,880</td><td>$11,200</td><td>$4,500</td>
+                  <td class="text-bold">$76,580</td>
+                  <td><span class="bdg b-green">Paid Feb 17</span></td>
+                </tr>
+                <tr>
+                  <td><code>BATCH-2026-01</code></td><td>Jan 2026</td><td>128</td>
+                  <td>$57,400</td><td>$13,500</td><td>$1,250</td>
+                  <td class="text-bold">$72,150</td>
+                  <td><span class="bdg b-green">Paid Jan 17</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Quick Actions + Incentive Queue -->
+      <div class="col-1">
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-bolt" style="margin-right:6px;color:#2e7d32"></i>Quick Actions</h5></div>
+          <div class="card-body" style="padding:14px;display:flex;flex-direction:column;gap:8px">
+            <a href="batch-review.html" class="btn-pr" style="justify-content:flex-start"><i class="fas fa-layer-group"></i>Review Payment Batch</a>
+            <a href="hra-review.html" class="btn-ol" style="justify-content:flex-start"><i class="fas fa-clipboard-check"></i>Review 14 Pending HRA Incentives</a>
+            <a href="disputes.html" class="btn-ol" style="justify-content:flex-start"><i class="fas fa-gavel"></i>Open Dispute Queue</a>
+            <a href="reconciliation.html" class="btn-ol" style="justify-content:flex-start"><i class="fas fa-balance-scale"></i>Commission Reconciliation</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><h5>Incentive Queue Summary</h5></div>
+          <div class="card-body" style="padding:14px;font-size:13px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">HRA Incentives — Approved</span><strong style="color:#2e7d32">$3,275</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">HRA Incentives — Pending Review</span><strong style="color:#e65100">$350 (14 items)</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Visit Incentives — Approved</span><strong style="color:#2e7d32">$18,425</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Visit Incentives — Pending Review</span><strong style="color:#e65100">$1,375 (5 items)</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Chargebacks Processed</span><strong style="color:#c62828">$0</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts & Reports Section -->
+    <div class="row-grid" style="margin-top:16px;margin-bottom:40px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="color:#1a237e;margin-right:6px"></i>Monthly Payout Summary</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="payoutChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-pie" style="color:#e65100;margin-right:6px"></i>Commission by Type</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="commTypeChart" height="200"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-grid" style="margin-bottom:40px">
+      <div class="col-3">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-line" style="color:#2e7d32;margin-right:6px"></i>YTD Revenue vs Payout</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="revVsPayChart" height="160"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// US-6.18 Near-Real-Time Commission Liability
+const ACCRUED_BASE=112843.00;
+let liabilityNextRefresh=null;
+function refreshLiability(){
+  const now=new Date();
+  const fmt=now.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
+  document.getElementById('liabilityRefreshTs').textContent='Last refreshed: '+fmt;
+  // Simulate a small fluctuation on refresh
+  const jitter=(Math.random()*200-100).toFixed(2);
+  const newVal=(ACCRUED_BASE+parseFloat(jitter)).toFixed(2);
+  document.getElementById('liabilityVal').textContent='$'+parseFloat(newVal).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  // Flash badge
+  const badge=document.getElementById('liabilityBadge');
+  badge.textContent='Updated';badge.style.background='#1b5e20';
+  setTimeout(()=>{badge.textContent='Live';badge.style.background='';},3000);
+  // Show toast
+  if(typeof showToast==='function'){
+    showToast('Liability total refreshed. Next auto-refresh in 15 minutes.','success');
+  }
+  // Schedule next auto-refresh (15 min = 900000ms) — simulated
+  if(liabilityNextRefresh) clearTimeout(liabilityNextRefresh);
+  liabilityNextRefresh=setTimeout(refreshLiability,900000);
+}
+// Auto-refresh on load
+setTimeout(()=>refreshLiability(),200);
+
+// Monthly Payout - Bar
+new Chart(document.getElementById('payoutChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [{
+      label: 'Total Paid ($K)',
+      data: [72, 78, 75, 82, 87, 91],
+      backgroundColor: '#1a237e',
+      borderRadius: 4
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+
+// Commission by Type - Doughnut
+new Chart(document.getElementById('commTypeChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Initial','Renewal','HRA Incentive','Healthy Visit','Override'],
+    datasets: [{
+      data: [42, 28, 8, 12, 10],
+      backgroundColor: ['#1565c0','#2e7d32','#7b1fa2','#e65100','#00838f']
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'right' } } }
+});
+
+// Revenue vs Payout - Multi-line
+new Chart(document.getElementById('revVsPayChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [
+      { label: 'Premium Revenue ($K)', data: [320, 335, 342, 356, 368, 380], borderColor: '#2e7d32', backgroundColor: 'rgba(46,125,50,0.05)', fill: true, tension: 0.3 },
+      { label: 'Commission Payout ($K)', data: [72, 78, 75, 82, 87, 91], borderColor: '#c62828', backgroundColor: 'rgba(198,40,40,0.05)', fill: true, tension: 0.3 }
+    ]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } }
+});
+</script>
+
+<!-- HIERARCHY TRANSFER IMPACT MODAL -->
+<div id="impactModal" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#e65100"><i class="fas fa-exchange-alt" style="margin-right:8px"></i>Hierarchy Transfer — Impact Review</h6>
+      <button onclick="document.getElementById('impactModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px" id="impactBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('impactModal').classList.remove('open')">Close</button>
+      <button class="btn-pr" id="impactRecalcBtn" onclick="recalcOverrides()"><i class="fas fa-calculator" style="margin-right:6px"></i>Recalculate Overrides</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function reviewImpact(agent) {
+  var data = {
+    'rivera': {
+      name: 'James Rivera', npn: '7744221',
+      from: 'Florida Health Partners', to: 'Southeast Distribution Group',
+      batch: 'BATCH-2026-06', batchAmt: '$91,200.00',
+      entries: [
+        {id:'ENR-2026-0489', member:'Dorothy Harris', type:'Initial Enrollment', commission:'$250.00', override:'$37.50 â†’ GA', status:'Pending Recalc'},
+        {id:'ENR-2026-0512', member:'Robert Chen', type:'Initial Enrollment', commission:'$250.00', override:'$37.50 â†’ GA', status:'Pending Recalc'}
+      ],
+      oldOverride: 'Florida Health Partners (GA) — 15% override ($37.50/entry)',
+      newOverride: 'Southeast Distribution Group (GA) — 15% override ($37.50/entry)',
+      impact: 'Override payments must be re-routed from Florida Health Partners to Southeast Distribution Group. No dollar amount change, but receiving entity changes.',
+      risk: 'Medium — If not recalculated before batch approval, overrides will be paid to the wrong GA.'
+    },
+    'patel': {
+      name: 'Kevin Patel', npn: '6612009',
+      from: 'Independent (No GA)', to: 'Premier Health Group (GA)',
+      batch: 'BATCH-2026-06', batchAmt: '$91,200.00',
+      entries: [
+        {id:'REN-2026-0801', member:'Maria Santos', type:'Renewal PMPM', commission:'$22.00/mo', override:'$0.00 (was independent)', status:'Pending Recalc'}
+      ],
+      oldOverride: 'None — agent was independent, no override route',
+      newOverride: 'Premier Health Group (GA) — 12% override ($2.64/mo)',
+      impact: 'New override tier created. Premier Health Group will receive $2.64/mo override on this renewal. Agent net commission unchanged.',
+      risk: 'Low — New override adds cost but no existing payment is incorrect.'
+    }
+  };
+  var d = data[agent];
+  if (!d) return;
+
+  var rows = '';
+  d.entries.forEach(function(e) {
+    rows += '<tr><td style="font-weight:600;font-size:12px">' + e.id + '</td><td>' + e.member + '</td><td>' + e.type + '</td><td>' + e.commission + '</td><td>' + e.override + '</td><td><span class="bdg b-amber" style="font-size:10px">' + e.status + '</span></td></tr>';
+  });
+
+  var riskColor = d.risk.indexOf('Medium') === 0 ? '#e65100' : '#1b5e20';
+
+  document.getElementById('impactBody').innerHTML =
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e8eaed">' +
+      '<div style="width:44px;height:44px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center"><i class="fas fa-user-tie" style="color:#e65100;font-size:18px"></i></div>' +
+      '<div><div style="font-size:15px;font-weight:700">' + d.name + '</div><div style="font-size:12px;color:#5f6368">NPN: ' + d.npn + ' &nbsp;|&nbsp; Batch: ' + d.batch + '</div></div>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">' +
+      '<div style="padding:10px 12px;background:#ffebee;border-radius:6px;font-size:12px"><div style="font-size:10px;font-weight:700;color:#c62828;margin-bottom:4px"><i class="fas fa-arrow-left" style="margin-right:4px"></i>FROM</div>' + d.from + '</div>' +
+      '<div style="padding:10px 12px;background:#e8f5e9;border-radius:6px;font-size:12px"><div style="font-size:10px;font-weight:700;color:#2e7d32;margin-bottom:4px"><i class="fas fa-arrow-right" style="margin-right:4px"></i>TO</div>' + d.to + '</div>' +
+    '</div>' +
+    '<div style="font-size:12px;font-weight:700;margin-bottom:6px">Affected Batch Entries (' + d.entries.length + ')</div>' +
+    '<div style="overflow-x:auto;margin-bottom:14px"><table class="table table-hover" style="font-size:12px;margin:0"><thead style="background:#f8f9fa"><tr><th>Entry ID</th><th>Member</th><th>Type</th><th>Commission</th><th>Override</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">' +
+      '<div style="padding:10px 12px;background:#f8f9fa;border-radius:6px;font-size:11px"><div style="font-weight:700;margin-bottom:4px;color:#5f6368">Previous Override Route</div>' + d.oldOverride + '</div>' +
+      '<div style="padding:10px 12px;background:#f8f9fa;border-radius:6px;font-size:11px"><div style="font-weight:700;margin-bottom:4px;color:#5f6368">New Override Route</div>' + d.newOverride + '</div>' +
+    '</div>' +
+    '<div style="padding:10px 12px;background:#fff3e0;border-radius:6px;border-left:4px solid #e65100;margin-bottom:10px;font-size:12px"><strong>Impact:</strong> ' + d.impact + '</div>' +
+    '<div style="padding:10px 12px;background:#f3e5f5;border-radius:6px;border-left:4px solid #7b1fa2;font-size:12px"><strong>Risk Level:</strong> <span style="color:' + riskColor + ';font-weight:700">' + d.risk + '</span></div>';
+
+  document.getElementById('impactModal').classList.add('open');
+}
+
+function recalcOverrides() {
+  document.getElementById('impactModal').classList.remove('open');
+  showToast('Override cascade recalculated successfully. Batch entries updated with new routing. Ready for batch approval.', 'success');
+}
+</script>
+
+<!-- EXCEPTIONS MODAL -->
+<div id="exceptionsModal" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-hdr">
+      <h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-exclamation-triangle" style="margin-right:8px"></i>Inactive Broker Exceptions</h6>
+      <button onclick="document.getElementById('exceptionsModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px">
+      <div style="padding:10px 14px;background:#ffebee;border-radius:6px;border-left:4px solid #c62828;margin-bottom:16px;font-size:12px">
+        <i class="fas fa-ban" style="color:#c62828;margin-right:6px"></i><strong>2 incentive triggers blocked</strong> — Agents were inactive/suspended at the time of payment event. Total withheld: <strong>$400.00</strong>
+      </div>
+
+      <!-- Exception 1 -->
+      <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;margin-bottom:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center"><i class="fas fa-user" style="color:#c62828"></i></div>
+            <div><div style="font-weight:700;font-size:13px">Sarah Kim</div><div style="font-size:11px;color:#5f6368">NPN: 5501887</div></div>
+          </div>
+          <span class="bdg b-red" style="font-size:10px">Inactive</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:10px">
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Event</span>HRA Completion</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Member</span>Dorothy Harris (MBI ***-**-3356)</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Date</span>06 03,2026</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Amount Withheld</span><strong style="color:#c62828">$25.00</strong></div>
+        </div>
+        <div style="font-size:11px;padding:8px 10px;background:#f8f9fa;border-radius:4px"><strong>Reason:</strong> Agent status = Inactive (effective 05 28,2026). Incentive trigger blocked.</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn-pr btn-sm" style="font-size:10px" onclick="resolveException('Sarah Kim','5501887','reassign')"><i class="fas fa-user-plus" style="margin-right:4px"></i>Reassign to Active AOR</button>
+          <button class="btn-ol btn-sm" style="font-size:10px" onclick="resolveException('Sarah Kim','5501887','reinstate')"><i class="fas fa-undo" style="margin-right:4px"></i>Reinstate & Pay</button>
+          <button class="btn-ol btn-sm" style="font-size:10px;color:#c62828;border-color:#c62828" onclick="resolveException('Sarah Kim','5501887','deny')"><i class="fas fa-times" style="margin-right:4px"></i>Deny</button>
+        </div>
+      </div>
+
+      <!-- Exception 2 -->
+      <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center"><i class="fas fa-user" style="color:#c62828"></i></div>
+            <div><div style="font-weight:700;font-size:13px">Kevin Patel</div><div style="font-size:11px;color:#5f6368">NPN: 6612009</div></div>
+          </div>
+          <span class="bdg b-orange" style="font-size:10px">Suspended</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:10px">
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Event</span>Healthy Visit — ESRD (DUO-confirmed)</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Member</span>Patient record (redacted)</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Date</span>06 05,2026</div>
+          <div><span style="font-weight:600;color:#5f6368;font-size:10px;display:block">Amount Withheld</span><strong style="color:#c62828">$375.00</strong></div>
+        </div>
+        <div style="font-size:11px;padding:8px 10px;background:#f8f9fa;border-radius:4px"><strong>Reason:</strong> Agent status = Suspended (compliance hold). Incentive trigger blocked.</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn-pr btn-sm" style="font-size:10px" onclick="resolveException('Kevin Patel','6612009','reassign')"><i class="fas fa-user-plus" style="margin-right:4px"></i>Reassign to Active AOR</button>
+          <button class="btn-ol btn-sm" style="font-size:10px" onclick="resolveException('Kevin Patel','6612009','reinstate')"><i class="fas fa-undo" style="margin-right:4px"></i>Reinstate & Pay</button>
+          <button class="btn-ol btn-sm" style="font-size:10px;color:#c62828;border-color:#c62828" onclick="resolveException('Kevin Patel','6612009','deny')"><i class="fas fa-times" style="margin-right:4px"></i>Deny</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('exceptionsModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function viewExceptions() {
+  document.getElementById('exceptionsModal').classList.add('open');
+}
+function resolveException(name, npn, action) {
+  var msgs = {
+    'reassign': 'Incentive for ' + name + ' (NPN ' + npn + ') reassigned to active AOR agent. Payment will be included in next batch.',
+    'reinstate': 'Agent ' + name + ' (NPN ' + npn + ') flagged for reinstatement review. Upon approval, withheld incentive will be released.',
+    'deny': 'Exception for ' + name + ' (NPN ' + npn + ') denied. Incentive permanently withheld. Audit log updated.'
+  };
+  showToast(msgs[action], action === 'deny' ? 'error' : 'success');
+}
+</script>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

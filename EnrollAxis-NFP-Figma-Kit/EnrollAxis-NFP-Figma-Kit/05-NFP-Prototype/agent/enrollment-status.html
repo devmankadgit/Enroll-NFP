@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enrollment Status | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}.timeline{position:relative;padding-left:30px;margin:12px 0}.timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:#e0e0e0}.tl-item{position:relative;padding-bottom:16px}.tl-item:last-child{padding-bottom:0}.tl-item::before{content:'';position:absolute;left:-24px;top:4px;width:12px;height:12px;border-radius:50%;background:#e0e0e0;border:2px solid #fff;box-shadow:0 0 0 1px #e0e0e0}.tl-item.done::before{background:#2e7d32;border-color:#fff;box-shadow:0 0 0 1px #2e7d32}.tl-item.current::before{background:#0d47a1;border-color:#fff;box-shadow:0 0 0 3px #bbdefb}.tl-item.failed::before{background:#c62828;border-color:#fff;box-shadow:0 0 0 1px #c62828}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html" class="active"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Enrollment Status Tracker</h4><ol class="breadcrumb-bar"><li>Enrollment Lifecycle Statuses &amp; History</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-paper-plane"></i></div><div><div class="stat-label">Submitted</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-sync-alt"></i></div><div><div class="stat-label">Pending CMS</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Accepted</div><div class="stat-val">18</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Rejected</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f0f2f5;color:#5f6368"><i class="fas fa-undo"></i></div><div><div class="stat-label">Disenrolled</div><div class="stat-val">2</div></div></div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <label>Status:</label>
+      <select id="statusFilter" onchange="filterEnrollments()"><option value="">All</option><option value="submitted">Submitted</option><option value="pending-cms">Pending CMS</option><option value="accepted">Accepted</option><option value="active">Active</option><option value="rejected">Rejected</option><option value="disenrolled">Disenrolled</option></select>
+      <label>Date Range:</label>
+      <input type="date" style="width:130px"><span style="font-size:12px">to</span><input type="date" style="width:130px">
+      <input type="text" id="memberSearch" placeholder="Search member..." style="width:160px">
+      <button class="btn-ol btn-sm" onclick="filterEnrollments()"><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- Enrollments Table -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>My Enrollments</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','enrollment-status_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>App ID</th><th>Member</th><th>Plan</th><th>Submitted</th><th>Status</th><th>CMS Response</th><th>Effective Date</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr data-status="submitted">
+              <td><strong>APP-2026-1249</strong></td>
+              <td>Frank Johnson</td>
+              <td>CKD SNP Silver</td>
+              <td>05 19,2026</td>
+              <td><span class="bdg b-blue">Submitted to CMS</span></td>
+              <td>Awaiting ATN</td>
+              <td></td>
+              <td><button class="btn-ol btn-sm" onclick="showTimeline('APP-2026-1249','Frank Johnson','CKD SNP Silver','submitted')">Timeline</button></td>
+            </tr>
+            <tr data-status="accepted">
+              <td><strong>APP-2026-1248</strong></td>
+              <td>Thomas Rivera</td>
+              <td>CKD SNP Gold</td>
+              <td>05 15,2026</td>
+              <td><span class="bdg b-green">CMS Accepted</span></td>
+              <td>05 18,2026</td>
+              <td>07 01,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="showTimeline('APP-2026-1248','Thomas Rivera','CKD SNP Gold','accepted')">Timeline</button></td>
+            </tr>
+            <tr data-status="active">
+              <td><strong>APP-2026-1245</strong></td>
+              <td>Dorothy Henderson</td>
+              <td>ESRD Platinum</td>
+              <td>04 28,2026</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>05 02,2026</td>
+              <td>06 01,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="showTimeline('APP-2026-1245','Dorothy Henderson','ESRD Platinum','active')">Timeline</button></td>
+            </tr>
+            <tr data-status="rejected" style="background:#fff5f5">
+              <td><strong>APP-2026-1240</strong></td>
+              <td>Robert Lin</td>
+              <td>CKD SNP Silver</td>
+              <td>04 10,2026</td>
+              <td><span class="bdg b-red">Rejected</span></td>
+              <td>04 14,2026</td>
+              <td></td>
+              <td><button class="btn-ol btn-sm" onclick="showTimeline('APP-2026-1240','Robert Lin','CKD SNP Silver','rejected')">Timeline</button> <button class="btn-ol btn-sm" style="color:#0d47a1" onclick="openResubmit('APP-2026-1240','Robert Lin','CKD SNP Silver')"><i class="fas fa-redo" style="margin-right:4px"></i>Re-Submit</button></td>
+            </tr>
+            <tr data-status="active">
+              <td><strong>APP-2026-1220</strong></td>
+              <td>Grace Kim</td>
+              <td>CKD SNP Gold</td>
+              <td>06 15,2025</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>06 18,2025</td>
+              <td>07 01,2025</td>
+              <td><button class="btn-ol btn-sm" onclick="showTimeline('APP-2026-1220','Grace Kim','CKD SNP Gold','active')">Timeline</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Status History Detail Panel -->
+    <div class="card" id="detail-panel" style="display:none">
+      <div class="card-hdr" style="background:#e3f2fd;display:flex;justify-content:space-between;align-items:center"><h5 id="tlTitle" style="margin:0"><i class="fas fa-history" style="margin-right:8px;color:#0d47a1"></i>Status History: APP-2026-1249 (Frank Johnson)</h5><button class="btn-ol btn-sm" onclick="document.getElementById('detail-panel').style.display='none'" style="border:none;font-size:16px;cursor:pointer;padding:4px 8px">&times;</button></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="row-grid" style="margin-bottom:12px">
+          <div class="col-1"><strong>Plan:</strong> CKD SNP Silver</div>
+          <div class="col-1"><strong>Source:</strong> Broker-Assisted</div>
+          <div class="col-1"><strong>SOA:</strong> Valid (signed May 17)</div>
+          <div class="col-1"><strong>7-Day CMS Clock:</strong> Day 6 of 7</div>
+        </div>
+
+        <!-- Status Timeline -->
+        <div class="timeline">
+          <div class="tl-item done">
+            <div style="font-size:12px"><strong>Application Created</strong>  05 19,2026 10:22 AM</div>
+            <div style="font-size:11px;color:#5f6368">Agent J. Martinez (NPN 8823441) initiated enrollment via broker-assisted form.</div>
+          </div>
+          <div class="tl-item done">
+            <div style="font-size:12px"><strong>Internal Validation Passed</strong>  05 19,2026 10:23 AM</div>
+            <div style="font-size:11px;color:#5f6368">All required fields complete. SOA verified. PQAT completed. BEQ: eligible.</div>
+          </div>
+          <div class="tl-item done">
+            <div style="font-size:12px"><strong>Submitted to CMS</strong>  05 19,2026 10:25 AM</div>
+            <div style="font-size:11px;color:#5f6368">Application transmitted to CMS via 834 transaction. 7-day compliance clock started.</div>
+          </div>
+          <div class="tl-item current">
+            <div style="font-size:12px"><strong>Awaiting CMS Transaction Reply (ATN)</strong>  In Progress</div>
+            <div style="font-size:11px;color:#5f6368">CMS is processing. Expected response within 24-72 hours. Day 6 of 7-day window.</div>
+          </div>
+          <div class="tl-item">
+            <div style="font-size:12px;color:#9e9e9e"><strong>CMS Accepted / Rejected</strong>  Pending</div>
+          </div>
+          <div class="tl-item">
+            <div style="font-size:12px;color:#9e9e9e"><strong>Member Active</strong>  Pending effective date</div>
+          </div>
+        </div>
+
+        <!-- Lifecycle Statuses Reference -->
+        <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:6px">
+          <div style="font-weight:600;margin-bottom:8px">Enrollment Lifecycle Statuses:</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:11px">
+            <span><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:10px">Draft</span> Application started, not submitted</span>
+            <span><span class="bdg" style="background:#e3f2fd;color:#0d47a1;font-size:10px">Submitted</span> Sent to CMS</span>
+            <span><span class="bdg" style="background:#fff8e1;color:#e65100;font-size:10px">Pending ATN</span> Awaiting CMS response</span>
+            <span><span class="bdg" style="background:#e8f5e9;color:#1b5e20;font-size:10px">Accepted</span> CMS confirmed</span>
+            <span><span class="bdg" style="background:#fce4ec;color:#c62828;font-size:10px">Rejected</span> CMS denied (reason provided)</span>
+            <span><span class="bdg" style="background:#e8f5e9;color:#1b5e20;font-size:10px">Active</span> Member enrolled, effective</span>
+            <span><span class="bdg" style="background:#f0f2f5;color:#5f6368;font-size:10px">Disenrolled</span> Voluntary or involuntary term</span>
+            <span><span class="bdg" style="background:#fce4ec;color:#c62828;font-size:10px">Voided</span> Cancelled before effective</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Re-Submit Modal -->
+<div class="modal-overlay" id="resubmitModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-redo" style="color:#0d47a1;margin-right:8px"></i>Re-Submit Enrollment</h5>
+      <button class="modal-close" onclick="closeModal('resubmitModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>Original Rejection Reason:</strong> Member has existing enrollment with another MA plan (conflict code E-091). Must disenroll from current plan first or submit during valid SEP.</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Application ID</label><div style="font-size:13px;font-weight:700" id="rsAppId">APP-2026-1240</div></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Member</label><div style="font-size:13px;font-weight:700" id="rsMember">Robert Lin</div></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Plan</label><div style="font-size:13px" id="rsPlan">CKD SNP Silver</div></div>
+        <div><label style="font-size:11px;font-weight:600;color:#5f6368">Original Submitted</label><div style="font-size:13px">04 10,2026</div></div>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368">Correction / SEP Justification <span style="color:#c62828">*</span></label>
+        <textarea id="rsReason" rows="3" placeholder="Describe what was corrected (e.g., member disenrolled from prior plan, SEP documentation attached)..." style="width:100%;padding:8px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;resize:vertical"></textarea>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368">Supporting Documentation (optional)</label>
+        <input type="file" id="rsDoc" style="font-size:12px">
+      </div>
+      <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;font-size:12px;color:#5f6368">
+        <i class="fas fa-info-circle" style="margin-right:6px;color:#0d47a1"></i>Re-submission will create a new CMS transaction referencing the original application. The 7-day compliance clock restarts upon submission.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('resubmitModal')">Cancel</button>
+      <button class="btn-ol" onclick="prefillResubmission()" style="color:#0d47a1;border-color:#0d47a1"><i class="fas fa-magic" style="margin-right:6px"></i>Prefill</button>
+      <button class="btn-pr" onclick="submitResubmission()"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Re-Submit to CMS</button>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Timeline data for each enrollment
+var timelineData = {
+  'APP-2026-1249': {
+    steps: [
+      {status:'done', title:'Application Created', date:'05 19,2026 10:22 AM', desc:'Agent J. Martinez (NPN 8823441) initiated enrollment via broker-assisted form.'},
+      {status:'done', title:'Internal Validation Passed', date:'05 19,2026 10:23 AM', desc:'All required fields complete. SOA verified. PQAT completed. BEQ: eligible.'},
+      {status:'done', title:'Submitted to CMS', date:'05 19,2026 10:25 AM', desc:'Application transmitted to CMS via 834 transaction. 7-day compliance clock started.'},
+      {status:'current', title:'Awaiting CMS Transaction Reply (ATN)', date:'In Progress', desc:'CMS is processing. Expected response within 24-72 hours. Day 6 of 7-day window.'},
+      {status:'', title:'CMS Accepted / Rejected', date:'Pending', desc:''},
+      {status:'', title:'Member Active', date:'Pending effective date', desc:''}
+    ],
+    meta: {plan:'CKD SNP Silver', source:'Broker-Assisted', soa:'Valid (signed May 17)', clock:'Day 6 of 7'}
+  },
+  'APP-2026-1248': {
+    steps: [
+      {status:'done', title:'Application Created', date:'05 15,2026 2:10 PM', desc:'Agent J. Martinez initiated enrollment via broker-assisted form.'},
+      {status:'done', title:'Internal Validation Passed', date:'05 15,2026 2:11 PM', desc:'All required fields complete. SOA verified. PQAT completed.'},
+      {status:'done', title:'Submitted to CMS', date:'05 15,2026 2:14 PM', desc:'Application transmitted to CMS via 834 transaction.'},
+      {status:'done', title:'CMS Transaction Reply Received', date:'05 18,2026 9:05 AM', desc:'CMS accepted enrollment. Confirmation code: TRC-99281.'},
+      {status:'current', title:'CMS Accepted — Awaiting Effective Date', date:'07 01,2026', desc:'Member will become active on effective date.'},
+      {status:'', title:'Member Active', date:'Pending 07 01,2026', desc:''}
+    ],
+    meta: {plan:'CKD SNP Gold', source:'Broker-Assisted', soa:'Valid (signed May 14)', clock:'Complete'}
+  },
+  'APP-2026-1245': {
+    steps: [
+      {status:'done', title:'Application Created', date:'04 28,2026 11:30 AM', desc:'Agent J. Martinez initiated enrollment for Dorothy Henderson.'},
+      {status:'done', title:'Internal Validation Passed', date:'04 28,2026 11:31 AM', desc:'All required fields complete. SOA & PQAT verified.'},
+      {status:'done', title:'Submitted to CMS', date:'04 28,2026 11:35 AM', desc:'Application transmitted to CMS via 834 transaction.'},
+      {status:'done', title:'CMS Accepted', date:'05 02,2026 8:12 AM', desc:'CMS accepted enrollment. Confirmation: TRC-88714.'},
+      {status:'done', title:'Member Activated', date:'06 01,2026', desc:'Coverage effective. Member enrolled in ESRD Platinum plan.'},
+      {status:'current', title:'Active — Enrolled', date:'Current', desc:'Member is actively enrolled with coverage through plan year.'}
+    ],
+    meta: {plan:'ESRD Platinum', source:'Broker-Assisted', soa:'Valid (signed Apr 26)', clock:'Complete'}
+  },
+  'APP-2026-1240': {
+    steps: [
+      {status:'done', title:'Application Created', date:'04 10,2026 3:45 PM', desc:'Agent J. Martinez initiated enrollment for Robert Lin.'},
+      {status:'done', title:'Internal Validation Passed', date:'04 10,2026 3:46 PM', desc:'All required fields complete. SOA verified.'},
+      {status:'done', title:'Submitted to CMS', date:'04 10,2026 3:50 PM', desc:'Application transmitted to CMS via 834 transaction.'},
+      {status:'failed', title:'CMS Rejected', date:'04 14,2026 10:30 AM', desc:'Rejection Reason: Member has existing enrollment with another MA plan (conflict code E-091). Must disenroll from current plan first or submit during valid SEP.'},
+      {status:'', title:'Corrective Action', date:'Pending', desc:'Agent may re-submit after member disenrolls from conflicting plan.'}
+    ],
+    meta: {plan:'CKD SNP Silver', source:'Broker-Assisted', soa:'Valid (signed Apr 8)', clock:'Terminated — Rejected'}
+  },
+  'APP-2026-1220': {
+    steps: [
+      {status:'done', title:'Application Created', date:'06 15,2025 9:00 AM', desc:'Agent J. Martinez initiated enrollment for Grace Kim.'},
+      {status:'done', title:'Internal Validation Passed', date:'06 15,2025 9:01 AM', desc:'All fields complete. SOA & eligibility verified.'},
+      {status:'done', title:'Submitted to CMS', date:'06 15,2025 9:05 AM', desc:'Application transmitted to CMS via 834 transaction.'},
+      {status:'done', title:'CMS Accepted', date:'06 18,2025 7:45 AM', desc:'CMS accepted. Confirmation: TRC-72109.'},
+      {status:'done', title:'Member Activated', date:'07 01,2025', desc:'Coverage effective. Enrolled in CKD SNP Gold.'},
+      {status:'current', title:'Active — Enrolled', date:'Current', desc:'Member actively enrolled through plan year 2026. Renewal confirmed.'}
+    ],
+    meta: {plan:'CKD SNP Gold', source:'Broker-Assisted', soa:'Valid (signed 06 13,2025)', clock:'Complete'}
+  }
+};
+
+function showTimeline(appId, memberName, plan, status) {
+  var panel = document.getElementById('detail-panel');
+  var data = timelineData[appId];
+  if (!data) return;
+
+  // Update title
+  document.getElementById('tlTitle').innerHTML = '<i class="fas fa-history" style="margin-right:8px;color:#0d47a1"></i>Status History: ' + appId + ' (' + memberName + ')';
+
+  // Update meta row
+  var metaRow = panel.querySelector('.row-grid');
+  metaRow.innerHTML = '<div class="col-1"><strong>Plan:</strong> ' + data.meta.plan + '</div>' +
+    '<div class="col-1"><strong>Source:</strong> ' + data.meta.source + '</div>' +
+    '<div class="col-1"><strong>SOA:</strong> ' + data.meta.soa + '</div>' +
+    '<div class="col-1"><strong>CMS Clock:</strong> ' + data.meta.clock + '</div>';
+
+  // Rebuild timeline
+  var tlContainer = panel.querySelector('.timeline');
+  var html = '';
+  data.steps.forEach(function(step) {
+    var cls = step.status ? ' ' + step.status : '';
+    var textColor = step.status ? '' : ' style="color:#9e9e9e"';
+    html += '<div class="tl-item' + cls + '">';
+    html += '<div style="font-size:12px"' + textColor + '><strong>' + step.title + '</strong>  ' + step.date + '</div>';
+    if (step.desc) {
+      html += '<div style="font-size:11px;color:' + (step.status === 'failed' ? '#c62828' : '#5f6368') + '">' + step.desc + '</div>';
+    }
+    html += '</div>';
+  });
+  tlContainer.innerHTML = html;
+
+  // Show panel and scroll to it
+  panel.style.display = 'block';
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function filterEnrollments() {
+  var status = (document.getElementById('statusFilter').value || '').toLowerCase();
+  var member = (document.getElementById('memberSearch').value || '').toLowerCase();
+  document.querySelectorAll('.tbl tbody tr').forEach(function(row) {
+    var rowStatus = (row.getAttribute('data-status') || '').toLowerCase();
+    var rowText = row.textContent.toLowerCase();
+    var statusOk = !status || rowStatus === status;
+    var memberOk = !member || rowText.indexOf(member) !== -1;
+    row.style.display = (statusOk && memberOk) ? '' : 'none';
+  });
+}
+
+function openResubmit(appId, member, plan) {
+  document.getElementById('rsAppId').textContent = appId;
+  document.getElementById('rsMember').textContent = member;
+  document.getElementById('rsPlan').textContent = plan;
+  document.getElementById('rsReason').value = '';
+  document.getElementById('resubmitModal').style.display = 'flex';
+}
+
+function submitResubmission() {
+  var reason = document.getElementById('rsReason').value.trim();
+  if (!reason || reason.length < 20) {
+    alert('Please provide a correction justification (minimum 20 characters).');
+    return;
+  }
+  closeModal('resubmitModal');
+  if (typeof showToast === 'function') {
+    showToast('Enrollment re-submitted to CMS successfully. New 7-day clock started.', 'success');
+  } else {
+    alert('Enrollment re-submitted to CMS successfully. New 7-day clock started.');
+  }
+}
+
+function prefillResubmission() {
+  document.getElementById('rsReason').value = 'Member has disenrolled from prior MA plan (confirmed via CMS TRR). SEP eligibility verified — Loss of Coverage SEP applies. Original application data carried forward with updated disenrollment confirmation.';
+  if (typeof showToast === 'function') {
+    showToast('Form prefilled with original application data.', 'info');
+  }
+}
+
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+document.querySelectorAll('.modal-overlay').forEach(function(o) { o.addEventListener('click', function(e) { if (e.target === this) this.style.display = 'none'; }); });
+</script>
+</body>
+</html>

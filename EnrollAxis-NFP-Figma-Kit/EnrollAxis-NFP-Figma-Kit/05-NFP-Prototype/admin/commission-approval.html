@@ -1,0 +1,446 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Approval | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.ca-status{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.cas-pending{background:#fff3e0;color:#e65100}
+.cas-approved{background:#e8f5e9;color:#1b5e20}
+.cas-rejected{background:#fce4ec;color:#b71c1c}
+.cas-hold{background:#e8eaed;color:#5f6368}
+.ca-type{padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.cat-initial{background:#e3f2fd;color:#0d47a1}
+.cat-renewal{background:#e8f5e9;color:#1b5e20}
+.cat-override{background:#ede7f6;color:#4527a0}
+.kpi-mini{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:12px 16px;text-align:center}
+.kpi-mini .val{font-size:24px;font-weight:800;color:#1a237e}
+.kpi-mini .lbl{font-size:11px;color:#5f6368;margin-top:2px}
+.breakdown-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f3f4;font-size:12px}
+.breakdown-row:last-child{border-bottom:none;font-weight:700;color:#1a237e}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html" class="active"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Approval</h4>
+      <ol class="breadcrumb-bar"><li>Agent-wise Commission Review &amp; Approval — CY2026</li></ol>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Info banner -->
+    <div style="background:#e8f0fe;border:1px solid #c5d7fb;border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px">
+      <i class="fas fa-info-circle" style="color:#1a237e;font-size:18px;flex-shrink:0;margin-top:2px"></i>
+      <div style="font-size:12px;color:#1a237e">
+        <strong>Commission Approval Workflow:</strong> Review each agent's calculated commission for the selected period. Approve to include in the next batch run, reject with a reason, or place on hold for further review. Bulk actions available for multiple agents.
+      </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="kpi-mini"><div class="val" id="kpiTotal">12</div><div class="lbl">Total Agents</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#e65100" id="kpiPending">5</div><div class="lbl">Pending Review</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#1b5e20" id="kpiApproved">5</div><div class="lbl">Approved</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#b71c1c" id="kpiRejected">1</div><div class="lbl">Rejected</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#5f6368" id="kpiHold">1</div><div class="lbl">On Hold</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#e65100;font-size:18px" id="kpiAmtPending">$14,320</div><div class="lbl">Amount Pending ($)</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#1b5e20;font-size:18px" id="kpiAmtApproved">$38,640</div><div class="lbl">Amount Approved ($)</div></div></div>
+    </div>
+
+    <!-- Filter + Bulk Actions -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <label style="font-size:12px;font-weight:600">Period:</label>
+      <select id="fPeriod" class="form-control" style="width:140px" onchange="renderTable()">
+        <option value="">All Periods</option>
+        <option value="Jun 2026" selected>Jun 2026</option>
+        <option value="May 2026">May 2026</option>
+        <option value="Apr 2026">Apr 2026</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Status:</label>
+      <select id="fStatus" class="form-control" style="width:140px" onchange="renderTable()">
+        <option value="">All Statuses</option>
+        <option>Pending</option>
+        <option>Approved</option>
+        <option>Rejected</option>
+        <option>On Hold</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Type:</label>
+      <select id="fType" class="form-control" style="width:130px" onchange="renderTable()">
+        <option value="">All Types</option>
+        <option>Initial</option>
+        <option>Renewal</option>
+        <option>Override</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Search:</label>
+      <input id="fSearch" class="form-control" placeholder="Agent name or NPN..." style="width:200px" oninput="renderTable()">
+      <button class="btn-ol btn-sm" onclick="clearFilters()"><i class="fas fa-times"></i> Clear</button>
+      <button class="btn-pr btn-sm" style="background:#1b5e20" onclick="bulkAction('Approved')"><i class="fas fa-check-double"></i> Approve All Pending</button>
+      <button class="btn-ol btn-sm" style="color:#b71c1c;border-color:#b71c1c" onclick="bulkAction('Rejected')"><i class="fas fa-times"></i> Reject All Pending</button>
+      <div style="margin-left:auto;display:flex;gap:8px">
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div class="card-hdr" style="justify-content:space-between">
+        <h5><i class="fas fa-check-circle" style="margin-right:6px;color:#1a237e"></i>Agent Commission Review</h5>
+        <span id="tableCount" style="font-size:12px;color:#5f6368"></span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('','commission-approval_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <!-- Legends -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:10px 16px;background:#fafafa;border-bottom:1px solid #f1f3f4;font-size:11px;color:#5f6368">
+        <span style="font-weight:700;color:#37474f">Status:</span>
+        <span><span class="ca-status cas-pending">Pending</span> Awaiting payer review</span>
+        <span><span class="ca-status cas-approved">Approved</span> Cleared for batch processing</span>
+        <span><span class="ca-status cas-rejected">Rejected</span> Excluded from batch</span>
+        <span><span class="ca-status cas-hold">On Hold</span> Flagged for further review</span>
+        <span style="margin-left:auto;display:flex;gap:10px;align-items:center">
+          <span style="font-weight:700;color:#37474f">Type:</span>
+          <span><span class="ca-type cat-initial">Initial</span> First-year enrollment</span>
+          <span><span class="ca-type cat-renewal">Renewal</span> Year 2+ retention</span>
+          <span><span class="ca-type cat-override">Override</span> Upline override commission</span>
+        </span>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Agent</th>
+              <th>NPN</th>
+              <th>Upline Agency</th>
+              <th>Period</th>
+              <th>Commission Type</th>
+              <th>Enrollments</th>
+              <th>Rate (PMPM)</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="commTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Commission Detail Modal -->
+<div class="modal-overlay" id="commDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:680px;width:97%;max-height:90vh;display:flex;flex-direction:column">
+    <div class="modal-hdr" style="flex-shrink:0">
+      <h5 id="commDetailTitle">Commission Detail</h5>
+      <button class="modal-close" onclick="document.getElementById('commDetailModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto;flex:1" id="commDetailBody"></div>
+  </div>
+</div>
+
+<!-- Approve / Reject / Hold Modal -->
+<div class="modal-overlay" id="commActionModal" style="display:none">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5 id="commActionTitle">Commission Action</h5>
+      <button class="modal-close" onclick="document.getElementById('commActionModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div id="commActionBanner" style="border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:14px"></div>
+      <div class="mb-3">
+        <label style="font-size:12px;font-weight:600">Notes <span id="commNoteReq" style="color:#c62828"></span></label>
+        <textarea id="commActionNotes" class="form-control" rows="3" placeholder="Add reviewer notes for audit trail..."></textarea>
+        <div id="commNoteErr" style="display:none;font-size:11px;color:#c62828;margin-top:3px"><i class="fas fa-exclamation-circle" style="margin-right:3px"></i>Notes are required for rejection.</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="document.getElementById('commActionModal').style.display='none'">Cancel</button>
+        <button class="btn-pr" id="commActionBtn" onclick="executeCommAction()"><i class="fas fa-check" style="margin-right:4px"></i>Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:380px"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var COMMISSIONS = [
+  {id:'CA-001',agent:'James Martinez',   npn:'8823441',   upline:'HealthFirst Distribution', period:'Jun 2026', type:'Initial', enrollments:5, rate:47.75, amount:1193.75, status:'Pending',
+   breakdown:[{plan:'StarPlus ESRD SNP 2026',member:'Frank Johnson',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'KidneyCare CKD SNP 2026',member:'Alice Cooper',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'StarPlus ESRD SNP 2026',member:'George Harris',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'BrightChoice HMO 2026',member:'Betty Moore',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'KidneyCare CKD SNP 2026',member:'Thomas Reed',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-002',agent:'Angela Williams',   npn:'8877665544', upline:'HealthFirst Distribution', period:'Jun 2026', type:'Renewal', enrollments:8, rate:28.92, amount:1156.80, status:'Approved',
+   breakdown:[{plan:'StarPlus ESRD SNP 2026',member:'Mary Williams',enrDate:'2025-06-01',type:'Renewal',rate:28.92,months:4,amt:115.68},{plan:'KidneyCare CKD SNP 2026',member:'John Davis',enrDate:'2025-06-01',type:'Renewal',rate:28.92,months:4,amt:115.68},{plan:'BrightChoice HMO 2026',member:'Linda Brown',enrDate:'2025-06-01',type:'Renewal',rate:28.92,months:4,amt:115.68}]},
+  {id:'CA-003',agent:'Michael Torres',    npn:'5544332211', upline:'HealthFirst Distribution', period:'Jun 2026', type:'Initial', enrollments:3, rate:47.75, amount:715.00, status:'Pending',
+   breakdown:[{plan:'BrightChoice HMO 2026',member:'Carlos Rivera',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'BrightChoice HMO 2026',member:'Maria Lopez',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'StarPlus ESRD SNP 2026',member:'James Wilson',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-004',agent:'Priya Patel',       npn:'91827364',   upline:'SunBridge Medicare Advisors', period:'Jun 2026', type:'Initial', enrollments:7, rate:47.75, amount:2126.25, status:'Approved',
+   breakdown:[{plan:'DiabetesCare SNP 2026',member:'Robert Kim',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'DiabetesCare SNP 2026',member:'Susan Park',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-005',agent:'Robert Chen',       npn:'98765432',   upline:'HealthFirst Distribution', period:'Jun 2026', type:'Initial', enrollments:4, rate:47.75, amount:955.00, status:'Pending',
+   breakdown:[{plan:'StarPlus ESRD SNP 2026',member:'Dorothy Clark',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'KidneyCare CKD SNP 2026',member:'Kevin White',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-006',agent:'Lisa Johnson',      npn:'66778899',   upline:'Coastal Medicare Partners', period:'Jun 2026', type:'Renewal', enrollments:6, rate:28.92, amount:867.60, status:'Approved',
+   breakdown:[{plan:'BrightChoice HMO 2026',member:'Nancy Martin',enrDate:'2025-05-01',type:'Renewal',rate:28.92,months:5,amt:144.60}]},
+  {id:'CA-007',agent:'David Kim',         npn:'55443322',   upline:'SunBridge Medicare Advisors', period:'Jun 2026', type:'Override', enrollments:12, rate:5.00, amount:360.00, status:'On Hold',
+   breakdown:[{plan:'DiabetesCare SNP 2026',member:'(12 members — GA override)',enrDate:'2026-06-01',type:'Override',rate:5.00,months:6,amt:360.00}]},
+  {id:'CA-008',agent:'Sarah Chen',        npn:'7712345',    upline:'Coastal Medicare Partners', period:'Jun 2026', type:'Renewal', enrollments:2, rate:28.92, amount:231.36, status:'Rejected',
+   breakdown:[{plan:'BrightChoice HMO 2026',member:'Paul Anderson',enrDate:'2025-04-01',type:'Renewal',rate:28.92,months:4,amt:115.68}]},
+  {id:'CA-009',agent:'Jennifer Lopez',    npn:'77889900',   upline:'HealthFirst Distribution', period:'Jun 2026', type:'Initial', enrollments:2, rate:47.75, amount:477.50, status:'Pending',
+   breakdown:[{plan:'KidneyCare CKD SNP 2026',member:'Steven Harris',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75},{plan:'StarPlus ESRD SNP 2026',member:'Karen Lewis',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-010',agent:'Maria Santos',      npn:'33445566',   upline:'Coastal Medicare Partners', period:'Jun 2026', type:'Initial', enrollments:1, rate:47.75, amount:238.75, status:'Approved',
+   breakdown:[{plan:'KidneyCare CKD SNP 2026',member:'Donald Robinson',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]},
+  {id:'CA-011',agent:'Thomas Wright',     npn:'44556677',   upline:'HealthFirst Distribution', period:'Jun 2026', type:'Renewal', enrollments:0, rate:28.92, amount:0, status:'Approved',
+   breakdown:[]},
+  {id:'CA-012',agent:'Amy Foster',        npn:'87654321',   upline:'Southeast Agency', period:'Jun 2026', type:'Initial', enrollments:9, rate:47.75, amount:2148.75, status:'Pending',
+   breakdown:[{plan:'HeartCare Heart & Diabetes SNP 2026',member:'(9 members)',enrDate:'2026-06-01',type:'Initial',rate:47.75,months:1,amt:47.75}]}
+];
+
+var CURRENT_ACTION_ID   = null;
+var CURRENT_ACTION_TYPE = null;
+
+/* ── Render table ── */
+function renderTable(){
+  var fPeriod = document.getElementById('fPeriod').value;
+  var fStatus = document.getElementById('fStatus').value;
+  var fType   = document.getElementById('fType').value;
+  var fSearch = document.getElementById('fSearch').value.toLowerCase();
+
+  var rows = COMMISSIONS.filter(function(c){
+    if(fPeriod && c.period !== fPeriod) return false;
+    if(fStatus && c.status !== fStatus) return false;
+    if(fType   && c.type   !== fType)   return false;
+    if(fSearch && (c.agent+c.npn).toLowerCase().indexOf(fSearch)<0) return false;
+    return true;
+  });
+
+  document.getElementById('tableCount').textContent = rows.length + ' record'+(rows.length!==1?'s':'');
+
+  var typeCls={Initial:'cat-initial',Renewal:'cat-renewal',Override:'cat-override'};
+  var stCls  ={Pending:'cas-pending',Approved:'cas-approved',Rejected:'cas-rejected','On Hold':'cas-hold'};
+
+  document.getElementById('commTbody').innerHTML = rows.map(function(c){
+    var actions='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px" onclick="openDetail(\''+c.id+'\')"><i class="fas fa-eye"></i> View</button>';
+    if(c.status==='Pending'){
+      actions+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#1b5e20" onclick="openAction(\''+c.id+'\',\'Approved\')"><i class="fas fa-check"></i> Approve</button>';
+      actions+='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px;color:#b71c1c;border-color:#b71c1c" onclick="openAction(\''+c.id+'\',\'Rejected\')"><i class="fas fa-times"></i> Reject</button>';
+      actions+='<button class="btn-ol btn-sm" style="font-size:10px;color:#5f6368;border-color:#bdbdbd" onclick="openAction(\''+c.id+'\',\'On Hold\')"><i class="fas fa-pause"></i> Hold</button>';
+    }
+    if(c.status==='On Hold'){
+      actions+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#1b5e20" onclick="openAction(\''+c.id+'\',\'Approved\')"><i class="fas fa-check"></i> Approve</button>';
+      actions+='<button class="btn-ol btn-sm" style="font-size:10px;color:#b71c1c;border-color:#b71c1c" onclick="openAction(\''+c.id+'\',\'Rejected\')"><i class="fas fa-times"></i> Reject</button>';
+    }
+    return '<tr>'
+      +'<td><input type="checkbox" class="row-chk" data-id="'+c.id+'"></td>'
+      +'<td><strong>'+c.agent+'</strong></td>'
+      +'<td style="font-family:monospace;font-size:11px">'+c.npn+'</td>'
+      +'<td style="font-size:11px">'+c.upline+'</td>'
+      +'<td style="font-size:11px">'+c.period+'</td>'
+      +'<td><span class="ca-type '+(typeCls[c.type]||'')+'">'+c.type+'</span></td>'
+      +'<td style="text-align:center;font-weight:700">'+c.enrollments+'</td>'
+      +'<td style="font-size:11px">$'+c.rate.toFixed(2)+'/mo</td>'
+      +'<td style="font-weight:700;color:'+(c.status==='Approved'?'#1b5e20':c.status==='Rejected'?'#b71c1c':'#1a237e')+'">'+(c.amount>0?'$'+c.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','):'—')+'</td>'
+      +'<td><span class="ca-status '+(stCls[c.status]||'')+'">'+c.status+'</span></td>'
+      +'<td>'+actions+'</td>'
+      +'</tr>';
+  }).join('');
+
+  updateKpis();
+}
+
+/* ── KPIs ── */
+function updateKpis(){
+  var t=0,p=0,a=0,r=0,h=0,ap=0,aa=0;
+  COMMISSIONS.forEach(function(c){
+    t++; ap+=(c.status==='Pending'?c.amount:0); aa+=(c.status==='Approved'?c.amount:0);
+    if(c.status==='Pending') p++;
+    else if(c.status==='Approved') a++;
+    else if(c.status==='Rejected') r++;
+    else if(c.status==='On Hold') h++;
+  });
+  document.getElementById('kpiTotal').textContent=t;
+  document.getElementById('kpiPending').textContent=p;
+  document.getElementById('kpiApproved').textContent=a;
+  document.getElementById('kpiRejected').textContent=r;
+  document.getElementById('kpiHold').textContent=h;
+  document.getElementById('kpiAmtPending').textContent='$'+ap.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('kpiAmtApproved').textContent='$'+aa.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+}
+
+/* ── Detail popup ── */
+function openDetail(id){
+  var c=COMMISSIONS.find(function(x){return x.id===id;});
+  if(!c) return;
+  document.getElementById('commDetailTitle').textContent='Commission Detail — '+c.agent;
+  var stCls={Pending:'cas-pending',Approved:'cas-approved',Rejected:'cas-rejected','On Hold':'cas-hold'};
+  var typeCls={Initial:'cat-initial',Renewal:'cat-renewal',Override:'cat-override'};
+  var fld=function(l,v){ return '<div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px"><div style="font-size:10px;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">'+l+'</div><div style="font-weight:600;font-size:12px">'+v+'</div></div>'; };
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">'
+    +fld('Agent',c.agent)+fld('NPN','<span style="font-family:monospace">'+c.npn+'</span>')+fld('Upline',c.upline)
+    +fld('Period',c.period)+fld('Commission Type','<span class="ca-type '+(typeCls[c.type]||'')+'">'+c.type+'</span>')+fld('Status','<span class="ca-status '+(stCls[c.status]||'')+'">'+c.status+'</span>')
+    +fld('Total Enrollments',c.enrollments)+fld('PMPM Rate','$'+c.rate.toFixed(2))+fld('Total Amount','<strong style="font-size:14px;color:#1a237e">$'+c.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')+'</strong>')
+    +'</div>';
+
+  html+='<div style="font-size:11px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px"><i class="fas fa-list" style="margin-right:5px"></i>Commission Breakdown</div>';
+  if(c.breakdown.length){
+    html+='<table class="tbl" id="tblExport2" style="margin-bottom:0"><thead><tr><th>Plan</th><th>Member</th><th>Enr. Date</th><th>Type</th><th>Rate</th><th>Months</th><th>Amount</th></tr></thead><tbody>';
+    var total=0;
+    c.breakdown.forEach(function(b){
+      total+=b.amt;
+      html+='<tr><td style="font-size:11px">'+b.plan+'</td><td style="font-size:11px">'+b.member+'</td><td style="font-size:11px">'+b.enrDate+'</td>'
+        +'<td><span class="ca-type '+(typeCls[b.type]||'')+'">'+b.type+'</span></td>'
+        +'<td style="font-size:11px">$'+b.rate.toFixed(2)+'</td>'
+        +'<td style="text-align:center;font-size:11px">'+b.months+'</td>'
+        +'<td style="font-weight:700">$'+b.amt.toFixed(2)+'</td></tr>';
+    });
+    html+='<tr style="background:#f8f9fa"><td colspan="6" style="text-align:right;font-weight:700;font-size:12px">Total</td><td style="font-weight:800;font-size:13px;color:#1a237e">$'+total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')+'</td></tr>';
+    html+='</tbody></table>';
+  } else {
+    html+='<div style="color:#9e9e9e;font-size:12px;padding:8px">No enrollment breakdown available.</div>';
+  }
+
+  if(c.status==='Pending'||c.status==='On Hold'){
+    html+='<div style="display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid #f1f3f4">'
+      +'<button class="btn-pr btn-sm" style="background:#1b5e20" onclick="document.getElementById(\'commDetailModal\').style.display=\'none\';openAction(\''+c.id+'\',\'Approved\')"><i class="fas fa-check"></i> Approve</button>'
+      +'<button class="btn-ol btn-sm" style="color:#b71c1c;border-color:#b71c1c" onclick="document.getElementById(\'commDetailModal\').style.display=\'none\';openAction(\''+c.id+'\',\'Rejected\')"><i class="fas fa-times"></i> Reject</button>'
+      +(c.status==='Pending'?'<button class="btn-ol btn-sm" style="color:#5f6368;border-color:#bdbdbd" onclick="document.getElementById(\'commDetailModal\').style.display=\'none\';openAction(\''+c.id+'\',\'On Hold\')"><i class="fas fa-pause"></i> Hold</button>':'')
+      +'</div>';
+  }
+
+  document.getElementById('commDetailBody').innerHTML=html;
+  document.getElementById('commDetailModal').style.display='flex';
+}
+
+/* ── Action modal ── */
+var ACTION_CFG={
+  Approved:{title:'Approve Commission', bg:'#e8f5e9', bdr:'#c8e6c9', clr:'#1b5e20', icon:'fa-check-circle', msg:'Commission will be <strong>approved</strong> and included in the next batch run.', btnBg:'#1b5e20', btnTxt:'Approve', req:false},
+  Rejected:{title:'Reject Commission',  bg:'#fce4ec', bdr:'#ef9a9a', clr:'#b71c1c', icon:'fa-times-circle', msg:'Commission will be <strong>rejected</strong> and excluded from batch. Reason required.', btnBg:'#b71c1c', btnTxt:'Reject', req:true},
+  'On Hold':{title:'Place on Hold',     bg:'#f1f3f4', bdr:'#e0e0e0', clr:'#5f6368', icon:'fa-pause-circle', msg:'Commission will be placed <strong>On Hold</strong> for further review.', btnBg:'#5f6368', btnTxt:'Place on Hold', req:false}
+};
+
+function openAction(id, action){
+  var c=COMMISSIONS.find(function(x){return x.id===id;});
+  if(!c) return;
+  CURRENT_ACTION_ID=id;
+  CURRENT_ACTION_TYPE=action;
+  var cfg=ACTION_CFG[action]||{};
+  document.getElementById('commActionTitle').innerHTML='<i class="fas '+cfg.icon+'" style="margin-right:7px;color:'+cfg.clr+'"></i>'+cfg.title+' — '+c.agent;
+  document.getElementById('commActionBanner').style.cssText='background:'+cfg.bg+';border:1px solid '+cfg.bdr+';border-radius:8px;padding:10px 14px;font-size:12px;color:'+cfg.clr;
+  document.getElementById('commActionBanner').innerHTML='<strong>'+c.agent+'</strong> | NPN: '+c.npn+' | Period: '+c.period+' | Amount: $'+c.amount.toFixed(2)+'<br><span style="margin-top:4px;display:block">'+cfg.msg+'</span>';
+  document.getElementById('commActionNotes').value='';
+  document.getElementById('commNoteErr').style.display='none';
+  document.getElementById('commNoteReq').textContent=cfg.req?'*':'';
+  var btn=document.getElementById('commActionBtn');
+  btn.textContent=cfg.btnTxt; btn.style.background=cfg.btnBg;
+  document.getElementById('commActionModal').style.display='flex';
+}
+
+function executeCommAction(){
+  var c=COMMISSIONS.find(function(x){return x.id===CURRENT_ACTION_ID;});
+  if(!c) return;
+  var notes=document.getElementById('commActionNotes').value.trim();
+  var cfg=ACTION_CFG[CURRENT_ACTION_TYPE]||{};
+  if(cfg.req && !notes){ document.getElementById('commNoteErr').style.display='block'; return; }
+  document.getElementById('commNoteErr').style.display='none';
+  c.status=CURRENT_ACTION_TYPE;
+  document.getElementById('commActionModal').style.display='none';
+  renderTable();
+  showToast(c.agent+' commission '+CURRENT_ACTION_TYPE.toLowerCase()+'.', CURRENT_ACTION_TYPE==='Approved'?'#1b5e20':CURRENT_ACTION_TYPE==='Rejected'?'#b71c1c':'#5f6368');
+}
+
+/* ── Bulk action ── */
+function bulkAction(action){
+  var checked=document.querySelectorAll('.row-chk:checked');
+  var ids=[];
+  checked.forEach(function(cb){ ids.push(cb.getAttribute('data-id')); });
+  if(!ids.length){
+    // act on all pending
+    COMMISSIONS.forEach(function(c){ if(c.status==='Pending') c.status=action; });
+    renderTable();
+    showToast('All pending commissions marked '+action+'.', action==='Approved'?'#1b5e20':'#b71c1c');
+    return;
+  }
+  ids.forEach(function(id){
+    var c=COMMISSIONS.find(function(x){return x.id===id;});
+    if(c && (c.status==='Pending'||c.status==='On Hold')) c.status=action;
+  });
+  renderTable();
+  showToast(ids.length+' commission(s) marked '+action+'.', action==='Approved'?'#1b5e20':'#b71c1c');
+}
+
+function toggleSelectAll(master){
+  document.querySelectorAll('.row-chk').forEach(function(cb){ cb.checked=master.checked; });
+}
+
+function clearFilters(){
+  document.getElementById('fPeriod').value='';
+  document.getElementById('fStatus').value='';
+  document.getElementById('fType').value='';
+  document.getElementById('fSearch').value='';
+  renderTable();
+}
+
+function showToast(msg,color){
+  var el=document.getElementById('toastEl');
+  el.textContent=msg; el.style.background=color||'#1b5e20'; el.style.display='block';
+  setTimeout(function(){el.style.display='none';},3500);
+}
+
+renderTable();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.7">Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manual Adjustments | Finance Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#2e7d32}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html" class="active"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Manual Adjustments</h4><p style="font-size:12px;color:#5f6368;margin:0">Create and review manual commission adjustments - corrections, bonuses, and one-time payments</p></div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="openAdjModal()"><i class="fas fa-plus"></i> New Adjustment</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Manual Adjustments')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-edit"></i></div>
+        <div><div class="stat-label">Pending Approval</div><div class="stat-val">3</div><div class="stat-sub">Awaiting finance review</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Approved (MTD)</div><div class="stat-val">7</div><div class="stat-sub">$4,320 total adjustments</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-arrow-up"></i></div>
+        <div><div class="stat-label">Credits</div><div class="stat-val">$3,180</div><div class="stat-sub">5 credit adjustments</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-arrow-down"></i></div>
+        <div><div class="stat-label">Debits</div><div class="stat-val">$1,140</div><div class="stat-sub">2 debit adjustments</div></div>
+      </div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar" style="margin-bottom:16px">
+      <select><option>All Types</option><option>Credit</option><option>Debit</option><option>Bonus</option><option>Correction</option></select>
+      <select><option>All Statuses</option><option>Pending</option><option>Approved</option><option>Rejected</option></select>
+      <input type="text" placeholder="Search by agent, reason, or ID..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:200px">
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div class="card-hdr"><h6><i class="fas fa-edit" style="color:#0277bd;margin-right:8px"></i>Adjustment History</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Adj ID</th><th>Agent</th><th>Type</th><th>Amount</th><th>Reason</th><th>Batch</th><th>Requested By</th><th>Date</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr style="background:#e3f2fd">
+              <td style="font-weight:600">ADJ-2026-041</td>
+              <td>James Martinez</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Credit</span></td>
+              <td style="font-weight:600;color:#2e7d32">+$680</td>
+              <td>Missed renewal commission - system error in May batch</td>
+              <td><code>BATCH-2026-06</code></td>
+              <td>Maria Johnson</td>
+              <td>Aug 1</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td>
+              <td><button class="btn-pr btn-sm" onclick="showToast('ADJ-2026-041 approved - added to BATCH-2026-06','success')">Approve</button></td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td style="font-weight:600">ADJ-2026-040</td>
+              <td>Sarah Chen</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Credit</span></td>
+              <td style="font-weight:600;color:#2e7d32">+$450</td>
+              <td>Override correction - hierarchy transfer mid-cycle</td>
+              <td><code>BATCH-2026-06</code></td>
+              <td>David Park</td>
+              <td>Jul 30</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td>
+              <td><button class="btn-pr btn-sm" onclick="showToast('ADJ-2026-040 approved - added to BATCH-2026-06','success')">Approve</button></td>
+            </tr>
+            <tr style="background:#e3f2fd">
+              <td style="font-weight:600">ADJ-2026-039</td>
+              <td>Kevin Nguyen</td>
+              <td><span class="badge" style="background:#ffebee;color:#c62828">Debit</span></td>
+              <td style="font-weight:600;color:#c62828">-$320</td>
+              <td>Overpayment recovery - duplicate enrollment processed</td>
+              <td><code>BATCH-2026-06</code></td>
+              <td>Lisa Wang</td>
+              <td>Jul 29</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Pending</span></td>
+              <td><button class="btn-pr btn-sm" onclick="showToast('ADJ-2026-039 approved - deducted from BATCH-2026-06','success')">Approve</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">ADJ-2026-038</td>
+              <td>Patricia Lee</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Bonus</span></td>
+              <td style="font-weight:600;color:#2e7d32">+$1,000</td>
+              <td>Q2 production bonus - exceeded 50 enrollments target</td>
+              <td><code>BATCH-2026-06</code></td>
+              <td>VP Sales</td>
+              <td>Jul 25</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td>
+              <td><span style="color:#2e7d32;font-size:12px"><i class="fas fa-check"></i></span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">ADJ-2026-037</td>
+              <td>Mark Brown</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Credit</span></td>
+              <td style="font-weight:600;color:#2e7d32">+$540</td>
+              <td>Commission correction - wrong rate applied in Apr batch</td>
+              <td><code>BATCH-2026-05</code></td>
+              <td>David Park</td>
+              <td>Jul 20</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td>
+              <td><span style="color:#2e7d32;font-size:12px"><i class="fas fa-check"></i></span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">ADJ-2026-036</td>
+              <td>Lisa Wang</td>
+              <td><span class="badge" style="background:#ffebee;color:#c62828">Debit</span></td>
+              <td style="font-weight:600;color:#c62828">-$820</td>
+              <td>Chargeback recovery - member disenrolled within rapid period</td>
+              <td><code>BATCH-2026-05</code></td>
+              <td>System</td>
+              <td>Jul 18</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td>
+              <td><span style="color:#2e7d32;font-size:12px"><i class="fas fa-check"></i></span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">ADJ-2026-035</td>
+              <td>Angela Torres</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Credit</span></td>
+              <td style="font-weight:600;color:#2e7d32">+$510</td>
+              <td>HRA incentive missed in automated calculation</td>
+              <td><code>BATCH-2026-05</code></td>
+              <td>Maria Johnson</td>
+              <td>Jul 15</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td>
+              <td><span style="color:#2e7d32;font-size:12px"><i class="fas fa-check"></i></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="al-info" style="margin-top:16px;font-size:12px">
+      <i class="fas fa-info-circle" style="flex-shrink:0"></i>
+      <span><strong>Policy:</strong> Manual adjustments require Finance Admin approval. Credits over $1,000 require VP Finance sign-off. All adjustments are logged in the audit trail with full justification. Adjustments are included in the next payment batch after approval.</span>
+    </div>
+  </div>
+</div>
+
+<!-- New Adjustment Modal -->
+<div id="adjModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-plus-circle" style="color:#2e7d32;margin-right:8px"></i>New Manual Adjustment</h6>
+      <button onclick="closeAdjModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Agent <span style="color:#c62828">*</span></label>
+          <select style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+            <option value="">-- Select Agent --</option>
+            <option>James Martinez (NPN 8823441)</option>
+            <option>Sarah Chen (NPN 7712390)</option>
+            <option>Kevin Nguyen (NPN 6634521)</option>
+            <option>Patricia Lee (NPN 5548832)</option>
+            <option>Mark Brown (NPN 9901274)</option>
+            <option>Lisa Wang (NPN 4437890)</option>
+            <option>Angela Torres (NPN 3321567)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Type <span style="color:#c62828">*</span></label>
+          <select style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+            <option value="">-- Select Type --</option>
+            <option value="Credit">Credit (add to payment)</option>
+            <option value="Debit">Debit (deduct from payment)</option>
+            <option value="Bonus">Bonus (one-time)</option>
+            <option value="Correction">Correction (rate/amount fix)</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Amount ($) <span style="color:#c62828">*</span></label>
+          <input type="number" placeholder="e.g. 500.00" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Apply to Batch</label>
+          <select style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+            <option>BATCH-2026-06 (Jun - Current)</option>
+            <option>BATCH-2026-07 (Jul - Next)</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Reason / Justification <span style="color:#c62828">*</span></label>
+        <textarea rows="3" placeholder="Provide detailed justification for this adjustment..." style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px;resize:vertical;font-family:inherit"></textarea>
+      </div>
+    </div>
+    <div style="padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn-ol btn-sm" onclick="closeAdjModal()">Cancel</button>
+      <button class="btn-pr btn-sm" onclick="showToast('Adjustment submitted for approval','success');closeAdjModal()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Submit for Approval</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function openAdjModal(){document.getElementById('adjModal').style.display='flex';}
+function closeAdjModal(){document.getElementById('adjModal').style.display='none';}
+document.getElementById('adjModal').addEventListener('click',function(e){if(e.target===this)closeAdjModal();});
+</script>
+</body>
+</html>

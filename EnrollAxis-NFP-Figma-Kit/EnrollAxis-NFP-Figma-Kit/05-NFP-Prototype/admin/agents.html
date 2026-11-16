@@ -1,0 +1,686 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Management | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.ag-status{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.ags-active{background:#e8f5e9;color:#1b5e20}
+.ags-pending{background:#fff3e0;color:#e65100}
+.ags-inactive{background:#f1f3f4;color:#616161}
+.ags-hold{background:#fff8e1;color:#f57f17}
+.ags-suspended{background:#fce4ec;color:#c62828}
+.ags-ready{background:#e8f5e9;color:#1b5e20}
+.ags-rejected{background:#f1f3f4;color:#5f6368}
+/* Profile modal tabs */
+.pm-tab{background:none;border:none;padding:10px 16px;font-size:12px;font-weight:600;color:#5f6368;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.pm-tab:hover{color:#1a237e}
+.pm-tab.active{color:#1a237e;border-bottom-color:#1a237e}
+.pm-section{display:none}
+.pm-section.active{display:block}
+.pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pm-grid.three{grid-template-columns:1fr 1fr 1fr}
+.pm-field{background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px}
+.pm-field .lbl{font-size:10px;color:#5f6368;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.pm-field .val{font-size:12px;font-weight:600;color:#202124}
+.pm-sec-hdr{font-size:11px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.doc-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;background:#fff}
+.doc-item .doc-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.cert-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px}
+.kpi-mini{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:12px 16px;text-align:center}
+.kpi-mini .val{font-size:24px;font-weight:800;color:#1a237e}
+.kpi-mini .lbl{font-size:11px;color:#5f6368;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html" class="active"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Agent Management</h4>
+      <ol class="breadcrumb-bar"><li>All Agents &mdash; Personal, License, Contract, Certifications, Documents &amp; Status</li></ol>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- KPI Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="kpi-mini"><div class="val" id="kpiTotal">12</div><div class="lbl">Total Agents</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#1b5e20" id="kpiActive">5</div><div class="lbl">Active / Ready to Sell</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#e65100" id="kpiPending">3</div><div class="lbl">Pending Approval</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#f57f17" id="kpiHold">2</div><div class="lbl">On Hold</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#c62828" id="kpiSuspended">1</div><div class="lbl">Suspended</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#616161" id="kpiInactive">1</div><div class="lbl">Inactive</div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <label style="font-size:12px;font-weight:600">Status:</label>
+      <select id="fStatus" class="form-control" style="width:160px" onchange="renderAgents()">
+        <option value="">All Statuses</option>
+        <option>Active</option>
+        <option>Pending Approval</option>
+        <option>On Hold</option>
+        <option>Suspended</option>
+        <option>Inactive</option>
+        <option>Rejected</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Level:</label>
+      <select id="fLevel" class="form-control" style="width:130px" onchange="renderAgents()">
+        <option value="">All Levels</option>
+        <option>Agent/Broker</option>
+        <option>GA</option>
+        <option>MGA</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">State:</label>
+      <select id="fState" class="form-control" style="width:100px" onchange="renderAgents()">
+        <option value="">All States</option>
+        <option>FL</option><option>TX</option><option>CA</option><option>IL</option><option>GA</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Search:</label>
+      <input id="fSearch" class="form-control" placeholder="Name, NPN, email..." style="width:210px" oninput="renderAgents()">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('fStatus').value='';document.getElementById('fLevel').value='';document.getElementById('fState').value='';document.getElementById('fSearch').value='';renderAgents()"><i class="fas fa-times"></i> Clear</button>
+    </div>
+
+    <!-- Agent Table -->
+    <div class="card">
+      <div class="card-hdr" style="justify-content:space-between">
+        <h5><i class="fas fa-id-card" style="margin-right:6px;color:#1a237e"></i>Agent Roster</h5>
+        <span id="agentCount" style="font-size:12px;color:#5f6368"></span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('','agents_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <!-- Legends -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:10px 16px;background:#fafafa;border-bottom:1px solid #f1f3f4;font-size:11px;color:#5f6368">
+        <span style="font-weight:700;color:#37474f;margin-right:4px">Status:</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-active">Active</span> Credentialed &amp; selling</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-pending">Pending Approval</span> Awaiting payer review</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-hold">On Hold</span> Hierarchy or compliance issue</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-suspended">Suspended</span> Blocked — admin action required</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-inactive">Inactive</span> 12-month no activity</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="ag-status ags-rejected">Rejected</span> Denied or cancelled</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:14px">
+          <span style="font-weight:700;color:#37474f;margin-right:2px">AHIP / E&amp;O:</span>
+          <span style="color:#1b5e20;font-weight:600">Active</span>
+          <span style="color:#e65100;font-weight:600">Expiring</span>
+          <span style="color:#b71c1c;font-weight:600">Expired</span>
+          <span style="color:#bdbdbd;font-weight:600">— Not on file</span>
+        </span>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead>
+            <tr>
+              <th>Agent Name</th>
+              <th>NPN</th>
+              <th>Level</th>
+              <th>Upline Agency</th>
+              <th>License State(s)</th>
+              <th>AHIP</th>
+              <th>E&amp;O Insurance</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="agentTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Agent Profile Modal -->
+<div class="modal-overlay" id="agentProfileModal" style="display:none">
+  <div class="modal-box" style="max-width:900px;width:97%;max-height:92vh;display:flex;flex-direction:column">
+    <div class="modal-hdr" style="flex-shrink:0;justify-content:space-between">
+      <div>
+        <h5 id="profileModalTitle" style="margin:0">Agent Profile</h5>
+        <div id="profileModalSub" style="font-size:11px;color:#5f6368;margin-top:2px"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div id="profileActionBtns"></div>
+        <button class="modal-close" onclick="document.getElementById('agentProfileModal').style.display='none'">&times;</button>
+      </div>
+    </div>
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:2px solid #e8eaed;flex-shrink:0;padding:0 20px;background:#fafafa">
+      <button class="pm-tab active" onclick="switchProfileTab('pm-personal',this)"><i class="fas fa-user" style="margin-right:5px"></i>Personal</button>
+      <button class="pm-tab" onclick="switchProfileTab('pm-license',this)"><i class="fas fa-id-badge" style="margin-right:5px"></i>License</button>
+      <button class="pm-tab" onclick="switchProfileTab('pm-contract',this)"><i class="fas fa-file-signature" style="margin-right:5px"></i>Contract</button>
+      <button class="pm-tab" onclick="switchProfileTab('pm-certs',this)"><i class="fas fa-certificate" style="margin-right:5px"></i>Certifications</button>
+      <button class="pm-tab" onclick="switchProfileTab('pm-docs',this)"><i class="fas fa-folder" style="margin-right:5px"></i>Documents</button>
+      <button class="pm-tab" onclick="switchProfileTab('pm-history',this)"><i class="fas fa-history" style="margin-right:5px"></i>Status History</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto;flex:1" id="profileBody"></div>
+  </div>
+</div>
+
+<!-- Action Confirmation Modal -->
+<div class="modal-overlay" id="actionConfirmModal" style="display:none">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5 id="actionConfirmTitle">Confirm Action</h5>
+      <button class="modal-close" onclick="document.getElementById('actionConfirmModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div id="actionConfirmBanner" style="border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:14px"></div>
+      <div class="mb-3">
+        <label style="font-size:12px;font-weight:600">Notes / Reason <span id="actionReasonReq" style="color:#c62828">*</span></label>
+        <textarea id="actionConfirmNotes" class="form-control" rows="3" placeholder="Add notes for audit trail..."></textarea>
+        <div id="actionNotesErr" style="display:none;font-size:11px;color:#c62828;margin-top:3px">Notes are required for this action.</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="document.getElementById('actionConfirmModal').style.display='none'">Cancel</button>
+        <button class="btn-pr" id="actionConfirmBtn" onclick="executeAgentAction()"><i class="fas fa-check" style="margin-right:4px"></i>Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:380px"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var AGENTS = [
+  {
+    id:'AGT-001', name:'James Martinez', npn:'8823441', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'jmartinez@email.com', phone:'(786) 555-0147',
+    dob:'1985-03-12', ssn:'***-**-4589', status:'Active',
+    business:{street:'1801 NW 9th Ave', suite:'Suite 210', city:'Miami', state:'FL', zip:'33136'},
+    licenses:[{state:'FL',num:'FL-AG-102938',type:'Health & Accident',eff:'2022-03-01',exp:'2027-02-28',lobs:['MA','C-SNP (ESRD)'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-05-23',sigName:'James R Martinez',states:'FL'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-JM-88234',issued:'2026-01-15',expires:'2027-01-14',status:'Active'},
+      {name:'E&O Insurance',num:'EO-2026-JM-00142',issued:'2026-01-01',expires:'2027-01-01',status:'Active'},
+      {name:'CKD Training Cert',num:'CKD-2026-JM-003',issued:'2026-02-10',expires:'2027-02-10',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-20',status:'Verified'},
+      {name:'FL License Document',type:'PDF',uploaded:'2026-05-20',status:'Verified'},
+      {name:'AHIP Certificate CY2026',type:'PDF',uploaded:'2026-05-21',status:'Verified'},
+      {name:'E&O Insurance Certificate',type:'PDF',uploaded:'2026-05-21',status:'Verified'}
+    ],
+    history:[
+      {ts:'2026-05-23 09:00',from:'Pending Approval',to:'Active',by:'Sandra Adams',note:'All documents verified. Approved for Ready to Sell.'},
+      {ts:'2026-05-21 10:14',from:'—',to:'Pending Approval',by:'System',note:'Onboarding case OB-2026-0441 completed'}
+    ]
+  },
+  {
+    id:'AGT-002', name:'Robert Chen', npn:'98765432', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'rchen@email.com', phone:'(305) 555-0122',
+    dob:'1981-07-14', ssn:'***-**-6712', status:'Pending Approval',
+    business:{street:'2100 Coral Way', suite:'Suite 305', city:'Miami', state:'FL', zip:'33145'},
+    licenses:[{state:'FL',num:'FL-AG-204812',type:'Health & Accident',eff:'2022-03-01',exp:'2027-02-28',lobs:['MA','C-SNP (ESRD)'],status:'Active'},{state:'GA',num:'GA-AG-998801',type:'Health & Accident',eff:'2023-06-15',exp:'2026-06-14',lobs:['MA'],status:'Expiring Soon'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-05-23',sigName:'Robert J Chen',states:'FL, GA'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-RC-44210',issued:'2026-01-10',expires:'2027-01-10',status:'Active'},
+      {name:'E&O Insurance',num:'EO-2026-RC-00198',issued:'2026-01-01',expires:'2027-01-01',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-20',status:'Verified'},
+      {name:'FL License Document',type:'PDF',uploaded:'2026-05-20',status:'Verified'},
+      {name:'AHIP Certificate CY2026',type:'PDF',uploaded:'2026-05-21',status:'Pending Review'}
+    ],
+    history:[{ts:'2026-05-23 09:00',from:'—',to:'Pending Approval',by:'System',note:'Onboarding case OB-2026-0441 submitted for payer approval'}]
+  },
+  {
+    id:'AGT-003', name:'Angela Williams', npn:'8877665544', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'awilliams@email.com', phone:'(561) 555-0173',
+    dob:'1983-09-15', ssn:'***-**-4418', status:'Active',
+    business:{street:'701 Clematis St', suite:'Suite 400', city:'West Palm Beach', state:'FL', zip:'33401'},
+    licenses:[{state:'FL',num:'FL-AG-228810',type:'Health & Accident',eff:'2019-04-01',exp:'2027-03-31',lobs:['MA','C-SNP (ESRD)','C-SNP (CKD)'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-05-14',sigName:'Angela M Williams',states:'FL'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-AW-55120',issued:'2026-01-28',expires:'2027-01-28',status:'Active'},
+      {name:'E&O Insurance',num:'EO-2026-AW-00214',issued:'2026-01-01',expires:'2027-01-01',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-10',status:'Verified'},
+      {name:'FL License Document',type:'PDF',uploaded:'2026-05-10',status:'Verified'},
+      {name:'AHIP Certificate CY2026',type:'PDF',uploaded:'2026-05-11',status:'Verified'}
+    ],
+    history:[{ts:'2026-05-14 09:00',from:'Pending Approval',to:'Active',by:'Sandra Adams',note:'All verified'},{ts:'2026-05-10 14:00',from:'—',to:'Pending Approval',by:'System',note:'Onboarding complete'}]
+  },
+  {
+    id:'AGT-004', name:'Maria Santos', npn:'33445566', level:'Agent/Broker',
+    upline:'Coastal Medicare Partners (GA-2288)', email:'msantos@email.com', phone:'(954) 555-0187',
+    dob:'1985-11-08', ssn:'***-**-7892', status:'On Hold',
+    business:{street:'1501 N Federal Hwy', suite:'Suite 210', city:'Fort Lauderdale', state:'FL', zip:'33304'},
+    licenses:[{state:'FL',num:'FL-AG-330291',type:'Health & Accident',eff:'2021-09-01',exp:'2026-08-31',lobs:['MA','C-SNP (CKD)'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:false,sigDate:'',sigName:'',states:'FL'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-MS-77651',issued:'2026-01-18',expires:'2027-01-18',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-22',status:'Verified'},
+      {name:'Background Check',type:'PDF',uploaded:'',status:'Missing'}
+    ],
+    history:[{ts:'2026-05-22 09:01',from:'Pending',to:'On Hold',by:'System',note:'Hierarchy readiness check failed — upline inactive'}]
+  },
+  {
+    id:'AGT-005', name:'David Kim', npn:'55443322', level:'GA',
+    upline:'SunBridge Medicare Advisors (MGA-1014)', email:'dkim@email.com', phone:'(213) 555-0141',
+    dob:'1975-12-01', ssn:'***-**-8801', status:'Suspended',
+    business:{street:'3800 Wilshire Blvd', suite:'Suite 900', city:'Los Angeles', state:'CA', zip:'90010'},
+    licenses:[{state:'CA',num:'CA-AG-778821',type:'Health & Accident',eff:'2018-01-01',exp:'2027-12-31',lobs:['MA','MAPD'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-02-15',sigName:'David S Kim',states:'CA'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-DK-90123',issued:'2026-02-11',expires:'2027-02-11',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-02-10',status:'Verified'},
+      {name:'CA License Document',type:'PDF',uploaded:'2026-02-10',status:'Verified'}
+    ],
+    history:[{ts:'2026-03-01 11:00',from:'Active',to:'Suspended',by:'Sandra Adams',note:'Administrative suspension pending compliance investigation'},{ts:'2025-06-15 09:00',from:'Pending Approval',to:'Active',by:'Sandra Adams',note:'All documents verified'}]
+  },
+  {
+    id:'AGT-006', name:'Jennifer Lopez', npn:'77889900', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'jlopez@email.com', phone:'(786) 555-0199',
+    dob:'1990-03-22', ssn:'***-**-3341', status:'Pending Approval',
+    business:{street:'800 Brickell Ave', suite:'', city:'Miami', state:'FL', zip:'33131'},
+    licenses:[],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:false,sigDate:'',sigName:'',states:''},
+    certs:[],
+    docs:[{name:'W-9 Form',type:'PDF',uploaded:'2026-05-25',status:'Pending Review'}],
+    history:[{ts:'2026-05-25 14:32',from:'—',to:'Pending Approval',by:'System',note:'Registration complete via invitation tk_004'}]
+  },
+  {
+    id:'AGT-007', name:'Michael Torres', npn:'5544332211', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'mtorres@email.com', phone:'(407) 555-0155',
+    dob:'1978-04-30', ssn:'***-**-5521', status:'Active',
+    business:{street:'4300 W Lake Mary Blvd', suite:'Suite 120', city:'Lake Mary', state:'FL', zip:'32746'},
+    licenses:[{state:'FL',num:'FL-AG-119023',type:'Health & Accident',eff:'2020-01-01',exp:'2027-12-31',lobs:['MA','MAPD'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-05-28',sigName:'Michael A Torres',states:'FL'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-MT-33890',issued:'2026-02-05',expires:'2027-02-05',status:'Active'},
+      {name:'E&O Insurance',num:'EO-2026-MT-00301',issued:'2026-01-01',expires:'2027-01-01',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-15',status:'Verified'},
+      {name:'FL License Document',type:'PDF',uploaded:'2026-05-15',status:'Verified'}
+    ],
+    history:[{ts:'2026-05-28 10:00',from:'Pending Approval',to:'Active',by:'Sandra Adams',note:'Approved'},{ts:'2026-05-15 11:22',from:'—',to:'Pending Approval',by:'System',note:'Direct registration'}]
+  },
+  {
+    id:'AGT-008', name:'Priya Patel', npn:'91827364', level:'Agent/Broker',
+    upline:'SunBridge Medicare Advisors (MGA-1014)', email:'ppatel@email.com', phone:'(312) 555-0188',
+    dob:'1988-02-14', ssn:'***-**-9102', status:'Active',
+    business:{street:'233 S Wacker Dr', suite:'Suite 4400', city:'Chicago', state:'IL', zip:'60606'},
+    licenses:[{state:'IL',num:'IL-AG-441209',type:'Health & Accident',eff:'2021-05-01',exp:'2027-04-30',lobs:['MA','C-SNP (ESRD)','MAPD'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:true,sigDate:'2026-06-01',sigName:'Priya K Patel',states:'IL'},
+    certs:[
+      {name:'AHIP CY2026',num:'AHIP-2026-PP-60120',issued:'2026-02-20',expires:'2027-02-20',status:'Active'},
+      {name:'E&O Insurance',num:'EO-2026-PP-00412',issued:'2026-01-01',expires:'2027-01-01',status:'Active'}
+    ],
+    docs:[
+      {name:'W-9 Form',type:'PDF',uploaded:'2026-05-29',status:'Verified'},
+      {name:'IL License Document',type:'PDF',uploaded:'2026-05-29',status:'Verified'},
+      {name:'AHIP Certificate CY2026',type:'PDF',uploaded:'2026-05-30',status:'Verified'}
+    ],
+    history:[{ts:'2026-06-01 09:00',from:'Pending Approval',to:'Active',by:'Sandra Adams',note:'All documents verified and approved'}]
+  },
+  {
+    id:'AGT-009', name:'Lisa Johnson', npn:'66778899', level:'Agent/Broker',
+    upline:'Coastal Medicare Partners (GA-2288)', email:'ljohnson@email.com', phone:'(904) 555-0166',
+    dob:'1992-06-19', ssn:'***-**-2214', status:'Pending Approval',
+    business:{street:'1 Independent Dr', suite:'', city:'Jacksonville', state:'FL', zip:'32202'},
+    licenses:[{state:'FL',num:'FL-AG-558821',type:'Health & Accident',eff:'2023-01-01',exp:'2028-12-31',lobs:['MA'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2026',version:'v3.2',signed:false,sigDate:'',sigName:'',states:'FL'},
+    certs:[],
+    docs:[{name:'W-9 Form',type:'PDF',uploaded:'2026-05-26',status:'Pending Review'}],
+    history:[{ts:'2026-05-26 17:55',from:'—',to:'Pending Approval',by:'System',note:'Onboarding case OB-2026-0388 submitted'}]
+  },
+  {
+    id:'AGT-010', name:'Carlos Mendez', npn:'11223344', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'cmendez@email.com', phone:'',
+    dob:'', ssn:'', status:'Rejected',
+    business:{street:'', suite:'', city:'', state:'', zip:''},
+    licenses:[],
+    contract:{type:'—',version:'—',signed:false,sigDate:'',sigName:'',states:''},
+    certs:[],
+    docs:[],
+    history:[{ts:'2026-05-17 11:00',from:'Pending',to:'Rejected',by:'Sandra Adams',note:'Invitation cancelled before registration completion'}]
+  },
+  {
+    id:'AGT-011', name:'Sarah Chen', npn:'7712345', level:'Agent/Broker',
+    upline:'Coastal Medicare Partners (GA-2288)', email:'schen@email.com', phone:'(213) 555-0200',
+    dob:'1986-05-10', ssn:'***-**-4421', status:'On Hold',
+    business:{street:'500 S Grand Ave', suite:'', city:'Los Angeles', state:'CA', zip:'90071'},
+    licenses:[{state:'CA',num:'CA-AG-991100',type:'Health & Accident',eff:'2019-01-01',exp:'2026-12-31',lobs:['MA'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2025',version:'v3.1',signed:true,sigDate:'2025-03-10',sigName:'Sarah Chen',states:'CA'},
+    certs:[{name:'AHIP CY2025',num:'AHIP-2025-SC-10100',issued:'2025-01-15',expires:'2026-01-14',status:'Expired'}],
+    docs:[{name:'CA License Document',type:'PDF',uploaded:'2025-03-01',status:'Verified'}],
+    history:[{ts:'2026-03-10 09:00',from:'Active',to:'On Hold',by:'System',note:'NIPR alert received — CA license expiring in 30 days'}]
+  },
+  {
+    id:'AGT-012', name:'Thomas Wright', npn:'44556677', level:'Agent/Broker',
+    upline:'HealthFirst Distribution (GA-2201)', email:'twright@email.com', phone:'(404) 555-0188',
+    dob:'1980-08-22', ssn:'***-**-7761', status:'Inactive',
+    business:{street:'100 Peachtree St', suite:'', city:'Atlanta', state:'GA', zip:'30303'},
+    licenses:[{state:'GA',num:'GA-AG-771234',type:'Health & Accident',eff:'2018-01-01',exp:'2026-12-31',lobs:['MA'],status:'Active'}],
+    contract:{type:'Agent Contracting Agreement CY2024',version:'v3.0',signed:true,sigDate:'2024-06-01',sigName:'Thomas Wright',states:'GA'},
+    certs:[{name:'AHIP CY2024',num:'AHIP-2024-TW-33210',issued:'2024-01-10',expires:'2025-01-09',status:'Expired'}],
+    docs:[{name:'GA License Document',type:'PDF',uploaded:'2024-06-01',status:'Verified'}],
+    history:[{ts:'2026-04-10 09:00',from:'Active',to:'Inactive',by:'System',note:'12-month inactivity rule triggered — no enrollment in 12 months'}]
+  }
+];
+
+var CURRENT_ACTION_AGENT = null;
+var CURRENT_ACTION_TYPE  = null;
+
+/* ── Status badge ── */
+function statusBadge(s){
+  var m={'Active':'ags-active','Pending Approval':'ags-pending','On Hold':'ags-hold','Suspended':'ags-suspended','Inactive':'ags-inactive','Rejected':'ags-rejected'};
+  return '<span class="ag-status '+(m[s]||'ags-inactive')+'">'+s+'</span>';
+}
+
+/* ── AHIP/E&O quick status ── */
+function certQuick(certs, name){
+  var c = certs.find(function(x){ return x.name.indexOf(name)>=0; });
+  if(!c) return '<span style="color:#bdbdbd;font-size:11px">—</span>';
+  var clr = c.status==='Active'?'#1b5e20':c.status==='Expired'?'#b71c1c':'#e65100';
+  return '<span style="font-size:11px;font-weight:600;color:'+clr+'">'+c.status+'</span><br><span style="font-size:10px;color:#9e9e9e">Exp: '+c.expires+'</span>';
+}
+
+/* ── Action buttons per status ── */
+function actionBtns(a){
+  var html='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px" onclick="openProfile(\''+a.id+'\')"><i class="fas fa-eye"></i> View</button>';
+  if(a.status==='Pending Approval'){
+    html+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#1b5e20" onclick="openAction(\''+a.id+'\',\'approve\')"><i class="fas fa-check"></i> Approve</button>';
+    html+='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px;color:#b71c1c;border-color:#b71c1c" onclick="openAction(\''+a.id+'\',\'reject\')"><i class="fas fa-times"></i> Reject</button>';
+  }
+  if(a.status==='Active'){
+    html+='<button class="btn-ol btn-sm" style="font-size:10px;margin-right:3px;color:#c62828;border-color:#c62828" onclick="openAction(\''+a.id+'\',\'suspend\')"><i class="fas fa-ban"></i> Suspend</button>';
+  }
+  if(a.status==='On Hold'||a.status==='Suspended'){
+    html+='<button class="btn-pr btn-sm" style="font-size:10px;margin-right:3px;background:#0d47a1" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
+  }
+  if(a.status==='Inactive'){
+    html+='<button class="btn-pr btn-sm" style="font-size:10px;background:#0d47a1" onclick="openAction(\''+a.id+'\',\'activate\')"><i class="fas fa-undo"></i> Reactivate</button>';
+  }
+  return html;
+}
+
+/* ── Render table ── */
+function renderAgents(){
+  var fStatus = document.getElementById('fStatus').value;
+  var fLevel  = document.getElementById('fLevel').value;
+  var fState  = document.getElementById('fState').value;
+  var fSearch = document.getElementById('fSearch').value.toLowerCase();
+
+  var rows = AGENTS.filter(function(a){
+    if(fStatus && a.status !== fStatus) return false;
+    if(fLevel  && a.level  !== fLevel)  return false;
+    if(fState  && !a.licenses.some(function(l){ return l.state===fState; })) return false;
+    if(fSearch && (a.name+a.npn+a.email).toLowerCase().indexOf(fSearch)<0) return false;
+    return true;
+  });
+
+  document.getElementById('agentCount').textContent = rows.length+' agent'+(rows.length!==1?'s':'');
+
+  var licStates = function(a){ return a.licenses.map(function(l){return l.state;}).join(', ')||'—'; };
+
+  document.getElementById('agentTbody').innerHTML = rows.map(function(a){
+    return '<tr>'
+      +'<td><strong>'+a.name+'</strong><br><span style="font-size:10px;color:#5f6368">'+a.email+'</span></td>'
+      +'<td style="font-family:monospace;font-size:11px">'+a.npn+'</td>'
+      +'<td>'+a.level+'</td>'
+      +'<td style="font-size:11px">'+a.upline+'</td>'
+      +'<td style="font-size:11px">'+licStates(a)+'</td>'
+      +'<td>'+certQuick(a.certs,'AHIP')+'</td>'
+      +'<td>'+certQuick(a.certs,'E&O')+'</td>'
+      +'<td>'+statusBadge(a.status)+'</td>'
+      +'<td>'+actionBtns(a)+'</td>'
+      +'</tr>';
+  }).join('');
+
+  updateKpis();
+}
+
+/* ── KPIs ── */
+function updateKpis(){
+  var c={total:0,active:0,pending:0,hold:0,suspended:0,inactive:0};
+  AGENTS.forEach(function(a){
+    c.total++;
+    if(a.status==='Active') c.active++;
+    else if(a.status==='Pending Approval') c.pending++;
+    else if(a.status==='On Hold') c.hold++;
+    else if(a.status==='Suspended') c.suspended++;
+    else if(a.status==='Inactive') c.inactive++;
+  });
+  document.getElementById('kpiTotal').textContent=c.total;
+  document.getElementById('kpiActive').textContent=c.active;
+  document.getElementById('kpiPending').textContent=c.pending;
+  document.getElementById('kpiHold').textContent=c.hold;
+  document.getElementById('kpiSuspended').textContent=c.suspended;
+  document.getElementById('kpiInactive').textContent=c.inactive;
+}
+
+/* ── Switch tab ── */
+function switchProfileTab(id, btn){
+  document.querySelectorAll('.pm-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.pm-tab').forEach(function(b){ b.classList.remove('active'); });
+  var sec = document.getElementById(id); if(sec) sec.classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+/* ── Open Profile ── */
+function openProfile(id){
+  var a = AGENTS.find(function(x){ return x.id===id; });
+  if(!a) return;
+
+  document.getElementById('profileModalTitle').textContent = a.name;
+  document.getElementById('profileModalSub').textContent = 'NPN: '+a.npn+' | '+a.level+' | '+a.upline;
+
+  /* Action buttons in header */
+  var ab='';
+  if(a.status==='Pending Approval'){
+    ab+='<button class="btn-pr btn-sm" style="background:#1b5e20;font-size:11px;margin-right:5px" onclick="closeProfileAndAction(\''+a.id+'\',\'approve\')"><i class="fas fa-check"></i> Approve</button>';
+    ab+='<button class="btn-ol btn-sm" style="font-size:11px;margin-right:5px;color:#b71c1c;border-color:#b71c1c" onclick="closeProfileAndAction(\''+a.id+'\',\'reject\')"><i class="fas fa-times"></i> Reject</button>';
+  }
+  if(a.status==='Active'){
+    ab+='<button class="btn-pr btn-sm" style="font-size:11px;margin-right:5px;background:#1b5e20" onclick="closeProfileAndAction(\''+a.id+'\',\'readytosell\')"><i class="fas fa-star"></i> Mark Ready to Sell</button>';
+    ab+='<button class="btn-ol btn-sm" style="font-size:11px;color:#c62828;border-color:#c62828" onclick="closeProfileAndAction(\''+a.id+'\',\'suspend\')"><i class="fas fa-ban"></i> Suspend</button>';
+  }
+  if(a.status==='On Hold'||a.status==='Suspended'||a.status==='Inactive'){
+    ab+='<button class="btn-pr btn-sm" style="font-size:11px;background:#0d47a1" onclick="closeProfileAndAction(\''+a.id+'\',\'activate\')"><i class="fas fa-check-circle"></i> Activate</button>';
+  }
+  document.getElementById('profileActionBtns').innerHTML=ab;
+
+  var f=function(l,v){ return '<div class="pm-field"><div class="lbl">'+l+'</div><div class="val">'+(v||'<span style="color:#bdbdbd">—</span>')+'</div></div>'; };
+
+  /* Personal */
+  var p='<div class="pm-sec-hdr"><i class="fas fa-user"></i>Personal Information</div>';
+  p+='<div class="pm-grid three">'+f('First Name',a.name.split(' ')[0])+f('Last Name',a.name.split(' ').slice(1).join(' '))+f('NPN','<span style="font-family:monospace">'+a.npn+'</span>')+'</div>';
+  p+='<div class="pm-grid three">'+f('Date of Birth',a.dob)+f('SSN / EIN',a.ssn)+f('Phone',a.phone)+'</div>';
+  p+='<div class="pm-grid">'+f('Email',a.email)+f('Status',statusBadge(a.status))+'</div>';
+  p+='<div class="pm-sec-hdr"><i class="fas fa-building"></i>Business Address</div>';
+  p+='<div class="pm-grid three">'+f('Street',(a.business.street+(a.business.suite?' '+a.business.suite:''))||'—')+f('City',a.business.city)+f('State / ZIP',a.business.state+' '+a.business.zip)+'</div>';
+
+  /* License */
+  var l='<div class="pm-sec-hdr"><i class="fas fa-id-badge"></i>State Licenses</div>';
+  if(a.licenses.length){
+    a.licenses.forEach(function(lic){
+      var lclr=lic.status==='Active'?'#1b5e20':lic.status==='Expired'?'#b71c1c':'#e65100';
+      l+='<div style="background:#f3f8ff;border:1px solid #bbdefb;border-radius:8px;padding:12px 14px;margin-bottom:10px">';
+      l+='<div style="font-weight:700;font-size:12px;color:#0d47a1;margin-bottom:8px"><i class="fas fa-map-marker-alt" style="margin-right:5px"></i>'+lic.state+'</div>';
+      l+='<div class="pm-grid three">'+f('License Number',lic.num)+f('License Type',lic.type)+f('Status','<span style="color:'+lclr+';font-weight:700">'+lic.status+'</span>')+'</div>';
+      l+='<div class="pm-grid">'+f('Effective Date',lic.eff)+f('Expiry Date',lic.exp)+'</div>';
+      l+='<div style="font-size:11px;color:#5f6368;margin-top:4px">Lines of Business: <strong>'+lic.lobs.join(', ')+'</strong></div></div>';
+    });
+  } else { l+='<div style="color:#9e9e9e;font-size:12px;padding:8px">No state licenses on file.</div>'; }
+
+  /* Contract */
+  var ct='<div class="pm-sec-hdr"><i class="fas fa-file-signature"></i>Contract Details</div>';
+  ct+='<div class="pm-grid">'+f('Contract Type',a.contract.type)+f('Version',a.contract.version)+'</div>';
+  ct+='<div class="pm-grid">'+f('Signed',a.contract.signed?'<span style="color:#1b5e20;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i>Signed on '+a.contract.sigDate+'</span>':'<span style="color:#e65100">Not signed</span>')+f('Signatory Name',a.contract.sigName||'—')+'</div>';
+  ct+='<div class="pm-grid">'+f('Selling States',a.contract.states||'—')+'</div>';
+
+  /* Certs */
+  var ce='<div class="pm-sec-hdr"><i class="fas fa-certificate"></i>Certifications</div>';
+  if(a.certs.length){
+    a.certs.forEach(function(c){
+      var cclr=c.status==='Active'?'#1b5e20':c.status==='Expired'?'#b71c1c':'#e65100';
+      var cbg=c.status==='Active'?'#e8f5e9':c.status==='Expired'?'#fce4ec':'#fff3e0';
+      ce+='<div class="cert-row"><div style="flex:1"><div style="font-weight:700;font-size:12px">'+c.name+'</div><div style="font-size:11px;color:#5f6368;margin-top:2px">Cert #: '+c.num+'</div></div>';
+      ce+='<div style="font-size:11px;color:#5f6368">Issued: '+c.issued+'</div>';
+      ce+='<div style="font-size:11px;color:#5f6368">Expires: '+c.expires+'</div>';
+      ce+='<span style="background:'+cbg+';color:'+cclr+';padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700">'+c.status+'</span></div>';
+    });
+  } else { ce+='<div style="color:#9e9e9e;font-size:12px;padding:8px">No certifications on file.</div>'; }
+
+  /* Docs */
+  var iconMap={'Verified':'#1b5e20','Pending Review':'#e65100','Missing':'#b71c1c'};
+  var d='<div class="pm-sec-hdr"><i class="fas fa-folder"></i>Documents</div>';
+  if(a.docs.length){
+    a.docs.forEach(function(doc){
+      var dclr=iconMap[doc.status]||'#9e9e9e';
+      d+='<div class="doc-item"><div class="doc-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-file-pdf"></i></div>';
+      d+='<div style="flex:1"><div style="font-weight:600;font-size:12px">'+doc.name+'</div>';
+      d+='<div style="font-size:11px;color:#5f6368">'+doc.type+(doc.uploaded?' &nbsp;|&nbsp; Uploaded: '+doc.uploaded:'')+'</div></div>';
+      d+='<span style="color:'+dclr+';font-size:11px;font-weight:600">'+doc.status+'</span></div>';
+    });
+  } else { d+='<div style="color:#9e9e9e;font-size:12px;padding:8px">No documents on file.</div>'; }
+
+  /* History */
+  var h='<div class="pm-sec-hdr"><i class="fas fa-history"></i>Status History</div>';
+  a.history.forEach(function(entry){
+    h+='<div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:9px 12px;font-size:11px;margin-bottom:6px;display:flex;gap:10px">';
+    h+='<i class="fas fa-circle" style="font-size:6px;margin-top:4px;color:#1a237e;flex-shrink:0"></i>';
+    h+='<div><div style="font-weight:700;color:#202124;margin-bottom:2px">'+entry.from+' → '+entry.to+'</div>';
+    h+='<div style="color:#5f6368">'+entry.note+'</div>';
+    h+='<div style="font-size:10px;color:#9e9e9e;margin-top:2px">'+entry.ts+' &nbsp;['+entry.by+']</div></div></div>';
+  });
+
+  document.getElementById('profileBody').innerHTML =
+    '<div id="pm-personal" class="pm-section active">'+p+'</div>'
+   +'<div id="pm-license"  class="pm-section">'+l+'</div>'
+   +'<div id="pm-contract" class="pm-section">'+ct+'</div>'
+   +'<div id="pm-certs"    class="pm-section">'+ce+'</div>'
+   +'<div id="pm-docs"     class="pm-section">'+d+'</div>'
+   +'<div id="pm-history"  class="pm-section">'+h+'</div>';
+
+  /* Reset to first tab */
+  document.querySelectorAll('.pm-tab').forEach(function(b,i){ b.classList.toggle('active',i===0); });
+  document.getElementById('agentProfileModal').style.display='flex';
+}
+
+function closeProfileAndAction(id, action){
+  document.getElementById('agentProfileModal').style.display='none';
+  openAction(id, action);
+}
+
+/* ── Action modal ── */
+var ACTION_LABELS={
+  approve:  {title:'Approve Agent',     color:'#1b5e20', bg:'#e8f5e9', bdr:'#c8e6c9', icon:'fa-check-circle',  msg:'Agent will be moved to <strong>Active (Ready to Sell)</strong>.',     btnTxt:'Approve', btnBg:'#1b5e20', req:false},
+  readytosell:{title:'Mark Ready to Sell',color:'#1b5e20',bg:'#e8f5e9',bdr:'#c8e6c9', icon:'fa-star',          msg:'Agent status will be confirmed as <strong>Ready to Sell</strong>.',   btnTxt:'Confirm', btnBg:'#1b5e20', req:false},
+  reject:   {title:'Reject Agent',      color:'#b71c1c', bg:'#fce4ec', bdr:'#ef9a9a', icon:'fa-times-circle',  msg:'Agent will be <strong>Rejected</strong>. Notes required.',             btnTxt:'Reject',  btnBg:'#b71c1c', req:true},
+  suspend:  {title:'Suspend Agent',     color:'#c62828', bg:'#fce4ec', bdr:'#ef9a9a', icon:'fa-ban',           msg:'Agent will be <strong>Suspended</strong>. Reason required.',           btnTxt:'Suspend', btnBg:'#c62828', req:true},
+  activate: {title:'Activate Agent',    color:'#0d47a1', bg:'#e3f2fd', bdr:'#90caf9', icon:'fa-check-circle',  msg:'Agent will be set back to <strong>Active</strong>.',                   btnTxt:'Activate',btnBg:'#0d47a1', req:false}
+};
+
+function openAction(id, action){
+  var a=AGENTS.find(function(x){return x.id===id;});
+  if(!a) return;
+  CURRENT_ACTION_AGENT=id;
+  CURRENT_ACTION_TYPE=action;
+  var cfg=ACTION_LABELS[action]||{};
+  document.getElementById('actionConfirmTitle').innerHTML='<i class="fas '+cfg.icon+'" style="margin-right:7px;color:'+cfg.color+'"></i>'+cfg.title+' — '+a.name;
+  document.getElementById('actionConfirmBanner').style.cssText='background:'+cfg.bg+';border:1px solid '+cfg.bdr+';border-radius:8px;padding:10px 14px;font-size:12px;color:'+cfg.color;
+  document.getElementById('actionConfirmBanner').innerHTML='<strong>'+a.name+'</strong> (NPN: '+a.npn+') &nbsp;|&nbsp; Current: '+a.status+'<br><span style="margin-top:4px;display:block">'+cfg.msg+'</span>';
+  document.getElementById('actionConfirmNotes').value='';
+  document.getElementById('actionNotesErr').style.display='none';
+  document.getElementById('actionReasonReq').style.display=cfg.req?'':'none';
+  var btn=document.getElementById('actionConfirmBtn');
+  btn.textContent=cfg.btnTxt;
+  btn.style.background=cfg.btnBg;
+  document.getElementById('actionConfirmModal').style.display='flex';
+}
+
+function executeAgentAction(){
+  var a=AGENTS.find(function(x){return x.id===CURRENT_ACTION_AGENT;});
+  if(!a) return;
+  var notes=document.getElementById('actionConfirmNotes').value.trim();
+  var cfg=ACTION_LABELS[CURRENT_ACTION_TYPE]||{};
+  if(cfg.req && !notes){ document.getElementById('actionNotesErr').style.display='block'; return; }
+  document.getElementById('actionNotesErr').style.display='none';
+
+  var newStatus={approve:'Active',readytosell:'Active',reject:'Rejected',suspend:'Suspended',activate:'Active'}[CURRENT_ACTION_TYPE];
+  var prevStatus=a.status;
+  a.status=newStatus;
+  a.history.unshift({ts:new Date().toLocaleString(),from:prevStatus,to:newStatus,by:'Sandra Adams',note:notes||cfg.btnTxt+' action executed'});
+
+  document.getElementById('actionConfirmModal').style.display='none';
+  renderAgents();
+  showToast(a.name+' — status updated to '+newStatus, newStatus==='Rejected'||newStatus==='Suspended'?'#c62828':'#1b5e20');
+}
+
+function showToast(msg,color){
+  var el=document.getElementById('toastEl');
+  el.textContent=msg;
+  el.style.background=color||'#1b5e20';
+  el.style.display='block';
+  setTimeout(function(){el.style.display='none';},3500);
+}
+
+renderAgents();
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.7">Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

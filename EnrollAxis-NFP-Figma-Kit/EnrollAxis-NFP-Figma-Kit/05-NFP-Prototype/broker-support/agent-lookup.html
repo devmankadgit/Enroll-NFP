@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — Agent Lookup -->
+<title>Agent Lookup | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html" class="active"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Agent Lookup</h4><p style="font-size:12px;color:#5f6368;margin:0">Search and view agent profiles, compliance status, and onboarding records</p></div>
+    <div class="dflex g8">
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Search Bar -->
+    <div class="card">
+      <div class="card-body" style="padding:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr auto;gap:10px;align-items:end">
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Agent Name</label><input type="text" id="fAgent" placeholder="Name..." style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">NPN</label><input type="text" id="fNPN" placeholder="NPN..." style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Agency</label><select id="fAgency" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"><option>All Agencies</option><option>Premier Insurance (FMO)</option><option>National Benefits (SGA)</option><option>Southwest Medicare (GA)</option><option>Alliance Health (MGA)</option></select></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">State</label><select id="fState" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"><option>All States</option><option>FL</option><option>GA</option><option>CA</option><option>TX</option></select></div>
+          <div><label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Status</label><select id="fStatus" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px"><option>All Statuses</option><option>Active</option><option>Onboarding</option><option>Compliance Hold</option><option>Terminated</option></select></div>
+          <button class="btn-pr" onclick="applyFilters()" style="padding:8px 16px"><i class="fas fa-search" style="margin-right:6px"></i>Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-users" style="color:#0277bd;margin-right:8px"></i>Search Results</h6><span class="badge" style="background:#e3f2fd;color:#0277bd">342 agents</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Agent</th><th>NPN</th><th>Email</th><th>Agency</th><th>States</th><th>Status</th><th>AHIP</th><th>License</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">James Martinez</td><td>8823441</td><td>j.martinez@email.com</td><td>Premier Insurance (FMO)</td><td>FL, GA</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showProfile('James Martinez','8823441')">Profile</button></td></tr>
+            <tr><td style="font-weight:600">Sarah Chen</td><td>7719022</td><td>s.chen@email.com</td><td>National Benefits (SGA)</td><td>CA, TX</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Active</span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showProfile('Sarah Chen','7719022')">Profile</button></td></tr>
+            <tr><td style="font-weight:600">Kevin Patel</td><td>7823410</td><td>k.patel@email.com</td><td>Southwest Medicare (GA)</td><td>FL</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Compliance Hold</span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#c62828"><i class="fas fa-times-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showProfile('Kevin Patel','7823410')">Profile</button></td></tr>
+            <tr><td style="font-weight:600">James Lee</td><td>8834521</td><td>j.lee@email.com</td><td>Premier Insurance (FMO)</td><td>FL, GA, TX</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Onboarding</span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showCase('James Lee','8834521','j.lee@email.com','Premier Insurance (FMO)','Onboarding','CASE-2026-0891','05 28,2026','Gate 3 — W-9 Document Upload','Pending Review','W-9 entity type mismatch. 3 resubmission attempts. Agent stuck at Gate 3. AHIP and NIPR passed. SLA overdue. Assigned to Maria Johnson.')">Case</button></td></tr>
+            <tr><td style="font-weight:600">Sarah Kim</td><td>9912388</td><td>s.kim@email.com</td><td>Alliance Health (MGA)</td><td>FL</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Compliance Hold</span></td><td><span style="color:#c62828"><i class="fas fa-times-circle"></i></span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showProfile('Sarah Kim','9912388')">Profile</button></td></tr>
+            <tr><td style="font-weight:600">Angela Torres</td><td>6651209</td><td>a.torres@email.com</td><td>Premier Insurance (FMO)</td><td>FL</td><td><span class="badge" style="background:#fff3e0;color:#e65100">Onboarding</span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><span style="color:#2e7d32"><i class="fas fa-check-circle"></i></span></td><td><button class="btn-ol btn-sm" onclick="showCase('Angela Torres','6651209','a.torres@email.com','Premier Insurance (FMO)','Onboarding','CASE-2026-0896','05 22,2026','AHIP Exam','High','Failed training exam 4 times. Override requested (OVR-301). Technical issues reported on attempt 3. Awaiting approval for 5th attempt.')">Case</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:94%;max-width:800px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1;border-radius:12px 12px 0 0">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-user-circle" style="color:#0277bd;margin-right:8px"></i><span id="pmTitle">Agent Profile</span></h6>
+      <button onclick="closeProfileModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+
+      <!-- Agent Header -->
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:linear-gradient(135deg,#e3f2fd 0%,#bbdefb 100%);border-radius:10px">
+        <div style="width:56px;height:56px;border-radius:50%;background:#0277bd;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0" id="pmAvatar">JM</div>
+        <div style="flex:1">
+          <div id="pmAgentName" style="font-size:16px;font-weight:700;color:#1a237e">—</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
+            <span style="font-size:12px;color:#5f6368"><i class="fas fa-id-badge" style="margin-right:3px"></i>NPN: <strong id="pmNPN">—</strong></span>
+            <span style="font-size:12px;color:#5f6368"><i class="fas fa-envelope" style="margin-right:3px"></i><span id="pmEmail">—</span></span>
+            <span style="font-size:12px;color:#5f6368"><i class="fas fa-phone" style="margin-right:3px"></i><span id="pmPhone">—</span></span>
+          </div>
+          <div style="margin-top:6px" id="pmStatusBadge"></div>
+        </div>
+      </div>
+
+      <!-- Section: Agency & Hierarchy -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-sitemap" style="margin-right:6px"></i>Agency & Hierarchy</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Agency</div><div id="pmAgency" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Hierarchy Level</div><div id="pmLevel" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Upline</div><div id="pmUpline" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Licensed States</div><div id="pmStates" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Appointed States</div><div id="pmAppointed" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Effective Date</div><div id="pmJoined" style="font-size:13px;margin-top:2px">—</div></div>
+        </div>
+      </div>
+
+      <!-- Section: Compliance & Licensing -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-shield-alt" style="margin-right:6px"></i>Compliance & Licensing</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px 14px"><div style="font-size:10px;color:#80868b;text-transform:uppercase">AHIP Certification</div><div id="pmAHIP" style="font-size:13px;font-weight:600;margin-top:4px">—</div><div id="pmAHIPExp" style="font-size:11px;color:#5f6368;margin-top:2px">—</div></div>
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px 14px"><div style="font-size:10px;color:#80868b;text-transform:uppercase">License Status</div><div id="pmLicense" style="font-size:13px;font-weight:600;margin-top:4px">—</div><div id="pmLicenseDetail" style="font-size:11px;color:#5f6368;margin-top:2px">—</div></div>
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px 14px"><div style="font-size:10px;color:#80868b;text-transform:uppercase">E&O Insurance</div><div id="pmEO" style="font-size:13px;font-weight:600;margin-top:4px">—</div><div id="pmEOExp" style="font-size:11px;color:#5f6368;margin-top:2px">—</div></div>
+          <div style="background:#f8f9fa;border-radius:8px;padding:10px 14px"><div style="font-size:10px;color:#80868b;text-transform:uppercase">Background Check</div><div id="pmBG" style="font-size:13px;font-weight:600;margin-top:4px">—</div><div id="pmBGDate" style="font-size:11px;color:#5f6368;margin-top:2px">—</div></div>
+        </div>
+      </div>
+
+      <!-- Section: Onboarding -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-user-clock" style="margin-right:6px"></i>Onboarding</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Onboarding Status</div><div id="pmOnboard" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Gates Completed</div><div id="pmGates" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Completed Date</div><div id="pmOnboardDate" style="font-size:13px;margin-top:2px">—</div></div>
+        </div>
+      </div>
+
+      <!-- Section: Book of Business / Members -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-users" style="margin-right:6px"></i>Book of Business</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+          <div style="text-align:center;background:#e3f2fd;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:700;color:#0277bd" id="pmMembers">—</div><div style="font-size:10px;color:#5f6368">Total Members</div></div>
+          <div style="text-align:center;background:#e8f5e9;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:700;color:#2e7d32" id="pmMA">—</div><div style="font-size:10px;color:#5f6368">MA</div></div>
+          <div style="text-align:center;background:#f3e5f5;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:700;color:#7b1fa2" id="pmDSNP">—</div><div style="font-size:10px;color:#5f6368">D-SNP</div></div>
+          <div style="text-align:center;background:#e0f2f1;border-radius:8px;padding:10px"><div style="font-size:20px;font-weight:700;color:#00695c" id="pmCSNP">—</div><div style="font-size:10px;color:#5f6368">C-SNP</div></div>
+        </div>
+      </div>
+
+      <!-- Section: Commission -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-dollar-sign" style="margin-right:6px"></i>Commission</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Commission Tier</div><div id="pmTier" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Last Payment</div><div id="pmLastPay" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Last Pay Date</div><div id="pmLastPayDate" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">YTD Earned</div><div id="pmYTD" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        </div>
+      </div>
+
+      <!-- Section: Activity -->
+      <div style="margin-bottom:8px">
+        <div style="font-size:12px;font-weight:700;color:#0277bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;border-bottom:2px solid #e3f2fd;padding-bottom:4px"><i class="fas fa-history" style="margin-right:6px"></i>Activity</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Last Login</div><div id="pmLogin" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Open Support Cases</div><div id="pmCases" style="font-size:13px;margin-top:2px">—</div></div>
+          <div><div style="font-size:10px;color:#80868b;text-transform:uppercase">Compliance Issues</div><div id="pmIssues" style="font-size:13px;margin-top:2px">—</div></div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div style="background:#fff8e1;border-radius:8px;padding:14px;margin-top:14px;border-left:4px solid #f57f17">
+        <div style="font-size:11px;font-weight:700;color:#f57f17;text-transform:uppercase;margin-bottom:6px"><i class="fas fa-sticky-note" style="margin-right:4px"></i>Notes</div>
+        <div id="pmNotes" style="font-size:13px;line-height:1.6;color:#333">—</div>
+      </div>
+
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end;position:sticky;bottom:0;background:#fff;border-radius:0 0 12px 12px">
+      <button class="btn-ol btn-sm" onclick="closeProfileModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Case Modal -->
+<div id="caseModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-folder-open" style="color:#e65100;margin-right:8px"></i><span id="cmTitle">Onboarding Case</span></h6>
+      <button onclick="closeCaseModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="cmAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">NPN</div><div id="cmNPN" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Case ID</div><div id="cmCase" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Started</div><div id="cmStarted" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Current Gate</div><div id="cmGate" style="font-size:13px;font-weight:600;color:#e65100;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Priority</div><div id="cmPriority" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Case Notes</div>
+        <div id="cmNotes" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="case-review.html" class="btn-pr btn-sm" style="text-decoration:none"><i class="fas fa-external-link-alt" style="margin-right:4px"></i>Open Full Case</a>
+        <button class="btn-ol btn-sm" onclick="showToast('Agent notified','info')"><i class="fas fa-envelope" style="margin-right:4px"></i>Notify Agent</button>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeCaseModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var agentProfiles = {
+  '8823441': {name:'James Martinez',npn:'8823441',email:'j.martinez@email.com',phone:'(305) 555-0142',agency:'Premier Insurance (FMO)',level:'GA — General Agent',upline:'Premier Insurance > Gold Kidney',states:'FL, GA',appointed:'FL, GA',joined:'03 12,2024',status:'Active',
+    ahip:'Valid',ahipExp:'AHIP 2026 — Score: 94% — Expires 12 31,2026',license:'Active — FL, GA',licenseDetail:'FL: Health 2-15, Exp Mar 2027 | GA: Health, Exp Jan 2027',eo:'Active',eoExp:'Policy #EO-44821 — Exp 09 30,2026',bg:'Cleared',bgDate:'Completed 03 15,2024',
+    onboard:'Completed',gates:'8/8',onboardDate:'04 02,2024',members:42,ma:28,dsnp:10,csnp:4,tier:'Level 2',lastPay:'$4,200',lastPayDate:'06 01,2026',ytd:'$25,200',login:'06 09,2026 — 8:30 AM',cases:'0',issues:'None',
+    notes:'High-performing agent. Consistently meets enrollment targets. Book of business growing steadily. No compliance issues. Recently completed AHIP recertification with 94% score.'},
+  '7719022': {name:'Sarah Chen',npn:'7719022',email:'s.chen@email.com',phone:'(415) 555-0198',agency:'National Benefits (SGA)',level:'Agent — Individual',upline:'National Benefits > Gold Kidney',states:'CA, TX',appointed:'CA, TX',joined:'01 08,2025',status:'Active',
+    ahip:'Valid',ahipExp:'AHIP 2026 — Score: 96% — Expires 12 31,2026',license:'Active — CA, TX',licenseDetail:'CA: Health, Exp Jul 2027 | TX: Health/Life, Exp Nov 2026',eo:'Active',eoExp:'Policy #EO-55102 — Exp 12 31,2026',bg:'Cleared',bgDate:'Completed 01 12,2025',
+    onboard:'Completed',gates:'8/8',onboardDate:'02 01,2025',members:28,ma:18,dsnp:8,csnp:2,tier:'Level 1',lastPay:'$2,800',lastPayDate:'06 01,2026',ytd:'$16,800',login:'06 08,2026 — 4:15 PM',cases:'1',issues:'None',
+    notes:'Recently recertified AHIP with excellent score. Active in CA and TX markets. 1 open enrollment support case (dual-eligible Medicaid verification).'},
+  '7823410': {name:'Kevin Patel',npn:'7823410',email:'k.patel@email.com',phone:'(786) 555-0331',agency:'Southwest Medicare (GA)',level:'Agent — Individual',upline:'Southwest Medicare > Gold Kidney',states:'FL',appointed:'FL (Suspended)',joined:'06 15,2023',status:'Compliance Hold',
+    ahip:'Valid',ahipExp:'AHIP 2026 — Score: 88% — Expires 12 31,2026',license:'EXPIRED — FL',licenseDetail:'FL: Health 2-15, EXPIRED 06 01,2026 — Renewal required',eo:'Active',eoExp:'Policy #EO-33219 — Exp 08 31,2026',bg:'Cleared',bgDate:'Completed 06 20,2023',
+    onboard:'Completed',gates:'8/8',onboardDate:'07 10,2023',members:18,ma:12,dsnp:5,csnp:1,tier:'Level 1',lastPay:'$1,800 (frozen)',lastPayDate:'05 01,2026',ytd:'$9,000',login:'06 02,2026 — 10:00 AM',cases:'1',issues:'License Expiration',
+    notes:'FL Health license expired 06 01,2026. Compliance hold applied Jun 2. Agent notified multiple times via email and portal. Book of business frozen (18 members). Must renew FL license before reactivation. Agency (Southwest Medicare) also notified.'},
+  '9912388': {name:'Sarah Kim',npn:'9912388',email:'s.kim@email.com',phone:'(305) 555-0276',agency:'Alliance Health (MGA)',level:'Agent — Individual',upline:'Alliance Health > Gold Kidney',states:'FL',appointed:'FL (Suspended)',joined:'09 03,2022',status:'Compliance Hold',
+    ahip:'EXPIRED',ahipExp:'AHIP 2025 — EXPIRED 12 31,2025 — 160+ days overdue',license:'Active — FL',licenseDetail:'FL: Health 2-15, Exp Apr 2027',eo:'Active',eoExp:'Policy #EO-28801 — Exp 03 31,2027',bg:'Cleared',bgDate:'Completed 09 10,2022',
+    onboard:'Completed',gates:'8/8',onboardDate:'10 01,2022',members:22,ma:15,dsnp:5,csnp:2,tier:'Level 1',lastPay:'$2,200 (frozen)',lastPayDate:'01 01,2026',ytd:'$2,200',login:'02 15,2026 — 11:20 AM',cases:'1',issues:'AHIP Expiration',
+    notes:'AHIP certification expired 12 31,2025. Compliance hold active 160+ days. Multiple reminders sent — agent unresponsive. Last login Feb 2026. Book of business frozen (22 members). Agency recommends termination review if no action by Jun 30.'}
+};
+function showProfile(agent,npn){
+  var p=agentProfiles[npn];if(!p)return;
+  document.getElementById('pmTitle').textContent='Agent Profile — '+p.name;
+  document.getElementById('pmAvatar').textContent=p.name.split(' ').map(function(w){return w[0]}).join('');
+  document.getElementById('pmAgentName').textContent=p.name;
+  document.getElementById('pmNPN').textContent=p.npn;
+  document.getElementById('pmEmail').textContent=p.email;
+  document.getElementById('pmPhone').textContent=p.phone;
+  document.getElementById('pmAgency').textContent=p.agency;
+  document.getElementById('pmLevel').textContent=p.level;
+  document.getElementById('pmUpline').textContent=p.upline;
+  document.getElementById('pmStates').textContent=p.states;
+  document.getElementById('pmAppointed').textContent=p.appointed;
+  document.getElementById('pmJoined').textContent=p.joined;
+  // Compliance
+  var ahipEl=document.getElementById('pmAHIP');
+  if(p.ahip==='Valid') ahipEl.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Valid</span>';
+  else ahipEl.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>'+p.ahip+'</span>';
+  document.getElementById('pmAHIPExp').textContent=p.ahipExp;
+  var licEl=document.getElementById('pmLicense');
+  if(p.license.indexOf('Active')===0) licEl.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>'+p.license+'</span>';
+  else licEl.innerHTML='<span style="color:#c62828"><i class="fas fa-times-circle" style="margin-right:4px"></i>'+p.license+'</span>';
+  document.getElementById('pmLicenseDetail').textContent=p.licenseDetail;
+  document.getElementById('pmEO').innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>'+p.eo+'</span>';
+  document.getElementById('pmEOExp').textContent=p.eoExp;
+  var bgEl=document.getElementById('pmBG');
+  if(p.bg==='Cleared') bgEl.innerHTML='<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Cleared</span>';
+  else bgEl.innerHTML='<span style="color:#e65100"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>'+p.bg+'</span>';
+  document.getElementById('pmBGDate').textContent=p.bgDate;
+  // Onboarding
+  document.getElementById('pmOnboard').innerHTML=p.onboard==='Completed'?'<span style="color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:4px"></i>Completed</span>':'<span style="color:#e65100">'+p.onboard+'</span>';
+  document.getElementById('pmGates').textContent=p.gates;
+  document.getElementById('pmOnboardDate').textContent=p.onboardDate;
+  // Book of Business
+  document.getElementById('pmMembers').textContent=p.members;
+  document.getElementById('pmMA').textContent=p.ma;
+  document.getElementById('pmDSNP').textContent=p.dsnp;
+  document.getElementById('pmCSNP').textContent=p.csnp;
+  // Commission
+  document.getElementById('pmTier').textContent=p.tier;
+  document.getElementById('pmLastPay').textContent=p.lastPay;
+  document.getElementById('pmLastPayDate').textContent=p.lastPayDate;
+  document.getElementById('pmYTD').textContent=p.ytd;
+  // Activity
+  document.getElementById('pmLogin').textContent=p.login;
+  document.getElementById('pmCases').textContent=p.cases;
+  var issEl=document.getElementById('pmIssues');
+  if(p.issues==='None') issEl.innerHTML='<span style="color:#2e7d32">None</span>';
+  else issEl.innerHTML='<span style="color:#c62828;font-weight:600">'+p.issues+'</span>';
+  document.getElementById('pmNotes').textContent=p.notes;
+  // Status badge
+  var sb=document.getElementById('pmStatusBadge');
+  if(p.status==='Active') sb.innerHTML='<span class="badge" style="background:#e8f5e9;color:#2e7d32;font-size:12px;padding:4px 12px"><i class="fas fa-check-circle" style="margin-right:4px"></i>Active</span>';
+  else if(p.status==='Compliance Hold') sb.innerHTML='<span class="badge" style="background:#ffcdd2;color:#c62828;font-size:12px;padding:4px 12px"><i class="fas fa-ban" style="margin-right:4px"></i>Compliance Hold</span>';
+  else sb.innerHTML='<span class="badge" style="background:#fff3e0;color:#e65100;font-size:12px;padding:4px 12px"><i class="fas fa-clock" style="margin-right:4px"></i>'+p.status+'</span>';
+  document.getElementById('profileModal').style.display='flex';
+}
+function closeProfileModal(){document.getElementById('profileModal').style.display='none';}
+document.getElementById('profileModal').addEventListener('click',function(e){if(e.target===this)closeProfileModal();});
+
+function showCase(agent,npn,email,agency,status,caseId,started,gate,priority,notes){
+  document.getElementById('cmAgent').textContent=agent;
+  document.getElementById('cmNPN').textContent=npn;
+  document.getElementById('cmCase').textContent=caseId;
+  document.getElementById('cmStarted').textContent=started;
+  document.getElementById('cmGate').textContent=gate;
+  document.getElementById('cmPriority').textContent=priority;
+  document.getElementById('cmNotes').textContent=notes;
+  document.getElementById('cmTitle').textContent='Case — '+agent;
+  document.getElementById('caseModal').style.display='flex';
+}
+function closeCaseModal(){document.getElementById('caseModal').style.display='none';}
+document.getElementById('caseModal').addEventListener('click',function(e){if(e.target===this)closeCaseModal();});
+
+// Table filtering
+var tableRows=document.querySelectorAll('.table tbody tr');
+function applyFilters(){
+  var agent=document.getElementById('fAgent').value.trim().toLowerCase();
+  var npn=document.getElementById('fNPN').value.trim();
+  var agency=document.getElementById('fAgency').value;
+  var state=document.getElementById('fState').value;
+  var status=document.getElementById('fStatus').value;
+  var visible=0;
+  tableRows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var rAgent=cells[0]?cells[0].textContent.trim().toLowerCase():'';
+    var rNPN=cells[1]?cells[1].textContent.trim():'';
+    var rAgency=cells[3]?cells[3].textContent.trim():'';
+    var rStates=cells[4]?cells[4].textContent.trim():'';
+    var rStatus=cells[5]?cells[5].textContent.trim():'';
+    var show=true;
+    if(agent && rAgent.indexOf(agent)<0) show=false;
+    if(npn && rNPN.indexOf(npn)<0) show=false;
+    if(agency!=='All Agencies' && rAgency.indexOf(agency.split(' (')[0])<0) show=false;
+    if(state!=='All States' && rStates.indexOf(state)<0) show=false;
+    if(status!=='All Statuses' && rStatus!==status) show=false;
+    row.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  showToast(visible+' agent'+(visible!==1?'s':'')+' found','info');
+}
+// Also filter on input/change
+document.getElementById('fAgent').addEventListener('input',applyFilters);
+document.getElementById('fNPN').addEventListener('input',applyFilters);
+document.getElementById('fAgency').addEventListener('change',applyFilters);
+document.getElementById('fState').addEventListener('change',applyFilters);
+document.getElementById('fStatus').addEventListener('change',applyFilters);
+</script>
+</body>
+</html>

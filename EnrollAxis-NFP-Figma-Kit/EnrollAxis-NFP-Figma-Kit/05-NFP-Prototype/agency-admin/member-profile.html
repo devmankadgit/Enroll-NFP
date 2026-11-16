@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Member Profile | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html" class="active"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Member Profile</h4>
+      <ol class="breadcrumb-bar"><li><a href="bob.html">Book of Business</a></li><li style="margin:0 6px;opacity:.5">/</li><li>Member Profile</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="history.back()" style="margin-right:8px"><i class="fas fa-arrow-left"></i>Back to BoB</button>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Member Header -->
+    <div class="member-header" style="margin-bottom:16px">
+      <div class="member-ava" id="mpAva">DH</div>
+      <div class="member-info">
+        <h2 id="mpName">Dorothy Henderson</h2>
+        <div class="meta" id="mpPlan"><i class="fas fa-id-card" style="margin-right:6px;color:#e65100"></i>StarPlus ESRD SNP</div>
+        <div class="meta" id="mpMBI" style="margin-top:3px"><i class="fas fa-fingerprint" style="margin-right:6px;color:#80868b"></i>MBI: ***-**-MK72</div>
+        <div class="meta" style="margin-top:3px"><span id="mpStatusBadge" class="bdg b-green"><i class="fas fa-check-circle"></i> Active</span> &nbsp; Effective: <span id="mpEff">01 01,2026</span> &nbsp; State: <span id="mpState">FL</span></div>
+      </div>
+      <div style="margin-left:auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+        <button class="btn-pr btn-sm" onclick="openHRAModal()"><i class="fas fa-clipboard-list"></i> Submit HRA</button>
+        <button class="btn-ol btn-sm" onclick="openVisitModal()"><i class="fas fa-calendar-check"></i> Schedule Visit</button>
+        <button class="btn-ol btn-sm" onclick="openEnrollModal()"><i class="fas fa-file-medical"></i> New Enrollment</button>
+      </div>
+    </div>
+
+    <div class="row-grid">
+      <!-- Plan & Coverage Info -->
+      <div class="col-2">
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-id-card" style="margin-right:8px;color:#e65100"></i>Plan &amp; Coverage</h5></div>
+          <div class="card-body" style="font-size:13px">
+            <table style="width:100%;border-collapse:collapse">
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368;width:45%">Plan Name</td><td style="padding:8px 0;font-weight:600" id="dPlan">StarPlus ESRD SNP</td></tr>
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368">Plan Type</td><td style="padding:8px 0">Medicare Advantage SNP</td></tr>
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368">Effective Date</td><td style="padding:8px 0" id="dEff">01 01,2026</td></tr>
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368">Service State</td><td style="padding:8px 0" id="dState">FL</td></tr>
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368">Monthly Premium</td><td style="padding:8px 0">$0.00</td></tr>
+              <tr style="border-bottom:1px solid #f1f3f4"><td style="padding:8px 0;color:#5f6368">Monthly Commission</td><td style="padding:8px 0" id="dComm" style="color:#1b5e20;font-weight:600">$50.08</td></tr>
+              <tr><td style="padding:8px 0;color:#5f6368">Assigned Agent</td><td style="padding:8px 0">James Martinez (NPN: 8823441)</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Care Management -->
+      <div class="col-2">
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-heartbeat" style="margin-right:8px;color:#c62828"></i>Care Management Status</h5></div>
+          <div class="card-body" style="font-size:13px">
+            <div style="margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><strong>HRA Status</strong><span id="hraStatus" class="bdg b-green">Completed</span></div>
+              <div style="font-size:12px;color:#5f6368">Last HRA: 03 15,2026 &nbsp;|&nbsp; Next due: 09 15,2026</div>
+            </div>
+            <div style="margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><strong>HIPAA / Enrollment</strong><span id="hipaaStatus" class="bdg b-green">Completed</span></div>
+              <div style="font-size:12px;color:#5f6368">Enrollment verified: 01 01,2026</div>
+            </div>
+            <div style="margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><strong>Risk / Recertification</strong><span id="riskStatus" class="bdg b-amber">Re-Verification Due Jun 1</span></div>
+              <div style="font-size:12px;color:#5f6368">C-SNP recertification required by 06 01,2026</div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><strong>Last Care Visit</strong><span class="bdg b-blue">04 20,2026</span></div>
+              <div style="font-size:12px;color:#5f6368">Primary Care: Dr. Patricia Moore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Items -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-tasks" style="margin-right:8px;color:#e65100"></i>Open Action Items</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','member-profile_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Type</th><th>Due Date</th><th>Status</th><th>Priority</th><th>Notes</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><span class="bdg b-amber">C-SNP Re-Verify</span></td><td>06 01,2026</td><td><span class="bdg b-amber">Pending</span></td><td>High</td><td>Annual recertification for ESRD condition</td><td><button class="btn-ol btn-sm" onclick="nfpSubmit('C-SNP Re-Verify initiated for this member')">Initiate</button></td></tr>
+            <tr><td><span class="bdg b-blue">Follow-up Call</span></td><td>06 05,2026</td><td><span class="bdg b-blue">Scheduled</span></td><td>Medium</td><td>Post-HRA follow-up on medication adherence</td><td><button class="btn-ol btn-sm" onclick="nfpSubmit('Follow-up call completed')">Complete</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Activity Log -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>Activity Log</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <ul class="timeline">
+          <li class="tl-item"><div class="tl-time">04 20,2026 — 10:30 AM</div>Healthy Visit completed with Dr. Patricia Moore<div class="tl-by">Logged by: James Martinez</div></li>
+          <li class="tl-item"><div class="tl-time">03 15,2026 — 2:15 PM</div>HRA submitted and completed via agent portal<div class="tl-by">Logged by: James Martinez</div></li>
+          <li class="tl-item"><div class="tl-time">01 01,2026 — 12:00 AM</div>Enrollment effective — StarPlus ESRD SNP<div class="tl-by">System</div></li>
+          <li class="tl-item"><div class="tl-time">11 15,2025 — 3:45 PM</div>SOA signed and enrollment completed<div class="tl-by">Logged by: James Martinez</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Submit HRA Modal -->
+<div class="modal-overlay" id="hraModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5><i class="fas fa-clipboard-list" style="margin-right:8px;color:#e65100"></i>Submit HRA</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">HRA Date</label><input type="date" class="form-control" id="hraDate"></div>
+      <div class="mb-3"><label class="form-label">Provider</label><input type="text" class="form-control" placeholder="Dr. / Provider name"></div>
+      <div class="mb-3"><label class="form-label">Location</label><select class="form-control"><option>Provider Office</option><option>Telehealth</option><option>Member Home</option></select></div>
+      <div class="mb-3"><label class="form-label">HRA Score (0-100)</label><input type="number" class="form-control" min="0" max="100" placeholder="Enter score"></div>
+      <div class="mb-3"><label class="form-label">Clinical Notes</label><textarea class="form-control" rows="3" placeholder="Key findings, medication changes, care gaps..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="submitHRA()"><i class="fas fa-check-circle"></i> Submit HRA</button>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Visit Modal -->
+<div class="modal-overlay" id="visitModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-calendar-check" style="margin-right:8px;color:#e65100"></i>Schedule Care Visit</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Visit Type</label><select class="form-control"><option>Healthy Visit (Annual)</option><option>Follow-up Visit</option><option>Specialist Referral</option><option>Telehealth Check-in</option></select></div>
+      <div class="mb-3"><label class="form-label">Preferred Date</label><input type="date" class="form-control" id="visitDate"></div>
+      <div class="mb-3"><label class="form-label">Preferred Time</label><select class="form-control"><option>Morning (8am-12pm)</option><option>Afternoon (12pm-4pm)</option><option>Evening (4pm-6pm)</option></select></div>
+      <div class="mb-3"><label class="form-label">Provider</label><input type="text" class="form-control" placeholder="Provider name or facility"></div>
+      <div class="mb-3"><label class="form-label">Notes</label><textarea class="form-control" rows="2" placeholder="Special instructions or concerns..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="scheduleVisit()"><i class="fas fa-calendar-check"></i> Schedule Visit</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Enrollment Modal -->
+<div class="modal-overlay" id="enrollModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h5><i class="fas fa-file-medical" style="margin-right:8px;color:#e65100"></i>New Enrollment</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-info mb-3"><i class="fas fa-info-circle"></i>&nbsp; This will initiate a new enrollment application for this member. Ensure SOA is signed before proceeding.</div>
+      <div class="mb-3"><label class="form-label">Enrollment Type</label><select class="form-control"><option>Plan Change</option><option>New Enrollment</option><option>Disenrollment</option></select></div>
+      <div class="mb-3"><label class="form-label">Effective Date</label><input type="date" class="form-control"></div>
+      <div class="mb-3"><label class="form-label">New Plan</label><select class="form-control"><option>StarPlus ESRD SNP (Current)</option><option>KidneyCare CKD SNP</option><option>HeartCare H&D SNP</option><option>BrightChoice HMO</option></select></div>
+      <div class="mb-3"><label class="form-label">SEP Reason</label><select class="form-control"><option>Annual Enrollment Period</option><option>Special Enrollment Period (SEP)</option><option>ICEP (Initial Coverage Election Period)</option></select></div>
+      <div class="mb-3"><label class="form-label">SOA Reference #</label><input type="text" class="form-control" placeholder="SOA-2026-XXXX"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="submitEnrollment()"><i class="fas fa-file-medical"></i> Submit Enrollment</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Load member data from sessionStorage
+(function() {
+  try {
+    var data = JSON.parse(sessionStorage.getItem('memberData') || '{}');
+    if (data.name) {
+      document.getElementById('mpName').textContent = data.name;
+      var initials = data.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0,2).toUpperCase();
+      document.getElementById('mpAva').textContent = initials;
+      document.getElementById('mpPlan').innerHTML = '<i class="fas fa-id-card" style="margin-right:6px;color:#e65100"></i>' + data.plan;
+      document.getElementById('mpMBI').innerHTML = '<i class="fas fa-fingerprint" style="margin-right:6px;color:#80868b"></i>MBI: ' + data.mbi;
+      document.getElementById('mpEff').textContent = data.eff;
+      document.getElementById('mpState').textContent = data.state;
+      document.getElementById('dPlan').textContent = data.plan;
+      document.getElementById('dEff').textContent = data.eff;
+      document.getElementById('dState').textContent = data.state;
+      document.getElementById('dComm').textContent = data.comm;
+      document.getElementById('hraStatus').textContent = data.hra;
+      document.getElementById('hipaaStatus').textContent = data.hipaa;
+      document.getElementById('riskStatus').textContent = data.risk;
+      // Update badge classes
+      var hraEl = document.getElementById('hraStatus');
+      hraEl.className = 'bdg ' + (data.hra === 'Completed' ? 'b-green' : 'b-amber');
+      var hipaaEl = document.getElementById('hipaaStatus');
+      hipaaEl.className = 'bdg ' + (data.hipaa === 'Completed' ? 'b-green' : 'b-amber');
+    }
+  } catch(e) {}
+})();
+
+function openHRAModal() { document.getElementById('hraModal').style.display = 'flex'; }
+function openVisitModal() { document.getElementById('visitModal').style.display = 'flex'; }
+function openEnrollModal() { document.getElementById('enrollModal').style.display = 'flex'; }
+
+function submitHRA() {
+  var d = document.getElementById('hraDate').value;
+  if (!d) { showToast('Please select an HRA date', 'error'); return; }
+  document.getElementById('hraModal').style.display = 'none';
+  showToast('HRA submitted successfully for ' + document.getElementById('mpName').textContent + ' — Date: ' + d, 'success');
+  document.getElementById('hraStatus').textContent = 'Completed';
+  document.getElementById('hraStatus').className = 'bdg b-green';
+}
+
+function scheduleVisit() {
+  var d = document.getElementById('visitDate').value;
+  if (!d) { showToast('Please select a preferred visit date', 'error'); return; }
+  document.getElementById('visitModal').style.display = 'none';
+  showToast('Care visit scheduled for ' + document.getElementById('mpName').textContent + ' — ' + d, 'success');
+}
+
+function submitEnrollment() {
+  document.getElementById('enrollModal').style.display = 'none';
+  showToast('Enrollment application submitted for ' + document.getElementById('mpName').textContent + ' — Reference: ENR-2026-' + Math.floor(Math.random()*9000+1000), 'success');
+}
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 27,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Calculation Engine | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.engine-status{border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:16px;border:2px solid}
+.engine-idle{background:#e8f5e9;border-color:#a5d6a7}
+.engine-running{background:#e3f2fd;border-color:#90caf9;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.engine-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.engine-idle .engine-icon{background:#1b5e20;color:#fff}
+.engine-running .engine-icon{background:#0d47a1;color:#fff}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html" class="active"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Calculation Engine</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Calculation Engine</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpExport('Engine Data')"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Engine Status Banner -->
+    <div class="engine-status engine-idle">
+      <div class="engine-icon"><i class="fas fa-check"></i></div>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:700;color:#1b5e20">Engine Idle &mdash; Ready</div>
+        <div style="font-size:13px;color:#2e7d32;margin-top:2px">Last run completed successfully on 07 15,2026 at 02:04 AM. 1,247 enrollments processed.</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px">Next Scheduled Run</div>
+        <div style="font-size:15px;font-weight:700;color:#1a1a2e">08 15,2026</div>
+        <div style="font-size:11px;color:#80868b">Cutoff: Aug 14 &bull; Pay date: Aug 17</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Last Run Processed</div><div class="stat-val">1,247</div><div class="stat-sub text-muted">07 15,2026 &mdash; RUN-2026-018</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Error Queue</div><div class="stat-val">4</div><div class="stat-sub" style="color:#c62828">Require Finance review</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Total Calculated (Jul)</div><div class="stat-val">$91,204</div><div class="stat-sub text-muted">Pending batch release</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Avg Run Duration</div><div class="stat-val">4.2 min</div><div class="stat-sub text-muted">1,200+ records/run</div></div></div></div>
+    </div>
+
+    <!-- Calculation Error Queue -->
+    <div class="card mb16">
+      <div class="card-hdr" style="background:#fff5f5;border-bottom-color:#f1f3f4">
+        <h5><i class="fas fa-exclamation-triangle" style="color:#c62828;margin-right:8px"></i>Calculation Error Queue <span class="bdg b-red" style="margin-left:8px">4</span></h5>
+        <button class="btn-ol btn-sm" onclick="nfpExport('Error Queue')"><i class="fas fa-download"></i>Export</button>
+      </div>
+      <div class="al-warn" style="margin:0"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Enrollments skipped during last calculation run. Finance reviews and takes action &mdash; Production Support executes recalculation after approval.</span></div>
+      <div class="table-wrap">
+        <table class="tbl" style="font-size:12.5px">
+          <thead><tr><th>Agent</th><th>Enrollment</th><th>Reason</th><th>Impact</th><th>Assigned To</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div style="font-weight:600">Kevin Nguyen</div><span style="color:#5f6368;font-size:11px">NPN 9912345</span></td>
+              <td><code>ENR-2025-9841</code></td>
+              <td><span class="bdg b-red">No Rate Config</span></td>
+              <td style="font-weight:600">$694.00 blocked</td>
+              <td>Lisa Rodriguez</td>
+              <td><div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="openErrorDetail('ERR-001')" title="Review"><i class="fas fa-eye"></i>Review</button>
+                <button class="btn-ol btn-sm" style="color:#1b5e20" onclick="approveError('ERR-001')" title="Approve for recalculation"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#e65100" onclick="holdError('ERR-001')" title="Place on hold"><i class="fas fa-pause"></i>Hold</button>
+                <button class="btn-ol btn-sm" style="color:#c62828" onclick="rejectError('ERR-001')" title="Reject"><i class="fas fa-times"></i>Reject</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600">Angela Torres</div><span style="color:#5f6368;font-size:11px">NPN 6643201</span></td>
+              <td><code>ENR-2026-1122</code></td>
+              <td><span class="bdg b-amber">Banking Missing</span></td>
+              <td style="font-weight:600">$694.00 on hold</td>
+              <td>David Park</td>
+              <td><div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="openErrorDetail('ERR-002')" title="Review"><i class="fas fa-eye"></i>Review</button>
+                <button class="btn-ol btn-sm" style="color:#1b5e20" onclick="approveError('ERR-002')" title="Approve"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#e65100" onclick="holdError('ERR-002')" title="Hold"><i class="fas fa-pause"></i>Hold</button>
+                <button class="btn-ol btn-sm" style="color:#c62828" onclick="rejectError('ERR-002')" title="Reject"><i class="fas fa-times"></i>Reject</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600">Unknown Agent</div><span style="color:#5f6368;font-size:11px">NPN 0000000</span></td>
+              <td><code>ENR-2026-0887</code></td>
+              <td><span class="bdg b-red">NPN Invalid</span></td>
+              <td style="font-weight:600">$694.00 blocked</td>
+              <td>Lisa Rodriguez</td>
+              <td><div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="openErrorDetail('ERR-003')" title="Review"><i class="fas fa-eye"></i>Review</button>
+                <button class="btn-ol btn-sm" style="color:#1b5e20" onclick="approveError('ERR-003')" title="Approve"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#e65100" onclick="holdError('ERR-003')" title="Hold"><i class="fas fa-pause"></i>Hold</button>
+                <button class="btn-ol btn-sm" style="color:#c62828" onclick="rejectError('ERR-003')" title="Reject"><i class="fas fa-times"></i>Reject</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600">Mark Brown</div><span style="color:#5f6368;font-size:11px">NPN 5521833</span></td>
+              <td><code>ENR-2026-1305</code></td>
+              <td><span class="bdg b-red">CMS Data Missing</span></td>
+              <td style="font-weight:600">Ledger blocked</td>
+              <td><span style="color:#c62828;font-weight:600">Unassigned</span></td>
+              <td><div class="dflex g8">
+                <button class="btn-ol btn-sm" onclick="openErrorDetail('ERR-004')" title="Review"><i class="fas fa-eye"></i>Review</button>
+                <button class="btn-ol btn-sm" style="color:#1b5e20" onclick="approveError('ERR-004')" title="Approve"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#e65100" onclick="holdError('ERR-004')" title="Hold"><i class="fas fa-pause"></i>Hold</button>
+                <button class="btn-ol btn-sm" style="color:#c62828" onclick="rejectError('ERR-004')" title="Reject"><i class="fas fa-times"></i>Reject</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Active Engine Config Summary (compact) -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-2">
+        <!-- Run History (recent 5) -->
+        <div class="card">
+          <div class="card-hdr">
+            <h5><i class="fas fa-history" style="margin-right:8px;color:#004d40"></i>Recent Runs</h5>
+            <a href="run-history.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i>Full History</a>
+          </div>
+          <div class="table-wrap">
+            <table class="tbl" style="font-size:12.5px">
+              <thead><tr><th>Run ID</th><th>Period</th><th>Triggered By</th><th>Records</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><code>RUN-2026-018</code></td><td style="font-weight:600">Jul 2026</td>
+                  <td style="font-size:12px">System (Scheduled)</td><td>1,247</td>
+                  <td style="font-weight:700;color:#2e7d32">$91,204</td>
+                  <td><span class="bdg b-green">Completed</span></td>
+                  <td><div class="dflex g8">
+                    <button class="btn-ol btn-sm" onclick="showRunDetail('RUN-2026-018')"><i class="fas fa-eye"></i>Details</button>
+                    <button class="btn-ol btn-sm" onclick="showRunLedger('RUN-2026-018')"><i class="fas fa-list"></i>Ledger</button>
+                  </div></td>
+                </tr>
+                <tr>
+                  <td><code>RUN-2026-017</code></td><td style="font-weight:600">Jul 2026</td>
+                  <td style="font-size:12px">David Park (Manual)</td><td>342</td>
+                  <td style="font-weight:700;color:#2e7d32">$28,416</td>
+                  <td><span class="bdg b-green">Completed</span></td>
+                  <td><div class="dflex g8">
+                    <button class="btn-ol btn-sm" onclick="showRunDetail('RUN-2026-017')"><i class="fas fa-eye"></i>Details</button>
+                    <button class="btn-ol btn-sm" onclick="showRunLedger('RUN-2026-017')"><i class="fas fa-list"></i>Ledger</button>
+                  </div></td>
+                </tr>
+                <tr>
+                  <td><code>RUN-2026-016</code></td><td style="font-weight:600">Jun 2026</td>
+                  <td style="font-size:12px">System (Scheduled)</td><td>1,198</td>
+                  <td style="font-weight:700;color:#2e7d32">$87,432</td>
+                  <td><span class="bdg b-green">Completed</span></td>
+                  <td><div class="dflex g8">
+                    <button class="btn-ol btn-sm" onclick="showRunDetail('RUN-2026-016')"><i class="fas fa-eye"></i>Details</button>
+                    <button class="btn-ol btn-sm" onclick="showRunLedger('RUN-2026-016')"><i class="fas fa-list"></i>Ledger</button>
+                  </div></td>
+                </tr>
+                <tr style="background:#fff5f5">
+                  <td><code>RUN-2026-015</code></td><td style="font-weight:600">Jun 2026</td>
+                  <td style="font-size:12px">David Park (Re-Run)</td><td>48</td>
+                  <td style="font-weight:700;color:#e65100">$3,216</td>
+                  <td><span class="bdg b-red">3 Errors</span></td>
+                  <td><div class="dflex g8">
+                    <button class="btn-ol btn-sm" onclick="showRunDetail('RUN-2026-015')"><i class="fas fa-eye"></i>Details</button>
+                    <button class="btn-ol btn-sm" onclick="showRunLedger('RUN-2026-015')"><i class="fas fa-list"></i>Ledger</button>
+                  </div></td>
+                </tr>
+                <tr>
+                  <td><code>RUN-2026-014</code></td><td style="font-weight:600">May 2026</td>
+                  <td style="font-size:12px">System (Scheduled)</td><td>1,156</td>
+                  <td style="font-weight:700;color:#2e7d32">$84,108</td>
+                  <td><span class="bdg b-green">Completed</span></td>
+                  <td><div class="dflex g8">
+                    <button class="btn-ol btn-sm" onclick="showRunDetail('RUN-2026-014')"><i class="fas fa-eye"></i>Details</button>
+                    <button class="btn-ol btn-sm" onclick="showRunLedger('RUN-2026-014')"><i class="fas fa-list"></i>Ledger</button>
+                  </div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-1">
+        <!-- Active Config -->
+        <div class="card" style="height:100%">
+          <div class="card-hdr"><h5><i class="fas fa-cog" style="color:#004d40;margin-right:8px"></i>Active Config</h5>
+            <a href="commission-config.html" class="btn-ol btn-sm"><i class="fas fa-external-link-alt"></i>Manage</a></div>
+          <div class="card-body" style="font-size:13px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Config Version</span><code>RC-2026-07</code></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Plan Year</span><strong>2026</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Initial Rate</span><strong>$694.00</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Renewal PMPM</span><strong>$28.92</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Cutoff Day</span><strong>15th</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Pay Day</span><strong>17th</strong></div>
+              <div class="dflex ai-center g8"><span class="text-muted" style="flex:1">Chargeback Window</span><strong>3 months</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Request Recalculation -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-paper-plane" style="margin-right:8px;color:#e65100"></i>Request Recalculation</h5></div>
+      <div class="card-body">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Workflow:</strong> Finance submits a recalculation request &rarr; Production Support reviews and executes &rarr; Finance is notified upon completion. Finance staff do not execute calculations directly.</span></div>
+        <div style="margin-top:8px">
+          <div style="font-size:12.5px;font-weight:600;margin-bottom:8px">Recent Requests</div>
+          <table class="tbl" style="font-size:12px">
+            <thead><tr><th>Request ID</th><th>Period</th><th>Scope</th><th>Requested By</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><code>RCR-2026-004</code></td><td>Jul 2026</td><td>Errors Only</td><td>David Park</td><td>07 16,2026</td><td><span class="bdg b-blue">Pending</span></td></tr>
+              <tr><td><code>RCR-2026-003</code></td><td>Jun 2026</td><td>Errors Only</td><td>Lisa Rodriguez</td><td>06 16,2026</td><td><span class="bdg b-green">Completed</span></td></tr>
+              <tr><td><code>RCR-2026-002</code></td><td>Apr 2026</td><td>Specific Agent</td><td>David Park</td><td>04 19,2026</td><td><span class="bdg b-green">Completed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== ERROR DETAIL MODAL ===== -->
+<div class="modal-overlay" id="errorDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-hdr">
+      <h5 id="errorDetailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('errorDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="errorDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('errorDetailModal')">Close</button>
+      <button class="btn-ol" style="color:#e65100;border-color:#e65100" onclick="closeModal('errorDetailModal');holdError('current')"><i class="fas fa-pause"></i>Hold</button>
+      <button class="btn-danger" onclick="closeModal('errorDetailModal');rejectError('current')"><i class="fas fa-times"></i>Reject</button>
+      <button class="btn-pr" onclick="closeModal('errorDetailModal');approveError('current')"><i class="fas fa-check"></i>Approve for Recalculation</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RUN DETAIL MODAL ===== -->
+<div class="modal-overlay" id="runDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr">
+      <h5 id="runDetailTitle"></h5>
+      <button class="modal-close" onclick="closeModal('runDetailModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="runDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('runDetailModal')">Close</button>
+      <button class="btn-ol" onclick="closeModal('runDetailModal');nfpExport('Run Detail')"><i class="fas fa-download"></i>Export</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEDGER MODAL ===== -->
+<div class="modal-overlay" id="ledgerModal" style="display:none">
+  <div class="modal-box" style="max-width:900px">
+    <div class="modal-hdr">
+      <h5 id="ledgerTitle"></h5>
+      <button class="modal-close" onclick="closeModal('ledgerModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="ledgerBody"></div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeModal('ledgerModal')">Close</button>
+      <button class="btn-ol" onclick="nfpExport('Ledger Entries')"><i class="fas fa-download"></i>Export</button>
+      <a href="bob-ledger.html" class="btn-pr"><i class="fas fa-external-link-alt"></i>Open Full BoB Ledger</a>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+// Error Details
+var errorDetails = {
+  'ERR-001':{title:'No Rate Config Found',agent:'Kevin Nguyen',npn:'9912345',enrollment:'ENR-2025-9841',
+    reason:'No commission rate config found for plan year 2025, carrier Gold Kidney Health Plan, event date 2025-12-15.',
+    fields:[['Enrollment ID','ENR-2025-9841'],['Agent','Kevin Nguyen (NPN: 9912345)'],['Plan Year','2025'],['Triggering Event Date','2025-12-15'],['Config Lookup Result','<span class="bdg b-red">No Config Found</span>']],
+    resolution:'Verify that a CY2025 rate config exists and is Active. If archived, Finance must create/activate the missing config before Production Support re-runs.'},
+  'ERR-002':{title:'Banking Details Missing',agent:'Angela Torres',npn:'6643201',enrollment:'ENR-2026-1122',
+    reason:'Agent Angela Torres (NPN 6643201) has no ACH banking details on file. Commission calculated but payment cannot be released.',
+    fields:[['Enrollment ID','ENR-2026-1122'],['Agent','Angela Torres (NPN: 6643201)'],['Calculated Amount','$694.00 (Initial)'],['Payment Method','Direct Pay &mdash; ACH required'],['Ledger Status','<span class="bdg b-amber">On Hold - Banking</span>']],
+    resolution:'Contact agent to add ACH banking details. Once added, approve for recalculation to move entry to Calculated status.'},
+  'ERR-003':{title:'NPN Validation Failed',agent:'Unknown Agent',npn:'0000000',enrollment:'ENR-2026-0887',
+    reason:'Agent NPN on enrollment (0000000) could not be validated against NIPR database. Commission withheld.',
+    fields:[['Enrollment ID','ENR-2026-0887'],['NPN on Enrollment','0000000 (invalid)'],['Calculated Amount','$694.00 (Initial) &mdash; withheld'],['Ledger Status','<span class="bdg b-red">On Hold - NPN</span>']],
+    resolution:'Identify the correct agent NPN from the original enrollment documentation. Update enrollment record and approve for recalculation.'},
+  'ERR-004':{title:'CMS Classification Missing',agent:'Mark Brown',npn:'5521833',enrollment:'ENR-2026-1305',
+    reason:'CMS MMR classification data missing for this enrollment. Cannot determine Initial vs. Renewal tier.',
+    fields:[['Enrollment ID','ENR-2026-1305'],['Agent','Mark Brown (NPN: 5521833)'],['CMS MMR File','Jul 2026 MMR &mdash; classification code blank'],['Expected Tier','Unknown &mdash; requires manual classification']],
+    resolution:'Reference enrollment history to determine correct classification (Initial vs. Renewal). Manually classify and approve for recalculation.'}
+};
+
+// Run Details
+var runDetails = {
+  'RUN-2026-018':{cycle:'Jul 2026',type:'Scheduled',started:'07 15,2026 02:00 AM',completed:'07 15,2026 02:04 AM',duration:'4.1 min',records:1247,total:'$91,204.56',errors:0,
+    breakdown:{initial:48,renewal:1152,hra:32,healthyVisit:15},config:'RC-2026-07',triggeredBy:'System (Cron)',notes:'Monthly scheduled run. All records processed successfully.'},
+  'RUN-2026-017':{cycle:'Jul 2026',type:'Manual',started:'07 12,2026 10:34 AM',completed:'07 12,2026 10:37 AM',duration:'2.8 min',records:342,total:'$28,416.00',errors:0,
+    breakdown:{initial:342,renewal:0,hra:0,healthyVisit:0},config:'RC-2026-07',triggeredBy:'David Park (Finance Admin)',notes:'Manual run for new enrollments received via daily agent feed (Jul 1-12).'},
+  'RUN-2026-016':{cycle:'Jun 2026',type:'Scheduled',started:'06 15,2026 02:00 AM',completed:'06 15,2026 02:04 AM',duration:'4.5 min',records:1198,total:'$87,432.12',errors:0,
+    breakdown:{initial:52,renewal:1104,hra:28,healthyVisit:14},config:'RC-2026-06',triggeredBy:'System (Cron)',notes:'Monthly scheduled run. All records processed successfully.'},
+  'RUN-2026-015':{cycle:'Jun 2026',type:'Re-Run',started:'06 14,2026 11:22 AM',completed:'06 14,2026 11:23 AM',duration:'1.2 min',records:48,total:'$3,216.00',errors:3,
+    breakdown:{initial:12,renewal:36,hra:0,healthyVisit:0},config:'RC-2026-06',triggeredBy:'David Park (Finance Admin)',notes:'Re-run for agents with corrected NPN. 3 records failed: missing hierarchy assignment.',
+    errorList:['BOB-112: Agent NPN 4421098 \u2014 no hierarchy override found for level MGA','BOB-118: Agent NPN 4421098 \u2014 commission config version mismatch','BOB-124: Agent NPN 8876543 \u2014 banking details not validated']},
+  'RUN-2026-014':{cycle:'May 2026',type:'Scheduled',started:'05 15,2026 02:00 AM',completed:'05 15,2026 02:04 AM',duration:'4.3 min',records:1156,total:'$84,108.44',errors:0,
+    breakdown:{initial:44,renewal:1068,hra:30,healthyVisit:14},config:'RC-2026-05',triggeredBy:'System (Cron)',notes:'Monthly scheduled run. All records processed successfully.'}
+};
+
+// Ledger sample data per run
+var ledgerData = {
+  'RUN-2026-018':[
+    {id:'LED-1247-01',member:'Robert Thompson',mbi:'1EG4-TE5-MK72',agent:'James Martinez',type:'Renewal',amount:'$208.92',status:'Calculated'},
+    {id:'LED-1247-02',member:'Linda Williams',mbi:'2HF5-TK8-NL93',agent:'Sarah Chen',type:'Renewal',amount:'$73.92',status:'Calculated'},
+    {id:'LED-1247-03',member:'George Wilson',mbi:'6MJ9-VW5-ST74',agent:'Angela Torres',type:'Renewal',amount:'$28.92',status:'On Hold - Banking'},
+    {id:'LED-1247-04',member:'Helen Anderson',mbi:'7NK0-XY6-UV85',agent:'Sarah Chen',type:'HRA',amount:'$25.00',status:'Calculated'},
+    {id:'LED-1247-05',member:'Dorothy Miller',mbi:'5LI8-UT4-QR63',agent:'James Martinez',type:'Healthy Visit',amount:'$275.00',status:'Calculated'}
+  ],
+  'RUN-2026-017':[
+    {id:'LED-342-01',member:'Frank Johnson',mbi:'8AB1-CD2-EF34',agent:'James Martinez',type:'Initial',amount:'$929.00',status:'Calculated'},
+    {id:'LED-342-02',member:'Mary Davis',mbi:'9GH3-IJ4-KL56',agent:'Patricia Lee',type:'Initial',amount:'$794.00',status:'Calculated'},
+    {id:'LED-342-03',member:'William Harris',mbi:'0MN5-OP6-QR78',agent:'David Kim',type:'Initial',amount:'$694.00',status:'Calculated'}
+  ],
+  'RUN-2026-016':[
+    {id:'LED-1198-01',member:'Robert Thompson',mbi:'1EG4-TE5-MK72',agent:'James Martinez',type:'Renewal',amount:'$208.92',status:'Paid'},
+    {id:'LED-1198-02',member:'Linda Williams',mbi:'2HF5-TK8-NL93',agent:'Sarah Chen',type:'Renewal',amount:'$73.92',status:'Paid'},
+    {id:'LED-1198-03',member:'Charles Davis',mbi:'3JG6-PQ2-MR41',agent:'Kevin Nguyen',type:'Renewal',amount:'$28.92',status:'On Hold - License'}
+  ],
+  'RUN-2026-015':[
+    {id:'LED-048-01',member:'Sandra Ray',mbi:'4KL7-MN8-OP90',agent:'Angela Torres',type:'Renewal',amount:'$28.92',status:'Error'},
+    {id:'LED-048-02',member:'Nancy Collins',mbi:'5QR1-ST2-UV34',agent:'Mark Brown',type:'Initial',amount:'$694.00',status:'Error'}
+  ],
+  'RUN-2026-014':[
+    {id:'LED-1156-01',member:'Robert Thompson',mbi:'1EG4-TE5-MK72',agent:'James Martinez',type:'Renewal',amount:'$208.92',status:'Paid'},
+    {id:'LED-1156-02',member:'Linda Williams',mbi:'2HF5-TK8-NL93',agent:'Sarah Chen',type:'Renewal',amount:'$73.92',status:'Paid'},
+    {id:'LED-1156-03',member:'Helen Anderson',mbi:'7NK0-XY6-UV85',agent:'Sarah Chen',type:'HRA',amount:'$25.00',status:'Paid'}
+  ]
+};
+
+function openErrorDetail(id){
+  var err = errorDetails[id]; if(!err) return;
+  document.getElementById('errorDetailTitle').innerHTML = '<i class="fas fa-exclamation-circle" style="color:#c62828;margin-right:8px"></i>' + err.title + ' \u2014 ' + err.enrollment;
+  var html = '<div class="al-danger mb16"><i class="fas fa-exclamation-circle" style="flex-shrink:0"></i><span><strong>Error:</strong> ' + err.reason + '</span></div>';
+  html += '<table class="tbl" style="font-size:13px;margin-bottom:14px"><thead><tr><th style="width:180px">Field</th><th>Value</th></tr></thead><tbody>';
+  err.fields.forEach(function(f){ html += '<tr><td style="font-weight:600">' + f[0] + '</td><td>' + f[1] + '</td></tr>'; });
+  html += '</tbody></table>';
+  html += '<div class="al-info"><i class="fas fa-lightbulb" style="flex-shrink:0"></i><span><strong>Resolution:</strong> ' + err.resolution + '</span></div>';
+  document.getElementById('errorDetailBody').innerHTML = html;
+  showModal('errorDetailModal');
+}
+
+function showRunDetail(id){
+  var r = runDetails[id]; if(!r) return;
+  document.getElementById('runDetailTitle').innerHTML = '<i class="fas fa-history" style="color:#004d40;margin-right:8px"></i>Run Details: ' + id;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Cycle</div><div style="font-weight:700">'+r.cycle+'</div></div>'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Type</div><div style="font-weight:700">'+r.type+'</div></div>'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Duration</div><div style="font-weight:700">'+r.duration+'</div></div>'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Started</div><div style="font-weight:600;font-size:12px">'+r.started+'</div></div>'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Completed</div><div style="font-weight:600;font-size:12px">'+r.completed+'</div></div>'
+    +'<div style="padding:10px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368">Config</div><div style="font-weight:600;font-family:monospace;font-size:12px">'+r.config+'</div></div>'
+    +'</div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px">'
+    +'<div style="text-align:center;padding:10px;background:#e3f2fd;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#0d47a1">'+r.breakdown.initial+'</div><div style="font-size:10px;color:#5f6368">Initial</div></div>'
+    +'<div style="text-align:center;padding:10px;background:#e8f5e9;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#2e7d32">'+r.breakdown.renewal+'</div><div style="font-size:10px;color:#5f6368">Renewal</div></div>'
+    +'<div style="text-align:center;padding:10px;background:#f3e5f5;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#6a1b9a">'+r.breakdown.hra+'</div><div style="font-size:10px;color:#5f6368">HRA</div></div>'
+    +'<div style="text-align:center;padding:10px;background:#fff3e0;border-radius:6px"><div style="font-size:18px;font-weight:700;color:#e65100">'+r.breakdown.healthyVisit+'</div><div style="font-size:10px;color:#5f6368">Healthy Visit</div></div>'
+    +'</div>';
+  html += '<div style="display:flex;gap:16px;margin-bottom:14px"><div><strong>Total Calculated:</strong> <span style="font-size:16px;font-weight:700;color:#2e7d32">'+r.total+'</span></div><div><strong>Records:</strong> '+r.records.toLocaleString()+'</div><div><strong>Errors:</strong> <span style="color:'+(r.errors>0?'#c62828':'#2e7d32')+'">'+r.errors+'</span></div></div>';
+  html += '<div style="padding:10px;background:#f8f9fa;border-radius:6px;font-size:12px;margin-bottom:12px"><strong>Triggered By:</strong> '+r.triggeredBy+'<br><strong>Notes:</strong> '+r.notes+'</div>';
+  if(r.errorList && r.errorList.length){
+    html += '<div style="padding:12px;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px"><div style="font-size:12px;font-weight:700;color:#c62828;margin-bottom:8px"><i class="fas fa-exclamation-circle" style="margin-right:6px"></i>Errors ('+r.errors+')</div>';
+    r.errorList.forEach(function(e){ html += '<div style="font-size:11.5px;color:#c62828;padding:4px 0;border-bottom:1px solid #ffcdd2">'+e+'</div>'; });
+    html += '</div>';
+  }
+  document.getElementById('runDetailBody').innerHTML = html;
+  showModal('runDetailModal');
+}
+
+function showRunLedger(id){
+  var entries = ledgerData[id];
+  if(!entries){ showToastGlobal('No ledger data available for ' + id,'warn'); return; }
+  document.getElementById('ledgerTitle').innerHTML = '<i class="fas fa-list" style="color:#004d40;margin-right:8px"></i>Ledger Entries \u2014 ' + id;
+  var html = '<div style="font-size:12px;color:#5f6368;margin-bottom:12px">Showing sample entries from this run. <a href="bob-ledger.html">Open full BoB Ledger</a> to see all records.</div>';
+  html += '<div class="table-wrap"><table class="tbl" style="font-size:12.5px"><thead><tr><th>Entry ID</th><th>Member</th><th>MBI</th><th>Agent</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead><tbody>';
+  entries.forEach(function(e){
+    var statusClass = e.status==='Calculated'?'b-blue':e.status==='Paid'?'b-green':e.status==='Error'?'b-red':'b-amber';
+    html += '<tr><td><code style="font-size:11px">'+e.id+'</code></td><td style="font-weight:600">'+e.member+'</td><td style="font-size:11px"><code>'+e.mbi+'</code></td><td>'+e.agent+'</td><td><span class="bdg '+(e.type==='Initial'?'b-blue':e.type==='Renewal'?'b-teal':e.type==='HRA'?'b-purple':'b-orange')+'" style="font-size:11px">'+e.type+'</span></td><td style="font-weight:700">'+e.amount+'</td><td><span class="bdg '+statusClass+'" style="font-size:11px">'+e.status+'</span></td></tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('ledgerBody').innerHTML = html;
+  showModal('ledgerModal');
+}
+
+function approveError(id){ showToastGlobal('Error '+id+' approved for recalculation. Production Support notified.','success'); }
+function holdError(id){ showToastGlobal('Error '+id+' placed on hold. Awaiting additional information.','warn'); }
+function rejectError(id){ showToastGlobal('Error '+id+' rejected. Entry marked as skipped.','error'); }
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToastGlobal(msg, type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px;max-width:440px">'+msg+'</div>';
+  t.style.display='block'; setTimeout(function(){t.style.display='none'},4000);
+}
+function nfpExport(label){ showToastGlobal(label+' export started.','info'); }
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; })});
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 08 03,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>

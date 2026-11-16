@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OIG/SAM Exclusion Monitoring | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html" class="active"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div style="font-size:11px;font-weight:700;color:#004d40;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>OIG/SAM Exclusion Monitoring</h4>
+      <ol class="breadcrumb-bar"><li>CMS-Required Monthly Exclusion Screening</li></ol>
+    </div>
+    <div class="dflex g8">
+      <a href="../auth-carrier/login.html" class="btn-ol btn-sm" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Monitoring KPIs -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Total Agents Screened</div><div class="stat-val">245</div><div class="stat-sub text-muted">Last run: 06 01,2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-shield-alt"></i></div><div><div class="stat-label">Clear</div><div class="stat-val">242</div><div class="stat-sub" style="color:#2e7d32">No matches found</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Potential Matches</div><div class="stat-val">2</div><div class="stat-sub" style="color:#e65100">Under investigation</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-ban"></i></div><div><div class="stat-label">Confirmed Exclusions</div><div class="stat-val">1</div><div class="stat-sub" style="color:#c62828">Auto-hold applied</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-calendar-check"></i></div><div><div class="stat-label">Next Scheduled Run</div><div class="stat-val">Jul 1</div><div class="stat-sub text-muted">Monthly automated</div></div></div></div>
+    </div>
+
+    <!-- Monthly Screening History -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-calendar-alt" style="color:#004d40;margin-right:8px"></i>Monthly Exclusion Check History</h5>
+        <select id="yearFilter" onchange="filterHistory()" style="margin-left:auto;padding:4px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          <option value="">All Years</option>
+          <option value="2026" selected>2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+        </select>
+        <select id="monthFilter" onchange="filterHistory()" style="padding:4px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          <option value="">All Months</option>
+          <option value="Jan">Jan</option>
+          <option value="Feb">Feb</option>
+          <option value="Mar">Mar</option>
+          <option value="Apr">Apr</option>
+          <option value="May">May</option>
+          <option value="Jun">Jun</option>
+          <option value="Jul">Jul</option>
+          <option value="Aug">Aug</option>
+          <option value="Sep">Sep</option>
+          <option value="Oct">Oct</option>
+          <option value="Nov">Nov</option>
+          <option value="Dec">Dec</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Run Date</th><th>Agents Screened</th><th>OIG Checked</th><th>SAM Checked</th><th>Matches Found</th><th>Confirmed</th><th>Auto-Holds</th><th>Status</th></tr></thead>
+          <tbody id="historyTbody">
+            <tr data-month="Jun" data-year="2026"><td>06 01,2026</td><td><a href="screened-agents.html?month=Jun&year=2026&count=245" style="color:#0d47a1;font-weight:600;text-decoration:underline">245</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>3</td><td>1</td><td>1</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="May" data-year="2026"><td>05 01,2026</td><td><a href="screened-agents.html?month=May&year=2026&count=238" style="color:#0d47a1;font-weight:600;text-decoration:underline">238</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Apr" data-year="2026"><td>04 01,2026</td><td><a href="screened-agents.html?month=Apr&year=2026&count=234" style="color:#0d47a1;font-weight:600;text-decoration:underline">234</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>1</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Mar" data-year="2026"><td>03 01,2026</td><td><a href="screened-agents.html?month=Mar&year=2026&count=229" style="color:#0d47a1;font-weight:600;text-decoration:underline">229</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Feb" data-year="2026"><td>02 01,2026</td><td><a href="screened-agents.html?month=Feb&year=2026&count=221" style="color:#0d47a1;font-weight:600;text-decoration:underline">221</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jan" data-year="2026"><td>01 02,2026</td><td><a href="screened-agents.html?month=Jan&year=2026&count=215" style="color:#0d47a1;font-weight:600;text-decoration:underline">215</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>1</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Dec" data-year="2025"><td>12 01,2025</td><td><a href="screened-agents.html?month=Dec&year=2025&count=210" style="color:#0d47a1;font-weight:600;text-decoration:underline">210</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Nov" data-year="2025"><td>11 01,2025</td><td><a href="screened-agents.html?month=Nov&year=2025&count=205" style="color:#0d47a1;font-weight:600;text-decoration:underline">205</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>2</td><td>1</td><td>1</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Oct" data-year="2025"><td>10 01,2025</td><td><a href="screened-agents.html?month=Oct&year=2025&count=198" style="color:#0d47a1;font-weight:600;text-decoration:underline">198</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Sep" data-year="2025"><td>09 01,2025</td><td><a href="screened-agents.html?month=Sep&year=2025&count=192" style="color:#0d47a1;font-weight:600;text-decoration:underline">192</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Aug" data-year="2025"><td>08 01,2025</td><td><a href="screened-agents.html?month=Aug&year=2025&count=188" style="color:#0d47a1;font-weight:600;text-decoration:underline">188</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>1</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jul" data-year="2025"><td>07 01,2025</td><td><a href="screened-agents.html?month=Jul&year=2025&count=183" style="color:#0d47a1;font-weight:600;text-decoration:underline">183</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jun" data-year="2025"><td>06 01,2025</td><td><a href="screened-agents.html?month=Jun&year=2025&count=178" style="color:#0d47a1;font-weight:600;text-decoration:underline">178</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="May" data-year="2025"><td>05 01,2025</td><td><a href="screened-agents.html?month=May&year=2025&count=172" style="color:#0d47a1;font-weight:600;text-decoration:underline">172</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Apr" data-year="2025"><td>04 01,2025</td><td><a href="screened-agents.html?month=Apr&year=2025&count=165" style="color:#0d47a1;font-weight:600;text-decoration:underline">165</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>1</td><td>1</td><td>1</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Mar" data-year="2025"><td>03 01,2025</td><td><a href="screened-agents.html?month=Mar&year=2025&count=160" style="color:#0d47a1;font-weight:600;text-decoration:underline">160</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Feb" data-year="2025"><td>02 01,2025</td><td><a href="screened-agents.html?month=Feb&year=2025&count=155" style="color:#0d47a1;font-weight:600;text-decoration:underline">155</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jan" data-year="2025"><td>01 02,2025</td><td><a href="screened-agents.html?month=Jan&year=2025&count=150" style="color:#0d47a1;font-weight:600;text-decoration:underline">150</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Dec" data-year="2024"><td>12 01,2024</td><td><a href="screened-agents.html?month=Dec&year=2024&count=145" style="color:#0d47a1;font-weight:600;text-decoration:underline">145</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Nov" data-year="2024"><td>11 01,2024</td><td><a href="screened-agents.html?month=Nov&year=2024&count=140" style="color:#0d47a1;font-weight:600;text-decoration:underline">140</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>1</td><td>1</td><td>1</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Oct" data-year="2024"><td>10 01,2024</td><td><a href="screened-agents.html?month=Oct&year=2024&count=135" style="color:#0d47a1;font-weight:600;text-decoration:underline">135</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Sep" data-year="2024"><td>09 01,2024</td><td><a href="screened-agents.html?month=Sep&year=2024&count=130" style="color:#0d47a1;font-weight:600;text-decoration:underline">130</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Aug" data-year="2024"><td>08 01,2024</td><td><a href="screened-agents.html?month=Aug&year=2024&count=125" style="color:#0d47a1;font-weight:600;text-decoration:underline">125</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jul" data-year="2024"><td>07 01,2024</td><td><a href="screened-agents.html?month=Jul&year=2024&count=120" style="color:#0d47a1;font-weight:600;text-decoration:underline">120</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jun" data-year="2024"><td>06 01,2024</td><td><a href="screened-agents.html?month=Jun&year=2024&count=112" style="color:#0d47a1;font-weight:600;text-decoration:underline">112</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="May" data-year="2024"><td>05 01,2024</td><td><a href="screened-agents.html?month=May&year=2024&count=105" style="color:#0d47a1;font-weight:600;text-decoration:underline">105</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Apr" data-year="2024"><td>04 01,2024</td><td><a href="screened-agents.html?month=Apr&year=2024&count=98" style="color:#0d47a1;font-weight:600;text-decoration:underline">98</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Mar" data-year="2024"><td>03 01,2024</td><td><a href="screened-agents.html?month=Mar&year=2024&count=90" style="color:#0d47a1;font-weight:600;text-decoration:underline">90</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Feb" data-year="2024"><td>02 01,2024</td><td><a href="screened-agents.html?month=Feb&year=2024&count=85" style="color:#0d47a1;font-weight:600;text-decoration:underline">85</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+            <tr data-month="Jan" data-year="2024"><td>01 02,2024</td><td><a href="screened-agents.html?month=Jan&year=2024&count=80" style="color:#0d47a1;font-weight:600;text-decoration:underline">80</a></td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td><i class="fas fa-check-circle" style="color:#2e7d32"></i> Yes</td><td>0</td><td>0</td><td>0</td><td><span class="bdg b-green">Complete</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Positive Match Review Queue -->
+    <div class="card mb16">
+      <div class="card-hdr" style="background:#fff5f5"><h5><i class="fas fa-flag" style="color:#c62828;margin-right:8px"></i>Positive Match Review Queue (3)</h5></div>
+      <div class="table-wrap">
+        <table class="tbl" id="matchTable">
+          <thead><tr><th>Match ID</th><th>Agent</th><th>NPN</th><th>Database</th><th>Match Type</th><th>Confidence</th><th>Status</th><th>Auto-Hold</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>EXC-2026-001</code></td><td>Robert Williams</td><td>5567234</td>
+              <td><span class="bdg" style="background:#fce4ec;color:#c62828">OIG-LEIE</span></td>
+              <td>Exact Name + NPI</td>
+              <td><span style="color:#c62828;font-weight:700">99%</span></td>
+              <td><span class="bdg b-red">Confirmed</span></td>
+              <td><i class="fas fa-check-circle" style="color:#c62828"></i> Applied</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2026-002</code></td><td>Michael Thompson</td><td>4412876</td>
+              <td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">SAM</span></td>
+              <td>Partial Name Match</td>
+              <td><span style="color:#e65100;font-weight:600">62%</span></td>
+              <td><span class="bdg b-amber">Investigating</span></td>
+              <td><i class="fas fa-clock" style="color:#e65100"></i> Pending</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2026-003</code></td><td>Lisa Johnson</td><td>7834521</td>
+              <td><span class="bdg" style="background:#fce4ec;color:#c62828">OIG-LEIE</span></td>
+              <td>Name Only (DOB mismatch)</td>
+              <td><span style="color:#5f6368;font-weight:600">28%</span></td>
+              <td><span class="bdg b-amber">Investigating</span></td>
+              <td><i class="fas fa-minus-circle" style="color:#9e9e9e"></i> Not required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Investigation Workflow -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-clipboard-list" style="color:#004d40;margin-right:8px"></i>Investigation Workflow</h5></div>
+      <div style="padding:16px">
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px;border:1px solid #e0e0e0;border-radius:8px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#004d40;margin-bottom:8px"><i class="fas fa-1" style="margin-right:6px"></i>Detection</div>
+            <div style="font-size:11px;color:#5f6368;line-height:1.5">
+              Monthly automated screening against OIG-LEIE and SAM databases. Name, NPN, NPI, DOB matching with confidence scoring.
+            </div>
+          </div>
+          <div style="flex:1;min-width:200px;border:1px solid #e0e0e0;border-radius:8px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#e65100;margin-bottom:8px"><i class="fas fa-2" style="margin-right:6px"></i>Review &amp; Verify</div>
+            <div style="font-size:11px;color:#5f6368;line-height:1.5">
+              Compliance officer reviews matches >50% confidence. Cross-reference DOB, SSN last 4, state licenses. Request additional documentation from agent if needed.
+            </div>
+          </div>
+          <div style="flex:1;min-width:200px;border:1px solid #e0e0e0;border-radius:8px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#c62828;margin-bottom:8px"><i class="fas fa-3" style="margin-right:6px"></i>Auto-Hold</div>
+            <div style="font-size:11px;color:#5f6368;line-height:1.5">
+              Matches >90% confidence trigger automatic compliance hold. All enrollments paused. Agent notified. Upline alerted. Commission payments suspended.
+            </div>
+          </div>
+          <div style="flex:1;min-width:200px;border:1px solid #e0e0e0;border-radius:8px;padding:14px">
+            <div style="font-size:12px;font-weight:700;color:#6a1b9a;margin-bottom:8px"><i class="fas fa-4" style="margin-right:6px"></i>Resolution</div>
+            <div style="font-size:11px;color:#5f6368;line-height:1.5">
+              False positive: Clear and restore. Confirmed match: Immediate termination, CMS notification within 30 days, enrollment reassignment.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resolved Historical Cases -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-archive" style="color:#004d40;margin-right:8px"></i>Resolved Cases — Historical Record</h5></div>
+      <div class="table-wrap">
+        <table class="tbl" id="resolvedTable">
+          <thead><tr><th>Case ID</th><th>Agent</th><th>NPN</th><th>Database</th><th>Detected</th><th>Resolved</th><th>Outcome</th><th>CMS Notified</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>EXC-2025-004</code></td><td>David Chen</td><td>3345678</td>
+              <td><span class="bdg" style="background:#fce4ec;color:#c62828">OIG-LEIE</span></td>
+              <td>11 01,2025</td><td>11 15,2025</td>
+              <td><span class="bdg b-red">Terminated</span></td>
+              <td><i class="fas fa-check-circle" style="color:#2e7d32"></i> 11 20,2025</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2025-003</code></td><td>Jennifer Adams</td><td>8890123</td>
+              <td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">SAM</span></td>
+              <td>08 01,2025</td><td>08 08,2025</td>
+              <td><span class="bdg b-green">Cleared — False Positive</span></td>
+              <td><i class="fas fa-minus-circle" style="color:#9e9e9e"></i> N/A</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2025-002</code></td><td>Richard Patel</td><td>4456789</td>
+              <td><span class="bdg" style="background:#fce4ec;color:#c62828">OIG-LEIE</span></td>
+              <td>04 01,2025</td><td>04 18,2025</td>
+              <td><span class="bdg b-red">Terminated</span></td>
+              <td><i class="fas fa-check-circle" style="color:#2e7d32"></i> 04 25,2025</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2025-001</code></td><td>Sandra Nguyen</td><td>6678901</td>
+              <td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">SAM</span></td>
+              <td>01 02,2025</td><td>01 10,2025</td>
+              <td><span class="bdg b-green">Cleared — False Positive</span></td>
+              <td><i class="fas fa-minus-circle" style="color:#9e9e9e"></i> N/A</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2024-002</code></td><td>Mark Sullivan</td><td>7789012</td>
+              <td><span class="bdg" style="background:#fce4ec;color:#c62828">OIG-LEIE</span></td>
+              <td>11 01,2024</td><td>11 22,2024</td>
+              <td><span class="bdg b-red">Terminated</span></td>
+              <td><i class="fas fa-check-circle" style="color:#2e7d32"></i> 11 28,2024</td>
+            </tr>
+            <tr>
+              <td><code>EXC-2024-001</code></td><td>Karen Mitchell</td><td>2234567</td>
+              <td><span class="bdg" style="background:#e3f2fd;color:#0d47a1">SAM</span></td>
+              <td>04 01,2024</td><td>04 05,2024</td>
+              <td><span class="bdg b-green">Cleared — False Positive</span></td>
+              <td><i class="fas fa-minus-circle" style="color:#9e9e9e"></i> N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Regulatory Requirements -->
+    <div class="card mb16">
+      <div class="card-hdr" style="background:#e3f2fd"><h5><i class="fas fa-balance-scale" style="color:#0d47a1;margin-right:8px"></i>Regulatory Requirements &amp; Policy</h5></div>
+      <div style="padding:16px;font-size:12px;line-height:1.8">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-weight:700;color:#004d40;margin-bottom:6px"><i class="fas fa-gavel" style="margin-right:4px"></i>CMS Requirements</div>
+            <ul style="margin:0;padding-left:18px;color:#3c4043">
+              <li><strong>42 CFR § 422.503(b)(4)(vi)(C)</strong> — Monthly OIG/GSA-SAM exclusion screening for all FDRs</li>
+              <li><strong>Chapter 21 MMCM</strong> — Results documented within 30 calendar days</li>
+              <li>Screening must include: OIG-LEIE, SAM (formerly EPLS), state Medicaid exclusion lists</li>
+              <li>Matches require immediate removal from patient care/billing pending investigation</li>
+              <li>Confirmed exclusions: Terminate within 30 days, notify CMS</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-weight:700;color:#004d40;margin-bottom:6px"><i class="fas fa-shield-alt" style="margin-right:4px"></i>Gold Kidney Policy (P-COMP-008)</div>
+            <ul style="margin:0;padding-left:18px;color:#3c4043">
+              <li>Automated monthly screening on 1st business day of each month</li>
+              <li>All active agents, brokers, and contracted entities screened</li>
+              <li>>90% confidence: Auto-hold + immediate compliance officer review</li>
+              <li>50-90% confidence: Flagged for manual review within 5 business days</li>
+              <li><50% confidence: Logged, no action (monitored on next cycle)</li>
+              <li>7-year retention of all screening results and investigation records</li>
+              <li>Quarterly attestation to CMS of ongoing screening compliance</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:#f8f9fa;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px">
+          <i class="fas fa-info-circle" style="color:#0d47a1;font-size:16px"></i>
+          <span><strong>Audit Note:</strong> Gold Kidney has maintained 100% monthly screening compliance since program inception (Jan 2024). Total screenings completed: 30. Total confirmed exclusions: 4 (all terminated within SLA). Zero CMS audit findings related to exclusion monitoring.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';setTimeout(function(){t.style.display='none';},4000);
+}
+function filterHistory(){
+  var year=document.getElementById('yearFilter').value;
+  var month=document.getElementById('monthFilter').value;
+  document.querySelectorAll('#historyTbody tr').forEach(function(r){
+    var rYear=r.getAttribute('data-year')||'';
+    var rMonth=r.getAttribute('data-month')||'';
+    var show=true;
+    if(year && rYear!==year) show=false;
+    if(month && rMonth!==month) show=false;
+    r.style.display=show?'':'none';
+  });
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Document Search | Gold Kidney Compliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html" class="active"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Compliance Document Search</h4></div>
+    <button class="btn-ol btn-sm" onclick="nfpExport()"><i class="fas fa-download"></i>Export Results</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Centralized Repository Access:</strong> Search all compliance documents — executed SOAs, enrollment applications, C-SNP verification forms, PQAT records, CMS acknowledgments, producer contracts, and attestations. Documents are auto-filed with metadata upon completion. SOA retention: minimum 10 years per CMS requirement. Access scoped per RBAC.</span></div>
+
+    <!-- Search Panel -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-filter" style="margin-right:6px;color:#004d40"></i>Search Filters</h5></div>
+      <div class="card-body" style="padding:14px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Member Name</label>
+            <input type="text" id="sMember" placeholder="Member name..." style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Member MBI</label>
+            <input type="text" id="sMbi" placeholder="MBI..." style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Agent NPN</label>
+            <input type="text" id="sNpn" placeholder="NPN..." style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Document Type</label>
+            <select id="sDocType" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+              <option value="">All Types</option>
+              <option>Scope of Appointment (SOA)</option>
+              <option>Enrollment Application</option>
+              <option>C-SNP Verification Form</option>
+              <option>PQAT Record</option>
+              <option>CMS Acknowledgment</option>
+              <option>Producer Contract</option>
+              <option>AHIP Certificate</option>
+              <option>Physician Attestation</option>
+              <option>Compliance Attestation</option>
+              <option>Marketing Material (Approved)</option>
+              <option>HRA Form</option>
+              <option>Benefit Summary</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Date From</label>
+            <input type="date" id="sDateFrom" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;display:block;margin-bottom:4px">Date To</label>
+            <input type="date" id="sDateTo" style="width:100%;padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px">
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-pr btn-sm" onclick="searchDocs()"><i class="fas fa-search"></i>Search</button>
+          <button class="btn-ol btn-sm" onclick="clearSearch()"><i class="fas fa-times"></i>Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="card">
+      <div class="card-hdr"><h5>Search Results</h5><span id="resultCount" style="font-size:11px;color:#5f6368">8 documents found</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','document-search_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Document ID</th><th>Type</th><th>Member / Agent</th><th>MBI / NPN</th><th>Filed Date</th><th>Effective Date</th><th>Filed By</th><th>Retention</th><th></th></tr></thead>
+          <tbody id="docResults">
+            <tr>
+              <td><code>DOC-2026-4201</code></td>
+              <td><span class="bdg b-blue">SOA</span></td>
+              <td>Frank Johnson<br><span style="font-size:10px;color:#5f6368">Agent: J. Martinez</span></td>
+              <td><code>1EG4-TE5-MK72</code><br><span style="font-size:10px">NPN: 8823441</span></td>
+              <td>06 01,2026</td>
+              <td>07 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#004d40;font-weight:600">10 yr (CMS)</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4201 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4198</code></td>
+              <td><span class="bdg b-green">Enrollment App</span></td>
+              <td>Frank Johnson<br><span style="font-size:10px;color:#5f6368">Agent: J. Martinez</span></td>
+              <td><code>1EG4-TE5-MK72</code><br><span style="font-size:10px">NPN: 8823441</span></td>
+              <td>06 01,2026</td>
+              <td>07 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4198 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4195</code></td>
+              <td><span class="bdg b-purple">C-SNP Form</span></td>
+              <td>Frank Johnson<br><span style="font-size:10px;color:#5f6368">Agent: J. Martinez</span></td>
+              <td><code>1EG4-TE5-MK72</code><br><span style="font-size:10px">NPN: 8823441</span></td>
+              <td>06 01,2026</td>
+              <td>07 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4195 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4190</code></td>
+              <td><span class="bdg b-teal">CMS Ack</span></td>
+              <td>Frank Johnson<br><span style="font-size:10px;color:#5f6368">Agent: J. Martinez</span></td>
+              <td><code>1EG4-TE5-MK72</code><br><span style="font-size:10px">NPN: 8823441</span></td>
+              <td>06 03,2026</td>
+              <td>07 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4190 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4185</code></td>
+              <td><span class="bdg b-blue">SOA</span></td>
+              <td>Alice Cooper<br><span style="font-size:10px;color:#5f6368">Agent: S. Chen</span></td>
+              <td><code>2FH5-RG7-NL83</code><br><span style="font-size:10px">NPN: 7741209</span></td>
+              <td>05 28,2026</td>
+              <td>07 01,2026</td>
+              <td>S. Chen (manual)</td>
+              <td><span style="font-size:10px;color:#004d40;font-weight:600">10 yr (CMS)</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4185 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4180</code></td>
+              <td><span class="bdg b-amber">Physician Attestation</span></td>
+              <td>Dorothy Henderson<br><span style="font-size:10px;color:#5f6368">Agent: M. Torres</span></td>
+              <td><code>3GJ6-SH8-PM94</code><br><span style="font-size:10px">NPN: 6623109</span></td>
+              <td>05 25,2026</td>
+              <td>06 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4180 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4175</code></td>
+              <td><span class="bdg b-grey">Producer Contract</span></td>
+              <td><span style="color:#5f6368">—</span><br><span style="font-size:10px;color:#5f6368">Agent: Sarah Kim</span></td>
+              <td><span style="color:#5f6368">—</span><br><span style="font-size:10px">NPN: 9912345</span></td>
+              <td>06 05,2026</td>
+              <td>06 05,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4175 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+            <tr>
+              <td><code>DOC-2026-4170</code></td>
+              <td><span class="bdg b-orange">HRA Form</span></td>
+              <td>Betty Moore<br><span style="font-size:10px;color:#5f6368">Agent: J. Martinez</span></td>
+              <td><code>4HK7-TJ9-QN05</code><br><span style="font-size:10px">NPN: 8823441</span></td>
+              <td>05 20,2026</td>
+              <td>06 01,2026</td>
+              <td>SYSTEM (auto-filed)</td>
+              <td><span style="font-size:10px;color:#424242">7 yr</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Document DOC-2026-4170 opened. Access logged in audit trail.','info')"><i class="fas fa-eye"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:8px 16px;font-size:11px;color:#5f6368;border-top:1px solid #f1f3f4">
+        <i class="fas fa-shield-alt" style="margin-right:4px;color:#004d40"></i>All document access is logged in the compliance audit trail. PHI fields masked unless full PHI access is authorized.
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function searchDocs(){showToast('Search executed. 8 documents match your criteria.','success');}
+function clearSearch(){
+  document.querySelectorAll('#sMember,#sMbi,#sNpn,#sDateFrom,#sDateTo').forEach(function(el){el.value='';});
+  document.getElementById('sDocType').selectedIndex=0;
+  showToast('Filters cleared.','info');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Batch Review | Gold Kidney Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#2e7d32}
+.tab-btns{display:flex;gap:0;border-bottom:2px solid #e8eaed;margin-bottom:16px}
+.tab-btn{padding:8px 18px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s}
+.tab-btn.active{color:#004d40;border-bottom-color:#004d40;font-weight:600}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.adj-row{background:#fff8e1}
+.hold-row{background:#fce4ec;opacity:.85}
+.method-badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.ach-ppd{background:#e3f2fd;color:#0d47a1}
+.ach-ccd{background:#e8eaf6;color:#283593}
+.check-badge{background:#fff8e1;color:#e65100}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html" class="active"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Payment Batch Review</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Finance Portal</a></li><li>Batch Review</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="openWeeklyReport()"><i class="fas fa-calendar-week"></i>Weekly Report</button>
+    <button class="btn-ol btn-sm" onclick="nfpExport('Batch Line Items')"><i class="fas fa-download"></i>Export</button>
+    <button class="btn-pr btn-sm" onclick="approveBatch()" id="approveBtn"><i class="fas fa-check-double"></i>Approve Batch</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+
+    <!-- Auto-generation info -->
+    <div class="al-info mb16"><i class="fas fa-robot" style="flex-shrink:0"></i>
+      <span><strong>Auto-Generated:</strong> BATCH-2026-06 was automatically generated on <strong>05 16,2026</strong> after the May 15 cutoff. The batch includes all Calculated ledger entries for the May 2026 commission cycle. On Hold (banking), On Hold (address gap), and pending chargeback-cancelled entries are excluded.</span></div>
+
+    <!-- Batch Summary Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-list-ol"></i></div><div><div class="stat-label">Total Payable Entries</div><div class="stat-val">7</div><div class="stat-sub text-muted">Excludes 1 On Hold</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Gross Payable</div><div class="stat-val">$9,121.27</div><div class="stat-sub text-muted">Before chargebacks</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-undo"></i></div><div><div class="stat-label">Chargeback Deductions</div><div class="stat-val" style="color:#c62828">-$463.17</div><div class="stat-sub text-muted">1 entry</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Net Payable</div><div class="stat-val" style="color:#1b5e20">$8,658.10</div><div class="stat-sub text-muted">Ready for payment</div></div></div></div>
+    </div>
+
+    <!-- Payment Method Breakdown -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-university" style="margin-right:8px;color:#004d40"></i>Payment Method Breakdown &nbsp;<span class="bdg b-amber" style="font-size:11px">BATCH-2026-06</span>&nbsp;<span class="bdg b-amber" style="font-size:11px">Pending Review</span></h5>
+        <div style="font-size:12px;color:#5f6368">Payment Cycle: May 2026 &nbsp;|&nbsp; Generated: 05 16,2026 &nbsp;|&nbsp; Target Payment Date: <span style="font-weight:600">05 17,2026</span></div>
+      </div>
+      <div class="card-body">
+        <div class="row-grid" style="gap:10px">
+          <div class="col-1" style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9">
+            <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">ACH Individual (PPD)</div>
+            <div style="font-size:20px;font-weight:700;color:#0d47a1">5 entries</div>
+            <div style="font-size:13px;color:#1b5e20;font-weight:600">$5,403.15 net</div>
+          </div>
+          <div class="col-1" style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da">
+            <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">ACH Agency (CCD)</div>
+            <div style="font-size:20px;font-weight:700;color:#283593">1 entry</div>
+            <div style="font-size:13px;color:#1b5e20;font-weight:600">$2,936.88 net</div>
+          </div>
+          <div class="col-1" style="background:#fff8e1;border-radius:8px;padding:12px;border:1px solid #ffe082">
+            <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">Physical Check</div>
+            <div style="font-size:20px;font-weight:700;color:#e65100">1 entry</div>
+            <div style="font-size:13px;color:#1b5e20;font-weight:600">$318.12 net</div>
+          </div>
+          <div class="col-1" style="background:#ffebee;border-radius:8px;padding:12px;border:1px solid #ef9a9a">
+            <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">On Hold</div>
+            <div style="font-size:20px;font-weight:700;color:#c62828">1 entry</div>
+            <div style="font-size:13px;color:#5f6368">$694.00 — excluded</div>
+          </div>
+          <div class="col-1" style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80">
+            <div style="font-size:11px;color:#5f6368;text-transform:uppercase;font-weight:600">Pending Adjustment</div>
+            <div style="font-size:20px;font-weight:700;color:#e65100">1 entry</div>
+            <div style="font-size:11.5px;color:#e65100;font-weight:600">Co-approval required before batch approval</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Line Items -->
+    <div class="card">
+      <div class="card-hdr">
+        <h5><i class="fas fa-list-ul" style="margin-right:8px;color:#004d40"></i>Batch Line Items <span id="lineCount" class="text-muted text-sm" style="font-weight:400"></span></h5>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','batch-review_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="filter-bar" style="padding:12px 16px;border-bottom:1px solid #e8eaed">
+        <label>Agent Search</label>
+        <input type="text" id="fAgent" placeholder="NPN or Name..." oninput="applyFilters()">
+        <label>Payment Method</label>
+        <select id="fMethod" onchange="applyFilters()">
+          <option value="">All</option><option>ACH PPD</option><option>ACH CCD</option><option>Physical Check</option>
+        </select>
+        <label>Status</label>
+        <select id="fStat" onchange="applyFilters()">
+          <option value="">All</option><option>Calculated</option><option>Pending Adjustment</option><option>On Hold</option><option>Held - Co-Approval</option>
+        </select>
+        <button class="btn-ol btn-sm" onclick="applyFilters()"><i class="fas fa-filter"></i>Filter</button>
+        <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i>Reset</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Agent NPN</th><th>Agent / Entity</th><th>Payment Method</th><th>Comm. Type Breakdown</th><th>Gross Commission</th><th>Chargebacks</th><th>Net Payable</th><th>Prepared By</th><th>Reviewed By</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="lineItemsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="al-info" style="margin-top:12px"><i class="fas fa-lock" style="flex-shrink:0"></i><span><strong>Approval rules:</strong> All <strong>Pending Adjustment</strong> line items must be co-approved by a second Finance user before batch approval. On Hold entries are excluded from this batch and will roll to the next cycle unless resolved.</span></div>
+  </div>
+</div>
+
+<!-- ===== HOLD LINE ITEM MODAL ===== -->
+<div class="modal-overlay" id="holdModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-hand-paper" style="color:#e65100;margin-right:8px"></i>Place Line Item On Hold</h5>
+      <button class="modal-close" onclick="closeModal('holdModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="holdItemInfo" style="background:#f8f9fa;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px"></div>
+      <div class="fg"><label>Hold Reason <span class="req">*</span></label>
+        <select id="holdReason" onchange="toggleHoldOther()">
+          <option value="">— Select a reason —</option>
+          <option>On Hold - Banking (no valid ACH on file)</option>
+          <option>On Hold - Address Gap (no mailing address for check)</option>
+          <option>On Hold - NPN Discrepancy</option>
+          <option>On Hold - License Issue</option>
+          <option>On Hold - Finance Investigation</option>
+          <option value="other">Other (specify below)</option>
+        </select>
+      </div>
+      <div class="fg" id="holdOtherBox" style="display:none"><label>Specify Reason <span class="req">*</span></label><textarea id="holdOtherText" rows="2" placeholder="Describe the hold reason..."></textarea></div>
+      <div class="al-warn" style="margin-top:8px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>This line item will be excluded from the current batch and placed in the Held Payments queue. Finance can release the hold for a future batch cycle.</span></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillHold()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('holdModal')">Cancel</button>
+        <button class="btn-danger" onclick="confirmHold()"><i class="fas fa-hand-paper"></i>Place On Hold</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADJUST LINE ITEM MODAL ===== -->
+<div class="modal-overlay" id="adjustModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-edit" style="color:#0d47a1;margin-right:8px"></i>Adjust Line Item Amount</h5>
+      <button class="modal-close" onclick="closeModal('adjustModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="adjustItemInfo" style="background:#f8f9fa;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px"></div>
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Adjustments require <strong>co-approval</strong> by a second Finance user. This line item will be marked <em>Pending Adjustment</em> until a second Finance Admin approves. The batch cannot be approved while any adjustment is pending.</span></div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Original Calculated Amount</label>
+          <input type="text" id="adjOriginal" class="field-ro" readonly>
+        </div>
+        <div class="fg">
+          <label>Adjusted Net Payable <span class="req">*</span></label>
+          <input type="number" id="adjNewAmount" step="0.01" min="0" placeholder="Enter adjusted amount" oninput="validateAdjAmount()">
+          <div id="adjAmtError" style="color:#c62828;font-size:11.5px;margin-top:4px;display:none"></div>
+        </div>
+      </div>
+      <div class="fg"><label>Adjustment Reason <span class="req">*</span></label><textarea id="adjReason" rows="3" placeholder="Document the reason for this adjustment (minimum 20 characters)..." oninput="validateAdjReason()"></textarea>
+        <div id="adjReasonError" style="color:#c62828;font-size:11.5px;margin-top:4px;display:none"></div>
+      </div>
+      <div class="fg"><label>Co-Approver (second Finance user) <span class="req">*</span></label>
+        <select id="adjCoApprover">
+          <option value="">— Select second Finance reviewer —</option>
+          <option value="lisa">Lisa Chen — Finance Manager</option>
+          <option value="mark">Mark Evans — Finance Admin</option>
+          <option value="priya">Priya Nair — Finance Admin</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillAdjust()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div class="dflex g8">
+        <button class="btn-ol" onclick="closeModal('adjustModal')">Cancel</button>
+        <button class="btn-pr" onclick="submitAdjustment()"><i class="fas fa-paper-plane"></i>Submit for Co-Approval</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CO-APPROVAL MODAL ===== -->
+<div class="modal-overlay" id="coApproveModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-user-check" style="color:#1b5e20;margin-right:8px"></i>Co-Approve Adjustment</h5>
+      <button class="modal-close" onclick="closeModal('coApproveModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="coApproveInfo" style="background:#f1f8e9;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px"></div>
+      <div class="fg"><label>Your Review Notes <span class="req">*</span></label><textarea id="coApproveNotes" rows="2" placeholder="Document your co-approval decision..."></textarea></div>
+      <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>By approving, you confirm the adjustment amount and reason are valid. This is logged under your name and timestamp.</span></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillCoApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" onclick="closeModal('coApproveModal')">Cancel</button>
+      <button class="btn-danger" onclick="coApproveReject()"><i class="fas fa-times"></i>Reject Adjustment</button>
+      <button class="btn-pr" style="background:#1b5e20" onclick="coApproveApprove()"><i class="fas fa-check"></i>Approve Adjustment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BATCH APPROVAL MODAL ===== -->
+<div class="modal-overlay" id="batchApproveModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-check-double" style="color:#1b5e20;margin-right:8px"></i>Approve Payment Batch</h5>
+      <button class="modal-close" onclick="closeModal('batchApproveModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#e8f5e9;border-radius:8px;padding:12px 16px;margin-bottom:14px">
+        <div style="font-size:13px"><strong>Batch:</strong> BATCH-2026-06 &nbsp;|&nbsp; <strong>Cycle:</strong> May 2026</div>
+        <div style="font-size:13px;margin-top:4px"><strong>Net Payable:</strong> <span style="font-weight:700;color:#1b5e20;font-size:16px">$8,658.10</span></div>
+        <div style="font-size:13px;margin-top:4px"><strong>Target Payment Date:</strong> 05 17,2026</div>
+      </div>
+      <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Approving this batch queues the <strong>ACH/NACHA file generation</strong> for all electronic payments and the <strong>check disbursement file</strong> for physical checks. This action is timestamped and cannot be undone.</span></div>
+      <div class="fg"><label>Approval Notes (optional)</label><textarea id="batchApproveNotes" rows="2" placeholder="Final review notes..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" style="color:#1565c0;border-color:#1565c0" onclick="prefillBatchApprove()"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <button class="btn-ol" onclick="closeModal('batchApproveModal')">Cancel</button>
+      <button class="btn-pr" style="background:#1b5e20" onclick="confirmBatchApproval()"><i class="fas fa-check-double"></i>Confirm Batch Approval</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const CURRENT_USER = 'David Park';
+let pendingHoldId = null, pendingAdjId = null, pendingCoApproveId = null;
+
+const lineItems = [
+  { id:'LI-001', npn:'8823441', agentName:'James Martinez', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'24 Renewal — 1 HRA',
+    gross:723.00, chargebacks:0, net:723.00, origCalc:723.00,
+    preparedBy:'System (Auto)', reviewedBy:'David Park',
+    status:'Calculated', holdReason:null, adjustment:null },
+  { id:'LI-002', npn:'7719022', agentName:'Sarah Chen', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'2 Initial — 18 Renewal',
+    gross:1663.16, chargebacks:0, net:1663.16, origCalc:1663.16,
+    preparedBy:'System (Auto)', reviewedBy:'David Park',
+    status:'Calculated', holdReason:null, adjustment:null },
+  { id:'LI-003', npn:'9912345', agentName:'Kevin Nguyen', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'3 Initial — 12 Renewal',
+    gross:2081.04, chargebacks:0, net:2081.04, origCalc:2081.04,
+    preparedBy:'System (Auto)', reviewedBy:'Lisa Chen',
+    status:'Calculated', holdReason:null, adjustment:null },
+  { id:'LI-004', npn:'5521833', agentName:'Mark Brown', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'0 Initial — 22 Renewal',
+    gross:636.24, chargebacks:0, net:636.24, origCalc:636.24,
+    preparedBy:'System (Auto)', reviewedBy:'David Park',
+    status:'Calculated', holdReason:null, adjustment:null },
+  { id:'LI-005', npn:'6643201', agentName:'Angela Torres', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'1 Initial — 1 Renewal',
+    gross:722.92, chargebacks:-463.17, net:259.75, origCalc:259.75,
+    preparedBy:'David Park', reviewedBy:null,
+    status:'Pending Adjustment',
+    holdReason:null,
+    adjustment:{ submittedBy:'David Park', submittedAt:'2026-05-22 10:14',
+      originalNet:259.75, proposedNet:200.00,
+      reason:'Agent dispute — chargeback amount under Finance review. Provisional adjustment pending outcome.',
+      coApprover:'Lisa Chen', coApproveStatus:'Pending' } },
+  { id:'LI-006', npn:'4432177', agentName:'Patricia Lee', entityType:'individual',
+    method:'Physical Check', typeBreakdown:'11 Renewal',
+    gross:318.12, chargebacks:0, net:318.12, origCalc:318.12,
+    preparedBy:'System (Auto)', reviewedBy:'Lisa Chen',
+    status:'Calculated', holdReason:null, adjustment:null },
+  { id:'LI-007', npn:'3318820', agentName:'Charles Davis', entityType:'individual',
+    method:'ACH PPD', typeBreakdown:'1 Initial',
+    gross:694.00, chargebacks:0, net:694.00, origCalc:694.00,
+    preparedBy:'System (Auto)', reviewedBy:null,
+    status:'On Hold - Banking',
+    holdReason:'No valid ACH banking details on file. Agent has not submitted banking information.',
+    adjustment:null },
+  { id:'LI-008', npn:'9988811', agentName:'HealthFirst Distribution (Agency)', entityType:'agency',
+    method:'ACH CCD', typeBreakdown:'Agency Override',
+    gross:2936.88, chargebacks:0, net:2936.88, origCalc:2936.88,
+    preparedBy:'System (Auto)', reviewedBy:'David Park',
+    status:'Calculated', holdReason:null, adjustment:null }
+];
+
+function methodBadge(m){
+  if(m==='ACH PPD') return '<span class="method-badge ach-ppd"><i class="fas fa-exchange-alt" style="font-size:9px;margin-right:3px"></i>ACH PPD</span>';
+  if(m==='ACH CCD') return '<span class="method-badge ach-ccd"><i class="fas fa-building" style="font-size:9px;margin-right:3px"></i>ACH CCD</span>';
+  return '<span class="method-badge check-badge"><i class="fas fa-envelope" style="font-size:9px;margin-right:3px"></i>Check</span>';
+}
+function statusBadge(s){
+  const m={'Calculated':'b-green','Pending Adjustment':'b-amber','On Hold - Banking':'b-red',
+    'On Hold - Address Gap':'b-red','On Hold - Finance Investigation':'b-red','Approved':'b-teal'};
+  return `<span class="bdg ${m[s]||'b-grey'}">${s}</span>`;
+}
+
+function renderTable(list){
+  document.getElementById('lineCount').textContent = `— ${list.length} entries`;
+  document.getElementById('lineItemsTbody').innerHTML = list.map(li=>{
+    const isHold = li.status.startsWith('On Hold');
+    const isAdj = li.status==='Pending Adjustment';
+    const cbHtml = li.chargebacks<0 ? `<span style="color:#c62828;font-weight:600">($${Math.abs(li.chargebacks).toFixed(2)})</span>` : '$0.00';
+    const adjNote = isAdj && li.adjustment ? `<div style="font-size:10.5px;color:#e65100;margin-top:3px"><i class="fas fa-clock" style="margin-right:3px"></i>Proposed: $${li.adjustment.proposedNet.toFixed(2)} — Co-approver: ${li.adjustment.coApprover}</div>` : '';
+    const holdNote = isHold && li.holdReason ? `<div style="font-size:10.5px;color:#c62828;margin-top:3px;max-width:140px;white-space:normal">${li.holdReason.split('.')[0]}</div>` : '';
+    const actions = isHold ? `<button class="btn-ol btn-sm" onclick="releaseHold('${li.id}')"><i class="fas fa-unlock"></i>Release Hold</button>` :
+      isAdj ? `<button class="btn-pr btn-sm" onclick="openCoApprove('${li.id}')"><i class="fas fa-user-check"></i>Co-Approve</button>` :
+      `<button class="btn-ol btn-sm" onclick="openHold('${li.id}')"><i class="fas fa-hand-paper"></i>Hold</button>
+       <button class="btn-ol btn-sm" onclick="openAdjust('${li.id}')"><i class="fas fa-edit"></i>Adjust</button>`;
+    return `<tr class="${isHold?'hold-row':isAdj?'adj-row':''}">
+      <td><code style="font-size:11px">${li.npn}</code></td>
+      <td><div style="font-weight:600;font-size:13px">${li.agentName}</div><div style="font-size:11px;color:#80868b">${li.entityType==='agency'?'Agency Account':'Individual'}</div></td>
+      <td>${methodBadge(li.method)}</td>
+      <td style="font-size:12px;color:#5f6368">${li.typeBreakdown}</td>
+      <td>$${li.gross.toFixed(2)}</td>
+      <td>${cbHtml}</td>
+      <td><strong style="${isHold?'color:#5f6368':'color:#1b5e20'}">$${li.net.toFixed(2)}</strong>${adjNote}</td>
+      <td style="font-size:12px;color:#5f6368">${li.preparedBy||'System (Auto)'}</td>
+      <td style="font-size:12px;color:#5f6368">${li.reviewedBy||'<span style="color:#e65100">Pending</span>'}</td>
+      <td>${statusBadge(li.status)}${holdNote}</td>
+      <td><div class="dflex g8">${actions}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function applyFilters(){
+  const agent=(document.getElementById('fAgent').value||'').toLowerCase();
+  const method=document.getElementById('fMethod').value;
+  const stat=document.getElementById('fStat').value;
+  renderTable(lineItems.filter(li=>{
+    if(agent && !li.agentName.toLowerCase().includes(agent) && !li.npn.includes(agent)) return false;
+    if(method && li.method!==method) return false;
+    if(stat && li.status!==stat) return false;
+    return true;
+  }));
+}
+function resetFilters(){
+  document.getElementById('fAgent').value='';
+  ['fMethod','fStat'].forEach(id=>document.getElementById(id).value='');
+  renderTable(lineItems);
+}
+
+function prefillHold(){
+  document.getElementById('holdReason').value='On Hold - NPN Discrepancy';
+  toggleHoldOther();
+  showToast('Hold form prefilled with sample data','info');
+}
+function prefillAdjust(){
+  document.getElementById('adjNewAmount').value='650.00';
+  document.getElementById('adjReason').value='Rate correction per CY2026 schedule update — agent was initially mapped to incorrect tier bracket.';
+  document.getElementById('adjCoApprover').value='lisa';
+  document.getElementById('adjAmtError').style.display='none';
+  document.getElementById('adjReasonError').style.display='none';
+  showToast('Adjust form prefilled with sample data','info');
+}
+function openHold(id){
+  pendingHoldId=id;
+  const li=lineItems.find(x=>x.id===id);
+  document.getElementById('holdItemInfo').innerHTML=`<strong>${li.agentName}</strong> (NPN: ${li.npn}) &nbsp;|&nbsp; Net: $${li.net.toFixed(2)} &nbsp;|&nbsp; ${li.method}`;
+  document.getElementById('holdReason').value='';
+  document.getElementById('holdOtherBox').style.display='none';
+  showModal('holdModal');
+}
+function toggleHoldOther(){ document.getElementById('holdOtherBox').style.display=document.getElementById('holdReason').value==='other'?'block':'none'; }
+function confirmHold(){
+  const reason=document.getElementById('holdReason').value;
+  if(!reason){ showToast('Please select a hold reason.','warn'); return; }
+  const custom=reason==='other'?document.getElementById('holdOtherText').value.trim():'';
+  if(reason==='other'&&!custom){ showToast('Please specify the hold reason.','warn'); return; }
+  const li=lineItems.find(x=>x.id===pendingHoldId);
+  if(li){ li.status='On Hold - Finance Investigation'; li.holdReason=reason==='other'?custom:reason.replace('On Hold - ',''); }
+  closeModal('holdModal');
+  renderTable(lineItems);
+  showToast(`${li.agentName} line item placed on hold. Excluded from BATCH-2026-06.`,'warn');
+  pendingHoldId=null;
+}
+function releaseHold(id){
+  const li=lineItems.find(x=>x.id===id); if(!li) return;
+  li.status='Calculated'; li.holdReason=null;
+  renderTable(lineItems);
+  showToast(`Hold released for ${li.agentName}. Entry re-included in batch.`,'success');
+}
+
+function openAdjust(id){
+  pendingAdjId=id;
+  const li=lineItems.find(x=>x.id===id);
+  document.getElementById('adjustItemInfo').innerHTML=`<strong>${li.agentName}</strong> (NPN: ${li.npn}) &nbsp;|&nbsp; Method: ${li.method} &nbsp;|&nbsp; Gross: $${li.gross.toFixed(2)} &nbsp;|&nbsp; Chargebacks: ${li.chargebacks<0?'($'+Math.abs(li.chargebacks).toFixed(2)+')':'$0.00'}`;
+  document.getElementById('adjOriginal').value='$'+li.net.toFixed(2)+' (calculated)';
+  document.getElementById('adjNewAmount').value='';
+  document.getElementById('adjReason').value='';
+  document.getElementById('adjCoApprover').value='';
+  document.getElementById('adjAmtError').style.display='none';
+  document.getElementById('adjReasonError').style.display='none';
+  showModal('adjustModal');
+}
+function validateAdjAmount(){
+  const li=lineItems.find(x=>x.id===pendingAdjId); if(!li) return;
+  const val=parseFloat(document.getElementById('adjNewAmount').value);
+  const err=document.getElementById('adjAmtError');
+  if(isNaN(val)||val<0){ err.textContent='Amount must be a positive number.'; err.style.display='block'; return false; }
+  if(val>li.origCalc){ err.textContent=`Adjustment amount cannot exceed original calculated amount of $${li.origCalc.toFixed(2)}.`; err.style.display='block'; return false; }
+  err.style.display='none'; return true;
+}
+function validateAdjReason(){
+  const reason=document.getElementById('adjReason').value.trim();
+  const err=document.getElementById('adjReasonError');
+  if(reason.length<20){ err.textContent=`Reason must be at least 20 characters (currently ${reason.length}).`; err.style.display='block'; return false; }
+  err.style.display='none'; return true;
+}
+function submitAdjustment(){
+  if(!validateAdjAmount()) return;
+  if(!validateAdjReason()) return;
+  const coApprover=document.getElementById('adjCoApprover').value;
+  if(!coApprover){ showToast('Please select a co-approver.','warn'); return; }
+  const li=lineItems.find(x=>x.id===pendingAdjId);
+  const newAmt=parseFloat(document.getElementById('adjNewAmount').value);
+  const reason=document.getElementById('adjReason').value.trim();
+  const approverNames={'lisa':'Lisa Chen — Finance Manager','mark':'Mark Evans — Finance Admin','priya':'Priya Nair — Finance Admin'};
+  li.status='Pending Adjustment';
+  li.adjustment={ submittedBy:CURRENT_USER, submittedAt:new Date().toISOString().slice(0,16).replace('T',' '),
+    originalNet:li.net, proposedNet:newAmt, reason:reason,
+    coApprover:approverNames[coApprover]||coApprover, coApproveStatus:'Pending' };
+  closeModal('adjustModal');
+  renderTable(lineItems);
+  showToast(`Adjustment submitted for ${li.agentName}. ${approverNames[coApprover]} has been notified for co-approval.`,'success');
+  pendingAdjId=null;
+}
+
+function openCoApprove(id){
+  pendingCoApproveId=id;
+  const li=lineItems.find(x=>x.id===id);
+  document.getElementById('coApproveInfo').innerHTML=`
+    <div><strong>${li.agentName}</strong> (NPN: ${li.npn})</div>
+    <div style="margin-top:6px"><strong>Original Net:</strong> $${li.adjustment.originalNet.toFixed(2)} &nbsp;|&nbsp; <strong>Proposed Net:</strong> <span style="color:#0d47a1;font-weight:700">$${li.adjustment.proposedNet.toFixed(2)}</span></div>
+    <div style="margin-top:4px"><strong>Submitted by:</strong> ${li.adjustment.submittedBy} on ${li.adjustment.submittedAt}</div>
+    <div style="margin-top:4px"><strong>Reason:</strong> ${li.adjustment.reason}</div>`;
+  document.getElementById('coApproveNotes').value='';
+  showModal('coApproveModal');
+}
+function coApproveApprove(){
+  const notes=document.getElementById('coApproveNotes').value.trim();
+  if(!notes){ showToast('Review notes are required for co-approval.','warn'); return; }
+  const li=lineItems.find(x=>x.id===pendingCoApproveId);
+  if(li && li.adjustment){ li.net=li.adjustment.proposedNet; li.adjustment.coApproveStatus='Approved'; li.status='Calculated'; }
+  closeModal('coApproveModal');
+  renderTable(lineItems);
+  showToast(`Adjustment co-approved for ${li.agentName}. Net payable updated to $${li.net.toFixed(2)}.`,'success');
+  pendingCoApproveId=null;
+}
+function coApproveReject(){
+  const notes=document.getElementById('coApproveNotes').value.trim();
+  if(!notes){ showToast('Review notes are required.','warn'); return; }
+  const li=lineItems.find(x=>x.id===pendingCoApproveId);
+  if(li && li.adjustment){ li.status='Calculated'; li.adjustment=null; }
+  closeModal('coApproveModal');
+  renderTable(lineItems);
+  showToast(`Adjustment rejected for ${li.agentName}. Line item reverted to original calculated amount.`,'warn');
+  pendingCoApproveId=null;
+}
+
+function approveBatch(){
+  const pendingAdj = lineItems.filter(li=>li.status==='Pending Adjustment');
+  if(pendingAdj.length>0){
+    showToast(`Cannot approve batch: ${pendingAdj.length} pending adjustment(s) must be co-approved first. Check highlighted entries.`,'warn'); return;
+  }
+  showModal('batchApproveModal');
+}
+function prefillCoApprove(){
+  document.getElementById('coApproveNotes').value='Reviewed adjustment details. Amount is consistent with rate config RC-2026-01 and matches the corrected override tier. Approved per dual-approval protocol.';
+  showToast('Co-approval notes prefilled with sample data','info');
+}
+function prefillBatchApprove(){
+  document.getElementById('batchApproveNotes').value='All line items verified. Holds resolved, discrepancies documented. Batch approved for ACH/NACHA generation per SLA.';
+  showToast('Batch approval notes prefilled with sample data','info');
+}
+function confirmBatchApproval(){
+  closeModal('batchApproveModal');
+  lineItems.filter(li=>li.status==='Calculated').forEach(li=>li.status='Approved');
+  document.getElementById('approveBtn').disabled=true;
+  document.getElementById('approveBtn').innerHTML='<i class="fas fa-check-double"></i>Approved';
+  document.getElementById('approveBtn').style.background='#1b5e20';
+  document.querySelector('.al-info').innerHTML='<i class="fas fa-check-circle" style="flex-shrink:0;color:#1b5e20"></i><span><strong>BATCH-2026-06 Approved</strong> by David Park on 05 29,2026 10:32. ACH file generation queued for today. Check disbursement file generated. Finance Manager notified.</span>';
+  renderTable(lineItems);
+  showToast('BATCH-2026-06 approved. ACH/NACHA file queued. Navigate to ACH & NACHA to monitor transmission.','success');
+}
+
+function sendEscalation(){ showToast('Notification sent to Finance Manager (Lisa Chen).','info'); }
+function openWeeklyReport(){ showToast('Weekly Batch Status Report emailed to Finance team. Report date: 05 29,2026.','info'); }
+
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function showToast(msg, type='info'){
+  const t=document.getElementById('toast');
+  const c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};
+  t.innerHTML=`<div style="background:#fff;border-left:4px solid ${c[type]};border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">${msg}</div>`;
+  t.style.display='block'; setTimeout(()=>t.style.display='none',5000);
+}
+function nfpExport(label){ showToast(`${label} export started.`,'info'); }
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){ if(e.target===this) this.style.display='none'; }));
+renderTable(lineItems);
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

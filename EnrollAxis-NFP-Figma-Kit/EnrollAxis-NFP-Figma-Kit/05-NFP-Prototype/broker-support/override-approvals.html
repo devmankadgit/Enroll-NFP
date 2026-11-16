@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — Override Approvals -->
+<title>Override Approvals | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html" class="active"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Override Approvals</h4><p style="font-size:12px;color:#5f6368;margin:0">Exam attempt resets, gate overrides, and exceptional approval requests</p></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Override Approvals')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Pending Overrides -->
+    <div class="card">
+      <div class="card-hdr"><h6><i class="fas fa-unlock-alt" style="color:#e65100;margin-right:8px"></i>Pending Override Requests</h6><span class="badge" style="background:#fff3e0;color:#e65100">3 pending</span></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Request ID</th><th>Agent</th><th>Override Type</th><th>Reason</th><th>Current Attempts</th><th>Requested By</th><th>Date</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">OVR-301</td><td>Angela Torres<br><span style="font-size:11px;color:#5f6368">NPN: 6651209</span></td><td><span class="badge" style="background:#ede7f6;color:#4a148c">Exam Retake</span></td><td>Agent failed training exam 4 times. Technical issues reported during attempt 3. Requesting 5th attempt.</td><td style="font-weight:700;color:#c62828">4/4 (max reached)</td><td>System Auto-Alert</td><td>Jun 8</td><td><div style="display:flex;gap:6px"><button class="btn-pr btn-sm" onclick="showOverride('OVR-301')"><i class="fas fa-check"></i> Approve</button><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showOverride('OVR-301')"><i class="fas fa-times"></i> Deny</button></div></td></tr>
+            <tr><td style="font-weight:600">OVR-299</td><td>James Lee<br><span style="font-size:11px;color:#5f6368">NPN: 8834521</span></td><td><span class="badge" style="background:#fff3e0;color:#e65100">Gate Override</span></td><td>W-9 entity type mismatch — agent claims updated filing with IRS. Awaiting IRS confirmation letter.</td><td style="font-weight:700;color:#c62828">3 resubmissions</td><td>Maria Johnson</td><td>Jun 9</td><td><div style="display:flex;gap:6px"><button class="btn-pr btn-sm" onclick="showOverride('OVR-299')"><i class="fas fa-check"></i> Approve</button><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showOverride('OVR-299')"><i class="fas fa-times"></i> Deny</button></div></td></tr>
+            <tr><td style="font-weight:600">OVR-297</td><td>Michael Brown<br><span style="font-size:11px;color:#5f6368">NPN: 5590812</span></td><td><span class="badge" style="background:#e3f2fd;color:#0277bd">BG Check Override</span></td><td>Background check vendor returned inconclusive. Agent has clean record from alternate verified source.</td><td>—</td><td>Carlos Rivera</td><td>Jun 7</td><td><div style="display:flex;gap:6px"><button class="btn-pr btn-sm" onclick="showOverride('OVR-297')"><i class="fas fa-check"></i> Approve</button><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="showOverride('OVR-297')"><i class="fas fa-times"></i> Deny</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recently Processed -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-history" style="color:#0277bd;margin-right:8px"></i>Recently Processed Overrides</h6></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Request ID</th><th>Agent</th><th>Type</th><th>Decision</th><th>Decided By</th><th>Date</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>OVR-295</td><td>Mark Wilson (NPN: 3312789)</td><td>Exam Retake</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td><td>Maria Johnson</td><td>Jun 6</td><td>Granted 5th attempt — verified technical issue on attempt 2</td></tr>
+            <tr><td>OVR-293</td><td>Karen Davis (NPN: 2247891)</td><td>Gate Override</td><td><span class="badge" style="background:#ffcdd2;color:#c62828">Denied</span></td><td>Carlos Rivera</td><td>Jun 5</td><td>Insufficient documentation to override — agent must resubmit</td></tr>
+            <tr><td>OVR-291</td><td>Sarah Chen (NPN: 7719022)</td><td>Exam Retake</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td><td>Maria Johnson</td><td>Jun 4</td><td>Approved — agent scored 84% (1% below threshold), borderline case</td></tr>
+            <tr><td>OVR-289</td><td>Lisa Park (NPN: 3356090)</td><td>BG Check Override</td><td><span class="badge" style="background:#e8f5e9;color:#2e7d32">Approved</span></td><td>Maria Johnson</td><td>Jun 3</td><td>Vendor error confirmed — manual verification passed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Override Detail Modal -->
+<div id="ovrModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-unlock-alt" style="color:#e65100;margin-right:8px"></i><span id="omTitle">Override Request</span></h6>
+      <button onclick="closeOvrModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Request ID</div><div id="omId" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Agent</div><div id="omAgent" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Override Type</div><div id="omType" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Requested By</div><div id="omRequester" style="font-size:13px;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Current Attempts</div><div id="omAttempts" style="font-size:13px;font-weight:600;margin-top:2px">—</div></div>
+        <div><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Date Submitted</div><div id="omDate" style="font-size:13px;margin-top:2px">—</div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:16px">
+        <div style="font-size:11px;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Reason / Justification</div>
+        <div id="omReason" style="font-size:13px;line-height:1.6">—</div>
+      </div>
+      <div id="omActionBox" style="background:#fff3e0;border-radius:8px;padding:14px;border-left:4px solid #e65100">
+        <div style="font-size:11px;font-weight:700;color:#e65100;text-transform:uppercase;margin-bottom:6px"><i class="fas fa-info-circle" style="margin-right:4px"></i><span id="omActionLabel">Pending Decision</span></div>
+        <div id="omActionDetail" style="font-size:13px;line-height:1.6;color:#333">—</div>
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:flex-end">
+      <button class="btn-ol btn-sm" onclick="closeOvrModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var ovrData={
+  'OVR-301':{id:'OVR-301',agent:'Angela Torres (NPN: 6651209)',type:'Exam Retake',requester:'System Auto-Alert',attempts:'4/4 (max reached)',date:'06 08,2026',reason:'Agent failed training exam 4 times. Technical issues reported during attempt 3 (browser crashed mid-exam, proctoring software froze). Agent is requesting a 5th attempt citing that attempt 3 should not count due to technical failure. Support ticket #TK-8821 confirms browser crash at 22-minute mark.',actionLabel:'Recommendation',actionDetail:'Technical issue on attempt 3 is verified via support ticket TK-8821. If approved, agent will receive one additional attempt with proctoring oversight. Approval requires Compliance Lead sign-off. Route to Admin for final decision.'},
+  'OVR-299':{id:'OVR-299',agent:'James Lee (NPN: 8834521)',type:'Gate Override — W-9 Mismatch',requester:'Maria Johnson',attempts:'3 resubmissions',date:'06 09,2026',reason:'W-9 entity type shows "Individual" but agent\'s contracting agreement is under "LLC." Agent claims they filed an updated W-9 with IRS on May 28 changing entity type to LLC. IRS confirmation letter expected within 4-6 weeks. Agent requests gate override to proceed with onboarding while waiting for IRS confirmation.',actionLabel:'Recommendation',actionDetail:'W-9 mismatch is a compliance gate — cannot be overridden without IRS documentation. Agent should provide IRS submission receipt as interim proof. If receipt is valid, a conditional override may be granted with 60-day documentation deadline. Route to Compliance for review.'},
+  'OVR-297':{id:'OVR-297',agent:'Michael Brown (NPN: 5590812)',type:'Background Check Override',requester:'Carlos Rivera',attempts:'—',date:'06 07,2026',reason:'Background check vendor (CheckRight Inc.) returned "Inconclusive" result on Jun 5. Agent has provided a clean background report from an alternate FCRA-compliant vendor (ClearScreen) dated 05 30,2026. No adverse findings in alternate report. Agent has been with previous carrier for 8 years with no compliance issues.',actionLabel:'Recommendation',actionDetail:'Alternate background report from ClearScreen (FCRA-compliant) shows no adverse findings. Agent has 8-year clean history with prior carrier. If approved, document the alternate source in compliance file and flag for re-check in 90 days with primary vendor. Route to Admin for final decision.'}
+};
+
+function showOverride(reqId){
+  var d=ovrData[reqId];if(!d)return;
+  document.getElementById('omTitle').textContent='Override Request '+d.id;
+  document.getElementById('omId').textContent=d.id;
+  document.getElementById('omAgent').textContent=d.agent;
+  document.getElementById('omType').textContent=d.type;
+  document.getElementById('omRequester').textContent=d.requester;
+  document.getElementById('omAttempts').textContent=d.attempts;
+  document.getElementById('omDate').textContent=d.date;
+  document.getElementById('omReason').textContent=d.reason;
+  document.getElementById('omActionLabel').textContent=d.actionLabel;
+  document.getElementById('omActionDetail').textContent=d.actionDetail;
+  document.getElementById('ovrModal').style.display='flex';
+}
+function closeOvrModal(){document.getElementById('ovrModal').style.display='none';}
+document.getElementById('ovrModal').addEventListener('click',function(e){if(e.target===this)closeOvrModal();});
+</script>
+</body>
+</html>

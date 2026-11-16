@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaigns | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns" class="active"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Campaigns</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Campaigns</li></ol>
+    </div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="exportCampaigns ? exportCampaigns() : null"><i class="fas fa-download"></i>Export</button>
+      <button class="btn-pr btn-sm" onclick="openNewCampaignModal()"><i class="fas fa-plus"></i>New Campaign</button>
+    </div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Stats Row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-bullhorn"></i></div><div><div class="stat-label">Active Campaigns</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Leads Generated</div><div class="stat-val">287</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Total Enrolled</div><div class="stat-val">23</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Avg Conversion Rate</div><div class="stat-val">8.0%</div></div></div></div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <label>Status:</label>
+      <select id="camp-status" onchange="filterCampaigns()">
+        <option value="">All Status</option>
+        <option value="Active">Active</option>
+        <option value="Paused">Paused</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <label>Type:</label>
+      <select id="camp-type" onchange="filterCampaigns()">
+        <option value="">All Types</option>
+        <option value="Digital">Digital</option>
+        <option value="Direct Mail">Direct Mail</option>
+        <option value="Event">Event</option>
+        <option value="Referral">Referral</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="filterCampaigns()"><i class="fas fa-filter"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetCampFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Campaigns Table -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-hdr">
+        <h5><i class="fas fa-bullhorn" style="margin-right:8px;color:#e65100"></i>All Campaigns</h5>
+        <button class="btn-ol btn-sm" onclick="exportCampaigns()"><i class="fas fa-download"></i>Export</button>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','campaigns_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr><th>Campaign Name</th><th>Type</th><th>Status</th><th>Leads</th><th>Contacted</th><th>Enrolled</th><th>Conv. Rate</th><th>Start Date</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="campTableBody">
+            <tr data-status="Active" data-type="Digital">
+              <td><strong>Spring ESRD Outreach 2026</strong></td>
+              <td><span class="bdg b-blue">Digital</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>112</td><td>89</td><td>11</td><td>9.8%</td><td>03 01,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" onclick="showCampDetails('Spring ESRD Outreach 2026','Digital','Active','112','89','11','9.8%','03 01,2026','Targeting ESRD patients in FL and TX for StarPlus ESRD SNP. Facebook and Google Ads.')">Details</button>
+                <button class="btn-ol btn-sm" onclick="viewCampLeads('Spring ESRD Outreach 2026')">Leads</button>
+              </td>
+            </tr>
+            <tr data-status="Active" data-type="Direct Mail">
+              <td><strong>CKD Awareness Mailer Q2</strong></td>
+              <td><span class="bdg b-purple">Direct Mail</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>78</td><td>54</td><td>6</td><td>7.7%</td><td>04 15,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" onclick="showCampDetails('CKD Awareness Mailer Q2','Direct Mail','Active','78','54','6','7.7%','04 15,2026','Direct mail campaign targeting CKD Stage 3-5 patients across FL and TX.')">Details</button>
+                <button class="btn-ol btn-sm" onclick="viewCampLeads('CKD Awareness Mailer Q2')">Leads</button>
+              </td>
+            </tr>
+            <tr data-status="Active" data-type="Event">
+              <td><strong>Community Health Fair May</strong></td>
+              <td><span class="bdg b-teal">Event</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>45</td><td>45</td><td>3</td><td>6.7%</td><td>05 10,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" onclick="showCampDetails('Community Health Fair May','Event','Active','45','45','3','6.7%','05 10,2026','Booth at Miami Community Health Fair. Lead collection via tablet sign-up forms.')">Details</button>
+                <button class="btn-ol btn-sm" onclick="viewCampLeads('Community Health Fair May')">Leads</button>
+              </td>
+            </tr>
+            <tr data-status="Active" data-type="Referral">
+              <td><strong>Nephrologist Referral Program</strong></td>
+              <td><span class="bdg b-amber">Referral</span></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td>52</td><td>38</td><td>3</td><td>5.8%</td><td>02 01,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" onclick="showCampDetails('Nephrologist Referral Program','Referral','Active','52','38','3','5.8%','02 01,2026','Partnership with 12 nephrology practices in FL and TX. Physicians refer qualifying Medicare patients.')">Details</button>
+                <button class="btn-ol btn-sm" onclick="viewCampLeads('Nephrologist Referral Program')">Leads</button>
+              </td>
+            </tr>
+            <tr id="campNoResults" style="display:none"><td colspan="9" style="text-align:center;color:#666;padding:16px">No campaigns match the selected filters.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Campaign Performance Chart / Summary -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#5f6368"></i>Campaign Performance Summary</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+          <div style="text-align:center;padding:16px;background:#fff3e0;border-radius:10px">
+            <div style="font-size:22px;font-weight:700;color:#e65100">287</div>
+            <div style="color:#5f6368;font-size:12px">Total Leads</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:#e8f5e9;border-radius:10px">
+            <div style="font-size:22px;font-weight:700;color:#1b5e20">226</div>
+            <div style="color:#5f6368;font-size:12px">Contacted</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:#e3f2fd;border-radius:10px">
+            <div style="font-size:22px;font-weight:700;color:#0d47a1">23</div>
+            <div style="color:#5f6368;font-size:12px">Enrolled</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:#f3e5f5;border-radius:10px">
+            <div style="font-size:22px;font-weight:700;color:#4a148c">8.0%</div>
+            <div style="color:#5f6368;font-size:12px">Avg Conversion</div>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="width:160px;font-weight:600">Spring ESRD Outreach</span>
+            <div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:9.8%;background:#e65100;height:100%;border-radius:20px"></div></div>
+            <span style="width:48px;text-align:right;color:#e65100;font-weight:600">9.8%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="width:160px;font-weight:600">CKD Mailer Q2</span>
+            <div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:7.7%;background:#7b1fa2;height:100%;border-radius:20px"></div></div>
+            <span style="width:48px;text-align:right;color:#7b1fa2;font-weight:600">7.7%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="width:160px;font-weight:600">Health Fair May</span>
+            <div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:6.7%;background:#00796b;height:100%;border-radius:20px"></div></div>
+            <span style="width:48px;text-align:right;color:#00796b;font-weight:600">6.7%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="width:160px;font-weight:600">Nephrologist Referral</span>
+            <div style="flex:1;background:#f1f3f4;border-radius:20px;height:12px;overflow:hidden"><div style="width:5.8%;background:#f57f17;height:100%;border-radius:20px"></div></div>
+            <span style="width:48px;text-align:right;color:#f57f17;font-weight:600">5.8%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Campaign Details Modal -->
+<div class="modal-overlay" id="campDetailsModal" style="display:none">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-hdr"><h5><i class="fas fa-bullhorn" style="margin-right:8px;color:#e65100"></i><span id="cdTitle">Campaign Details</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Type</div><div style="font-weight:600" id="cdType"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Status</div><div style="font-weight:600" id="cdStatus"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Leads Generated</div><div style="font-size:20px;font-weight:700;color:#e65100" id="cdLeads"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Enrolled</div><div style="font-size:20px;font-weight:700;color:#1b5e20" id="cdEnrolled"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Contacted</div><div style="font-weight:600" id="cdContacted"></div></div>
+        <div style="background:#f8f9fa;padding:12px;border-radius:8px"><div style="font-size:11px;color:#5f6368">Conversion Rate</div><div style="font-weight:600;color:#e65100" id="cdConv"></div></div>
+      </div>
+      <div style="margin-bottom:12px"><div style="font-size:11px;color:#5f6368;margin-bottom:4px">Start Date</div><div id="cdStart"></div></div>
+      <div><div style="font-size:11px;color:#5f6368;margin-bottom:4px">Campaign Description</div><div id="cdDesc" style="font-size:13px;line-height:1.6;color:#3c4043"></div></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-pr" onclick="viewCampLeadsFromModal()"><i class="fas fa-users"></i> View Leads</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Campaign Modal -->
+<div class="modal-overlay" id="newCampModal" style="display:none">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-hdr"><h5><i class="fas fa-plus" style="margin-right:8px;color:#e65100"></i>New Campaign</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="mb-3"><label class="form-label">Campaign Name</label><input type="text" class="form-control" id="newCampName" placeholder="e.g. Summer CKD Outreach 2026"></div>
+      <div class="mb-3"><label class="form-label">Campaign Type</label>
+        <select class="form-control"><option>Digital</option><option>Direct Mail</option><option>Event</option><option>Referral</option></select>
+      </div>
+      <div class="mb-3"><label class="form-label">Target Region</label>
+        <select class="form-control"><option>Florida</option><option>Texas</option><option>Florida &amp; Texas</option><option>Nationwide</option></select>
+      </div>
+      <div class="mb-3"><label class="form-label">Start Date</label><input type="date" class="form-control"></div>
+      <div class="mb-3"><label class="form-label">Lead Goal</label><input type="number" class="form-control" placeholder="Number of leads to generate"></div>
+      <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3" placeholder="Campaign goals, target audience, outreach strategy..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="createCampaign()"><i class="fas fa-save"></i> Create Campaign</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var _currentCampName = '';
+
+function filterCampaigns() {
+  var status = document.getElementById('camp-status').value;
+  var type = document.getElementById('camp-type').value;
+  var rows = document.querySelectorAll('#campTableBody tr:not(#campNoResults)');
+  var noResults = document.getElementById('campNoResults');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var rs = row.dataset.status || '';
+    var rt = row.dataset.type || '';
+    var show = (!status || rs === status) && (!type || rt === type);
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (noResults) noResults.style.display = visible ? 'none' : '';
+  showToast(visible + ' campaign(s) match the filters', 'success');
+}
+
+function resetCampFilters() {
+  document.getElementById('camp-status').value = '';
+  document.getElementById('camp-type').value = '';
+  document.querySelectorAll('#campTableBody tr:not(#campNoResults)').forEach(function(r){ r.style.display = ''; });
+  var noResults = document.getElementById('campNoResults');
+  if (noResults) noResults.style.display = 'none';
+  showToast('Filters cleared', 'success');
+}
+
+function showCampDetails(name, type, status, leads, contacted, enrolled, conv, start, desc) {
+  _currentCampName = name;
+  document.getElementById('cdTitle').textContent = name;
+  document.getElementById('cdType').textContent = type;
+  document.getElementById('cdStatus').textContent = status;
+  document.getElementById('cdLeads').textContent = leads;
+  document.getElementById('cdContacted').textContent = contacted;
+  document.getElementById('cdEnrolled').textContent = enrolled;
+  document.getElementById('cdConv').textContent = conv;
+  document.getElementById('cdStart').textContent = start;
+  document.getElementById('cdDesc').textContent = desc;
+  document.getElementById('campDetailsModal').style.display = 'flex';
+}
+
+function viewCampLeads(campaignName) {
+  location.href = 'leads.html?campaign=' + encodeURIComponent(campaignName);
+}
+
+function viewCampLeadsFromModal() {
+  document.getElementById('campDetailsModal').style.display = 'none';
+  viewCampLeads(_currentCampName);
+}
+
+function openNewCampaignModal() {
+  document.getElementById('newCampModal').style.display = 'flex';
+}
+
+function createCampaign() {
+  var name = document.getElementById('newCampName').value.trim();
+  if (!name) { showToast('Please enter a campaign name', 'error'); return; }
+  document.getElementById('newCampModal').style.display = 'none';
+  showToast('Campaign created: ' + name, 'success');
+}
+
+function exportCampaigns() {
+  var rows = [['Campaign Name','Type','Status','Leads','Contacted','Enrolled','Conversion Rate','Start Date']];
+  document.querySelectorAll('#campTableBody tr').forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length >= 8) {
+      rows.push([cells[0].textContent.trim(),cells[1].textContent.trim(),cells[2].textContent.trim(),cells[3].textContent.trim(),cells[4].textContent.trim(),cells[5].textContent.trim(),cells[6].textContent.trim(),cells[7].textContent.trim()]);
+    }
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'campaigns-may-2026.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  showToast('Campaign data exported successfully', 'success');
+}
+</script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 27,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feature Toggles | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .toggle-on{color:#2e7d32;font-size:22px} .toggle-off{color:#9e9e9e;font-size:22px}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle open" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub sb-sub-open">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html" class="active"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Feature Toggles</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Feature Toggles</li></ol>
+    </div>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Active Feature Toggles</h5><input type="text" id="toggleSearch" class="tb-search" placeholder="Search features" style="max-width:220px" oninput="filterToggles()"><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','feature-toggles_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Feature</th><th>State</th><th>Scope</th><th>Users Affected</th><th>Last Changed</th><th>Changed By</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>New Enrollment v2 Wizard</strong><br><small class="text-muted">Enhanced multi-step enrollment flow</small></td>
+              <td><i class="fas fa-toggle-on toggle-on"></i> <span class="badge bg-success">Enabled</span></td>
+              <td>Pilot Group (5 agents)</td><td>5</td><td>05 15,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('New Enrollment v2 Wizard','Enabled','Pilot Group')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>HRA Digital Completion</strong><br><small class="text-muted">Members complete HRA online (vs paper)</small></td>
+              <td><i class="fas fa-toggle-on toggle-on"></i> <span class="badge bg-success">Enabled</span></td>
+              <td>All Users</td><td>All</td><td>04 01,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('HRA Digital Completion','Enabled','All Users')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>Commission Preview Mode</strong><br><small class="text-muted">Agents see projected commission before enrollment</small></td>
+              <td><i class="fas fa-toggle-on toggle-on"></i> <span class="badge bg-success">Enabled</span></td>
+              <td>All Agents</td><td>143</td><td>03 10,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('Commission Preview Mode','Enabled','All Agents')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>DTC Self-Enrollment</strong><br><small class="text-muted">Direct-to-consumer enrollment (no agent)</small></td>
+              <td><i class="fas fa-toggle-off toggle-off"></i> <span class="badge bg-secondary">Disabled</span></td>
+              <td></td><td>0</td><td>05 20,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('DTC Self-Enrollment','Disabled','None')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>Auto-NIPR Refresh</strong><br><small class="text-muted">Nightly NIPR license verification for all agents</small></td>
+              <td><i class="fas fa-toggle-on toggle-on"></i> <span class="badge bg-success">Enabled</span></td>
+              <td>All Agents</td><td>143</td><td>01 05,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('Auto-NIPR Refresh','Enabled','All Agents')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>Agency Self-Registration</strong><br><small class="text-muted">Agencies can register without invitation</small></td>
+              <td><i class="fas fa-toggle-on toggle-on"></i> <span class="badge bg-success">Enabled</span></td>
+              <td>Public</td><td>N/A</td><td>02 01,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('Agency Self-Registration','Enabled','Public')">Edit</button></td>
+            </tr>
+            <tr>
+              <td><strong>Real-Time Commission Calc</strong><br><small class="text-muted">Switch from batch to real-time calculation</small></td>
+              <td><i class="fas fa-toggle-off toggle-off"></i> <span class="badge bg-secondary">Disabled</span></td>
+              <td></td><td>0</td><td>05 01,2026</td><td>Sandra Adams</td>
+              <td><button class="btn-ol btn-sm" onclick="editToggle('Real-Time Commission Calc','Disabled','None')">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Toggle Change Log -->
+    <div class="card">
+      <div class="card-hdr"><h5>Toggle Change Log</h5><button class="btn-ol btn-sm" onclick="nfpExport('Toggle Change Log')"><i class="fas fa-download"></i>Export</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','feature-toggles_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Timestamp</th><th>Feature</th><th>Action</th><th>Changed By</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>05 20,2026 11:30 AM</td><td>DTC Self-Enrollment</td><td>Disabled globally</td><td>Sandra Adams</td><td>Production issue — CAPTCHA bypass detected</td></tr>
+            <tr><td>05 15,2026 9:00 AM</td><td>New Enrollment v2 Wizard</td><td>Enabled for pilot group</td><td>Sandra Adams</td><td>Phase 1 rollout to 5 beta agents</td></tr>
+            <tr><td>05 01,2026 2:00 PM</td><td>Real-Time Commission Calc</td><td>Disabled globally</td><td>Sandra Adams</td><td>Performance concerns — reverting to batch</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Toggle Modal -->
+<div class="modal-overlay" id="createToggleModal" style="display:none">
+<div class="modal-box" style="max-width:580px">
+<div class="modal-hdr"><h5><i class="fas fa-toggle-on" style="margin-right:8px"></i>Create Feature Toggle</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body">
+  <div id="toggleModalAlertZone" style="display:none" class="mb-2"></div>
+  <div class="fg mb-3"><label>Feature Name <span class="req">*</span></label><input id="tglName" class="form-control" maxlength="80" placeholder="e.g. Real-Time BoB Refresh"></div>
+  <div class="fg mb-3"><label>Description <span class="req">*</span></label><textarea id="tglDesc" class="form-control" maxlength="200" rows="2" placeholder="Brief description of what this toggle controls..."></textarea></div>
+  <div class="row-grid" style="gap:12px;margin-bottom:12px">
+    <div class="fg"><label>Initial State <span class="req">*</span></label>
+      <select id="tglState" class="form-control">
+        <option value="Disabled">Disabled</option>
+        <option value="Enabled">Enabled</option>
+      </select>
+    </div>
+    <div class="fg"><label>Scope <span class="req">*</span></label>
+      <select id="tglScope" class="form-control">
+        <option value="">-- Select Scope --</option>
+        <option value="All Users">All Users</option>
+        <option value="All Agents">All Agents</option>
+        <option value="Pilot Group">Pilot Group</option>
+        <option value="Public">Public</option>
+        <option value="Internal Only">Internal Only</option>
+      </select>
+    </div>
+  </div>
+  <div class="fg mb-3"><label>Reason / Justification <span class="req">*</span></label><textarea id="tglReason" class="form-control" maxlength="300" rows="2" placeholder="Why is this toggle being created? (required for audit log)"></textarea></div>
+</div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="prefillToggle()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill Data</button>
+  <div>
+    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="saveNewToggle()"><i class="fas fa-save"></i> Create Toggle</button>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+function showAlert(zone, msg, type) {
+  if(!zone) return;
+  var colors = {danger:'#fce4ec',warning:'#fff8e1',info:'#e3f2fd',success:'#e8f5e9'};
+  var borders = {danger:'#ef9a9a',warning:'#ffe082',info:'#90caf9',success:'#a5d6a7'};
+  var icons = {danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle',success:'fa-check-circle'};
+  zone.innerHTML = '<div style="background:'+colors[type]+';border:1px solid '+borders[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+icons[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
+  zone.style.display='block';
+  setTimeout(function(){zone.style.display='none';},5000);
+}
+
+function openCreateToggleModal() {
+  document.getElementById('tglName').value='';
+  document.getElementById('tglDesc').value='';
+  document.getElementById('tglState').value='Disabled';
+  document.getElementById('tglScope').value='';
+  document.getElementById('tglReason').value='';
+  document.getElementById('toggleModalAlertZone').style.display='none';
+  document.getElementById('createToggleModal').style.display='flex';
+}
+
+function prefillToggle() {
+  document.getElementById('tglName').value='Real-Time BoB Refresh';
+  document.getElementById('tglDesc').value='Enables real-time refresh of Book of Business data instead of nightly batch sync.';
+  document.getElementById('tglState').value='Disabled';
+  document.getElementById('tglScope').value='Pilot Group';
+  document.getElementById('tglReason').value='Testing real-time BoB sync with pilot group before full rollout. Performance benchmarking required.';
+  showAlert(document.getElementById('toggleModalAlertZone'), 'Form prefilled with sample data for testing.', 'info');
+}
+
+function saveNewToggle() {
+  var alertZone = document.getElementById('toggleModalAlertZone');
+  var name = document.getElementById('tglName').value.trim();
+  var desc = document.getElementById('tglDesc').value.trim();
+  var state = document.getElementById('tglState').value;
+  var scope = document.getElementById('tglScope').value;
+  var reason = document.getElementById('tglReason').value.trim();
+
+  if(!name){showAlert(alertZone,'Feature Name is required.','danger');return;}
+  if(!desc){showAlert(alertZone,'Description is required.','danger');return;}
+  if(!scope){showAlert(alertZone,'Please select a Scope.','danger');return;}
+  if(!reason){showAlert(alertZone,'Reason / Justification is required for audit log.','danger');return;}
+
+  // Check duplicate name
+  var existing = document.querySelectorAll('.tbl tbody tr td:first-child strong');
+  for(var i=0;i<existing.length;i++){
+    if(existing[i].textContent.trim().toLowerCase()===name.toLowerCase()){
+      showAlert(alertZone,'A toggle named "'+name+'" already exists.','danger');return;
+    }
+  }
+
+  document.getElementById('createToggleModal').style.display='none';
+  showToast('Feature toggle "'+name+'" created as '+state+'. Audit entry recorded.','success');
+}
+
+function editToggle(name, currentState, scope) {
+  var newState = currentState === 'Enabled' ? 'Disabled' : 'Enabled';
+  var reason = prompt('Toggle: ' + name + '\nCurrent: ' + currentState + ' | Scope: ' + scope + '\n\nEnter reason for change (required for audit log):');
+  if(reason === null) return;
+  if(!reason.trim()) { showToast('A reason is required to change a feature toggle.', 'error'); return; }
+  showToast('Feature toggle "' + name + '" updated. Changes propagate within 5 minutes. Audit entry created.', 'success');
+}
+function filterToggles() {
+  var q = document.getElementById('toggleSearch').value.toLowerCase();
+  document.querySelectorAll('.tbl tbody tr').forEach(function(r) {
+    r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

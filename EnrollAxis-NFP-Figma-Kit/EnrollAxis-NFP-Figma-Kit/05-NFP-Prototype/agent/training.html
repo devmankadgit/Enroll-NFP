@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-26 Training Package Setup — Agent-facing training & certification tracker -->
+<title>Training &amp; Certification | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+.cert-timeline{position:relative;padding-left:28px;margin:12px 0}
+.cert-timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:#e0e0e0}
+.cert-tl-item{position:relative;margin-bottom:14px;padding:10px 14px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px}
+.cert-tl-item::before{content:'';position:absolute;left:-22px;top:14px;width:10px;height:10px;border-radius:50%;border:2px solid #0d47a1;background:#fff}
+.cert-tl-item.completed::before{background:#2e7d32;border-color:#2e7d32}
+.cert-tl-item.overdue::before{background:#c62828;border-color:#c62828}
+.cert-tl-item.upcoming::before{background:#ff9800;border-color:#ff9800}
+.renewal-countdown{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700}
+.renewal-countdown.ok{background:#e8f5e9;color:#2e7d32}
+.renewal-countdown.warn{background:#fff8e1;color:#e65100}
+.renewal-countdown.danger{background:#ffebee;color:#c62828}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.filter-pills .pill{padding:5px 14px;border-radius:16px;font-size:11px;font-weight:600;border:1px solid #dadce0;background:#fff;cursor:pointer;transition:all .15s}
+.filter-pills .pill:hover{border-color:#0d47a1;color:#0d47a1}
+.filter-pills .pill.active{background:#0d47a1;color:#fff;border-color:#0d47a1}
+.prog-bar{background:#e0e0e0;border-radius:4px;height:7px;width:100px;display:inline-block;vertical-align:middle}
+.prog-fill{height:7px;border-radius:4px}
+/* Inline exam/training panel */
+.exam-panel{display:none;background:#f8f9ff;border:1px solid #c5cae9;border-radius:8px;padding:18px 20px;margin:0 0 4px}
+.exam-panel.show{display:block}
+.seg-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e8eaed;border-radius:6px;margin-bottom:6px;background:#fff;font-size:12px}
+.seg-row .seg-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.seg-num.done{background:#2e7d32;color:#fff}
+.seg-num.active{background:#0d47a1;color:#fff}
+.seg-num.locked{background:#e0e0e0;color:#9e9e9e}
+.q-opt{display:flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid #e8eaed;border-radius:8px;cursor:pointer;font-size:12px;margin-bottom:6px;transition:all .15s}
+.q-opt:hover{border-color:#0d47a1;background:#f0f4ff}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html" class="active"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8">
+      <div class="sb-ava">JM</div>
+      <div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Training &amp; Certification Tracker</h4>
+      <ol class="breadcrumb-bar"><li>Resources</li><li>Training &amp; Certification</li></ol>
+    </div>
+    <a href="notifications.html" class="tb-btn"><i class="fas fa-bell"></i><span class="n-dot"></span></a>
+    <a href="profile.html" class="tb-btn" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user"></i></a>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Alert: Upcoming Renewals -->
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin-bottom:16px;font-size:12px;color:#e65100">
+      <i class="fas fa-exclamation-triangle" style="margin-top:2px;font-size:14px"></i>
+      <div><strong>Action Required:</strong> AHIP PY2027 certification opens 09 01,2026. Annual Compliance re-certification due 08 31,2026 (34 days). FL license renewal due 10 15,2026.</div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-clipboard-check"></i></div><div><div class="stat-label">Assigned Training</div><div class="stat-val">12</div><div class="stat-sub text-muted">PY 2025 &amp; 2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Completed</div><div class="stat-val">8</div><div class="stat-sub stat-up">All passed</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-spinner"></i></div><div><div class="stat-label">In Progress</div><div class="stat-val">2</div><div class="stat-sub text-muted">1 due soon</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Expired Certifications</div><div class="stat-val">2</div><div class="stat-sub stat-dn">Recertify required</div></div></div></div>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- My Training List -->
+    <!-- ====================================================== -->
+    <div class="card mb16">
+      <div class="card-hdr" style="flex-wrap:wrap;gap:8px">
+        <h5><i class="fas fa-list-alt" style="margin-right:6px;color:#0d47a1"></i>My Training List</h5>
+        <div class="filter-pills" style="margin-left:12px">
+          <span class="pill active" onclick="filterTraining(this,'all')">All (12)</span>
+          <span class="pill" onclick="filterTraining(this,'assigned')">Assigned (2)</span>
+          <span class="pill" onclick="filterTraining(this,'completed')">Completed (8)</span>
+          <span class="pill" onclick="filterTraining(this,'in-progress')">In Progress (2)</span>
+          <span class="pill" onclick="filterTraining(this,'expired')">Expired (2)</span>
+        </div>
+        <button class="btn-ol btn-sm" style="margin-left:auto" onclick="exportTableToExcel('tblTraining','My_Training_List')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table id="tblTraining" class="table table-hover" style="font-size:13px;margin-bottom:0">
+          <thead><tr><th style="min-width:240px">Assigned Training</th><th>Plan Year</th><th>Category</th><th style="min-width:140px">Progress</th><th>Score</th><th>Completed</th><th>Expires</th><th>Status</th><th style="min-width:140px">Action</th></tr></thead>
+          <tbody>
+
+            <!-- ===== EXPIRED CERTIFICATIONS ===== -->
+            <tr data-status="expired" style="background:#fff5f5">
+              <td>
+                <div style="font-weight:600;color:#c62828"><i class="fas fa-times-circle" style="color:#c62828;margin-right:6px"></i>AHIP Medicare Certification</div>
+                <div style="font-size:11px;color:#c62828">Expired — Must recertify for PY2026 or later</div>
+              </td>
+              <td><span style="font-weight:600">PY 2025</span></td>
+              <td><span style="background:#fce4ec;color:#c62828;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Industry</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#c62828;width:100%"></div></div>
+                <span style="font-size:10px;color:#c62828;margin-left:4px">100% (expired)</span>
+              </td>
+              <td><span style="font-weight:700;color:#9e9e9e;text-decoration:line-through">91%</span></td>
+              <td style="color:#9e9e9e">10 05,2024</td>
+              <td style="color:#c62828;font-weight:600">12 31,2025</td>
+              <td><span style="background:#ffebee;color:#c62828;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-times-circle"></i> Expired</span></td>
+              <td><button class="btn-ol btn-sm" style="color:#9e9e9e" disabled title="Superseded by PY2026 certification"><i class="fas fa-ban"></i>Superseded</button></td>
+            </tr>
+            <tr data-status="expired" style="background:#fff5f5">
+              <td>
+                <div style="font-weight:600;color:#c62828"><i class="fas fa-times-circle" style="color:#c62828;margin-right:6px"></i>Gold Kidney Carrier Cert</div>
+                <div style="font-size:11px;color:#c62828">Expired — Renewed as PY2026</div>
+              </td>
+              <td><span style="font-weight:600">PY 2025</span></td>
+              <td><span style="background:#fce4ec;color:#c62828;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#c62828;width:100%"></div></div>
+                <span style="font-size:10px;color:#c62828;margin-left:4px">100% (expired)</span>
+              </td>
+              <td><span style="font-weight:700;color:#9e9e9e;text-decoration:line-through">88%</span></td>
+              <td style="color:#9e9e9e">11 02,2024</td>
+              <td style="color:#c62828;font-weight:600">12 31,2025</td>
+              <td><span style="background:#ffebee;color:#c62828;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-times-circle"></i> Expired</span></td>
+              <td><button class="btn-ol btn-sm" style="color:#9e9e9e" disabled title="Superseded by PY2026 certification"><i class="fas fa-ban"></i>Superseded</button></td>
+            </tr>
+
+            <!-- ===== IN PROGRESS ===== -->
+            <tr data-status="in-progress" style="background:#fffde7" id="row-mod9">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-spinner fa-spin" style="color:#e65100;margin-right:6px"></i>C-SNP Special Needs Plan Deep Dive</div>
+                <div style="font-size:11px;color:#e65100">Advanced C-SNP verification, Model of Care, interdisciplinary team</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#ff9800;width:60%"></div></div>
+                <span style="font-size:10px;color:#e65100;margin-left:4px">4 of 6 segments (60%)</span>
+              </td>
+              <td><span style="font-size:11px;color:#5f6368">—</span></td>
+              <td>—</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-spinner"></i> In Progress</span></td>
+              <td><button class="btn-pr btn-sm" onclick="toggleExam('exam-mod9')"><i class="fas fa-play"></i>Continue Training</button></td>
+            </tr>
+            <!-- Inline Exam Panel for Module 9 -->
+            <tr data-status="in-progress" style="background:#fffde7"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod9">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#0d47a1"><i class="fas fa-book-reader" style="margin-right:6px"></i>C-SNP Special Needs Plan Deep Dive — Training &amp; Exam</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod9')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">6 segments | 3 hrs | Passing score: 85% | Max attempts: 4 | <strong>Progress: 4 of 6 completed</strong></div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> C-SNP Eligibility & Verification</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Chronic Condition Documentation</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Plan Benefits & Supplemental Coverage</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Model of Care Overview</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></div>
+                  <div class="seg-row" style="border-color:#0d47a1;background:#f0f4ff"><div class="seg-num active">5</div><div style="flex:1"><strong>Segment 5:</strong> Interdisciplinary Care Team Coordination</div><button class="btn-pr btn-sm" onclick="alert('Loading Segment 5: Interdisciplinary Care Team Coordination...\n\nVideo content: 22 min\nReading material: 8 pages\n\nAfter completion, Segment 6 will unlock.')"><i class="fas fa-play"></i>Resume</button></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Segment 6:</strong> Annual Re-Verification Process</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#0d47a1;margin-right:4px"></i><strong style="font-size:12px">Final Exam</strong> <span style="font-size:11px;color:#5f6368">— Available after all 6 segments completed</span></div>
+                  <button class="btn-ol btn-sm" disabled title="Complete all segments first"><i class="fas fa-lock"></i>Exam Locked</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="in-progress" style="background:#fffde7" id="row-mod10">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-spinner fa-spin" style="color:#e65100;margin-right:6px"></i>Annual Compliance Re-Certification</div>
+                <div style="font-size:11px;color:#e65100">HIPAA Refresher, FWA Prevention, Medicare Marketing Rules</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Compliance</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#ff9800;width:33%"></div></div>
+                <span style="font-size:10px;color:#e65100;margin-left:4px">1 of 3 modules (33%)</span>
+              </td>
+              <td><span style="font-size:11px;color:#5f6368">—</span></td>
+              <td>—</td>
+              <td style="color:#c62828;font-weight:600">08 31,2026</td>
+              <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-spinner"></i> In Progress</span></td>
+              <td><button class="btn-pr btn-sm" onclick="toggleExam('exam-mod10')"><i class="fas fa-play"></i>Continue Training</button></td>
+            </tr>
+            <!-- Inline Exam Panel for Module 10 (Compliance Recert) -->
+            <tr data-status="in-progress" style="background:#fffde7"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod10">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#0d47a1"><i class="fas fa-shield-alt" style="margin-right:6px"></i>Annual Compliance Re-Certification — Training &amp; Exam</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod10')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:4px">3 modules | 1 hr total | Passing: 85% | <strong style="color:#c62828">Due: 08 31,2026 (34 days)</strong></div>
+                <div style="font-size:11px;color:#e65100;margin-bottom:14px"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>Must complete before expiry to maintain Ready-to-Sell status</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Module 1:</strong> HIPAA Refresher (20 min)</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed Jul 15</span></div>
+                  <div class="seg-row" style="border-color:#0d47a1;background:#f0f4ff"><div class="seg-num active">2</div><div style="flex:1"><strong>Module 2:</strong> FWA Prevention (15 min)</div><button class="btn-pr btn-sm" onclick="alert('Loading Module 2: Fraud, Waste & Abuse Prevention Refresher...\n\nVideo: 10 min + Quiz: 5 min\nTopics: FDR requirements, reporting hotline, case studies')"><i class="fas fa-play"></i>Start</button></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Module 3:</strong> Medicare Marketing Rules (25 min)</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#0d47a1;margin-right:4px"></i><strong style="font-size:12px">Final Exam</strong> <span style="font-size:11px;color:#5f6368">— 20 questions, available after all 3 modules</span></div>
+                  <button class="btn-ol btn-sm" disabled title="Complete all modules first"><i class="fas fa-lock"></i>Exam Locked</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <!-- ===== ASSIGNED (Not Started) ===== -->
+            <tr data-status="assigned">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-clipboard-list" style="color:#1565c0;margin-right:6px"></i>Annual Ethics &amp; Professional Conduct</div>
+                <div style="font-size:11px;color:#5f6368">State CE ethics requirement, professional standards</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#fce4ec;color:#c62828;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">CE Required</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#e0e0e0;width:0%"></div></div>
+                <span style="font-size:10px;color:#9e9e9e;margin-left:4px">0 of 5 segments (0%)</span>
+              </td>
+              <td>—</td>
+              <td>—</td>
+              <td>10 15,2026</td>
+              <td><span style="background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-clipboard-list"></i> Assigned</span></td>
+              <td><button class="btn-pr btn-sm" onclick="toggleExam('exam-ethics')"><i class="fas fa-play-circle"></i>Start Training</button></td>
+            </tr>
+            <tr data-status="assigned"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-ethics">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#0d47a1"><i class="fas fa-balance-scale" style="margin-right:6px"></i>Annual Ethics &amp; Professional Conduct — Training &amp; Exam</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-ethics')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">5 segments | 2.5 hrs | Passing: 85% | Required for FL license renewal by 10 15,2026</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row" style="border-color:#0d47a1;background:#f0f4ff"><div class="seg-num active">1</div><div style="flex:1"><strong>Segment 1:</strong> Ethical Standards & Fiduciary Duty</div><button class="btn-pr btn-sm" onclick="alert('Loading Segment 1: Ethical Standards & Fiduciary Duty...\n\nVideo: 25 min\nReading: 6 pages')"><i class="fas fa-play"></i>Start</button></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Segment 2:</strong> Conflicts of Interest & Disclosure</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Segment 3:</strong> Privacy & Confidentiality in Practice</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Segment 4:</strong> Regulatory Compliance Case Studies</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                  <div class="seg-row"><div class="seg-num locked"><i class="fas fa-lock" style="font-size:9px"></i></div><div style="flex:1;color:#9e9e9e"><strong>Segment 5:</strong> Professional Conduct Review</div><span style="color:#9e9e9e;font-size:11px">Locked</span></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#0d47a1;margin-right:4px"></i><strong style="font-size:12px">Final Exam</strong> <span style="font-size:11px;color:#5f6368">— 25 questions, available after all 5 segments</span></div>
+                  <button class="btn-ol btn-sm" disabled><i class="fas fa-lock"></i>Exam Locked</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="assigned">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-clipboard-list" style="color:#1565c0;margin-right:6px"></i>AHIP Medicare Certification</div>
+                <div style="font-size:11px;color:#5f6368">Annual AHIP recertification — opens 09 01,2026</div>
+              </td>
+              <td><span style="font-weight:600">PY 2027</span></td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Industry</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#e0e0e0;width:0%"></div></div>
+                <span style="font-size:10px;color:#9e9e9e;margin-left:4px">0% — Opens Sep 1</span>
+              </td>
+              <td>—</td>
+              <td>—</td>
+              <td>12 31,2027</td>
+              <td><span style="background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-clipboard-list"></i> Assigned</span></td>
+              <td><button class="btn-ol btn-sm" disabled title="Opens 09 01,2026"><i class="fas fa-lock"></i>Not Yet Open</button></td>
+            </tr>
+
+            <!-- ===== COMPLETED ===== -->
+            <tr data-status="completed" id="row-mod1">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Gold Kidney Plan Overview</div>
+                <div style="font-size:11px;color:#5f6368">C-SNP eligibility, plan types, service areas, benefits</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">4 of 4 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">94%</span></td>
+              <td>10 20,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod1')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod1">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Gold Kidney Plan Overview — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod1')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">4 segments | 2 hrs | Score: <strong style="color:#2e7d32">94%</strong> (Attempt 1 of 4) | Completed 10 20,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> C-SNP Plan Types & Eligibility</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="alert('Replaying Segment 1: C-SNP Plan Types & Eligibility\n\nVideo: 28 min\nReading: 10 pages')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Service Area & Network</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="alert('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Benefits & Cost Sharing</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="alert('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Formulary & Pharmacy</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="alert('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">94% — Passed (47/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="alert('Viewing full exam results:\n\n47/50 questions correct (94%)\n\nMissed topics:\n- Formulary tier exception process (Q22)\n- CKD Stage 4 criteria (Q31)\n- Dual-eligible coordination (Q45)')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="alert('Are you sure you want to retake this exam?\n\nCurrent score: 94% (Passed)\nAttempts used: 1 of 4\n\nNote: Your highest score will be retained.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod2">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Enrollment Process &amp; SOA Compliance</div>
+                <div style="font-size:11px;color:#5f6368">SOA rules, 48-hr requirement, BEQ, OEC submission</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">6 of 6 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">88%</span></td>
+              <td>10 28,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod2')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod2">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Enrollment Process &amp; SOA Compliance — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod2')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">6 segments | 3 hrs | Score: <strong style="color:#2e7d32">88%</strong> (Attempt 2 of 4) | Completed 10 28,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> Scope of Appointment (SOA) Rules</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1: SOA Rules...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> 48-Hour SOA Requirement</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Beneficiary Enrollment Questionnaire</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> OEC Application Submission</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 5:</strong> Election Period Compliance</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 5...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 6:</strong> Post-Enrollment Obligations</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 6...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">88% — Passed (44/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 2 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 44/50 correct (88%). Missed: Q8 SOA timing, Q19 BEQ fields, Q27 OEC deadlines, Q32 SEP eligibility, Q41 rapid disenrollment, Q48 CTM complaints')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 2 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod3">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Commission &amp; Payment Fundamentals</div>
+                <div style="font-size:11px;color:#5f6368">Initial/renewal rates, proration, HRA/Healthy Visit incentives</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">5 of 5 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">92%</span></td>
+              <td>11 05,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod3')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod3">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Commission &amp; Payment Fundamentals — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod3')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">5 segments | 2.5 hrs | Score: <strong style="color:#2e7d32">92%</strong> (Attempt 1 of 4) | Completed 11 05,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> Initial Commission Rates &amp; Proration</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Renewal &amp; PMPM Calculations</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> HRA &amp; Healthy Visit Incentives</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Hierarchy Overrides &amp; Cascading</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 5:</strong> Payment Batches &amp; Remittance</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 5...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">92% — Passed (46/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 46/50 correct (92%). Missed: Q14 proration formula, Q28 override cap, Q37 chargeback timing, Q44 batch cycle')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod4">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Medicare Compliance &amp; HIPAA</div>
+                <div style="font-size:11px;color:#5f6368">PHI handling, minimum necessary, marketing rules, CMS guidelines</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Compliance</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">7 of 7 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">90%</span></td>
+              <td>11 18,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod4')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod4">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Medicare Compliance &amp; HIPAA — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod4')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">7 segments | 3.5 hrs | Score: <strong style="color:#2e7d32">90%</strong> (Attempt 1 of 4) | Completed 11 18,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> HIPAA Privacy Rule Fundamentals</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> PHI Handling &amp; Minimum Necessary</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Security Rule &amp; Breach Notification</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Medicare Marketing Compliance</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 5:</strong> CMS Guidelines &amp; Regulations</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 5...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 6:</strong> Agent-Specific Obligations</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 6...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 7:</strong> Incident Reporting &amp; Escalation</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 7...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">90% — Passed (45/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 45/50 correct (90%). Missed: Q11 minimum necessary, Q23 breach timeline, Q34 marketing event rules, Q39 PHI disposal, Q47 subcontractor BAA')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod5">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>HRA, Healthy Visit &amp; Patient Activation</div>
+                <div style="font-size:11px;color:#5f6368">HRA 14-day window, Healthy Visit scheduling, C-SNP re-verification</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Carrier</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">4 of 4 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">96%</span></td>
+              <td>11 22,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod5')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod5">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>HRA, Healthy Visit &amp; Patient Activation — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod5')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">4 segments | 2 hrs | Score: <strong style="color:#2e7d32">96%</strong> (Attempt 1 of 4) | Completed 11 22,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> HRA 14-Day Window &amp; Scheduling</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Healthy Visit Coordination</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> C-SNP Annual Re-Verification</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Patient Activation &amp; Incentive Tracking</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">96% — Passed (48/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 48/50 correct (96%). Missed: Q21 HRA escalation path, Q39 re-verification timeline')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod6">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Fraud, Waste &amp; Abuse (FWA) Prevention</div>
+                <div style="font-size:11px;color:#5f6368">CMS-required annual FWA training, reporting obligations</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Compliance</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">3 of 3 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">100%</span></td>
+              <td>12 03,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod6')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod6">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Fraud, Waste &amp; Abuse Prevention — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod6')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">3 segments | 1.5 hrs | Score: <strong style="color:#2e7d32">100%</strong> — Perfect Score (Attempt 1 of 4) | Completed 12 03,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> FWA Definitions &amp; CMS Requirements</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> FDR Obligations &amp; Reporting</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Case Studies &amp; Hotline Reporting</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">100% — Perfect Score (50/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Perfect score! No missed questions.')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod7">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Medicare Marketing Guidelines</div>
+                <div style="font-size:11px;color:#5f6368">CMS marketing do's/don'ts, scope of appointment, sales events</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Compliance</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">4 of 4 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">88%</span></td>
+              <td>12 10,2025</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod7')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod7">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Medicare Marketing Guidelines — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod7')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">4 segments | 2 hrs | Score: <strong style="color:#2e7d32">88%</strong> (Attempt 1 of 4) | Completed 12 10,2025</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> CMS Marketing Do's &amp; Don'ts</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Sales Event &amp; Educational Event Rules</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Digital &amp; Social Media Compliance</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 4:</strong> Scope of Appointment Best Practices</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 4...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">88% — Passed (44/50 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 44/50 correct (88%). Missed: Q9 nominal gift value, Q17 unsolicited contact, Q26 event disclaimer, Q33 social media pre-approval, Q41 call recording, Q49 co-branding')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+
+            <tr data-status="completed" id="row-mod8">
+              <td>
+                <div style="font-weight:600"><i class="fas fa-check-circle" style="color:#2e7d32;margin-right:6px"></i>Cultural Competency &amp; Health Equity</div>
+                <div style="font-size:11px;color:#5f6368">CKD/ESRD population health literacy, language access</div>
+              </td>
+              <td><span style="font-weight:600">PY 2026</span></td>
+              <td><span style="background:#e0f2f1;color:#00695c;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Elective</span></td>
+              <td>
+                <div class="prog-bar"><div class="prog-fill" style="background:#2e7d32;width:100%"></div></div>
+                <span style="font-size:10px;color:#2e7d32;margin-left:4px">3 of 3 segments (100%)</span>
+              </td>
+              <td><span style="font-weight:700;color:#2e7d32">95%</span></td>
+              <td>01 08,2026</td>
+              <td>12 31,2026</td>
+              <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span></td>
+              <td><button class="btn-ol btn-sm" onclick="toggleExam('exam-mod8')"><i class="fas fa-eye"></i>View / Retake</button></td>
+            </tr>
+            <tr data-status="completed"><td colspan="9" style="padding:0 16px 12px">
+              <div class="exam-panel" id="exam-mod8">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h6 style="margin:0;font-size:14px;color:#2e7d32"><i class="fas fa-check-circle" style="margin-right:6px"></i>Cultural Competency &amp; Health Equity — Completed</h6>
+                  <button class="btn-ol btn-sm" onclick="toggleExam('exam-mod8')"><i class="fas fa-times"></i>Close</button>
+                </div>
+                <div style="font-size:12px;color:#5f6368;margin-bottom:14px">3 segments | 1.5 hrs | Score: <strong style="color:#2e7d32">95%</strong> (Attempt 1 of 4) | Completed 01 08,2026</div>
+                <div style="margin-bottom:16px">
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 1:</strong> CKD/ESRD Population Health Literacy</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 1...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 2:</strong> Language Access &amp; Interpreter Services</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 2...')"><i class="fas fa-redo"></i>Review</button></div>
+                  <div class="seg-row"><div class="seg-num done"><i class="fas fa-check" style="font-size:9px"></i></div><div style="flex:1"><strong>Segment 3:</strong> Cultural Sensitivity in Enrollment</div><span style="color:#2e7d32;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Completed</span><button class="btn-ol btn-sm" style="margin-left:8px" onclick="showToast('Replaying Segment 3...')"><i class="fas fa-redo"></i>Review</button></div>
+                </div>
+                <div style="background:#e8eaed;height:1px;margin:14px 0"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div><i class="fas fa-file-alt" style="color:#2e7d32;margin-right:4px"></i><strong style="font-size:12px">Exam Result:</strong> <span style="font-size:12px;color:#2e7d32;font-weight:600">95% — Passed (19/20 correct)</span> <span style="font-size:11px;color:#5f6368">| Attempt 1 of 4</span></div>
+                  <button class="btn-ol btn-sm" onclick="showToast('Exam results: 19/20 correct (95%). Missed: Q14 interpreter documentation requirements')"><i class="fas fa-eye"></i>View Results</button>
+                  <button class="btn-ol btn-sm" onclick="showToast('Retake initiated. Your highest score will be retained. Attempts: 1 of 4 used.')"><i class="fas fa-redo"></i>Retake Exam</button>
+                </div>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- Certifications & Licenses + Renewal Calendar -->
+    <!-- ====================================================== -->
+    <div class="row-grid">
+      <div class="col-2">
+        <div class="card mb16">
+          <div class="card-hdr">
+            <h5><i class="fas fa-id-badge" style="margin-right:6px;color:#0d47a1"></i>My Certifications &amp; Licenses</h5>
+            <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblCerts','My_Certifications')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table id="tblCerts" class="table table-hover" style="font-size:13px">
+              <thead><tr><th>Certification / License</th><th>ID / Number</th><th>Issued</th><th>Expires</th><th>Renewal</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div style="font-weight:600"><i class="fas fa-certificate" style="color:#2e7d32;margin-right:4px"></i>AHIP — PY 2026</div><div style="font-size:11px;color:#5f6368">Medicare Advantage & Part D</div></td>
+                  <td>AHIP-2026-44821</td>
+                  <td>10 12,2025</td>
+                  <td>12 31,2026</td>
+                  <td><span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>156d</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="alert('Downloading AHIP Certificate PDF...')"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:600"><i class="fas fa-certificate" style="color:#0d47a1;margin-right:4px"></i>Gold Kidney Carrier Cert</div><div style="font-size:11px;color:#5f6368">Plan-specific product training</div></td>
+                  <td>GK-CERT-2026-1187</td>
+                  <td>11 15,2025</td>
+                  <td>12 31,2026</td>
+                  <td><span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>156d</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="alert('Downloading Gold Kidney Carrier Certificate...')"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr style="background:#fffde7">
+                  <td><div style="font-weight:600"><i class="fas fa-shield-alt" style="color:#e65100;margin-right:4px"></i>Annual Compliance</div><div style="font-size:11px;color:#e65100">HIPAA, FWA, Marketing</div></td>
+                  <td>COMP-2025-0441</td>
+                  <td>08 20,2025</td>
+                  <td style="color:#c62828;font-weight:600">08 31,2026</td>
+                  <td><span class="renewal-countdown warn"><i class="fas fa-exclamation-circle"></i>34d</span></td>
+                  <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Due Soon</span></td>
+                  <td><button class="btn-pr btn-sm" onclick="toggleExam('exam-mod10')"><i class="fas fa-redo"></i>Recertify</button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:600"><i class="fas fa-id-card" style="color:#1565c0;margin-right:4px"></i>FL License (2-15)</div><div style="font-size:11px;color:#5f6368">Health & Life Insurance</div></td>
+                  <td>FL-W448821</td>
+                  <td>03 01,2024</td>
+                  <td>10 15,2026</td>
+                  <td><span class="renewal-countdown warn"><i class="fas fa-exclamation-circle"></i>79d</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="alert('Florida DOI Renewal:\n1. 24 CE credits (incl. 5 Ethics) — COMPLETE\n2. Pay $55 renewal fee\n3. Submit via myfloridacfo.com')"><i class="fas fa-external-link-alt"></i></button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:600"><i class="fas fa-id-card" style="color:#1565c0;margin-right:4px"></i>GA License</div><div style="font-size:11px;color:#5f6368">Health & Life Insurance</div></td>
+                  <td>GA-LIC-229174</td>
+                  <td>06 01,2024</td>
+                  <td>05 31,2027</td>
+                  <td><span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>308d</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="alert('Downloading GA License PDF...')"><i class="fas fa-download"></i></button></td>
+                </tr>
+                <tr>
+                  <td><div style="font-weight:600"><i class="fas fa-file-contract" style="color:#00695c;margin-right:4px"></i>E&amp;O Insurance</div><div style="font-size:11px;color:#5f6368">$1M/$3M coverage</div></td>
+                  <td>EO-POL-884421</td>
+                  <td>01 01,2026</td>
+                  <td>01 01,2027</td>
+                  <td><span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>157d</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Active</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="alert('Downloading E&O Certificate...')"><i class="fas fa-download"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Renewal Calendar + CE Credits -->
+      <div class="col-1" style="min-width:300px">
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-calendar-alt" style="margin-right:6px;color:#c62828"></i>Renewal Calendar</h5></div>
+          <div style="padding:14px">
+            <div class="cert-timeline">
+              <div class="cert-tl-item upcoming">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#e65100">08 31,2026</div><div style="font-size:12px;font-weight:600">Annual Compliance Re-Cert</div></div>
+                  <span class="renewal-countdown warn"><i class="fas fa-exclamation-circle"></i>34d</span>
+                </div>
+              </div>
+              <div class="cert-tl-item upcoming">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#e65100">09 01,2026</div><div style="font-size:12px;font-weight:600">AHIP PY2027 Opens</div></div>
+                  <span class="renewal-countdown warn"><i class="fas fa-bell"></i>35d</span>
+                </div>
+              </div>
+              <div class="cert-tl-item upcoming">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#e65100">10 15,2026</div><div style="font-size:12px;font-weight:600">FL License Renewal</div></div>
+                  <span class="renewal-countdown warn"><i class="fas fa-exclamation-circle"></i>79d</span>
+                </div>
+              </div>
+              <div class="cert-tl-item">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#5f6368">12 31,2026</div><div style="font-size:12px;font-weight:600">AHIP PY2026 Expires</div></div>
+                  <span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>156d</span>
+                </div>
+              </div>
+              <div class="cert-tl-item">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#5f6368">01 01,2027</div><div style="font-size:12px;font-weight:600">E&amp;O Insurance Renewal</div></div>
+                  <span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>157d</span>
+                </div>
+              </div>
+              <div class="cert-tl-item">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div><div style="font-size:11px;font-weight:700;color:#5f6368">05 31,2027</div><div style="font-size:12px;font-weight:600">GA License Renewal</div></div>
+                  <span class="renewal-countdown ok"><i class="fas fa-check-circle"></i>308d</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-award" style="margin-right:6px;color:#00695c"></i>CE Credits (YTD)</h5></div>
+          <div style="padding:14px">
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Total Earned</span><span>24.0 / 30.0</span></div>
+            <div style="background:#e0e0e0;border-radius:4px;height:8px;margin-bottom:14px"><div style="background:#0d47a1;height:8px;border-radius:4px;width:80%"></div></div>
+            <div style="font-size:12px;line-height:2">
+              <div style="display:flex;justify-content:space-between"><span>Carrier</span><span style="font-weight:600">12.5</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Compliance</span><span style="font-weight:600">7.0</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Elective</span><span style="font-weight:600">1.0</span></div>
+              <div style="display:flex;justify-content:space-between"><span>Ethics (FL: 5 req)</span><span style="font-weight:600">3.5</span></div>
+              <div style="display:flex;justify-content:space-between;color:#e65100;font-weight:600;margin-top:4px;padding-top:4px;border-top:1px solid #e0e0e0"><span>Remaining</span><span>6.0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Training Content Library -->
+    <div class="card" style="margin-bottom:40px">
+      <div class="card-hdr"><h5><i class="fas fa-file-alt" style="margin-right:6px;color:#00695c"></i>Training Content Library</h5></div>
+      <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>Agent Handbook 2026</div>
+          <div style="font-size:11px;color:#5f6368">PDF — 42 pages</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Downloading Agent Handbook 2026.pdf...')"><i class="fas fa-download"></i>Download</button>
+        </div>
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-video" style="color:#1565c0;margin-right:6px"></i>SOA Compliance Walkthrough</div>
+          <div style="font-size:11px;color:#5f6368">Video — 18 min</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Playing: SOA Compliance Walkthrough')"><i class="fas fa-play"></i>Watch</button>
+        </div>
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>HIPAA Quick Reference</div>
+          <div style="font-size:11px;color:#5f6368">PDF — 8 pages</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Downloading HIPAA Quick Reference.pdf...')"><i class="fas fa-download"></i>Download</button>
+        </div>
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-video" style="color:#1565c0;margin-right:6px"></i>Commission Calculator Demo</div>
+          <div style="font-size:11px;color:#5f6368">Video — 12 min</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Playing: Commission Calculator Demo')"><i class="fas fa-play"></i>Watch</button>
+        </div>
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-file-pdf" style="color:#c62828;margin-right:6px"></i>C-SNP Verification Guide</div>
+          <div style="font-size:11px;color:#5f6368">PDF — 16 pages</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Downloading C-SNP Verification Guide.pdf...')"><i class="fas fa-download"></i>Download</button>
+        </div>
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:14px;background:#f8f9fa">
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px"><i class="fas fa-video" style="color:#1565c0;margin-right:6px"></i>HRA Submission Walkthrough</div>
+          <div style="font-size:11px;color:#5f6368">Video — 14 min</div>
+          <button class="btn-ol btn-sm" style="margin-top:8px" onclick="alert('Playing: HRA Submission Walkthrough')"><i class="fas fa-play"></i>Watch</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function filterTraining(el, status) {
+  document.querySelectorAll('.filter-pills .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#tblTraining tbody tr').forEach(row => {
+    if (status === 'all') { row.style.display = ''; return; }
+    var rs = row.getAttribute('data-status');
+    if (!rs) { row.style.display = 'none'; return; }
+    row.style.display = rs === status ? '' : 'none';
+  });
+  // Close all open exam panels when filtering
+  document.querySelectorAll('.exam-panel').forEach(p => p.classList.remove('show'));
+}
+
+function toggleExam(id) {
+  var panel = document.getElementById(id);
+  if (!panel) return;
+  var isOpen = panel.classList.contains('show');
+  // Close all others first
+  document.querySelectorAll('.exam-panel').forEach(p => p.classList.remove('show'));
+  if (!isOpen) {
+    panel.classList.add('show');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toastMsg');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toastMsg';
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;display:none';
+    document.body.appendChild(t);
+  }
+  t.innerHTML = '<div style="background:#fff;border-left:4px solid #0d47a1;border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13px;max-width:420px">' + msg + '</div>';
+  t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 4000);
+}
+</script>
+</body>
+</html>

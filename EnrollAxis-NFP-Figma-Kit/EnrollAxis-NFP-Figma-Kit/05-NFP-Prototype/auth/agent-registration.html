@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Self-Registration | Gold Kidney Health Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+body{background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#3949ab 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.reg-container{background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:680px;width:100%;overflow:hidden}
+.reg-header{background:#1a237e;color:#fff;padding:28px 32px;text-align:center}
+.reg-header h2{font-size:20px;margin:0 0 6px;font-weight:700}
+.reg-header p{opacity:.85;font-size:13px;margin:0}
+.reg-logo{font-size:28px;margin-bottom:10px}
+.reg-body{padding:28px 32px}
+.reg-body .form-label{font-weight:600;font-size:12px;color:#333;margin-bottom:4px}
+.reg-body .form-control,.reg-body .form-select{font-size:13px;border-radius:8px;border:1px solid #dadce0;padding:10px 14px}
+.reg-body .form-control:focus,.reg-body .form-select:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(26,35,126,.1)}
+.reg-note{background:#e3f2fd;border-radius:8px;padding:12px 16px;font-size:12px;color:#0d47a1;margin-bottom:16px}
+.reg-warn{background:#fff8e1;border-radius:8px;padding:12px 16px;font-size:12px;color:#e65100;margin-bottom:16px}
+.reg-success{background:#e8f5e9;border-radius:8px;padding:12px 16px;font-size:12px;color:#1b5e20;display:none;margin-bottom:16px}
+.reg-footer{background:#f8f9fa;padding:16px 32px;text-align:center;font-size:11px;color:#5f6368;border-top:1px solid #e8eaed}
+.npn-check{display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-top:4px}
+.state-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.state-chip{padding:6px 10px;border:1px solid #dadce0;border-radius:6px;font-size:11px;text-align:center;cursor:pointer;transition:all .15s}
+.state-chip:hover{border-color:#1a237e;background:#e8eaf6}
+.state-chip.selected{background:#1a237e;color:#fff;border-color:#1a237e}
+.pathway-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:600;background:#e8eaf6;color:#1a237e}
+</style>
+</head>
+<body>
+
+<div class="reg-container">
+  <div class="reg-header">
+    <div class="reg-logo"><i class="fas fa-heartbeat"></i></div>
+    <h2>Agent Self-Registration</h2>
+    <p>Initiate your contracting request with Gold Kidney Health Plan</p>
+    <div style="margin-top:10px"><span class="pathway-badge" style="background:rgba(255,255,255,.15);color:#fff"><i class="fas fa-route"></i> Self-Registration Pathway</span></div>
+  </div>
+
+  <div class="reg-body">
+    <div class="reg-note">
+      <i class="fas fa-info-circle" style="margin-right:6px"></i>
+      <strong>No account required.</strong> Complete this form to start your contracting and onboarding process. You will receive an email with next steps within 24 hours. This pathway converges into the same onboarding workflow as agency invitations and carrier-initiated invitations.
+    </div>
+
+    <!-- Duplicate NPN Warning (hidden by default, shown on duplicate) -->
+    <div class="reg-warn" id="dupWarning" style="display:none">
+      <i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>
+      <strong>Duplicate NPN Detected:</strong> This NPN is already associated with an active or pending registration. A notification has been sent to the admin team. If you believe this is an error, please contact <a href="mailto:contracting@goldkidney.com">contracting@goldkidney.com</a>.
+    </div>
+
+    <!-- Success Message (shown on submit) -->
+    <div class="reg-success" id="regSuccess">
+      <i class="fas fa-check-circle" style="margin-right:6px"></i>
+      <strong>Registration Submitted!</strong> Your request has been received. You will receive a confirmation email at the address provided with a secure link to complete your onboarding documents. Reference ID: <strong>SR-2026-0142</strong>
+    </div>
+
+    <form id="selfRegForm">
+      <!-- Section 1: Identity -->
+      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed"><i class="fas fa-user" style="margin-right:6px"></i>Personal Information</h6>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">First Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="First name" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Last Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Last name" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Email Address <span class="text-danger">*</span></label>
+          <input type="email" class="form-control" placeholder="email@example.com" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" placeholder="(555) 123-4567">
+        </div>
+      </div>
+
+      <!-- Section 2: NPN & Licensing -->
+      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-id-badge" style="margin-right:6px"></i>NPN & Licensing</h6>
+
+      <div class="mb-3">
+        <label class="form-label">National Producer Number (NPN) <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="npnInput" placeholder="Enter your 8-10 digit NPN" maxlength="10" required>
+        <div class="npn-check" id="npnStatus" style="display:none">
+          <i class="fas fa-check-circle" style="color:#2e7d32"></i> <span style="color:#2e7d32">NPN verified — no existing registration found</span>
+        </div>
+        <small style="font-size:11px;color:#5f6368">Your NPN is used as the primary deduplication key. Duplicate registrations will be blocked and admins notified.</small>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Desired States of Appointment <span class="text-danger">*</span></label>
+        <small style="display:block;font-size:11px;color:#5f6368;margin-bottom:6px">Select the state(s) where you wish to sell. You must hold an active resident or non-resident license.</small>
+        <div class="state-grid">
+          <div class="state-chip selected" onclick="this.classList.toggle('selected')">FL</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">TX</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">CA</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">AZ</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">GA</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">NC</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">NV</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">OH</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">PA</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">NY</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">IL</div>
+          <div class="state-chip" onclick="this.classList.toggle('selected')">TN</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Upline (Optional) -->
+      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-sitemap" style="margin-right:6px"></i>Upline Information (Optional)</h6>
+
+      <div class="reg-note" style="background:#f3e5f5;color:#4a148c">
+        <i class="fas fa-question-circle" style="margin-right:6px"></i>
+        If you were referred by an agency or FMO, enter their information below. If you don't have an upline or aren't sure, leave this blank — you'll be placed as a direct-contracted agent and can be re-assigned later.
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Upline Organization Name</label>
+        <input type="text" class="form-control" placeholder="e.g., Medicare Solutions Group, HealthFirst Distribution">
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Upline Contact Email</label>
+          <input type="email" class="form-control" placeholder="upline@agency.com">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Upline Type (if known)</label>
+          <select class="form-select">
+            <option selected>— Not Sure —</option>
+            <option>SFMO (Super FMO)</option>
+            <option>NFMO (National FMO)</option>
+            <option>FMO (Field Marketing Org)</option>
+            <option>SGA (Sub-General Agency)</option>
+            <option>MGA (Managing General Agency)</option>
+            <option>GA (General Agency)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 4: Additional -->
+      <h6 style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e8eaed;margin-top:20px"><i class="fas fa-clipboard-list" style="margin-right:6px"></i>Additional Details</h6>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Plan Year</label>
+          <select class="form-select">
+            <option selected>2026 (Current)</option>
+            <option>2027 (Upcoming)</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Registration Type</label>
+          <select class="form-select" id="regType" onchange="toggleRegType()">
+            <option value="individual-agent" selected>Individual Agent</option>
+            <option value="individual-broker">Individual Broker</option>
+            <option value="agency-new">Agency (new)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Agency-specific fields — shown when Agency (new) is selected -->
+      <div id="agencyFields" style="display:none;margin-top:4px;padding:16px 18px;background:#f1f8e9;border:1px solid #c8e6c9;border-radius:8px;margin-bottom:8px">
+        <h6 style="font-size:13px;font-weight:700;color:#1b5e20;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #c8e6c9"><i class="fas fa-building" style="margin-right:6px"></i>Agency Registration Details</h6>
+        <div class="reg-note" style="background:#e8f5e9;color:#1b5e20;margin-bottom:14px">
+          <i class="fas fa-info-circle" style="margin-right:6px"></i>
+          You are registering a <strong>new agency</strong>. Each agent who sells under this agency must complete their own individual onboarding once the agency is approved. All fields marked <span style="color:#c62828">*</span> are required.
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Agency / Business Legal Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="agencyLegalName" placeholder="e.g. Sunshine Medicare Solutions LLC">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Agency Tax ID / EIN <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="agencyEIN" placeholder="XX-XXXXXXX">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Agency NPN <span style="font-size:11px;color:#5f6368">(if applicable)</span></label>
+            <input type="text" class="form-control" id="agencyNPN" placeholder="Agency-level NPN (leave blank if agents appointed individually)">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">State of Incorporation <span class="text-danger">*</span></label>
+            <select class="form-select" id="agencyState">
+              <option value="">— Select state —</option>
+              <option>FL</option><option>TX</option><option>GA</option><option>CA</option>
+              <option>NY</option><option>AZ</option><option>NC</option><option>IL</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Estimated Number of Agents to Onboard</label>
+            <select class="form-select" id="agencyAgentCount">
+              <option>1–5 agents</option>
+              <option>6–15 agents</option>
+              <option>16–50 agents</option>
+              <option>51–100 agents</option>
+              <option>100+ agents</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Agency Primary Contact Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="agencyContactEmail" placeholder="admin@agencyname.com">
+          </div>
+        </div>
+        <div id="agencyErr" style="display:none;background:#ffebee;border:1px solid #ffcdd2;border-radius:6px;padding:8px 12px;font-size:12px;color:#c62828;margin-top:4px"></div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">How did you hear about Gold Kidney Health Plan?</label>
+        <select class="form-select">
+          <option selected>— Select —</option>
+          <option>FMO / Agency referral</option>
+          <option>Industry event / conference</option>
+          <option>Online search</option>
+          <option>Colleague / peer referral</option>
+          <option>Gold Kidney marketing outreach</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Consent -->
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 16px;margin:16px 0;font-size:11px;color:#333">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="consent1" required>
+          <label class="form-check-label" for="consent1">I certify that the information provided is accurate and I hold (or am in process of obtaining) the required insurance licenses for the states selected above. <span class="text-danger">*</span></label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="consent2" required>
+          <label class="form-check-label" for="consent2">I consent to Gold Kidney Health Plan verifying my NPN, licensing status, and any existing registrations. <span class="text-danger">*</span></label>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+        <a href="login.html" style="font-size:12px;color:#5f6368"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Already have an account? Sign in</a>
+        <button type="button" class="btn-pr" onclick="handleSelfRegistration()" style="padding:10px 28px"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Submit Registration</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="reg-footer">
+    <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+    <div>All three registration pathways (agency invitation, self-registration, carrier/payer invitation) converge into the same onboarding workflow.</div>
+    <div style="margin-top:6px;opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; &copy; 2026 Gold Kidney Health Plan</div>
+  </div>
+</div>
+
+<script>
+function toggleRegType(){
+  var val=document.getElementById('regType').value;
+  var af=document.getElementById('agencyFields');
+  af.style.display=(val==='agency-new')?'block':'none';
+  if(val!=='agency-new'){document.getElementById('agencyErr').style.display='none';}
+}
+
+function handleSelfRegistration(){
+  var npn=document.getElementById('npnInput').value.trim();
+  var regType=document.getElementById('regType').value;
+
+  // Validate agency-specific fields
+  if(regType==='agency-new'){
+    var name=document.getElementById('agencyLegalName').value.trim();
+    var ein=document.getElementById('agencyEIN').value.trim();
+    var state=document.getElementById('agencyState').value;
+    var email=document.getElementById('agencyContactEmail').value.trim();
+    var errs=[];
+    if(!name) errs.push('Agency / Business Legal Name is required.');
+    if(!ein) errs.push('Agency Tax ID / EIN is required.');
+    if(!state) errs.push('State of Incorporation is required.');
+    if(!email) errs.push('Agency Primary Contact Email is required.');
+    var errEl=document.getElementById('agencyErr');
+    if(errs.length){errEl.innerHTML='<i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>'+errs.join('<br>');errEl.style.display='block';return;}
+    errEl.style.display='none';
+  }
+
+  // Simulate duplicate check
+  if(npn==='1234567890'){
+    document.getElementById('dupWarning').style.display='block';
+    document.getElementById('regSuccess').style.display='none';
+    return;
+  }
+  document.getElementById('dupWarning').style.display='none';
+  document.getElementById('regSuccess').style.display='block';
+  document.getElementById('selfRegForm').style.opacity='.5';
+  document.getElementById('selfRegForm').style.pointerEvents='none';
+  // Show NPN verification
+  document.getElementById('npnStatus').style.display='flex';
+}
+
+// Simulate NPN validation on blur
+document.getElementById('npnInput').addEventListener('blur',function(){
+  var val=this.value.trim();
+  if(val.length>=8 && val!=='1234567890'){
+    document.getElementById('npnStatus').style.display='flex';
+    document.getElementById('dupWarning').style.display='none';
+  } else if(val==='1234567890'){
+    document.getElementById('npnStatus').style.display='none';
+    document.getElementById('dupWarning').style.display='block';
+  } else {
+    document.getElementById('npnStatus').style.display='none';
+  }
+});
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Batch Ledger — BATCH-2026-05 | Finance Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#2e7d32}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-dollar-sign" style="margin-right:8px;opacity:.8"></i>Finance Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Commission Processing</div>
+    <a href="calc-engine.html"><i class="fas fa-calculator"></i>Calculation Engine</a>
+    <a href="run-history.html"><i class="fas fa-history"></i>Run History</a>
+    <a href="commission-config.html"><i class="fas fa-sliders-h"></i>Configuration</a>
+    <div class="sb-section">Payment Exceptions</div>
+    <a href="banking-gap.html"><i class="fas fa-university"></i>Banking Holds</a>
+    <a href="missing-npn.html"><i class="fas fa-id-badge"></i>Missing NPN</a>
+    <a href="missing-cms-data.html"><i class="fas fa-database"></i>Missing CMS Data</a>
+    <a href="compliance-holds.html"><i class="fas fa-shield-alt"></i>Compliance Holds</a>
+    <a href="chargebacks.html"><i class="fas fa-undo"></i>Chargebacks</a>
+    <a href="hra-review.html"><i class="fas fa-clipboard-check"></i>HRA Incentive Review</a>
+    <a href="manual-adjustments.html"><i class="fas fa-edit"></i>Manual Adjustments</a>
+    <div class="sb-section">Payment Batch</div>
+    <a href="batch-review.html" class="active"><i class="fas fa-search-dollar"></i>Review Batch</a>
+    <a href="ach-nacha.html"><i class="fas fa-university"></i>Generate ACH / Checks</a>
+    <a href="batches.html"><i class="fas fa-credit-card"></i>Release Payments</a>
+    <a href="remittance.html"><i class="fas fa-receipt"></i>Payment History</a>
+    <a href="reconciliation.html"><i class="fas fa-balance-scale"></i>Reconciliation</a>
+    <a href="bob-ledger.html"><i class="fas fa-book"></i>Book of Business</a>
+    <div class="sb-section">Dispute Management</div>
+    <a href="disputes.html"><i class="fas fa-gavel"></i>Dispute Queue</a>
+    <div class="sb-section">Reports &amp; Audit</div>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="calc-audit.html"><i class="fas fa-fingerprint"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DP</div><div><div class="sb-u-name">David Park</div><div class="sb-u-role">Finance Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Batch Ledger — BATCH-2026-05</h4>
+      <ol class="breadcrumb-bar"><li><a href="batches.html">Batches</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>BATCH-2026-05</li></ol>
+    </div>
+    <button class="btn-ol btn-sm" onclick="nfpExport('Data')"><i class="fas fa-download"></i>Export Ledger</button>
+    <button class="btn-ol btn-sm"><i class="fas fa-file-pdf"></i>Generate Remittance</button>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- Batch Summary -->
+    <div style="background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:16px 20px;margin-bottom:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px">
+        <div><div class="text-muted text-sm">Batch Ref</div><div class="text-bold" style="font-size:15px"><code>BATCH-2026-05</code></div></div>
+        <div><div class="text-muted text-sm">Period</div><div class="text-bold">May 2026</div></div>
+        <div><div class="text-muted text-sm">Run Date</div><div class="text-bold">05 10,2026</div></div>
+        <div><div class="text-muted text-sm">Payment Date</div><div class="text-bold">05 17,2026</div></div>
+        <div><div class="text-muted text-sm">Agents Paid</div><div class="text-bold">143</div></div>
+        <div><div class="text-muted text-sm">Total Net</div><div class="text-bold" style="font-size:16px;color:#2e7d32">$87,432.00</div></div>
+        <div><div class="text-muted text-sm">Status</div><div><span class="bdg b-green">Paid — ACH May 17</span></div></div>
+      </div>
+    </div>
+
+    <!-- Agent Line Items -->
+    <div class="card">
+      <div class="card-hdr"><h5>Agent Line Items — BATCH-2026-05</h5><button class="btn-ol btn-sm"><i class="fas fa-filter"></i>Filter</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','batch-detail_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr><th>Agent Name</th><th>NPN</th><th>Agency</th><th>Active Members</th><th>Base Commission</th><th>HRA Incentives</th><th>Visit Incentives</th><th>Chargebacks</th><th>Net Payment</th><th>Remittance</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-bold">James Martinez</td>
+              <td>8823441</td>
+              <td>HealthFirst (AGY-001)</td>
+              <td>24</td>
+              <td>$300.48</td>
+              <td>$0</td>
+              <td>$275.00</td>
+              <td>$0</td>
+              <td class="text-bold" style="color:#2e7d32">$1,403.48</td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="text-bold">Sarah Chen</td>
+              <td>7712309</td>
+              <td>HealthFirst (AGY-001)</td>
+              <td>19</td>
+              <td>$951.52</td>
+              <td>$75.00</td>
+              <td>$375.00</td>
+              <td>$0</td>
+              <td class="text-bold" style="color:#2e7d32">$1,401.52</td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="text-bold">Michael Torres</td>
+              <td>9934221</td>
+              <td>HealthFirst (AGY-001)</td>
+              <td>16</td>
+              <td>$801.28</td>
+              <td>$50.00</td>
+              <td>$0</td>
+              <td>$0</td>
+              <td class="text-bold" style="color:#2e7d32">$851.28</td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+            </tr>
+            <tr>
+              <td class="text-bold">Linda Brooks</td>
+              <td>4421008</td>
+              <td>SunState Insurance (AGY-002)</td>
+              <td>22</td>
+              <td>$1,101.76</td>
+              <td>$75.00</td>
+              <td>$275.00</td>
+              <td>$0</td>
+              <td class="text-bold" style="color:#2e7d32">$1,451.76</td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="background:#f8f9fa;font-weight:600">
+              <td colspan="4" style="text-align:right;padding-right:12px">Batch Totals</td>
+              <td>$71,882</td><td>$8,350</td><td>$7,200</td><td>$0</td>
+              <td style="color:#2e7d32">$87,432</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 08,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

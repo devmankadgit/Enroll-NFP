@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Access Restrictions | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Access Restrictions & Security</h4><ol class="breadcrumb-bar"><li>Field Masking, Session Management &amp; IP Allowlist</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Field Masking Configuration -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-eye-slash" style="margin-right:8px;color:#c62828"></i>Field-Level Masking Configuration</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','access-restrictions_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Field Masking:</strong> Sensitive fields are masked (e.g., SSN shows as ***-**-1234) based on role. Users must have explicit "Unmask" permission to view full values. All unmask actions are logged.</span></div>
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Field</th><th>Module</th><th>Masking Pattern</th><th>Agent</th><th>Agency Admin</th><th>Enroll Ops</th><th>Finance</th><th>Admin</th></tr></thead>
+          <tbody>
+            <tr><td>SSN / MBI</td><td>Enrollment, Members</td><td>***-**-1234</td><td>Masked</td><td>Masked</td><td><span style="color:#1b5e20">Full</span></td><td>Masked</td><td><span style="color:#1b5e20">Full</span></td></tr>
+            <tr><td>Bank Account #</td><td>Payment Preferences</td><td>****4821</td><td>Masked (own)</td><td>Hidden</td><td>Hidden</td><td><span style="color:#1b5e20">Full</span></td><td><span style="color:#1b5e20">Full</span></td></tr>
+            <tr><td>Date of Birth</td><td>Members, Enrollment</td><td>**/**/1952</td><td>Masked</td><td>Masked</td><td><span style="color:#1b5e20">Full</span></td><td>Masked</td><td><span style="color:#1b5e20">Full</span></td></tr>
+            <tr><td>Phone Number</td><td>Leads, Members</td><td>(***) ***-0123</td><td><span style="color:#1b5e20">Full (own leads)</span></td><td><span style="color:#1b5e20">Full</span></td><td><span style="color:#1b5e20">Full</span></td><td>Hidden</td><td><span style="color:#1b5e20">Full</span></td></tr>
+            <tr><td>Commission Amount</td><td>Commissions</td><td>$***.**</td><td><span style="color:#1b5e20">Full (own)</span></td><td>Masked (downline)</td><td>Hidden</td><td><span style="color:#1b5e20">Full</span></td><td><span style="color:#1b5e20">Full</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Session Management -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-clock" style="margin-right:8px;color:#e65100"></i>Session Management</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="form-row">
+          <div class="fg"><label>Session Timeout (minutes)</label><input type="number" class="form-control form-control-sm" value="30" min="5" max="120"><div style="font-size:11px;color:#5f6368;margin-top:4px">Idle sessions auto-logout after this period</div></div>
+          <div class="fg"><label>Max Concurrent Sessions</label><select><option>1 (most secure)</option><option selected>2</option><option>3</option><option>Unlimited</option></select></div>
+          <div class="fg"><label>Force Re-Auth for Sensitive Actions</label><select><option selected>Enabled — Require password for: payment changes, user creation, role changes</option><option>Disabled</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Remember Device</label><select><option>30 days</option><option selected>14 days</option><option>7 days</option><option>Disabled (always 2FA)</option></select></div>
+          <div class="fg"><label>Failed Login Lockout</label><select><option>3 attempts &rarr; 15 min lock</option><option selected>5 attempts &rarr; 30 min lock</option><option>10 attempts &rarr; 1 hour lock</option></select></div>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn-pr btn-sm" onclick="saveSessionSettings()"><i class="fas fa-save"></i> Save Session Settings</button>
+        </div>
+
+        <!-- Active Sessions -->
+        <div style="margin-top:16px">
+          <div style="font-weight:600;margin-bottom:8px">Active Sessions (Platform Admins)</div>
+          <table class="tbl" id="tblExport2">
+            <thead><tr><th>User</th><th>IP Address</th><th>Device</th><th>Started</th><th>Last Activity</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td>Karen White</td><td>10.0.1.45</td><td>Chrome / Windows 11</td><td>May 25, 9:00 AM</td><td>2 min ago</td><td><span class="bdg b-green">Current</span></td></tr>
+              <tr><td>Karen White</td><td>192.168.1.100</td><td>Safari / iPhone 15</td><td>May 25, 8:30 AM</td><td>45 min ago</td><td><button class="btn-ol btn-sm" style="color:#c62828" onclick="terminateSession('Safari / iPhone 15', '192.168.1.100')">Terminate</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- IP Allowlist -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-network-wired" style="margin-right:8px;color:#00695c"></i>IP Allowlist Configuration</h5></div>
+      <div class="card-body" style="font-size:13px">
+        <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>IP Allowlist:</strong> When enabled, only connections from listed IP addresses/ranges will be allowed for the specified roles. Use with caution — incorrect configuration can lock out users.</span></div>
+        
+        <div class="form-row">
+          <div class="fg"><label>IP Allowlist Enforcement</label>
+            <select><option>Disabled (all IPs allowed)</option><option selected>Enabled for Internal Roles Only (Enrollment Ops, Finance, Compliance, Admin)</option><option>Enabled for All Roles</option></select>
+          </div>
+        </div>
+
+        <table class="tbl" id="tblExport3" style="margin-top:12px">
+          <thead><tr><th>IP / CIDR Range</th><th>Label</th><th>Applies To</th><th>Added By</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><code>10.0.0.0/16</code></td><td>Corporate Office Network</td><td>All Internal Roles</td><td>K. White</td><td><button class="btn-ol btn-sm" style="color:#c62828" onclick="removeIP('10.0.0.0/16','Corporate Office Network')">Remove</button></td></tr>
+            <tr><td><code>172.16.5.0/24</code></td><td>VPN Pool</td><td>All Internal Roles</td><td>K. White</td><td><button class="btn-ol btn-sm" style="color:#c62828" onclick="removeIP('172.16.5.0/24','VPN Pool')">Remove</button></td></tr>
+            <tr><td><code>203.0.113.50</code></td><td>Finance Remote (L. Rodriguez)</td><td>Finance</td><td>K. White</td><td><button class="btn-ol btn-sm" style="color:#c62828" onclick="removeIP('203.0.113.50','Finance Remote')">Remove</button></td></tr>
+          </tbody>
+        </table>
+
+        <div class="form-row" style="margin-top:12px">
+          <div class="fg"><label>Add IP/CIDR</label><input type="text" class="form-control form-control-sm" placeholder="e.g., 192.168.1.0/24"></div>
+          <div class="fg"><label>Label</label><input type="text" class="form-control form-control-sm" placeholder="e.g., Branch Office Miami"></div>
+          <div class="fg"><label>Applies To</label><select><option>All Internal Roles</option><option>Platform Admin Only</option><option>Finance Only</option><option>Specific User</option></select></div>
+          <div class="fg" style="display:flex;align-items:flex-end"><button class="btn-pr btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-plus"></i>Add</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function saveSessionSettings() {
+  var timeout = document.querySelector('input[type=number]');
+  var val = timeout ? parseInt(timeout.value) : 30;
+  if(isNaN(val) || val < 1 || val > 480) {
+    showToast('Session timeout must be between 1 and 480 minutes.', 'error'); return;
+  }
+  showToast('Session management settings saved. Changes take effect on next login for all users.', 'success');
+}
+
+function terminateSession(device, ip) {
+  showToast('Session terminated: ' + device + ' (' + ip + '). User has been logged out.', 'success');
+  event.target.closest('tr').remove();
+}
+
+function removeIP(cidr, label) {
+  if(!confirm('Remove IP/CIDR "' + cidr + '" (' + label + ') from the allowlist?')) return;
+  showToast('IP ' + cidr + ' (' + label + ') removed from the allowlist. Change is effective immediately.', 'success');
+  event.target.closest('tr').remove();
+}
+
+function addIPEntry() {
+  var ipEl = document.querySelector('input[placeholder*="192.168"]');
+  var labelEl = document.querySelector('input[placeholder*="Branch"]');
+  var appliesEl = document.querySelectorAll('.card select');
+  var ip = ipEl ? ipEl.value.trim() : '';
+  var lbl = labelEl ? labelEl.value.trim() : '';
+  if(!ip) { showToast('Please enter an IP address or CIDR range.', 'error'); return; }
+  // Validate CIDR/IP format
+  if(!/^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/.test(ip)) {
+    showToast('Invalid CIDR format. Use e.g. 192.168.1.0/24 or 10.0.0.5', 'error'); return;
+  }
+  var tbody = document.querySelectorAll('.tbl')[2] ? document.querySelectorAll('.tbl')[2].querySelector('tbody') : null;
+  if(tbody) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><code>' + ip + '</code></td><td>' + (lbl || '?') + '</td><td>All Internal Roles</td><td>K. White</td>'
+      + '<td><button class="btn-ol btn-sm" style="color:#c62828" onclick="removeIP(\'' + ip + '\',\'' + (lbl||ip) + '\')">Remove</button></td>';
+    tbody.appendChild(tr);
+  }
+  if(ipEl) ipEl.value = '';
+  if(labelEl) labelEl.value = '';
+  showToast('IP ' + ip + ' added to the allowlist. Change is effective immediately.', 'success');
+}
+</script>
+</html>
+

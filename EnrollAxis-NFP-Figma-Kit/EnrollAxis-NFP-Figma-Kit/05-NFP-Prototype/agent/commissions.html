@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Dashboard | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group open">
+      <a href="commissions.html" class="sb-toggle active" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Commissions Management</h4><ol class="breadcrumb-bar"><li>Producer Commission Visibility &amp; Statements</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Commission Summary Cards -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">YTD Paid</div><div class="stat-val">$8,247.00</div><div class="stat-sub stat-up"><a href="#history" style="color:#1b5e20">View year history ?</a></div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Current Pending Batch</div><div class="stat-val">$601.00</div><div class="stat-sub">May 2026 cycle — Processing 17th</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-calendar-check"></i></div><div><div class="stat-label">Last Payment</div><div class="stat-val">$1,203.00</div><div class="stat-sub">04 17,2026 — ACH</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Pending Chargebacks</div><div class="stat-val" style="color:#c62828">$0.00</div><div class="stat-sub">0 pending</div></div></div></div>
+    </div>
+
+    <!-- BoB Commission Summary -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-briefcase" style="margin-right:8px;color:#0d47a1"></i>Book of Business Commission Summary</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-1"><div style="text-align:center;padding:12px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Active Members</div><div style="font-size:22px;font-weight:700">24</div></div></div>
+          <div class="col-1"><div style="text-align:center;padding:12px;background:#f8f9fa;border-radius:8px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Monthly Renewal Rate</div><div style="font-size:22px;font-weight:700">$28.92/ea</div></div></div>
+          <div class="col-1"><div style="text-align:center;padding:12px;background:#e8f5e9;border-radius:8px"><div style="font-size:11px;color:#5f6368;text-transform:uppercase">Est. Monthly Earnings</div><div style="font-size:22px;font-weight:700;color:#1b5e20">$694.08</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commission Chart -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Monthly Commission Trend (2026)</h5></div>
+      <div class="card-body"><canvas id="commChart" height="80"></canvas></div>
+    </div>
+
+    <!-- Payment History -->
+    <div class="card" id="history">
+      <div class="card-hdr"><h5><i class="fas fa-history" style="margin-right:8px;color:#5f6368"></i>Payment History</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commissions_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Batch Month</th><th>Payment Date</th><th>Method</th><th>Gross Amount</th><th>Chargebacks</th><th>Net Paid</th><th>Statement</th></tr></thead>
+          <tbody>
+            <tr><td>April 2026</td><td>04 17,2026</td><td>ACH (PPD)</td><td>$1,203.00</td><td>$0.00</td><td style="font-weight:700;color:#1b5e20">$1,203.00</td><td><button class="btn-ol btn-sm" onclick="viewStatement('apr')"><i class="fas fa-file-pdf"></i>PDF</button></td></tr>
+            <tr><td>March 2026</td><td>03 17,2026</td><td>ACH (PPD)</td><td>$2,120.33</td><td>$0.00</td><td style="font-weight:700;color:#1b5e20">$2,120.33</td><td><button class="btn-ol btn-sm" onclick="viewStatement('mar')"><i class="fas fa-file-pdf"></i>PDF</button></td></tr>
+            <tr><td>February 2026</td><td>02 17,2026</td><td>ACH (PPD)</td><td>$1,847.00</td><td>($578.33)</td><td style="font-weight:700;color:#1b5e20">$1,268.67</td><td><button class="btn-ol btn-sm" onclick="viewStatement('feb')"><i class="fas fa-file-pdf"></i>PDF</button></td></tr>
+            <tr><td>January 2026</td><td>01 17,2026</td><td>ACH (PPD)</td><td>$3,655.00</td><td>$0.00</td><td style="font-weight:700;color:#1b5e20">$3,655.00</td><td><button class="btn-ol btn-sm" onclick="viewStatement('jan')"><i class="fas fa-file-pdf"></i>PDF</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Attribution Note -->
+    <div class="al-info" style="margin-top:16px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Commission Attribution:</strong> Commission is determined by the NPN on the submitted enrollment application. Commission data is read-only. To dispute, use the Dispute module. Statement PDFs generated on-demand per request.</span></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Payment Statement Modal -->
+<div class="modal fade" id="stmtModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header" style="background:#e3f2fd"><h5 class="modal-title" id="stmtTitle"><i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>Commission Statement</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" id="stmtBody" style="font-size:13px;padding:20px"></div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button><button class="btn btn-primary btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print</button></div>
+</div></div></div>
+<script>
+new Chart(document.getElementById('commChart'),{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May (pending)'],datasets:[{label:'Net Paid',data:[3655,1268.67,2120.33,1203,601],backgroundColor:['#1b5e20','#1b5e20','#1b5e20','#1b5e20','#90caf9']},{label:'Chargebacks',data:[0,578.33,0,0,0],backgroundColor:'#ef5350'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v}}}}});
+</script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var stmtData={
+  apr:{month:'April 2026',payDate:'04 17,2026',gross:'$1,203.00',chargebacks:'$0.00',net:'$1,203.00',
+    lines:[
+      {member:'Frank Johnson',type:'Initial Enrollment',plan:'StarPlus ESRD SNP',amount:'$573.00'},
+      {member:'Susan Walsh',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Earl Thompson',type:'Monthly Residual',plan:'HeartCare Heart & Diabetes SNP',amount:'$50.08'},
+      {member:'Thomas Rivera',type:'Monthly Residual',plan:'StarPlus ESRD SNP',amount:'$50.08'},
+      {member:'Dorothy Henderson',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Robert Kim',type:'Monthly Residual',plan:'BrightChoice HMO',amount:'$50.08'},
+      {member:'Margaret Chen',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Frank Johnson',type:'HRA Incentive',plan:'StarPlus ESRD SNP',amount:'$25.00'},
+      {member:'Susan Walsh',type:'HRA Incentive',plan:'KidneyCare CKD SNP',amount:'$25.00'},
+      {member:'Thomas Rivera',type:'HRA Incentive',plan:'StarPlus ESRD SNP',amount:'$25.00'},
+      {member:'Dorothy Henderson',type:'HRA Incentive',plan:'KidneyCare CKD SNP',amount:'$25.00'},
+      {member:'Earl Thompson',type:'HRA Incentive',plan:'HeartCare Heart & Diabetes SNP',amount:'$25.00'},
+      {member:'Robert Kim',type:'HRA Incentive',plan:'BrightChoice HMO',amount:'$25.00'},
+      {member:'Margaret Chen',type:'HRA Incentive',plan:'KidneyCare CKD SNP',amount:'$25.00'}
+    ]},
+  mar:{month:'March 2026',payDate:'03 17,2026',gross:'$2,120.33',chargebacks:'$0.00',net:'$2,120.33',
+    lines:[
+      {member:'Earl Thompson',type:'Initial Enrollment',plan:'HeartCare Heart & Diabetes SNP',amount:'$573.00'},
+      {member:'Robert Kim',type:'Initial Enrollment',plan:'BrightChoice HMO',amount:'$573.00'},
+      {member:'Margaret Chen',type:'Initial Enrollment',plan:'KidneyCare CKD SNP',amount:'$573.00'},
+      {member:'Thomas Rivera',type:'Monthly Residual',plan:'StarPlus ESRD SNP',amount:'$50.08'},
+      {member:'Dorothy Henderson',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Susan Walsh',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Thomas Rivera',type:'Renewal',plan:'StarPlus ESRD SNP',amount:'$287.00'}
+    ]},
+  feb:{month:'February 2026',payDate:'02 17,2026',gross:'$1,847.00',chargebacks:'($578.33)',net:'$1,268.67',
+    lines:[
+      {member:'Susan Walsh',type:'Initial Enrollment',plan:'KidneyCare CKD SNP',amount:'$573.00'},
+      {member:'Thomas Rivera',type:'Monthly Residual',plan:'StarPlus ESRD SNP',amount:'$50.08'},
+      {member:'Dorothy Henderson',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Dorothy Henderson',type:'Renewal',plan:'KidneyCare CKD SNP',amount:'$287.00'},
+      {member:'Thomas Rivera',type:'HRA Incentive',plan:'StarPlus ESRD SNP',amount:'$25.00'},
+      {member:'Dorothy Henderson',type:'HRA Incentive',plan:'KidneyCare CKD SNP',amount:'$25.00'},
+      {member:'(Chargeback) James Wilson',type:'Chargeback - Disenrollment',plan:'BrightChoice HMO',amount:'-$578.33'}
+    ]},
+  jan:{month:'January 2026',payDate:'01 17,2026',gross:'$3,655.00',chargebacks:'$0.00',net:'$3,655.00',
+    lines:[
+      {member:'Thomas Rivera',type:'Initial Enrollment',plan:'StarPlus ESRD SNP',amount:'$573.00'},
+      {member:'Dorothy Henderson',type:'Initial Enrollment',plan:'KidneyCare CKD SNP',amount:'$573.00'},
+      {member:'Thomas Rivera',type:'Monthly Residual',plan:'StarPlus ESRD SNP',amount:'$50.08'},
+      {member:'Dorothy Henderson',type:'Monthly Residual',plan:'KidneyCare CKD SNP',amount:'$50.08'},
+      {member:'Thomas Rivera',type:'Renewal',plan:'StarPlus ESRD SNP',amount:'$287.00'},
+      {member:'Dorothy Henderson',type:'Renewal',plan:'KidneyCare CKD SNP',amount:'$287.00'},
+      {member:'Thomas Rivera',type:'HRA Incentive',plan:'StarPlus ESRD SNP',amount:'$25.00'},
+      {member:'Dorothy Henderson',type:'HRA Incentive',plan:'KidneyCare CKD SNP',amount:'$25.00'}
+    ]}
+};
+
+function viewStatement(key){
+  var d=stmtData[key];
+  if(!d) return;
+  document.getElementById('stmtTitle').innerHTML='<i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>Commission Statement &mdash; '+d.month;
+  var rows=d.lines.map(function(l){
+    var color=l.amount.charAt(0)==='-'?'color:#c62828;':'color:#1b5e20;';
+    return '<tr><td>'+l.member+'</td><td>'+l.type+'</td><td>'+l.plan+'</td><td style="font-weight:700;'+color+'">'+l.amount+'</td></tr>';
+  }).join('');
+  var html='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">'+
+    '<div><div style="font-size:16px;font-weight:700;color:#1a237e">Gold Kidney Health Plan</div><div class="text-muted text-sm">Commission Payment Statement</div></div>'+
+    '<div style="text-align:right;font-size:12px"><div><strong>Agent:</strong> James Martinez (NPN 8823441)</div><div><strong>Payment Date:</strong> '+d.payDate+'</div><div><strong>Method:</strong> ACH Direct Deposit</div></div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:6px">'+
+      '<div><div class="text-muted text-sm">Gross Amount</div><div style="font-size:16px;font-weight:700">'+d.gross+'</div></div>'+
+      '<div><div class="text-muted text-sm">Chargebacks</div><div style="font-size:16px;font-weight:700;color:#c62828">'+d.chargebacks+'</div></div>'+
+      '<div><div class="text-muted text-sm">Net Paid</div><div style="font-size:16px;font-weight:700;color:#1b5e20">'+d.net+'</div></div>'+
+    '</div>'+
+    '<table id="tblExport2" class="tbl" style="font-size:12px"><thead><tr><th>Member</th><th>Commission Type</th><th>Plan</th><th>Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<div style="margin-top:12px;padding:10px;background:#e3f2fd;border-radius:6px;font-size:11px"><i class="fas fa-info-circle" style="color:#1565c0;margin-right:6px"></i>This statement is for informational purposes. Commission is attributed by NPN on the enrollment application.</div>';
+  document.getElementById('stmtBody').innerHTML=html;
+  new bootstrap.Modal(document.getElementById('stmtModal')).show();
+}
+</script>
+</body>
+</html>

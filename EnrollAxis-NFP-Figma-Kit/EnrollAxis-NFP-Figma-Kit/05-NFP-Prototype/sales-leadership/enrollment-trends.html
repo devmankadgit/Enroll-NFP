@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enrollment Details | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html" class="active"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Enrollment Details</h4></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('exportPanel').style.display=document.getElementById('exportPanel').style.display==='none'?'block':'none'"><i class="fas fa-download"></i> Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <select id="fYear"><option>CY 2026</option><option>CY 2025</option><option>CY 2024</option></select>
+      <select id="fPeriod"><option value="">Period: All</option><option>Month to Date</option><option>Quarter to Date</option><option>Year to Date</option><option>Last 30 Days</option><option>Last 90 Days</option><option>Custom Range</option></select>
+      <select id="fProduct"><option value="">All Products</option><option>ESRD SNP</option><option>CKD SNP</option><option>H&D SNP</option><option>HMO</option></select>
+      <select id="fState"><option value="">All States</option><option>Florida</option><option>Texas</option><option>Georgia</option><option>California</option><option>Arizona</option><option>Oklahoma</option></select>
+      <select id="fAgency"><option value="">All Agencies</option><option>Premier Insurance Group</option><option>National Benefits Group</option><option>Alliance Health Partners</option><option>Southwest Medicare Solutions</option><option>Direct (Individual)</option></select>
+      <select id="fLeadSource"><option value="">All Lead Sources</option><option>Digital (Web/SEO)</option><option>TFN (Toll-Free)</option><option>Referral Partners</option><option>Third-Party Vendors</option><option>Community Events</option><option>Agent Generated</option></select>
+      <select id="fCampaign"><option value="">All Campaigns</option><option>Spring OEP Digital</option><option>Medicare TFN Campaign</option><option>Referral Partner Program</option><option>Third-Party Vendor Leads</option><option>Community Events</option></select>
+      <button class="btn-pr btn-sm" onclick="applyFilters()"><i class="fas fa-filter" style="margin-right:4px"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetFilters()">Reset</button>
+    </div>
+
+    <!-- Export Panel (hidden by default) -->
+    <div id="exportPanel" style="display:none;margin-bottom:16px;background:#f8f6fc;border:1px solid #ce93d8;border-radius:8px;padding:14px 18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div style="font-size:13px;font-weight:600;color:#4a148c"><i class="fas fa-file-export" style="margin-right:6px"></i>Export Enrollment Trends Data</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-ol btn-sm" onclick="showToast('Exporting as Excel...','success')"><i class="fas fa-file-excel" style="color:#2e7d32;margin-right:4px"></i>Excel (.xlsx)</button>
+          <button class="btn-ol btn-sm" onclick="showToast('Exporting as CSV...','success')"><i class="fas fa-file-csv" style="color:#0277bd;margin-right:4px"></i>CSV</button>
+          <button class="btn-ol btn-sm" onclick="showToast('Exporting as PDF...','success')"><i class="fas fa-file-pdf" style="color:#c62828;margin-right:4px"></i>PDF</button>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#5f6368;margin-top:8px">Export reflects current filters. Includes enrollment volume, plan mix, and trend data.</div>
+    </div>
+    <!-- KPIs -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">MTD Enrollments</div><div class="stat-val">1,247</div><div class="stat-sub" style="color:#2e7d32">+12.3% vs prior month</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-calendar-check"></i></div><div><div class="stat-label">YTD Enrollments</div><div class="stat-val">8,412</div><div class="stat-sub" style="color:#2e7d32">+18.6% YoY</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-bullseye"></i></div><div><div class="stat-label">Annual Target</div><div class="stat-val">15,000</div><div class="stat-sub">56.1% achieved</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-chart-bar"></i></div><div><div class="stat-label">Avg Daily Rate</div><div class="stat-val">42</div><div class="stat-sub">enrollments/day</div></div></div></div>
+    </div>
+
+    <!-- Member Enrollment Records -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr">
+        <h6><i class="fas fa-users" style="color:#4a148c;margin-right:8px"></i>Member Enrollment Records</h6>
+        <div style="font-size:12px;color:#5f6368">Total Pipeline MTD: <strong style="color:#4a148c">1,247</strong> &nbsp;|&nbsp; Showing <span id="recordCount">0</span> records</div>
+      </div>
+      <div class="table-wrap">
+        <table class="table table-hover" style="font-size:13px">
+          <thead>
+            <tr>
+              <th>Application ID</th>
+              <th>Member Name</th>
+              <th>DOB</th>
+              <th>MBI</th>
+              <th>Product</th>
+              <th>Agency</th>
+              <th>Agent</th>
+              <th>State</th>
+              <th>Enrollment Date</th>
+              <th>Effective Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="memberRecordsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var MEMBER_ENROLLMENTS = [
+  /* PREMIER INSURANCE GROUP - FL */
+  {appId:'GK-2026-000781',member:'Maria Thompson',dob:'03/15/1959',mbi:'1EG4-TE5-MK72',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Florida',enrolled:'06/01/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000782',member:'Robert Anderson',dob:'11/22/1957',mbi:'2RT6-YN8-PD44',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Florida',enrolled:'06/02/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000783',member:'Evelyn Price',dob:'09/08/1960',mbi:'8QP3-LA7-HS55',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Florida',enrolled:'06/03/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000784',member:'Thomas Clark',dob:'01/19/1956',mbi:'4ND9-XR2-VC91',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Florida',enrolled:'06/04/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* PREMIER INSURANCE GROUP - TX */
+  {appId:'GK-2026-000785',member:'Patricia Hall',dob:'07/11/1961',mbi:'6BM2-KW4-TN33',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Texas',enrolled:'06/05/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000786',member:'William Lewis',dob:'12/30/1958',mbi:'3YU8-FJ1-LP80',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Texas',enrolled:'06/06/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000787',member:'Barbara Young',dob:'05/27/1955',mbi:'9ZA5-QC6-WM17',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Texas',enrolled:'06/07/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000788',member:'Charles Walker',dob:'10/02/1963',mbi:'7KV1-BX9-SR65',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Texas',enrolled:'06/08/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* PREMIER INSURANCE GROUP - GA */
+  {appId:'GK-2026-000789',member:'Dorothy Harris',dob:'02/14/1954',mbi:'5LC7-ZN2-TY48',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Georgia',enrolled:'06/09/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000790',member:'Joseph Martin',dob:'06/09/1957',mbi:'1TS4-QM8-VA26',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Georgia',enrolled:'06/10/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000791',member:'Sandra Thompson',dob:'04/21/1962',mbi:'8EF6-HG3-NX50',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Georgia',enrolled:'06/11/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000792',member:'Kenneth Garcia',dob:'08/05/1959',mbi:'2WP9-DK5-JB39',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Georgia',enrolled:'06/12/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* PREMIER INSURANCE GROUP - CA */
+  {appId:'GK-2026-000793',member:'Margaret Wilson',dob:'07/30/1958',mbi:'3HN5-WA2-CB81',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'California',enrolled:'06/13/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000794',member:'Donald Moore',dob:'02/18/1955',mbi:'6PR8-LX4-DM29',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'California',enrolled:'06/14/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000795',member:'Elizabeth Taylor',dob:'11/04/1960',mbi:'9TK1-SF6-YR47',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'California',enrolled:'06/15/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000796',member:'Paul Jackson',dob:'05/12/1957',mbi:'4VB7-GC3-NJ64',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'California',enrolled:'06/16/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* PREMIER INSURANCE GROUP - AZ/OK */
+  {appId:'GK-2026-000797',member:'Helen White',dob:'09/25/1963',mbi:'7MQ2-HD9-PW13',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Arizona',enrolled:'06/17/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000798',member:'Steven Harris',dob:'01/08/1956',mbi:'2YR6-KN5-EL80',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Arizona',enrolled:'06/18/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000799',member:'Betty Davis',dob:'06/14/1961',mbi:'5ZW3-BJ7-QS36',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Oklahoma',enrolled:'06/19/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000800',member:'Larry Martinez',dob:'03/29/1954',mbi:'8UA4-TM1-FV52',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Oklahoma',enrolled:'06/20/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* NATIONAL BENEFITS GROUP - FL */
+  {appId:'GK-2026-000801',member:'Ruth Robinson',dob:'10/17/1958',mbi:'1XC9-PK6-RH74',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Florida',enrolled:'06/21/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000802',member:'Frank Reed',dob:'08/03/1962',mbi:'6DL2-WF8-MN19',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Florida',enrolled:'06/22/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000803',member:'Joyce Johnson',dob:'04/22/1955',mbi:'3SB5-YQ4-LT67',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Florida',enrolled:'06/23/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000804',member:'Raymond Brown',dob:'12/11/1959',mbi:'9GE7-AV3-CW41',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Florida',enrolled:'06/24/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  /* NATIONAL BENEFITS GROUP - TX */
+  {appId:'GK-2026-000805',member:'Evelyn Williams',dob:'07/06/1957',mbi:'4JP1-NR9-DS88',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Texas',enrolled:'06/25/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000806',member:'Howard Jones',dob:'02/28/1960',mbi:'7HM4-ZL6-BQ23',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Texas',enrolled:'06/26/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000807',member:'Martha Miller',dob:'09/15/1956',mbi:'2KN8-EW2-XR59',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Texas',enrolled:'06/27/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000808',member:'Albert Davis',dob:'05/01/1963',mbi:'5TC3-VH7-JP34',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Texas',enrolled:'06/28/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  /* NATIONAL BENEFITS GROUP - GA */
+  {appId:'GK-2026-000809',member:'Virginia Wilson',dob:'11/01/1958',mbi:'8WB6-GF1-KM70',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Georgia',enrolled:'06/29/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000810',member:'Carl Moore',dob:'01/19/1956',mbi:'1QD9-SX4-VN16',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Georgia',enrolled:'06/30/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000811',member:'Florence Taylor',dob:'06/06/1961',mbi:'4RF2-YA8-HW93',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Georgia',enrolled:'07/01/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000812',member:'Eugene Jackson',dob:'03/23/1959',mbi:'7ZP5-BM3-QG48',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Georgia',enrolled:'07/02/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* NATIONAL BENEFITS GROUP - CA */
+  {appId:'GK-2026-000813',member:'Annie White',dob:'10/10/1954',mbi:'2LU7-CV9-TF25',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'California',enrolled:'07/03/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000814',member:'Louis Harris',dob:'08/27/1962',mbi:'6YK1-DH5-NE61',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'California',enrolled:'07/04/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000815',member:'Mabel Martin',dob:'04/14/1957',mbi:'9XT4-JN2-ML87',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'California',enrolled:'07/05/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000816',member:'Herbert Garcia',dob:'12/01/1955',mbi:'3MR8-WS6-GK43',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'California',enrolled:'07/06/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  /* NATIONAL BENEFITS GROUP - AZ/OK */
+  {appId:'GK-2026-000817',member:'Lillian Martinez',dob:'07/18/1960',mbi:'5BN3-FQ1-AV72',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Arizona',enrolled:'07/07/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000818',member:'Walter Robinson',dob:'02/05/1958',mbi:'8VE6-HG4-CX18',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Arizona',enrolled:'07/08/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000819',member:'Ethel Anderson',dob:'09/22/1956',mbi:'1PJ9-ZW7-RN54',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Oklahoma',enrolled:'07/09/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000820',member:'Herman Johnson',dob:'05/09/1963',mbi:'4GT2-XA3-JB90',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Oklahoma',enrolled:'07/10/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* ALLIANCE HEALTH PARTNERS - FL */
+  {appId:'GK-2026-000821',member:'Grace Brown',dob:'11/26/1959',mbi:'7DL5-NK8-PH37',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Florida',enrolled:'07/11/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000822',member:'Bernard Williams',dob:'01/13/1954',mbi:'2WC1-QM6-FS63',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Florida',enrolled:'07/12/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000823',member:'Agnes Jones',dob:'06/30/1961',mbi:'5HB4-YR2-KT19',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Florida',enrolled:'07/13/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000824',member:'Chester Miller',dob:'03/17/1957',mbi:'8UF7-GL9-WN45',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Florida',enrolled:'07/14/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  /* ALLIANCE HEALTH PARTNERS - TX */
+  {appId:'GK-2026-000825',member:'Hattie Davis',dob:'10/04/1955',mbi:'3SA3-TE5-BQ81',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Texas',enrolled:'07/15/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000826',member:'Lester Wilson',dob:'08/21/1962',mbi:'6YK8-VH1-DM27',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Texas',enrolled:'07/16/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000827',member:'Ruby Moore',dob:'04/08/1958',mbi:'9BP2-JN6-XL54',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Texas',enrolled:'07/17/2026',effective:'08/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000828',member:'Clarence Taylor',dob:'12/25/1956',mbi:'1MR5-FW3-GK70',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Texas',enrolled:'07/18/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* ALLIANCE HEALTH PARTNERS - GA */
+  {appId:'GK-2026-000829',member:'Oscar Jackson',dob:'07/12/1961',mbi:'4QD8-AX7-NJ46',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Georgia',enrolled:'07/19/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000830',member:'Alma White',dob:'02/27/1959',mbi:'7ZE1-HS4-RW92',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Georgia',enrolled:'07/20/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000831',member:'Nathan Harris',dob:'09/14/1954',mbi:'2TN4-LP9-CQ38',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Georgia',enrolled:'07/21/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000832',member:'Ida Foster',dob:'05/01/1963',mbi:'5WB7-GM2-VF65',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Georgia',enrolled:'07/22/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  /* ALLIANCE HEALTH PARTNERS - CA */
+  {appId:'GK-2026-000833',member:'Miles Garcia',dob:'11/18/1957',mbi:'8KP3-YC6-JH21',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'California',enrolled:'07/23/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000834',member:'Vera Martinez',dob:'01/05/1955',mbi:'3RU6-WA1-BN57',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'California',enrolled:'07/24/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000835',member:'Sylvester Robinson',dob:'06/22/1960',mbi:'6CV9-DM5-XS83',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'California',enrolled:'07/25/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000836',member:'Cora Anderson',dob:'03/11/1958',mbi:'9HF2-ZN8-LQ49',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'California',enrolled:'07/26/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* ALLIANCE HEALTH PARTNERS - AZ/OK */
+  {appId:'GK-2026-000837',member:'Amos Johnson',dob:'10/28/1956',mbi:'1JB5-KR3-WE75',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Arizona',enrolled:'07/27/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000838',member:'Leah Brown',dob:'08/15/1962',mbi:'4LD8-SX6-TF12',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Arizona',enrolled:'07/28/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000839',member:'Silas Williams',dob:'04/02/1959',mbi:'7PG1-AV4-MH38',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Oklahoma',enrolled:'07/29/2026',effective:'08/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000840',member:'Naomi Jones',dob:'12/19/1954',mbi:'2NM4-YJ9-GK84',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Oklahoma',enrolled:'07/30/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - FL */
+  {appId:'GK-2026-000841',member:'Julius Miller',dob:'07/06/1961',mbi:'5WQ7-BF2-CR50',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Florida',enrolled:'07/31/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000842',member:'Mamie Davis',dob:'02/23/1957',mbi:'8TE3-HL6-NV96',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Florida',enrolled:'06/01/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000843',member:'Horace Wilson',dob:'09/10/1955',mbi:'3AK6-QW1-JB32',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Florida',enrolled:'06/02/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000844',member:'Essie Moore',dob:'05/27/1963',mbi:'6RN9-XG4-DP68',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Florida',enrolled:'06/03/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - TX */
+  {appId:'GK-2026-000845',member:'Roland Taylor',dob:'11/14/1958',mbi:'9CJ2-MH7-VL14',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Texas',enrolled:'06/04/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000846',member:'Cynthia Jackson',dob:'01/01/1956',mbi:'1BU5-SK3-WN90',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Texas',enrolled:'06/05/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000847',member:'Alonzo White',dob:'06/18/1961',mbi:'4FP8-VZ6-QR26',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Texas',enrolled:'06/06/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000848',member:'Fannie Harris',dob:'03/05/1959',mbi:'7YM1-GE9-JK52',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Texas',enrolled:'06/07/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - GA */
+  {appId:'GK-2026-000849',member:'Lorenzo Martin',dob:'10/22/1954',mbi:'2XT4-NQ2-CL78',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Georgia',enrolled:'06/08/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000850',member:'Minnie Garcia',dob:'08/09/1962',mbi:'5KH7-DP5-BM14',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Georgia',enrolled:'06/09/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000851',member:'Percy Martinez',dob:'04/26/1957',mbi:'8SA3-LW8-HF40',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Georgia',enrolled:'06/10/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000852',member:'Carrie Robinson',dob:'12/13/1955',mbi:'3VE6-BJ1-XN86',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Georgia',enrolled:'06/11/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - CA */
+  {appId:'GK-2026-000853',member:'Garfield Anderson',dob:'07/30/1960',mbi:'6GN9-YR4-QW32',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'California',enrolled:'06/12/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000854',member:'Addie Johnson',dob:'02/17/1958',mbi:'9WB2-ZC7-KT58',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'California',enrolled:'06/13/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000855',member:'Elijah Brown',dob:'09/04/1956',mbi:'1MF5-DV3-NJ94',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'California',enrolled:'06/14/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000856',member:'Myrtle Williams',dob:'05/21/1963',mbi:'4RP8-HG6-WL20',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'California',enrolled:'06/15/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - AZ/OK */
+  {appId:'GK-2026-000857',member:'Isaiah Jones',dob:'11/07/1959',mbi:'7CJ1-XA9-MH66',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Arizona',enrolled:'06/16/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000858',member:'Nora Miller',dob:'01/24/1954',mbi:'2BN4-FK2-VR42',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Arizona',enrolled:'06/17/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000859',member:'Rufus Davis',dob:'06/11/1961',mbi:'5ZP7-YM5-GW88',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Oklahoma',enrolled:'06/18/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000860',member:'Blanche Wilson',dob:'03/28/1957',mbi:'8KU3-WE8-NQ14',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Oklahoma',enrolled:'06/19/2026',effective:'07/01/2026',statusKey:'rejected',statusLabel:'Rejected / Denied'},
+  /* DIRECT (INDIVIDUAL) - FL */
+  {appId:'GK-2026-000861',member:'Cornelius Moore',dob:'10/15/1955',mbi:'3YG6-TN1-BX50',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'06/20/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000862',member:'Magnolia Taylor',dob:'08/02/1962',mbi:'6CH9-SJ4-DM76',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'06/21/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000863',member:'Otis Jackson',dob:'04/19/1958',mbi:'9RL2-BV7-KF22',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'06/22/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000864',member:'Bessie White',dob:'12/06/1956',mbi:'1AW5-QX3-LT98',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'06/23/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* DIRECT (INDIVIDUAL) - TX */
+  {appId:'GK-2026-000865',member:'Dewey Harris',dob:'07/23/1961',mbi:'4FT8-GK6-RH34',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'06/24/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000866',member:'Lucille Martin',dob:'02/10/1959',mbi:'7PM1-ZA9-CS80',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'06/25/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000867',member:'Emmett Garcia',dob:'09/27/1954',mbi:'2XN4-WC2-MV56',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'06/26/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000868',member:'Hilda Martinez',dob:'05/14/1963',mbi:'5EJ7-DH5-NT12',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'06/27/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  /* DIRECT (INDIVIDUAL) - GA */
+  {appId:'GK-2026-000869',member:'Wilbur Robinson',dob:'11/01/1957',mbi:'8VB3-YL8-JQ38',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'06/28/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000870',member:'Estelle Anderson',dob:'01/18/1955',mbi:'3GQ6-NK1-WR74',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'06/29/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000871',member:'Felix Johnson',dob:'06/05/1960',mbi:'6SP9-BE4-XK20',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'06/30/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000872',member:'Opal Brown',dob:'03/22/1958',mbi:'9HA2-VF7-GN96',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'07/01/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* DIRECT (INDIVIDUAL) - CA */
+  {appId:'GK-2026-000873',member:'Jasper Williams',dob:'10/09/1956',mbi:'1DM5-QJ3-LB62',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/02/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000874',member:'Celestine Jones',dob:'08/26/1962',mbi:'4KT8-XW6-RH28',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/03/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000875',member:'Roosevelt Miller',dob:'04/13/1959',mbi:'7BN1-SG9-WM54',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/04/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000876',member:'Callie Davis',dob:'12/30/1954',mbi:'2YP4-TE2-BK80',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/05/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* DIRECT (INDIVIDUAL) - AZ/OK */
+  {appId:'GK-2026-000877',member:'Ezra Wilson',dob:'07/17/1961',mbi:'5WC7-MN5-JH36',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Arizona',enrolled:'07/06/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000878',member:'Odessa Moore',dob:'02/04/1957',mbi:'8XL3-VR8-QF62',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Arizona',enrolled:'07/07/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000879',member:'Hector Taylor',dob:'09/21/1955',mbi:'3FK6-HJ1-NP88',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Oklahoma',enrolled:'07/08/2026',effective:'08/01/2026',statusKey:'disenrolled',statusLabel:'Disenrolled (Voluntary)'},
+  {appId:'GK-2026-000880',member:'Inez Jackson',dob:'05/08/1963',mbi:'6TZ9-AW4-CR14',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Oklahoma',enrolled:'07/09/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'}
+  /* PREMIER INSURANCE GROUP - extra (FL+2, TX+2, GA+2, CA+2, AZ+2, OK+2) */
+  {appId:'GK-2026-000881',member:'Franklin Webb',dob:'04/22/1960',mbi:'3NF7-WT2-KH45',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Florida',enrolled:'06/01/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000882',member:'Geraldine Hunt',dob:'09/17/1955',mbi:'6BA1-RX9-PM82',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Florida',enrolled:'06/02/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000883',member:'Morris Price',dob:'02/08/1963',mbi:'9WQ4-DG6-VJ19',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Texas',enrolled:'06/03/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000884',member:'Ida Thompson',dob:'07/31/1957',mbi:'1LK8-YS3-CF56',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Texas',enrolled:'06/04/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000885',member:'Sherman Bailey',dob:'11/14/1959',mbi:'4TP2-NH7-BW93',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Georgia',enrolled:'06/05/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000886',member:'Celia Grant',dob:'05/06/1954',mbi:'7ZM5-QE1-AX30',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Georgia',enrolled:'06/06/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000887',member:'Leon Rogers',dob:'08/23/1961',mbi:'2GU9-KV4-RC67',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'California',enrolled:'06/07/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000888',member:'Paulette Morris',dob:'01/12/1956',mbi:'5CJ3-FW8-ND14',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'California',enrolled:'06/08/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000889',member:'Harvey Coleman',dob:'06/19/1964',mbi:'8PH6-MA2-TG51',product:'ESRD SNP',agency:'Premier Insurance Group',agent:'James Martinez',state:'Arizona',enrolled:'06/09/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000890',member:'Rosetta Jenkins',dob:'03/05/1958',mbi:'3XB1-YK5-WS88',product:'CKD SNP',agency:'Premier Insurance Group',agent:'Patricia Lee',state:'Arizona',enrolled:'06/10/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000891',member:'Clifton Patterson',dob:'10/28/1955',mbi:'6FE4-ZR9-LP25',product:'H&D SNP',agency:'Premier Insurance Group',agent:'David Kim',state:'Oklahoma',enrolled:'06/11/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000892',member:'Marcia Ross',dob:'12/17/1962',mbi:'9VN7-BT3-QH62',product:'HMO',agency:'Premier Insurance Group',agent:'Jennifer Walsh',state:'Oklahoma',enrolled:'06/12/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* NATIONAL BENEFITS GROUP - extra (FL+2, TX+2, GA+2, CA+2, AZ+2, OK+2) */
+  {appId:'GK-2026-000893',member:'Wilfred Henderson',dob:'07/04/1960',mbi:'1WP2-CG6-MX99',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Florida',enrolled:'06/13/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000894',member:'Leila Carter',dob:'02/21/1957',mbi:'4KL5-DS1-VB36',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Florida',enrolled:'06/14/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000895',member:'Xavier Torres',dob:'09/09/1963',mbi:'7RA9-YJ4-WN73',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Texas',enrolled:'06/15/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000896',member:'Debra Nelson',dob:'04/26/1955',mbi:'2TF3-NM8-CK10',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Texas',enrolled:'06/16/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000897',member:'Jessie Campbell',dob:'11/30/1958',mbi:'5BG6-QV2-HR47',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Georgia',enrolled:'06/17/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000898',member:'Orlando Mitchell',dob:'06/15/1961',mbi:'8YH1-FL5-XT84',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Georgia',enrolled:'06/18/2026',effective:'07/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000899',member:'Yvonne Perez',dob:'01/08/1954',mbi:'3SC4-WA9-JP21',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'California',enrolled:'06/19/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000900',member:'Anthony Rivera',dob:'08/27/1959',mbi:'6MD7-TB3-KR58',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'California',enrolled:'06/20/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000901',member:'Josephine Cook',dob:'03/14/1964',mbi:'9XU2-GE6-NL95',product:'ESRD SNP',agency:'National Benefits Group',agent:'Sarah Chen',state:'Arizona',enrolled:'06/21/2026',effective:'07/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000902',member:'Randall Bell',dob:'10/01/1956',mbi:'1PN5-AF1-VM32',product:'CKD SNP',agency:'National Benefits Group',agent:'Kevin Park',state:'Arizona',enrolled:'06/22/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000903',member:'Wanda Parker',dob:'05/18/1962',mbi:'4RW8-SH4-DT69',product:'H&D SNP',agency:'National Benefits Group',agent:'Angela Torres',state:'Oklahoma',enrolled:'06/23/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000904',member:'Stanley Edwards',dob:'12/07/1957',mbi:'7KJ3-YQ7-BG06',product:'HMO',agency:'National Benefits Group',agent:'Michael Wong',state:'Oklahoma',enrolled:'06/24/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* ALLIANCE HEALTH PARTNERS - extra (FL+2, TX+2, GA+2, CA+2, AZ+2, OK+2) */
+  {appId:'GK-2026-000905',member:'Bertha Collins',dob:'07/24/1960',mbi:'2GF6-CD2-WP43',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Florida',enrolled:'06/25/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000906',member:'Herman Richardson',dob:'02/11/1955',mbi:'5PL1-MX5-KH80',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Florida',enrolled:'06/26/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000907',member:'Edna Wood',dob:'09/28/1963',mbi:'8WN4-TY9-FR17',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Texas',enrolled:'06/27/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000908',member:'Oliver Watson',dob:'04/15/1958',mbi:'3BS7-QA3-GV54',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Texas',enrolled:'06/28/2026',effective:'07/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000909',member:'Constance Brooks',dob:'11/02/1961',mbi:'6HE2-NK6-XW91',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Georgia',enrolled:'06/29/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000910',member:'Nelson Kelly',dob:'06/19/1954',mbi:'9TQ5-VB1-CL28',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Georgia',enrolled:'06/30/2026',effective:'07/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000911',member:'Maxine Howard',dob:'01/06/1959',mbi:'1MR8-DH4-PR65',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'California',enrolled:'07/01/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000912',member:'Rodney Foster',dob:'08/23/1962',mbi:'4ZG3-YJ7-WT02',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'California',enrolled:'07/02/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000913',member:'Lorene Simmons',dob:'03/10/1956',mbi:'7CD6-FN2-SK39',product:'ESRD SNP',agency:'Alliance Health Partners',agent:'Kevin Nguyen',state:'Arizona',enrolled:'07/03/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000914',member:'Hubert Wright',dob:'10/27/1963',mbi:'2PX1-GW5-VH76',product:'CKD SNP',agency:'Alliance Health Partners',agent:'Lisa Park',state:'Arizona',enrolled:'07/04/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000915',member:'Clara James',dob:'05/14/1958',mbi:'5BK4-AL9-QM13',product:'H&D SNP',agency:'Alliance Health Partners',agent:'Carlos Morales',state:'Oklahoma',enrolled:'07/05/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000916',member:'Maurice Hughes',dob:'12/01/1955',mbi:'8WF7-TQ3-YR50',product:'HMO',agency:'Alliance Health Partners',agent:'Rachel Kim',state:'Oklahoma',enrolled:'07/06/2026',effective:'08/01/2026',statusKey:'rejected',statusLabel:'Rejected / Denied'},
+  /* SOUTHWEST MEDICARE SOLUTIONS - extra (FL+2, TX+2, GA+2, CA+2, AZ+2, OK+2) */
+  {appId:'GK-2026-000917',member:'Audrey Price',dob:'07/18/1961',mbi:'3NJ2-SK6-DG87',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Florida',enrolled:'07/07/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000918',member:'Preston Henderson',dob:'02/05/1959',mbi:'6TB5-XM1-KW24',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Florida',enrolled:'07/08/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000919',member:'Irma Coleman',dob:'09/22/1954',mbi:'9VC8-QH4-NP61',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Texas',enrolled:'07/09/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000920',member:'Alonza Alexander',dob:'04/09/1962',mbi:'1GF3-YA7-TB98',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Texas',enrolled:'07/10/2026',effective:'08/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000921',member:'Nellie Russell',dob:'11/26/1957',mbi:'4PX6-WN2-MR35',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Georgia',enrolled:'07/11/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000922',member:'Herbert Young',dob:'06/13/1960',mbi:'7LQ1-DJ5-FS72',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Georgia',enrolled:'07/12/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000923',member:'Georgina Bailey',dob:'01/30/1956',mbi:'2HB4-TE8-GV09',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'California',enrolled:'07/13/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000924',member:'Ellsworth Perry',dob:'08/17/1963',mbi:'5KC7-SR3-AX46',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'California',enrolled:'07/14/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000925',member:'Viola Shaw',dob:'03/04/1958',mbi:'8FW2-NM6-DT83',product:'ESRD SNP',agency:'Southwest Medicare Solutions',agent:'Mark Brown',state:'Arizona',enrolled:'07/15/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000926',member:'Dwight Owens',dob:'10/21/1961',mbi:'3BG5-QK1-YH20',product:'CKD SNP',agency:'Southwest Medicare Solutions',agent:'Carlos Ruiz',state:'Arizona',enrolled:'07/16/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000927',member:'Effie Barnes',dob:'05/08/1955',mbi:'6RN8-WA4-PJ57',product:'H&D SNP',agency:'Southwest Medicare Solutions',agent:'Diane Foster',state:'Oklahoma',enrolled:'07/17/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000928',member:'Clinton Henderson',dob:'12/25/1959',mbi:'9YD3-CV7-BM94',product:'HMO',agency:'Southwest Medicare Solutions',agent:'Tom Harris',state:'Oklahoma',enrolled:'07/18/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  /* DIRECT (INDIVIDUAL) - extra (FL+2, TX+2, GA+2, CA+2, AZ+2, OK+2) */
+  {appId:'GK-2026-000929',member:'Rosie Henderson',dob:'07/12/1962',mbi:'1HT6-GK2-WL31',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'07/19/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000930',member:'Marvin Sullivan',dob:'02/28/1960',mbi:'4MZ1-FS5-RN68',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Florida',enrolled:'07/20/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000931',member:'Sylvester Bell',dob:'09/06/1957',mbi:'7PB4-YW8-KC05',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'07/21/2026',effective:'08/01/2026',statusKey:'pending',statusLabel:'Pending CMS Review'},
+  {appId:'GK-2026-000932',member:'Almeda Robinson',dob:'04/23/1961',mbi:'2WH7-DG3-TF42',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Texas',enrolled:'07/22/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000933',member:'Nettie Lewis',dob:'11/10/1954',mbi:'5RC2-NK6-VB79',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'07/23/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000934',member:'Fletcher Davis',dob:'06/27/1963',mbi:'8FX5-QM1-GW16',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Georgia',enrolled:'07/24/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000935',member:'Ernestine Moore',dob:'01/14/1958',mbi:'3LV8-YA4-HP53',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/25/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000936',member:'Ulysses Carter',dob:'08/01/1956',mbi:'6TK3-BJ7-QN90',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'California',enrolled:'07/26/2026',effective:'08/01/2026',statusKey:'submitted',statusLabel:'Submitted (Awaiting)'},
+  {appId:'GK-2026-000937',member:'Myrna Morgan',dob:'03/18/1960',mbi:'9WG6-FC2-XR27',product:'ESRD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Arizona',enrolled:'07/27/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000938',member:'Elwood Ferguson',dob:'10/05/1955',mbi:'1KB1-NM5-DT64',product:'CKD SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Arizona',enrolled:'07/28/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'},
+  {appId:'GK-2026-000939',member:'Dolores Patterson',dob:'05/22/1962',mbi:'4RP4-WS8-VH01',product:'H&D SNP',agency:'Direct (Individual)',agent:'Direct Channel',state:'Oklahoma',enrolled:'07/29/2026',effective:'08/01/2026',statusKey:'pended',statusLabel:'Pended (Needs Info)'},
+  {appId:'GK-2026-000940',member:'Clarence Jackson',dob:'12/09/1957',mbi:'7YN7-TK3-BG38',product:'HMO',agency:'Direct (Individual)',agent:'Direct Channel',state:'Oklahoma',enrolled:'07/30/2026',effective:'08/01/2026',statusKey:'confirmed',statusLabel:'CMS Confirmed'}
+];
+
+var activeStatusFilter = '';
+
+function renderMemberEnrollmentRows(records) {
+  var tbody = document.getElementById('memberRecordsTbody');
+  var countEl = document.getElementById('recordCount');
+  tbody.innerHTML = '';
+
+  var statusColors = {
+    confirmed:  {bg:'#e8f5e9', color:'#2e7d32'},
+    pending:    {bg:'#fff3e0', color:'#e65100'},
+    submitted:  {bg:'#e3f2fd', color:'#1565c0'},
+    pended:     {bg:'#ede7f6', color:'#6a1b9a'},
+    rejected:   {bg:'#ffebee', color:'#c62828'},
+    disenrolled:{bg:'#f5f5f5', color:'#757575'}
+  };
+
+  records.forEach(function(r) {
+    var c = statusColors[r.statusKey] || {bg:'#ede7f6', color:'#4a148c'};
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-family:monospace;font-size:12px">' + r.appId + '</td>' +
+      '<td style="font-weight:600">' + r.member + '</td>' +
+      '<td>' + r.dob + '</td>' +
+      '<td style="font-family:monospace;font-size:12px">' + r.mbi + '</td>' +
+      '<td>' + r.product + '</td>' +
+      '<td>' + r.agency + '</td>' +
+      '<td>' + r.agent + '</td>' +
+      '<td>' + r.state + '</td>' +
+      '<td>' + r.enrolled + '</td>' +
+      '<td>' + r.effective + '</td>' +
+      '<td><span class="bdg" style="background:' + c.bg + ';color:' + c.color + '">' + r.statusLabel + '</span></td>';
+    tbody.appendChild(tr);
+  });
+
+  if (countEl) countEl.textContent = records.length;
+}
+
+function applyMemberRecordFilters() {
+  var product = document.getElementById('fProduct').value;
+  var agency  = document.getElementById('fAgency').value;
+  var state   = document.getElementById('fState').value;
+
+  var filtered = MEMBER_ENROLLMENTS.filter(function(r) {
+    if (activeStatusFilter && r.statusKey !== activeStatusFilter) return false;
+    if (product && r.product !== product) return false;
+    if (agency && r.agency !== agency) return false;
+    if (state && r.state !== state) return false;
+    return true;
+  });
+
+  renderMemberEnrollmentRows(filtered);
+}
+
+function applyFilters() {
+  var period  = document.getElementById('fPeriod').value;
+  var product = document.getElementById('fProduct').value;
+  var agency  = document.getElementById('fAgency').value;
+  var state   = document.getElementById('fState').value;
+  var currentMonth = 6; // June is current
+
+  // Determine which months to show
+  var showMonths;
+  if (period === 'Month to Date' || period === 'Last 30 Days') {
+    showMonths = [6];
+  } else if (period === 'Quarter to Date' || period === 'Last 90 Days') {
+    showMonths = [4, 5, 6];
+  } else {
+    showMonths = [1, 2, 3, 4, 5, 6]; // Year to Date / All
+  }
+
+  // Filter monthly trend table
+  document.querySelectorAll('#monthlyTbody tr[data-month]').forEach(function(row) {
+    var m = parseInt(row.getAttribute('data-month'));
+    row.style.display = showMonths.indexOf(m) > -1 ? '' : 'none';
+  });
+
+  // Filter product mix table
+  document.querySelectorAll('#productTbody tr[data-product]').forEach(function(row) {
+    var p = row.getAttribute('data-product');
+    row.style.display = (!product || p === product) ? '' : 'none';
+  });
+
+  applyMemberRecordFilters();
+
+  var msg = 'Filters applied';
+  if (period)  msg += ' â€” Period: ' + period;
+  if (product) msg += ' â€” Product: ' + product;
+  if (agency)  msg += ' â€” Agency: ' + agency;
+  if (state)   msg += ' â€” State: ' + state;
+  showToast(msg, 'success');
+}
+
+function resetFilters(){
+  document.querySelectorAll('.filter-bar select').forEach(function(s){s.selectedIndex=0;});
+  activeStatusFilter = '';
+  window.history.replaceState(null,'',window.location.pathname);
+  applyMemberRecordFilters();
+  showToast('Filters reset','info');
+}
+// Auto-select filters from URL params
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var agency = params.get('agency');
+  var status = params.get('status');
+  var state  = params.get('state');
+
+  var statusLabelMap = {
+    confirmed: 'CMS Confirmed',
+    pending: 'Pending CMS Review',
+    submitted: 'Submitted (Awaiting)',
+    pended: 'Pended (Needs Info)',
+    rejected: 'Rejected / Denied',
+    disenrolled: 'Disenrolled (Voluntary)'
+  };
+
+  var stateNameMap = {
+    'FL':'Florida','TX':'Texas','GA':'Georgia',
+    'CA':'California','AZ':'Arizona','OK':'Oklahoma','NV':'Nevada'
+  };
+
+  if (statusLabelMap[status]) {
+    activeStatusFilter = status;
+    showToast('Filtered by status: ' + statusLabelMap[status], 'info');
+  }
+
+  if (state && state !== 'other') {
+    var stateName = stateNameMap[state] || '';
+    if (stateName) {
+      var sSel = document.getElementById('fState');
+      for (var j = 0; j < sSel.options.length; j++) {
+        if (sSel.options[j].text === stateName) { sSel.selectedIndex = j; break; }
+      }
+      showToast('Filtered by state: ' + stateName, 'info');
+    }
+  }
+
+  if (agency) {
+    var agencyMap = {
+      'premier':'Premier Insurance Group',
+      'national-benefits':'National Benefits Group',
+      'alliance':'Alliance Health Partners',
+      'southwest':'Southwest Medicare Solutions',
+      'direct':'Direct (Individual)',
+      'other':'All Agencies'
+    };
+    var name = agencyMap[agency] || '';
+    if (name) {
+      var sel = document.getElementById('fAgency');
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].text === name) { sel.selectedIndex = i; break; }
+      }
+      showToast('Filtered by agency: ' + name, 'info');
+    }
+  }
+
+  applyMemberRecordFilters();
+})();
+</script>
+</body>
+</html>

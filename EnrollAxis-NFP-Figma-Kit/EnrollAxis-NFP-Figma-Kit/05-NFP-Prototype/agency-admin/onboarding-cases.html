@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding Cases | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html" class="active"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Onboarding Cases</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Onboarding Cases</li></ol>
+    </div>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">In Progress</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Awaiting Review</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-clock"></i></div><div><div class="stat-label">Invitation Expired</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Completed (MTD)</div><div class="stat-val">1</div></div></div></div>
+    </div>
+
+    <!-- Onboarding Cases Table -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5>Downline Onboarding Cases</h5><select id="onboardingStatusFilter" class="form-control" style="width:130px" onchange="filterOnboardingCases()"><option>All Status</option><option>In Progress</option><option>Awaiting Review</option><option>Activated</option><option>Denied</option></select><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','onboarding-cases_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Agent/Agency</th><th>NPN</th><th>Started</th><th>Invitation Status</th><th>Form</th><th>NIPR</th><th>AHIP</th><th>Background</th><th>Training</th><th>Carrier Appt</th><th>State Appointments</th><th>Ready to Sell</th><th></th></tr></thead>
+          <tbody id="onboardingCasesBody">
+            <tr>
+              <td><strong>Kevin Williams</strong></td><td>8847123</td><td>05 15,2026</td>
+              <td><span class="badge bg-success"><i class="fas fa-check-circle" style="margin-right:3px"></i>Accepted</span><div style="font-size:10px;color:#5f6368;margin-top:2px">Accepted May 16</div></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-warning text-dark" style="margin-bottom:2px">FL – Pending</span><br><span class="badge bg-secondary">TX – Not Started</span></div></td>
+              <td><span class="badge bg-danger">Not Ready</span></td>
+              <td style="white-space:nowrap"><button class="btn-ol btn-sm" onclick="viewCase('OB-2026-001')" style="margin-right:4px">View</button><button class="btn-ol btn-sm" onclick="sendReminder('Kevin Williams','kwilliams@email.com')" title="Send Reminder to finish onboarding"><i class="fas fa-bell" style="color:#e65100"></i></button></td>
+            </tr>
+            <tr>
+              <td><strong>Premier Health Agency</strong></td><td>—</td><td>05 18,2026</td>
+              <td><span class="badge bg-success"><i class="fas fa-check-circle" style="margin-right:3px"></i>Accepted</span><div style="font-size:10px;color:#5f6368;margin-top:2px">Accepted May 19</div></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-success" style="margin-bottom:2px">FL – Active</span><br><span class="badge bg-success">GA – Active</span></div></td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td style="white-space:nowrap"><button class="btn-ol btn-sm" onclick="document.getElementById('reviewModal').style.display='flex'" style="margin-right:4px">Review</button><button class="btn-ol btn-sm" onclick="viewCase('OB-2026-008')" style="margin-right:4px">View</button><button class="btn-ol btn-sm" onclick="sendReminder('Premier Health Agency','admin@premierhealth.com')" title="Send Reminder to finish onboarding"><i class="fas fa-bell" style="color:#e65100"></i></button></td>
+            </tr>
+            <tr>
+              <td><strong>Sarah Johnson</strong></td><td>—</td><td>05 21,2026</td>
+              <td><span class="badge bg-info text-dark"><i class="fas fa-paper-plane" style="margin-right:3px"></i>Sent</span><div style="font-size:10px;color:#5f6368;margin-top:2px">Sent May 21</div></td>
+              <td><span class="badge bg-warning text-dark">Partial</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-secondary">FL – Not Started</span></div></td>
+              <td><span class="badge bg-danger">Not Ready</span></td>
+              <td style="white-space:nowrap"><button class="btn-ol btn-sm" style="margin-right:4px">View</button><button class="btn-ol btn-sm" onclick="sendReminder('Sarah Johnson','sjohnson@email.com')" title="Send Reminder to finish onboarding"><i class="fas fa-bell" style="color:#e65100"></i></button></td>
+            </tr>
+            <tr>
+              <td><strong>David Nguyen</strong></td><td>6634892</td><td>04 28,2026</td>
+              <td><span class="badge bg-danger"><i class="fas fa-clock" style="margin-right:3px"></i>Expired</span><div style="font-size:10px;color:#c62828;margin-top:2px">Expired May 28</div></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-secondary">TX – Not Started</span></div></td>
+              <td><span class="badge bg-danger">Not Ready</span></td>
+              <td style="white-space:nowrap"><button class="btn-ol btn-sm" onclick="resendInvitation('David Nguyen','dnguyen@email.com')" style="margin-right:4px"><i class="fas fa-redo" style="margin-right:3px"></i>Resend</button><button class="btn-ol btn-sm" onclick="viewCase('OB-2026-015')" style="margin-right:4px">View</button><button class="btn-ol btn-sm" onclick="sendReminder('David Nguyen','dnguyen@email.com')" title="Send Reminder to finish onboarding"><i class="fas fa-bell" style="color:#e65100"></i></button></td>
+            </tr>
+            <tr>
+              <td><strong>Maria Garcia</strong></td><td>5521034</td><td>05 01,2026</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100"><i class="fas fa-redo" style="margin-right:3px"></i>Resent</span><div style="font-size:10px;color:#e65100;margin-top:2px">Resent Jun 5 (2nd)</div></td>
+              <td><span class="badge bg-warning text-dark">Partial</span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><span class="badge bg-secondary">—</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-warning text-dark" style="margin-bottom:2px">FL – Pending</span><br><span class="badge bg-secondary">CA – Not Started</span></div></td>
+              <td><span class="badge bg-danger">Not Ready</span></td>
+              <td style="white-space:nowrap"><button class="btn-ol btn-sm" onclick="viewCase('OB-2026-018')" style="margin-right:4px">View</button><button class="btn-ol btn-sm" onclick="sendReminder('Maria Garcia','mgarcia@email.com')" title="Send Reminder to finish onboarding"><i class="fas fa-bell" style="color:#e65100"></i></button></td>
+            </tr>
+            <tr>
+              <td><strong>Lisa Park</strong></td><td>7722118</td><td>05 05,2026</td>
+              <td><span class="badge bg-success"><i class="fas fa-check-circle" style="margin-right:3px"></i>Accepted</span><div style="font-size:10px;color:#5f6368;margin-top:2px">Accepted May 6</div></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success"><i class="fas fa-check"></i></span></td>
+              <td><span class="badge bg-success">Appointed</span></td>
+              <td><div style="font-size:11px"><span class="badge bg-success" style="margin-bottom:2px">FL – Active</span><br><span class="badge bg-success">TX – Active</span></div></td>
+              <td><span class="badge bg-success"><i class="fas fa-check-circle"></i> Ready</span></td>
+              <td><button class="btn-ol btn-sm" onclick="viewCase('OB-2026-012')">View</button></td>
+            </tr>
+            <tr id="onboardingNoResults" style="display:none"><td colspan="13" style="text-align:center;color:#666;padding:16px">No onboarding cases match the selected status.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Case Detail (expanded) -->
+    <div class="card">
+      <div class="card-hdr"><h5>Case Detail — Kevin Williams</h5></div>
+      <div class="card-body">
+        <div class="row-grid">
+          <div class="col-2">
+            <p><strong>NPN:</strong> 8847123</p>
+            <p><strong>Email:</strong> kwilliams@email.com</p>
+            <p><strong>Requested States:</strong> FL, TX</p>
+            <p><strong>Hierarchy Position:</strong> Agent under HealthFirst (GA-001)</p>
+            <p><strong>Plan Year:</strong> 2026</p>
+          </div>
+          <div class="col-2">
+            <p><strong>Current Step:</strong> Background Check (IBR)</p>
+            <p><strong>Background Check Status:</strong> Submitted May 19 — awaiting result</p>
+            <p><strong>Estimated Completion:</strong> 05 26,2026</p>
+            <p><strong>Reviewer Notes:</strong> All documents verified. Awaiting IBR clearance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Onboarding Case Detail Modal -->
+<div class="modal-overlay" id="caseDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:760px;width:95%">
+    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#e65100"></i><span id="cdCaseName">Case Detail</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body" style="padding:20px;max-height:75vh;overflow-y:auto">
+      <!-- Agent Info -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin-bottom:16px;font-size:13px">
+        <p style="margin:0"><strong>Case ID:</strong> <span id="cdCaseID"></span></p>
+        <p style="margin:0"><strong>Started:</strong> <span id="cdDate"></span></p>
+        <p style="margin:0"><strong>Agent / Agency:</strong> <span id="cdAgentName"></span></p>
+        <p style="margin:0"><strong>NPN:</strong> <span id="cdNPN"></span></p>
+        <p style="margin:0"><strong>Agency:</strong> <span id="cdAgency"></span></p>
+        <p style="margin:0"><strong>Current Status:</strong> <span id="cdStatus"></span></p>
+      </div>
+      <!-- Unique Detail Fields -->
+      <div style="font-weight:700;font-size:12px;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Contact &amp; Assignment Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin-bottom:16px;font-size:13px;background:#f8f9fa;border-radius:8px;padding:12px 14px">
+        <p style="margin:0"><strong>Email:</strong> <span id="cdEmail"></span></p>
+        <p style="margin:0"><strong>Phone:</strong> <span id="cdPhone"></span></p>
+        <p style="margin:0"><strong>Hierarchy Position:</strong> <span id="cdHierarchy"></span></p>
+        <p style="margin:0"><strong>Plan Year:</strong> <span id="cdPlanYear"></span></p>
+        <p style="margin:0"><strong>Requested States:</strong> <span id="cdReqStates"></span></p>
+        <p style="margin:0"><strong>Assigned Reviewer:</strong> <span id="cdReviewer"></span></p>
+        <p style="margin:0"><strong>E&amp;O Insurance:</strong> <span id="cdEO"></span></p>
+        <p style="margin:0"><strong>E&amp;O Expiry:</strong> <span id="cdEOExpiry"></span></p>
+        <p style="margin:0"><strong>License #:</strong> <span id="cdLicense"></span></p>
+        <p style="margin:0"><strong>License Expiry:</strong> <span id="cdLicExpiry"></span></p>
+        <p style="margin:0"><strong>Est. Completion:</strong> <span id="cdEstCompletion"></span></p>
+        <p style="margin:0"><strong>Reviewer Notes:</strong> <span id="cdNotes"></span></p>
+      </div>
+      <!-- Onboarding Checklist -->
+      <div style="font-weight:700;font-size:12px;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Onboarding Checklist</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px" id="cdChecklist"></div>
+      <!-- State Appointments -->
+      <div style="font-weight:700;font-size:12px;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">State Appointments</div>
+      <div id="cdStateAppts" style="margin-bottom:16px"></div>
+      <!-- Recent Activity -->
+      <div style="font-weight:700;font-size:12px;color:#5f6368;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Recent Activity</div>
+      <div id="cdActivity" style="font-size:12px;color:#555;background:#f8f9fa;border-radius:8px;padding:10px 14px"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+      <button class="btn-pr" onclick="sendReminder(document.getElementById('cdAgentName').textContent,''); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-bell" style="margin-right:4px"></i>Send Reminder</button>
+      <button class="btn-pr" onclick="nfpSubmit('Case status updated'); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-check-circle"></i> Mark Step Complete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Premier Health Review Modal -->
+<div class="modal-overlay" id="reviewModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5><i class="fas fa-clipboard-check" style="margin-right:8px;color:#e65100"></i>Review Onboarding Case</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div style="background:#fff3e0;border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:13px"><i class="fas fa-exclamation-triangle" style="color:#e65100"></i> <strong>Premier Health Group</strong> — E&O documentation is pending review. Carrier appointment also awaiting confirmation.</div>
+      <div class="mb-3"><label class="form-label">Review Decision</label>
+        <select class="form-control" id="rvDecision">
+          <option value="">-- Select --</option>
+          <option>Approve and Continue</option>
+          <option>Request Additional Docs</option>
+          <option>Hold — Pending Carrier Response</option>
+          <option>Escalate to Compliance</option>
+        </select>
+      </div>
+      <div class="mb-3"><label class="form-label">Notes</label><textarea class="form-control" id="rvNotes" rows="3" placeholder="Enter review notes or instructions..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" onclick="submitReview()"><i class="fas fa-clipboard-check"></i> Submit Review</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var caseData = {
+  'OB-2026-001': {name:'Kevin Williams',npn:'8847123',agency:'HealthFirst (GA-001)',status:'In Progress',date:'05 15,2026',
+    email:'kwilliams@email.com',phone:'(305) 555-1234',hierarchy:'Agent under HealthFirst Distribution (GA-001)',planYear:'2026',reqStates:'FL, TX',reviewer:'Rachel Vargas',eo:'Complete',eoExpiry:'03 15,2027',license:'FL-L2024-88471',licExpiry:'06 30,2027',estCompletion:'06 10,2026',notes:'All documents verified. Awaiting IBR background clearance before carrier appointment.',
+    invitation:{status:'Accepted',date:'May 16'},
+    form:'Complete', nipr:'Complete', ahip:'Complete', background:'Pending', training:'Not Started', carrierAppt:'Pending',
+    stateAppts:[{state:'FL',status:'Pending'},{state:'TX',status:'Not Started'}],
+    rts:'Not Ready',
+    activity:'May 19 \u2192 Background check submitted, awaiting IBR result. May 17 \u2192 AHIP certification verified. May 16 \u2192 Invitation accepted, application form completed. May 15 \u2192 Invitation sent.'},
+  'OB-2026-008': {name:'Premier Health Agency',npn:'N/A',agency:'Premier Health',status:'Awaiting Review',date:'05 18,2026',
+    email:'admin@premierhealth.com',phone:'(786) 555-9087',hierarchy:'Agency under Premier Medicare Advisors (MGA-1042)',planYear:'2026',reqStates:'FL, GA',reviewer:'Rachel Vargas',eo:'Pending',eoExpiry:'Pending submission',license:'FL-A2024-00891',licExpiry:'12 31,2026',estCompletion:'06 15,2026',notes:'E&O documentation pending review. Carrier appointment awaiting confirmation from Gold Kidney.',
+    invitation:{status:'Accepted',date:'May 19'},
+    form:'Complete', nipr:'Complete', ahip:'Complete', background:'Complete', training:'Complete', carrierAppt:'Pending',
+    stateAppts:[{state:'FL',status:'Active'},{state:'GA',status:'Active'}],
+    rts:'Pending',
+    activity:'May 25 \u2192 All training complete. May 22 \u2192 Background check cleared. May 20 \u2192 NIPR verified. May 19 \u2192 Invitation accepted.'},
+  'OB-2026-012': {name:'Lisa Park',npn:'7722118',agency:'Park Insurance',status:'Completed',date:'05 05,2026',
+    email:'lpark@parkinsurance.com',phone:'(407) 555-6789',hierarchy:'Agent under Coastal Medicare Partners (GA-2288)',planYear:'2026',reqStates:'FL, TX',reviewer:'Rachel Vargas',eo:'Complete',eoExpiry:'11 30,2027',license:'FL-L2024-77221',licExpiry:'06 30,2027',estCompletion:'05 28,2026',notes:'All steps completed. Agent is fully onboarded and Ready to Sell.',
+    invitation:{status:'Accepted',date:'May 6'},
+    form:'Complete', nipr:'Complete', ahip:'Complete', background:'Complete', training:'Complete', carrierAppt:'Appointed',
+    stateAppts:[{state:'FL',status:'Active'},{state:'TX',status:'Active'}],
+    rts:'Ready',
+    activity:'May 28 \u2192 Ready to Sell confirmed. May 25 \u2192 Carrier appointment approved. May 20 \u2192 All training completed. May 10 \u2192 Background check cleared.'},
+  'OB-2026-015': {name:'David Nguyen',npn:'6634892',agency:'Independent',status:'Expired',date:'04 28,2026',
+    email:'dnguyen@email.com',phone:'(512) 555-3344',hierarchy:'Agent under HealthFirst Distribution (GA-001)',planYear:'2026',reqStates:'TX',reviewer:'Unassigned',eo:'Not Started',eoExpiry:'N/A',license:'TX-L2024-66348',licExpiry:'09 30,2027',estCompletion:'N/A',notes:'Invitation expired with no response. Recommend resending or contacting agent directly.',
+    invitation:{status:'Expired',date:'May 28'},
+    form:'Not Started', nipr:'Not Started', ahip:'Not Started', background:'Not Started', training:'Not Started', carrierAppt:'Not Started',
+    stateAppts:[{state:'TX',status:'Not Started'}],
+    rts:'Not Ready',
+    activity:'May 28 \u2192 Invitation expired (no response after 30 days). Apr 28 \u2192 Invitation sent.'},
+  'OB-2026-018': {name:'Maria Garcia',npn:'5521034',agency:'Garcia Health Services',status:'In Progress',date:'05 01,2026',
+    email:'mgarcia@email.com',phone:'(954) 555-7890',hierarchy:'Agent under Coastal Medicare Partners (GA-2288)',planYear:'2026',reqStates:'FL, CA',reviewer:'Rachel Vargas',eo:'Not Started',eoExpiry:'N/A',license:'FL-L2025-55210',licExpiry:'03 31,2028',estCompletion:'07 15,2026',notes:'Invitation resent on Jun 5. Agent has started partial application. NIPR verified. Awaiting AHIP and remaining steps.',
+    invitation:{status:'Resent',date:'Jun 5 (2nd)'},
+    form:'Partial', nipr:'Complete', ahip:'Not Started', background:'Not Started', training:'Not Started', carrierAppt:'Not Started',
+    stateAppts:[{state:'FL',status:'Pending'},{state:'CA',status:'Not Started'}],
+    rts:'Not Ready',
+    activity:'Jun 5 \u2192 Invitation resent (2nd attempt). Jun 1 \u2192 First invitation expired. May 15 \u2192 NIPR verified. May 1 \u2192 Invitation sent.'}
+};
+function viewCase(id) {
+  var d = caseData[id];
+  if (!d) return;
+  document.getElementById('cdCaseName').textContent = d.name + ' — ' + id;
+  document.getElementById('cdCaseID').textContent = id;
+  document.getElementById('cdAgentName').textContent = d.name;
+  document.getElementById('cdNPN').textContent = d.npn;
+  document.getElementById('cdAgency').textContent = d.agency;
+  document.getElementById('cdStatus').textContent = d.status;
+  document.getElementById('cdDate').textContent = d.date;
+  /* Unique detail fields */
+  document.getElementById('cdEmail').textContent = d.email;
+  document.getElementById('cdPhone').textContent = d.phone;
+  document.getElementById('cdHierarchy').textContent = d.hierarchy;
+  document.getElementById('cdPlanYear').textContent = d.planYear;
+  document.getElementById('cdReqStates').textContent = d.reqStates;
+  document.getElementById('cdReviewer').textContent = d.reviewer;
+  document.getElementById('cdEO').textContent = d.eo;
+  document.getElementById('cdEOExpiry').textContent = d.eoExpiry;
+  document.getElementById('cdLicense').textContent = d.license;
+  document.getElementById('cdLicExpiry').textContent = d.licExpiry;
+  document.getElementById('cdEstCompletion').textContent = d.estCompletion;
+  document.getElementById('cdNotes').textContent = d.notes;
+  /* Build checklist tiles */
+  var steps = [
+    {label:'Invitation',val:d.invitation.status,sub:d.invitation.date},
+    {label:'Application Form',val:d.form},
+    {label:'NIPR',val:d.nipr},
+    {label:'AHIP',val:d.ahip},
+    {label:'Background Check',val:d.background},
+    {label:'Training',val:d.training},
+    {label:'Carrier Appt',val:d.carrierAppt},
+    {label:'Ready to Sell',val:d.rts}
+  ];
+  var html='';
+  steps.forEach(function(s){
+    var color,bg,icon;
+    if(s.val==='Complete'||s.val==='Accepted'||s.val==='Active'||s.val==='Ready'||s.val==='Appointed'){color='#1b5e20';bg='#e8f5e9';icon='fa-check-circle';}
+    else if(s.val==='Pending'||s.val==='Partial'||s.val==='Sent'||s.val==='Resent'){color='#e65100';bg='#fff3e0';icon='fa-hourglass-half';}
+    else if(s.val==='Expired'||s.val==='Not Ready'){color='#c62828';bg='#ffebee';icon='fa-times-circle';}
+    else{color='#5f6368';bg='#f1f3f4';icon='fa-minus-circle';}
+    html+='<div style="background:'+bg+';border-radius:8px;padding:10px;text-align:center">';
+    html+='<div style="font-size:10px;color:#5f6368;margin-bottom:4px">'+s.label+'</div>';
+    html+='<div style="font-weight:700;color:'+color+';font-size:12px"><i class="fas '+icon+'" style="margin-right:4px"></i>'+s.val+'</div>';
+    if(s.sub) html+='<div style="font-size:10px;color:#5f6368;margin-top:2px">'+s.sub+'</div>';
+    html+='</div>';
+  });
+  document.getElementById('cdChecklist').innerHTML=html;
+  /* Build state appointments */
+  var saHtml='';
+  d.stateAppts.forEach(function(sa){
+    var sc,sb;
+    if(sa.status==='Active'){sc='#1b5e20';sb='#e8f5e9';}
+    else if(sa.status==='Pending'){sc='#e65100';sb='#fff3e0';}
+    else{sc='#5f6368';sb='#f1f3f4';}
+    saHtml+='<span style="display:inline-block;background:'+sb+';color:'+sc+';padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;margin-right:8px;margin-bottom:4px"><i class="fas fa-map-marker-alt" style="margin-right:4px"></i>'+sa.state+' — '+sa.status+'</span>';
+  });
+  document.getElementById('cdStateAppts').innerHTML=saHtml;
+  /* Activity */
+  document.getElementById('cdActivity').innerHTML=d.activity.replace(/\u2192/g,'→').split('. ').join('.<br>');
+  document.getElementById('caseDetailModal').style.display = 'flex';
+}
+function submitReview() {
+  var dec = document.getElementById('rvDecision').value;
+  if (!dec) { showToast('Please select a review decision', 'error'); return; }
+  document.getElementById('reviewModal').style.display = 'none';
+  showToast('Review submitted: ' + dec + ' — Premier Health Group (OB-2026-008)', 'success');
+}
+function sendReminder(name, email) {
+  showToast('Reminder sent to ' + name + ' (' + email + ') to complete remaining onboarding steps.', 'success');
+}
+function resendInvitation(name, email) {
+  showToast('Invitation resent to ' + name + ' (' + email + '). New invitation valid for 30 days.', 'success');
+}
+
+function filterOnboardingCases() {
+  var filter = document.getElementById('onboardingStatusFilter');
+  var body = document.getElementById('onboardingCasesBody');
+  var noResults = document.getElementById('onboardingNoResults');
+  if (!filter || !body) return;
+
+  var selected = filter.value.trim().toLowerCase();
+  var rows = body.querySelectorAll('tr:not(#onboardingNoResults)');
+  var visibleCount = 0;
+
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length < 9) return;
+    var rowStatus = cells[11].textContent.trim().toLowerCase();
+    var isMatch = selected === 'all status' || rowStatus === selected;
+    row.style.display = isMatch ? '' : 'none';
+    if (isMatch) visibleCount++;
+  });
+
+  if (noResults) noResults.style.display = visibleCount ? 'none' : '';
+}
+</script>
+</body>
+</html>
+

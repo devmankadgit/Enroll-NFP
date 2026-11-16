@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C-SNP Review | Gold Kidney Enrollment Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#00695c}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-clipboard-check" style="margin-right:8px;opacity:.8"></i>Enrollment Ops</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Enrollment Processing</div>
+    <a href="processing-hub.html"><i class="fas fa-inbox"></i>Processing Hub</a>
+    <a href="oec-intake.html"><i class="fas fa-inbox"></i>OEC Intake Hub</a>
+    <a href="csnp-review.html" class="active"><i class="fas fa-heartbeat"></i>C-SNP Review</a>
+    <a href="compliance-tracker.html"><i class="fas fa-clock"></i>7-Day Compliance</a>
+    <div class="sb-section">Member Services</div>
+    <a href="document-repository.html"><i class="fas fa-folder-open"></i>Document Repository</a>
+    <a href="id-cards.html"><i class="fas fa-id-card"></i>ID Cards</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Wong</div><div class="sb-u-role">Enrollment Ops Manager</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>C-SNP Verification Review</h4><ol class="breadcrumb-bar"><li>C-SNP Documentation Review &amp; Annual Re-Verification</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary Cards -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-inbox"></i></div><div><div class="stat-label">Pending Initial Review</div><div class="stat-val">5</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-sync-alt"></i></div><div><div class="stat-label">Re-Verification Due</div><div class="stat-val">8</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Approved (MTD)</div><div class="stat-val">22</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Rejected (MTD)</div><div class="stat-val">3</div></div></div></div>
+    </div>
+
+    <!-- C-SNP Documentation Requirements -->
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>C-SNP Eligibility:</strong> Members must have a qualifying chronic condition (CKD Stage 3+, ESRD, Diabetes w/ CKD, Cardiovascular w/ CKD). Documentation must include: physician attestation, lab results (eGFR &lt; 60), or dialysis records. Annual re-verification required within 60 days of plan anniversary.</span></div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <label>Condition:</label>
+      <select id="fCondition" onchange="applyCSNPFilters()"><option value="">All</option><option value="ESRD">ESRD</option><option value="CKD">CKD</option><option value="Diabetes">Diabetes + CKD</option><option value="Cardiovascular">Cardiovascular + CKD</option></select>
+      <label>Status:</label>
+      <select id="fCSNPStatus" onchange="applyCSNPFilters()"><option value="">All</option><option value="pending">Pending Review</option><option value="needs-info">Needs More Info</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+      <label>Agent:</label>
+      <input type="text" id="fCSNPAgent" placeholder="Search NPN..." style="width:120px" oninput="applyCSNPFilters()">
+      <button class="btn-ol btn-sm" onclick="applyCSNPFilters()"><i class="fas fa-filter"></i>Apply</button>
+      <button class="btn-ol btn-sm" onclick="resetCSNPFilters()" style="color:#c62828;border-color:#c62828"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- New Submissions Queue -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-inbox" style="margin-right:8px;color:#0d47a1"></i>New C-SNP Submissions (5)</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('csnpNewTable','csnp-review_csnpNewTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="csnpNewTable">
+          <thead><tr><th>Member</th><th>Condition</th><th>Documentation Type</th><th>Submitted</th><th>Agent</th><th>eGFR Value</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr data-condition="ESRD" data-status="pending" data-agent="8823441">
+              <td><strong>Dorothy Henderson</strong><br><span style="font-size:11px;color:#5f6368">DOB: 03/15/1958 — MBI: 1EG4-TE5-MK72</span></td>
+              <td><span class="bdg b-red">ESRD</span></td>
+              <td>Dialysis Records + Physician Attestation</td>
+              <td>05 22,2026</td>
+              <td>J. Martinez (8823441)</td>
+              <td style="font-weight:700;color:#c62828">&lt; 15</td>
+              <td><span class="bdg b-blue">Pending Review</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Dorothy Henderson','ESRD')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('ESRD-2026-001','Dorothy Henderson')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="CKD" data-status="pending" data-agent="8823441">
+              <td><strong>Thomas Rivera</strong><br><span style="font-size:11px;color:#5f6368">DOB: 07/22/1951 — MBI: 2KF7-AB3-QR91</span></td>
+              <td><span class="bdg b-amber">CKD Stage 4</span></td>
+              <td>Lab Results (eGFR)</td>
+              <td>05 21,2026</td>
+              <td>J. Martinez (8823441)</td>
+              <td style="font-weight:700;color:#e65100">22</td>
+              <td><span class="bdg b-blue">Pending Review</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Thomas Rivera','CKD Stage 4')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('CKD-2026-002','Thomas Rivera')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="Diabetes" data-status="pending" data-agent="7719022">
+              <td><strong>Nancy Collins</strong><br><span style="font-size:11px;color:#5f6368">DOB: 11/04/1960 — MBI: 3MH2-CD6-WX45</span></td>
+              <td><span class="bdg b-purple">Diabetes + CKD</span></td>
+              <td>Physician Attestation + A1c Results</td>
+              <td>05 20,2026</td>
+              <td>S. Chen (7719022)</td>
+              <td style="font-weight:700;color:#e65100">38</td>
+              <td><span class="bdg b-blue">Pending Review</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Nancy Collins','Diabetes + CKD')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('DIA-2026-003','Nancy Collins')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="CKD" data-status="needs-info" data-agent="8823441">
+              <td><strong>Earl Thompson</strong><br><span style="font-size:11px;color:#5f6368">DOB: 05/30/1949 — MBI: 4PQ8-EF9-YZ12</span></td>
+              <td><span class="bdg b-amber">CKD Stage 3b</span></td>
+              <td>Lab Results Only</td>
+              <td>05 19,2026</td>
+              <td>J. Martinez (8823441)</td>
+              <td style="font-weight:700;color:#e65100">42</td>
+              <td><span class="bdg b-amber">Needs More Info</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Earl Thompson','CKD Stage 3b')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('CKD-2026-004','Earl Thompson')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="Cardiovascular" data-status="pending" data-agent="6643091">
+              <td><strong>Robert Lin</strong><br><span style="font-size:11px;color:#5f6368">DOB: 09/17/1955 — MBI: 5RS3-GH1-AB67</span></td>
+              <td><span class="bdg" style="background:#e0f2f1;color:#00695c">Cardiovascular + CKD</span></td>
+              <td>Physician Attestation + Cardiology Report</td>
+              <td>05 18,2026</td>
+              <td>D. Wright (6643091)</td>
+              <td style="font-weight:700;color:#e65100">45</td>
+              <td><span class="bdg b-blue">Pending Review</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Robert Lin','Cardiovascular + CKD')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('CVD-2026-005','Robert Lin')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Annual Re-Verification Queue -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-sync-alt" style="margin-right:8px;color:#e65100"></i>Annual Re-Verification Queue (8)</h5><span class="bdg b-amber">Within 60 days of anniversary</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('csnpReverifyTable','csnp-review_csnpReverifyTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="csnpReverifyTable">
+          <thead><tr><th>Member</th><th>Condition</th><th>Plan Anniversary</th><th>Re-Verify By</th><th>Days Remaining</th><th>Last Verification</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr style="background:#fce4ec" data-condition="ESRD" data-status="overdue" data-agent="">
+              <td><strong>Helen Morris</strong><br><span style="font-size:11px;color:#5f6368">MBI: 9AB1-CD2-EF34</span></td>
+              <td><span class="bdg b-red">ESRD</span></td>
+              <td>05 31,2026</td>
+              <td><strong style="color:#c62828">05 31,2026</strong></td>
+              <td><span class="bdg b-red"><i class="fas fa-exclamation-triangle"></i> OVERDUE</span></td>
+              <td>06 01,2025</td>
+              <td><span class="bdg b-red">Overdue — Flag</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Helen Morris','ESRD')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('REVERIFY','Helen Morris')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="CKD" data-status="not-started" data-agent="">
+              <td><strong>Grace Kim</strong><br><span style="font-size:11px;color:#5f6368">MBI: 6KL4-MN5-OP78</span></td>
+              <td><span class="bdg b-amber">CKD Stage 3a</span></td>
+              <td>07 01,2026</td>
+              <td>06 30,2026</td>
+              <td style="color:#e65100;font-weight:600">32 days <span class="bdg b-amber" style="font-size:10px">30-day alert</span></td>
+              <td>07 01,2025</td>
+              <td><span class="bdg b-amber">Not Started</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('Viewing details for Grace Kim...','info')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('REVERIFY','Grace Kim')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="ESRD" data-status="docs-requested" data-agent="">
+              <td><strong>Maria Santos</strong><br><span style="font-size:11px;color:#5f6368">MBI: 7QR5-ST6-UV89</span></td>
+              <td><span class="bdg b-red">ESRD</span></td>
+              <td>07 15,2026</td>
+              <td>07 14,2026</td>
+              <td>46 days</td>
+              <td>07 15,2025</td>
+              <td><span class="bdg b-blue">Docs Requested</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="openDocViewer('Maria Santos','ESRD')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('REVERIFY-003','Maria Santos')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+            <tr data-condition="Diabetes" data-status="not-started" data-agent="">
+              <td><strong>William Park</strong><br><span style="font-size:11px;color:#5f6368">MBI: 8WX6-YZ7-AB90</span></td>
+              <td><span class="bdg b-purple">Diabetes + CKD</span></td>
+              <td>08 01,2026</td>
+              <td>07 31,2026</td>
+              <td>63 days <span class="bdg b-blue" style="font-size:10px">60-day alert</span></td>
+              <td>08 01,2025</td>
+              <td><span class="bdg b-blue">Not Started</span></td>
+              <td><div class="dflex g4"><button class="btn-ol btn-sm" onclick="showToast('Viewing details for William Park...','info')"><i class="fas fa-eye"></i></button><button class="btn-ol btn-sm" onclick="openComment('REVERIFY','William Park')"><i class="fas fa-comment"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- COMMENT MODAL -->
+<div id="commentModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#0d47a1"><i class="fas fa-comment" style="margin-right:8px"></i>Comments</h6>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn-ol btn-sm" onclick="prefillComment()" style="font-size:11px"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill</button>
+        <button onclick="document.getElementById('commentModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;margin-bottom:12px">Comments for <strong id="commentRefId"></strong> &mdash; <strong id="commentName"></strong></p>
+      <!-- Comment History -->
+      <div id="commentHistory" style="max-height:180px;overflow-y:auto;margin-bottom:14px;border:1px solid #e8eaed;border-radius:6px;padding:10px;background:#f8f9fa">
+        <div style="font-size:11px;color:#80868b;text-align:center;padding:8px 0">No comments yet</div>
+      </div>
+      <!-- New Comment -->
+      <div class="fg"><label>Add Comment <span class="req">*</span></label><textarea id="commentText" rows="3" placeholder="Enter your comment..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('commentModal').classList.remove('open')">Cancel</button>
+      <button class="btn-pr" onclick="submitComment()"><i class="fas fa-paper-plane"></i>Submit Comment</button>
+    </div>
+  </div>
+</div>
+
+<!-- REJECT MODAL -->
+<div id="rejectModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#c62828"><i class="fas fa-times-circle" style="margin-right:8px"></i>Reject C-SNP Submission</h6>
+      <button onclick="document.getElementById('rejectModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13.5px">Reject C-SNP submission for <strong id="rejectMemName"></strong> (<span id="rejectEnrID"></span>)?</p>
+      <div class="fg"><label>Rejection Reason <span class="req">*</span></label>
+        <select id="rejectReason">
+          <option value="">&#8212; Select reason &#8212;</option>
+          <option>eGFR value does not meet threshold (must be &lt; 60)</option>
+          <option>Physician attestation missing or unsigned</option>
+          <option>Documentation older than 12 months</option>
+          <option>Condition does not qualify for C-SNP</option>
+          <option>Lab results incomplete or illegible</option>
+          <option>Member already disenrolled</option>
+          <option>Other (document below)</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-top:10px"><label>Detailed Rejection Notes <span class="req">*</span> <span style="font-size:11px;color:#5f6368">(min 30 characters)</span></label>
+        <textarea id="rejectNotes" rows="3" placeholder="Required: Provide specific reason for rejection. Include what documentation is needed for re-submission (minimum 30 characters)..."></textarea>
+        <div id="rejectCharCount" style="font-size:11px;color:#5f6368;margin-top:2px;text-align:right">0 characters</div>
+      </div>
+      <div id="rejectErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillRejection()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div>
+        <button class="btn-ol" onclick="document.getElementById('rejectModal').classList.remove('open')">Cancel</button>
+        <button class="btn-danger" onclick="confirmRejection()"><i class="fas fa-times"></i>Confirm Rejection</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOCUMENT VIEWER MODAL -->
+<div id="docModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700" id="docModalTitle"><i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>C-SNP Documentation Viewer</h6>
+      <button onclick="document.getElementById('docModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <div style="display:flex;gap:12px;margin-bottom:12px">
+        <span class="bdg b-blue">Physician Attestation.pdf</span>
+        <span class="bdg b-blue">Lab Results eGFR.pdf</span>
+        <span class="bdg b-grey">Document3.pdf</span>
+      </div>
+      <div style="background:#f8f9fa;border:2px dashed #e0e0e0;border-radius:8px;min-height:300px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#5f6368">
+        <i class="fas fa-file-pdf" style="font-size:64px;color:#c62828;opacity:.6"></i>
+        <div style="font-weight:600;font-size:15px">Physician Attestation.pdf</div>
+        <div style="font-size:12.5px">Document preview — Gold Kidney Health Plan C-SNP Verification Form</div>
+        <div style="font-size:12px;background:#fff;border:1px solid #e0e0e0;padding:12px 16px;border-radius:6px;max-width:420px;text-align:left">
+          <div style="font-weight:600;margin-bottom:4px">PHYSICIAN ATTESTATION</div>
+          <div>Patient: <strong id="docPatientName"></strong></div>
+          <div>Diagnosis: <strong id="docCondition"></strong></div>
+          <div>Physician: Dr. Maria Rodriguez, MD — Nephrology</div>
+          <div>Date: 04 15,2026</div>
+          <div style="margin-top:8px;font-size:11px;color:#5f6368">I hereby certify that this patient meets the eligibility criteria for a C-SNP enrollment...</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="document.getElementById('docModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- RE-VERIFY MODAL -->
+<div id="reverifyModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr"><h6 style="margin:0;font-weight:700;color:#e65100"><i class="fas fa-sync-alt" style="margin-right:8px"></i>Initiate Annual Re-Verification</h6>
+      <button onclick="document.getElementById('reverifyModal').classList.remove('open')" style="background:none;border:none;font-size:20px;cursor:pointer">&times;</button></div>
+    <div class="modal-body">
+      <p style="font-size:13.5px">Initiating annual C-SNP re-verification for <strong id="reverifyName"></strong>.</p>
+      <div class="al-warn"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>Annual re-verification is required within 12 months of the initial approval date. Failure to complete by the deadline will result in automatic disenrollment notification.</span></div>
+      <div class="fg" style="margin-top:12px"><label>Re-Verification Due Date <span class="req">*</span></label><input id="reverifyDueDate" type="date"></div>
+      <div class="fg"><label>Notes</label><textarea id="reverifyNotes" rows="2" placeholder="Documentation requested from agent..."></textarea></div>
+      <div id="reverifyErr" class="al-danger" style="display:none;margin-top:8px"></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between">
+      <button class="btn-ol" onclick="prefillReVerify()" style="color:#1565c0;border-color:#1565c0"><i class="fas fa-fill-drip"></i> Prefill</button>
+      <div>
+        <button class="btn-ol" onclick="document.getElementById('reverifyModal').classList.remove('open')">Cancel</button>
+        <button class="btn-pr" onclick="confirmReVerify()"><i class="fas fa-sync-alt"></i>Initiate Re-Verification</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:99999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 29,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var currentDocMember='',currentDocEnrID='',rejectTarget={name:'',enrID:''};
+
+function applyCSNPFilters(){
+  var condition=document.getElementById('fCondition').value;
+  var status=document.getElementById('fCSNPStatus').value;
+  var agent=document.getElementById('fCSNPAgent').value.trim().toLowerCase();
+  var tables=['csnpNewTable','csnpReverifyTable'];
+  var totalShown=0,totalRows=0;
+  tables.forEach(function(tid){
+    var tbl=document.getElementById(tid);
+    if(!tbl) return;
+    var rows=tbl.querySelectorAll('tbody tr');
+    rows.forEach(function(r){
+      totalRows++;
+      var rCond=(r.getAttribute('data-condition')||'').toLowerCase();
+      var rStatus=(r.getAttribute('data-status')||'').toLowerCase();
+      var agentCell=r.querySelectorAll('td')[4]||r.querySelectorAll('td')[0];
+      var agentText=agentCell?agentCell.textContent.toLowerCase():'';
+      var show=true;
+      if(condition&&rCond.indexOf(condition.toLowerCase())===-1) show=false;
+      if(status&&rStatus!==status) show=false;
+      if(agent&&agentText.indexOf(agent)===-1) show=false;
+      r.style.display=show?'':'none';
+      if(show) totalShown++;
+    });
+  });
+  showToast('Filters applied \u2014 '+totalShown+' of '+totalRows+' records shown.','info');
+}
+
+function resetCSNPFilters(){
+  document.getElementById('fCondition').value='';
+  document.getElementById('fCSNPStatus').value='';
+  document.getElementById('fCSNPAgent').value='';
+  var tables=['csnpNewTable','csnpReverifyTable'];
+  tables.forEach(function(tid){
+    var tbl=document.getElementById(tid);
+    if(!tbl) return;
+    tbl.querySelectorAll('tbody tr').forEach(function(r){r.style.display='';});
+  });
+  showToast('All filters cleared.','info');
+}
+
+function openApprove(name,enrID){
+  document.getElementById('approveMemName').textContent=name;
+  document.getElementById('approveEnrID').textContent=enrID;
+  document.getElementById('approveNotes').value='';
+  document.getElementById('approveModal').classList.add('open');
+}
+function confirmApproval(){
+  var name=document.getElementById('approveMemName').textContent;
+  var notes=document.getElementById('approveNotes').value.trim();
+  document.getElementById('approveModal').classList.remove('open');
+  showToast('C-SNP eligibility approved for '+name+'. Agent notified. Annual re-verification due in 12 months.','success');
+}
+
+function prefillApproval(){
+  document.getElementById('approveNotes').value='Physician attestation and lab results reviewed. eGFR confirmed below threshold. All documentation current within 12 months. Approved per C-SNP clinical criteria.';
+  showInfoAlert(document.getElementById('approveAlertZone'));
+}
+
+function prefillRejection(){
+  document.getElementById('rejectReason').value='eGFR value does not meet threshold (must be < 60)';
+  document.getElementById('rejectNotes').value='Lab results show eGFR of 68 ml/min which does not meet the C-SNP eligibility threshold of <60. Please obtain updated lab work and resubmit with current values.';
+  document.getElementById('rejectCharCount').textContent=document.getElementById('rejectNotes').value.length+' characters';
+  var err=document.getElementById('rejectErr');
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing.</div>';
+  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
+}
+
+function openReject(name,enrID){
+  rejectTarget={name:name,enrID:enrID};
+  document.getElementById('rejectMemName').textContent=name;
+  document.getElementById('rejectEnrID').textContent=enrID;
+  document.getElementById('rejectReason').value='';
+  document.getElementById('rejectNotes').value='';
+  document.getElementById('rejectCharCount').textContent='0 characters';
+  document.getElementById('rejectErr').style.display='none';
+  document.getElementById('rejectModal').classList.add('open');
+  document.getElementById('rejectNotes').addEventListener('input',function(){document.getElementById('rejectCharCount').textContent=this.value.length+' characters';});
+}
+function confirmRejection(){
+  var reason=document.getElementById('rejectReason').value;
+  var notes=document.getElementById('rejectNotes').value.trim();
+  var err=document.getElementById('rejectErr');
+  var errors=[];
+  if(!reason) errors.push('Rejection reason is required.');
+  if(notes.length<30) errors.push('Rejection notes must be at least 30 characters (current: '+notes.length+').');
+  if(errors.length){err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>'+errors.join('<br>')+'</div>';err.style.display='flex';return;}
+  err.style.display='none';
+  document.getElementById('rejectModal').classList.remove('open');
+  showToast('C-SNP submission rejected for '+rejectTarget.name+'. Reason: '+reason+'. Agent notified with re-submission instructions.','info');
+}
+
+function openDocViewer(name,condition){
+  currentDocMember=name;
+  document.getElementById('docModalTitle').innerHTML='<i class="fas fa-file-pdf" style="margin-right:8px;color:#c62828"></i>C-SNP Documentation — '+name;
+  document.getElementById('docPatientName').textContent=name;
+  document.getElementById('docCondition').textContent=condition;
+  document.getElementById('docModal').classList.add('open');
+}
+
+function openReVerify(name){
+  document.getElementById('reverifyName').textContent=name;
+  document.getElementById('reverifyDueDate').value='';
+  document.getElementById('reverifyNotes').value='';
+  document.getElementById('reverifyModal').classList.add('open');
+}
+function confirmReVerify(){
+  var name=document.getElementById('reverifyName').textContent;
+  var due=document.getElementById('reverifyDueDate').value;
+  var notes=document.getElementById('reverifyNotes').value.trim();
+  var err=document.getElementById('reverifyErr');
+  if(!due){
+    document.getElementById('reverifyDueDate').style.border='1.5px solid #c62828';
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div>Re-Verification Due Date is required.</div>';
+    err.style.display='flex';return;
+  }
+  err.style.display='none';
+  document.getElementById('reverifyDueDate').style.border='';
+  document.getElementById('reverifyModal').classList.remove('open');
+  showToast('Annual re-verification initiated for '+name+'. Agent notified. Due: '+due+'.','success');
+}
+
+function prefillReVerify(){
+  var future=new Date();future.setMonth(future.getMonth()+12);
+  document.getElementById('reverifyDueDate').value=future.toISOString().split('T')[0];
+  document.getElementById('reverifyDueDate').style.border='';
+  document.getElementById('reverifyNotes').value='Annual C-SNP re-verification required. Please submit updated physician attestation and current lab results (eGFR) within 30 days of the due date.';
+  var err=document.getElementById('reverifyErr');
+  err.innerHTML='<i class="fas fa-info-circle" style="flex-shrink:0;color:#0d47a1"></i><div style="color:#0d47a1">Form prefilled with sample data for testing.</div>';
+  err.style.display='flex';err.style.background='#e3f2fd';err.style.borderColor='#90caf9';
+  setTimeout(function(){err.style.display='none';err.style.background='';err.style.borderColor='';},5000);
+}
+
+function showInfoAlert(zone){
+  if(!zone)return;
+  zone.innerHTML='<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas fa-info-circle" style="margin-right:6px;color:#0d47a1"></i>Form prefilled with sample data for testing.</div>';
+  zone.style.display='block';
+  setTimeout(function(){zone.style.display='none';},5000);
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  var c={'success':'#1b5e20','info':'#0d47a1','warn':'#e65100','danger':'#c62828'};
+  t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},5000);
+}
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+
+var commentStore = {};
+
+function openComment(refId, name) {
+  document.getElementById('commentRefId').textContent = refId;
+  document.getElementById('commentName').textContent = name;
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  document.getElementById('commentModal').classList.add('open');
+}
+
+function renderCommentHistory(refId) {
+  var hist = document.getElementById('commentHistory');
+  var comments = commentStore[refId] || [];
+  if (comments.length === 0) {
+    hist.innerHTML = '<div style="font-size:11px;color:#80868b;text-align:center;padding:8px 0">No comments yet</div>';
+    return;
+  }
+  var html = '';
+  comments.forEach(function(c) {
+    html += '<div style="padding:8px 0;border-bottom:1px solid #e8eaed;font-size:12px">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+      '<strong style="color:#0d47a1">' + c.user + '</strong>' +
+      '<span style="color:#80868b;font-size:10px">' + c.time + '</span></div>' +
+      '<div style="color:#424242">' + c.text + '</div></div>';
+  });
+  hist.innerHTML = html;
+  hist.scrollTop = hist.scrollHeight;
+}
+
+function submitComment() {
+  var text = document.getElementById('commentText').value.trim();
+  if (!text) { alert('Please enter a comment.'); return; }
+  var refId = document.getElementById('commentRefId').textContent;
+  if (!commentStore[refId]) commentStore[refId] = [];
+  var now = new Date();
+  var timeStr = now.toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) + ' ' + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  commentStore[refId].push({ user: 'Current User', time: timeStr, text: text });
+  document.getElementById('commentText').value = '';
+  renderCommentHistory(refId);
+  showToast('Comment saved for ' + refId, 'success');
+}
+
+function prefillComment() {
+  document.getElementById('commentText').value = 'Reviewed application. All documentation verified and compliant. No issues found.';
+}
+</script>
+</body>
+</html>

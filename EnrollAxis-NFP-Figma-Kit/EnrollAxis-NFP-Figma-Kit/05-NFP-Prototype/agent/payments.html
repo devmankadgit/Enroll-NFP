@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment History | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html" class="active"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Payment History</h4></div>
+    <button class="btn-ol btn-sm" onclick="nfpSave('Changes')"><i class="fas fa-download"></i>Export CSV</button>
+    <button class="btn-ol btn-sm"><i class="fas fa-file-pdf"></i>Download 1099</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-wallet"></i></div><div><div class="stat-label">Total Paid (CY2026)</div><div class="stat-val">$6,844</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-calendar"></i></div><div><div class="stat-label">Last Payment</div><div class="stat-val">$1,403</div><div class="stat-sub text-muted">05 17,2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass"></i></div><div><div class="stat-label">Pending</div><div class="stat-val">$1,403</div><div class="stat-sub text-muted">Est. 06 17,2026</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-minus-circle"></i></div><div><div class="stat-label">Chargebacks YTD</div><div class="stat-val">$0</div></div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><h5>Payment History ? CY2026</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','payments_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr><th>Payment Date</th><th>Batch Ref</th><th>Period</th><th>Monthly Commissions</th><th>HRA Incentives</th><th>Visit Incentives</th><th>Chargebacks</th><th>Net Amount</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr style="background:#fffde7">
+              <td>Est. 06 17,2026</td>
+              <td><code>Pending</code></td>
+              <td>Jun 2026</td>
+              <td>$200.32</td><td>$25.00</td><td>$0</td><td>$0</td>
+              <td class="text-bold">$1,403.32</td>
+              <td><span class="bdg b-amber">Processing</span></td>
+              <td><button class="btn-ol btn-sm" disabled>Remittance</button></td>
+            </tr>
+            <tr>
+              <td>05 17,2026</td>
+              <td><code>BATCH-2026-05</code></td>
+              <td>May 2026</td>
+              <td>$300.48</td><td>$0</td><td>$275.00</td><td>$0</td>
+              <td class="text-bold">$1,403.48</td>
+              <td><span class="bdg b-green">Paid ? ACH</span></td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Remittance</button></td>
+            </tr>
+            <tr>
+              <td>04 17,2026</td>
+              <td><code>BATCH-2026-04</code></td>
+              <td>Apr 2026</td>
+              <td>$250.40</td><td>$50.00</td><td>$0</td><td>$0</td>
+              <td class="text-bold">$1,301.40</td>
+              <td><span class="bdg b-green">Paid ? ACH</span></td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Remittance</button></td>
+            </tr>
+            <tr>
+              <td>03 17,2026</td>
+              <td><code>BATCH-2026-03</code></td>
+              <td>Mar 2026</td>
+              <td>$200.32</td><td>$0</td><td>$375.00</td><td>$0</td>
+              <td class="text-bold">$1,576.32</td>
+              <td><span class="bdg b-green">Paid ? ACH</span></td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Remittance</button></td>
+            </tr>
+            <tr>
+              <td>02 17,2026</td>
+              <td><code>BATCH-2026-02</code></td>
+              <td>Feb 2026</td>
+              <td>$150.24</td><td>$75.00</td><td>$0</td><td>$0</td>
+              <td class="text-bold">$1,026.24</td>
+              <td><span class="bdg b-green">Paid ? ACH</span></td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Remittance</button></td>
+            </tr>
+            <tr>
+              <td>01 17,2026</td>
+              <td><code>BATCH-2026-01</code></td>
+              <td>Jan 2026</td>
+              <td>$100.16</td><td>$25.00</td><td>$0</td><td>$0</td>
+              <td class="text-bold">$536.16</td>
+              <td><span class="bdg b-green">Paid ? ACH</span></td>
+              <td><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Remittance</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card mt16" style="margin-top:14px">
+      <div class="card-hdr"><h5>Banking Information on File</h5></div>
+      <div class="card-body" style="padding:14px;font-size:13px">
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <div><div class="text-muted text-sm">Account Type</div><div class="text-bold">Checking</div></div>
+          <div><div class="text-muted text-sm">Bank</div><div class="text-bold">Chase Bank</div></div>
+          <div><div class="text-muted text-sm">Account (masked)</div><div class="text-bold">****7834</div></div>
+          <div><div class="text-muted text-sm">Routing (masked)</div><div class="text-bold">****0021</div></div>
+          <div><div class="text-muted text-sm">Payment Method</div><div class="text-bold">ACH Direct Deposit</div></div>
+        </div>
+        <a href="payment-preferences.html" class="btn-ol btn-sm mt8"><i class="fas fa-edit"></i>Update Banking Info</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

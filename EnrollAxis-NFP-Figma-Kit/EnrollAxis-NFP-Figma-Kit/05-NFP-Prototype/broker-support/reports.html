@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- EN-92 Broker Support — Reports -->
+<title>Reports | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+        <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html" class="active"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Reports &amp; Analytics</h4><p style="font-size:12px;color:#5f6368;margin:0">Pipeline analytics, drop-off analysis, case statuses, and performance metrics</p></div>
+    <div class="dflex g8">
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Report Categories -->
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run Onboarding Pipeline Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-funnel-dollar" style="font-size:32px;color:#0277bd;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">Onboarding Pipeline</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Gate-by-gate conversion, drop-off points, time-in-stage breakdown</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run Enrollment Performance Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-chart-line" style="font-size:32px;color:#2e7d32;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">Enrollment Performance</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Enrollments by agent, agency, state. MTD/YTD with trend.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run Compliance Holds Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-ban" style="font-size:32px;color:#c62828;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">Compliance Hold Analysis</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Active holds by reason, duration, resolution time, repeat offenders</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run AHIP/Training Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-certificate" style="font-size:32px;color:#e65100;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">AHIP &amp; Training Status</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Certification pass rates, renewal status, expiration timeline</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run Support Ticket Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-ticket-alt" style="font-size:32px;color:#4a148c;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">Support Tickets</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Ticket volume, resolution time, category breakdown, SLA adherence</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="cursor:pointer" onclick="nfpAction('Run Lead Performance Report')">
+          <div class="card-body" style="padding:20px;text-align:center">
+            <i class="fas fa-phone-volume" style="font-size:32px;color:#0277bd;margin-bottom:12px"></i>
+            <h6 style="font-size:14px;font-weight:700">Lead Performance</h6>
+            <p style="font-size:12px;color:#5f6368;margin:8px 0 0">Lead assignment, conversion rates, agent response time, channel attribution</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Metrics -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-hdr"><h6><i class="fas fa-tachometer-alt" style="color:#0277bd;margin-right:8px"></i>Quick Metrics — This Month</h6></div>
+      <div class="card-body" style="padding:20px">
+        <div class="row g-3 text-center">
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#0277bd">87</div><div style="font-size:11px;color:#5f6368">Onboarding Started</div></div>
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#2e7d32">18</div><div style="font-size:11px;color:#5f6368">Activated</div></div>
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#e65100">12</div><div style="font-size:11px;color:#5f6368">In Onboarding</div></div>
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#c62828">3</div><div style="font-size:11px;color:#5f6368">Withdrawn</div></div>
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#4a148c">79.3%</div><div style="font-size:11px;color:#5f6368">Completion Rate</div></div>
+          <div class="col-md-2"><div style="font-size:24px;font-weight:700;color:#5f6368">8.4 days</div><div style="font-size:11px;color:#5f6368">Avg Time to Activate</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drop-off Analysis -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-chart-bar" style="color:#e65100;margin-right:8px"></i>Gate Drop-off Analysis (Last 90 Days)</h6></div>
+      <div class="card-body" style="padding:16px 20px;font-size:13px">
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>1. Registration</span><span style="font-weight:600">100% (87 started)</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:100%;background:#2e7d32;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>2. Personal & Business Info</span><span style="font-weight:600">94.3%</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:94%;background:#2e7d32;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>3. W-9 / Tax Documentation</span><span style="font-weight:600;color:#e65100">85.1% (−9.2pp drop)</span></div><div style="height:8px;background:#fff3e0;border-radius:4px"><div style="height:100%;width:85%;background:#e65100;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>4. AHIP Certification</span><span style="font-weight:600">82.8%</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:83%;background:#2e7d32;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>5. NIPR License Verification</span><span style="font-weight:600">81.6%</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:82%;background:#2e7d32;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>6. Plan-Specific Training</span><span style="font-weight:600;color:#e65100">77.0% (−4.6pp drop)</span></div><div style="height:8px;background:#fff3e0;border-radius:4px"><div style="height:100%;width:77%;background:#e65100;border-radius:4px"></div></div></div>
+        <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>7. Background Check</span><span style="font-weight:600">75.9%</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:76%;background:#2e7d32;border-radius:4px"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>8. Contract Execution & Activation</span><span style="font-weight:600;color:#2e7d32">79.3% final</span></div><div style="height:8px;background:#e8f5e9;border-radius:4px"><div style="height:100%;width:79%;background:#2e7d32;border-radius:4px"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

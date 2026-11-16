@@ -1,0 +1,1148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding Cases | NFP Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.case-status{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.cs-pending{background:#e3f2fd;color:#0d47a1}
+.cs-inreview{background:#fff8e1;color:#e65100}
+.cs-pendingapproval{background:#ede7f6;color:#4527a0}
+.cs-onhold{background:#fce4ec;color:#b71c1c}
+.cs-completed{background:#e8f5e9;color:#1b5e20}
+.cs-rejected{background:#f1f3f4;color:#5f6368}
+.cs-corrections{background:#fff3e0;color:#bf360c}
+.hold-reason-tag{background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:4px 10px;font-size:11px;color:#b71c1c;margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
+.case-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:0;margin-bottom:12px;overflow:hidden}
+.case-card-hdr{padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #f1f3f4}
+.case-card-body{padding:16px}
+.hier-change-banner{background:#fff8e1;border-left:4px solid #e65100;padding:10px 14px;font-size:12px;margin-bottom:12px;border-radius:0 6px 6px 0}
+.kpi-mini{background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:12px 16px;text-align:center}
+.kpi-mini .val{font-size:24px;font-weight:800;color:#1a237e}
+.kpi-mini .lbl{font-size:11px;color:#5f6368;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html" class="active"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Onboarding Cases</h4>
+      <ol class="breadcrumb-bar"><li>Hierarchy Readiness &nbsp;|&nbsp; Transfer Impact</li></ol>
+    </div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- US-1.18: Post-transfer banner (shown when navigated from transfer) -->
+    <div id="transferImpactBanner" style="display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px">
+      <div style="font-size:24px;color:#e65100;flex-shrink:0"><i class="fas fa-exchange-alt"></i></div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:14px;color:#e65100;margin-bottom:4px">Recent Hierarchy Transfer Impacted Onboarding Cases</div>
+        <div style="font-size:12px;color:#5f6368">A hierarchy transfer was recently executed. The cases below marked with the hierarchy update banner have had their hierarchy fields updated. Hierarchy readiness has been re-run. Broker Support has been notified.</div>
+      </div>
+      <button onclick="document.getElementById('transferImpactBanner').style.display='none'" style="background:none;border:none;color:#9e9e9e;cursor:pointer;font-size:16px">&times;</button>
+    </div>
+
+    <!-- KPI row -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="kpi-mini"><div class="val" id="kpiTotal">10</div><div class="lbl">Total Cases</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#0d47a1" id="kpiPending">3</div><div class="lbl">Pending</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#4527a0" id="kpiPendingApproval">1</div><div class="lbl">Pending Admin Approval</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#e65100" id="kpiInReview">3</div><div class="lbl">In Review</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#b71c1c" id="kpiOnHold">2</div><div class="lbl">On Hold</div></div></div>
+      <div class="col-1"><div class="kpi-mini"><div class="val" style="color:#1b5e20" id="kpiCompleted">0</div><div class="lbl">Completed</div></div></div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <label style="font-size:12px;font-weight:600">Status:</label>
+      <select id="caseFilterStatus" class="form-control" style="width:160px" onchange="filterCases()">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Pending Admin Approval">Pending Admin Approval</option>
+        <option value="In Review">In Review</option>
+        <option value="On Hold - Hierarchy Issue">On Hold - Hierarchy Issue</option>
+        <option value="On Hold - Compliance">On Hold - Compliance</option>
+        <option value="Corrections Required">Corrections Required</option>
+        <option value="Completed">Completed</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Plan Year:</label>
+      <select id="caseFilterYear" class="form-control" style="width:100px" onchange="filterCases()">
+        <option value="">All</option>
+        <option value="2026" selected>2026</option>
+        <option value="2027">2027</option>
+      </select>
+      <label style="font-size:12px;font-weight:600">Search:</label>
+      <input id="caseFilterSearch" class="form-control" placeholder="Agent name, NPN, case ID..." style="width:220px" oninput="filterCases()">
+      <button class="btn-ol btn-sm" onclick="document.getElementById('caseFilterStatus').value='';document.getElementById('caseFilterSearch').value='';filterCases()"><i class="fas fa-times"></i> Clear</button>
+      <button class="btn-pr btn-sm" style="margin-left:auto" onclick="openNewCase()"><i class="fas fa-plus"></i> New Case</button>
+    </div>
+
+    <!-- Cases table -->
+    <div class="card">
+      <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between">
+        <h5>Onboarding Cases</h5>
+        <span id="caseCount" style="font-size:12px;color:#5f6368"></span>
+        <button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','onboarding-cases_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1" id="casesTable">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>Agent Name</th>
+              <th>NPN</th>
+              <th>Level</th>
+              <th>Upline Org</th>
+              <th>Plan Year</th>
+              <th>Status</th>
+              <th>Hierarchy Updated</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="casesTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+</div><!-- /main -->
+</div><!-- /wrapper -->
+<!-- Case Detail Modal -->
+<div class="modal-overlay" id="caseDetailModal" style="display:none">
+  <div class="modal-box" style="max-width:860px;width:97%;max-height:90vh;display:flex;flex-direction:column">
+    <div class="modal-hdr" style="flex-shrink:0">
+      <h5 id="caseDetailTitle">Case Detail</h5>
+      <button class="modal-close" onclick="document.getElementById('caseDetailModal').style.display='none'">&times;</button>
+    </div>
+    <!-- Tab bar -->
+    <div style="display:flex;gap:0;border-bottom:2px solid #e8eaed;flex-shrink:0;padding:0 20px;background:#fafafa">
+      <button class="cd-tab active" onclick="switchCdTab('cd-overview',this)">Overview</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-personal',this)">Personal &amp; Business</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-tax',this)">W-9 &amp; Payment</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-license',this)">License &amp; AHIP</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-training',this)">Training</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-background',this)">Background</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-contract',this)">Contract</button>
+      <button class="cd-tab" onclick="switchCdTab('cd-audit',this)">Audit Trail</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto;flex:1" id="caseDetailBody"></div>
+  </div>
+</div>
+<style>
+.cd-tab{background:none;border:none;padding:10px 16px;font-size:12px;font-weight:600;color:#5f6368;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.cd-tab:hover{color:#1a237e}
+.cd-tab.active{color:#1a237e;border-bottom-color:#1a237e}
+.cd-section{display:none}
+.cd-section.active{display:block}
+.cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;margin-bottom:14px}
+.cd-grid.three{grid-template-columns:1fr 1fr 1fr}
+.cd-field{background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px}
+.cd-field .lbl{font-size:10px;color:#5f6368;margin-bottom:2px;text-transform:uppercase;letter-spacing:.3px}
+.cd-field .val{font-size:12px;font-weight:600;color:#202124}
+.cd-sec-hdr{font-size:11px;font-weight:700;color:#1a237e;text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.step-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+.sc-done{background:#e8f5e9;color:#1b5e20}
+.sc-pending{background:#e3f2fd;color:#0d47a1}
+.sc-skip{background:#fff8e1;color:#e65100}
+.sc-na{background:#f1f3f4;color:#5f6368}
+</style>
+
+<!-- Release Hold Confirmation Modal -->
+<div class="modal-overlay" id="releaseHoldModal" style="display:none">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-unlock" style="margin-right:8px;color:#1b5e20"></i>Release Hierarchy Hold</h5>
+      <button class="modal-close" onclick="document.getElementById('releaseHoldModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px 14px;font-size:13px;margin-bottom:16px">
+        <i class="fas fa-exclamation-triangle" style="color:#e65100;margin-right:6px"></i>
+        <strong>Confirm Release:</strong> You are releasing the On Hold status for case <strong id="releaseHoldCaseId"></strong>. Confirm that all hierarchy issues have been resolved before proceeding.
+      </div>
+      <div class="mb-3">
+        <label style="font-size:12px;font-weight:600">Resolution Notes <span class="req">*</span></label>
+        <textarea id="releaseHoldNotes" class="form-control" rows="3" placeholder="Describe what was resolved (required for audit trail)..."></textarea>
+      </div>
+      <div id="releaseHoldAlert" style="display:none;margin-bottom:10px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="document.getElementById('releaseHoldModal').style.display='none'">Cancel</button>
+        <button class="btn-pr" style="background:#1b5e20" onclick="confirmReleaseHold()"><i class="fas fa-unlock" style="margin-right:4px"></i>Release Hold</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Request Corrections Modal -->
+<div class="modal-overlay" id="correctionsModal" style="display:none">
+  <div class="modal-box" style="max-width:620px;width:97%">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-comment-dots" style="margin-right:8px;color:#bf360c"></i>Request Corrections — <span id="corrCaseId"></span></h5>
+      <button class="modal-close" onclick="document.getElementById('correctionsModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:10px 14px;font-size:12px;color:#bf360c;margin-bottom:16px">
+        <i class="fas fa-exclamation-triangle" style="margin-right:6px"></i>
+        Flag the specific onboarding steps that need correction and add itemized comments. The agent/agency will be notified and the case will move to <strong>Corrections Required</strong>.
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:#37474f;margin-bottom:8px">Flag Steps Needing Correction</div>
+      <div id="corrStepList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        <div class="corr-step-row" data-step="1">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep1" class="corr-chk" onchange="toggleCorrComment(1)">
+            <label for="corrStep1" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 1 — Invitation &amp; Registration</label>
+          </div>
+          <textarea id="corrComment1" class="form-control corr-txt" rows="2" placeholder="Describe what needs to be corrected for Step 1..." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="2">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep2" class="corr-chk" onchange="toggleCorrComment(2)">
+            <label for="corrStep2" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 2 — Personal &amp; Business Information</label>
+          </div>
+          <textarea id="corrComment2" class="form-control corr-txt" rows="2" placeholder="e.g. Business address is incomplete — ZIP code missing." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="3">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep3" class="corr-chk" onchange="toggleCorrComment(3)">
+            <label for="corrStep3" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 3 — W-9 &amp; Payment</label>
+          </div>
+          <textarea id="corrComment3" class="form-control corr-txt" rows="2" placeholder="e.g. W-9 form is missing agent signature. Please re-upload a signed copy." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="4">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep4" class="corr-chk" onchange="toggleCorrComment(4)">
+            <label for="corrStep4" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 4 — AHIP &amp; License Verification</label>
+          </div>
+          <textarea id="corrComment4" class="form-control corr-txt" rows="2" placeholder="e.g. Florida license document not uploaded. AHIP certificate number does not match records." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="5">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep5" class="corr-chk" onchange="toggleCorrComment(5)">
+            <label for="corrStep5" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 5 — Training &amp; Certification</label>
+          </div>
+          <textarea id="corrComment5" class="form-control corr-txt" rows="2" placeholder="e.g. Training not yet completed for all 4 segments." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="6">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep6" class="corr-chk" onchange="toggleCorrComment(6)">
+            <label for="corrStep6" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 6 — Background Check</label>
+          </div>
+          <textarea id="corrComment6" class="form-control corr-txt" rows="2" placeholder="e.g. Background check invitation not yet sent. Please complete vendor authorization." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+        <div class="corr-step-row" data-step="7">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="corrStep7" class="corr-chk" onchange="toggleCorrComment(7)">
+            <label for="corrStep7" style="font-size:12px;font-weight:600;cursor:pointer;margin:0">Step 7 — Contract Execution</label>
+          </div>
+          <textarea id="corrComment7" class="form-control corr-txt" rows="2" placeholder="e.g. Contract not yet signed. Electronic signature required before approval." style="display:none;margin-top:6px;font-size:12px"></textarea>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:#37474f;margin-bottom:6px">Overall Note to Agent / Agency <span style="font-weight:400;color:#9e9e9e">(optional)</span></div>
+      <textarea id="corrOverallNote" class="form-control" rows="3" placeholder="Add a general message to accompany the itemized corrections (e.g., 'Please address all flagged items and resubmit within 5 business days.')..." style="font-size:12px;margin-bottom:16px"></textarea>
+
+      <div id="corrAlert" style="display:none;margin-bottom:10px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="document.getElementById('correctionsModal').style.display='none'">Cancel</button>
+        <button class="btn-pr" style="background:#bf360c" onclick="submitCorrections()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Correction Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Approval Modal -->
+<div class="modal-overlay" id="approvalModal" style="display:none">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-hdr">
+      <h5 id="approvalModalTitle"><i class="fas fa-user-check" style="margin-right:8px;color:#4527a0"></i>Admin Approval Decision</h5>
+      <button class="modal-close" onclick="document.getElementById('approvalModal').style.display='none'">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div id="approvalCaseBanner" style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:10px 12px;font-size:12px;color:#4a148c;margin-bottom:12px"></div>
+      <div class="mb-3">
+        <label style="font-size:12px;font-weight:600">Reviewer Notes <span class="req">*</span></label>
+        <textarea id="approvalNotes" class="form-control" rows="3" placeholder="Add decision rationale for audit trail..."></textarea>
+      </div>
+      <div id="approvalAlert" style="display:none;margin-bottom:10px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="document.getElementById('approvalModal').style.display='none'">Cancel</button>
+        <button class="btn-pr" id="approvalConfirmBtn" onclick="submitApprovalDecision()"><i class="fas fa-check" style="margin-right:4px"></i>Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Case Modal -->
+<div class="modal-overlay" id="newCaseModal" style="display:none">
+  <div class="modal-box" style="max-width:620px;width:95%">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-plus-circle" style="margin-right:8px;color:#1a237e"></i>Create New Onboarding Case</h5>
+      <button class="modal-close" onclick="closeNewCaseModal()">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div class="form-row two" style="margin-bottom:10px">
+        <div class="fg"><label>Agent Name <span class="req">*</span></label><input type="text" id="newCaseAgentName" class="form-control" placeholder="e.g. John Smith"></div>
+        <div class="fg"><label>NPN</label><input type="text" id="newCaseNpn" class="form-control" placeholder="Numeric NPN"></div>
+      </div>
+      <div class="form-row two" style="margin-bottom:10px">
+        <div class="fg"><label>Hierarchy Level <span class="req">*</span></label>
+          <select id="newCaseLevel" class="form-control">
+            <option value="">Select level</option>
+            <option>Agent/Broker</option>
+            <option>GA</option>
+            <option>MGA</option>
+            <option>SGA</option>
+            <option>FMO</option>
+          </select>
+        </div>
+        <div class="fg"><label>Plan Year <span class="req">*</span></label>
+          <select id="newCasePlanYear" class="form-control">
+            <option value="">Select year</option>
+            <option selected>2026</option>
+            <option>2027</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:10px">
+        <div class="fg"><label>Upline Organization <span class="req">*</span></label><input type="text" id="newCaseUpline" class="form-control" placeholder="e.g. HealthFirst Distribution (GA-2201)"></div>
+      </div>
+      <div class="form-row" style="margin-bottom:8px">
+        <div class="fg"><label>Agent Email</label><input type="email" id="newCaseEmail" class="form-control" placeholder="agent@email.com"></div>
+      </div>
+      <div id="newCaseAlert" style="display:none;margin-bottom:10px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn-ol" onclick="closeNewCaseModal()">Cancel</button>
+        <button class="btn-pr" onclick="createNewCase()"><i class="fas fa-save" style="margin-right:4px"></i>Create Case</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* =========================================================
+   US-1.17 + US-1.18: ONBOARDING CASES DATA
+   ========================================================= */
+var CASES = [
+  {
+    id:'OB-2026-0441',agentName:'Robert Chen',npn:'98765432',level:'Agent/Broker',
+    uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',
+    status:'Pending Admin Approval',created:'2026-05-21',
+    invitationId:'tk_001',holdReasons:[],hierarchyUpdated:false,
+    agentEmail:'rchen@email.com',agentPhone:'(305) 555-0122',
+    form:{
+      personal:{firstName:'Robert',middleName:'J',lastName:'Chen',dob:'1981-07-14',ssn:'***-**-6712',phone:'(305) 555-0122',email:'rchen@email.com',smsConsent:true,emailConsent:true},
+      business:{street:'2100 Coral Way',suite:'Suite 305',city:'Miami',state:'FL',zip:'33145'},
+      tax:{entity:'Individual / Sole Proprietor',tin:'***-**-6712',taxName:'Robert J Chen',payMethod:'ACH',bankName:'Bank of America',routing:'026009593',account:'****4421',accountType:'Checking',w9Uploaded:true},
+      ahip:{cert:'AHIP-2026-RC-44210',date:'2026-01-10',validThru:'2027-01-10',states:[{st:'FL',licNum:'FL-AG-204812',eff:'2022-03-01',exp:'2027-02-28',lobs:['Medicare Advantage (MA)','C-SNP (ESRD)']},{st:'GA',licNum:'GA-AG-998801',eff:'2023-06-15',exp:'2026-06-14',lobs:['Medicare Advantage (MA)']}]},
+      training:{segA:{score:100,time:'4m 12s',status:'Passed'},segB:{score:80,time:'3m 55s',status:'Passed'},segC:{score:100,time:'5m 02s',status:'Passed'},segD:{score:80,time:'2m 48s',status:'Passed'},overall:'90%',totalTime:'16m 57s',passed:true},
+      background:{consentGiven:true,vendor:'Sterling Talent Solutions',inviteSent:'2026-05-22 09:30',status:'Awaiting Vendor Completion'},
+      contract:{signed:true,sigName:'Robert J Chen',sigDate:'2026-05-23',contractVersion:'v3.2',agreed:true}
+    },
+    auditTrail:[
+      {ts:'2026-05-21 10:14',event:'Case Created',user:'System',note:'Via invitation tk_001'},
+      {ts:'2026-05-21 10:40',event:'Hierarchy Readiness Check Passed',user:'System',note:'All 4 checks passed'},
+      {ts:'2026-05-23 08:55',event:'Training Completed',user:'System',note:'All assigned training and certification checks passed'},
+      {ts:'2026-05-23 09:00',event:'Status ? Pending Admin Approval',user:'System',note:'Awaiting explicit payer admin/case manager approval before Ready'}
+    ]
+  },
+  {
+    id:'OB-2026-0467',agentName:'Jennifer Lopez',npn:'',level:'Agent/Broker',
+    uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',
+    status:'Pending',created:'2026-05-25',
+    invitationId:'tk_004',holdReasons:[],hierarchyUpdated:false,
+    agentEmail:'jlopez@email.com',agentPhone:'(786) 555-0199',
+    form:{
+      personal:{firstName:'Jennifer',middleName:'',lastName:'Lopez',dob:'1990-03-22',ssn:'***-**-3341',phone:'(786) 555-0199',email:'jlopez@email.com',smsConsent:true,emailConsent:false},
+      business:{street:'800 Brickell Ave',suite:'',city:'Miami',state:'FL',zip:'33131'},
+      tax:{entity:'',tin:'',taxName:'',payMethod:'',bankName:'',routing:'',account:'',accountType:'',w9Uploaded:false},
+      ahip:{cert:'',date:'',validThru:'',states:[]},
+      training:{segA:null,segB:null,segC:null,segD:null,overall:'0%',totalTime:'—',passed:false},
+      background:{consentGiven:false,vendor:'Sterling Talent Solutions',inviteSent:'',status:'Not Started'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-25 14:32',event:'Case Created',user:'System',note:'Via invitation tk_004'},
+      {ts:'2026-05-25 14:33',event:'Hierarchy Readiness Check Passed',user:'System',note:'All 4 checks passed'}
+    ]
+  },
+  {
+    id:'OB-2026-0449',agentName:'Maria Santos',npn:'',level:'Agent/Broker',
+    uplineOrg:'Coastal Medicare Partners (GA-2288)',planYear:'2026',
+    status:'On Hold - Hierarchy Issue',created:'2026-05-22',
+    invitationId:'tk_002',
+    holdReasons:[
+      'Upline organization Coastal Medicare Partners is inactive. Reactivate before proceeding.',
+      'Payment routing is not configured for Agent/Broker in plan year 2026.'
+    ],
+    hierarchyUpdated:false,
+    agentEmail:'msantos@email.com',agentPhone:'(954) 555-0187',
+    form:{
+      personal:{firstName:'Maria',middleName:'E',lastName:'Santos',dob:'1985-11-08',ssn:'***-**-7892',phone:'(954) 555-0187',email:'msantos@email.com',smsConsent:true,emailConsent:true},
+      business:{street:'1501 N Federal Hwy',suite:'Suite 210',city:'Fort Lauderdale',state:'FL',zip:'33304'},
+      tax:{entity:'Individual / Sole Proprietor',tin:'***-**-7892',taxName:'Maria E Santos',payMethod:'ACH',bankName:'Wells Fargo',routing:'121000248',account:'****9910',accountType:'Checking',w9Uploaded:true},
+      ahip:{cert:'AHIP-2026-MS-77651',date:'2026-01-18',validThru:'2027-01-18',states:[{st:'FL',licNum:'FL-AG-330291',eff:'2021-09-01',exp:'2026-08-31',lobs:['Medicare Advantage (MA)','C-SNP (CKD)']}]},
+      training:{segA:{score:80,time:'3m 30s',status:'Passed'},segB:{score:60,time:'4m 10s',status:'Passed'},segC:null,segD:null,overall:'35%',totalTime:'7m 40s',passed:false},
+      background:{consentGiven:false,vendor:'Sterling Talent Solutions',inviteSent:'',status:'Not Started'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-22 09:00',event:'Case Created',user:'System',note:'Via invitation tk_002'},
+      {ts:'2026-05-22 09:01',event:'Hierarchy Readiness Check Failed',user:'System',note:'2 checks failed - case placed On Hold'},
+      {ts:'2026-05-22 09:02',event:'Admin Notification Sent',user:'System',note:'Email sent to Sandra Adams listing 2 failed checks'}
+    ]
+  },
+  {
+    id:'OB-2026-0328',agentName:'Michael Torres',npn:'5544332211',level:'Agent/Broker',
+    uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',
+    status:'Pending',created:'2026-05-15',
+    invitationId:'',holdReasons:[],hierarchyUpdated:true,
+    agentEmail:'mtorres@email.com',agentPhone:'(407) 555-0155',
+    form:{
+      personal:{firstName:'Michael',middleName:'A',lastName:'Torres',dob:'1978-04-30',ssn:'***-**-5521',phone:'(407) 555-0155',email:'mtorres@email.com',smsConsent:false,emailConsent:true},
+      business:{street:'4300 W Lake Mary Blvd',suite:'Suite 120',city:'Lake Mary',state:'FL',zip:'32746'},
+      tax:{entity:'LLC (Single Member)',tin:'***-**-5521',taxName:'Michael A Torres LLC',payMethod:'Check',bankName:'',routing:'',account:'',accountType:'',w9Uploaded:true,checkAddr:'4300 W Lake Mary Blvd, Lake Mary, FL 32746'},
+      ahip:{cert:'AHIP-2026-MT-33890',date:'2026-02-05',validThru:'2027-02-05',states:[{st:'FL',licNum:'FL-AG-119023',eff:'2020-01-01',exp:'2027-12-31',lobs:['Medicare Advantage (MA)','MAPD']}]},
+      training:{segA:{score:100,time:'5m 00s',status:'Passed'},segB:{score:100,time:'4m 20s',status:'Passed'},segC:{score:80,time:'3m 50s',status:'Passed'},segD:{score:80,time:'3m 10s',status:'Passed'},overall:'90%',totalTime:'16m 20s',passed:true},
+      background:{consentGiven:true,vendor:'Sterling Talent Solutions',inviteSent:'2026-05-18 11:00',status:'Awaiting Vendor Completion'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-15 11:22',event:'Case Created',user:'System',note:'Direct registration'},
+      {ts:'2026-05-15 11:23',event:'Hierarchy Readiness Check Passed',user:'System',note:'All 4 checks passed'},
+      {ts:'2026-05-27 08:05',event:'Hierarchy Updated',user:'System',note:'Transfer TFR-2026-4821 executed - hierarchy fields updated'},
+      {ts:'2026-05-27 08:06',event:'Hierarchy Readiness Re-Check Passed',user:'System',note:'Re-ran 4 checks on new hierarchy - all passed'}
+    ]
+  },
+  {
+    id:'OB-2026-0291',agentName:'Angela Williams',npn:'8877665544',level:'Agent/Broker',
+    uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',
+    status:'In Review',created:'2026-05-10',
+    invitationId:'',holdReasons:[],hierarchyUpdated:true,
+    agentEmail:'awilliams@email.com',agentPhone:'(561) 555-0173',
+    form:{
+      personal:{firstName:'Angela',middleName:'M',lastName:'Williams',dob:'1983-09-15',ssn:'***-**-4418',phone:'(561) 555-0173',email:'awilliams@email.com',smsConsent:true,emailConsent:true},
+      business:{street:'701 Clematis St',suite:'Suite 400',city:'West Palm Beach',state:'FL',zip:'33401'},
+      tax:{entity:'Individual / Sole Proprietor',tin:'***-**-4418',taxName:'Angela M Williams',payMethod:'ACH',bankName:'Chase Bank',routing:'021000021',account:'****7832',accountType:'Checking',w9Uploaded:true},
+      ahip:{cert:'AHIP-2026-AW-55120',date:'2026-01-28',validThru:'2027-01-28',states:[{st:'FL',licNum:'FL-AG-228810',eff:'2019-04-01',exp:'2027-03-31',lobs:['Medicare Advantage (MA)','C-SNP (ESRD)','C-SNP (CKD)']}]},
+      training:{segA:{score:100,time:'4m 45s',status:'Passed'},segB:{score:80,time:'3m 30s',status:'Passed'},segC:{score:100,time:'4m 55s',status:'Passed'},segD:{score:100,time:'3m 00s',status:'Passed'},overall:'95%',totalTime:'16m 10s',passed:true},
+      background:{consentGiven:true,vendor:'Sterling Talent Solutions',inviteSent:'2026-05-13 10:15',status:'Awaiting Vendor Completion'},
+      contract:{signed:true,sigName:'Angela M Williams',sigDate:'2026-05-14',contractVersion:'v3.2',agreed:true}
+    },
+    auditTrail:[
+      {ts:'2026-05-10 14:00',event:'Case Created',user:'System',note:'Direct registration'},
+      {ts:'2026-05-12 10:30',event:'Status ? In Review',user:'Sandra Adams',note:'Documents submitted for review'},
+      {ts:'2026-05-27 08:05',event:'Hierarchy Updated',user:'System',note:'Transfer TFR-2026-4821 executed - hierarchy fields updated'},
+      {ts:'2026-05-27 08:06',event:'Hierarchy Readiness Re-Check Passed',user:'System',note:'All checks passed on new hierarchy'}
+    ]
+  },
+  {
+    id:'OB-2026-0510',agentName:'David Kim',npn:'55443322',level:'GA',
+    uplineOrg:'SunBridge Medicare Advisors (MGA-1014)',planYear:'2026',
+    status:'On Hold - Hierarchy Issue',created:'2026-05-26',
+    invitationId:'tk_003',
+    holdReasons:[
+      'No plan year configuration exists for 2026. Contact Finance Admin.',
+      'Payment routing is not configured for GA in plan year 2026.'
+    ],
+    hierarchyUpdated:false,
+    agentEmail:'dkim@email.com',agentPhone:'(213) 555-0141',
+    form:{
+      personal:{firstName:'David',middleName:'S',lastName:'Kim',dob:'1975-12-01',ssn:'***-**-8801',phone:'(213) 555-0141',email:'dkim@email.com',smsConsent:false,emailConsent:false},
+      business:{street:'3800 Wilshire Blvd',suite:'Suite 900',city:'Los Angeles',state:'CA',zip:'90010'},
+      tax:{entity:'Corporation',tin:'***-**-8801',taxName:'DK Medicare Solutions Inc',payMethod:'ACH',bankName:'US Bank',routing:'091000022',account:'****3309',accountType:'Checking',w9Uploaded:true},
+      ahip:{cert:'AHIP-2026-DK-90123',date:'2026-02-11',validThru:'2027-02-11',states:[{st:'CA',licNum:'CA-AG-778821',eff:'2018-01-01',exp:'2027-12-31',lobs:['Medicare Advantage (MA)','MAPD']}]},
+      training:{segA:{score:100,time:'3m 50s',status:'Passed'},segB:{score:80,time:'4m 05s',status:'Passed'},segC:{score:80,time:'4m 30s',status:'Passed'},segD:{score:60,time:'2m 55s',status:'Passed'},overall:'80%',totalTime:'15m 20s',passed:false},
+      background:{consentGiven:false,vendor:'Sterling Talent Solutions',inviteSent:'',status:'Not Started'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-26 16:10',event:'Case Created',user:'System',note:'Via invitation tk_003'},
+      {ts:'2026-05-26 16:11',event:'Hierarchy Readiness Check Failed',user:'System',note:'2 checks failed - SunBridge has no plan year config or payment routing'},
+      {ts:'2026-05-26 16:12',event:'Admin Notification Sent',user:'System',note:'Email sent to Sandra Adams'}
+    ]
+  },
+  {
+    id:'OB-2026-0388',agentName:'Lisa Johnson',npn:'66778899',level:'Agent/Broker',
+    uplineOrg:'Coastal Medicare Partners (GA-2288)',planYear:'2026',
+    status:'Pending',created:'2026-05-26',
+    invitationId:'tk_008',holdReasons:[],hierarchyUpdated:false,
+    agentEmail:'ljohnson@email.com',agentPhone:'(904) 555-0166',
+    form:{
+      personal:{firstName:'Lisa',middleName:'',lastName:'Johnson',dob:'1992-06-19',ssn:'***-**-2214',phone:'(904) 555-0166',email:'ljohnson@email.com',smsConsent:true,emailConsent:true},
+      business:{street:'1 Independent Dr',suite:'',city:'Jacksonville',state:'FL',zip:'32202'},
+      tax:{entity:'Individual / Sole Proprietor',tin:'***-**-2214',taxName:'Lisa Johnson',payMethod:'ACH',bankName:'SunTrust',routing:'061000104',account:'****6678',accountType:'Savings',w9Uploaded:true},
+      ahip:{cert:'',date:'',validThru:'',states:[]},
+      training:{segA:null,segB:null,segC:null,segD:null,overall:'0%',totalTime:'—',passed:false},
+      background:{consentGiven:false,vendor:'Sterling Talent Solutions',inviteSent:'',status:'Not Started'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-26 17:55',event:'Case Created',user:'System',note:'Via invitation tk_008'},
+      {ts:'2026-05-26 17:56',event:'Hierarchy Readiness Check Passed',user:'System',note:'All 4 checks passed'}
+    ]
+  },
+  {
+    id:'OB-2026-0533',agentName:'Priya Patel',npn:'91827364',level:'Agent/Broker',
+    uplineOrg:'SunBridge Medicare Advisors (MGA-1014)',planYear:'2026',
+    status:'In Review',created:'2026-05-29',
+    invitationId:'tk_011',holdReasons:[],hierarchyUpdated:false,
+    agentEmail:'ppatel@email.com',agentPhone:'(312) 555-0188',
+    form:{
+      personal:{firstName:'Priya',middleName:'K',lastName:'Patel',dob:'1988-02-14',ssn:'***-**-9102',phone:'(312) 555-0188',email:'ppatel@email.com',smsConsent:true,emailConsent:true},
+      business:{street:'233 S Wacker Dr',suite:'Suite 4400',city:'Chicago',state:'IL',zip:'60606'},
+      tax:{entity:'Individual / Sole Proprietor',tin:'***-**-9102',taxName:'Priya K Patel',payMethod:'ACH',bankName:'Chase Bank',routing:'021000021',account:'****5571',accountType:'Checking',w9Uploaded:true},
+      ahip:{cert:'AHIP-2026-PP-60120',date:'2026-02-20',validThru:'2027-02-20',states:[{st:'IL',licNum:'IL-AG-441209',eff:'2021-05-01',exp:'2027-04-30',lobs:['Medicare Advantage (MA)','C-SNP (ESRD)','MAPD']}]},
+      training:{segA:{score:100,time:'3m 55s',status:'Passed'},segB:{score:80,time:'4m 10s',status:'Passed'},segC:{score:80,time:'4m 45s',status:'Passed'},segD:{score:100,time:'2m 50s',status:'Passed'},overall:'90%',totalTime:'15m 40s',passed:true},
+      background:{consentGiven:true,vendor:'Sterling Talent Solutions',inviteSent:'2026-05-30 10:00',status:'Awaiting Vendor Completion'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-29 09:10',event:'Case Created',user:'System',note:'Via invitation tk_011'},
+      {ts:'2026-05-29 09:12',event:'Hierarchy Readiness Check Passed',user:'System',note:'All 4 checks passed'},
+      {ts:'2026-05-31 14:20',event:'Training Completed',user:'System',note:'All 4 segments passed — overall 90%'},
+      {ts:'2026-06-01 08:45',event:'Status ? In Review',user:'Sandra Adams',note:'Documents under review pending background check result'}
+    ]
+  },
+  {
+    id:'OB-2026-0201',agentName:'Carlos Mendez',npn:'',level:'Agent/Broker',
+    uplineOrg:'HealthFirst Distribution (GA-2201)',planYear:'2026',
+    status:'Rejected',created:'2026-05-14',
+    invitationId:'tk_007',holdReasons:[],hierarchyUpdated:false,
+    agentEmail:'cmendez@email.com',agentPhone:'',
+    form:{
+      personal:{firstName:'Carlos',middleName:'',lastName:'Mendez',dob:'',ssn:'',phone:'',email:'cmendez@email.com',smsConsent:false,emailConsent:false},
+      business:{street:'',suite:'',city:'',state:'',zip:''},
+      tax:{entity:'',tin:'',taxName:'',payMethod:'',bankName:'',routing:'',account:'',accountType:'',w9Uploaded:false},
+      ahip:{cert:'',date:'',validThru:'',states:[]},
+      training:{segA:null,segB:null,segC:null,segD:null,overall:'0%',totalTime:'—',passed:false},
+      background:{consentGiven:false,vendor:'',inviteSent:'',status:'Not Started'},
+      contract:{signed:false,sigName:'',sigDate:'',contractVersion:'v3.2',agreed:false}
+    },
+    auditTrail:[
+      {ts:'2026-05-14 09:00',event:'Case Created',user:'System',note:'Via invitation tk_007'},
+      {ts:'2026-05-17 11:00',event:'Status ? Rejected',user:'Sandra Adams',note:'Invitation cancelled before registration'}
+    ]
+  }
+];
+
+var CURRENT_HOLD_CASE_ID = null;
+var CURRENT_APPROVAL_CASE_ID = null;
+var CURRENT_APPROVAL_ACTION = null;
+
+/* =========================================================
+   RENDER TABLE
+   ========================================================= */
+function renderCasesTable(data){
+  var tbody = document.getElementById('casesTbody');
+  if(!data.length){
+    tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:#9e9e9e;padding:24px">No cases match the current filters.</td></tr>';
+    document.getElementById('caseCount').textContent='0 cases';
+    return;
+  }
+  document.getElementById('caseCount').textContent=data.length+' case'+(data.length!==1?'s':'');
+  tbody.innerHTML = data.map(function(c){
+    var sc = c.status==='Completed'?'cs-completed':c.status==='Rejected'?'cs-rejected':c.status==='Corrections Required'?'cs-corrections':c.status==='Pending Admin Approval'?'cs-pendingapproval':c.status.indexOf('On Hold')>=0?'cs-onhold':c.status==='In Review'?'cs-inreview':'cs-pending';
+    var hierBadge = c.hierarchyUpdated?'<span style="background:#fff8e1;color:#e65100;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:600;margin-left:4px"><i class="fas fa-exchange-alt"></i> Updated</span>':'<span style="color:#bdbdbd;font-size:11px">N/A</span>';
+    var actions = '';
+    if(c.status==='Pending Admin Approval'){
+      actions += '<button class="btn-pr btn-sm" style="background:#1b5e20;font-size:11px;margin-right:4px" onclick="openApprovalDecision(\''+c.id+'\',\'approve\')"><i class="fas fa-user-check"></i> Approve Ready</button>';
+      actions += '<button class="btn-ol btn-sm" style="font-size:11px;margin-right:4px;color:#bf360c;border-color:#bf360c" onclick="openCorrectionsModal(\''+c.id+'\')" title="Request Corrections"><i class="fas fa-comment-dots"></i> Request Corrections</button>';
+      actions += '<button class="btn-ol btn-sm" style="font-size:11px;margin-right:4px;border-color:#b71c1c;color:#b71c1c" onclick="openApprovalDecision(\''+c.id+'\',\'deny\')"><i class="fas fa-user-times"></i> Deny</button>';
+    }
+    if(c.status==='In Review' || c.status==='Corrections Required'){
+      actions += '<button class="btn-ol btn-sm" style="font-size:11px;margin-right:4px;color:#bf360c;border-color:#bf360c" onclick="openCorrectionsModal(\''+c.id+'\')" title="Request Corrections"><i class="fas fa-comment-dots"></i> Request Corrections</button>';
+    }
+    if(c.status.indexOf('On Hold - Hierarchy')>=0){
+      actions += '<button class="btn-pr btn-sm" style="background:#1b5e20;font-size:11px;margin-right:4px" onclick="openReleaseHold(\''+c.id+'\')"><i class="fas fa-unlock"></i> Release Hold</button>';
+    }
+    actions += '<button class="btn-ol btn-sm" style="font-size:11px" onclick="openCaseDetail(\''+c.id+'\')"><i class="fas fa-eye"></i></button>';
+    return '<tr>'
+      +'<td style="font-weight:700;color:#1a237e">'+c.id+'</td>'
+      +'<td>'+c.agentName+'</td>'
+      +'<td style="font-family:monospace">'+( c.npn||'<span style="color:#bdbdbd">N/A</span>')+'</td>'
+      +'<td>'+c.level+'</td>'
+      +'<td style="font-size:12px">'+c.uplineOrg+'</td>'
+      +'<td>'+c.planYear+'</td>'
+      +'<td><span class="case-status '+sc+'">'+c.status+'</span></td>'
+      +'<td>'+hierBadge+'</td>'
+      +'<td style="font-size:11px;color:#5f6368">'+c.created+'</td>'
+      +'<td>'+actions+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function filterCases(){
+  var status = document.getElementById('caseFilterStatus').value;
+  var year   = document.getElementById('caseFilterYear').value;
+  var search = document.getElementById('caseFilterSearch').value.toLowerCase();
+  var filtered = CASES.filter(function(c){
+    if(status && c.status !== status) return false;
+    if(year && c.planYear !== year) return false;
+    if(search){
+      var hay = (c.id+c.agentName+c.npn+c.uplineOrg).toLowerCase();
+      if(hay.indexOf(search)<0) return false;
+    }
+    return true;
+  });
+  renderCasesTable(filtered);
+}
+
+/* =========================================================
+   CASE DETAIL MODAL — tabbed full onboarding form view
+   ========================================================= */
+function field(lbl, val) {
+  return '<div class="cd-field"><div class="lbl">'+lbl+'</div><div class="val">'+(val||'<span style="color:#bdbdbd">—</span>')+'</div></div>';
+}
+function boolChip(v, yesLabel, noLabel) {
+  return v ? '<span class="step-chip sc-done"><i class="fas fa-check"></i> '+(yesLabel||'Yes')+'</span>'
+           : '<span class="step-chip sc-na"><i class="fas fa-times"></i> '+(noLabel||'No')+'</span>';
+}
+function segChip(seg) {
+  if(!seg) return '<span class="step-chip sc-na">Not Started</span>';
+  return '<span class="step-chip sc-done"><i class="fas fa-check"></i> '+seg.score+'% &bull; '+seg.time+'</span>';
+}
+function switchCdTab(id, btn) {
+  document.querySelectorAll('.cd-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.cd-tab').forEach(function(b){ b.classList.remove('active'); });
+  var sec = document.getElementById(id);
+  if(sec) sec.classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+function openCaseDetail(id){
+  var c = CASES.find(function(x){return x.id===id;});
+  if(!c) return;
+  document.getElementById('caseDetailTitle').textContent = 'Case: '+c.id+' — '+c.agentName;
+  var f = c.form || {};
+  var p = f.personal || {}, b = f.business || {}, t = f.tax || {};
+  var a = f.ahip || {}, tr = f.training || {}, bg = f.background || {}, ct = f.contract || {};
+
+  // -- Tab: Overview --
+  var overviewHtml = '';
+  if(c.hierarchyUpdated) overviewHtml += '<div class="hier-change-banner"><i class="fas fa-exchange-alt" style="color:#e65100;margin-right:6px"></i><strong>Hierarchy Updated</strong> — Hierarchy fields were updated due to a transfer. Readiness was automatically re-run.</div>';
+  if(c.holdReasons && c.holdReasons.length){
+    overviewHtml += '<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin-bottom:14px"><div style="font-weight:700;font-size:12px;color:#b71c1c;margin-bottom:8px"><i class="fas fa-pause-circle" style="margin-right:5px"></i>On Hold — Hierarchy Readiness Failed</div>';
+    c.holdReasons.forEach(function(r){ overviewHtml += '<div class="hold-reason-tag"><i class="fas fa-times-circle"></i>'+r+'</div>'; });
+    overviewHtml += '<div style="margin-top:10px"><button class="btn-pr btn-sm" style="background:#1b5e20" onclick="document.getElementById(\'caseDetailModal\').style.display=\'none\';openReleaseHold(\''+c.id+'\')"><i class="fas fa-unlock"></i> Release Hold</button></div></div>';
+  }
+  if(c.status==='Pending Admin Approval'){
+    overviewHtml += '<div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px;padding:12px 14px;margin-bottom:14px"><div style="font-weight:700;font-size:12px;color:#4a148c;margin-bottom:6px"><i class="fas fa-user-check" style="margin-right:5px"></i>Admin Approval Required</div><div style="font-size:12px;color:#5f6368;margin-bottom:10px">Training complete. Awaiting payer admin approval before Ready to Sell.</div>'
+      +'<button class="btn-pr btn-sm" style="background:#1b5e20;margin-right:6px" onclick="document.getElementById(\'caseDetailModal\').style.display=\'none\';openApprovalDecision(\''+c.id+'\',\'approve\')"><i class="fas fa-user-check"></i> Approve Ready</button>'
+      +'<button class="btn-ol btn-sm" style="border-color:#bf360c;color:#bf360c;margin-right:6px" onclick="document.getElementById(\'caseDetailModal\').style.display=\'none\';openCorrectionsModal(\''+c.id+'\')" ><i class="fas fa-comment-dots"></i> Request Corrections</button>'
+      +'<button class="btn-ol btn-sm" style="border-color:#b71c1c;color:#b71c1c" onclick="document.getElementById(\'caseDetailModal\').style.display=\'none\';openApprovalDecision(\''+c.id+'\',\'deny\')"><i class="fas fa-user-times"></i> Deny</button></div>';
+  }
+  if(c.status==='Corrections Required' && c.corrections && c.corrections.length){
+    var latest = c.corrections[c.corrections.length-1];
+    overviewHtml += '<div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:12px 14px;margin-bottom:14px"><div style="font-weight:700;font-size:12px;color:#bf360c;margin-bottom:8px"><i class="fas fa-comment-dots" style="margin-right:5px"></i>Corrections Required — '+latest.ts+' (by '+latest.reviewedBy+')</div>';
+    latest.flaggedSteps.forEach(function(f){
+      overviewHtml += '<div style="background:#fff;border:1px solid #ffcc80;border-radius:6px;padding:7px 12px;margin-bottom:6px;font-size:12px"><span style="font-weight:700;color:#bf360c">'+f.label+':</span> '+f.comment+'</div>';
+    });
+    if(latest.overallNote) overviewHtml += '<div style="font-size:12px;color:#5f6368;margin-top:6px;padding:8px 12px;background:#fff8e1;border-radius:6px"><i class="fas fa-info-circle" style="margin-right:5px;color:#e65100"></i>'+latest.overallNote+'</div>';
+    overviewHtml += '<div style="margin-top:10px"><button class="btn-ol btn-sm" style="border-color:#bf360c;color:#bf360c" onclick="document.getElementById(\'caseDetailModal\').style.display=\'none\';openCorrectionsModal(\''+c.id+'\')" ><i class="fas fa-comment-dots"></i> Send New Correction Request</button></div></div>';
+  }
+  overviewHtml += '<div class="cd-grid">'
+    +field('Case ID','<strong style="color:#1a237e">'+c.id+'</strong>')
+    +field('Status',c.status)
+    +field('Agent Name','<strong>'+c.agentName+'</strong>')
+    +field('NPN',c.npn||'—')
+    +field('Hierarchy Level',c.level)
+    +field('Upline Org',c.uplineOrg)
+    +field('Plan Year',c.planYear)
+    +field('Created',c.created)
+    +field('Email',c.agentEmail)
+    +field('Phone',c.agentPhone||'—')
+    +field('Invitation Token',c.invitationId||'—')
+    +field('Hierarchy Updated',c.hierarchyUpdated?'<span style="color:#e65100;font-weight:600">Yes</span>':'No')
+    +'</div>';
+
+  // Onboarding step progress summary
+  overviewHtml += '<div class="cd-sec-hdr"><i class="fas fa-tasks"></i>Onboarding Step Progress</div>';
+  overviewHtml += '<div style="display:flex;flex-wrap:wrap;gap:8px;font-size:11px">'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 1 — Registration</div>'+boolChip(!!c.npn,'NPN Validated','—')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 2 — Personal Info</div>'+boolChip(!!(p.firstName&&p.lastName),'Complete','Incomplete')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 3 — W-9 & Payment</div>'+boolChip(t.w9Uploaded,'Uploaded','Not Uploaded')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 4 — AHIP & License</div>'+boolChip(!!a.cert,'Complete','Incomplete')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 5 — Training</div>'+boolChip(tr.passed,'Passed','Not Passed')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 6 — Background</div>'+boolChip(bg.consentGiven,'Initiated','Not Started')+'</div>'
+    +'<div style="padding:8px 12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;min-width:120px"><div style="font-size:10px;color:#5f6368;margin-bottom:3px">Step 7 — Contract</div>'+boolChip(ct.signed,'Signed','Not Signed')+'</div>'
+    +'</div>';
+
+  // -- Tab: Personal & Business --
+  var personalHtml = '<div class="cd-sec-hdr"><i class="fas fa-user"></i>Personal Information</div>';
+  personalHtml += '<div class="cd-grid three">'
+    +field('First Name',p.firstName)+field('Middle Name',p.middleName)+field('Last Name',p.lastName)
+    +field('Date of Birth',p.dob)+field('SSN / EIN',p.ssn)+field('Phone',p.phone)
+    +field('Email',p.email)
+    +'</div>';
+  personalHtml += '<div class="cd-grid">'
+    +field('SMS Consent',boolChip(p.smsConsent,'Yes, consented','Not consented'))
+    +field('Email Consent',boolChip(p.emailConsent,'Yes, consented','Not consented'))
+    +'</div>';
+  personalHtml += '<div class="cd-sec-hdr"><i class="fas fa-building"></i>Business Address</div>';
+  personalHtml += '<div class="cd-grid three">'
+    +field('Business Street',b.street)+field('Suite',b.suite||'—')+field('ZIP',b.zip)
+    +field('City',b.city)+field('State',b.state)
+    +'</div>';
+
+  // -- Tab: W-9 & Payment --
+  var taxHtml = '<div class="cd-sec-hdr"><i class="fas fa-file-invoice-dollar"></i>W-9 Tax Information</div>';
+  taxHtml += '<div class="cd-grid three">'
+    +field('Tax Entity Type',t.entity)+field('Taxpayer ID (TIN)',t.tin)+field('Tax Name',t.taxName)
+    +field('W-9 Uploaded',boolChip(t.w9Uploaded,'Uploaded','Not Uploaded'))
+    +'</div>';
+  taxHtml += '<div class="cd-sec-hdr"><i class="fas fa-money-check-alt"></i>Commission Payment</div>';
+  taxHtml += '<div class="cd-grid">' + field('Payment Method',t.payMethod||'—') + '</div>';
+  if(t.payMethod==='ACH') {
+    taxHtml += '<div class="cd-grid three">'
+      +field('Bank Name',t.bankName)+field('Routing Number',t.routing)+field('Account Number',t.account)
+      +field('Account Type',t.accountType)
+      +'</div>';
+  } else if(t.payMethod==='Check') {
+    taxHtml += '<div class="cd-grid">'+field('Check Mailing Address',t.checkAddr)+'</div>';
+  }
+
+  // -- Tab: License & AHIP --
+  var licHtml = '<div class="cd-sec-hdr"><i class="fas fa-certificate"></i>AHIP Certification</div>';
+  licHtml += '<div class="cd-grid three">'
+    +field('Certificate #',a.cert)+field('Completion Date',a.date)+field('Valid Through',a.validThru)
+    +'</div>';
+  licHtml += '<div class="cd-sec-hdr"><i class="fas fa-id-badge"></i>State Licenses</div>';
+  if(a.states && a.states.length) {
+    a.states.forEach(function(s){
+      licHtml += '<div style="background:#f3f8ff;border:1px solid #bbdefb;border-radius:8px;padding:12px 14px;margin-bottom:10px"><div style="font-weight:700;font-size:12px;color:#0d47a1;margin-bottom:8px"><i class="fas fa-map-marker-alt" style="margin-right:5px"></i>'+s.st+'</div>'
+        +'<div class="cd-grid three">'
+        +field('License Number',s.licNum)+field('Effective Date',s.eff)+field('Expiry Date',s.exp)
+        +'</div>'
+        +'<div style="font-size:11px;color:#5f6368;margin-top:4px">Lines of Business: <strong>'+s.lobs.join(', ')+'</strong></div></div>';
+    });
+  } else {
+    licHtml += '<div style="color:#9e9e9e;font-size:12px;padding:8px">No state licenses on file.</div>';
+  }
+
+  // -- Tab: Training --
+  var trainHtml = '<div class="cd-sec-hdr"><i class="fas fa-graduation-cap"></i>Training & Certification Results</div>';
+  var segMeta = [{key:'segA',lbl:'Seg A — Video'},{key:'segB',lbl:'Seg B — Training'},{key:'segC',lbl:'Seg C — PDF Review'},{key:'segD',lbl:'Seg D — General MCQ'}];
+  trainHtml += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">';
+  segMeta.forEach(function(m){
+    var seg = tr[m.key];
+    var done = !!seg;
+    trainHtml += '<div style="text-align:center;padding:12px 8px;border-radius:8px;background:'+(done?'#e8f5e9':'#f8f9fa')+';border:1px solid '+(done?'#c8e6c9':'#e8eaed')+'">'
+      +'<div style="font-size:9px;color:#5f6368;margin-bottom:4px">'+m.lbl+'</div>'
+      +'<div style="font-size:18px;font-weight:800;color:'+(done?'#1b5e20':'#9e9e9e')+'">'+(seg?seg.score+'%':'—')+'</div>'
+      +'<div style="font-size:10px;color:#5f6368;margin-top:2px">'+(seg?'<i class="fas fa-clock"></i> '+seg.time:'Not started')+'</div>'
+      +'<div style="margin-top:5px">'+(done?'<span style="background:#1b5e20;color:#fff;padding:2px 8px;border-radius:10px;font-size:9px">Passed</span>':'<span style="background:#f1f3f4;color:#9e9e9e;padding:2px 8px;border-radius:10px;font-size:9px">Pending</span>')+'</div>'
+      +'</div>';
+  });
+  trainHtml += '</div>';
+  trainHtml += '<div class="cd-grid">'
+    +field('Overall Score','<strong style="font-size:16px;color:'+(tr.passed?'#1b5e20':'#e65100')+'">'+tr.overall+'</strong>')
+    +field('Total Time',tr.totalTime)
+    +field('Certification Result',boolChip(tr.passed,'Passed — 85%+ Avg','Not Yet Passed'))
+    +'</div>';
+
+  // -- Tab: Background --
+  var bgHtml = '<div class="cd-sec-hdr"><i class="fas fa-user-secret"></i>Background & Sanctions Check</div>';
+  bgHtml += '<div class="cd-grid">'
+    +field('Authorization Consent',boolChip(bg.consentGiven,'Authorized','Not Yet Authorized'))
+    +field('Screening Vendor',bg.vendor||'—')
+    +field('Invitation Sent',bg.inviteSent||'—')
+    +field('Status','<strong>'+bg.status+'</strong>')
+    +'</div>';
+
+  // -- Tab: Contract --
+  var contractHtml = '<div class="cd-sec-hdr"><i class="fas fa-file-signature"></i>Contract Execution</div>';
+  contractHtml += '<div class="cd-grid">'
+    +field('Contract Version',ct.contractVersion)
+    +field('Terms Agreed',boolChip(ct.agreed,'Agreed','Not Agreed'))
+    +field('Electronic Signature',ct.sigName||'—')
+    +field('Signature Date',ct.sigDate||'—')
+    +field('Contract Signed',boolChip(ct.signed,'Signed','Not Signed'))
+    +'</div>';
+
+  // -- Tab: Audit Trail --
+  var auditHtml = '<div class="cd-sec-hdr"><i class="fas fa-history"></i>Audit Trail</div>';
+  // Show correction requests as highlighted threaded entries
+  if(c.corrections && c.corrections.length){
+    auditHtml += '<div class="cd-sec-hdr" style="color:#bf360c"><i class="fas fa-comment-dots"></i>Correction Requests ('+c.corrections.length+')</div>';
+    c.corrections.forEach(function(cr,ci){
+      auditHtml += '<div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:10px 14px;margin-bottom:10px">';
+      auditHtml += '<div style="font-size:11px;font-weight:700;color:#bf360c;margin-bottom:6px"><i class="fas fa-comment-dots" style="margin-right:5px"></i>Correction Request #'+(ci+1)+' &mdash; '+cr.ts+' &mdash; by '+cr.reviewedBy+'</div>';
+      cr.flaggedSteps.forEach(function(f){
+        auditHtml += '<div style="background:#fff;border:1px solid #ffcc80;border-radius:6px;padding:6px 10px;margin-bottom:4px;font-size:11px"><strong style="color:#bf360c">'+f.label+':</strong> '+f.comment+'</div>';
+      });
+      if(cr.overallNote) auditHtml += '<div style="font-size:11px;color:#5f6368;margin-top:6px;font-style:italic">Overall note: '+cr.overallNote+'</div>';
+      auditHtml += '</div>';
+    });
+    auditHtml += '<div class="cd-sec-hdr"><i class="fas fa-history"></i>System Events</div>';
+  }
+  c.auditTrail.forEach(function(entry){
+    auditHtml += '<div style="background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:8px 12px;font-size:11px;color:#5f6368;margin-bottom:6px;display:flex;align-items:flex-start;gap:8px">'
+      +'<i class="fas fa-circle" style="font-size:6px;margin-top:4px;color:#1a237e;flex-shrink:0"></i>'
+      +'<div><strong>'+entry.ts+'</strong> — <span style="color:#333">'+entry.event+'</span><br>'+entry.note+' <span style="color:#9e9e9e">['+entry.user+']</span></div></div>';
+  });
+
+  // Assemble all sections
+  document.getElementById('caseDetailBody').innerHTML =
+    '<div id="cd-overview"  class="cd-section active">'+overviewHtml+'</div>'
+   +'<div id="cd-personal"  class="cd-section">'+personalHtml+'</div>'
+   +'<div id="cd-tax"       class="cd-section">'+taxHtml+'</div>'
+   +'<div id="cd-license"   class="cd-section">'+licHtml+'</div>'
+   +'<div id="cd-training"  class="cd-section">'+trainHtml+'</div>'
+   +'<div id="cd-background"class="cd-section">'+bgHtml+'</div>'
+   +'<div id="cd-contract"  class="cd-section">'+contractHtml+'</div>'
+   +'<div id="cd-audit"     class="cd-section">'+auditHtml+'</div>';
+
+  // Reset tabs to Overview
+  document.querySelectorAll('.cd-tab').forEach(function(b,i){ b.classList.toggle('active', i===0); });
+
+  document.getElementById('caseDetailModal').style.display = 'flex';
+}
+
+/* =========================================================
+   US-1.17: RELEASE HOLD ACTION
+   ========================================================= */
+function openReleaseHold(id){
+  CURRENT_HOLD_CASE_ID = id;
+  document.getElementById('releaseHoldCaseId').textContent = id;
+  document.getElementById('releaseHoldNotes').value = '';
+  document.getElementById('releaseHoldAlert').style.display='none';
+  document.getElementById('releaseHoldModal').style.display='flex';
+}
+
+function confirmReleaseHold(){
+  var notes = document.getElementById('releaseHoldNotes').value.trim();
+  var zone = document.getElementById('releaseHoldAlert');
+  if(!notes){
+    zone.innerHTML='<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:12px;color:#b71c1c"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Resolution notes are required for the audit trail.</div>';
+    zone.style.display='block';
+    return;
+  }
+  var c = CASES.find(function(x){return x.id===CURRENT_HOLD_CASE_ID;});
+  if(c){
+    c.status = 'Pending';
+    c.holdReasons = [];
+    c.auditTrail.push({
+      ts: new Date().toLocaleString(),
+      event: 'Hold Released',
+      user: 'Sandra Adams',
+      note: 'Resolution: '+notes
+    });
+    console.log('[AUDIT] Release Hold | CaseID:'+c.id+' | ReleasedBy:Sandra Adams | Notes:'+notes);
+  }
+  document.getElementById('releaseHoldModal').style.display='none';
+  filterCases();
+  updateKPIs();
+  showToast('Hold released for case '+CURRENT_HOLD_CASE_ID+'. Case is now Pending.','success');
+}
+
+function openApprovalDecision(id, action){
+  CURRENT_APPROVAL_CASE_ID = id;
+  CURRENT_APPROVAL_ACTION = action;
+  var c = CASES.find(function(x){ return x.id===id; });
+  var title = document.getElementById('approvalModalTitle');
+  var banner = document.getElementById('approvalCaseBanner');
+  var notes = document.getElementById('approvalNotes');
+  var alert = document.getElementById('approvalAlert');
+  var btn = document.getElementById('approvalConfirmBtn');
+  if(notes) notes.value = '';
+  if(alert) alert.style.display = 'none';
+
+  if(action==='approve'){
+    if(title) title.innerHTML = '<i class="fas fa-user-check" style="margin-right:8px;color:#1b5e20"></i>Approve Case For Ready Status';
+    if(banner) banner.innerHTML = '<strong>Case '+id+'</strong> will move from <strong>Pending Admin Approval</strong> to <strong>Completed (Ready)</strong>.';
+    if(btn){ btn.innerHTML = '<i class="fas fa-check" style="margin-right:4px"></i>Approve Ready'; btn.style.background = '#1b5e20'; }
+  } else {
+    if(title) title.innerHTML = '<i class="fas fa-user-times" style="margin-right:8px;color:#b71c1c"></i>Deny Onboarding Case';
+    if(banner) banner.innerHTML = '<strong>Case '+id+'</strong> will move from <strong>Pending Admin Approval</strong> to <strong>Rejected</strong>.';
+    if(btn){ btn.innerHTML = '<i class="fas fa-ban" style="margin-right:4px"></i>Deny Case'; btn.style.background = '#b71c1c'; }
+  }
+
+  document.getElementById('approvalModal').style.display = 'flex';
+}
+
+function submitApprovalDecision(){
+  var notes = document.getElementById('approvalNotes').value.trim();
+  var zone = document.getElementById('approvalAlert');
+  if(!notes){
+    zone.innerHTML = '<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:12px;color:#b71c1c"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Reviewer notes are required for audit trail.</div>';
+    zone.style.display = 'block';
+    return;
+  }
+  var c = CASES.find(function(x){ return x.id===CURRENT_APPROVAL_CASE_ID; });
+  if(!c) return;
+
+  if(CURRENT_APPROVAL_ACTION==='approve'){
+    c.status = 'Completed';
+    c.auditTrail.push({
+      ts: new Date().toLocaleString(),
+      event: 'Status ? Completed (Ready Approved)',
+      user: 'Sandra Adams',
+      note: 'Admin approval granted. ' + notes
+    });
+    showToast('Case '+c.id+' approved and moved to Completed (Ready).','success');
+  } else {
+    c.status = 'Rejected';
+    c.auditTrail.push({
+      ts: new Date().toLocaleString(),
+      event: 'Status ? Rejected',
+      user: 'Sandra Adams',
+      note: 'Admin denial decision. ' + notes
+    });
+    showToast('Case '+c.id+' denied and moved to Rejected.','warning');
+  }
+
+  console.log('[AUDIT] ApprovalDecision | CaseID:'+c.id+' | Action:'+CURRENT_APPROVAL_ACTION+' | By:Sandra Adams | Notes:'+notes);
+  document.getElementById('approvalModal').style.display='none';
+  filterCases();
+  updateKPIs();
+}
+
+function updateKPIs(){
+  var counts = {total:CASES.length,pending:0,pendingApproval:0,inreview:0,onhold:0,completed:0,corrections:0};
+  CASES.forEach(function(c){
+    if(c.status==='Pending') counts.pending++;
+    else if(c.status==='Pending Admin Approval') counts.pendingApproval++;
+    else if(c.status==='In Review') counts.inreview++;
+    else if(c.status.indexOf('On Hold')>=0) counts.onhold++;
+    else if(c.status==='Completed') counts.completed++;
+    else if(c.status==='Corrections Required') counts.corrections++;
+  });
+  document.getElementById('kpiTotal').textContent=counts.total;
+  document.getElementById('kpiPending').textContent=counts.pending;
+  document.getElementById('kpiPendingApproval').textContent=counts.pendingApproval;
+  document.getElementById('kpiInReview').textContent=counts.inreview;
+  document.getElementById('kpiOnHold').textContent=counts.onhold;
+  document.getElementById('kpiCompleted').textContent=counts.completed;
+}
+
+/* =========================================================
+   REQUEST CORRECTIONS WORKFLOW
+   ========================================================= */
+var CURRENT_CORRECTIONS_CASE_ID = null;
+
+function openCorrectionsModal(id) {
+  CURRENT_CORRECTIONS_CASE_ID = id;
+  document.getElementById('corrCaseId').textContent = id;
+  // reset all checkboxes and textareas
+  for(var i=1;i<=7;i++){
+    var chk = document.getElementById('corrStep'+i);
+    var txt = document.getElementById('corrComment'+i);
+    if(chk) chk.checked = false;
+    if(txt){ txt.style.display='none'; txt.value=''; }
+  }
+  document.getElementById('corrOverallNote').value='';
+  document.getElementById('corrAlert').style.display='none';
+  document.getElementById('correctionsModal').style.display='flex';
+}
+
+function toggleCorrComment(step) {
+  var chk = document.getElementById('corrStep'+step);
+  var txt = document.getElementById('corrComment'+step);
+  if(txt) txt.style.display = (chk && chk.checked) ? 'block' : 'none';
+}
+
+function submitCorrections() {
+  var flagged = [];
+  var stepLabels = ['','Step 1 — Registration','Step 2 — Personal & Business','Step 3 — W-9 & Payment','Step 4 — AHIP & License','Step 5 — Training','Step 6 — Background','Step 7 — Contract'];
+  for(var i=1;i<=7;i++){
+    var chk = document.getElementById('corrStep'+i);
+    var txt = document.getElementById('corrComment'+i);
+    if(chk && chk.checked){
+      flagged.push({ step: i, label: stepLabels[i], comment: (txt ? txt.value.trim() : '') });
+    }
+  }
+  var overall = document.getElementById('corrOverallNote').value.trim();
+  var zone = document.getElementById('corrAlert');
+
+  if(!flagged.length){
+    zone.innerHTML='<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:12px;color:#b71c1c"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Please flag at least one step that requires correction.</div>';
+    zone.style.display='block';
+    return;
+  }
+  for(var j=0;j<flagged.length;j++){
+    if(!flagged[j].comment){
+      zone.innerHTML='<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:12px;color:#b71c1c"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Please add a comment for every flagged step ('+flagged[j].label+').</div>';
+      zone.style.display='block';
+      return;
+    }
+  }
+
+  var c = CASES.find(function(x){ return x.id===CURRENT_CORRECTIONS_CASE_ID; });
+  if(!c) return;
+
+  c.status = 'Corrections Required';
+  if(!c.corrections) c.corrections = [];
+  var corrEntry = {
+    ts: new Date().toLocaleString(),
+    reviewedBy: 'Sandra Adams',
+    overallNote: overall,
+    flaggedSteps: flagged
+  };
+  c.corrections.push(corrEntry);
+  c.auditTrail.push({
+    ts: new Date().toLocaleString(),
+    event: 'Correction Request Sent',
+    user: 'Sandra Adams',
+    note: 'Flagged '+flagged.length+' step(s): '+flagged.map(function(f){return f.label;}).join(', ')+(overall?' | Note: '+overall:'')
+  });
+
+  document.getElementById('correctionsModal').style.display='none';
+  filterCases();
+  updateKPIs();
+  showToast('Correction request sent for case '+c.id+'. Case moved to Corrections Required.','warning');
+}
+
+function openNewCase(){
+  document.getElementById('newCaseAlert').style.display = 'none';
+  document.getElementById('newCaseAgentName').value = '';
+  document.getElementById('newCaseNpn').value = '';
+  document.getElementById('newCaseLevel').value = '';
+  document.getElementById('newCasePlanYear').value = '2026';
+  document.getElementById('newCaseUpline').value = '';
+  document.getElementById('newCaseEmail').value = '';
+  document.getElementById('newCaseModal').style.display = 'flex';
+}
+
+function closeNewCaseModal(){
+  document.getElementById('newCaseModal').style.display = 'none';
+}
+
+function createNewCase(){
+  var agentName = document.getElementById('newCaseAgentName').value.trim();
+  var npn = document.getElementById('newCaseNpn').value.trim();
+  var level = document.getElementById('newCaseLevel').value;
+  var planYear = document.getElementById('newCasePlanYear').value;
+  var uplineOrg = document.getElementById('newCaseUpline').value.trim();
+  var agentEmail = document.getElementById('newCaseEmail').value.trim();
+  var zone = document.getElementById('newCaseAlert');
+
+  if(!agentName || !level || !planYear || !uplineOrg){
+    zone.innerHTML = '<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:8px 12px;font-size:12px;color:#b71c1c"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Please fill all required fields.</div>';
+    zone.style.display = 'block';
+    return;
+  }
+
+  if(npn && !/^\d{7,10}$/.test(npn)){
+    zone.innerHTML = '<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:12px;color:#e65100"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>NPN must be 7 to 10 digits.</div>';
+    zone.style.display = 'block';
+    return;
+  }
+
+  var nextNum = 1000;
+  CASES.forEach(function(c){
+    var parts = String(c.id || '').split('-');
+    var n = parseInt(parts[2], 10);
+    if(!isNaN(n) && n >= nextNum) nextNum = n + 1;
+  });
+
+  var newId = 'OB-' + planYear + '-' + String(nextNum).padStart(4,'0');
+  var created = new Date().toISOString().slice(0,10);
+
+  CASES.unshift({
+    id: newId,
+    agentName: agentName,
+    npn: npn,
+    level: level,
+    uplineOrg: uplineOrg,
+    planYear: planYear,
+    status: 'Pending',
+    created: created,
+    invitationId: '',
+    holdReasons: [],
+    hierarchyUpdated: false,
+    agentEmail: agentEmail,
+    agentPhone: '',
+    auditTrail: [
+      {ts: new Date().toLocaleString(), event: 'Case Created', user: 'Sandra Adams', note: 'Manual case created by admin'}
+    ]
+  });
+
+  closeNewCaseModal();
+  filterCases();
+  updateKPIs();
+  showToast('New onboarding case created: ' + newId, 'success');
+}
+
+function showToast(msg,type){
+  var el=document.getElementById('toastEl');
+  if(!el)return;
+  el.textContent=msg;
+  el.style.background=type==='danger'?'#b71c1c':type==='warning'?'#e65100':'#1b5e20';
+  el.style.display='block';
+  setTimeout(function(){el.style.display='none';},3500);
+}
+
+window.addEventListener('DOMContentLoaded', function(){
+  // Check URL for transfer impact param
+  var params = new URLSearchParams(window.location.search);
+  if(params.get('transfer')){
+    document.getElementById('transferImpactBanner').style.display='flex';
+  }
+  // Check for specific case to highlight
+  var caseParam = params.get('case');
+  if(caseParam){
+    setTimeout(function(){ openCaseDetail(caseParam); }, 300);
+  }
+  filterCases();
+  updateKPIs();
+});
+</script>
+
+<div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:380px"></div>
+
+</body>
+</html>

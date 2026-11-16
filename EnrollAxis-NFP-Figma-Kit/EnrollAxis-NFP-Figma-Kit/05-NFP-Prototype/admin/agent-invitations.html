@@ -1,0 +1,1162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Invitations | Carrier Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#1a237e}
+.inv-tab{padding:9px 22px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.inv-tab:hover{background:#f1f3f4;color:#1a237e}
+.inv-tab.active{background:#e8eaf6;color:#1a237e}
+.inv-tab .tbadge{background:#1a237e;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
+.kpi-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.kpi-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.kpi-val{font-size:26px;font-weight:800;color:#1a237e;line-height:1}
+.kpi-lbl{font-size:11px;color:#5f6368;margin-top:2px}
+.kpi-sub{font-size:10px;color:#5f6368;margin-top:3px}
+.status-badge{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.sb-draft{background:#f1f3f4;color:#5f6368}
+.sb-sent{background:#e3f2fd;color:#0d47a1}
+.sb-opened{background:#fff8e1;color:#e65100}
+.sb-accepted{background:#e8f5e9;color:#1b5e20}
+.sb-expired{background:#fce4ec;color:#b71c1c}
+.sb-cancelled{background:#f1f3f4;color:#5f6368}
+.sb-rejected{background:#fce4ec;color:#880e4f}
+.inv-form-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:24px}
+.inv-form-card h6{font-size:14px;font-weight:700;color:#1a237e;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.form-section{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:16px;margin-bottom:14px}
+.form-section-title{font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.char-count{font-size:11px;color:#5f6368;text-align:right;margin-top:3px}
+.inv-timeline{position:relative;padding-left:24px}
+.inv-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:2px;background:#e8eaed}
+.inv-tl-item{position:relative;margin-bottom:14px}
+.inv-tl-dot{position:absolute;left:-20px;width:14px;height:14px;border-radius:50%;border:2px solid;top:3px;background:#fff}
+.inv-tl-dot.active{border-color:#1a237e;background:#1a237e}
+.inv-tl-dot.done{border-color:#1b5e20;background:#1b5e20}
+.inv-tl-dot.warn{border-color:#e65100;background:#e65100}
+.inv-tl-dot.err{border-color:#b71c1c;background:#b71c1c}
+.inv-tl-dot.grey{border-color:#bdbdbd;background:#fff}
+.dup-warn{display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:7px 10px;font-size:11px;color:#e65100;margin-top:5px}
+.dup-err{display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:7px 10px;font-size:11px;color:#b71c1c;margin-top:5px}
+.npn-ok{display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:7px 10px;font-size:11px;color:#1b5e20;margin-top:5px}
+.bulk-bar{background:#e8eaf6;border:1px solid #9fa8da;border-radius:8px;padding:8px 14px;display:none;align-items:center;gap:12px;margin-bottom:10px;font-size:12px}
+.preview-card{background:#f8f9fa;border:1px dashed #9fa8da;border-radius:8px;padding:14px;font-size:12px}
+.bulk-help{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;font-size:11px;color:#5f6368;margin-top:8px}
+.bulk-result{display:none;background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:10px 12px;font-size:12px;color:#0d47a1;margin-top:10px;white-space:pre-line}
+.kpi-row{display:grid;gap:14px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table thead{background:#f8f9fa}
+.data-table th,.data-table td{padding:10px 12px;border-bottom:1px solid #f1f3f4;text-align:left}
+.data-table tbody tr:hover{background:#f8f9ff}
+.inv-err{border-color:#ef9a9a!important;background:#fff5f5!important}
+.tbl-action-btn{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:#1a237e;transition:all .15s}
+.tbl-action-btn:hover{background:#e8eaf6;border-color:#9fa8da}
+.tbl-action-btn.danger{color:#c62828;border-color:#ef9a9a}
+.tbl-action-btn.danger:hover{background:#fce4ec}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html" class="active"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <h4 style="margin:0;color:#1a237e;font-size:16px"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Agent Invitations</h4>
+    <div style="font-size:11px;color:#5f6368">Send &amp; Track Contracting Invitations</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
+    <button class="btn-pr btn-sm" onclick="openSendInviteModal()" style="white-space:nowrap"><i class="fas fa-plus" style="margin-right:4px"></i>Send Invitation</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- TAB NAV -->
+<div style="display:flex;gap:4px;background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:8px;margin-bottom:18px">
+  <button class="inv-tab active" id="itab-send" onclick="switchInvTab('send')"><i class="fas fa-paper-plane"></i>Send Invitation </button>
+  <button class="inv-tab" id="itab-track" onclick="switchInvTab('track')"><i class="fas fa-chart-bar"></i>Invitation Dashboard <span class="tbadge" id="pendingCountBadge">5</span></button>
+</div>
+
+<!-- ===== TAB 1: SEND INVITATION ===== -->
+<div id="invTabSend">
+<div class="row-grid" style="gap:18px">
+  <!-- FORM -->
+  <div class="fg" style="flex:1.4">
+    <div class="inv-form-card">
+      <h6><i class="fas fa-envelope-open-text" style="color:#1a237e"></i>New Contracting Invitation</h6>
+      <div id="invFormAlert" style="display:none;margin-bottom:12px"></div>
+
+      <!-- Recipient Section -->
+      <div class="form-section">
+        <div class="form-section-title"><i class="fas fa-user" style="margin-right:5px"></i>Recipient Information</div>
+        <div class="row-grid" style="gap:12px;margin-bottom:10px">
+          <div class="fg"><label>First Name <span class="req">*</span></label>
+            <input id="invFirstName" class="form-control" placeholder="e.g. James" oninput="buildInvitePreview()">
+          </div>
+          <div class="fg"><label>Last Name <span class="req">*</span></label>
+            <input id="invLastName" class="form-control" placeholder="e.g. Rivera" oninput="buildInvitePreview()">
+          </div>
+        </div>
+        <div class="fg mb-3">
+          <label>Email Address <span class="req">*</span></label>
+          <input id="invEmail" class="form-control" type="email" placeholder="agent@example.com" oninput="validateInviteEmail()" onblur="checkEmailDuplicate()">
+          <div id="emailFormatErr" class="dup-err">Please enter a valid email address.</div>
+          <div id="emailDupWarn" class="dup-warn"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>A user with this email already exists. Confirm you intend to send a new invitation. <label style="margin-left:6px"><input type="checkbox" id="emailDupConfirm"> I confirm</label></div>
+        </div>
+        <div class="fg">
+          <label>NPN <small style="font-weight:400;color:#5f6368">(optional ? triggers duplicate check)</small></label>
+          <input id="invNPN" class="form-control" maxlength="10" placeholder="e.g. 88234419" oninput="validateNPN()">
+          <div id="npnFormatErr" class="dup-err"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>NPN must be 8 to 10 numeric digits. No letters or special characters.</div>
+          <div id="npnDupErr" class="dup-err"><i class="fas fa-ban" style="margin-right:4px"></i>An active agent with this NPN already exists in the system. Please contact Broker Support.</div>
+          <div id="npnPendErr" class="dup-err"><i class="fas fa-clock" style="margin-right:4px"></i>An onboarding case for this NPN is already in progress. Please contact Broker Support.</div>
+          <div id="npnTermWarn" style="display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:11px;color:#e65100;margin-top:5px"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>A terminated agent record with this NPN exists. <label style="cursor:pointer;display:inline;margin-left:4px"><input type="checkbox" id="npnTermConfirm" onchange="checkNpnTermConfirm()"> Admin confirms reuse of terminated NPN record</label></div>
+          <div id="npnOk" class="npn-ok"><i class="fas fa-check-circle" style="margin-right:4px"></i>NPN available ? not yet registered in portal.</div>
+        </div>
+      </div>
+
+      <!-- Hierarchy Section -->
+      <div class="form-section">
+        <div class="form-section-title"><i class="fas fa-sitemap" style="margin-right:5px"></i>Hierarchy Placement</div>
+        <div class="row-grid" style="gap:12px;margin-bottom:10px">
+          <div class="fg"><label>Hierarchy Level <span class="req">*</span></label>
+            <select id="invLevel" class="form-control" onchange="buildInvitePreview()">
+              <option value="" disabled selected>Select Level</option>
+              <option value="GA">GA (General Agency)</option>
+              <option value="MGA">MGA (Managing General Agency)</option>
+              <option value="Agent" selected>Agent/Broker</option>
+            </select>
+          </div>
+          <div class="fg"><label>Role Type <span class="req">*</span></label>
+            <select id="invRole" class="form-control" onchange="buildInvitePreview()">
+              <option value="Individual Agent">Individual Agent</option>
+              <option value="Agency Admin">Agency Admin</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg mb-3">
+          <label>Upline Organization <span class="req">*</span></label>
+          <select id="invUplineOrg" class="form-control" onchange="buildInvitePreview()">
+            <option value="" disabled selected>Search / Select Upline Org</option>
+            <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
+            <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
+            <option value="MGA-1014">SunBridge Medicare Advisors (MGA-1014)</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Plan Year <span class="req">*</span></label>
+          <select id="invPlanYear" class="form-control" onchange="buildInvitePreview()">
+            <option value="2026" selected>2026 (Active)</option>
+            <option value="2027">2027 (Draft)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Invitation Config -->
+      <div class="form-section">
+        <div class="form-section-title"><i class="fas fa-clock" style="margin-right:5px"></i>Invitation Settings</div>
+        <div class="fg mb-3">
+          <label>Invitation Expiry <small style="font-weight:400;color:#5f6368">(hours from send time, default 72)</small></label>
+          <input id="invExpiry" class="form-control" type="number" min="1" max="720" value="72" oninput="buildInvitePreview()">
+        </div>
+        <div class="fg">
+          <label>Personal Message to Recipient <small style="font-weight:400;color:#5f6368">(optional, max 500 chars)</small></label>
+          <textarea id="invMessage" class="form-control" rows="3" maxlength="500" placeholder="E.g. We look forward to having you as part of our network! Please complete your contracting within 72 hours." oninput="invMsgCount()"></textarea>
+          <div class="char-count"><span id="invMsgLen">0</span>/500</div>
+        </div>
+      </div>
+
+      <!-- Bulk Invitation -->
+      <div class="form-section">
+        <div class="form-section-title"><i class="fas fa-file-upload" style="margin-right:5px"></i>Bulk Invitations</div>
+        <div class="fg mb-2">
+          <label>Upload CSV <small style="font-weight:400;color:#5f6368">(firstName,lastName,email,npn,level,role,uplineOrgId,planYear,message)</small></label>
+          <input id="bulkInviteFile" class="form-control" type="file" accept=".csv,.txt" onchange="loadBulkInviteFile(event)">
+        </div>
+        <div class="bulk-help">
+          Upload a CSV and send many invitations in one action. Optional columns can be omitted and defaults from the form will be applied.
+        </div>
+        <div id="bulkInviteResult" class="bulk-result"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap">
+          <button class="btn-ol btn-sm" onclick="downloadBulkInviteTemplate()"><i class="fas fa-download" style="margin-right:4px"></i>Download Template</button>
+          <button class="btn-pr btn-sm" onclick="sendBulkInvitations()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Bulk Invitations</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:space-between">
+        <button class="btn-ol" onclick="prefillSendInvitation()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
+        <div style="display:flex;gap:10px">
+          <button class="btn-ol" onclick="resetInviteForm()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
+          <button class="btn-pr" id="sendInviteBtn" onclick="sendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Invitation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="fg" style="flex:1">
+    <div class="inv-form-card" style="position:sticky;top:80px">
+      <h6><i class="fas fa-eye" style="color:#1a237e"></i>Invitation Preview</h6>
+      <div id="invPreview" class="preview-card">
+        <div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#c5cae9"></i>Fill in the form to preview the invitation email</div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:#e8eaf6;border-radius:8px;font-size:11px;color:#3949ab">
+        <i class="fas fa-link" style="margin-right:4px"></i><strong>Token Link:</strong> The invitation will contain a unique, single-use tokenized link that expires after the configured hours. Each resend creates a new token and invalidates the previous.
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /invTabSend -->
+
+<!-- ===== TAB 2: INVITATION DASHBOARD ===== -->
+<div id="invTabTrack" style="display:none">
+
+  <!-- KPI TILES -->
+  <div class="kpi-row" style="margin-bottom:20px;grid-template-columns:repeat(5,1fr)">
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-paper-plane"></i></div>
+      <div><div class="kpi-val" id="kpiSent">18</div><div class="kpi-lbl">Total Sent</div><div class="kpi-sub">Last 30 days</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div>
+      <div><div class="kpi-val" id="kpiAccepted">7</div><div class="kpi-lbl">Accepted</div><div class="kpi-sub">38.9% conversion</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div>
+      <div><div class="kpi-val" id="kpiPending">5</div><div class="kpi-lbl">Pending / Open</div><div class="kpi-sub">Awaiting action</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#fce4ec;color:#b71c1c"><i class="fas fa-clock"></i></div>
+      <div><div class="kpi-val" id="kpiExpired">4</div><div class="kpi-lbl">Expired</div><div class="kpi-sub">Not acted on</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon" style="background:#f1f3f4;color:#5f6368"><i class="fas fa-ban"></i></div>
+      <div><div class="kpi-val" id="kpiCancelled">2</div><div class="kpi-lbl">Cancelled</div><div class="kpi-sub">Revoked by sender</div></div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:14px;margin-bottom:14px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Status</label>
+        <select id="invFilterStatus" class="form-control form-control-sm" onchange="filterInvitations()">
+          <option value="">All Statuses</option>
+          <option>Draft</option><option>Sent</option><option>Opened</option><option>Accepted</option><option>Expired</option><option>Cancelled</option><option>Rejected</option>
+        </select>
+      </div>
+      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Hierarchy Level</label>
+        <select id="invFilterLevel" class="form-control form-control-sm" onchange="filterInvitations()">
+          <option value="">All Levels</option>
+          <option>Agent/Broker</option><option>GA</option><option>MGA</option><option>SGA</option>
+        </select>
+      </div>
+      <div class="fg" style="min-width:140px"><label style="font-size:11px;color:#5f6368;font-weight:600">Sent By</label>
+        <select id="invFilterBy" class="form-control form-control-sm" onchange="filterInvitations()">
+          <option value="">All Senders</option>
+          <option>Sandra Adams</option><option>James Rollins</option>
+        </select>
+      </div>
+      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Date From</label>
+        <input type="date" id="invFilterFrom" class="form-control form-control-sm" onchange="filterInvitations()">
+      </div>
+      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Upline Org</label>
+        <select id="invFilterOrg" class="form-control form-control-sm" onchange="filterInvitations()">
+          <option value="">All Orgs</option>
+          <option>HealthFirst Distribution</option><option>Coastal Medicare Partners</option><option>SunBridge Medicare</option>
+        </select>
+      </div>
+      <button class="btn-ol btn-sm" onclick="prefillDashboardFilters()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Filters</button>
+      <button class="btn-ol btn-sm" onclick="resetInvFilters()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
+      <button class="btn-pr btn-sm" onclick="exportInvCSV()"><i class="fas fa-file-csv" style="margin-right:4px"></i>Export CSV</button>
+    </div>
+  </div>
+
+  <!-- BULK ACTIONS BAR -->
+  <div class="bulk-bar" id="invBulkBar">
+    <div><i class="fas fa-check-square" style="color:#1a237e;margin-right:5px"></i><strong id="invBulkCount">0</strong> selected</div>
+    <select id="invBulkAction" class="form-control form-control-sm" style="width:auto;min-width:160px">
+      <option value="">? Bulk Action ?</option>
+      <option value="resend">Resend Selected</option>
+      <option value="cancel">Cancel Selected</option>
+    </select>
+    <button class="btn-pr btn-sm" onclick="applyBulkAction()"><i class="fas fa-play" style="margin-right:4px"></i>Apply</button>
+    <button class="btn-ol btn-sm" onclick="clearBulkSelection()">Clear</button>
+  </div>
+
+  <!-- STATUS LEGEND -->
+  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:11px;font-weight:600;color:#5f6368;margin-right:4px">Status Legend:</span>
+    <span class="status-badge sb-draft"    title="Draft — Invitation created but not yet sent"><i class="fas fa-pencil-alt"     style="font-size:9px"></i> Draft</span>
+    <span class="status-badge sb-sent"     title="Sent — Invitation email delivered to recipient"><i class="fas fa-paper-plane"  style="font-size:9px"></i> Sent</span>
+    <span class="status-badge sb-opened"   title="Opened — Recipient has opened the invitation email"><i class="fas fa-envelope-open" style="font-size:9px"></i> Opened</span>
+    <span class="status-badge sb-accepted" title="Accepted — Recipient completed registration"><i class="fas fa-check-circle"  style="font-size:9px"></i> Accepted</span>
+    <span class="status-badge sb-expired"  title="Expired — Invitation link passed its expiry date without action"><i class="fas fa-clock"        style="font-size:9px"></i> Expired</span>
+    <span class="status-badge sb-cancelled" title="Cancelled — Invitation was revoked by the sender before completion"><i class="fas fa-ban"         style="font-size:9px"></i> Cancelled</span>
+    <span class="status-badge sb-rejected"  title="Rejected — Recipient actively declined the invitation"><i class="fas fa-times-circle" style="font-size:9px"></i> Rejected</span>
+  </div>
+
+  <!-- INVITATIONS TABLE -->
+  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;overflow:hidden">
+    <div style="overflow-x:auto">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width:36px"><input type="checkbox" id="invSelectAll" onchange="toggleSelectAll(this)"></th>
+            <th>Recipient</th>
+            <th>Email</th>
+            <th>NPN</th>
+            <th>Level</th>
+            <th>Upline Org</th>
+            <th>Sent Date</th>
+            <th>Status</th>
+            <th>Expiry</th>
+            <th>Accepted Date</th>
+            <th>Sent By</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="invTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /invTabTrack -->
+
+</div><!-- /page -->
+</div><!-- /main -->
+</div><!-- /wrapper -->
+<!-- MODALS -->
+
+<!-- Invitation Detail Modal -->
+<div class="modal-overlay" id="invDetailModal" style="display:none">
+<div class="modal-box" style="max-width:640px">
+<div class="modal-hdr"><h5 id="invDetailTitle"><i class="fas fa-envelope" style="margin-right:8px"></i>Invitation Detail</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body">
+  <div id="invDetailContent"></div>
+</div>
+<div class="modal-foot">
+  <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
+  <button class="btn-pr" id="invDetailResend" onclick="resendFromDetail()"><i class="fas fa-redo" style="margin-right:4px"></i>Resend</button>
+  <button class="btn-ol" id="invDetailCancel" style="color:#b71c1c;border-color:#ef9a9a" onclick="cancelFromDetail()"><i class="fas fa-ban" style="margin-right:4px"></i>Cancel Invitation</button>
+</div>
+</div>
+</div>
+
+<!-- Send Invitation Quick Modal (from topbar button) -->
+<div class="modal-overlay" id="sendInviteQuickModal" style="display:none">
+<div class="modal-box" style="max-width:460px">
+<div class="modal-hdr"><h5><i class="fas fa-paper-plane" style="margin-right:8px"></i>Quick Send Invitation</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+<div class="modal-body">
+  <div style="font-size:13px;color:#5f6368;margin-bottom:12px">For a full form with preview, use the <strong>Send Invitation</strong> tab. Quick send:</div>
+  <div class="row-grid" style="gap:10px;margin-bottom:10px">
+    <div class="fg"><label>First Name <span class="req">*</span></label><input id="qInvFirstName" class="form-control"></div>
+    <div class="fg"><label>Last Name <span class="req">*</span></label><input id="qInvLastName" class="form-control"></div>
+  </div>
+  <div class="fg mb-3"><label>Email <span class="req">*</span></label><input id="qInvEmail" class="form-control" type="email"></div>
+  <div class="row-grid" style="gap:10px;margin-bottom:10px">
+    <div class="fg"><label>Level <span class="req">*</span></label>
+      <select id="qInvLevel" class="form-control">
+        <option>Agent/Broker</option><option>GA</option><option>MGA</option>
+      </select>
+    </div>
+    <div class="fg"><label>Upline Org <span class="req">*</span></label>
+      <select id="qInvOrg" class="form-control">
+        <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
+        <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="modal-foot" style="justify-content:space-between">
+  <button class="btn-ol" onclick="prefillQuickSend()" style="color:#1a237e;border-color:#9fa8da"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill</button>
+  <div style="display:flex;gap:8px">
+    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+    <button class="btn-pr" onclick="quickSendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send</button>
+  </div>
+</div>
+</div>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* =========================================================
+   DATA / */
+// NPN Registry ? status-aware
+var NPN_REGISTRY = {
+  '8823441':  { status:'Active',     name:'James Martinez',    org:'HealthFirst Distribution' },
+  '7745123':  { status:'Active',     name:'Sarah Williams',    org:'National FMO' },
+  '6612890':  { status:'Pending',    name:'Carlos Rivera',     org:'Coastal Medicare Partners' },
+  '12345678': { status:'Terminated', name:'Patricia Thompson', org:'Pacific Health Distributors' },
+  '99887766': { status:'Pending',    name:'Michael Chen',      org:'HealthFirst Distribution' }
+};
+var REGISTERED_NPNS = Object.keys(NPN_REGISTRY); // back-compat alias
+// Pre-registered emails
+var REGISTERED_EMAILS = ['jmartinez@healthfirst.com','swilliams@healthfirst.com'];
+// Current inviter scope
+var INVITER = {name:'Sandra Adams',level:'SFMO',org:'National FMO (SFMO-2024-001)'};
+
+// Sample invitation records
+var INVITATIONS = [
+  {id:1,firstName:'Robert',lastName:'Chen',email:'rchen@email.com',npn:'98765432',level:'Agent/Broker',uplineOrg:'HealthFirst Distribution (GA-2201)',uplineOrgId:'GA-2201',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-20',expiryHours:72,expiryDate:'2026-05-23',status:'Accepted',acceptedDate:'2026-05-21',onboardingCase:'OB-2026-0441',sentBy:'Sandra Adams',token:'tk_001',message:''},
+  {id:2,firstName:'Maria',lastName:'Santos',email:'msantos@email.com',npn:'',level:'Agent/Broker',uplineOrg:'Coastal Medicare Partners (GA-2288)',uplineOrgId:'GA-2288',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-22',expiryHours:72,expiryDate:'2026-05-25',status:'Opened',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_002',message:'We look forward to welcoming you to our team!'},
+  {id:3,firstName:'David',lastName:'Kim',email:'dkim@email.com',npn:'55443322',level:'GA',uplineOrg:'SunBridge Medicare Advisors (MGA-1014)',uplineOrgId:'MGA-1014',planYear:'2026',role:'Agency Admin',sentDate:'2026-05-18',expiryHours:72,expiryDate:'2026-05-21',status:'Expired',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_003',message:''},
+  {id:4,firstName:'Jennifer',lastName:'Lopez',email:'jlopez@email.com',npn:'',level:'Agent/Broker',uplineOrg:'HealthFirst Distribution (GA-2201)',uplineOrgId:'GA-2201',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-25',expiryHours:72,expiryDate:'2026-05-28',status:'Sent',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_004',message:''},
+  {id:5,firstName:'Kevin',lastName:'Park',email:'kpark@email.com',npn:'',level:'MGA',uplineOrg:'SunBridge Medicare Advisors (MGA-1014)',uplineOrgId:'MGA-1014',planYear:'2026',role:'Agency Admin',sentDate:'2026-05-24',expiryHours:72,expiryDate:'2026-05-27',status:'Sent',acceptedDate:'',onboardingCase:'',sentBy:'James Rollins',token:'tk_005',message:''},
+  {id:6,firstName:'Amanda',lastName:'White',email:'awhite@email.com',npn:'11223344',level:'Agent/Broker',uplineOrg:'Coastal Medicare Partners (GA-2288)',uplineOrgId:'GA-2288',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-10',expiryHours:72,expiryDate:'2026-05-13',status:'Expired',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_006',message:''},
+  {id:7,firstName:'Carlos',lastName:'Mendez',email:'cmendez@email.com',npn:'',level:'Agent/Broker',uplineOrg:'HealthFirst Distribution (GA-2201)',uplineOrgId:'GA-2201',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-14',expiryHours:72,expiryDate:'2026-05-17',status:'Cancelled',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_007',message:''},
+  {id:8,firstName:'Lisa',lastName:'Johnson',email:'ljohnson@email.com',npn:'66778899',level:'Agent/Broker',uplineOrg:'Coastal Medicare Partners (GA-2288)',uplineOrgId:'GA-2288',planYear:'2026',role:'Individual Agent',sentDate:'2026-05-26',expiryHours:72,expiryDate:'2026-05-29',status:'Sent',acceptedDate:'',onboardingCase:'',sentBy:'Sandra Adams',token:'tk_008',message:''}
+];
+
+var CURRENT_DETAIL_ID = null;
+var NPN_HAS_ERROR = false;
+var EMAIL_HAS_ERROR = false;
+var BULK_INVITE_RAW = '';
+
+/* =========================================================
+   TAB NAVIGATION
+   ========================================================= */
+function switchInvTab(tab){
+  document.getElementById('invTabSend').style.display=tab==='send'?'':'none';
+  document.getElementById('invTabTrack').style.display=tab==='track'?'':'none';
+  document.getElementById('itab-send').classList.toggle('active',tab==='send');
+  document.getElementById('itab-track').classList.toggle('active',tab==='track');
+  if(tab==='track') renderInvitationsTable(INVITATIONS);
+}
+
+function openSendInviteModal(){document.getElementById('sendInviteQuickModal').style.display='flex';}
+
+/* =========================================================
+   SEND INVITATION FORM
+   ========================================================= */
+function validateInviteEmail(){
+  var email = document.getElementById('invEmail').value.trim();
+  var fmt = document.getElementById('emailFormatErr');
+  var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  fmt.style.display = (email&&!valid)?'block':'none';
+  EMAIL_HAS_ERROR = email && !valid;
+  buildInvitePreview();
+}
+
+function checkEmailDuplicate(){
+  var email = document.getElementById('invEmail').value.trim().toLowerCase();
+  var warn = document.getElementById('emailDupWarn');
+  var isdup = REGISTERED_EMAILS.some(function(e){return e.toLowerCase()===email;});
+  warn.style.display = isdup?'block':'none';
+}
+
+function validateNPN(){
+  var npn = document.getElementById('invNPN').value.trim();
+  var fmtErr  = document.getElementById('npnFormatErr');
+  var dupErr  = document.getElementById('npnDupErr');
+  var pendErr = document.getElementById('npnPendErr');
+  var termWrn = document.getElementById('npnTermWarn');
+  var okMsg   = document.getElementById('npnOk');
+  // Hide all first
+  [fmtErr,dupErr,pendErr,termWrn,okMsg].forEach(function(el){if(el)el.style.display='none';});
+  NPN_HAS_ERROR = false;
+  if(!npn) return;
+  // Format check first
+  if(!/^\d{8,10}$/.test(npn)){fmtErr.style.display='block';NPN_HAS_ERROR=true;return;}
+  // Status-aware duplicate check
+  var rec = NPN_REGISTRY[npn];
+  if(!rec){okMsg.style.display='block';return;}
+  if(rec.status==='Active'){
+    dupErr.style.display='block';
+    NPN_HAS_ERROR=true;
+    addNpnAuditEntry(npn,'DUPLICATE_ACTIVE',rec);
+  } else if(rec.status==='Pending'){
+    pendErr.style.display='block';
+    NPN_HAS_ERROR=true;
+    addNpnAuditEntry(npn,'DUPLICATE_PENDING',rec);
+  } else if(rec.status==='Terminated'){
+    termWrn.style.display='block';
+    NPN_HAS_ERROR=true; // block until admin confirms
+    addNpnAuditEntry(npn,'DUPLICATE_TERMINATED',rec);
+  }
+}
+
+function checkNpnTermConfirm(){
+  var cb = document.getElementById('npnTermConfirm');
+  NPN_HAS_ERROR = !cb.checked; // admin confirmed ? unblock
+}
+
+function addNpnAuditEntry(npn, result, rec){
+  // Duplicate check result logged to audit trail
+  console.log('[AUDIT] NPN Duplicate Check | NPN: '+npn+' | Result: '+result+' | ExistingAgent: '+(rec?rec.name:'N/A')+' | CheckedBy: Sandra Adams | Time: '+new Date().toISOString());
+}
+
+function invMsgCount(){
+  var len = (document.getElementById('invMessage').value||'').length;
+  document.getElementById('invMsgLen').textContent=len;
+}
+
+function buildInvitePreview(){
+  var first = (document.getElementById('invFirstName').value||'').trim();
+  var last = (document.getElementById('invLastName').value||'').trim();
+  var email = (document.getElementById('invEmail').value||'').trim();
+  var level = document.getElementById('invLevel').value;
+  var org = document.getElementById('invUplineOrg');
+  var orgText = org.options[org.selectedIndex]?org.options[org.selectedIndex].text:'?';
+  var planYear = document.getElementById('invPlanYear').value;
+  var expiry = document.getElementById('invExpiry').value||72;
+  var msg = (document.getElementById('invMessage').value||'').trim();
+  var role = document.getElementById('invRole').value;
+  var preview = document.getElementById('invPreview');
+  if(!first&&!last&&!email){preview.innerHTML='<div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#c5cae9"></i>Fill in the form to preview the invitation email</div>';return;}
+  var recipientName = (first+' '+last).trim()||'[Recipient Name]';
+  var expiryDate = new Date(Date.now()+expiry*3600000);
+  var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
+  preview.innerHTML = '<div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden">'
+    +'<div style="background:#1a237e;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">Gold Kidney Health Plan ? Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
+    +'<div style="padding:16px;font-size:12px;color:#333">'
+    +'<div style="margin-bottom:10px">Dear <strong>'+recipientName+'</strong>,</div>'
+    +'<div style="margin-bottom:8px">You have been invited to join the <strong>Gold Kidney Health Plan</strong> producer network as a <strong>'+role+'</strong>.</div>'
+    +(msg?'<div style="background:#f8f9fa;border-left:3px solid #1a237e;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+msg+'</div>':'')
+    +'<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:12px">'
+    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368;width:120px">Hierarchy Level:</td><td style="padding:5px;font-weight:600">'+(level||'?')+'</td></tr>'
+    +'<tr><td style="padding:5px;color:#5f6368">Upline Org:</td><td style="padding:5px;font-weight:600">'+orgText+'</td></tr>'
+    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Plan Year:</td><td style="padding:5px;font-weight:600">'+planYear+'</td></tr>'
+    +'<tr><td style="padding:5px;color:#5f6368">Invited By:</td><td style="padding:5px">'+INVITER.name+'</td></tr>'
+    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Expires:</td><td style="padding:5px;color:#e65100;font-weight:600">'+expiryDate.toLocaleString()+'</td></tr>'
+    +'</table>'
+    +'<div style="text-align:center;margin-bottom:12px"><a style="display:inline-block;background:#1a237e;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px" href="../auth/invite-accept.html?token='+token+'">Accept Invitation &amp; Begin Contracting</a></div>'
+    +'<div style="font-size:10px;color:#9e9e9e;text-align:center">This is a single-use, time-limited link. Do not share it.<br>Token: '+token+'</div>'
+    +'</div></div>';
+}
+
+function sendInvitation(){
+  var first = document.getElementById('invFirstName').value.trim();
+  var last = document.getElementById('invLastName').value.trim();
+  var email = document.getElementById('invEmail').value.trim();
+  var level = document.getElementById('invLevel').value;
+  var org = document.getElementById('invUplineOrg').value;
+  var planYear = document.getElementById('invPlanYear').value;
+  var zone = document.getElementById('invFormAlert');
+  // Clear previous highlights
+  ['invFirstName','invLastName','invEmail','invLevel','invUplineOrg'].forEach(function(id){document.getElementById(id).classList.remove('inv-err');});
+  var hasErr=false;
+  if(!first){document.getElementById('invFirstName').classList.add('inv-err');hasErr=true;}
+  if(!last){document.getElementById('invLastName').classList.add('inv-err');hasErr=true;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('invEmail').classList.add('inv-err');hasErr=true;}
+  if(!level){document.getElementById('invLevel').classList.add('inv-err');hasErr=true;}
+  if(!org){document.getElementById('invUplineOrg').classList.add('inv-err');hasErr=true;}
+  if(hasErr){showInvAlert(zone,'Please fill in all required fields highlighted in red.','danger');return;}
+  if(NPN_HAS_ERROR){showInvAlert(zone,'Please fix the NPN error before sending.','danger');return;}
+  if(EMAIL_HAS_ERROR){showInvAlert(zone,'Please fix the email error before sending.','danger');return;}
+  var dupConfirm = document.getElementById('emailDupConfirm');
+  if(document.getElementById('emailDupWarn').style.display!=='none' && dupConfirm && !dupConfirm.checked){
+    showInvAlert(zone,'Please confirm you intend to send an invitation to this existing user.','warning');return;
+  }
+  // Generate token
+  var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
+  var expiry = parseInt(document.getElementById('invExpiry').value)||72;
+  var expiryDate = new Date(Date.now()+expiry*3600000);
+  var orgSel = document.getElementById('invUplineOrg');
+  var orgText = orgSel.options[orgSel.selectedIndex].text;
+  var newInv = {
+    id:getNextInviteId(),firstName:first,lastName:last,email:email,
+    npn:document.getElementById('invNPN').value.trim(),level:level,
+    uplineOrg:orgText,uplineOrgId:org,planYear:planYear,
+    role:document.getElementById('invRole').value,
+    sentDate:new Date().toISOString().split('T')[0],
+    expiryHours:expiry,expiryDate:expiryDate.toISOString().split('T')[0],
+    status:'Sent',acceptedDate:'',onboardingCase:'',sentBy:INVITER.name,
+    token:token,message:document.getElementById('invMessage').value.trim()
+  };
+  INVITATIONS.unshift(newInv);
+  showInvToast('Invitation sent to '+first+' '+last+' ('+email+'). Token link expires in '+expiry+' hours.','success');
+  resetInviteForm();
+  // Update KPIs
+  updateKPIs();
+}
+
+function quickSendInvitation(){
+  var first=document.getElementById('qInvFirstName').value.trim();
+  var last=document.getElementById('qInvLastName').value.trim();
+  var email=document.getElementById('qInvEmail').value.trim();
+  var valid=true;
+  ['qInvFirstName','qInvLastName','qInvEmail'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value.trim()){el.classList.add('inv-err');valid=false;}else{el.classList.remove('inv-err');}
+  });
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('qInvEmail').classList.add('inv-err');
+    showInvToast('Please enter a valid email address.','danger');return;
+  }
+  if(!valid){showInvToast('Please fill in all required fields.','danger');return;}
+  var orgSel=document.getElementById('qInvOrg');
+  var orgText=orgSel.options[orgSel.selectedIndex].text;
+  var token='tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
+  var newInv={
+    id:getNextInviteId(),firstName:first,lastName:last,email:email,npn:'',
+    level:document.getElementById('qInvLevel').value,uplineOrg:orgText,
+    uplineOrgId:orgSel.value,planYear:'2026',role:'Individual Agent',
+    sentDate:new Date().toISOString().split('T')[0],expiryHours:72,
+    expiryDate:new Date(Date.now()+72*3600000).toISOString().split('T')[0],
+    status:'Sent',acceptedDate:'',onboardingCase:'',sentBy:INVITER.name,
+    token:token,message:''
+  };
+  INVITATIONS.unshift(newInv);
+  showInvToast('Quick invitation sent to '+first+' '+last+'. Token: '+token,'success');
+  document.getElementById('sendInviteQuickModal').style.display='none';
+  ['qInvFirstName','qInvLastName','qInvEmail'].forEach(function(id){var el=document.getElementById(id);el.value='';el.classList.remove('inv-err');});
+  updateKPIs();
+}
+
+function resetInviteForm(){
+  ['invFirstName','invLastName','invEmail','invNPN','invMessage'].forEach(function(id){
+    var el=document.getElementById(id);if(el){el.value='';el.classList.remove('inv-err');}
+  });
+  ['invLevel','invUplineOrg','invRole'].forEach(function(id){
+    var el=document.getElementById(id);if(el){el.selectedIndex=0;el.classList.remove('inv-err');}
+  });
+  document.getElementById('invExpiry').value='72';
+  document.getElementById('invMsgLen').textContent='0';
+  ['emailFormatErr','emailDupWarn','npnFormatErr','npnDupErr','npnPendErr','npnTermWarn','npnOk','invFormAlert'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  var bulkResult=document.getElementById('bulkInviteResult');
+  if(bulkResult){bulkResult.style.display='none';bulkResult.textContent='';}
+  var bulkFile=document.getElementById('bulkInviteFile');
+  if(bulkFile){bulkFile.value='';}
+  BULK_INVITE_RAW='';
+  NPN_HAS_ERROR=false;EMAIL_HAS_ERROR=false;
+  buildInvitePreview();
+}
+
+function getNextInviteId(){
+  return INVITATIONS.reduce(function(max,inv){return Math.max(max,inv.id||0);},0)+1;
+}
+
+function parseCsvLine(line){
+  var values=[];
+  var current='';
+  var inQuotes=false;
+  for(var i=0;i<line.length;i++){
+    var ch=line[i];
+    if(ch==='"'){
+      if(inQuotes && line[i+1]==='"'){
+        current+='"';
+        i++;
+      } else {
+        inQuotes=!inQuotes;
+      }
+    } else if(ch===',' && !inQuotes){
+      values.push(current);
+      current='';
+    } else {
+      current+=ch;
+    }
+  }
+  values.push(current);
+  return values.map(function(v){return v.trim();});
+}
+
+function loadBulkInviteFile(event){
+  var file = event && event.target && event.target.files ? event.target.files[0] : null;
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var content = (e.target && e.target.result ? e.target.result : '').toString();
+    BULK_INVITE_RAW = content;
+    var lineCount = content.split(/\r?\n/).map(function(line){return line.trim();}).filter(Boolean).length;
+    showInvToast('CSV loaded with '+lineCount+' row(s). Click Send Bulk Invitations.','info');
+  };
+  reader.readAsText(file);
+}
+
+function downloadBulkInviteTemplate(){
+  var rows = [
+    'firstName,lastName,email,npn,level,role,uplineOrgId,planYear,message',
+    'Ava,Ng,ava.ng@email.com,44556677,Agent/Broker,Individual Agent,GA-2201,2026,Welcome to Gold Kidney!',
+    'Noah,Patel,noah.patel@email.com,,GA,Agency Admin,MGA-1014,2026,'
+  ];
+  var blob = new Blob([rows.join('\n')],{type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bulk_invitation_template.csv';
+  a.click();
+}
+
+function sendBulkInvitations(){
+  var zone = document.getElementById('invFormAlert');
+  var resultBox = document.getElementById('bulkInviteResult');
+  var raw = (BULK_INVITE_RAW || '').trim();
+  if(!raw){
+    showInvAlert(zone,'Please upload a CSV file before sending bulk invitations.','warning');
+    return;
+  }
+
+  var lines = raw.split(/\r?\n/).map(function(line){return line.trim();}).filter(Boolean);
+  if(!lines.length){
+    showInvAlert(zone,'No valid rows found in bulk input.','warning');
+    return;
+  }
+
+  var hasHeader = /^firstname\s*,\s*lastname\s*,\s*email/i.test(lines[0].toLowerCase());
+  var startIndex = hasHeader ? 1 : 0;
+  var defaults = {
+    level: document.getElementById('invLevel').value || 'Agent/Broker',
+    role: document.getElementById('invRole').value || 'Individual Agent',
+    uplineOrgId: document.getElementById('invUplineOrg').value,
+    planYear: document.getElementById('invPlanYear').value || '2026',
+    message: (document.getElementById('invMessage').value || '').trim(),
+    expiryHours: parseInt(document.getElementById('invExpiry').value,10) || 72
+  };
+
+  if(!defaults.uplineOrgId){
+    showInvAlert(zone,'Select an Upline Organization in the form before bulk send, or provide uplineOrgId per row.','warning');
+    return;
+  }
+
+  var orgSelect = document.getElementById('invUplineOrg');
+  var orgById = {};
+  var orgIdByText = {};
+  Array.from(orgSelect.options).forEach(function(opt){
+    if(!opt.value) return;
+    orgById[opt.value] = opt.text;
+    orgIdByText[opt.text.toLowerCase()] = opt.value;
+  });
+
+  var created = [];
+  var errors = [];
+
+  for(var i=startIndex;i<lines.length;i++){
+    var rowNum = i + 1;
+    var cols = parseCsvLine(lines[i]);
+    if(!cols.length) continue;
+
+    var first = (cols[0] || '').trim();
+    var last = (cols[1] || '').trim();
+    var email = (cols[2] || '').trim();
+    var npn = (cols[3] || '').trim();
+    var level = (cols[4] || defaults.level).trim();
+    var role = (cols[5] || defaults.role).trim();
+    var orgRaw = (cols[6] || defaults.uplineOrgId).trim();
+    var planYear = (cols[7] || defaults.planYear).trim();
+    var message = (cols[8] || defaults.message).trim();
+
+    if(!first || !last || !email){
+      errors.push('Row '+rowNum+': missing required fields (firstName, lastName, email).');
+      continue;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      errors.push('Row '+rowNum+': invalid email format ('+email+').');
+      continue;
+    }
+    if(REGISTERED_EMAILS.some(function(e){return e.toLowerCase()===email.toLowerCase();})){
+      errors.push('Row '+rowNum+': email already exists ('+email+').');
+      continue;
+    }
+    if(npn && !/^\d{8,10}$/.test(npn)){
+      errors.push('Row '+rowNum+': invalid NPN format ('+npn+'). Must be 8-10 digits.');
+      continue;
+    }
+    if(npn && NPN_REGISTRY[npn] && (NPN_REGISTRY[npn].status==='Active' || NPN_REGISTRY[npn].status==='Pending')){
+      errors.push('Row '+rowNum+': NPN already in use with status '+NPN_REGISTRY[npn].status+' ('+npn+').');
+      continue;
+    }
+
+    var normalizedLevel = level;
+    if(normalizedLevel==='Agent') normalizedLevel='Agent/Broker';
+    if(['Agent/Broker','GA','MGA','SGA'].indexOf(normalizedLevel)===-1){
+      errors.push('Row '+rowNum+': invalid level ('+level+'). Use Agent/Broker, GA, MGA, or SGA.');
+      continue;
+    }
+
+    var orgId = orgById[orgRaw] ? orgRaw : (orgIdByText[orgRaw.toLowerCase()] || '');
+    if(!orgId){
+      errors.push('Row '+rowNum+': unknown uplineOrgId/org ('+orgRaw+').');
+      continue;
+    }
+
+    var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
+    var expiryDate = new Date(Date.now()+defaults.expiryHours*3600000).toISOString().split('T')[0];
+
+    created.push({
+      id:getNextInviteId()+created.length,
+      firstName:first,
+      lastName:last,
+      email:email,
+      npn:npn,
+      level:normalizedLevel,
+      uplineOrg:orgById[orgId],
+      uplineOrgId:orgId,
+      planYear:planYear || defaults.planYear,
+      role:role || defaults.role,
+      sentDate:new Date().toISOString().split('T')[0],
+      expiryHours:defaults.expiryHours,
+      expiryDate:expiryDate,
+      status:'Sent',
+      acceptedDate:'',
+      onboardingCase:'',
+      sentBy:INVITER.name,
+      token:token,
+      message:message
+    });
+  }
+
+  if(created.length){
+    INVITATIONS = created.concat(INVITATIONS);
+    updateKPIs();
+    if(document.getElementById('itab-track').classList.contains('active')){
+      renderInvitationsTable(INVITATIONS);
+    }
+  }
+
+  var linesOut = [];
+  linesOut.push('Bulk invitation result');
+  linesOut.push('Created: '+created.length);
+  linesOut.push('Skipped: '+errors.length);
+  if(errors.length){
+    linesOut.push('');
+    linesOut.push('Issues:');
+    errors.slice(0,12).forEach(function(err){linesOut.push('- '+err);});
+    if(errors.length>12){linesOut.push('- ...and '+(errors.length-12)+' more');}
+  }
+  resultBox.textContent = linesOut.join('\n');
+  resultBox.style.display = 'block';
+
+  if(created.length){
+    showInvToast('Bulk send complete. '+created.length+' invitation(s) created.','success');
+    document.getElementById('bulkInviteFile').value='';
+  } else {
+    showInvToast('No invitations were created. Review row errors.','warning');
+  }
+}
+
+/* =========================================================
+   INVITATION DASHBOARD
+   ========================================================= */
+function renderInvitationsTable(data){
+  var tbody = document.getElementById('invTableBody');
+  if(!tbody) return;
+  tbody.innerHTML='';
+  if(!data.length){tbody.innerHTML='<tr><td colspan="12" style="text-align:center;padding:20px;color:#9e9e9e">No invitations match the current filters.</td></tr>';return;}
+  data.forEach(function(inv){
+    var statusClass={'Draft':'sb-draft','Sent':'sb-sent','Opened':'sb-opened','Accepted':'sb-accepted','Expired':'sb-expired','Cancelled':'sb-cancelled','Rejected':'sb-rejected'}[inv.status]||'sb-draft';
+    var statusIcon={'Draft':'fa-pencil-alt','Sent':'fa-paper-plane','Opened':'fa-envelope-open','Accepted':'fa-check-circle','Expired':'fa-clock','Cancelled':'fa-ban','Rejected':'fa-times-circle'}[inv.status]||'fa-circle';
+    var canResend = inv.status==='Expired'||inv.status==='Sent';
+    var canCancel = inv.status==='Sent'||inv.status==='Opened';
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-id',inv.id);
+    tr.setAttribute('data-status',inv.status);
+    tr.setAttribute('data-level',inv.level);
+    tr.setAttribute('data-sentby',inv.sentBy);
+    tr.setAttribute('data-org',inv.uplineOrg);
+    // NPN display
+    var npnHtml = inv.npn ? '<code style="background:#f5f5f5;padding:2px 6px;border-radius:4px;font-size:11px">'+inv.npn+'</code>' : '<span style="color:#bdbdbd;font-size:11px">N/A</span>';
+    // Accepted date display
+    var acceptedHtml = inv.acceptedDate ? '<span style="color:#1b5e20;font-weight:600;font-size:11px"><i class="fas fa-check-circle" style="font-size:9px;margin-right:3px"></i>'+inv.acceptedDate+'</span>' : '<span style="color:#bdbdbd;font-size:11px">&mdash;</span>';
+    tr.innerHTML = '<td><input type="checkbox" class="inv-row-cb" value="'+inv.id+'" onchange="onRowCheckChange()"></td>'
+      +'<td style="font-weight:600;white-space:nowrap">'+inv.firstName+' '+inv.lastName+'</td>'
+      +'<td style="font-size:11px">'+inv.email+'</td>'
+      +'<td>'+npnHtml+'</td>'
+      +'<td><span style="font-size:11px;background:#e8eaf6;color:#1a237e;padding:2px 8px;border-radius:8px;font-weight:600">'+inv.level+'</span></td>'
+      +'<td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis">'+inv.uplineOrg+'</td>'
+      +'<td style="font-size:11px;white-space:nowrap">'+inv.sentDate+'</td>'
+      +'<td><span class="status-badge '+statusClass+'"><i class="fas '+statusIcon+'" style="font-size:9px"></i> '+inv.status+'</span></td>'
+      +'<td style="font-size:11px;white-space:nowrap">'+inv.expiryDate+'</td>'
+      +'<td style="white-space:nowrap">'+acceptedHtml+'</td>'
+      +'<td style="font-size:11px">'+inv.sentBy+'</td>'
+      +'<td style="white-space:nowrap"><div style="display:flex;gap:4px;align-items:center">'
+        +'<button class="tbl-action-btn" onclick="viewInvDetail('+inv.id+')" title="View Detail"><i class="fas fa-eye"></i></button>'
+        +(canResend?'<button class="tbl-action-btn" onclick="resendInvitation('+inv.id+')" title="Resend"><i class="fas fa-redo"></i></button>':'')
+        +(canCancel?'<button class="tbl-action-btn danger" onclick="cancelInvitation('+inv.id+')" title="Cancel"><i class="fas fa-ban"></i></button>':'')
+        +(inv.onboardingCase?'<a href="../agency-admin/onboarding-cases.html" class="tbl-action-btn" title="Onboarding Case"><i class="fas fa-clipboard-check"></i></a>':'')
+      +'</div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function filterInvitations(){
+  var status = document.getElementById('invFilterStatus').value.toLowerCase();
+  var level = document.getElementById('invFilterLevel').value.toLowerCase();
+  var sentby = document.getElementById('invFilterBy').value.toLowerCase();
+  var org = document.getElementById('invFilterOrg').value.toLowerCase();
+  var dateFrom = document.getElementById('invFilterFrom').value;
+  var filtered = INVITATIONS.filter(function(inv){
+    var sMatch = !status || inv.status.toLowerCase()===status;
+    var lMatch = !level || inv.level.toLowerCase()===level;
+    var bMatch = !sentby || inv.sentBy.toLowerCase().indexOf(sentby)>-1;
+    var oMatch = !org || inv.uplineOrg.toLowerCase().indexOf(org)>-1;
+    var dMatch = !dateFrom || inv.sentDate >= dateFrom;
+    return sMatch&&lMatch&&bMatch&&oMatch&&dMatch;
+  });
+  renderInvitationsTable(filtered);
+  updateFilteredKPIs(filtered);
+}
+
+function updateFilteredKPIs(data){
+  var sent=data.filter(function(i){return i.status==='Sent'||i.status==='Opened'||i.status==='Accepted';}).length;
+  var accepted=data.filter(function(i){return i.status==='Accepted';}).length;
+  var pending=data.filter(function(i){return i.status==='Sent'||i.status==='Opened';}).length;
+  var expired=data.filter(function(i){return i.status==='Expired';}).length;
+  var cancelled=data.filter(function(i){return i.status==='Cancelled';}).length;
+  var ks=document.getElementById('kpiSent');var ka=document.getElementById('kpiAccepted');
+  var kp=document.getElementById('kpiPending');var ke=document.getElementById('kpiExpired');var kc=document.getElementById('kpiCancelled');
+  if(ks)ks.textContent=sent;if(ka)ka.textContent=accepted;if(kp)kp.textContent=pending;if(ke)ke.textContent=expired;if(kc)kc.textContent=cancelled;
+}
+
+function resetInvFilters(){
+  ['invFilterStatus','invFilterLevel','invFilterBy','invFilterOrg'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('invFilterFrom').value='';
+  renderInvitationsTable(INVITATIONS);
+  updateKPIs();
+}
+
+function updateKPIs(){
+  var sent=INVITATIONS.filter(function(i){return i.status==='Sent'||i.status==='Opened'||i.status==='Accepted';}).length;
+  var accepted=INVITATIONS.filter(function(i){return i.status==='Accepted';}).length;
+  var pending=INVITATIONS.filter(function(i){return i.status==='Sent'||i.status==='Opened';}).length;
+  var expired=INVITATIONS.filter(function(i){return i.status==='Expired';}).length;
+  var cancelled=INVITATIONS.filter(function(i){return i.status==='Cancelled';}).length;
+  var ks=document.getElementById('kpiSent');var ka=document.getElementById('kpiAccepted');
+  var kp=document.getElementById('kpiPending');var ke=document.getElementById('kpiExpired');var kc=document.getElementById('kpiCancelled');
+  if(ks)ks.textContent=sent;if(ka)ka.textContent=accepted;if(kp)kp.textContent=pending;if(ke)ke.textContent=expired;if(kc)kc.textContent=cancelled;
+  var pb=document.getElementById('pendingCountBadge');if(pb)pb.textContent=pending;
+}
+
+function viewInvDetail(id){
+  var inv = INVITATIONS.find(function(i){return i.id===id;});
+  if(!inv) return;
+  CURRENT_DETAIL_ID = id;
+  var canResend = inv.status==='Expired'||inv.status==='Sent';
+  var canCancel = inv.status==='Sent'||inv.status==='Opened';
+  var rb=document.getElementById('invDetailResend');var cb=document.getElementById('invDetailCancel');
+  if(rb){rb.style.display=canResend?'':'none';}
+  if(cb){cb.style.display=canCancel?'':'none';}
+  var statusClass={'Draft':'sb-draft','Sent':'sb-sent','Opened':'sb-opened','Accepted':'sb-accepted','Expired':'sb-expired','Cancelled':'sb-cancelled','Rejected':'sb-rejected'}[inv.status]||'sb-draft';
+  // Timeline steps: Draft -> Sent -> Opened -> Accepted/Expired/Cancelled/Rejected
+  var steps = [
+    {key:'Draft',label:'Draft Created',date:'?',done:true},
+    {key:'Sent',label:'Invitation Sent',date:inv.sentDate,done:true},
+    {key:'Opened',label:'Link Opened',date:inv.status==='Opened'||inv.status==='Accepted'?inv.sentDate+' (link opened)':'?',done:inv.status==='Opened'||inv.status==='Accepted'},
+    {key:'Accepted',label:inv.status==='Expired'?'Expired':inv.status==='Cancelled'?'Cancelled':inv.status==='Rejected'?'Rejected':'Accepted',date:inv.acceptedDate||(inv.status==='Expired'?inv.expiryDate:inv.status==='Cancelled'?'Cancelled by sender':'?'),done:inv.status==='Accepted'||inv.status==='Expired'||inv.status==='Cancelled'||inv.status==='Rejected'}
+  ];
+  var tlHtml = '<div class="inv-timeline">';
+  steps.forEach(function(s){
+    var dotClass = s.done?(s.key==='Accepted'&&inv.status!=='Accepted'?'err':'done'):'grey';
+    tlHtml += '<div class="inv-tl-item"><div class="inv-tl-dot '+dotClass+'"></div>'
+      +'<div><div style="font-weight:700;font-size:12px">'+s.label+'</div><div style="font-size:11px;color:#5f6368">'+s.date+'</div></div></div>';
+  });
+  tlHtml += '</div>';
+  var content = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">'
+    +'<div><div style="font-size:11px;color:#5f6368">Recipient</div><div style="font-weight:700">'+inv.firstName+' '+inv.lastName+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Status</div><span class="status-badge '+statusClass+'">'+inv.status+'</span></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Email</div><div style="font-size:12px">'+inv.email+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">NPN</div><div style="font-size:12px">'+(inv.npn||'?')+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Level / Role</div><div style="font-size:12px">'+inv.level+' &mdash; '+inv.role+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Upline Org</div><div style="font-size:12px">'+inv.uplineOrg+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Plan Year</div><div style="font-size:12px">'+inv.planYear+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Expiry Date</div><div style="font-size:12px;color:#e65100">'+inv.expiryDate+'</div></div>'
+    +'<div><div style="font-size:11px;color:#5f6368">Sent By</div><div style="font-size:12px">'+inv.sentBy+'</div></div>'
+    +(inv.onboardingCase?'<div><div style="font-size:11px;color:#5f6368">Onboarding Case</div><a href="../agency-admin/onboarding-cases.html" style="font-size:12px;color:#1a237e;font-weight:700">'+inv.onboardingCase+' <i class="fas fa-external-link-alt" style="font-size:9px"></i></a></div>':'')
+    +(inv.message?'<div style="grid-column:span 2"><div style="font-size:11px;color:#5f6368">Personal Message</div><div style="font-size:12px;font-style:italic;color:#5f6368">'+inv.message+'</div></div>':'')
+    +'</div>'
+    +'<div style="border-top:1px solid #f1f3f4;padding-top:12px"><div style="font-weight:700;font-size:12px;color:#1a237e;margin-bottom:8px"><i class="fas fa-history" style="margin-right:5px"></i>Status Timeline</div>'+tlHtml+'</div>';
+  document.getElementById('invDetailContent').innerHTML=content;
+  document.getElementById('invDetailTitle').innerHTML='<i class="fas fa-envelope" style="margin-right:8px"></i>'+inv.firstName+' '+inv.lastName+' &mdash; Invitation Detail';
+  document.getElementById('invDetailModal').style.display='flex';
+}
+
+function resendInvitation(id){
+  var inv = INVITATIONS.find(function(i){return i.id===id;});
+  if(!inv) return;
+  var newToken = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
+  inv.token = newToken;
+  inv.status = 'Sent';
+  inv.sentDate = new Date().toISOString().split('T')[0];
+  var expHours = inv.expiryHours||72;
+  inv.expiryDate = new Date(Date.now()+expHours*3600000).toISOString().split('T')[0];
+  showInvToast('Invitation resent to '+inv.firstName+' '+inv.lastName+'. New token generated; previous link invalidated.','success');
+  renderInvitationsTable(INVITATIONS);updateKPIs();
+}
+
+function cancelInvitation(id){
+  var inv = INVITATIONS.find(function(i){return i.id===id;});
+  if(!inv) return;
+  inv.status='Cancelled';
+  inv.token='';
+  showInvToast('Invitation cancelled. The link for '+inv.firstName+' '+inv.lastName+' is now invalid.','warning');
+  renderInvitationsTable(INVITATIONS);updateKPIs();
+}
+
+function resendFromDetail(){if(CURRENT_DETAIL_ID){resendInvitation(CURRENT_DETAIL_ID);document.getElementById('invDetailModal').style.display='none';}}
+function cancelFromDetail(){if(CURRENT_DETAIL_ID){cancelInvitation(CURRENT_DETAIL_ID);document.getElementById('invDetailModal').style.display='none';}}
+
+/* Bulk actions */
+function onRowCheckChange(){
+  var cbs = document.querySelectorAll('.inv-row-cb:checked');
+  var bar = document.getElementById('invBulkBar');
+  var cnt = document.getElementById('invBulkCount');
+  if(cnt) cnt.textContent=cbs.length;
+  if(bar) bar.style.display=cbs.length?'flex':'none';
+}
+
+function toggleSelectAll(master){
+  document.querySelectorAll('.inv-row-cb').forEach(function(cb){cb.checked=master.checked;});
+  onRowCheckChange();
+}
+
+function clearBulkSelection(){
+  document.querySelectorAll('.inv-row-cb').forEach(function(cb){cb.checked=false;});
+  var sel=document.getElementById('invSelectAll');if(sel)sel.checked=false;
+  onRowCheckChange();
+}
+
+function applyBulkAction(){
+  var action = document.getElementById('invBulkAction').value;
+  var checked = Array.from(document.querySelectorAll('.inv-row-cb:checked')).map(function(cb){return parseInt(cb.value);});
+  if(!action){showInvToast('Please select a bulk action.','warning');return;}
+  if(!checked.length){showInvToast('No rows selected.','warning');return;}
+  // Validate: resend only for Expired/Sent; cancel only for Sent/Opened
+  if(action==='resend'){
+    var invalid = checked.filter(function(id){var inv=INVITATIONS.find(function(i){return i.id===id;});return inv&&inv.status!=='Expired'&&inv.status!=='Sent';});
+    if(invalid.length){showInvToast('Warning: '+invalid.length+' selected invitation(s) are not in Expired or Sent status and will be skipped.','warning');}
+    checked.forEach(function(id){var inv=INVITATIONS.find(function(i){return i.id===id;});if(inv&&(inv.status==='Expired'||inv.status==='Sent'))resendInvitation(id);});
+    showInvToast(checked.length+' invitations resent.','success');
+  } else if(action==='cancel'){
+    var invalid2 = checked.filter(function(id){var inv=INVITATIONS.find(function(i){return i.id===id;});return inv&&inv.status!=='Sent'&&inv.status!=='Opened';});
+    if(invalid2.length){showInvToast('Warning: '+invalid2.length+' selected invitation(s) are not in Sent or Opened status and will be skipped.','warning');}
+    checked.forEach(function(id){var inv=INVITATIONS.find(function(i){return i.id===id;});if(inv&&(inv.status==='Sent'||inv.status==='Opened'))cancelInvitation(id);});
+    showInvToast(checked.length+' invitations cancelled.','success');
+  }
+  clearBulkSelection();
+}
+
+function exportInvCSV(){
+  var status = document.getElementById('invFilterStatus').value.toLowerCase();
+  var level = document.getElementById('invFilterLevel').value.toLowerCase();
+  var data = INVITATIONS.filter(function(inv){
+    var sMatch=!status||inv.status.toLowerCase()===status;
+    var lMatch=!level||inv.level.toLowerCase()===level;
+    return sMatch&&lMatch;
+  });
+  var rows = ['ID,First Name,Last Name,Email,NPN,Level,Role,Upline Org,Plan Year,Sent Date,Status,Expiry Date,Accepted Date,Sent By'];
+  data.forEach(function(inv){
+    rows.push([inv.id,'"'+inv.firstName+'"','"'+inv.lastName+'"','"'+inv.email+'"',inv.npn,'"'+inv.level+'"','"'+inv.role+'"','"'+inv.uplineOrg+'"',inv.planYear,inv.sentDate,inv.status,inv.expiryDate,inv.acceptedDate||'','"'+inv.sentBy+'"'].join(','));
+  });
+  var blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='invitations_export.csv';a.click();
+  showInvToast('Exported '+data.length+' invitations as CSV (current filter applied).','success');
+}
+
+/* Utilities */
+function showInvAlert(zone,msg,type){
+  if(!zone)return;
+  var c={danger:'#fce4ec',warning:'#fff8e1',success:'#e8f5e9',info:'#e3f2fd'};
+  var b={danger:'#ef9a9a',warning:'#ffe082',success:'#a5d6a7',info:'#90caf9'};
+  var ic={danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',success:'fa-check-circle',info:'fa-info-circle'};
+  zone.innerHTML='<div style="background:'+c[type]+';border:1px solid '+b[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+ic[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
+  zone.style.display='block';
+  setTimeout(function(){zone.style.display='none';},6000);
+}
+
+function showInvToast(msg,type){
+  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#e65100',info:'#0d47a1'};
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:28px;right:24px;background:'+(colors[type]||colors.info)+';color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px';
+  t.innerHTML='<i class="fas '+(type==='success'?'fa-check-circle':'fa-info-circle')+'" style="margin-right:6px"></i>'+msg;
+  document.body.appendChild(t);setTimeout(function(){t.remove();},4000);
+}
+
+/* Prefill Functions */
+function prefillSendInvitation(){
+  document.getElementById('invFirstName').value='Robert';
+  document.getElementById('invLastName').value='Chen';
+  document.getElementById('invEmail').value='rchen@newagent.com';
+  document.getElementById('invNPN').value='44556677';
+  document.getElementById('invLevel').value='Agent';
+  document.getElementById('invRole').value='Individual Agent';
+  document.getElementById('invUplineOrg').value='GA-2201';
+  document.getElementById('invPlanYear').value='2026';
+  document.getElementById('invExpiry').value='72';
+  document.getElementById('invMessage').value='Welcome to Gold Kidney Health Plan! We look forward to having you join our network. Please complete your contracting within 72 hours.';
+  document.getElementById('invMsgLen').textContent=document.getElementById('invMessage').value.length;
+  // Reset NPN/email error states
+  ['emailFormatErr','emailDupWarn','npnFormatErr','npnDupErr','npnPendErr','npnTermWarn'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  NPN_HAS_ERROR=false;EMAIL_HAS_ERROR=false;
+  // Show NPN OK
+  document.getElementById('npnOk').style.display='block';
+  buildInvitePreview();
+  showInvToast('Form prefilled with sample data.','info');
+}
+
+function prefillQuickSend(){
+  document.getElementById('qInvFirstName').value='Angela';
+  document.getElementById('qInvLastName').value='Torres';
+  document.getElementById('qInvEmail').value='atorres@partner.com';
+  document.getElementById('qInvLevel').value='Agent/Broker';
+  document.getElementById('qInvOrg').value='GA-2288';
+  ['qInvFirstName','qInvLastName','qInvEmail'].forEach(function(id){document.getElementById(id).classList.remove('inv-err');});
+  showInvToast('Quick send form prefilled.','info');
+}
+
+function prefillDashboardFilters(){
+  document.getElementById('invFilterStatus').value='Sent';
+  document.getElementById('invFilterLevel').value='Agent/Broker';
+  document.getElementById('invFilterBy').value='Sandra Adams';
+  document.getElementById('invFilterOrg').value='HealthFirst Distribution';
+  document.getElementById('invFilterFrom').value='2026-05-01';
+  filterInvitations();
+  showInvToast('Dashboard filters prefilled with sample criteria.','info');
+}
+
+/* Init */
+document.addEventListener('DOMContentLoaded',function(){
+  renderInvitationsTable(INVITATIONS);
+  updateKPIs();
+});
+</script>
+</body>
+</html>

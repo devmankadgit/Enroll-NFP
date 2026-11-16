@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Help & Support — Agent support ticket creation and tracking -->
+<title>Help &amp; Support | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+.faq-item{border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:600;background:#f8f9fa;transition:background .15s}
+.faq-q:hover{background:#e3f2fd}
+.faq-a{display:none;padding:12px 16px;font-size:12px;color:#5f6368;line-height:1.7;border-top:1px solid #e8eaed}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q{background:#e3f2fd;color:#0d47a1}
+.faq-q .fa-chevron-down{transition:transform .2s;font-size:10px;color:#9e9e9e}
+.faq-item.open .faq-q .fa-chevron-down{transform:rotate(180deg);color:#0d47a1}
+.ticket-form .fg{display:flex;flex-direction:column;gap:3px;margin-bottom:12px}
+.ticket-form .fg label{font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.3px}
+.ticket-form .fg label .req{color:#c62828}
+.ticket-form .fg input,.ticket-form .fg select,.ticket-form .fg textarea{padding:8px 10px;border:1px solid #dadce0;border-radius:5px;font-size:12px;background:#fff}
+.ticket-form .fg input:focus,.ticket-form .fg select:focus,.ticket-form .fg textarea:focus{border-color:#0d47a1;outline:none;box-shadow:0 0 0 2px rgba(13,71,161,.08)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+.upload-zone{border:2px dashed #bdbdbd;border-radius:8px;padding:14px;text-align:center;font-size:12px;color:#757575;cursor:pointer;transition:border-color .2s;background:#fff}
+.upload-zone:hover{border-color:#0d47a1;background:#f8f9ff}
+.upload-zone input[type=file]{display:none}
+.upload-zone.has-file{border-color:#2e7d32;border-style:solid;background:#f1f8e9;color:#1b5e20}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html" class="active"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8">
+      <div class="sb-ava">JM</div>
+      <div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Help &amp; Support</h4>
+      <ol class="breadcrumb-bar"><li>Resources</li><li>Help &amp; Support</li></ol>
+    </div>
+    <a href="notifications.html" class="tb-btn"><i class="fas fa-bell"></i><span class="n-dot"></span></a>
+    <a href="profile.html" class="tb-btn" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-user"></i></a>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Quick Contact Banner -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:14px 18px;background:#e3f2fd;border:1px solid #bbdefb;border-radius:8px">
+        <i class="fas fa-phone-alt" style="font-size:20px;color:#0d47a1"></i>
+        <div><div style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase">Agent Support Hotline</div><div style="font-size:15px;font-weight:700;color:#0d47a1">1-800-555-GKID (4543)</div><div style="font-size:11px;color:#5f6368">Mon–Fri 8 AM – 8 PM EST</div></div>
+      </div>
+      <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:14px 18px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px">
+        <i class="fas fa-envelope" style="font-size:20px;color:#2e7d32"></i>
+        <div><div style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase">Email Support</div><div style="font-size:14px;font-weight:700;color:#2e7d32">agentsupport@goldkidney.com</div><div style="font-size:11px;color:#5f6368">Response within 1 business day</div></div>
+      </div>
+      <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:14px 18px;background:#f3e5f5;border:1px solid #ce93d8;border-radius:8px">
+        <i class="fas fa-comments" style="font-size:20px;color:#6a1b9a"></i>
+        <div><div style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase">Live Chat</div><div style="font-size:14px;font-weight:700;color:#6a1b9a">Chat Now</div><div style="font-size:11px;color:#5f6368">Available Mon–Fri 9 AM – 6 PM EST</div></div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-ticket-alt"></i></div><div><div class="stat-label">Open Tickets</div><div class="stat-val">2</div><div class="stat-sub text-muted">Awaiting response</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">In Progress</div><div class="stat-val">1</div><div class="stat-sub text-muted">Being investigated</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Resolved (YTD)</div><div class="stat-val">7</div><div class="stat-sub stat-up">Avg. resolution: 1.2 days</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-star"></i></div><div><div class="stat-label">Satisfaction</div><div class="stat-val">4.8 / 5</div><div class="stat-sub text-muted">Based on 7 surveys</div></div></div></div>
+    </div>
+
+    <div class="row-grid">
+      <!-- ========================================== -->
+      <!-- Create Support Ticket Form -->
+      <!-- ========================================== -->
+      <div class="col-2">
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-plus-circle" style="margin-right:6px;color:#0d47a1"></i>Create Support Ticket</h5></div>
+          <div style="padding:16px" class="ticket-form">
+            <div class="form-row">
+              <div class="fg">
+                <label>Issue Category <span class="req">*</span></label>
+                <select id="ticketCategory">
+                  <option value="">— Select Category —</option>
+                  <option value="portal-access">Portal Access / Login Issues</option>
+                  <option value="enrollment">Enrollment Processing</option>
+                  <option value="commission">Commission / Payment Issues</option>
+                  <option value="hra">HRA / Healthy Visit</option>
+                  <option value="compliance">Compliance / Certification</option>
+                  <option value="member">Member Data / BoB Issues</option>
+                  <option value="leads">Lead Management</option>
+                  <option value="documents">Document Upload / Access</option>
+                  <option value="technical">Technical / System Error</option>
+                  <option value="training">Training / Exam Issues</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label>Priority <span class="req">*</span></label>
+                <select id="ticketPriority">
+                  <option value="">— Select Priority —</option>
+                  <option value="critical">Critical — Cannot work / System down</option>
+                  <option value="high">High — Major feature not working</option>
+                  <option value="medium" selected>Medium — Issue with workaround</option>
+                  <option value="low">Low — Minor issue / Question</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Subject <span class="req">*</span></label>
+              <input type="text" id="ticketSubject" placeholder="Brief description of the issue">
+            </div>
+            <div class="fg">
+              <label>Description <span class="req">*</span></label>
+              <textarea id="ticketDesc" rows="5" placeholder="Please describe the issue in detail. Include:&#10;• What were you trying to do?&#10;• What happened instead?&#10;• Any error messages you saw&#10;• Steps to reproduce the issue"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="fg">
+                <label>Member ID (if applicable)</label>
+                <input type="text" id="ticketMemberId" placeholder="e.g. MEM-20260001">
+              </div>
+              <div class="fg">
+                <label>Browser / Device</label>
+                <input type="text" id="ticketBrowser" placeholder="e.g. Chrome 126, Windows 11">
+              </div>
+            </div>
+            <div class="fg">
+              <label>Attachments (screenshots, error logs, audio)</label>
+              <div class="upload-zone" id="ticketUpload" onclick="document.getElementById('ticketFile').click()">
+                <input type="file" id="ticketFile" multiple accept=".png,.jpg,.jpeg,.pdf,.xlsx,.csv,.mp3,.wav,.m4a,.ogg,.aac" onchange="handleUpload(this)">
+                <i class="fas fa-cloud-upload-alt" style="font-size:20px;display:block;margin-bottom:6px"></i>
+                Click to upload or drag &amp; drop — PNG, JPG, PDF, Excel, Audio (MP3, WAV, M4A)
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:8px">
+              <button class="btn-pr" onclick="submitTicket()"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Submit Ticket</button>
+              <button class="btn-ol" onclick="clearForm()">Clear Form</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- My Support Tickets -->
+        <!-- ========================================== -->
+        <div class="card mb16">
+          <div class="card-hdr">
+            <h5><i class="fas fa-list" style="margin-right:6px;color:#4a148c"></i>My Support Tickets</h5>
+            <select style="font-size:11px;padding:4px 8px;border:1px solid #dadce0;border-radius:4px" onchange="filterTickets(this.value)">
+              <option value="all">All Tickets</option>
+              <option value="open">Open</option>
+              <option value="in-progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="table table-hover" style="font-size:13px" id="tblTickets">
+              <thead><tr><th>Ticket #</th><th>Subject</th><th>Category</th><th>Priority</th><th>Submitted</th><th>Last Updated</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr data-ticket-status="open">
+                  <td style="font-weight:600;color:#0d47a1">TKT-2026-0089</td>
+                  <td>
+                    <div style="font-weight:600">Commission amount discrepancy for member Dorothy Henderson</div>
+                    <div style="font-size:11px;color:#5f6368">Expected $601, received $501 for initial enrollment</div>
+                  </td>
+                  <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Commission</span></td>
+                  <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-arrow-up"></i> High</span></td>
+                  <td>07 25,2026</td>
+                  <td>07 26,2026</td>
+                  <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-envelope-open"></i> Open</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewTicket('TKT-2026-0089')"><i class="fas fa-eye"></i>View</button></td>
+                </tr>
+                <tr data-ticket-status="in-progress" style="background:#fffde7">
+                  <td style="font-weight:600;color:#0d47a1">TKT-2026-0085</td>
+                  <td>
+                    <div style="font-weight:600">Unable to upload HRA document for Robert Nguyen</div>
+                    <div style="font-size:11px;color:#5f6368">PDF upload fails with "File too large" error — file is only 2 MB</div>
+                  </td>
+                  <td><span style="background:#e0f2f1;color:#00695c;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">HRA</span></td>
+                  <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-minus"></i> Medium</span></td>
+                  <td>07 20,2026</td>
+                  <td>07 27,2026</td>
+                  <td><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-cog fa-spin"></i> In Progress</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewTicket('TKT-2026-0085')"><i class="fas fa-eye"></i>View</button></td>
+                </tr>
+                <tr data-ticket-status="open">
+                  <td style="font-weight:600;color:#0d47a1">TKT-2026-0082</td>
+                  <td>
+                    <div style="font-weight:600">Lead status not updating after phone call logged</div>
+                    <div style="font-size:11px;color:#5f6368">Changed status to "Contacted" but still shows "New"</div>
+                  </td>
+                  <td><span style="background:#f3e5f5;color:#6a1b9a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Leads</span></td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-arrow-down"></i> Low</span></td>
+                  <td>07 18,2026</td>
+                  <td>07 19,2026</td>
+                  <td><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-envelope-open"></i> Open</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewTicket('TKT-2026-0082')"><i class="fas fa-eye"></i>View</button></td>
+                </tr>
+                <tr data-ticket-status="resolved">
+                  <td style="font-weight:600;color:#5f6368">TKT-2026-0074</td>
+                  <td>
+                    <div style="font-weight:600;color:#5f6368">Cannot access SOA Management page — blank screen</div>
+                    <div style="font-size:11px;color:#9e9e9e">Browser cache issue — cleared cache and resolved</div>
+                  </td>
+                  <td><span style="background:#f5f5f5;color:#757575;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Technical</span></td>
+                  <td><span style="background:#f5f5f5;color:#757575;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-minus"></i> Medium</span></td>
+                  <td>07 10,2026</td>
+                  <td>07 11,2026</td>
+                  <td><span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Resolved</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewTicket('TKT-2026-0074')"><i class="fas fa-eye"></i>View</button></td>
+                </tr>
+                <tr data-ticket-status="closed">
+                  <td style="font-weight:600;color:#9e9e9e">TKT-2026-0061</td>
+                  <td>
+                    <div style="font-weight:600;color:#9e9e9e">How to download commission statement as PDF?</div>
+                    <div style="font-size:11px;color:#bdbdbd">Resolved — directed to Commissions → Download PDF button</div>
+                  </td>
+                  <td><span style="background:#f5f5f5;color:#bdbdbd;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Commission</span></td>
+                  <td><span style="background:#f5f5f5;color:#bdbdbd;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600"><i class="fas fa-arrow-down"></i> Low</span></td>
+                  <td>06 28,2026</td>
+                  <td>06 28,2026</td>
+                  <td><span style="background:#f5f5f5;color:#9e9e9e;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-archive"></i> Closed</span></td>
+                  <td><button class="btn-ol btn-sm" onclick="viewTicket('TKT-2026-0061')"><i class="fas fa-eye"></i>View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: FAQs + Quick Links -->
+      <div class="col-1" style="min-width:320px">
+        <!-- FAQs -->
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-question-circle" style="margin-right:6px;color:#e65100"></i>Frequently Asked Questions</h5></div>
+          <div style="padding:12px">
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>How do I reset my portal password?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">Click your profile icon → "My Profile" → "Security" tab → "Change Password". If locked out, click "Forgot Password" on the login page or call the Agent Support Hotline.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>Why is my commission showing $0 for a member?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">Commission is paid after the member's enrollment is fully processed and the 7-day CMS confirmation period completes. Check the member's enrollment status. If enrollment is confirmed but commission is still $0, create a support ticket under "Commission / Payment Issues".</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>How do I submit an HRA for a new member?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">Navigate to HRA Management → click "Start HRA" next to the member's name. The HRA must be submitted within 14 days of enrollment effective date to qualify for the $25 HRA incentive.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>My enrollment submission shows "Pended" — what does that mean?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">A "Pended" status means the enrollment requires additional documentation or review. Check Enrollment Status for the specific pend reason. Common reasons include missing SOA, C-SNP verification pending, or incomplete beneficiary information. Address the issue and resubmit.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>How do I update my payment preferences (ACH)?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">Go to My Profile → "Payment" tab → "Update ACH Information". Changes take effect on the next payment cycle. You'll receive a confirmation email once updated.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>When does AHIP recertification open for next plan year?</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">AHIP certification for the next plan year typically opens September 1 and must be completed before December 31. Check Training & Certification for your current status and deadlines.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+              <div class="faq-q"><span>I can't see a lead that was assigned to me</span><i class="fas fa-chevron-down"></i></div>
+              <div class="faq-a">Lead assignments may take up to 15 minutes to sync. Try refreshing the page. If the lead still doesn't appear, check with your upline or create a support ticket under "Lead Management".</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-link" style="margin-right:6px;color:#00695c"></i>Quick Links</h5></div>
+          <div style="padding:12px">
+            <a href="documents.html" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e8eaed;border-radius:6px;margin-bottom:6px;text-decoration:none;color:#212121;font-size:12px;font-weight:500;transition:background .15s" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+              <i class="fas fa-file-pdf" style="color:#c62828;width:20px;text-align:center"></i>Agent Handbook &amp; Guides
+            </a>
+            <a href="training.html" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e8eaed;border-radius:6px;margin-bottom:6px;text-decoration:none;color:#212121;font-size:12px;font-weight:500;transition:background .15s" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+              <i class="fas fa-graduation-cap" style="color:#0d47a1;width:20px;text-align:center"></i>Training &amp; Certification
+            </a>
+            <a href="commissions.html" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e8eaed;border-radius:6px;margin-bottom:6px;text-decoration:none;color:#212121;font-size:12px;font-weight:500;transition:background .15s" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+              <i class="fas fa-dollar-sign" style="color:#2e7d32;width:20px;text-align:center"></i>Commission Schedule &amp; Rates
+            </a>
+            <a href="enrollment.html" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e8eaed;border-radius:6px;margin-bottom:6px;text-decoration:none;color:#212121;font-size:12px;font-weight:500;transition:background .15s" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+              <i class="fas fa-file-medical" style="color:#1565c0;width:20px;text-align:center"></i>Enrollment Instructions
+            </a>
+            <a href="recredentialing.html" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e8eaed;border-radius:6px;text-decoration:none;color:#212121;font-size:12px;font-weight:500;transition:background .15s" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='#fff'">
+              <i class="fas fa-sync-alt" style="color:#6a1b9a;width:20px;text-align:center"></i>Re-Credentialing Requirements
+            </a>
+          </div>
+        </div>
+
+        <!-- SLA Info -->
+        <div class="card mb16">
+          <div class="card-hdr"><h5><i class="fas fa-clock" style="margin-right:6px;color:#1565c0"></i>Response Times (SLA)</h5></div>
+          <div style="padding:14px;font-size:12px;line-height:2">
+            <div style="display:flex;justify-content:space-between"><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#c62828;margin-right:6px"></span>Critical</span><span style="font-weight:600">2 hours</span></div>
+            <div style="display:flex;justify-content:space-between"><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e65100;margin-right:6px"></span>High</span><span style="font-weight:600">4 hours</span></div>
+            <div style="display:flex;justify-content:space-between"><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff9800;margin-right:6px"></span>Medium</span><span style="font-weight:600">1 business day</span></div>
+            <div style="display:flex;justify-content:space-between"><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2e7d32;margin-right:6px"></span>Low</span><span style="font-weight:600">2 business days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Ticket Detail Modal -->
+<div id="ticketModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;justify-content:center;align-items:center">
+  <div style="background:#fff;border-radius:10px;width:680px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.25)">
+    <div style="padding:18px 22px;border-bottom:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+      <h5 style="margin:0;font-size:15px" id="modalTicketId"><i class="fas fa-ticket-alt" style="margin-right:6px;color:#0d47a1"></i>TKT-2026-0089</h5>
+      <button class="btn-ol btn-sm" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:18px 22px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+        <div><div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase">Status</div><div id="modalStatus" style="margin-top:4px"><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-envelope-open"></i> Open</span></div></div>
+        <div><div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase">Priority</div><div id="modalPriority" style="margin-top:4px"><span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600"><i class="fas fa-arrow-up"></i> High</span></div></div>
+        <div><div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase">Category</div><div id="modalCategory" style="margin-top:4px"><span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Commission</span></div></div>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:4px">Subject</div>
+        <div style="font-size:13px;font-weight:600" id="modalSubject">Commission amount discrepancy for member Dorothy Henderson</div>
+      </div>
+
+      <!-- Conversation Thread -->
+      <div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:8px">Conversation</div>
+      <div id="modalThread" style="margin-bottom:16px">
+        <div style="border:1px solid #e8eaed;border-radius:8px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <div style="font-size:12px;font-weight:600;color:#0d47a1"><i class="fas fa-user" style="margin-right:4px"></i>James Martinez (You)</div>
+            <div style="font-size:11px;color:#9e9e9e">07 25,2026 2:14 PM</div>
+          </div>
+          <div style="font-size:12px;color:#424242;line-height:1.7">I enrolled Dorothy Henderson (MEM-20260012) under ESRD SNP effective 01 01,2026. Per the commission schedule, initial ESRD enrollment should pay $601. My May 2026 commission statement shows only $501 for this member. Please review and adjust. Attached screenshot of statement.</div>
+          <div style="margin-top:8px"><span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:4px;font-size:11px;color:#5f6368"><i class="fas fa-paperclip"></i>commission_statement_may2026.png</span></div>
+        </div>
+        <div style="border:1px solid #bbdefb;border-radius:8px;padding:12px;margin-bottom:8px;background:#f8fbff">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <div style="font-size:12px;font-weight:600;color:#2e7d32"><i class="fas fa-headset" style="margin-right:4px"></i>Agent Support Team</div>
+            <div style="font-size:11px;color:#9e9e9e">07 26,2026 10:22 AM</div>
+          </div>
+          <div style="font-size:12px;color:#424242;line-height:1.7">Thank you for reporting this. We've escalated the discrepancy to the Finance team for review. The commission for ESRD SNP initial enrollment is indeed $601. We'll update you once the adjustment is processed. Expected resolution: 2-3 business days.</div>
+        </div>
+      </div>
+
+      <!-- Add Reply -->
+      <div style="font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:6px">Add Reply</div>
+      <textarea id="modalReply" rows="3" style="width:100%;padding:8px 10px;border:1px solid #dadce0;border-radius:5px;font-size:12px;resize:vertical" placeholder="Type your reply here..."></textarea>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn-pr btn-sm" onclick="alert('Reply sent successfully.\n\nTicket TKT-2026-0089 updated.');closeModal()"><i class="fas fa-reply" style="margin-right:4px"></i>Send Reply</button>
+        <button class="btn-ol btn-sm" onclick="alert('Ticket TKT-2026-0089 escalated to supervisor.\n\nYour upline manager will be notified.')"><i class="fas fa-level-up-alt" style="margin-right:4px"></i>Escalate</button>
+        <button class="btn-ol btn-sm" style="margin-left:auto;color:#c62828;border-color:#ffcdd2" onclick="if(confirm('Close this ticket? You can reopen it later if needed.')){alert('Ticket closed.');closeModal()}"><i class="fas fa-times-circle" style="margin-right:4px"></i>Close Ticket</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Toast -->
+<div id="successToast" style="display:none;position:fixed;bottom:24px;right:24px;background:#1b5e20;color:#fff;padding:14px 22px;border-radius:8px;font-size:13px;font-weight:600;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.25);animation:slideUp .3s ease">
+  <i class="fas fa-check-circle" style="margin-right:8px"></i><span id="toastMsg">Ticket submitted successfully!</span>
+</div>
+
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function submitTicket() {
+  var cat = document.getElementById('ticketCategory').value;
+  var subj = document.getElementById('ticketSubject').value;
+  var desc = document.getElementById('ticketDesc').value;
+  if (!cat) { alert('Please select an issue category.'); return; }
+  if (!subj.trim()) { alert('Please enter a subject.'); return; }
+  if (!desc.trim()) { alert('Please provide a description of the issue.'); return; }
+  var ticketNum = 'TKT-2026-' + String(Math.floor(Math.random()*900)+100).padStart(4,'0');
+  showToast('Ticket ' + ticketNum + ' submitted successfully! You will receive a confirmation email.');
+  clearForm();
+}
+
+function clearForm() {
+  document.getElementById('ticketCategory').value = '';
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketDesc').value = '';
+  document.getElementById('ticketMemberId').value = '';
+  document.getElementById('ticketBrowser').value = '';
+  document.getElementById('ticketPage').value = '';
+  var uz = document.getElementById('ticketUpload');
+  uz.classList.remove('has-file');
+  uz.innerHTML = '<input type="file" id="ticketFile" multiple accept=".png,.jpg,.jpeg,.pdf,.xlsx,.csv" onchange="handleUpload(this)"><i class="fas fa-cloud-upload-alt" style="font-size:20px;display:block;margin-bottom:6px"></i>Click to upload or drag & drop — PNG, JPG, PDF, Excel (max 10 MB each)';
+}
+
+function handleUpload(input) {
+  if (input.files.length > 0) {
+    var zone = document.getElementById('ticketUpload');
+    zone.classList.add('has-file');
+    var names = Array.from(input.files).map(f => f.name).join(', ');
+    zone.innerHTML = '<input type="file" id="ticketFile" multiple accept=".png,.jpg,.jpeg,.pdf,.xlsx,.csv" onchange="handleUpload(this)"><i class="fas fa-check-circle" style="font-size:20px;display:block;margin-bottom:6px"></i>' + input.files.length + ' file(s) selected: ' + names;
+  }
+}
+
+function viewTicket(id) {
+  document.getElementById('modalTicketId').innerHTML = '<i class="fas fa-ticket-alt" style="margin-right:6px;color:#0d47a1"></i>' + id;
+  document.getElementById('ticketModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('ticketModal').style.display = 'none';
+}
+
+function filterTickets(status) {
+  document.querySelectorAll('#tblTickets tbody tr').forEach(function(row) {
+    if (status === 'all') { row.style.display = ''; return; }
+    row.style.display = row.getAttribute('data-ticket-status') === status ? '' : 'none';
+  });
+}
+
+function showToast(msg) {
+  var t = document.getElementById('successToast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 4000);
+}
+
+// Close modal on background click
+document.getElementById('ticketModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>

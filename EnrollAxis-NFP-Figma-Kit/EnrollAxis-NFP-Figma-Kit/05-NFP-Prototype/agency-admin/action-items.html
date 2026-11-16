@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Action Items | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html" class="active"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Consolidated Action Items (Downline)</h4><ol class="breadcrumb-bar"><li>Aggregated Action Items Across Downline Agents</li></ol></div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary by Agent -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-circle"></i></div><div><div class="stat-label">Total Overdue</div><div class="stat-val" style="color:#c62828">14</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clipboard-list"></i></div><div><div class="stat-label">HRA Due</div><div class="stat-val">6</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-clipboard-check"></i></div><div><div class="stat-label">PQAT Due</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-users"></i></div><div><div class="stat-label">Lead Follow-ups</div><div class="stat-val">12</div></div></div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <label>Agent:</label>
+      <select id="ai-agent" onchange="filterActionItems()"><option value="">All Agents</option><option value="J. Martinez">J. Martinez (8823441)</option><option value="S. Chen">S. Chen (7719022)</option><option value="K. Nguyen">K. Nguyen (9912345)</option></select>
+      <label>Type:</label>
+      <select id="ai-type" onchange="filterActionItems()"><option value="">All Types</option><option value="HRA Due">HRA Due</option><option value="PQAT Due">PQAT Due</option><option value="Healthy Visit">Healthy Visit</option><option value="C-SNP Re-Verify">C-SNP Re-Verify</option><option value="Lead Follow-up">Lead Follow-up</option></select>
+      <label>Priority:</label>
+      <select id="ai-priority" onchange="filterActionItems()"><option value="">All Priority</option><option value="High">High (Overdue)</option><option value="Medium">Medium</option><option value="Low">Low</option></select> <input type="date" id="ai-date" onchange="filterActionItems()" title="Filter by due date">
+      <button class="btn-ol btn-sm" onclick="filterActionItems()"><i class="fas fa-filter"></i>Apply</button> <button class="btn-ol btn-sm" onclick="resetAiFilters()"><i class="fas fa-times"></i>Reset</button>
+    </div>
+
+    <!-- Consolidated Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>All Downline Action Items (36)</h5><div class="dflex g8"><button class="btn-ol btn-sm"><i class="fas fa-envelope"></i>Send Reminders</button><button class="btn-ol btn-sm"><i class="fas fa-download"></i>Export</button></div><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','action-items_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Agent</th><th>Type</th><th>Member / Lead</th><th>Due Date</th><th>Status</th><th>Priority</th><th>Actions</th></tr></thead>
+          <tbody id="aiTableBody">
+            <tr style="background:#fff5f5"><td>J. Martinez</td><td><span class="bdg b-red">Lead Follow-up</span></td><td>Linda Park</td><td>May 24</td><td><span class="bdg b-red">1 day overdue</span></td><td>High</td><td><button class="btn-ol btn-sm">Remind</button> <button class="btn-ol btn-sm">Reassign</button></td></tr>
+            <tr style="background:#fff5f5"><td>J. Martinez</td><td><span class="bdg b-amber">HRA Due</span></td><td>Susan Walsh</td><td>May 28</td><td><span class="bdg b-amber">3 days left</span></td><td>High</td><td><button class="btn-ol btn-sm">Remind</button></td></tr>
+            <tr style="background:#fff5f5"><td>S. Chen</td><td><span class="bdg b-red">Lead Follow-up</span></td><td>Robert Kim</td><td>May 23</td><td><span class="bdg b-red">2 days overdue</span></td><td>High</td><td><button class="btn-ol btn-sm">Remind</button> <button class="btn-ol btn-sm">Reassign</button></td></tr>
+            <tr><td>S. Chen</td><td><span class="bdg b-amber">HRA Due</span></td><td>Frank Johnson</td><td>May 30</td><td><span class="bdg b-blue">5 days left</span></td><td>Medium</td><td><button class="btn-ol btn-sm">Remind</button></td></tr>
+            <tr><td>K. Nguyen</td><td><span class="bdg b-purple">PQAT Due</span></td><td>Maria Santos</td><td>Jun 15</td><td><span class="bdg b-blue">21 days</span></td><td>Low</td><td><button class="btn-ol btn-sm">Remind</button></td></tr>
+            <tr><td>J. Martinez</td><td><span class="bdg b-teal">Healthy Visit</span></td><td>Grace Kim</td><td>Aug 1</td><td><span class="bdg b-blue">68 days</span></td><td>Low</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Agent Performance Summary -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="margin-right:8px;color:#5f6368"></i>Agent Action Item Performance</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','action-items_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <table id="tblExport2" class="tbl">
+          <thead><tr><th>Agent</th><th>Total Items</th><th>Overdue</th><th>On-Time Rate</th><th>HRA Completion</th><th>PQAT Completion</th></tr></thead>
+          <tbody>
+            <tr><td>James Martinez (8823441)</td><td>8</td><td style="color:#c62828;font-weight:600">3</td><td>62.5%</td><td>75%</td><td>60%</td></tr>
+            <tr><td>Sarah Chen (7719022)</td><td>10</td><td style="color:#c62828;font-weight:600">2</td><td>80.0%</td><td>90%</td><td>85%</td></tr>
+            <tr><td>Kevin Nguyen (9912345)</td><td>6</td><td>0</td><td style="color:#1b5e20;font-weight:600">100%</td><td>100%</td><td>80%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<script>
+function filterActionItems() {
+  var agent = document.getElementById('ai-agent').value;
+  var type = document.getElementById('ai-type').value;
+  var priority = document.getElementById('ai-priority').value;
+  var dateFilter = document.getElementById('ai-date').value;
+  var rows = document.querySelectorAll('#aiTableBody tr');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells.length < 6) return;
+    var rowAgent = cells[0].textContent.trim();
+    var rowType = cells[1].textContent.trim();
+    var rowDate = cells[3].textContent.trim();
+    var rowPriority = cells[5].textContent.trim();
+    var show = true;
+    if (agent && !rowAgent.startsWith(agent)) show = false;
+    if (type && rowType !== type) show = false;
+    if (priority) {
+      if (priority === 'High' && rowPriority !== 'High') show = false;
+      if (priority === 'Medium' && rowPriority !== 'Medium') show = false;
+      if (priority === 'Low' && rowPriority !== 'Low') show = false;
+    }
+    if (dateFilter) {
+      try {
+        var due = new Date(rowDate + ', 2026');
+        var filter = new Date(dateFilter);
+        if (due.toDateString() !== filter.toDateString()) show = false;
+      } catch(e) {}
+    }
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  showToast(visible + ' action item(s) match the current filters', 'success');
+}
+function resetAiFilters() {
+  document.getElementById('ai-agent').value = '';
+  document.getElementById('ai-type').value = '';
+  document.getElementById('ai-priority').value = '';
+  document.getElementById('ai-date').value = '';
+  document.querySelectorAll('#aiTableBody tr').forEach(function(r){ r.style.display = ''; });
+  showToast('Filters cleared', 'success');
+}
+</script>
+</body>
+</html>
+
+

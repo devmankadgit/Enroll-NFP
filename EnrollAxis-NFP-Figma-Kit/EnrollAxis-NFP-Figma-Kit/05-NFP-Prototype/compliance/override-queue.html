@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Override Co-sign Queue | Gold Kidney Compliance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#004d40}</style>
+</head>
+<body>
+<div class="wrapper">
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Compliance</div>
+    <a href="compliance-hold.html"><i class="fas fa-pause-circle"></i>Compliance Holds</a>
+    <a href="reactivation.html"><i class="fas fa-undo"></i>Reactivation</a>
+    <a href="onboarding-review.html"><i class="fas fa-clipboard-check"></i>Onboarding Cases</a>
+    <a href="training-tracker.html"><i class="fas fa-graduation-cap"></i>Training Tracker</a>
+    <a href="override-queue.html" class="active"><i class="fas fa-exclamation-circle"></i>Override Co-sign</a>
+    <div class="sb-section">Monitoring &amp; Audit</div>
+    <a href="soa-compliance.html"><i class="fas fa-file-signature"></i>SOA Compliance</a>
+    <a href="exclusion-monitoring.html"><i class="fas fa-ban"></i>OIG/SAM Exclusions</a>
+    <a href="analytics.html"><i class="fas fa-chart-line"></i>Compliance Analytics</a>
+    <a href="audit-trail.html"><i class="fas fa-history"></i>Audit Trail</a>
+    <a href="document-search.html"><i class="fas fa-search"></i>Document Search</a>
+    <a href="export-panel.html"><i class="fas fa-file-export"></i>Export Panel</a>
+    <div class="sb-section">Configuration</div>
+    <a href="rules-config.html"><i class="fas fa-cogs"></i>Rules Configuration</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">DM</div><div><div class="sb-u-name">Diana Murphy</div><div class="sb-u-role">Compliance Officer</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Override Co-sign Queue</h4></div>
+    <button class="btn-ol btn-sm" onclick="nfpExport()"><i class="fas fa-download"></i>Export</button>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span><strong>Compliance Co-sign Required:</strong> Overrides requiring Compliance approval are held in pending status until Compliance co-signs. These overrides allow operational flexibility while maintaining a documented, auditable compliance record. Only authorized users (Admin, Sales Ops, Compliance) can initiate overrides.</span></div>
+
+    <!-- Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending Co-sign</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-double"></i></div><div><div class="stat-label">Approved (30d)</div><div class="stat-val">11</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-ban"></i></div><div><div class="stat-label">Rejected (30d)</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#1565c0"><i class="fas fa-hourglass-half"></i></div><div><div class="stat-label">Avg Response Time</div><div class="stat-val">4.1h</div></div></div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar mb16">
+      <select id="fStatus" onchange="filterOverrides()"><option value="">All Statuses</option><option value="pending">Pending Co-sign</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+      <select id="fType" onchange="filterOverrides()"><option value="">All Override Types</option><option value="onboarding">Onboarding Validation</option><option value="commission">Commission Rate</option><option value="enrollment">Enrollment Exception</option><option value="license">License Waiver</option></select>
+      <input type="text" id="fSearch" placeholder="Search..." oninput="filterOverrides()" style="flex:1;min-width:140px">
+    </div>
+
+    <!-- Queue -->
+    <div class="card">
+      <div class="card-hdr"><h5>Overrides Requiring Compliance Co-sign</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('overrideTable','override-queue_overrideTable')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="overrideTable">
+          <thead><tr><th>Override ID</th><th>Type</th><th>Agent/Entity</th><th>Initiated By</th><th>Justification</th><th>Requested</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr data-status="pending" data-type="onboarding">
+              <td><code>OVR-2026-0051</code></td>
+              <td><span class="bdg b-amber">Onboarding</span></td>
+              <td>Lisa Wang (NPN: 6609812)</td>
+              <td>Sandra Adams<br><span style="font-size:10px;color:#5f6368">System Admin</span></td>
+              <td style="font-size:11px;max-width:200px">Background check pending >10 days; IBR vendor delay confirmed. Agent passed all other gates. Request to activate provisionally per carrier SLA exception.</td>
+              <td>06 07,2026<br><span style="font-size:10px;color:#e65100">18h ago</span></td>
+              <td><span class="bdg b-amber">Pending Co-sign</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="nfpSubmit('Override OVR-2026-0051 APPROVED by Compliance (Diana Murphy).\nAgent Lisa Wang provisionally activated.\nAudit record created. Override expires in 30 days if background check not received.')"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="nfpSubmit('Override OVR-2026-0051 REJECTED by Compliance.\nReason: Cannot activate without background check per CMS guidelines.\nInitiator notified.')"><i class="fas fa-times"></i>Reject</button>
+              </td>
+            </tr>
+            <tr data-status="pending" data-type="commission">
+              <td><code>OVR-2026-0049</code></td>
+              <td><span class="bdg b-blue">Commission</span></td>
+              <td>J. Martinez (NPN: 8823441)</td>
+              <td>James Rollins<br><span style="font-size:10px;color:#5f6368">Sales Ops</span></td>
+              <td style="font-size:11px;max-width:200px">Rate override from 3.5% to 4.2% per regional VP authorization. Carrier agreement addendum dated 05 15,2026. Expires 12 31,2026.</td>
+              <td>06 06,2026<br><span style="font-size:10px;color:#e65100">2d ago</span></td>
+              <td><span class="bdg b-amber">Pending Co-sign</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="nfpSubmit('Override OVR-2026-0049 APPROVED by Compliance (Diana Murphy).\nCommission rate override applied for NPN 8823441.\nExpiry: 12 31,2026. Audit record created.')"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="nfpSubmit('Override OVR-2026-0049 REJECTED by Compliance.\nInitiator notified.')"><i class="fas fa-times"></i>Reject</button>
+              </td>
+            </tr>
+            <tr data-status="pending" data-type="enrollment">
+              <td><code>OVR-2026-0048</code></td>
+              <td><span class="bdg b-purple">Enrollment</span></td>
+              <td>ENR-2026-00534 (Betty Moore)</td>
+              <td>Rachel Wong<br><span style="font-size:10px;color:#5f6368">Enrollment Ops</span></td>
+              <td style="font-size:11px;max-width:200px">CMS rejection R17 due to missing middle initial. Member confirmed name legally has no middle name. Request to override validation and resubmit with CMS-compliant format.</td>
+              <td>06 08,2026<br><span style="font-size:10px;color:#e65100">3h ago</span></td>
+              <td><span class="bdg b-amber">Pending Co-sign</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="nfpSubmit('Override OVR-2026-0048 APPROVED by Compliance.\nEnrollment resubmission authorized with override flag.\nAudit record created.')"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="nfpSubmit('Override OVR-2026-0048 REJECTED by Compliance.\nInitiator notified.')"><i class="fas fa-times"></i>Reject</button>
+              </td>
+            </tr>
+            <tr data-status="pending" data-type="license">
+              <td><code>OVR-2026-0047</code></td>
+              <td><span class="bdg b-teal">License</span></td>
+              <td>Kevin Park (NPN: 7721098)</td>
+              <td>Sandra Adams<br><span style="font-size:10px;color:#5f6368">System Admin</span></td>
+              <td style="font-size:11px;max-width:200px">State appointment for FL delayed due to DOI processing backlog. License is active. Request 14-day extension to sell while appointment confirmation is pending.</td>
+              <td>06 05,2026<br><span style="font-size:10px;color:#e65100">3d ago</span></td>
+              <td><span class="bdg b-amber">Pending Co-sign</span></td>
+              <td>
+                <button class="btn-pr btn-sm" onclick="nfpSubmit('Override OVR-2026-0047 APPROVED by Compliance.\n14-day extension granted. Expires 06 19,2026.\nAudit record created.')"><i class="fas fa-check"></i>Approve</button>
+                <button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828" onclick="nfpSubmit('Override OVR-2026-0047 REJECTED by Compliance.\nInitiator notified.')"><i class="fas fa-times"></i>Reject</button>
+              </td>
+            </tr>
+            <tr data-status="approved" data-type="onboarding">
+              <td><code>OVR-2026-0045</code></td>
+              <td><span class="bdg b-amber">Onboarding</span></td>
+              <td>Angela Torres (NPN: 5534211)</td>
+              <td>Sandra Adams<br><span style="font-size:10px;color:#5f6368">System Admin</span></td>
+              <td style="font-size:11px;max-width:200px">AHIP score 68% (threshold 70%). Agent retook and scored 72% on second attempt. Override original fail.</td>
+              <td>06 02,2026</td>
+              <td><span class="bdg b-green">Approved</span><br><span style="font-size:10px;color:#2e7d32">Jun 2, Diana Murphy</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Override details and audit trail opened','info')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="rejected" data-type="commission">
+              <td><code>OVR-2026-0043</code></td>
+              <td><span class="bdg b-blue">Commission</span></td>
+              <td>K. Adams (NPN: 3398712)</td>
+              <td>James Rollins<br><span style="font-size:10px;color:#5f6368">Sales Ops</span></td>
+              <td style="font-size:11px;max-width:200px">Request to waive clawback on disenrolled member within 90 days. No qualifying exception documented.</td>
+              <td>05 28,2026</td>
+              <td><span class="bdg b-red">Rejected</span><br><span style="font-size:10px;color:#c62828">May 29, Diana Murphy</span></td>
+              <td><button class="btn-ol btn-sm" onclick="nfpAction('Override details and audit trail opened','info')"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:8px 16px;font-size:11px;color:#5f6368;border-top:1px solid #f1f3f4">
+        <i class="fas fa-lock" style="margin-right:4px;color:#004d40"></i>All override decisions are immutably logged in the audit trail. Overrides cannot be self-approved — initiator and co-signer must be different users.
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+function filterOverrides(){
+  var s=document.getElementById('fStatus').value;
+  var t=document.getElementById('fType').value;
+  var q=document.getElementById('fSearch').value.toLowerCase();
+  document.querySelectorAll('#overrideTable tbody tr').forEach(function(r){
+    var ms=!s||r.dataset.status===s;
+    var mt=!t||r.dataset.type===t;
+    var mq=!q||r.textContent.toLowerCase().indexOf(q)>-1;
+    r.style.display=(ms&&mt&&mq)?'':'none';
+  });
+}
+</script>
+</body>
+</html>

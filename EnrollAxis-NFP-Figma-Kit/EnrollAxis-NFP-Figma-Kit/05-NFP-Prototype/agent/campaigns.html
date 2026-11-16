@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaigns | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html" class="active"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Campaigns</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>Campaigns</li></ol>
+    </div>
+    <input type="text" class="tb-search" placeholder="Search campaigns?">
+    <a href="notifications.html" class="tb-btn"><i class="fas fa-bell"></i><span class="n-dot"></span></a>
+    <button class="btn-pr" data-bs-toggle="modal" data-bs-target="#newCampaignModal"><i class="fas fa-plus"></i>New Campaign</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><a href="campaigns.html" style="text-decoration:none"><div class="stat-card" style="cursor:pointer" title="Click to view Active Campaigns"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-bullhorn"></i></div><div><div class="stat-label">Active Campaigns</div><div class="stat-val">2</div></div></div></a></div>
+      <div class="col-1"><a href="leads.html" style="text-decoration:none"><div class="stat-card" style="cursor:pointer" title="Click to view all Leads"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-plus"></i></div><div><div class="stat-label">Leads (All Campaigns)</div><div class="stat-val">28</div></div></div></a></div>
+      <div class="col-1"><a href="leads.html" style="text-decoration:none"><div class="stat-card" style="cursor:pointer" title="Click to view TFN call leads"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-phone"></i></div><div><div class="stat-label">Unique TFN Calls</div><div class="stat-val">63</div></div></div></a></div>
+      <div class="col-1"><a href="leads.html" style="text-decoration:none"><div class="stat-card" style="cursor:pointer" title="Click to view enrollment conversion"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-percentage"></i></div><div><div class="stat-label">Avg. Lead-to-Enroll</div><div class="stat-val">43%</div></div></div></a></div>
+    </div>
+
+    <!-- Campaign Table -->
+    <div class="card">
+      <div class="card-hdr"><h5>My Campaigns</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','campaigns_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead>
+            <tr>
+              <th>Campaign Name</th><th>Code</th><th>Type</th><th>TFN</th><th>States</th>
+              <th>Plans</th><th>Leads</th><th>Enrolled</th><th>Conv. Rate</th><th>Status</th><th>Period</th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="text-bold">AEP 2026 Florida Drive</span></td>
+              <td><code>AEP-FL-2026</code></td>
+              <td><span class="bdg b-blue">AEP</span></td>
+              <td><code>1-800-555-0101</code></td>
+              <td>FL, GA</td>
+              <td>
+                <span class="chip" style="font-size:11px">ESRD SNP</span>
+                <span class="chip" style="font-size:11px">CKD SNP</span>
+                <span class="chip" style="font-size:11px">HMO</span>
+              </td>
+              <td><strong>21</strong></td>
+              <td><strong>9</strong></td>
+              <td><strong>43%</strong></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td style="font-size:12px">Oct 15 ? 12 07,2025</td>
+              <td>
+                <button class="btn-ol btn-sm" data-bs-toggle="modal" data-bs-target="#campaignDetailModal">Details</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-bold">Year-Round ESRD Outreach</span></td>
+              <td><code>YR-ESRD-2026</code></td>
+              <td><span class="bdg b-purple">Year-Round</span></td>
+              <td><code>1-800-555-0202</code></td>
+              <td>FL, GA</td>
+              <td>
+                <span class="chip" style="font-size:11px">ESRD SNP</span>
+              </td>
+              <td><strong>7</strong></td>
+              <td><strong>3</strong></td>
+              <td><strong>43%</strong></td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td style="font-size:12px">Jan 1 ? 12 31,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" data-bs-toggle="modal" data-bs-target="#campaignDetailModal">Details</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="text-bold">SEP Diabetes &amp; Heart Outreach</span></td>
+              <td><code>SEP-DH-2025</code></td>
+              <td><span class="bdg b-teal">SEP</span></td>
+              <td><code>1-800-555-0303</code></td>
+              <td>FL</td>
+              <td>
+                <span class="chip" style="font-size:11px">Heart &amp; Diabetes</span>
+              </td>
+              <td><strong>0</strong></td>
+              <td><strong>0</strong></td>
+              <td>?</td>
+              <td><span class="bdg b-grey">Scheduled</span></td>
+              <td style="font-size:12px">Jun 1 ? 06 30,2026</td>
+              <td>
+                <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')">Details</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Campaign Modal -->
+<div class="modal fade" id="newCampaignModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header" style="border-bottom:1px solid #e8eaed;padding:18px 20px">
+        <h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-plus" style="color:#0d47a1;margin-right:8px"></i>Request New Campaign</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:20px">
+        <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Campaign requests are reviewed by your Carrier Admin. You will be notified once approved and a TFN is assigned.</span></div>
+        <div style="margin-top:14px">
+          <div class="form-row">
+            <div class="fg"><label>Campaign Name *</label><input id="ncName" placeholder="e.g. Summer 2026 CKD Drive"><div id="ncName_err" style="display:none;color:#c62828;font-size:11px;margin-top:2px">Campaign name is required.</div></div>
+            <div class="fg"><label>Campaign Type *</label><select id="ncType"><option value="">— Select Type —</option><option>AEP</option><option>SEP</option><option>Year-Round</option></select><div id="ncType_err" style="display:none;color:#c62828;font-size:11px;margin-top:2px">Please select a campaign type.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="fg col-full"><label>Target States *</label><input id="ncStates" placeholder="FL, GA, TX"><div id="ncStates_err" style="display:none;color:#c62828;font-size:11px;margin-top:2px">Please enter at least one state.</div></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Target Plans (select all that apply)</label>
+              <div class="dflex g8" style="flex-wrap:wrap">
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox"> ESRD SNP</label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox"> CKD SNP</label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox"> Heart &amp; Diabetes SNP</label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox"> BrightChoice HMO</label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox"> DiabetesCare SNP</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Campaign Start Date</label><input type="date"></div>
+            <div class="fg"><label>Campaign End Date</label><input type="date"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg col-full"><label>Notes / Justification</label><textarea rows="3" placeholder="Describe the campaign objectives and expected audience?"></textarea></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:1px solid #e8eaed;padding:14px 20px">
+        <button class="btn-ol" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-pr" onclick="submitNewCampaign()"><i class="fas fa-paper-plane"></i>Submit Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Campaign Detail Modal -->
+<div class="modal fade" id="campaignDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header" style="border-bottom:1px solid #e8eaed;padding:18px 20px">
+        <h5 style="margin:0;font-size:15px;font-weight:600"><i class="fas fa-bullhorn" style="color:#0d47a1;margin-right:8px"></i>AEP 2026 Florida Drive ? Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:20px">
+        <div class="row-grid">
+          <div class="col-1">
+            <div class="kv-row" style="display:flex;flex-wrap:wrap;gap:12px">
+              <div style="flex:1;min-width:120px"><div style="font-size:11px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Campaign Code</div><div style="font-size:13px;font-weight:600"><code>AEP-FL-2026</code></div></div>
+              <div style="flex:1;min-width:120px"><div style="font-size:11px;color:#80868b;text-transform:uppercase;margin-bottom:2px">TFN</div><div style="font-size:13px;font-weight:600"><code>1-800-555-0101</code></div></div>
+              <div style="flex:1;min-width:120px"><div style="font-size:11px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Digital Source</div><div style="font-size:13px;font-weight:600">aep2026.Gold Kidney.com</div></div>
+              <div style="flex:1;min-width:120px"><div style="font-size:11px;color:#80868b;text-transform:uppercase;margin-bottom:2px">Status</div><div><span class="bdg b-green">Active</span></div></div>
+            </div>
+            <hr style="border-color:#f1f3f4;margin:12px 0">
+            <div style="font-size:13px;font-weight:600;margin-bottom:8px">Performance Summary</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+              <div style="background:#f8f9fa;border-radius:8px;padding:10px;text-align:center"><div style="font-size:11px;color:#80868b">Total Leads</div><div style="font-size:20px;font-weight:700;color:#0d47a1">21</div></div>
+              <div style="background:#f8f9fa;border-radius:8px;padding:10px;text-align:center"><div style="font-size:11px;color:#80868b">Enrolled</div><div style="font-size:20px;font-weight:700;color:#2e7d32">9</div></div>
+              <div style="background:#f8f9fa;border-radius:8px;padding:10px;text-align:center"><div style="font-size:11px;color:#80868b">TFN Calls</div><div style="font-size:20px;font-weight:700;color:#6a1b9a">48</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:1px solid #e8eaed;padding:14px 20px">
+        <button class="btn-ol" data-bs-dismiss="modal">Close</button>
+        <a href="leads.html" class="btn-pr"><i class="fas fa-users"></i>View Leads for This Campaign</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function submitNewCampaign(){
+  var ok=true;
+  function reqField(id,errId){
+    var el=document.getElementById(id);
+    var err=document.getElementById(errId);
+    if(!el) return;
+    var val=el.value?el.value.trim():'';
+    if(!val){el.style.borderColor='#c62828';err.style.display='block';ok=false;}
+    else{el.style.borderColor='';err.style.display='none';}
+  }
+  reqField('ncName','ncName_err');
+  reqField('ncType','ncType_err');
+  reqField('ncStates','ncStates_err');
+  if(!ok) return;
+  bootstrap.Modal.getInstance(document.getElementById('newCampaignModal')).hide();
+  nfpSubmit('Campaign request submitted! The Carrier Admin will review and assign a TFN.');
+}
+document.getElementById('newCampaignModal').addEventListener('hidden.bs.modal',function(){
+  ['ncName','ncType','ncStates'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.value='';el.style.borderColor='';}
+  });
+  ['ncName_err','ncType_err','ncStates_err'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+});
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

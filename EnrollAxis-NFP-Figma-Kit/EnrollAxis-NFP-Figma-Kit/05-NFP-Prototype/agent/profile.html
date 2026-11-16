@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile &amp; Settings | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}
+.license-tag{display:inline-flex;align-items:center;gap:5px;background:#e3f2fd;border:1px solid #90caf9;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#0d47a1}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent ? NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Profile &amp; Settings</h4></div>
+    <button class="btn-pr" onclick="nfpSave('Settings')"><i class="fas fa-save"></i>Save Changes</button>
+
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <div class="row-grid">
+      <!-- Left: Profile -->
+      <div class="col-3">
+        <!-- Agent Info -->
+        <div class="form-sect">
+          <div class="form-sect-title" style="display:flex;align-items:center;justify-content:space-between"><span><i class="fas fa-user"></i>Agent Information</span><button class="btn-ol btn-sm" onclick="prefillProfile(this)"><i class="fas fa-magic"></i>Prefill Data</button></div>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="width:70px;height:70px;border-radius:50%;background:#0d47a1;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;flex-shrink:0">JM</div>
+            <div>
+              <div style="font-size:18px;font-weight:700">James Martinez</div>
+              <div class="text-sm text-muted">NPN: 8823441 ? Independent Agent</div>
+              <div class="text-sm text-muted">Agency: HealthFirst Distribution Agency (AGY-001)</div>
+              <button class="btn-ol btn-sm mt8"><i class="fas fa-camera"></i>Change Photo</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>First Name</label><input id="profFirstName" value="James"></div>
+            <div class="fg"><label>Last Name</label><input id="profLastName" value="Martinez"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Email</label><input id="profEmail" value="james.martinez@healthfirstagency.com"></div>
+            <div class="fg"><label>Phone</label><input id="profPhone" value="(786) 555-0147"></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Business Address</label><input id="profAddress" value="1801 NW 9th Ave, Miami, FL 33136"></div>
+          </div>
+        </div>
+
+        <!-- Licensing -->
+        <div class="form-sect">
+          <div class="form-sect-title"><i class="fas fa-id-badge"></i>Licensing &amp; Appointments</div>
+          <div class="form-row" style="margin-bottom:10px">
+            <div class="fg"><label>NPN</label><input value="8823441" readonly style="background:#f8f9fa"></div>
+            <div class="fg"><label>AHIP Certification Year</label><input value="2026" readonly style="background:#f8f9fa"></div>
+          </div>
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;display:block">Licensed States</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="license-tag"><i class="fas fa-check"></i>FL ? Active ? Exp 2027-06-30</div>
+              <div class="license-tag"><i class="fas fa-check"></i>GA ? Active ? Exp 2027-03-15</div>
+              <button class="btn-ol btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-plus"></i>Add State</button>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:#5f6368;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;display:block">Carrier Appointments (Gold Kidney)</label>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+              <div class="dflex ai-center g8"><span class="bdg b-green" style="font-size:10px">Active</span>StarPlus ESRD SNP 2026 ? FL, GA</div>
+              <div class="dflex ai-center g8"><span class="bdg b-green" style="font-size:10px">Active</span>KidneyCare CKD SNP 2026 ? FL, GA</div>
+              <div class="dflex ai-center g8"><span class="bdg b-green" style="font-size:10px">Active</span>HeartCare Heart &amp; Diabetes SNP 2026 ? FL, GA</div>
+              <div class="dflex ai-center g8"><span class="bdg b-green" style="font-size:10px">Active</span>BrightChoice HMO 2026 ? FL, GA, TX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Notification Prefs + Security -->
+      <div class="col-1">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Notification Preferences</h5></div>
+          <div class="card-body" style="padding:14px;font-size:13px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>New Lead Assigned</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>HRA Overdue Alert</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>C-SNP Verification Due</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>Enrollment Status Change</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>Commission Payment</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>Chargeback Alert</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked></div></div>
+              <div class="dflex ai-center g8" style="justify-content:space-between"><span>Marketing Announcements</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox"></div></div>
+            </div>
+            <hr style="border-color:#f1f3f4;margin:12px 0">
+            <div class="fg">
+              <label>Email for Notifications</label>
+              <input value="james.martinez@healthfirstagency.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><h5>Security</h5></div>
+          <div class="card-body" style="padding:14px;font-size:13px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div>
+                <div class="text-muted text-sm">Last Login</div>
+                <div class="text-bold">05 23,2026 · 8:41 AM</div>
+              </div>
+              <div>
+                <div class="text-muted text-sm">MFA Status</div>
+                <div><span class="bdg b-green">Enabled (App-based)</span></div>
+              </div>
+              <button class="btn-ol btn-sm"><i class="fas fa-key"></i>Change Password</button>
+              <button class="btn-ol btn-sm"><i class="fas fa-mobile-alt"></i>Manage MFA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Preferences -->
+    <div style="margin-top:24px">
+      <h5 style="font-weight:700;margin-bottom:16px"><i class="fas fa-university" style="margin-right:8px;color:#0d47a1"></i>Payment Preferences</h5>
+
+      <!-- Current Status -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-check-circle" style="margin-right:8px;color:#1b5e20"></i>Current Payment Method</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="row-grid">
+            <div class="col-1"><strong>Method:</strong> ACH Direct Deposit</div>
+            <div class="col-1"><strong>Bank:</strong> Chase Bank (****4821)</div>
+            <div class="col-1"><strong>Pre-Note Status:</strong> <span class="pre-note-status" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i>Verified</span></div>
+            <div class="col-1"><strong>Last Updated:</strong> 01 15,2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method Selection -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-credit-card" style="margin-right:8px;color:#0d47a1"></i>Select Payment Method</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div class="method-card selected" id="methodACH" onclick="selectPayMethod('ach')">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <i class="fas fa-university" style="font-size:24px;color:#0d47a1"></i>
+                <div><div style="font-weight:700;font-size:14px">ACH Direct Deposit</div><div style="font-size:11px;color:#5f6368">Fastest — funds in 1-2 business days</div></div>
+              </div>
+              <ul style="font-size:11px;color:#5f6368;margin:0;padding-left:16px">
+                <li>Requires ABA routing number validation</li>
+                <li>Pre-note verification (3-5 business days)</li>
+                <li>Voided check or bank letter upload</li>
+              </ul>
+            </div>
+            <div class="method-card" id="methodCheck" onclick="selectPayMethod('check')">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <i class="fas fa-money-check-alt" style="font-size:24px;color:#5f6368"></i>
+                <div><div style="font-weight:700;font-size:14px">Paper Check</div><div style="font-size:11px;color:#5f6368">Mailed to address on file — 5-7 business days</div></div>
+              </div>
+              <ul style="font-size:11px;color:#5f6368;margin:0;padding-left:16px">
+                <li>Mailed to your registered address</li>
+                <li>No bank info required</li>
+                <li>$5.00 processing fee per check</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="ach-details">
+      <!-- ACH Bank Details -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-university" style="margin-right:8px;color:#0d47a1"></i>ACH Bank Account Details</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="form-row">
+            <div class="fg">
+              <label>ABA Routing Number <span style="color:#c62828">*</span></label>
+              <input type="text" class="form-control form-control-sm" value="021000021" maxlength="9" pattern="[0-9]{9}">
+              <div style="font-size:11px;color:#1b5e20;margin-top:4px"><i class="fas fa-check-circle"></i> Validated: JP Morgan Chase Bank, N.A. — New York, NY</div>
+            </div>
+            <div class="fg">
+              <label>Account Number <span style="color:#c62828">*</span></label>
+              <input type="password" class="form-control form-control-sm" value="4821">
+            </div>
+            <div class="fg">
+              <label>Confirm Account Number <span style="color:#c62828">*</span></label>
+              <input type="password" class="form-control form-control-sm" placeholder="Re-enter account number">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Account Type <span style="color:#c62828">*</span></label>
+              <select><option selected>Checking</option><option>Savings</option></select>
+            </div>
+            <div class="fg"><label>Account Holder Name <span style="color:#c62828">*</span></label><input type="text" class="form-control form-control-sm" value="James A. Martinez"></div>
+          </div>
+          <div class="al-info" style="margin-top:12px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>ABA Validation:</strong> Routing number is validated against the Federal Reserve's E-Payments directory in real-time. Must be 9 digits and pass checksum algorithm. Bank name displays upon validation.</span></div>
+        </div>
+      </div>
+
+      <!-- Pre-Note Section -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-shield-alt" style="margin-right:8px;color:#4a148c"></i>Pre-Note Verification</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Pre-Note Process:</strong> A $0.00 test transaction is sent to verify the bank account before any real payment. This takes 3-5 business days. During pre-note, payments will be held. If pre-note fails, agent is notified and must update bank details.</span></div>
+          <div style="padding:12px;background:#e8f5e9;border-radius:6px;border:1px solid #a5d6a7">
+            <div style="display:flex;align-items:center;gap:8px">
+              <i class="fas fa-check-circle" style="font-size:18px;color:#1b5e20"></i>
+              <div>
+                <div style="font-weight:600;color:#1b5e20">Pre-Note: VERIFIED</div>
+                <div style="font-size:11px;color:#5f6368">Pre-note sent 01 15,2026. Confirmed 01 18,2026. Account verified for ACH deposits.</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:#5f6368">
+            <strong>Pre-Note Statuses:</strong>
+            <span class="pre-note-status" style="background:#e3f2fd;color:#0d47a1;margin-left:8px"><i class="fas fa-clock"></i>Pending</span>
+            <span class="pre-note-status" style="background:#e8f5e9;color:#1b5e20;margin-left:8px"><i class="fas fa-check-circle"></i>Verified</span>
+            <span class="pre-note-status" style="background:#fce4ec;color:#c62828;margin-left:8px"><i class="fas fa-times-circle"></i>Failed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voided Check Upload -->
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-file-image" style="margin-right:8px;color:#5f6368"></i>Voided Check / Bank Letter Upload</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="al-warn mb16"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>A voided check image or official bank verification letter is <strong>required</strong> for new ACH setup or account changes. This document is used to verify account ownership.</span></div>
+          <div style="border:2px dashed #90caf9;border-radius:8px;padding:24px;text-align:center;background:#fafafa;cursor:pointer">
+            <i class="fas fa-cloud-upload-alt" style="font-size:32px;color:#0d47a1;margin-bottom:8px"></i>
+            <div style="font-size:13px;font-weight:600">Drag & Drop or Click to Upload</div>
+            <div style="font-size:11px;color:#5f6368;margin-top:4px">Accepted: PDF, JPG, PNG (max 5MB)</div>
+          </div>
+          <input type="file" accept=".pdf,.jpg,.png" class="form-control form-control-sm" style="margin-top:8px">
+          <div style="margin-top:12px;padding:10px;background:#f8f9fa;border-radius:6px;display:flex;align-items:center;gap:10px">
+            <i class="fas fa-file-pdf" style="font-size:18px;color:#c62828"></i>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">voided_check_martinez.pdf</div><div style="font-size:11px;color:#5f6368">Uploaded 01 15,2026 — 245 KB</div></div>
+            <span class="bdg b-green">Verified</span>
+          </div>
+        </div>
+      </div>
+      </div><!-- /ach-details -->
+
+      <!-- Paper Check Details -->
+      <div id="check-details" style="display:none">
+      <div class="card mb16">
+        <div class="card-hdr"><h5><i class="fas fa-money-check-alt" style="margin-right:8px;color:#5f6368"></i>Paper Check Mailing Details</h5></div>
+        <div class="card-body" style="font-size:13px">
+          <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Commission checks are mailed to your registered address. Delivery takes <strong>5&ndash;7 business days</strong> after the payment processing date. A <strong>$5.00 processing fee</strong> is deducted per check issued.</span></div>
+          <div class="form-row">
+            <div class="fg"><label>Street Address on File</label><input type="text" class="form-control form-control-sm" value="1842 NW 87th Ave" readonly style="background:#f8f9fa"></div>
+            <div class="fg"><label>City, State ZIP</label><input type="text" class="form-control form-control-sm" value="Miami, FL 33172" readonly style="background:#f8f9fa"></div>
+            <div class="fg"><label>Country</label><input type="text" class="form-control form-control-sm" value="United States" readonly style="background:#f8f9fa"></div>
+          </div>
+          <div class="al-warn" style="margin-top:12px"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>If your mailing address is incorrect, update it above in Profile before saving. Address changes require re-verification.</span></div>
+          <div style="margin-top:12px;padding:10px;background:#f8f9fa;border-radius:6px">
+            <label style="font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+              <input type="checkbox" id="checkFeeAck" style="margin-top:2px;flex-shrink:0">
+              <span>I acknowledge the <strong>$5.00 per-check processing fee</strong> will be deducted from each commission payment issued by paper check, and I understand delivery may take 5&ndash;7 business days after the payment date.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      </div><!-- /check-details -->
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script>
+function prefillProfile(btn){
+  document.getElementById('profFirstName').value='James';
+  document.getElementById('profLastName').value='Martinez';
+  document.getElementById('profEmail').value='james.martinez@healthfirstagency.com';
+  document.getElementById('profPhone').value='(786) 555-0147';
+  document.getElementById('profAddress').value='1801 NW 9th Ave, Miami, FL 33136';
+  btn.innerHTML='<i class="fas fa-check"></i>Prefilled';
+  btn.disabled=true;
+  setTimeout(function(){btn.innerHTML='<i class="fas fa-magic"></i>Prefill Data';btn.disabled=false},2000);
+}
+
+function selectPayMethod(m){
+  var isACH = m === 'ach';
+  document.getElementById('methodACH').classList.toggle('selected', isACH);
+  document.getElementById('methodCheck').classList.toggle('selected', !isACH);
+  document.getElementById('ach-details').style.display = isACH ? '' : 'none';
+  document.getElementById('check-details').style.display = isACH ? 'none' : '';
+}
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

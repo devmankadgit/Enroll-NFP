@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dispute Management | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0d47a1}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group open">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html" class="active"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Dispute Management</h4><ol class="breadcrumb-bar"><li>Commission Payment Disputes &amp; Resolution Tracking</li></ol></div>
+    <button class="btn-pr" onclick="openNewDispute()"><i class="fas fa-plus"></i>New Dispute</button>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Summary Stats -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-gavel"></i></div><div><div class="stat-label">Total Disputes</div><div class="stat-val">4</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-clock"></i></div><div><div class="stat-label">Pending Review</div><div class="stat-val">2</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div><div><div class="stat-label">Resolved</div><div class="stat-val">1</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Denied</div><div class="stat-val">1</div></div></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <label>Status:</label>
+      <select id="filterStatus" onchange="filterDisputes()">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Under Review">Under Review</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Denied">Denied</option>
+      </select>
+      <label>Search:</label>
+      <input type="text" id="filterSearch" placeholder="Reference ID or description..." oninput="filterDisputes()" style="width:200px">
+    </div>
+
+    <!-- Disputes Table -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-gavel" style="margin-right:8px;color:#c62828"></i>My Disputes</h5><span id="disputeCount" class="text-sm text-muted">4 disputes</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','commission-disputes_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table id="tblExport1" class="tbl">
+          <thead><tr><th>Dispute ID</th><th>Enrollment Reference ID</th><th>Payment Date</th><th>Disputed Amount</th><th>Description</th><th>Status</th><th>Filed On</th><th>Actions</th></tr></thead>
+          <tbody id="disputeTableBody">
+            <tr data-status="Pending">
+              <td class="text-bold">DSP-2026-004</td>
+              <td><code>ENR-2026-00541</code></td>
+              <td>04 17,2026</td>
+              <td style="font-weight:700;color:#c62828">$573.00</td>
+              <td>Initial enrollment commission not received for Frank Johnson despite confirmed submission</td>
+              <td><span class="bdg b-amber">Pending</span></td>
+              <td>05 28,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="viewDispute(3)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Under Review">
+              <td class="text-bold">DSP-2026-003</td>
+              <td><code>ENR-2025-00847</code></td>
+              <td>02 17,2026</td>
+              <td style="font-weight:700;color:#c62828">$287.00</td>
+              <td>Renewal commission for Dorothy Henderson calculated at wrong tier rate</td>
+              <td><span class="bdg b-blue">Under Review</span></td>
+              <td>05 10,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="viewDispute(2)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Resolved">
+              <td class="text-bold">DSP-2026-002</td>
+              <td><code>ENR-2025-00623</code></td>
+              <td>01 17,2026</td>
+              <td style="font-weight:700;color:#1b5e20">$50.08</td>
+              <td>Monthly residual missing for Robert Nguyen — January payment batch</td>
+              <td><span class="bdg b-green">Resolved</span></td>
+              <td>02 05,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="viewDispute(1)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+            <tr data-status="Denied">
+              <td class="text-bold">DSP-2026-001</td>
+              <td><code>ENR-2025-00510</code></td>
+              <td>01 17,2026</td>
+              <td style="font-weight:700;color:#757575">$573.00</td>
+              <td>Enrollment commission disputed — member disenrolled within rapid disenrollment period</td>
+              <td><span class="bdg b-red">Denied</span></td>
+              <td>01 25,2026</td>
+              <td><button class="btn-ol btn-sm" onclick="viewDispute(0)"><i class="fas fa-eye"></i>View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="al-info" style="margin-top:16px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Dispute Policy:</strong> Disputes are reviewed within 5 business days. If resolved in your favor, the corrected commission will be included in the next payment batch. You will receive a notification when the status changes.</span></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- New Dispute Modal -->
+<div class="modal fade" id="newDisputeModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header" style="background:#fce4ec"><h5 class="modal-title"><i class="fas fa-plus-circle" style="margin-right:8px;color:#c62828"></i>File New Dispute</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" style="padding:20px">
+    <div style="font-size:12px;color:#5f6368;margin-bottom:16px;padding:10px;background:#fff8e1;border-radius:6px"><i class="fas fa-info-circle" style="color:#e65100;margin-right:6px"></i>Submit a dispute for a commission payment you believe is incorrect. The compliance team will review within 5 business days.</div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Enrollment Reference ID <span style="color:#c62828">*</span></label><input type="text" id="newDispEnrollRef" class="form-control form-control-sm" placeholder="e.g., ENR-2026-00541"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Payment Date in Question <span style="color:#c62828">*</span></label><input type="date" id="newDispPayDate" class="form-control form-control-sm"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Disputed Amount <span style="color:#c62828">*</span></label><input type="text" id="newDispAmount" class="form-control form-control-sm" placeholder="e.g., $573.00"></div>
+    <div class="fg" style="margin-bottom:12px"><label style="font-size:12px;font-weight:600">Description of the Discrepancy <span style="color:#c62828">*</span></label><textarea id="newDispDesc" class="form-control form-control-sm" rows="3" placeholder="Describe what you believe is incorrect about this payment..."></textarea></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-danger btn-sm" onclick="submitNewDispute()"><i class="fas fa-paper-plane"></i> Submit Dispute</button></div>
+</div></div></div>
+
+<!-- View Dispute Modal -->
+<div class="modal fade" id="viewDisputeModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header" style="background:#e3f2fd"><h5 class="modal-title" id="viewDispTitle"><i class="fas fa-gavel" style="margin-right:8px;color:#0d47a1"></i>Dispute Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body" id="viewDispBody" style="padding:20px;font-size:13px"></div>
+  <div class="modal-footer"><button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button></div>
+</div></div></div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var disputes=[
+  {id:'DSP-2026-001',enrollRef:'ENR-2025-00510',payDate:'01 17,2026',amount:'$573.00',desc:'Enrollment commission disputed — member disenrolled within rapid disenrollment period',status:'Denied',filed:'01 25,2026',resolution:'Dispute denied. Member James Wilson exercised rapid disenrollment within 30-day window per CMS guidelines. Chargeback correctly applied.'},
+  {id:'DSP-2026-002',enrollRef:'ENR-2025-00623',payDate:'01 17,2026',amount:'$50.08',desc:'Monthly residual missing for Robert Nguyen — January payment batch',status:'Resolved',filed:'02 05,2026',resolution:'Resolved in your favor. $50.08 monthly residual was omitted due to batch processing error. Payment included in Feb 2026 batch.'},
+  {id:'DSP-2026-003',enrollRef:'ENR-2025-00847',payDate:'02 17,2026',amount:'$287.00',desc:'Renewal commission for Dorothy Henderson calculated at wrong tier rate',status:'Under Review',filed:'05 10,2026',resolution:'Currently under review by the commission operations team. Expected resolution by 06 10,2026.'},
+  {id:'DSP-2026-004',enrollRef:'ENR-2026-00541',payDate:'04 17,2026',amount:'$573.00',desc:'Initial enrollment commission not received for Frank Johnson despite confirmed submission',status:'Pending',filed:'05 28,2026',resolution:'Dispute received. Awaiting assignment to reviewer.'}
+];
+
+function filterDisputes(){
+  var status=document.getElementById('filterStatus').value;
+  var search=document.getElementById('filterSearch').value.toLowerCase().trim();
+  var rows=document.querySelectorAll('#disputeTableBody tr');
+  var visible=0;
+  rows.forEach(function(r){
+    var rStatus=r.dataset.status||'';
+    var text=r.textContent.toLowerCase();
+    var show=true;
+    if(status && rStatus!==status) show=false;
+    if(search && text.indexOf(search)===-1) show=false;
+    r.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  document.getElementById('disputeCount').textContent=visible+' dispute'+(visible!==1?'s':'');
+}
+
+function openNewDispute(){
+  document.getElementById('newDispEnrollRef').value='';
+  document.getElementById('newDispPayDate').value='';
+  document.getElementById('newDispAmount').value='';
+  document.getElementById('newDispDesc').value='';
+  new bootstrap.Modal(document.getElementById('newDisputeModal')).show();
+}
+
+function submitNewDispute(){
+  var ref=document.getElementById('newDispEnrollRef').value.trim();
+  var payDate=document.getElementById('newDispPayDate').value;
+  var amount=document.getElementById('newDispAmount').value.trim();
+  var desc=document.getElementById('newDispDesc').value.trim();
+  if(!ref||!payDate||!amount||!desc){
+    alert('Please fill in all required fields.');
+    return;
+  }
+  bootstrap.Modal.getInstance(document.getElementById('newDisputeModal')).hide();
+  if(typeof showToast==='function') showToast('Dispute submitted for '+ref+'. You will be notified within 5 business days.','success');
+}
+
+function viewDispute(idx){
+  var d=disputes[idx];
+  if(!d) return;
+  var statusClass={'Pending':'b-amber','Under Review':'b-blue','Resolved':'b-green','Denied':'b-red'}[d.status]||'b-amber';
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">'+
+    '<div><div class="text-muted text-sm">Dispute ID</div><div class="text-bold">'+d.id+'</div></div>'+
+    '<div><div class="text-muted text-sm">Status</div><div><span class="bdg '+statusClass+'">'+d.status+'</span></div></div>'+
+    '<div><div class="text-muted text-sm">Enrollment Reference ID</div><div class="text-bold"><code>'+d.enrollRef+'</code></div></div>'+
+    '<div><div class="text-muted text-sm">Payment Date in Question</div><div class="text-bold">'+d.payDate+'</div></div>'+
+    '<div><div class="text-muted text-sm">Disputed Amount</div><div class="text-bold" style="color:#c62828">'+d.amount+'</div></div>'+
+    '<div><div class="text-muted text-sm">Filed On</div><div class="text-bold">'+d.filed+'</div></div>'+
+    '</div>'+
+    '<div style="margin-bottom:16px"><div class="text-muted text-sm">Description of Discrepancy</div><div style="margin-top:4px;padding:10px;background:#f8f9fa;border-radius:6px">'+d.desc+'</div></div>'+
+    '<div><div class="text-muted text-sm">Resolution / Notes</div><div style="margin-top:4px;padding:10px;background:#e3f2fd;border-radius:6px">'+d.resolution+'</div></div>';
+  document.getElementById('viewDispTitle').innerHTML='<i class="fas fa-gavel" style="margin-right:8px;color:#0d47a1"></i>Dispute: '+d.id;
+  document.getElementById('viewDispBody').innerHTML=html;
+  new bootstrap.Modal(document.getElementById('viewDisputeModal')).show();
+}
+</script>
+</body>
+</html>

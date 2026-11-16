@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agency Agents | Gold Kidney Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html" class="active"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4 id="pageTitle">Agency Agents</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="agency-details.html">Agency Details</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li id="breadcrumbAgency">Agents</li></ol>
+    </div>
+    <a href="agency-details.html" class="btn-ol btn-sm"><i class="fas fa-arrow-left"></i> Back to Agencies</a>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Agency Summary -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-building"></i></div><div><div class="stat-label">Agency</div><div class="stat-val" id="statAgencyName">Premier Medicare Group</div><div class="stat-sub" id="statAgencyTax">Tax ID: 59-3847201</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-user-check"></i></div><div><div class="stat-label">Active Agents</div><div class="stat-val" id="statActive">72</div><div class="stat-sub">Licensed &amp; producing</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-user-clock"></i></div><div><div class="stat-label">Pending</div><div class="stat-val" id="statPending">9</div><div class="stat-sub">Awaiting credentials</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-user-slash"></i></div><div><div class="stat-label">Inactive</div><div class="stat-val" id="statInactive">5</div><div class="stat-sub">Terminated or suspended</div></div></div></div>
+    </div>
+
+    <!-- Agent Listing -->
+    <div class="card">
+      <div class="card-hdr"><h5><i class="fas fa-users" style="margin-right:8px;color:#1a237e"></i>Agents Under <span id="hdrAgencyName">Premier Medicare Group</span></h5><span class="text-muted" style="font-size:12px" id="agentCount">Showing 10 of 86 agents</span><button class="btn-ol btn-sm" onclick="exportTableToExcel('','agency-agents_Table')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <!-- Filter Bar -->
+      <div class="filter-bar" style="border-radius:0;border-left:0;border-right:0;border-top:0;margin-bottom:0">
+        <label>Status:</label>
+        <select id="fStatus" onchange="filterAgents()">
+          <option value="">All Statuses</option>
+          <option value="Active">Active</option>
+          <option value="Pending">Pending</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <label>State:</label>
+        <select id="fState" onchange="filterAgents()">
+          <option value="">All States</option>
+          <option value="FL">FL</option>
+          <option value="TX">TX</option>
+          <option value="GA">GA</option>
+          <option value="CA">CA</option>
+          <option value="AL">AL</option>
+        </select>
+        <label>License Type:</label>
+        <select id="fLicense" onchange="filterAgents()">
+          <option value="">All Types</option>
+          <option value="Health">Health</option>
+          <option value="Life & Health">Life & Health</option>
+          <option value="Medicare Supplement">Medicare Supplement</option>
+        </select>
+        <label>Search:</label>
+        <input type="text" id="fSearch" class="tb-search" placeholder="Agent name, NPN, email..." oninput="filterAgents()" style="min-width:180px">
+        <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times"></i> Reset</button>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1" id="agentTable">
+          <thead><tr><th>Agent Name</th><th>NPN</th><th>Email</th><th>Phone</th><th>State</th><th>License Type</th><th>Appointed</th><th>Status</th></tr></thead>
+          <tbody id="agentBody"></tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div id="paginationBar" style="padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <div id="pageInfo" style="font-size:13px;color:#5f6368">Page 1 of 1</div>
+        <div class="dflex g8" id="pageButtons"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 10,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+
+<script>
+/* --- Agency-specific agent data --- */
+var agencyAgents={
+  'Premier Medicare Group':{tax:'59-3847201',active:72,pending:9,inactive:5,total:86,agents:[
+    {name:'Maria Santos',npn:'18294731',email:'m.santos@premiermedicare.com',phone:'(305) 555-0112',state:'FL',license:'Health',appointed:'2023-03-15',status:'Active'},
+    {name:'James Carter',npn:'19384627',email:'j.carter@premiermedicare.com',phone:'(305) 555-0134',state:'FL',license:'Life & Health',appointed:'2022-08-20',status:'Active'},
+    {name:'Patricia Nguyen',npn:'20481735',email:'p.nguyen@premiermedicare.com',phone:'(713) 555-0198',state:'TX',license:'Health',appointed:'2023-06-01',status:'Active'},
+    {name:'Robert Thompson',npn:'17293846',email:'r.thompson@premiermedicare.com',phone:'(404) 555-0221',state:'GA',license:'Medicare Supplement',appointed:'2021-11-10',status:'Active'},
+    {name:'Lisa Martinez',npn:'21584920',email:'l.martinez@premiermedicare.com',phone:'(305) 555-0267',state:'FL',license:'Health',appointed:'2024-01-08',status:'Active'},
+    {name:'David Kim',npn:'22691034',email:'d.kim@premiermedicare.com',phone:'(713) 555-0311',state:'TX',license:'Life & Health',appointed:'2023-09-22',status:'Active'},
+    {name:'Sarah Johnson',npn:'15782946',email:'s.johnson@premiermedicare.com',phone:'(404) 555-0348',state:'GA',license:'Health',appointed:'2022-02-14',status:'Active'},
+    {name:'Michael Brown',npn:'23704158',email:'m.brown@premiermedicare.com',phone:'(305) 555-0392',state:'FL',license:'Medicare Supplement',appointed:'2024-03-05',status:'Pending'},
+    {name:'Jennifer Lee',npn:'24815269',email:'j.lee@premiermedicare.com',phone:'(713) 555-0427',state:'TX',license:'Health',appointed:'2024-05-18',status:'Pending'},
+    {name:'William Davis',npn:'14671835',email:'w.davis@premiermedicare.com',phone:'(305) 555-0463',state:'FL',license:'Life & Health',appointed:'2020-07-30',status:'Inactive'}
+  ]},
+  'Southeast Health Advisors':{tax:'58-2934810',active:52,pending:8,inactive:4,total:64,agents:[
+    {name:'Anthony Williams',npn:'25926370',email:'a.williams@sehealthadvisors.com',phone:'(404) 555-0501',state:'GA',license:'Health',appointed:'2022-05-12',status:'Active'},
+    {name:'Nicole Harris',npn:'26037481',email:'n.harris@sehealthadvisors.com',phone:'(305) 555-0534',state:'FL',license:'Life & Health',appointed:'2023-01-25',status:'Active'},
+    {name:'Christopher Moore',npn:'27148592',email:'c.moore@sehealthadvisors.com',phone:'(205) 555-0578',state:'AL',license:'Health',appointed:'2022-09-08',status:'Active'},
+    {name:'Amanda Clark',npn:'28259603',email:'a.clark@sehealthadvisors.com',phone:'(404) 555-0612',state:'GA',license:'Medicare Supplement',appointed:'2023-04-19',status:'Active'},
+    {name:'Daniel White',npn:'29360714',email:'d.white@sehealthadvisors.com',phone:'(305) 555-0647',state:'FL',license:'Health',appointed:'2024-02-03',status:'Active'},
+    {name:'Michelle Scott',npn:'30471825',email:'m.scott@sehealthadvisors.com',phone:'(205) 555-0681',state:'AL',license:'Life & Health',appointed:'2023-07-14',status:'Active'},
+    {name:'Kevin Turner',npn:'31582936',email:'k.turner@sehealthadvisors.com',phone:'(404) 555-0719',state:'GA',license:'Health',appointed:'2024-04-28',status:'Pending'},
+    {name:'Stephanie Adams',npn:'32694047',email:'s.adams@sehealthadvisors.com',phone:'(305) 555-0753',state:'FL',license:'Medicare Supplement',appointed:'2021-12-01',status:'Inactive'}
+  ]},
+  'Pacific Coast Insurance':{tax:'94-7721053',active:42,pending:7,inactive:3,total:52,agents:[
+    {name:'Brian Chen',npn:'33705158',email:'b.chen@pacificcoast.com',phone:'(415) 555-0801',state:'CA',license:'Health',appointed:'2022-06-15',status:'Active'},
+    {name:'Rachel Park',npn:'34816269',email:'r.park@pacificcoast.com',phone:'(503) 555-0834',state:'OR',license:'Life & Health',appointed:'2023-02-28',status:'Active'},
+    {name:'Steven Wright',npn:'35927370',email:'s.wright@pacificcoast.com',phone:'(206) 555-0867',state:'WA',license:'Health',appointed:'2022-10-11',status:'Active'},
+    {name:'Laura Garcia',npn:'36038481',email:'l.garcia@pacificcoast.com',phone:'(415) 555-0902',state:'CA',license:'Medicare Supplement',appointed:'2023-08-04',status:'Active'},
+    {name:'Jason Miller',npn:'37149592',email:'j.miller@pacificcoast.com',phone:'(503) 555-0938',state:'OR',license:'Health',appointed:'2024-01-19',status:'Active'},
+    {name:'Emily Robinson',npn:'38260703',email:'e.robinson@pacificcoast.com',phone:'(206) 555-0971',state:'WA',license:'Life & Health',appointed:'2024-05-02',status:'Pending'},
+    {name:'Mark Anderson',npn:'39371814',email:'m.anderson@pacificcoast.com',phone:'(415) 555-1008',state:'CA',license:'Health',appointed:'2021-04-22',status:'Inactive'}
+  ]},
+  'Heartland Benefits':{tax:'75-6601284',active:30,pending:5,inactive:3,total:38,agents:[
+    {name:'Thomas Jackson',npn:'40482925',email:'t.jackson@heartlandbenefits.com',phone:'(214) 555-1042',state:'TX',license:'Health',appointed:'2022-07-18',status:'Active'},
+    {name:'Jessica Taylor',npn:'41594036',email:'j.taylor@heartlandbenefits.com',phone:'(405) 555-1078',state:'OK',license:'Life & Health',appointed:'2023-03-06',status:'Active'},
+    {name:'Ryan Martin',npn:'42605147',email:'r.martin@heartlandbenefits.com',phone:'(214) 555-1112',state:'TX',license:'Medicare Supplement',appointed:'2022-11-29',status:'Active'},
+    {name:'Ashley Lewis',npn:'43716258',email:'a.lewis@heartlandbenefits.com',phone:'(405) 555-1147',state:'OK',license:'Health',appointed:'2023-09-14',status:'Active'},
+    {name:'Brandon Hall',npn:'44827369',email:'b.hall@heartlandbenefits.com',phone:'(214) 555-1183',state:'TX',license:'Life & Health',appointed:'2024-02-25',status:'Pending'},
+    {name:'Megan Young',npn:'45938470',email:'m.young@heartlandbenefits.com',phone:'(214) 555-1219',state:'TX',license:'Health',appointed:'2020-09-08',status:'Inactive'}
+  ]},
+  'Sunshine Senior Solutions':{tax:'59-4482017',active:20,pending:5,inactive:2,total:27,agents:[
+    {name:'Carlos Ramirez',npn:'46049581',email:'c.ramirez@sunshinesenior.com',phone:'(813) 555-1254',state:'FL',license:'Health',appointed:'2023-01-10',status:'Active'},
+    {name:'Donna Phillips',npn:'47150692',email:'d.phillips@sunshinesenior.com',phone:'(813) 555-1288',state:'FL',license:'Life & Health',appointed:'2023-05-23',status:'Active'},
+    {name:'Eric Campbell',npn:'48261703',email:'e.campbell@sunshinesenior.com',phone:'(813) 555-1322',state:'FL',license:'Medicare Supplement',appointed:'2022-08-07',status:'Active'},
+    {name:'Rebecca Evans',npn:'49372814',email:'r.evans@sunshinesenior.com',phone:'(813) 555-1356',state:'FL',license:'Health',appointed:'2024-04-12',status:'Pending'},
+    {name:'Frank Wilson',npn:'50483925',email:'f.wilson@sunshinesenior.com',phone:'(813) 555-1391',state:'FL',license:'Life & Health',appointed:'2021-03-18',status:'Inactive'}
+  ]},
+  'Liberty Health Partners':{tax:'36-9918472',active:0,pending:0,inactive:0,total:0,agents:[]}
+};
+
+/* --- Read agency from URL param --- */
+var params=new URLSearchParams(window.location.search);
+var agencyName=params.get('agency')||'Premier Medicare Group';
+var agency=agencyAgents[agencyName];
+
+function initPage(){
+  if(!agency){
+    document.getElementById('agentBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:#5f6368">Agency not found.</td></tr>';
+    return;
+  }
+  document.getElementById('pageTitle').textContent=agencyName+' — Agents';
+  document.getElementById('breadcrumbAgency').textContent=agencyName;
+  document.getElementById('statAgencyName').textContent=agencyName;
+  document.getElementById('statAgencyTax').textContent='Tax ID: '+agency.tax;
+  document.getElementById('statActive').textContent=agency.active;
+  document.getElementById('statPending').textContent=agency.pending;
+  document.getElementById('statInactive').textContent=agency.inactive;
+  document.getElementById('hdrAgencyName').textContent=agencyName;
+  document.title=agencyName+' Agents | Gold Kidney Admin';
+  renderAgents();
+}
+
+function renderAgents(){
+  var tbody=document.getElementById('agentBody');
+  var agents=agency.agents;
+  if(!agents.length){
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:40px;color:#5f6368">No agents assigned to this agency.</td></tr>';
+    document.getElementById('agentCount').textContent='0 agents';
+    renderPaginationUI();
+    return;
+  }
+  var html='';
+  agents.forEach(function(a){
+    var bdg=a.status==='Active'?'b-green':a.status==='Pending'?'b-amber':'b-red';
+    html+='<tr data-status="'+a.status+'" data-state="'+a.state+'" data-license="'+a.license+'">';
+    html+='<td><strong>'+a.name+'</strong></td>';
+    html+='<td><code>'+a.npn+'</code></td>';
+    html+='<td>'+a.email+'</td>';
+    html+='<td>'+a.phone+'</td>';
+    html+='<td>'+a.state+'</td>';
+    html+='<td>'+a.license+'</td>';
+    html+='<td>'+a.appointed+'</td>';
+    html+='<td><span class="bdg '+bdg+'">'+a.status+'</span></td>';
+    html+='</tr>';
+  });
+  tbody.innerHTML=html;
+  // Initialize all as filtered-in
+  document.querySelectorAll('#agentTable tbody tr').forEach(function(r){r.dataset.filtered='1';});
+  currentPage=1;
+  renderPaginationUI();
+}
+
+/* --- Filtering --- */
+function filterAgents(){
+  var status=document.getElementById('fStatus').value;
+  var state=document.getElementById('fState').value;
+  var license=document.getElementById('fLicense').value;
+  var search=document.getElementById('fSearch').value.toLowerCase();
+  var rows=document.querySelectorAll('#agentTable tbody tr');
+  rows.forEach(function(row){
+    var show=true;
+    if(status && row.dataset.status!==status) show=false;
+    if(state && row.dataset.state!==state) show=false;
+    if(license && row.dataset.license!==license) show=false;
+    if(search && row.textContent.toLowerCase().indexOf(search)===-1) show=false;
+    row.dataset.filtered=show?'1':'0';
+  });
+  currentPage=1;
+  renderPaginationUI();
+}
+
+function resetFilters(){
+  document.getElementById('fStatus').value='';
+  document.getElementById('fState').value='';
+  document.getElementById('fLicense').value='';
+  document.getElementById('fSearch').value='';
+  filterAgents();
+}
+
+/* --- Pagination --- */
+var rowsPerPage=5;
+var currentPage=1;
+
+function getVisibleRows(){
+  var rows=document.querySelectorAll('#agentTable tbody tr');
+  var visible=[];
+  rows.forEach(function(row){if(row.dataset.filtered==='1') visible.push(row);});
+  return visible;
+}
+
+function renderPaginationUI(){
+  var visible=getVisibleRows();
+  var totalPages=Math.max(1,Math.ceil(visible.length/rowsPerPage));
+  if(currentPage>totalPages) currentPage=totalPages;
+
+  // Hide all, show current page
+  document.querySelectorAll('#agentTable tbody tr').forEach(function(r){r.style.display='none';});
+  var start=(currentPage-1)*rowsPerPage;
+  var end=start+rowsPerPage;
+  for(var i=start;i<end&&i<visible.length;i++) visible[i].style.display='';
+
+  document.getElementById('agentCount').textContent='Showing '+visible.length+' of '+agency.total+' agents';
+  // Buttons
+  var html='<button class="btn-ol btn-sm" onclick="goToPage('+(currentPage-1)+')"'+(currentPage<=1?' disabled':'')+'><i class="fas fa-chevron-left"></i> Previous</button>';
+  for(var p=1;p<=totalPages;p++){
+    html+=p===currentPage?'<button class="btn-ol btn-sm" style="background:#1a237e;color:#fff;border-color:#1a237e">'+p+'</button>':'<button class="btn-ol btn-sm" onclick="goToPage('+p+')">'+p+'</button>';
+  }
+  html+='<button class="btn-ol btn-sm" onclick="goToPage('+(currentPage+1)+')"'+(currentPage>=totalPages?' disabled':'')+'>Next <i class="fas fa-chevron-right"></i></button>';
+  document.getElementById('pageButtons').innerHTML=html;
+  document.getElementById('pageInfo').textContent='Page '+currentPage+' of '+totalPages;
+}
+
+function goToPage(page){
+  var visible=getVisibleRows();
+  var totalPages=Math.max(1,Math.ceil(visible.length/rowsPerPage));
+  if(page<1||page>totalPages) return;
+  currentPage=page;
+  renderPaginationUI();
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','warning':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+// Initialize
+initPage();
+</script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

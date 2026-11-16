@@ -1,0 +1,655 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Broker Support — Unified Support Cases Hub -->
+<title>Support Cases | Broker Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#0277bd}
+.case-cat{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px}
+.cat-onboard{background:#e3f2fd;color:#0277bd}
+.cat-enroll{background:#e0f2f1;color:#00695c}
+.cat-comply{background:#fff3e0;color:#e65100}
+.cat-commission{background:#f3e5f5;color:#7b1fa2}
+.cat-lifecycle{background:#fce4ec;color:#c62828}
+.cat-general{background:#e8eaed;color:#5f6368}
+.reply-box{background:#f8f9fa;border:1px solid #e0e3e7;border-radius:8px;padding:12px;margin-top:8px}
+.case-flow{display:flex;align-items:center;gap:6px;font-size:11px;color:#5f6368;margin-top:4px}
+.case-flow i{font-size:9px;color:#bdbdbd}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-headset" style="margin-right:8px;opacity:.8"></i>Broker Support</div></div>
+      <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="support-cases.html" class="active"><i class="fas fa-inbox"></i>Support Cases<span class="n-badge">34</span></a>
+    <div class="sb-section">Agent Support</div>
+    <a href="agent-lookup.html"><i class="fas fa-search"></i>Agent Lookup</a>
+    <a href="agent-lifecycle.html"><i class="fas fa-user-shield"></i>Agent Lifecycle</a>
+    <a href="onboarding-queue.html"><i class="fas fa-user-clock"></i>Onboarding Queue<span class="n-badge">12</span></a>
+    <a href="activation-queue.html"><i class="fas fa-check-circle"></i>Activation Status</a>
+    <a href="invitations.html"><i class="fas fa-envelope-open-text"></i>Invitations</a>
+    <div class="sb-section">Member &amp; Enrollment</div>
+    <a href="member-inquiry.html"><i class="fas fa-id-card"></i>Member Inquiry</a>
+    <div class="sb-section">Compliance &amp; Licensing</div>
+    <a href="nipr-alerts.html"><i class="fas fa-bell"></i>NIPR Alerts<span class="n-badge">5</span></a>
+    <a href="ahip-renewals.html"><i class="fas fa-certificate"></i>AHIP Renewals</a>
+    <a href="state-appointments.html"><i class="fas fa-map-marker-alt"></i>State Appointments</a>
+    <a href="compliance-holds.html"><i class="fas fa-ban"></i>Compliance Holds</a>
+    <a href="override-approvals.html"><i class="fas fa-unlock-alt"></i>Override Requests<span class="n-badge">3</span></a>
+    <div class="sb-section">Operations &amp; SLA</div>
+    <a href="commission-inquiries.html"><i class="fas fa-dollar-sign"></i>Commission Inquiries</a>
+    <a href="sla-tracker.html"><i class="fas fa-stopwatch"></i>SLA Tracker</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">MJ</div><div><div class="sb-u-name">Maria Johnson</div><div class="sb-u-role">Broker Support Lead</div><div style="font-size:9px;color:#81d4fa;margin-top:2px"><i class="fas fa-shield-alt" style="margin-right:3px"></i>Org-Wide Visibility</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Support Cases</h4><p style="font-size:12px;color:#5f6368;margin:0">View and respond to agency inquiries — provide status updates on onboarding, enrollment, compliance, commissions</p></div>
+    <div class="dflex g8">
+      <button class="btn-pr btn-sm" onclick="openNewTicket()"><i class="fas fa-plus"></i> Create Ticket</button>
+      <button class="btn-ol btn-sm" onclick="nfpExport('Support Cases')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Case Flow Indicator -->
+    <div style="background:linear-gradient(135deg,#e3f2fd 0%,#e0f2f1 100%);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:8px"><span style="background:#0277bd;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600"><i class="fas fa-user" style="margin-right:4px"></i>Agent</span><i class="fas fa-arrow-right" style="color:#90a4ae;font-size:10px"></i></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="background:#e65100;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600"><i class="fas fa-building" style="margin-right:4px"></i>Agency</span><i class="fas fa-arrow-right" style="color:#90a4ae;font-size:10px"></i></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="background:#2e7d32;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600"><i class="fas fa-headset" style="margin-right:4px"></i>Payer (Broker Support)</span></div>
+      </div>
+      <div style="font-size:12px;color:#5f6368"><i class="fas fa-info-circle" style="margin-right:4px;color:#0277bd"></i>Broker Support provides status updates &amp; information — does not approve or take action</div>
+    </div>
+
+    <!-- KPI Summary -->
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#0277bd"><i class="fas fa-inbox"></i></div>
+        <div><div class="stat-label">Open Cases</div><div class="stat-val">34</div><div class="stat-sub"><i class="fas fa-arrow-up" style="color:#c62828"></i> 6 new today</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-reply"></i></div>
+        <div><div class="stat-label">Awaiting Response</div><div class="stat-val">12</div><div class="stat-sub">5 due within 2 hrs</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-check-circle"></i></div>
+        <div><div class="stat-label">Resolved Today</div><div class="stat-val">9</div><div class="stat-sub">100% within SLA</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-circle"></i></div>
+        <div><div class="stat-label">SLA At Risk</div><div class="stat-val">3</div><div class="stat-sub">Needs immediate action</div></div>
+      </div></div>
+      <div class="col-1"><div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-stopwatch"></i></div>
+        <div><div class="stat-label">SLA Compliance</div><div class="stat-val">94%</div><div class="stat-sub"><i class="fas fa-arrow-up" style="color:#2e7d32"></i> +2% vs last week</div></div>
+      </div></div>
+    </div>
+
+    <!-- Category Quick Filters -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px" id="catFilters">
+      <button class="btn-pr btn-sm" style="border-radius:16px;font-size:11px" data-cat="all" onclick="filterByCat('all',this)"><i class="fas fa-list" style="margin-right:4px"></i>All (34)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="onboard" onclick="filterByCat('onboard',this)"><i class="fas fa-user-clock" style="margin-right:4px;color:#0277bd"></i>Onboarding (8)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="enroll" onclick="filterByCat('enroll',this)"><i class="fas fa-clipboard-check" style="margin-right:4px;color:#00695c"></i>Enrollment (7)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="comply" onclick="filterByCat('comply',this)"><i class="fas fa-shield-alt" style="margin-right:4px;color:#e65100"></i>Compliance (6)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="commission" onclick="filterByCat('commission',this)"><i class="fas fa-dollar-sign" style="margin-right:4px;color:#7b1fa2"></i>Commission (5)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="lifecycle" onclick="filterByCat('lifecycle',this)"><i class="fas fa-user-shield" style="margin-right:4px;color:#c62828"></i>Agent Lifecycle (4)</button>
+      <button class="btn-ol btn-sm" style="border-radius:16px;font-size:11px" data-cat="general" onclick="filterByCat('general',this)"><i class="fas fa-question-circle" style="margin-right:4px;color:#5f6368"></i>General (4)</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" style="margin-top:12px">
+      <select id="fStatus"><option>All Statuses</option><option>New</option><option>In Progress</option><option>Awaiting Agency</option><option>Awaiting Finance</option><option>Awaiting Compliance</option><option>Resolved</option><option>Closed</option></select>
+      <select id="fPriority"><option>All Priorities</option><option>Urgent</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select id="fAgency"><option>All Agencies</option><option>Premier Insurance (FMO)</option><option>National Benefits (SGA)</option><option>Southwest Medicare (GA)</option><option>Alliance Health (MGA)</option></select>
+      <select id="fAssigned"><option>All Assignees</option><option>Maria Johnson</option><option>Carlos Rivera</option><option>Sarah Park</option><option>David Kim</option><option>Unassigned</option></select>
+      <input type="text" id="fSearch" placeholder="Search by case ID, agent name, NPN, or keyword..." style="border:1px solid #e0e3e7;border-radius:6px;padding:6px 12px;font-size:12px;flex:1;min-width:200px">
+    </div>
+
+    <!-- Unified Case Table -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-inbox" style="color:#0277bd;margin-right:8px"></i>All Support Cases</h6><div class="dflex g8"><span class="badge" style="background:#e3f2fd;color:#0277bd">34 open</span><span class="badge" style="background:#e8f5e9;color:#2e7d32">9 resolved today</span></div></div>
+      <div class="card-body" style="padding:0;overflow-x:auto">
+        <table class="table table-hover mb-0" style="font-size:13px">
+          <thead><tr><th>Case ID</th><th>Category</th><th>Agency</th><th>Agent</th><th>Subject</th><th>Status</th><th>Priority</th><th>SLA</th><th>Last Updated</th><th></th></tr></thead>
+          <tbody>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:600">SC-2026-0501</td>
+              <td><span class="case-cat cat-commission"><i class="fas fa-dollar-sign"></i>Commission</span></td>
+              <td>Premier Insurance</td>
+              <td>James Martinez</td>
+              <td>May cycle payment not received — 42 active members</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#ffcdd2;color:#c62828">Urgent</span></td>
+              <td><span style="color:#c62828;font-weight:600">2 hrs left</span></td>
+              <td>30 min ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0501')">Reply</button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:600">SC-2026-0502</td>
+              <td><span class="case-cat cat-enroll"><i class="fas fa-clipboard-check"></i>Enrollment</span></td>
+              <td>National Benefits</td>
+              <td>Lisa Wang</td>
+              <td>CSNP physician verification letter — member Martha Johnson</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#ffcdd2;color:#c62828">Urgent</span></td>
+              <td><span style="color:#c62828;font-weight:600">4 hrs left</span></td>
+              <td>1 hr ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0502')">Reply</button></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:600">SC-2026-0503</td>
+              <td><span class="case-cat cat-lifecycle"><i class="fas fa-user-shield"></i>Lifecycle</span></td>
+              <td>Southwest Medicare</td>
+              <td>Kevin Patel</td>
+              <td>Agent suspended — FL license expired, requesting reinstatement path</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><span class="badge" style="background:#ffcdd2;color:#c62828">High</span></td>
+              <td><span style="color:#e65100;font-weight:600">6 hrs left</span></td>
+              <td>2 hrs ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0503')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0504</td>
+              <td><span class="case-cat cat-onboard"><i class="fas fa-user-clock"></i>Onboarding</span></td>
+              <td>Premier Insurance</td>
+              <td>James Lee</td>
+              <td>W-9 entity type mismatch — 3rd resubmission, agent stuck at Gate 3</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">High</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>3 hrs ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0504')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0505</td>
+              <td><span class="case-cat cat-comply"><i class="fas fa-shield-alt"></i>Compliance</span></td>
+              <td>Alliance Health</td>
+              <td>Sarah Kim</td>
+              <td>AHIP expired 160 days — agency requesting termination guidance</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">High</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>3 hrs ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0505')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0506</td>
+              <td><span class="case-cat cat-enroll"><i class="fas fa-clipboard-check"></i>Enrollment</span></td>
+              <td>Premier Insurance</td>
+              <td>Angela Torres</td>
+              <td>SOA attestation system error — cannot complete enrollment</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Medium</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>4 hrs ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0506')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0507</td>
+              <td><span class="case-cat cat-onboard"><i class="fas fa-user-clock"></i>Onboarding</span></td>
+              <td>National Benefits</td>
+              <td>Angela Torres</td>
+              <td>Failed training exam 4 times — requesting override for 5th attempt</td>
+              <td><span class="badge" style="background:#fff8e1;color:#f57f17">Awaiting Agency</span></td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Medium</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>5 hrs ago</td>
+              <td><button class="btn-ol btn-sm" onclick="showCaseDetail('SC-2026-0507')">View</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0508</td>
+              <td><span class="case-cat cat-commission"><i class="fas fa-dollar-sign"></i>Commission</span></td>
+              <td>National Benefits</td>
+              <td>Sarah Chen</td>
+              <td>Tier 1 applied instead of Tier 2 — 28 members qualifies for upgrade</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">Medium</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>6 hrs ago</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0508')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0509</td>
+              <td><span class="case-cat cat-comply"><i class="fas fa-shield-alt"></i>Compliance</span></td>
+              <td>Southwest Medicare</td>
+              <td>David Chen</td>
+              <td>State appointment rejected TX — E&O documentation missing</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">Medium</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>Yesterday</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0509')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0510</td>
+              <td><span class="case-cat cat-lifecycle"><i class="fas fa-user-shield"></i>Lifecycle</span></td>
+              <td>National Benefits</td>
+              <td>Richard Evans</td>
+              <td>Agent renewed license — requesting reinstatement activation</td>
+              <td><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">Medium</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>Yesterday</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0510')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0511</td>
+              <td><span class="case-cat cat-enroll"><i class="fas fa-clipboard-check"></i>Enrollment</span></td>
+              <td>Alliance Health</td>
+              <td>Sarah Chen</td>
+              <td>Dual-eligible Medicaid ID validation error — state lookup timeout</td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">Low</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>Yesterday</td>
+              <td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0511')">Reply</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">SC-2026-0512</td>
+              <td><span class="case-cat cat-general"><i class="fas fa-question-circle"></i>General</span></td>
+              <td>Premier Insurance</td>
+              <td>—</td>
+              <td>Agency requesting updated plan materials for OEP preparation</td>
+              <td><span class="badge" style="background:#fff8e1;color:#f57f17">Awaiting Agency</span></td>
+              <td><span class="badge" style="background:#e3f2fd;color:#0277bd">Low</span></td>
+              <td><span style="color:#2e7d32">On Track</span></td>
+              <td>Yesterday</td>
+              <td><button class="btn-ol btn-sm" onclick="showCaseDetail('SC-2026-0512')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Two-Column: Response Queue + Case Volume by Agency -->
+    <div class="row g-3" style="margin-top:16px">
+      <div class="col-lg-7">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-reply" style="color:#c62828;margin-right:8px"></i>Needs Your Response</h6><span class="badge" style="background:#fce4ec;color:#c62828">12 awaiting</span></div>
+          <div class="card-body" style="padding:0;overflow-x:auto">
+            <table class="table table-hover mb-0" style="font-size:12px" data-no-paginate>
+              <thead><tr><th>Case</th><th>Category</th><th>Agency</th><th>Waiting Since</th><th>SLA</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:600">SC-2026-0501</td><td><span class="case-cat cat-commission"><i class="fas fa-dollar-sign"></i>Commission</span></td><td>Premier Insurance</td><td>30 min</td><td><span style="color:#c62828;font-weight:600">2 hrs</span></td><td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0501')">Reply</button></td></tr>
+                <tr><td style="font-weight:600">SC-2026-0502</td><td><span class="case-cat cat-enroll"><i class="fas fa-clipboard-check"></i>Enrollment</span></td><td>National Benefits</td><td>1 hr</td><td><span style="color:#c62828;font-weight:600">4 hrs</span></td><td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0502')">Reply</button></td></tr>
+                <tr><td style="font-weight:600">SC-2026-0503</td><td><span class="case-cat cat-lifecycle"><i class="fas fa-user-shield"></i>Lifecycle</span></td><td>Southwest Medicare</td><td>2 hrs</td><td><span style="color:#e65100;font-weight:600">6 hrs</span></td><td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0503')">Reply</button></td></tr>
+                <tr><td style="font-weight:600">SC-2026-0505</td><td><span class="case-cat cat-comply"><i class="fas fa-shield-alt"></i>Compliance</span></td><td>Alliance Health</td><td>3 hrs</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0505')">Reply</button></td></tr>
+                <tr><td style="font-weight:600">SC-2026-0508</td><td><span class="case-cat cat-commission"><i class="fas fa-dollar-sign"></i>Commission</span></td><td>National Benefits</td><td>6 hrs</td><td><span style="color:#2e7d32">On Track</span></td><td><button class="btn-pr btn-sm" onclick="showCaseDetail('SC-2026-0508')">Reply</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-hdr"><h6><i class="fas fa-building" style="color:#e65100;margin-right:8px"></i>Cases by Agency</h6><span style="font-size:11px;color:#5f6368">Open cases</span></div>
+          <div class="card-body" style="padding:14px 16px;font-size:13px">
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Premier Insurance (FMO)</span><strong>12</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:35%;background:#0277bd;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>National Benefits (SGA)</span><strong>9</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:26%;background:#e65100;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span>Southwest Medicare (GA)</span><strong>7</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:21%;background:#7b1fa2;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between"><span>Alliance Health (MGA)</span><strong>6</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:18%;background:#00695c;border-radius:3px"></div></div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="card-hdr"><h6><i class="fas fa-chart-pie" style="color:#0277bd;margin-right:8px"></i>Cases by Category</h6></div>
+          <div class="card-body" style="padding:14px 16px;font-size:13px">
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span><i class="fas fa-user-clock" style="color:#0277bd;margin-right:4px"></i>Onboarding</span><strong>8</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:24%;background:#0277bd;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span><i class="fas fa-clipboard-check" style="color:#00695c;margin-right:4px"></i>Enrollment</span><strong>7</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:21%;background:#00695c;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span><i class="fas fa-shield-alt" style="color:#e65100;margin-right:4px"></i>Compliance</span><strong>6</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:18%;background:#e65100;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span><i class="fas fa-dollar-sign" style="color:#7b1fa2;margin-right:4px"></i>Commission</span><strong>5</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:15%;background:#7b1fa2;border-radius:3px"></div></div></div>
+            <div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><span><i class="fas fa-user-shield" style="color:#c62828;margin-right:4px"></i>Lifecycle</span><strong>4</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:12%;background:#c62828;border-radius:3px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between"><span><i class="fas fa-question-circle" style="color:#5f6368;margin-right:4px"></i>General</span><strong>4</strong></div><div style="height:6px;background:#e8eaed;border-radius:3px;margin-top:4px"><div style="height:100%;width:12%;background:#5f6368;border-radius:3px"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Case Detail Modal -->
+<div id="caseModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:90%;max-width:680px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-folder-open" style="color:#0277bd;margin-right:8px"></i><span id="cmTitle">Case SC-2026-0501</span></h6>
+      <button onclick="document.getElementById('caseModal').style.display='none'" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+        <div><span style="font-size:11px;color:#5f6368">Category</span><div><span class="case-cat cat-commission"><i class="fas fa-dollar-sign"></i>Commission</span></div></div>
+        <div><span style="font-size:11px;color:#5f6368">Agency</span><div style="font-weight:600;font-size:13px">Premier Insurance (FMO)</div></div>
+        <div><span style="font-size:11px;color:#5f6368">Agent</span><div style="font-weight:600;font-size:13px">James Martinez (NPN: 8823441)</div></div>
+        <div><span style="font-size:11px;color:#5f6368">Status</span><div><span class="badge" style="background:#fff3e0;color:#e65100">In Progress</span></div></div>
+        <div><span style="font-size:11px;color:#5f6368">Priority</span><div><span class="badge" style="background:#ffcdd2;color:#c62828">Urgent</span></div></div>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px;margin-bottom:16px">
+        <div style="font-weight:600;font-size:13px;margin-bottom:6px">Issue Description</div>
+        <div style="font-size:13px;color:#333">Agent James Martinez (42 active members) has not received his May commission payment. Agency confirmed ACH details are correct. Payment was expected Jun 1 but not yet received. Agent is threatening to move book of business to another carrier.</div>
+      </div>
+      <!-- Conversation Thread -->
+      <div style="font-weight:600;font-size:13px;margin-bottom:10px"><i class="fas fa-comments" style="color:#0277bd;margin-right:6px"></i>Conversation Thread</div>
+      <div style="border-left:3px solid #e0e3e7;padding-left:14px;margin-bottom:16px">
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:12px;color:#e65100"><i class="fas fa-building" style="margin-right:4px"></i>Premier Insurance (Agency)</span><span style="font-size:11px;color:#80868b">Jun 7, 2:30 PM</span></div><div style="font-size:12px;margin-top:4px;color:#333">Agent James Martinez has not received May commission. Please investigate ASAP. He is very upset and considering leaving Gold Kidney.</div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:12px;color:#2e7d32"><i class="fas fa-headset" style="margin-right:4px"></i>Maria Johnson (Broker Support)</span><span style="font-size:11px;color:#80868b">Jun 7, 3:15 PM</span></div><div style="font-size:12px;margin-top:4px;color:#333">Thank you for escalating. I'm reviewing with Finance. His May statement shows $4,200 was processed Jun 1. Checking ACH status with payment vendor.</div></div>
+        <div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:12px;color:#e65100"><i class="fas fa-building" style="margin-right:4px"></i>Premier Insurance (Agency)</span><span style="font-size:11px;color:#80868b">Jun 8, 9:00 AM</span></div><div style="font-size:12px;margin-top:4px;color:#333">Any update? Agent called again this morning.</div></div>
+      </div>
+      <!-- Reply Box -->
+      <div class="reply-box">
+        <div style="font-weight:600;font-size:12px;margin-bottom:8px"><i class="fas fa-reply" style="color:#0277bd;margin-right:4px"></i>Respond with Status Update</div>
+        <textarea style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:10px;font-size:13px;resize:vertical;min-height:80px;font-family:inherit" placeholder="Provide the latest status update to the agency..."></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+          <div style="display:flex;gap:8px">
+            <select style="border:1px solid #e0e3e7;border-radius:4px;padding:4px 8px;font-size:11px"><option>Update Status →</option><option>Status Provided</option><option>Awaiting Info from Agency</option><option>Forwarded to Admin</option><option>Forwarded to Finance</option><option>Closed</option></select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-ol btn-sm" onclick="showToast('File attached','info')"><i class="fas fa-paperclip"></i></button>
+            <button class="btn-pr btn-sm" onclick="sendUpdate()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+var activeCat='all';
+var caseRows=document.querySelectorAll('.card-body table:not([data-no-paginate]) tbody tr');
+
+// Category button filter
+function filterByCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('#catFilters button').forEach(function(b){
+    b.className=b.getAttribute('data-cat')===cat?'btn-pr btn-sm':'btn-ol btn-sm';
+    b.style.borderRadius='16px';b.style.fontSize='11px';
+  });
+  applyAllFilters();
+}
+
+// Apply all filters together
+function applyAllFilters(){
+  var fStatus=document.getElementById('fStatus').value;
+  var fPriority=document.getElementById('fPriority').value;
+  var fAgency=document.getElementById('fAgency').value;
+  var fSearch=document.getElementById('fSearch').value.trim().toLowerCase();
+  var visible=0;
+  caseRows.forEach(function(row){
+    var cells=row.querySelectorAll('td');
+    var catCell=cells[1]?cells[1].innerHTML:'';
+    var agencyText=cells[2]?cells[2].textContent.trim():'';
+    var statusText=cells[5]?cells[5].textContent.trim():'';
+    var prioText=cells[6]?cells[6].textContent.trim():'';
+    var rowText=row.textContent.toLowerCase();
+    var show=true;
+    // Category filter
+    if(activeCat!=='all'){
+      if(catCell.indexOf('cat-'+activeCat)<0) show=false;
+    }
+    // Status filter
+    if(fStatus!=='All Statuses' && statusText.indexOf(fStatus)<0) show=false;
+    // Priority filter
+    if(fPriority!=='All Priorities' && prioText!==fPriority) show=false;
+    // Agency filter
+    if(fAgency!=='All Agencies' && agencyText.indexOf(fAgency.split(' (')[0])<0) show=false;
+    // Search
+    if(fSearch && rowText.indexOf(fSearch)<0) show=false;
+    row.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  showToast(visible+' case'+(visible!==1?'s':'')+' shown','info');
+}
+
+// Bind filter bar controls
+document.getElementById('fStatus').addEventListener('change',applyAllFilters);
+document.getElementById('fPriority').addEventListener('change',applyAllFilters);
+document.getElementById('fAgency').addEventListener('change',applyAllFilters);
+document.getElementById('fAssigned').addEventListener('change',applyAllFilters);
+document.getElementById('fSearch').addEventListener('input',applyAllFilters);
+
+function showCaseDetail(caseId){
+  document.getElementById('cmTitle').textContent='Case '+caseId;
+  document.getElementById('caseModal').style.display='flex';
+}
+function sendUpdate(){
+  var textarea=document.querySelector('#caseModal textarea');
+  var msg=textarea?textarea.value.trim():'';
+  if(!msg){showToast('Please enter a status update message','error');return;}
+  showToast('Status update sent successfully','success');
+  if(textarea) textarea.value='';
+  setTimeout(function(){document.getElementById('caseModal').style.display='none';},1000);
+}
+document.getElementById('caseModal').addEventListener('click',function(e){if(e.target===this) this.style.display='none';});
+
+// --- Create Ticket Modal ---
+function openNewTicket(){document.getElementById('newTicketModal').style.display='flex';}
+function closeNewTicket(){document.getElementById('newTicketModal').style.display='none';}
+document.getElementById('newTicketModal').addEventListener('click',function(e){if(e.target===this)closeNewTicket();});
+
+// --- Prefill Data ---
+var PREFILL_DATA={
+  james:{name:'James Martinez',npn:'8823441',agency:'Premier Insurance Group',state:'FL'},
+  sarah:{name:'Sarah Chen',npn:'7712390',agency:'National Benefits Group',state:'CA'},
+  kevin:{name:'Kevin Nguyen',npn:'6634521',agency:'Alliance Health Partners',state:'TX'},
+  patricia:{name:'Patricia Lee',npn:'5548832',agency:'Southwest Medicare Solutions',state:'FL'},
+  mark:{name:'Mark Brown',npn:'9901274',agency:'Direct Agent',state:'GA'},
+  linda:{name:'Linda Garcia',npn:'4437890',agency:'Premier Insurance Group',state:'GA'},
+  robert:{name:'Robert Wilson',npn:'3321567',agency:'Coastal Health Advisors',state:'FL'},
+  maria:{name:'Maria Rodriguez',npn:'2215643',agency:'National Benefits Group',state:'TX'}
+};
+function prefillTicket(){
+  var key=document.getElementById('ntPrefill').value;
+  if(!key){return;}
+  var d=PREFILL_DATA[key];
+  if(!d)return;
+  document.getElementById('ntAgent').value=d.name;
+  document.getElementById('ntNpn').value=d.npn;
+  document.getElementById('ntAgent').style.background='#f1f8e9';
+  document.getElementById('ntNpn').style.background='#f1f8e9';
+  setTimeout(function(){document.getElementById('ntAgent').style.background='';document.getElementById('ntNpn').style.background='';},1500);
+  showToast('Prefilled: '+d.name+' ('+d.agency+', '+d.state+')','success');
+}
+
+function submitNewTicket(){
+  var agent=document.getElementById('ntAgent').value.trim();
+  var npn=document.getElementById('ntNpn').value.trim();
+  var category=document.getElementById('ntCategory').value;
+  var priority=document.getElementById('ntPriority').value;
+  var subject=document.getElementById('ntSubject').value.trim();
+  var desc=document.getElementById('ntDesc').value.trim();
+  var memberId=document.getElementById('ntMemberId').value.trim();
+  var browser=document.getElementById('ntBrowser').value.trim();
+  var attachFiles=document.getElementById('ntAttachments').files;
+  var callFile=document.getElementById('ntCallRec').files[0];
+  // Validation
+  if(!agent){showToast('Please enter agent name','error');return;}
+  if(!category){showToast('Please select an issue category','error');return;}
+  if(!subject){showToast('Please enter a subject','error');return;}
+  if(!desc){showToast('Please enter a description','error');return;}
+  // Generate case ID
+  var newId='SC-2026-0'+Math.floor(Math.random()*900+513);
+  // Category badge mapping
+  var catMap={'Onboarding':'cat-onboard','Enrollment':'cat-enroll','Compliance':'cat-comply','Commission':'cat-commission','Agent Lifecycle':'cat-lifecycle','Portal Access':'cat-general','HRA':'cat-enroll','Member Data':'cat-general','Leads':'cat-general','Documents':'cat-general','Technical':'cat-general','Training':'cat-comply','General':'cat-general'};
+  var catIcon={'Onboarding':'fa-user-clock','Enrollment':'fa-clipboard-check','Compliance':'fa-shield-alt','Commission':'fa-dollar-sign','Agent Lifecycle':'fa-user-shield','Portal Access':'fa-lock','HRA':'fa-clipboard-list','Member Data':'fa-id-card','Leads':'fa-users','Documents':'fa-folder','Technical':'fa-cog','Training':'fa-graduation-cap','General':'fa-question-circle'};
+  var catClass=catMap[category]||'cat-general';
+  var icon=catIcon[category]||'fa-question-circle';
+  // Insert row at top of table
+  var tbody=document.querySelector('.card-body table:not([data-no-paginate]) tbody');
+  var newRow=document.createElement('tr');
+  newRow.style.background='#e8f5e9';
+  newRow.innerHTML='<td style="font-weight:600">'+newId+'</td>'+
+    '<td><span class="case-cat '+catClass+'"><i class="fas '+icon+'"></i>'+category+'</span></td>'+
+    '<td>—</td>'+
+    '<td>'+agent+(npn?' ('+npn+')':'')+'</td>'+
+    '<td>'+subject+'</td>'+
+    '<td><span class="badge" style="background:#e3f2fd;color:#0277bd">New</span></td>'+
+    '<td><span class="badge" style="background:#fff3e0;color:#e65100">'+priority+'</span></td>'+
+    '<td><span style="color:#2e7d32">On Track</span></td>'+
+    '<td>Just now</td>'+
+    '<td><button class="btn-pr btn-sm" onclick="showCaseDetail(\''+newId+'\')">Reply</button></td>';
+  tbody.insertBefore(newRow,tbody.firstChild);
+  // Build success message
+  var extras=[];
+  if(callFile) extras.push('Call: '+callFile.name);
+  if(attachFiles.length) extras.push(attachFiles.length+' attachment'+(attachFiles.length>1?'s':''));
+  if(memberId) extras.push('Member: '+memberId);
+  if(browser) extras.push('Browser: '+browser);
+  var extraMsg=extras.length?' ('+extras.join(', ')+')':'';
+  showToast('Ticket '+newId+' created successfully'+extraMsg,'success');
+  clearNewTicket();
+  closeNewTicket();
+}
+function clearNewTicket(){
+  document.getElementById('ntPrefill').value='';
+  document.getElementById('ntAgent').value='';
+  document.getElementById('ntNpn').value='';
+  document.getElementById('ntCategory').value='';
+  document.getElementById('ntPriority').value='Medium';
+  document.getElementById('ntSubject').value='';
+  document.getElementById('ntDesc').value='';
+  document.getElementById('ntMemberId').value='';
+  document.getElementById('ntBrowser').value='';
+  document.getElementById('ntAttachments').value='';
+  document.getElementById('ntAttachList').textContent='';
+  document.getElementById('ntCallRec').value='';
+  document.getElementById('ntFileName').textContent='';
+}
+function handleAttachments(){
+  var files=document.getElementById('ntAttachments').files;
+  var names=[];
+  for(var i=0;i<files.length;i++) names.push(files[i].name);
+  document.getElementById('ntAttachList').innerHTML=names.length?'<i class="fas fa-check-circle" style="margin-right:4px"></i>'+names.join(', '):'';
+  if(names.length) document.getElementById('ntUploadZone').style.borderColor='#2e7d32';
+}
+function handleCallFile(){
+  var f=document.getElementById('ntCallRec').files[0];
+  document.getElementById('ntFileName').textContent=f?f.name:'';
+}
+</script>
+
+<!-- Create Ticket Modal -->
+<div id="newTicketModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:92%;max-width:680px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between">
+      <h6 style="margin:0;font-size:15px"><i class="fas fa-plus-circle" style="color:#0277bd;margin-right:8px"></i>Create Support Ticket</h6>
+      <button onclick="closeNewTicket()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#5f6368"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="padding:20px">
+      <!-- Prefill Data Option -->
+      <div style="margin-bottom:16px;padding:12px 14px;background:#e3f2fd;border-radius:8px;border:1px solid #90caf9">
+        <label style="font-size:11px;font-weight:600;color:#0277bd;text-transform:uppercase;display:block;margin-bottom:6px"><i class="fas fa-magic" style="margin-right:4px"></i>Quick Prefill — Select Agent to Auto-Fill</label>
+        <select id="ntPrefill" onchange="prefillTicket()" style="width:100%;border:1px solid #90caf9;border-radius:6px;padding:8px 12px;font-size:13px;background:#fff">
+          <option value="">— Select agent to prefill data —</option>
+          <option value="james">James Martinez — NPN 8823441 (Premier Insurance, FL)</option>
+          <option value="sarah">Sarah Chen — NPN 7712390 (National Benefits, CA)</option>
+          <option value="kevin">Kevin Nguyen — NPN 6634521 (Alliance Health, TX)</option>
+          <option value="patricia">Patricia Lee — NPN 5548832 (Southwest Medicare, FL)</option>
+          <option value="mark">Mark Brown — NPN 9901274 (Direct Agent, GA)</option>
+          <option value="linda">Linda Garcia — NPN 4437890 (Premier Insurance, GA)</option>
+          <option value="robert">Robert Wilson — NPN 3321567 (Coastal Health, FL)</option>
+          <option value="maria">Maria Rodriguez — NPN 2215643 (National Benefits, TX)</option>
+        </select>
+      </div>
+      <!-- Row 1: Agent Name + NPN -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Agent Name <span style="color:#c62828">*</span></label>
+          <input type="text" id="ntAgent" placeholder="e.g. James Martinez" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">NPN (optional)</label>
+          <input type="text" id="ntNpn" placeholder="e.g. 8823441" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+        </div>
+      </div>
+      <!-- Row 2: Issue Category + Priority -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Issue Category <span style="color:#c62828">*</span></label>
+          <select id="ntCategory" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+            <option value="">— Select Category —</option>
+            <option value="Portal Access">Portal Access / Login Issues</option>
+            <option value="Enrollment">Enrollment Processing</option>
+            <option value="Commission">Commission / Payment Issues</option>
+            <option value="HRA">HRA / Healthy Visit</option>
+            <option value="Compliance">Compliance / Certification</option>
+            <option value="Member Data">Member Data / BoB Issues</option>
+            <option value="Leads">Lead Management</option>
+            <option value="Documents">Document Upload / Access</option>
+            <option value="Technical">Technical / System Error</option>
+            <option value="Training">Training / Exam Issues</option>
+            <option value="Onboarding">Onboarding</option>
+            <option value="Agent Lifecycle">Agent Lifecycle</option>
+            <option value="General">Other / General</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Priority <span style="color:#c62828">*</span></label>
+          <select id="ntPriority" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+            <option value="Low">Low — Minor issue / Question</option>
+            <option value="Medium" selected>Medium — Issue with workaround</option>
+            <option value="High">High — Major feature not working</option>
+            <option value="Urgent">Critical — Cannot work / System down</option>
+          </select>
+        </div>
+      </div>
+      <!-- Subject -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Subject <span style="color:#c62828">*</span></label>
+        <input type="text" id="ntSubject" placeholder="Brief description of the issue" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+      </div>
+      <!-- Description -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Description <span style="color:#c62828">*</span></label>
+        <textarea id="ntDesc" rows="4" placeholder="Please describe the issue in detail. Include:&#10;• What was the agent/agency trying to do?&#10;• What happened instead?&#10;• Any error messages reported&#10;• Steps to reproduce the issue" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:10px 12px;font-size:13px;resize:vertical;font-family:inherit"></textarea>
+      </div>
+      <!-- Row 3: Member ID + Browser/Device -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Member ID (if applicable)</label>
+          <input type="text" id="ntMemberId" placeholder="e.g. MEM-20260001" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px">Browser / Device</label>
+          <input type="text" id="ntBrowser" placeholder="e.g. Chrome 126, Windows" style="width:100%;border:1px solid #e0e3e7;border-radius:6px;padding:8px 12px;font-size:13px">
+        </div>
+      </div>
+      <!-- Attachments -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;display:block;margin-bottom:4px"><i class="fas fa-paperclip" style="margin-right:4px"></i>Attachments — Screenshots, Error Logs (Optional)</label>
+        <div id="ntUploadZone" style="border:2px dashed #e0e3e7;border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:border-color .2s;background:#fff" onclick="document.getElementById('ntAttachments').click()">
+          <input type="file" id="ntAttachments" multiple accept=".png,.jpg,.jpeg,.pdf,.xlsx,.csv,.doc,.docx" style="display:none" onchange="handleAttachments()">
+          <i class="fas fa-cloud-upload-alt" style="font-size:18px;color:#bdbdbd;display:block;margin-bottom:4px"></i>
+          <div style="font-size:12px;color:#757575">Click to upload — PNG, JPG, PDF, Excel, Word (max 10 MB each)</div>
+        </div>
+        <div id="ntAttachList" style="font-size:12px;color:#2e7d32;margin-top:6px"></div>
+      </div>
+      <!-- Call Recording Upload -->
+      <div style="background:#f8f9fa;border:2px dashed #e0e3e7;border-radius:8px;padding:16px;text-align:center">
+        <div style="font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;margin-bottom:8px"><i class="fas fa-phone-alt" style="margin-right:4px;color:#0277bd"></i>Call Recording (Optional)</div>
+        <p style="font-size:12px;color:#80868b;margin:0 0 10px">Upload call recording if the ticket was taken over phone</p>
+        <label for="ntCallRec" style="display:inline-flex;align-items:center;gap:6px;background:#0277bd;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer">
+          <i class="fas fa-microphone"></i> Choose Audio File
+        </label>
+        <input type="file" id="ntCallRec" accept="audio/*,.mp3,.wav,.m4a,.ogg,.wma" style="display:none" onchange="handleCallFile()">
+        <div id="ntFileName" style="font-size:12px;color:#2e7d32;margin-top:8px;font-weight:500"></div>
+        <div style="font-size:10px;color:#9e9e9e;margin-top:4px">Accepted: MP3, WAV, M4A, OGG, WMA (max 50 MB)</div>
+      </div>
+    </div>
+    <div style="padding:14px 20px;border-top:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center">
+      <button class="btn-ol btn-sm" onclick="clearNewTicket()" style="color:#5f6368"><i class="fas fa-eraser" style="margin-right:4px"></i>Clear Form</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ol btn-sm" onclick="closeNewTicket()">Cancel</button>
+        <button class="btn-pr btn-sm" onclick="submitNewTicket()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Create Ticket</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

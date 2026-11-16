@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commission Details | Gold Kidney Agency Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#e65100}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-building" style="margin-right:8px;opacity:.8"></i>Agency Admin</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent Management</div>
+    <a href="agents.html"><i class="fas fa-user-tie"></i>My Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <a href="invitations.html"><i class="fas fa-paper-plane"></i>Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-user-plus"></i>Onboarding Cases</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-address-book"></i>Book of Business<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="bob.html?tab=mybob"><i class="fas fa-id-card"></i>My Book of Business</a>
+        <a href="bob.html"><i class="fas fa-sitemap"></i>My Downline Business</a>
+      </div>
+    </div>
+    <div class="sb-group open">
+      <div class="sb-toggle" onclick="this.parentNode.classList.toggle('open')"><i class="fas fa-users"></i>Lead Management<i class="fas fa-chevron-down sb-chev"></i></div>
+      <div class="sb-sub">
+        <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+        <a href="leads.html?tab=campaigns"><i class="fas fa-bullhorn"></i>Campaign Management</a>
+      </div>
+    </div>
+    <a href="soa-management.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <div class="sb-section">Operations &amp; Finance</div>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items</a>
+    <a href="commissions.html" class="active"><i class="fas fa-dollar-sign"></i>Commissions Management</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RV</div><div><div class="sb-u-name">Rachel Vargas</div><div class="sb-u-role">Agency Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Commission Details &mdash; Member Level</h4>
+      <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li><a href="commissions.html">Commissions</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li id="breadcrumbAgent">Details</li></ol>
+    </div>
+    <div class="dflex g8">
+      <a href="commissions.html" class="btn-ol btn-sm"><i class="fas fa-arrow-left" style="margin-right:4px"></i>Back to Commissions</a>
+      <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Agent Summary Card -->
+    <div class="card mb16" id="agentSummaryCard">
+      <div class="card-body" style="padding:16px 20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:48px;height:48px;border-radius:50%;background:#e65100;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px" id="agentAvatar">?</div>
+            <div>
+              <div style="font-weight:700;font-size:16px;color:#1a237e" id="agentNameTitle">Loading...</div>
+              <div style="font-size:12px;color:#5f6368">NPN: <strong id="agentNPNTitle">—</strong> &nbsp;|&nbsp; <span id="agentTypeTitle"></span></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="text-align:center;background:#e8f5e9;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Total Net</div><div style="font-weight:700;font-size:18px;color:#1b5e20" id="totalNet">—</div></div>
+            <div style="text-align:center;background:#e3f2fd;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Initial</div><div style="font-weight:700;font-size:16px;color:#0d47a1" id="totalInitial">—</div></div>
+            <div style="text-align:center;background:#f3e5f5;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Renewal</div><div style="font-weight:700;font-size:16px;color:#6a1b9a" id="totalRenewal">—</div></div>
+            <div style="text-align:center;background:#ffebee;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Chargebacks</div><div style="font-weight:700;font-size:16px;color:#c62828" id="totalChargeback">—</div></div>
+            <div style="text-align:center;background:#f8f9fa;border-radius:8px;padding:8px 16px"><div style="font-size:10px;color:#5f6368">Members</div><div style="font-weight:700;font-size:16px;color:#333" id="totalMembers">—</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commission Type Legends -->
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding:10px 16px;background:#f8f9fa;border-radius:8px;font-size:12px">
+      <span style="font-weight:700;color:#5f6368;margin-right:4px"><i class="fas fa-palette" style="margin-right:4px"></i>Commission Type:</span>
+      <span><span class="bdg b-blue" style="margin-right:4px">Initial</span> First enrollment payment</span>
+      <span><span class="bdg b-teal" style="margin-right:4px">Renewal</span> Monthly recurring</span>
+      <span><span class="bdg b-purple" style="margin-right:4px">Override</span> Agency override on downline</span>
+      <span><span class="bdg b-red" style="margin-right:4px">Chargeback</span> Reversed / clawed-back</span>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar" style="margin-bottom:14px">
+      <label>Agent:</label>
+      <select id="fAgent" onchange="applyFilters()">
+        <option value="">All Agents</option>
+        <option>Rachel Vargas</option>
+        <option>James Martinez</option>
+        <option>Sarah Chen</option>
+        <option>Kevin Nguyen</option>
+        <option>Mark Brown</option>
+      </select>
+      <label>Commission Type:</label>
+      <select id="fType" onchange="applyFilters()">
+        <option value="">All Types</option>
+        <option value="Initial">Initial</option>
+        <option value="Renewal">Renewal</option>
+        <option value="Override">Override</option>
+        <option value="Chargeback">Chargeback</option>
+      </select>
+      <label>Payment Status:</label>
+      <select id="fStatus" onchange="applyFilters()">
+        <option value="">All Status</option>
+        <option value="Paid">Paid</option>
+        <option value="Pending">Pending</option>
+        <option value="Sent for Approval">Sent for Approval</option>
+        <option value="Chargeback">Chargeback</option>
+      </select>
+      <label>Batch:</label>
+      <select id="fBatch" onchange="applyFilters()">
+        <option value="">All Batches</option>
+        <option value="BATCH-2026-05">May 2026</option>
+        <option value="BATCH-2026-04">Apr 2026</option>
+        <option value="BATCH-2026-03">Mar 2026</option>
+      </select>
+      <button class="btn-ol btn-sm" onclick="resetFilters()"><i class="fas fa-times" style="margin-right:3px"></i>Reset</button>
+    </div>
+
+    <!-- Member-Level Commission Table -->
+    <div class="card mb16">
+      <div class="card-hdr">
+        <h5><i class="fas fa-list-alt" style="margin-right:8px;color:#0d47a1"></i>Member-Level Commission Details</h5>
+        <div class="dflex g8">
+          <span id="filterResultCount" style="font-size:12px;color:#5f6368;align-self:center"></span>
+          <button class="btn-ol btn-sm" onclick="exportTableToExcel('commDetailTable','commission_details')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="commDetailTable" class="tbl">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Member ID</th>
+              <th>Member Name</th>
+              <th>Plan</th>
+              <th>Commission Type</th>
+              <th>Effective Date</th>
+              <th>Commission Amount</th>
+              <th>Payment Batch</th>
+              <th>Payment Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="commDetailBody"></tbody>
+          <tfoot id="commDetailFoot"></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>Note:</strong> Initial = first enrollment payment ($520 per new enrollment). Renewal = monthly recurring ($28.92 per member). Override = agency admin override on downline production. Click <strong>Dispute</strong> on any row to raise a commission dispute with Finance.</span></div>
+
+  </div>
+</div>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 25,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+
+<!-- Dispute Modal -->
+<div class="modal-overlay" id="disputeModal" style="display:none">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-hdr"><h5><i class="fas fa-exclamation-triangle" style="margin-right:8px;color:#c62828"></i>Raise Commission Dispute</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-body">
+      <div class="al-warn" style="margin-bottom:14px"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Disputes are reviewed by the Finance team within 5 business days.</span></div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px;margin-bottom:14px">
+        <p style="margin:2px 0"><strong>Agent:</strong> <span id="dspAgent"></span></p>
+        <p style="margin:2px 0"><strong>Member:</strong> <span id="dspMemberId"></span> &mdash; <span id="dspMemberName"></span></p>
+        <p style="margin:2px 0"><strong>Amount:</strong> <span id="dspAmount" style="font-weight:700"></span> &nbsp;|&nbsp; <strong>Type:</strong> <span id="dspType"></span></p>
+      </div>
+      <div class="mb-3"><label class="form-label">Dispute Category <span class="text-danger">*</span></label>
+        <select id="dspCategory" class="form-control"><option value="">-- Select Reason --</option><option>Incorrect Commission Amount</option><option>Missing Commission Payment</option><option>Wrong Member Attributed</option><option>Chargeback Disputed</option><option>Incorrect Commission Type (Initial vs Renewal)</option><option>Payment Not Received</option><option>Duplicate Payment</option><option>Other</option></select></div>
+      <div class="mb-3"><label class="form-label">Expected Amount <small class="text-muted">(if different)</small></label><input type="text" id="dspExpected" class="form-control" placeholder="e.g. $520.00"></div>
+      <div class="mb-3"><label class="form-label">Details <span class="text-danger">*</span></label><textarea id="dspDetails" class="form-control" rows="3" placeholder="Describe the issue in detail..."></textarea></div>
+      <div class="mb-3"><label class="form-label">Supporting Document <small class="text-muted">(optional)</small></label><input type="file" class="form-control"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
+      <button class="btn-pr" style="background:#c62828" onclick="submitDispute()"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>Submit Dispute</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== MEMBER-LEVEL COMMISSION DATA ========== */
+var ALL_MEMBERS = [
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100201',name:'Dorothy Henderson',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100202',name:'Robert Nguyen',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100203',name:'Maria Gonzalez',plan:'H1234-002 (MAPD Silver)',type:'Initial',eff:'02 01,2026',amount:200.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100204',name:'Patricia Johnson',plan:'H1234-003 (CSNP ESRD)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100205',name:'William Scott',plan:'H1234-001 (MA Gold)',type:'Initial',eff:'04 01,2026',amount:200.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100206',name:'Elizabeth Young',plan:'H1234-002 (MAPD Silver)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100210',name:'Frank Reynolds',plan:'H1234-003 (CSNP ESRD)',type:'Initial',eff:'05 01,2026',amount:200.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Rachel Vargas',npn:'AGY-001',agentType:'My Agency',id:'MEM-100211',name:'Angela Torres',plan:'H1234-001 (MA Gold)',type:'Initial',eff:'05 15,2026',amount:200.00,status:'Pending',batch:'BATCH-2026-05'},
+
+  {agent:'James Martinez',npn:'8823441',agentType:'Downline Agent',id:'MEM-200301',name:'Dorothy Henderson',plan:'H1234-001 (MA Gold)',type:'Initial',eff:'01 01,2026',amount:520.00,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'James Martinez',npn:'8823441',agentType:'Downline Agent',id:'MEM-200302',name:'Robert Nguyen',plan:'H1234-002 (MAPD Silver)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'James Martinez',npn:'8823441',agentType:'Downline Agent',id:'MEM-200304',name:'Patricia Johnson',plan:'H1234-003 (CSNP ESRD)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'James Martinez',npn:'8823441',agentType:'Downline Agent',id:'MEM-200305',name:'William Scott',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'04 01,2026',amount:23.16,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'James Martinez',npn:'8823441',agentType:'Downline Agent',id:'MEM-200306',name:'Karen Mitchell',plan:'H1234-002 (MAPD Silver)',type:'Override',eff:'05 01,2026',amount:50.00,status:'Paid',batch:'BATCH-2026-04'},
+
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200401',name:'Charles Williams',plan:'H1234-004 (CSNP CKD)',type:'Initial',eff:'01 01,2026',amount:520.00,status:'Sent for Approval',batch:'BATCH-2026-05'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200402',name:'Alice Cooper',plan:'H1234-002 (MAPD Silver)',type:'Initial',eff:'06 01,2026',amount:520.00,status:'Sent for Approval',batch:'BATCH-2026-05'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200403',name:'James Baker',plan:'H1234-003 (CSNP ESRD)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200404',name:'Sandra Adams',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'05 01,2026',amount:28.92,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200405',name:'Kevin Hall',plan:'H1234-004 (CSNP CKD)',type:'Renewal',eff:'03 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-03'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200406',name:'Angela Turner',plan:'H1234-001 (MA Gold)',type:'Chargeback',eff:'07 01,2025',amount:-160.00,status:'Chargeback',batch:'BATCH-2026-05'},
+  {agent:'Sarah Chen',npn:'7719022',agentType:'Downline Agent',id:'MEM-200407',name:'Lisa Robinson',plan:'H1234-002 (MAPD Silver)',type:'Override',eff:'05 01,2026',amount:190.00,status:'Pending',batch:'BATCH-2026-05'},
+
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200501',name:'Linda Martinez',plan:'H1234-001 (MA Gold)',type:'Initial',eff:'03 01,2026',amount:520.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200502',name:'Robert Johnson',plan:'H1234-002 (MAPD Silver)',type:'Initial',eff:'04 01,2026',amount:520.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200503',name:'Susan Taylor',plan:'H1234-003 (CSNP ESRD)',type:'Initial',eff:'05 01,2026',amount:520.00,status:'Pending',batch:'BATCH-2026-05'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200504',name:'Thomas Anderson',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200505',name:'Barbara Wilson',plan:'H1234-002 (MAPD Silver)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200506',name:'David Brown',plan:'H1234-004 (CSNP CKD)',type:'Chargeback',eff:'02 01,2026',amount:-160.00,status:'Chargeback',batch:'BATCH-2026-05'},
+  {agent:'Kevin Nguyen',npn:'9912345',agentType:'Downline Agent',id:'MEM-200507',name:'Jennifer White',plan:'H1234-001 (MA Gold)',type:'Override',eff:'05 01,2026',amount:210.00,status:'Pending',batch:'BATCH-2026-05'},
+
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200601',name:'Nancy Garcia',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200602',name:'Michael Thomas',plan:'H1234-003 (CSNP ESRD)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200603',name:'Helen Lewis',plan:'H1234-002 (MAPD Silver)',type:'Renewal',eff:'02 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-03'},
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200604',name:'Mark Lee',plan:'H1234-001 (MA Gold)',type:'Renewal',eff:'01 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-04'},
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200605',name:'Donna Walker',plan:'H1234-004 (CSNP CKD)',type:'Renewal',eff:'03 01,2026',amount:28.92,status:'Paid',batch:'BATCH-2026-03'},
+  {agent:'Mark Brown',npn:'5521833',agentType:'Downline Agent',id:'MEM-200606',name:'George Harris',plan:'H1234-001 (MA Gold)',type:'Override',eff:'04 01,2026',amount:110.00,status:'Paid',batch:'BATCH-2026-04'}
+];
+
+/* ========== INIT FROM URL PARAM ========== */
+function getParam(key) {
+  var params = new URLSearchParams(window.location.search);
+  return params.get(key) || '';
+}
+
+function init() {
+  var agentParam = getParam('agent');
+  if (agentParam) {
+    document.getElementById('fAgent').value = agentParam;
+  }
+  applyFilters();
+}
+
+/* ========== RENDER TABLE ========== */
+function applyFilters() {
+  var fAgent = document.getElementById('fAgent').value;
+  var fType = document.getElementById('fType').value;
+  var fStatus = document.getElementById('fStatus').value;
+  var fBatch = document.getElementById('fBatch').value;
+
+  var filtered = ALL_MEMBERS.filter(function(m) {
+    if (fAgent && m.agent !== fAgent) return false;
+    if (fType && m.type !== fType) return false;
+    if (fStatus && m.status !== fStatus) return false;
+    if (fBatch && m.batch !== fBatch) return false;
+    return true;
+  });
+
+  // Update header
+  var agentTitle = fAgent || 'All Agents';
+  document.getElementById('breadcrumbAgent').textContent = agentTitle;
+  document.getElementById('agentNameTitle').textContent = agentTitle;
+  if (fAgent) {
+    var sample = ALL_MEMBERS.find(function(m){return m.agent===fAgent;});
+    document.getElementById('agentNPNTitle').textContent = sample ? sample.npn : '—';
+    document.getElementById('agentTypeTitle').textContent = sample ? sample.agentType : '';
+    document.getElementById('agentAvatar').textContent = fAgent.split(' ').map(function(w){return w[0];}).join('');
+  } else {
+    document.getElementById('agentNPNTitle').textContent = 'All';
+    document.getElementById('agentTypeTitle').textContent = 'Agency + Downline';
+    document.getElementById('agentAvatar').textContent = 'ALL';
+    document.getElementById('agentAvatar').style.fontSize = '12px';
+  }
+
+  // Compute summary stats
+  var sumInitial = 0, sumRenewal = 0, sumChargeback = 0, sumOverride = 0;
+  filtered.forEach(function(m) {
+    if (m.type === 'Initial') sumInitial += m.amount;
+    else if (m.type === 'Renewal') sumRenewal += m.amount;
+    else if (m.type === 'Chargeback') sumChargeback += m.amount;
+    else if (m.type === 'Override') sumOverride += m.amount;
+  });
+  var sumNet = sumInitial + sumRenewal + sumChargeback + sumOverride;
+  document.getElementById('totalNet').textContent = '$' + sumNet.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('totalInitial').textContent = '$' + sumInitial.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('totalRenewal').textContent = '$' + sumRenewal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('totalChargeback').textContent = sumChargeback < 0 ? '-$' + Math.abs(sumChargeback).toFixed(2) : '$0.00';
+  document.getElementById('totalMembers').textContent = filtered.length;
+  document.getElementById('filterResultCount').textContent = 'Showing ' + filtered.length + ' of ' + ALL_MEMBERS.length + ' records';
+
+  // Render rows
+  var body = document.getElementById('commDetailBody');
+  var foot = document.getElementById('commDetailFoot');
+  if (!filtered.length) {
+    body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#666;padding:20px"><i class="fas fa-search" style="font-size:18px;display:block;margin-bottom:6px;color:#c5cae9"></i>No commission records match the selected filters.</td></tr>';
+    foot.innerHTML = '';
+    return;
+  }
+
+  var html = '';
+  filtered.forEach(function(m) {
+    var sBadge = m.status === 'Paid' ? 'b-green' : (m.status === 'Chargeback' ? 'b-red' : (m.status === 'Pending' ? 'b-amber' : 'b-blue'));
+    var tBadge = m.type === 'Initial' ? 'b-blue' : (m.type === 'Chargeback' ? 'b-red' : (m.type === 'Override' ? 'b-purple' : 'b-teal'));
+    var amtStr = m.amount < 0 ? '-$' + Math.abs(m.amount).toFixed(2) : '$' + m.amount.toFixed(2);
+    var amtStyle = m.amount < 0 ? 'color:#c62828;font-weight:600' : 'font-weight:600';
+    var batchLabel = m.batch.replace('BATCH-2026-0','').replace('3','Mar 2026').replace('4','Apr 2026').replace('5','May 2026');
+    html += '<tr>'
+      + '<td>' + m.agent + '</td>'
+      + '<td><code>' + m.id + '</code></td>'
+      + '<td>' + m.name + '</td>'
+      + '<td style="font-size:12px">' + m.plan + '</td>'
+      + '<td><span class="bdg ' + tBadge + '">' + m.type + '</span></td>'
+      + '<td>' + m.eff + '</td>'
+      + '<td style="' + amtStyle + '">' + amtStr + '</td>'
+      + '<td><span style="font-size:11px;background:#f1f3f4;padding:3px 8px;border-radius:6px">' + m.batch + '</span></td>'
+      + '<td><span class="bdg ' + sBadge + '">' + m.status + '</span></td>'
+      + '<td><button class="btn-ol btn-sm" style="color:#c62828;border-color:#c62828;font-size:10px" onclick="openDispute(\'' + m.agent + '\',\'' + m.id + '\',\'' + m.name + '\',\'' + amtStr + '\',\'' + m.type + '\')"><i class="fas fa-exclamation-triangle"></i> Dispute</button></td>'
+      + '</tr>';
+  });
+  body.innerHTML = html;
+
+  // Footer totals
+  foot.innerHTML = '<tr style="background:#f0f2f5;font-weight:700"><td colspan="6">Total (' + filtered.length + ' records)</td><td>$' + sumNet.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',') + '</td><td colspan="3"></td></tr>';
+}
+
+function resetFilters() {
+  document.getElementById('fAgent').value = '';
+  document.getElementById('fType').value = '';
+  document.getElementById('fStatus').value = '';
+  document.getElementById('fBatch').value = '';
+  document.getElementById('agentAvatar').style.fontSize = '';
+  applyFilters();
+}
+
+function openDispute(agent, memberId, memberName, amount, type) {
+  document.getElementById('dspAgent').textContent = agent;
+  document.getElementById('dspMemberId').textContent = memberId;
+  document.getElementById('dspMemberName').textContent = memberName;
+  document.getElementById('dspAmount').textContent = amount;
+  document.getElementById('dspType').textContent = type;
+  document.getElementById('dspCategory').value = '';
+  document.getElementById('dspExpected').value = '';
+  document.getElementById('dspDetails').value = '';
+  document.getElementById('disputeModal').style.display = 'flex';
+}
+
+function submitDispute() {
+  var reason = document.getElementById('dspCategory').value;
+  var details = document.getElementById('dspDetails').value.trim();
+  if (!reason) { showToast('Please select a dispute reason', 'error'); return; }
+  if (!details) { showToast('Please provide dispute details', 'error'); return; }
+  var memberId = document.getElementById('dspMemberId').textContent;
+  var agent = document.getElementById('dspAgent').textContent;
+  document.getElementById('disputeModal').style.display = 'none';
+  showToast('Dispute DSP-2026-' + Math.floor(Math.random()*900+100) + ' raised for ' + memberId + ' (' + agent + '). Finance team will review within 5 business days.', 'success');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Training &amp; Exam | Gold Kidney Agent Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>
+:root{--sb:#0d47a1}
+/* Step wizard */
+.ob-step-bar{display:flex;align-items:flex-start;gap:0;margin-bottom:24px;counter-reset:step}
+.ob-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;cursor:default}
+.ob-step:not(:last-child)::after{content:'';position:absolute;top:16px;left:50%;width:100%;height:2px;background:#e0e0e0;z-index:0}
+.ob-step.done:not(:last-child)::after,.ob-step.active:not(:last-child)::after{background:#0d47a1}
+.ob-step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;z-index:1;background:#e0e0e0;color:#9e9e9e;border:2px solid #e0e0e0}
+.ob-step.done .ob-step-num{background:#1b5e20;color:#fff;border-color:#1b5e20}
+.ob-step.active .ob-step-num{background:#0d47a1;color:#fff;border-color:#0d47a1}
+.ob-step-label{font-size:10px;font-weight:600;color:#9e9e9e;margin-top:4px;text-align:center;line-height:1.3}
+.ob-step.done .ob-step-label{color:#1b5e20}
+.ob-step.active .ob-step-label{color:#0d47a1}
+/* Sections */
+.ob-section{display:none}
+.ob-section.active{display:block}
+.ob-form-section{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:16px 18px;margin-bottom:12px}
+.ob-form-section h6{font-size:12px;font-weight:700;color:#0d47a1;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+.form-row.four{grid-template-columns:1fr 1fr 1fr 1fr}
+.form-row.one{grid-template-columns:1fr}
+.fg{display:flex;flex-direction:column;gap:3px}
+.fg label{font-size:10px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.3px}
+.fg label .req{color:#c62828}
+.fg input,.fg select,.fg textarea{padding:7px 10px;border:1px solid #dadce0;border-radius:5px;font-size:12px;background:#fff}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#0d47a1;outline:none;box-shadow:0 0 0 2px rgba(13,71,161,.08)}
+.fg .field-err{border-color:#c62828 !important;background:#fff8f8}
+.fg .err-msg{font-size:10px;color:#c62828;margin-top:2px;display:none}
+.fg .err-msg.show{display:block}
+.upload-zone{border:2px dashed #bdbdbd;border-radius:8px;padding:16px;text-align:center;font-size:12px;color:#757575;cursor:pointer;transition:border-color .2s;background:#fff}
+.upload-zone:hover{border-color:#0d47a1;background:#f8f9ff}
+.upload-zone input[type=file]{display:none}
+.upload-zone.has-file{border-color:#2e7d32;border-style:solid;background:#f1f8e9;color:#1b5e20}
+.step-nav{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #f1f3f4}
+.state-checkbox{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;cursor:pointer;margin:3px;transition:all .15s}
+.state-checkbox:hover{border-color:#0d47a1;background:#f0f4ff}
+.state-checkbox input:checked ~ span{font-weight:600;color:#0d47a1}
+.lob-checkbox{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;cursor:pointer;margin:3px;transition:all .15s}
+.lob-checkbox:hover{border-color:#0d47a1;background:#f0f4ff}
+.module-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;margin-bottom:8px;background:#fff}
+.module-item .m-num{width:28px;height:28px;border-radius:50%;background:#e3f2fd;color:#0d47a1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.module-item.unlocked .m-num{background:#0d47a1;color:#fff}
+.q-option-label{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e8eaed;border-radius:8px;cursor:pointer;font-size:13px;margin-bottom:8px;transition:all .15s}
+.q-option-label:hover{border-color:#0d47a1;background:#f0f4ff}
+.q-option-label input[type=radio]:checked ~ .q-text{font-weight:600;color:#0d47a1}
+.attest-box{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:12px;line-height:1.7;color:#1b5e20}
+/* Draft step badge */
+.ob-step.draft .ob-step-num{background:#e65100;color:#fff;border-color:#e65100}
+.ob-step.draft .ob-step-label{color:#e65100}
+.ob-step.draft:not(:last-child)::after{background:#ffe0cc}
+/* W-9 draft banner */
+.w9-draft-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin-bottom:14px;font-size:12px;color:#e65100}
+.w9-draft-saved{display:none;align-items:center;gap:8px;padding:8px 12px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;margin-top:8px;font-size:11px;color:#1b5e20;font-weight:600}
+/* W-9 incomplete warning on contract step */
+.w9-block-banner{display:none;align-items:flex-start;gap:10px;padding:14px 16px;background:#ffebee;border:1px solid #ffcdd2;border-radius:8px;margin-bottom:16px;font-size:12px;color:#b71c1c}
+/* Disabled validate buttons with hover tooltip */
+.validate-wrap{position:relative;display:inline-flex}
+.validate-wrap::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#424242;color:#fff;font-size:10px;font-weight:500;padding:4px 9px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;letter-spacing:.2px}
+.validate-wrap:hover::after{opacity:1}
+.btn-validate{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-size:11px;font-weight:600;border:1.5px solid #bdbdbd;border-radius:6px;background:#f5f5f5;color:#9e9e9e;cursor:not-allowed;pointer-events:none;line-height:1.4}
+.btn-validate i{font-size:11px}
+/* Exam segment progress tracker */
+.seg-progress{display:flex;align-items:flex-start;gap:0;margin-bottom:20px}
+.seg-prog-cell{display:flex;flex-direction:column;align-items:center;flex:1}
+.seg-dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:#e8eaed;color:#5f6368;border:2px solid #dadce0;transition:all .2s}
+.seg-dot.active{background:#0d47a1;color:#fff;border-color:#0d47a1;box-shadow:0 0 0 4px rgba(13,71,161,.12)}
+.seg-dot.done{background:#1b5e20;color:#fff;border-color:#1b5e20}
+.seg-dot-label{font-size:9px;color:#5f6368;margin-top:4px;text-align:center;line-height:1.3}
+.seg-connector-wrap{flex:1;display:flex;align-items:center;padding-top:17px}
+.seg-connector{height:3px;width:100%;background:#e8eaed;border-radius:2px;transition:background .3s}
+.seg-connector.done{background:#1b5e20}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-user-tie" style="margin-right:8px;opacity:.8"></i>Agent Portal</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Members &amp; Enrollment</div>
+    <a href="bob.html"><i class="fas fa-briefcase"></i>Book of Business</a>
+    <a href="enrollment.html"><i class="fas fa-file-medical"></i>New Enrollment</a>
+    <a href="enrollment-status.html"><i class="fas fa-clock"></i>Enrollment Status</a>
+    <a href="soa-form.html"><i class="fas fa-file-signature"></i>SOA Management</a>
+    <a href="hra-management.html"><i class="fas fa-clipboard-list"></i>HRA Management</a>
+    <div class="sb-section">Sales &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>My Leads <span class="n-badge">12</span></a>
+    <a href="campaigns.html"><i class="fas fa-bullhorn"></i>Campaigns</a>
+    <a href="action-items.html"><i class="fas fa-tasks"></i>Action Items <span class="n-badge">4</span></a>
+    <div class="sb-section">Commissions &amp; Payments</div>
+    <div class="sb-group">
+      <a href="commissions.html" class="sb-toggle" onclick="event.preventDefault();this.parentNode.classList.toggle('open');window.location='commissions.html'"><i class="fas fa-dollar-sign"></i>Commissions Management<i class="fas fa-chevron-down sb-chev"></i></a>
+      <div class="sb-sub">
+        <a href="commission-detail.html"><i class="fas fa-dollar-sign"></i>My Commissions</a>
+        <a href="commission-disputes.html"><i class="fas fa-gavel"></i>Dispute Management</a>
+      </div>
+    </div>
+    <a href="payments.html"><i class="fas fa-history"></i>Payment History</a>
+    <div class="sb-section">Compliance &amp; Training</div>
+    <a href="training.html" class="active"><i class="fas fa-graduation-cap"></i>Training &amp; Certification</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">1</span></a>
+    <div class="sb-section">Resources</div>
+    <a href="documents.html"><i class="fas fa-folder"></i>Documents</a>
+    <a href="notifications.html"><i class="fas fa-bell"></i>Notifications <span class="n-badge">3</span></a>
+    <a href="my-hierarchy.html"><i class="fas fa-sitemap"></i>My Upline</a>
+    <a href="support.html"><i class="fas fa-life-ring"></i>Help &amp; Support</a>
+  </div>
+  <div class="sb-foot">
+    <a href="profile.html" class="sb-profile-link" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);text-decoration:none;color:#fff;margin-bottom:8px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'">
+      <i class="fas fa-user-circle" style="font-size:18px;opacity:.9"></i>
+      <span style="font-size:12px;font-weight:600">My Profile</span>
+      <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
+    </a>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div>
+      <h4>Training &amp; Exam</h4>
+      <ol class="breadcrumb-bar"><li>Producer Onboarding &mdash; Invitation through Ready to Sell</li></ol>
+    </div>
+    <a href="../auth/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+
+    <!-- Step bar -->
+    <div class="ob-step-bar" id="obStepBar">
+      <div class="ob-step active" id="bar0"><div class="ob-step-num">1</div><div class="ob-step-label">Invitation &amp;<br>Registration</div></div>
+      <div class="ob-step" id="bar1"><div class="ob-step-num">2</div><div class="ob-step-label">Personal &amp;<br>Business Info</div></div>
+      <div class="ob-step" id="bar2"><div class="ob-step-num">3</div><div class="ob-step-label">W-9 &amp; Tax<br>/ Payment</div></div>
+      <div class="ob-step" id="bar3"><div class="ob-step-num">4</div><div class="ob-step-label">AHIP &amp; License<br>Verification</div></div>
+      <div class="ob-step" id="bar4"><div class="ob-step-num">5</div><div class="ob-step-label">Training &amp;<br>Certification</div></div>
+      <div class="ob-step" id="bar5"><div class="ob-step-num">6</div><div class="ob-step-label">Background<br>Check</div></div>
+      <div class="ob-step" id="bar6"><div class="ob-step-num">7</div><div class="ob-step-label">Contract<br>Execution</div></div>
+      <div class="ob-step" id="bar7"><div class="ob-step-num">8</div><div class="ob-step-label">Ready<br>to Sell</div></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 1: Invitation & Registration -->
+    <!-- ============================================================ -->
+    <div class="ob-section active card" id="obStep0">
+      <div class="card-hdr"><h5><i class="fas fa-envelope-open-text" style="margin-right:8px;color:#0d47a1"></i>Step 1: Invitation &amp; Registration</h5><button class="btn-ol btn-sm" onclick="prefillStep(0,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Draft saved badge (shown when step was skipped) -->
+        <div class="w9-draft-saved" id="draftBadge0"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Enter the details from your invitation email. New agents can also self-register using a public link. Each NPN can only be registered once.</span></div>
+        <div class="ob-form-section">
+          <h6>Invitation Details</h6>
+          <div class="form-row three">
+            <div class="fg"><label>Invitation Type <span class="req">*</span></label>
+              <select id="inviteType">
+                <option value="">— Select —</option>
+                <option selected>Agency-Driven (FMO Invitation)</option>
+                <option>Carrier / Payer Initiated</option>
+                <option>Self-Registration (Public Link)</option>
+              </select>
+              <span class="err-msg" id="err_inviteType">Please select an invitation type.</span>
+            </div>
+            <div class="fg"><label>Invite Code / Token <span class="req">*</span></label>
+              <input type="text" id="inviteToken" placeholder="e.g. GK-INV-2026-XXXX" value="GK-INV-2026-0847">
+              <span class="err-msg" id="err_inviteToken">Please enter your invitation code.</span>
+            </div>
+            <div class="fg"><label>Invited By (Agency / FMO Name)</label>
+              <input type="text" id="invitedBy" placeholder="e.g. Sunshine Insurance Group" value="HealthFirst Distribution">
+            </div>
+          </div>
+
+        </div>
+        <div class="ob-form-section">
+          <h6>NPN Pre-Validation</h6>
+          <div class="form-row">
+            <div class="fg"><label>National Producer Number (NPN) <span class="req">*</span></label>
+              <input type="text" id="regNPN" placeholder="8–10 digit NPN" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+              <span class="err-msg" id="err_regNPN">NPN must be 8–10 digits (numbers only, no letters or symbols).</span>
+            </div>
+            <div class="fg" style="justify-content:flex-end">
+              <button class="btn-ol btn-sm" style="margin-top:18px" onclick="validateNPN()"><i class="fas fa-search"></i>Validate NPN</button>
+            </div>
+          </div>
+          <div id="npnResult" style="display:none;padding:10px 12px;background:#f1f8e9;border:1px solid #c8e6c9;border-radius:6px;font-size:11px;color:#1b5e20">
+            <i class="fas fa-check-circle" style="margin-right:4px"></i><strong>NPN Validated</strong> &mdash; Format OK. No duplicate detected.
+          </div>
+        </div>
+        <div style="font-size:11px;color:#5f6368;padding:8px 12px;background:#fff3e0;border:1px solid #ffe082;border-radius:6px">
+          <i class="fas fa-exclamation-triangle" style="color:#e65100;margin-right:4px"></i>Duplicate NPN submissions are blocked and trigger an admin alert. Invite links expire after 72 hours.
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="skipStep(0)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" onclick="obNext(0)"><i class="fas fa-arrow-right"></i>Next: Personal Details</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 2: Personal & Business Information -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep1">
+      <div class="card-hdr"><h5><i class="fas fa-user" style="margin-right:8px;color:#0d47a1"></i>Step 2: Personal &amp; Business Information</h5><button class="btn-ol btn-sm" onclick="prefillStep(1,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Draft saved badge (shown when step was skipped) -->
+        <div class="w9-draft-saved" id="draftBadge1"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
+        <div class="ob-form-section">
+          <h6>Personal Information</h6>
+          <div class="form-row three">
+            <div class="fg"><label>Legal First Name <span class="req">*</span></label><input type="text" id="piFirst" placeholder="First name"><span class="err-msg" id="err_piFirst">Required.</span></div>
+            <div class="fg"><label>Middle Initial</label><input type="text" id="piMI" placeholder="M" maxlength="2"></div>
+            <div class="fg"><label>Legal Last Name <span class="req">*</span></label><input type="text" id="piLast" placeholder="Last name"><span class="err-msg" id="err_piLast">Required.</span></div>
+          </div>
+          <div class="form-row three">
+            <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date" id="piDOB"><span class="err-msg" id="err_piDOB">Required.</span></div>
+            <div class="fg"><label>SSN / EIN <span class="req">*</span></label><input type="text" id="piSSN" placeholder="XXX-XX-XXXX"><span class="err-msg" id="err_piSSN">Required.</span></div>
+            <div class="fg"><label>Phone Number <span class="req">*</span></label><input type="tel" id="piPhone" placeholder="(555) 000-0000"><span class="err-msg" id="err_piPhone">Required.</span></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Business / Agency Name</label><input type="text" id="piAgency" placeholder="Agency or DBA name"></div>
+            <div class="fg"><label>SMS Opt-In</label><select id="piSMS"><option value="">— Select —</option><option>Yes — Consent for SMS notifications</option><option>No</option></select></div>
+          </div>
+          <div class="form-row one">
+            <div class="fg"><label>Business Address <span class="req">*</span></label><input type="text" id="piAddr" placeholder="Street, Suite, City, State, ZIP"><span class="err-msg" id="err_piAddr">Required.</span></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(1)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-ol" onclick="skipStep(1)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" onclick="obNext(1)"><i class="fas fa-arrow-right"></i>Next: W-9 &amp; Payment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 3: W-9 & Payment Preferences -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep2">
+      <div class="card-hdr"><h5><i class="fas fa-file-invoice-dollar" style="margin-right:8px;color:#0d47a1"></i>Step 3: W-9 Tax Details &amp; Payment Preferences</h5><button class="btn-ol btn-sm" onclick="prefillStep(2,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- W-9 Skip/Draft Banner -->
+        <div class="w9-draft-banner">
+          <i class="fas fa-exclamation-triangle" style="flex-shrink:0;margin-top:1px"></i>
+          <div>
+            <div style="font-weight:700;margin-bottom:3px">W-9 &amp; Payment Details Required for Final Submission</div>
+            <div style="color:#795548">You can save your progress and complete these details later. However, <strong>final submission will be blocked</strong> until all W-9 tax and payment fields are completed.</div>
+          </div>
+        </div>
+        <!-- Draft saved indicator (shown after skipping) -->
+        <div class="w9-draft-saved" id="draftBadge2">
+          <i class="fas fa-save"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.
+        </div>
+        <div class="ob-form-section">
+          <h6>W-9 Tax Information</h6>
+          <div class="form-row three">
+            <div class="fg"><label>Tax Entity Type <span class="req">*</span></label>
+              <select id="taxEntity"><option value="">— Select —</option><option>Individual / Sole Proprietor</option><option>LLC (Single Member)</option><option>Corporation</option><option>Partnership</option></select>
+              <span class="err-msg" id="err_taxEntity">Required.</span>
+            </div>
+            <div class="fg"><label>Taxpayer ID (TIN/EIN) <span class="req">*</span></label><input type="text" id="taxTIN" placeholder="XXX-XX-XXXX"><span class="err-msg" id="err_taxTIN">Required.</span></div>
+            <div class="fg"><label>Tax Name (as on return) <span class="req">*</span></label><input type="text" id="taxName" placeholder="Full legal name"><span class="err-msg" id="err_taxName">Required.</span></div>
+          </div>
+          <div class="fg" style="margin-bottom:10px"><label>Upload W-9 Form (PDF) <span class="req">*</span></label>
+            <label class="upload-zone" id="w9UploadZone" onclick="document.getElementById('w9File').click()">
+              <i class="fas fa-cloud-upload-alt" style="font-size:20px;margin-bottom:4px"></i><br>Click to upload W-9 PDF<br><span style="font-size:10px">Max 5 MB</span>
+              <input type="file" id="w9File" accept=".pdf" onchange="handleUpload('w9File','w9UploadZone','w9Label')">
+            </label>
+            <span id="w9Label" style="font-size:10px;color:#1b5e20;display:none"></span>
+            <span class="err-msg" id="err_w9">Please upload your W-9.</span>
+          </div>
+        </div>
+        <div class="ob-form-section">
+          <h6>Commission Payment Preferences</h6>
+          <div style="display:flex;gap:12px;margin-bottom:14px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 14px;border:2px solid #dadce0;border-radius:6px;cursor:pointer">
+              <input type="radio" name="payMethod" id="payACH" value="ach" onchange="togglePayFields()"> ACH Direct Deposit
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 14px;border:2px solid #dadce0;border-radius:6px;cursor:pointer">
+              <input type="radio" name="payMethod" id="payCheck" value="check" onchange="togglePayFields()"> Physical Check
+            </label>
+          </div>
+          <div id="achFields">
+            <div class="form-row three">
+              <div class="fg"><label>Bank Name</label><input type="text" id="bankName" placeholder="e.g. Chase Bank"></div>
+              <div class="fg"><label>Routing Number</label><input type="text" id="bankRouting" placeholder="9-digit ABA number"></div>
+              <div class="fg"><label>Account Number</label><input type="text" id="bankAcct" placeholder="Account number"></div>
+            </div>
+            <div class="form-row">
+              <div class="fg"><label>Account Type</label><select id="bankAcctType"><option value="">— Select —</option><option>Checking</option><option>Savings</option></select></div>
+              <div class="fg"><label>Upload Voided Check / Bank Letter</label>
+                <label class="upload-zone" style="padding:8px 12px" onclick="document.getElementById('voidFile').click()">
+                  <i class="fas fa-cloud-upload-alt"></i> Upload void check or bank letter
+                  <input type="file" id="voidFile" accept=".pdf,.jpg,.png" onchange="handleUpload('voidFile','','voidLabel')">
+                </label>
+                <span id="voidLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
+              </div>
+            </div>
+          </div>
+          <div id="checkFields" style="display:none">
+            <div class="form-row">
+              <div class="fg"><label>Check Mailing Address <span class="req">*</span></label><input type="text" id="checkAddr" placeholder="Street, City, State, ZIP"></div>
+            </div>
+          </div>
+          <span class="err-msg show" id="err_payMethod" style="display:none;font-size:10px;color:#c62828">Please select a payment method.</span>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(2)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-ol" id="w9SkipBtn" onclick="skipStep(2)" style="border-color:#e65100;color:#e65100" title="Save as draft and complete W-9 later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" id="w9NextBtn" onclick="obNext(2)"><i class="fas fa-arrow-right"></i>Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 4: AHIP + State Selection + NIPR -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep3">
+      <div class="card-hdr"><h5><i class="fas fa-certificate" style="margin-right:8px;color:#0d47a1"></i>Step 4: AHIP Certification, State Selection &amp; License Verification</h5><button class="btn-ol btn-sm" onclick="prefillStep(3,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Draft saved badge (shown when step was skipped) -->
+        <div class="w9-draft-saved" id="draftBadge3"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
+        <div class="ob-form-section">
+          <h6>AHIP Medicare Certification</h6>
+          <div class="form-row three">
+            <div class="fg"><label>AHIP Certificate # <span class="req">*</span></label><input type="text" id="ahipCert" placeholder="e.g. AH2026-XXXXX"><span class="err-msg" id="err_ahipCert">Required.</span></div>
+            <div class="fg"><label>Completion Date <span class="req">*</span></label><input type="date" id="ahipDate"><span class="err-msg" id="err_ahipDate">Required.</span></div>
+            <div class="fg"><label>Valid Through</label><input type="date" id="ahipExpiry" placeholder="Auto-calculated (1 year)"></div>
+          </div>
+          <div class="fg" style="margin-bottom:6px"><label>Upload AHIP Certificate (optional if auto-verified)</label>
+            <label class="upload-zone" style="padding:8px 12px" onclick="document.getElementById('ahipFile').click()">
+              <i class="fas fa-cloud-upload-alt"></i> Upload certificate PDF
+              <input type="file" id="ahipFile" accept=".pdf" onchange="handleUpload('ahipFile','','ahipLabel')">
+            </label>
+            <span id="ahipLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:4px">
+            <span class="validate-wrap" data-tip="Validate AHIP — requires live AHIP registry integration">
+              <button class="btn-validate" disabled><i class="fas fa-shield-alt"></i>Validate AHIP</button>
+            </span>
+          </div>
+        </div>
+        <div class="ob-form-section">
+          <h6>State Selection — Selling Territories</h6>
+          <p style="font-size:11px;color:#5f6368;margin-bottom:10px">Select states where you hold (or will hold) an active license and where Gold Kidney has available plans.</p>
+          <div id="stateCheckboxes">
+            <label class="state-checkbox"><input type="checkbox" value="FL" onchange="updateStates()"> <span>Florida</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="TX" onchange="updateStates()"> <span>Texas</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="GA" onchange="updateStates()"> <span>Georgia</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="CA" onchange="updateStates()"> <span>California</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="NY" onchange="updateStates()"> <span>New York</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="AZ" onchange="updateStates()"> <span>Arizona</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="NC" onchange="updateStates()"> <span>North Carolina</span></label>
+            <label class="state-checkbox"><input type="checkbox" value="IL" onchange="updateStates()"> <span>Illinois</span></label>
+          </div>
+          <span class="err-msg" id="err_states" style="margin-top:6px">Please select at least one state.</span>
+
+        </div>
+        <div class="ob-form-section">
+          <h6>Lines of Business</h6>
+          <div>
+            <label class="lob-checkbox"><input type="checkbox" value="MA"> <span>Medicare Advantage (MA)</span></label>
+            <label class="lob-checkbox"><input type="checkbox" value="CSNP-ESRD"> <span>C-SNP (ESRD)</span></label>
+            <label class="lob-checkbox"><input type="checkbox" value="CSNP-CKD"> <span>C-SNP (CKD)</span></label>
+            <label class="lob-checkbox"><input type="checkbox" value="MAPD"> <span>MAPD</span></label>
+            <label class="lob-checkbox"><input type="checkbox" value="PDP"> <span>Part D (PDP)</span></label>
+          </div>
+          <span class="err-msg" id="err_lob">Please select at least one line of business.</span>
+          <div style="display:flex;justify-content:flex-end;margin-top:10px">
+            <span class="validate-wrap" data-tip="Validate License &amp; State Appointment — requires NIPR integration">
+              <button class="btn-validate" disabled><i class="fas fa-id-badge"></i>Validate License &amp; State Appointment</button>
+            </span>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(3)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-ol" onclick="skipStep(3)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" onclick="obNext(3)"><i class="fas fa-arrow-right"></i>Next: Training</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 5: Training & Certification -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep4">
+      <div class="card-hdr"><h5><i class="fas fa-graduation-cap" style="margin-right:8px;color:#0d47a1"></i>Step 5: Training &amp; Certification</h5><button class="btn-ol btn-sm" onclick="prefillStep(4,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Draft saved badge (shown when step was skipped) -->
+        <div class="w9-draft-saved" id="draftBadge4"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Complete all 4 training segments. Each segment unlocks its own exam upon completion. Pass score: <strong>85%</strong> overall average. Maximum <strong>4</strong> attempts per segment.</span></div>
+
+        <!-- Overall Progress Dashboard -->
+        <div class="ob-form-section">
+          <h6>Training Progress Dashboard</h6>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:11px;margin-bottom:16px" id="progressDashboard">
+            <div style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
+              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg A &mdash; Video</div>
+              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctA">0%</div>
+              <div style="font-size:9px;color:#9e9e9e" id="dashTimeA">&mdash;</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
+              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg B &mdash; Training</div>
+              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctB">0%</div>
+              <div style="font-size:9px;color:#9e9e9e" id="dashTimeB">&mdash;</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
+              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg C &mdash; PDF</div>
+              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctC">0%</div>
+              <div style="font-size:9px;color:#9e9e9e" id="dashTimeC">&mdash;</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:#f8f9fa;border-radius:8px;border:1px solid #e8eaed">
+              <div style="font-size:9px;color:#5f6368;margin-bottom:2px">Seg D &mdash; MCQ</div>
+              <div style="font-size:14px;font-weight:700;color:#9e9e9e" id="dashPctD">0%</div>
+              <div style="font-size:9px;color:#9e9e9e" id="dashTimeD">&mdash;</div>
+            </div>
+            <div style="text-align:center;padding:10px 6px;background:#e3f2fd;border-radius:8px;border:1px solid #90caf9">
+              <div style="font-size:9px;color:#0d47a1;margin-bottom:2px;font-weight:600">Total</div>
+              <div style="font-size:14px;font-weight:700;color:#0d47a1" id="dashPctTotal">0%</div>
+              <div style="font-size:9px;color:#0d47a1" id="dashTimeTotal">&mdash;</div>
+            </div>
+          </div>
+          <!-- Overall progress bar -->
+          <div style="background:#e8eaed;border-radius:6px;height:8px;overflow:hidden;margin-bottom:8px">
+            <div id="overallProgBar" style="height:100%;width:0%;background:linear-gradient(90deg,#0d47a1,#1976d2);border-radius:6px;transition:width .5s ease"></div>
+          </div>
+          <div style="font-size:10px;color:#5f6368;text-align:right" id="overallProgLabel">0 of 4 segments complete</div>
+        </div>
+
+        <!-- Training Package: 4 Segments -->
+        <div class="ob-form-section">
+          <h6>Training Package: Gold Kidney 2026 &mdash; ESRD/CKD C-SNP Product Training</h6>
+
+          <!-- Segment A -->
+          <div class="module-item unlocked" id="mod1" style="border:1px solid #e3f2fd">
+            <div class="m-num" style="background:#e3f2fd;color:#0d47a1">A</div>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600">Segment A: Product Portfolio, Plans &amp; Service Areas</div>
+              <div style="font-size:10px;color:#5f6368;margin-top:2px">Watch video overview of plan types, target members, C-SNP benefits, coverage areas (~8 min)</div>
+              <div style="margin-top:6px;display:flex;align-items:center;gap:10px">
+                <div style="flex:1;background:#e8eaed;border-radius:4px;height:4px;overflow:hidden"><div id="progBarA" style="height:100%;width:0%;background:#0d47a1;transition:width .3s"></div></div>
+                <span style="font-size:10px;color:#5f6368;min-width:30px" id="progLabelA">0%</span>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;min-width:100px">
+              <div id="mod1Status" style="font-size:10px;color:#9e9e9e">Not Started</div>
+              <div id="mod1Time" style="font-size:9px;color:#9e9e9e;margin-top:2px"></div>
+              <button class="btn-pr btn-sm" style="margin-top:4px" id="mod1Btn" onclick="startModule(0)"><i class="fas fa-play"></i>Start</button>
+            </div>
+          </div>
+
+          <!-- Segment B -->
+          <div class="module-item unlocked" id="mod2" style="border:1px solid #e8f5e9">
+            <div class="m-num" style="background:#e8f5e9;color:#1b5e20">B</div>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600">Segment B: Enrollment Process, Eligibility &amp; Compliance</div>
+              <div style="font-size:10px;color:#5f6368;margin-top:2px">Read training material on enrollment periods, SOA rules, CMS guidelines (~12 min)</div>
+              <div style="margin-top:6px;display:flex;align-items:center;gap:10px">
+                <div style="flex:1;background:#e8eaed;border-radius:4px;height:4px;overflow:hidden"><div id="progBarB" style="height:100%;width:0%;background:#1b5e20;transition:width .3s"></div></div>
+                <span style="font-size:10px;color:#5f6368;min-width:30px" id="progLabelB">0%</span>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;min-width:100px">
+              <div id="mod2Status" style="font-size:10px;color:#9e9e9e">Not Started</div>
+              <div id="mod2Time" style="font-size:9px;color:#9e9e9e;margin-top:2px"></div>
+              <button class="btn-pr btn-sm" style="margin-top:4px" id="mod2Btn" onclick="startModule(1)"><i class="fas fa-play"></i>Start</button>
+            </div>
+          </div>
+
+          <!-- Segment C -->
+          <div class="module-item unlocked" id="mod3" style="border:1px solid #ede7f6">
+            <div class="m-num" style="background:#ede7f6;color:#6a1b9a">C</div>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600">Segment C: C-SNP Product Knowledge &amp; HIPAA</div>
+              <div style="font-size:10px;color:#5f6368;margin-top:2px">Review C-SNP product guide, PQAT questionnaire, HIPAA obligations (~10 min)</div>
+              <div style="margin-top:6px;display:flex;align-items:center;gap:10px">
+                <div style="flex:1;background:#e8eaed;border-radius:4px;height:4px;overflow:hidden"><div id="progBarC" style="height:100%;width:0%;background:#6a1b9a;transition:width .3s"></div></div>
+                <span style="font-size:10px;color:#5f6368;min-width:30px" id="progLabelC">0%</span>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;min-width:100px">
+              <div id="mod3Status" style="font-size:10px;color:#9e9e9e">Not Started</div>
+              <div id="mod3Time" style="font-size:9px;color:#9e9e9e;margin-top:2px"></div>
+              <button class="btn-pr btn-sm" style="margin-top:4px" id="mod3Btn" onclick="startModule(2)"><i class="fas fa-play"></i>Start</button>
+            </div>
+          </div>
+
+          <!-- Segment D -->
+          <div class="module-item unlocked" id="mod4" style="border:1px solid #fff3e0">
+            <div class="m-num" style="background:#fff3e0;color:#e65100">D</div>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600">Segment D: General Medicare Advantage Knowledge</div>
+              <div style="font-size:10px;color:#5f6368;margin-top:2px">General MCQ review covering MAPD, enrollment periods, NPN, Part D (~6 min)</div>
+              <div style="margin-top:6px;display:flex;align-items:center;gap:10px">
+                <div style="flex:1;background:#e8eaed;border-radius:4px;height:4px;overflow:hidden"><div id="progBarD" style="height:100%;width:0%;background:#e65100;transition:width .3s"></div></div>
+                <span style="font-size:10px;color:#5f6368;min-width:30px" id="progLabelD">0%</span>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;min-width:100px">
+              <div id="mod4Status" style="font-size:10px;color:#9e9e9e">Not Started</div>
+              <div id="mod4Time" style="font-size:9px;color:#9e9e9e;margin-top:2px"></div>
+              <button class="btn-pr btn-sm" style="margin-top:4px" id="mod4Btn" onclick="startModule(3)"><i class="fas fa-play"></i>Start</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Per-segment Exam Panels -->
+        <div class="ob-form-section" id="examSection" style="display:none">
+          <h6>Certification Exams</h6>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:11px;margin-bottom:16px">
+            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Pass Score</div><div style="font-weight:700">85% avg</div></div>
+            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Total Questions</div><div style="font-weight:700">20 (4 &times; 5)</div></div>
+            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Segments</div><div style="font-weight:700">4</div></div>
+            <div style="text-align:center;padding:8px;background:#f8f9fa;border-radius:6px"><div style="font-size:9px;color:#5f6368">Max Attempts</div><div style="font-weight:700">4 per seg</div></div>
+          </div>
+          <!-- Segment exam panels -->
+          <div id="examSeg0" class="exam-seg" style="display:none"></div>
+          <div id="examSeg1" class="exam-seg" style="display:none"></div>
+          <div id="examSeg2" class="exam-seg" style="display:none"></div>
+          <div id="examSeg3" class="exam-seg" style="display:none"></div>
+          <!-- Unanswered warning -->
+          <div id="unansweredWarn" style="display:none;align-items:flex-start;gap:10px;padding:12px 14px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;margin:12px 0;font-size:12px;color:#e65100">
+            <i class="fas fa-exclamation-triangle" style="flex-shrink:0;margin-top:2px"></i>
+            <div style="flex:1">
+              <div style="font-weight:700;margin-bottom:4px"><span id="unansweredCount">0</span> question(s) not answered (<span id="unansweredList"></span>).</div>
+              <div>Would you like to go back and review before submitting?</div>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn-ol btn-sm" onclick="dismissUnansweredWarn()"><i class="fas fa-arrow-left"></i>Go Back &amp; Review</button>
+                <button class="btn-pr btn-sm" onclick="submitSegmentForce()"><i class="fas fa-check"></i>Submit Anyway</button>
+              </div>
+            </div>
+          </div>
+          <!-- Consolidated result (shown after all 4 segments) -->
+          <div id="examConsolidatedResult" style="display:none"></div>
+        </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(4)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-ol" onclick="skipStep(4)" style="border-color:#e65100;color:#e65100" title="Save draft and complete training later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" id="step5Next" onclick="obNext(4)" style="display:none"><i class="fas fa-arrow-right"></i>Next: Background Check</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 6: Background Check -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep5">
+      <div class="card-hdr"><h5><i class="fas fa-user-secret" style="margin-right:8px;color:#0d47a1"></i>Step 6: Background &amp; Sanctions Check</h5><button class="btn-ol btn-sm" onclick="prefillStep(5,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Draft saved badge (shown when step was skipped) -->
+        <div class="w9-draft-saved" id="draftBadge5"><i class="fas fa-edit"></i> Draft Saved &mdash; Return to this step before final submission to complete all required fields.</div>
+        <div class="al-info mb16" style="background:#fff8e1;border-color:#ffe082"><i class="fas fa-info-circle" style="flex-shrink:0;color:#e65100"></i><span>This check is automatically triggered upon training exam completion. It includes criminal background screening and OIG/SAM exclusion list verification.</span></div>
+        <div class="ob-form-section">
+          <h6>Background Check Authorization</h6>
+          <div class="form-row">
+            <div class="fg"><label>Full Legal Name <span class="req">*</span></label><input type="text" id="bgName" placeholder="As it appears on government ID"><span class="err-msg" id="err_bgName">Required.</span></div>
+            <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date" id="bgDOB"><span class="err-msg" id="err_bgDOB">Required.</span></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>Social Security Number <span class="req">*</span></label><input type="text" id="bgSSN" placeholder="XXX-XX-XXXX"><span class="err-msg" id="err_bgSSN">Required.</span></div>
+            <div class="fg"><label>Government-Issued ID Type <span class="req">*</span></label>
+              <select id="bgIDType"><option value="">— Select —</option><option>Driver's License</option><option>Passport</option><option>State ID</option></select>
+              <span class="err-msg" id="err_bgIDType">Required.</span>
+            </div>
+          </div>
+          <div class="fg" style="margin-bottom:12px"><label>Upload Government ID (Front) <span class="req">*</span></label>
+            <label class="upload-zone" style="padding:10px" onclick="document.getElementById('bgIDFile').click()">
+              <i class="fas fa-id-card" style="font-size:18px;margin-bottom:4px"></i><br>Click to upload ID image (JPG/PDF)<br><span style="font-size:10px">Max 5 MB</span>
+              <input type="file" id="bgIDFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUpload('bgIDFile','','bgIDLabel')">
+            </label>
+            <span id="bgIDLabel" style="font-size:10px;color:#1b5e20;display:none"></span>
+            <span class="err-msg" id="err_bgID">Please upload your ID.</span>
+          </div>
+          <div style="padding:10px 14px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:6px;font-size:11px;color:#1b5e20">
+            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+              <input type="checkbox" id="bgConsent" style="margin-top:2px;flex-shrink:0">
+              <span>I authorize Gold Kidney Health Plan to conduct a background check including criminal history and OIG/SAM exclusion list verification. I understand this is required for agent activation.</span>
+            </label>
+            <span class="err-msg" id="err_bgConsent">You must authorize the background check to proceed.</span>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(5)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-ol" onclick="skipStep(5)" style="border-color:#e65100;color:#e65100" title="Save draft and complete this step later"><i class="fas fa-forward"></i>Save Draft &amp; Continue</button>
+          <button class="btn-pr" onclick="obNext(5)"><i class="fas fa-arrow-right"></i>Next: Contract</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 7: Contract Execution -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep6">
+      <div class="card-hdr"><h5><i class="fas fa-file-signature" style="margin-right:8px;color:#0d47a1"></i>Step 7: Contract Execution</h5><button class="btn-ol btn-sm" onclick="prefillStep(6,this)" style="margin-left:auto;background:#fff3e0;border-color:#fb8c00;color:#e65100"><i class="fas fa-magic"></i>Prefill Data</button></div>
+      <div class="card-body">
+        <!-- Incomplete steps blocking banner (shown when any prior step is incomplete) -->
+        <div class="w9-block-banner" id="blockBanner">
+          <i class="fas fa-lock" style="flex-shrink:0;font-size:18px;margin-top:2px"></i>
+          <div>
+            <div style="font-weight:700;margin-bottom:6px">Cannot Submit &mdash; Incomplete Steps Must Be Completed First</div>
+            <div style="margin-bottom:6px">The following steps are incomplete. Click a step to go back and complete it before submitting:</div>
+            <ul id="blockBannerList" style="margin:4px 0 0 0;padding-left:18px;line-height:2.2"></ul>
+          </div>
+        </div>
+        <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>Review and digitally sign your Agent Contracting Agreement. The contract is specific to your selected states and lines of business.</span></div>
+        <div class="ob-form-section">
+          <h6>Contract Summary</h6>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px">
+            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Contract Type</div><div style="font-weight:600">Agent Contracting Agreement CY2026</div></div>
+            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Version</div><div style="font-weight:600">v3.2</div></div>
+            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Lines of Business</div><div style="font-weight:600">As selected in Step 4</div></div>
+            <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Selling States</div><div style="font-weight:600">As selected in Step 4</div></div>
+          </div>
+          <div style="border:1px solid #e8eaed;border-radius:8px;height:180px;overflow-y:auto;padding:14px 16px;font-size:11px;color:#424242;line-height:1.8;background:#fafafa;margin-bottom:12px">
+            <strong>AGENT CONTRACTING AGREEMENT</strong><br><br>
+            This agreement is entered into between Gold Kidney Health Plan, Inc. ("Carrier") and the agent identified during registration ("Agent").<br><br>
+            <strong>1. Appointment.</strong> Carrier appoints Agent to solicit applications for Carrier's Medicare Advantage plans in the selected territories, subject to the terms of this agreement and applicable state and federal law.<br><br>
+            <strong>2. Compliance.</strong> Agent agrees to comply with all CMS marketing guidelines, HIPAA requirements, and applicable state regulations. Agent shall not engage in misleading, deceptive, or coercive sales practices.<br><br>
+            <strong>3. Commissions.</strong> Carrier shall pay Agent commissions per the current commission schedule. Commission rates are subject to change with 30 days written notice.<br><br>
+            <strong>4. Term &amp; Termination.</strong> This agreement commences upon countersignature and remains in effect unless terminated by either party with 30 days written notice. Carrier may terminate immediately for cause including compliance violations.<br><br>
+            <strong>5. Confidentiality.</strong> Agent shall maintain strict confidentiality of all member, carrier, and proprietary information.<br><br>
+            <em>[Full agreement continues — scroll to read complete terms before signing]</em>
+          </div>
+          <div class="attest-box">
+            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+              <input type="checkbox" id="contractRead" style="margin-top:2px;flex-shrink:0">
+              <span>I have read, understood, and agree to all terms of the Agent Contracting Agreement. I understand that this is a legally binding document.</span>
+            </label>
+            <span class="err-msg" id="err_contractRead">You must agree to the contract terms.</span>
+          </div>
+          <div class="ob-form-section" style="margin-top:10px">
+            <h6>Electronic Signature</h6>
+            <div class="form-row">
+              <div class="fg"><label>Type Your Full Legal Name to Sign <span class="req">*</span></label><input type="text" id="eSigName" placeholder="Full legal name"><span class="err-msg" id="err_eSigName">Required.</span></div>
+              <div class="fg"><label>Date</label><input type="date" id="eSigDate"></div>
+            </div>
+            <div style="font-size:10px;color:#757575;margin-top:4px"><i class="fas fa-lock" style="margin-right:3px"></i>Your typed signature is legally binding and equivalent to a handwritten signature under the E-SIGN Act.</div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ol" onclick="obBack(6)"><i class="fas fa-arrow-left"></i>Back</button>
+          <button class="btn-pr" onclick="obNext(6)"><i class="fas fa-check"></i>Submit &amp; Finalize</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- STEP 8: Ready to Sell (Confirmation) -->
+    <!-- ============================================================ -->
+    <div class="ob-section card" id="obStep7">
+      <div class="card-hdr"><h5><i class="fas fa-check-circle" style="margin-right:8px;color:#1b5e20"></i>Step 8: Submission Complete</h5></div>
+      <div class="card-body" style="text-align:center;padding:32px">
+        <div style="width:72px;height:72px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:#1b5e20"><i class="fas fa-check"></i></div>
+        <h4 style="color:#1b5e20;margin-bottom:8px">Onboarding Application Submitted!</h4>
+        <p style="color:#5f6368;font-size:13px;max-width:480px;margin:0 auto 20px">Your onboarding application has been submitted for review. The Broker Support team will verify your documents and activate your account. You will receive an email notification once you are <strong>Ready to Sell</strong>.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:400px;margin:0 auto 24px;font-size:12px;text-align:left">
+          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Case ID</div><div style="font-weight:700" id="caseID">OB-2026-0001</div></div>
+          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Status</div><div style="font-weight:700;color:#e65100">Pending Review</div></div>
+          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Submitted</div><div style="font-weight:700" id="submitDate"></div></div>
+          <div style="padding:10px;background:#f8f9fa;border-radius:6px"><div style="font-size:10px;color:#5f6368">Estimated Review</div><div style="font-weight:700">3–5 Business Days</div></div>
+        </div>
+        <div style="font-size:12px;color:#5f6368;margin-bottom:20px">Questions? Contact Broker Support: <a href="mailto:brokersupport@goldkidney.com" style="color:#0d47a1">brokersupport@goldkidney.com</a> | (800) 555-GOLD ext. 2</div>
+        <a href="dashboard.html" class="btn-pr"><i class="fas fa-tachometer-alt"></i>Go to Dashboard</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function prefillStep(step,btn){
+  function setVal(id,v){var el=document.getElementById(id);if(el){el.value=v;}}
+  function setCheck(id,v){var el=document.getElementById(id);if(el){el.checked=v;}}
+  if(step===0){
+    setVal('inviteType','Agency-Driven (FMO Invitation)');
+    setVal('inviteToken','GK-INV-2026-0847');
+    setVal('invitedBy','HealthFirst Distribution');
+    setVal('regNPN','88234410');
+  } else if(step===1){
+    setVal('piFirst','James');
+    setVal('piMI','R');
+    setVal('piLast','Martinez');
+    setVal('piDOB','1985-03-12');
+    setVal('piSSN','***-**-4589');
+    setVal('piPhone','(786) 555-0147');
+    setVal('piAgency','HealthFirst Distribution Agency');
+    setVal('piSMS','Yes \u2014 Consent for SMS notifications');
+    setVal('piAddr','1801 NW 9th Ave, Miami, FL 33136');
+  } else if(step===2){
+    setVal('taxEntity','Individual / Sole Proprietor');
+    setVal('taxTIN','***-**-4589');
+    setVal('taxName','James R Martinez');
+    var achRadio=document.getElementById('payACH');
+    if(achRadio){achRadio.checked=true;if(typeof togglePayFields==='function')togglePayFields();}
+    setVal('bankName','Chase Bank');
+    setVal('bankRouting','021000021');
+    setVal('bankAcct','****7832');
+    setVal('bankAcctType','Checking');
+  } else if(step===3){
+    setVal('ahipCert','AHIP-2026-JM-88234');
+    setVal('ahipDate','2026-01-15');
+    var checks=document.querySelectorAll('#stateCheckboxes input[type=checkbox]');
+    if(checks.length>=2){checks[0].checked=true;checks[1].checked=true;}
+    var lobs=document.querySelectorAll('.lob-checkbox input[type=checkbox]');
+    lobs.forEach(function(c){c.checked=true;});
+  } else if(step===4){
+    // Training step - simulate all 4 segments complete with times
+    var labels=['A','B','C','D'];
+    var fakeTimes=[3200,4100,3500,2800];
+    for(var si=0;si<4;si++){
+      modComplete[si]=true;
+      modTimes[si]=fakeTimes[si];
+      modStartTimes[si]=Date.now()-fakeTimes[si];
+      modsDone=(modsDone<4)?si+1:4;
+      var stEl=document.getElementById('mod'+(si+1)+'Status');
+      if(stEl) stEl.innerHTML='<span style="color:#1b5e20;font-weight:600"><i class="fas fa-check-circle"></i> Complete</span>';
+      var tEl=document.getElementById('mod'+(si+1)+'Time');
+      var s2=Math.round(fakeTimes[si]/1000);
+      var ts=s2>=60?Math.floor(s2/60)+'m '+(s2%60)+'s':s2+'s';
+      if(tEl) tEl.innerHTML='<i class="fas fa-clock"></i> '+ts;
+      var b2=document.getElementById('mod'+(si+1)+'Btn');
+      if(b2) b2.style.display='none';
+      var pb=document.getElementById('progBar'+labels[si]);
+      if(pb) pb.style.width='100%';
+      var pl=document.getElementById('progLabel'+labels[si]);
+      if(pl) pl.textContent='100%';
+      document.getElementById('dashPct'+labels[si]).textContent='100%';
+      document.getElementById('dashPct'+labels[si]).style.color='#1b5e20';
+      document.getElementById('dashTime'+labels[si]).textContent=ts;
+    }
+    modsDone=4;
+    document.getElementById('overallProgBar').style.width='100%';
+    document.getElementById('overallProgLabel').textContent='4 of 4 segments complete';
+    document.getElementById('dashPctTotal').textContent='100%';
+    var totalMs2=fakeTimes.reduce(function(a,b){return a+b;},0);
+    var ts2=Math.round(totalMs2/1000);
+    document.getElementById('dashTimeTotal').textContent=(ts2>=60?Math.floor(ts2/60)+'m '+(ts2%60)+'s':ts2+'s');
+    document.getElementById('examSection').style.display='block';
+    for(var xi=0;xi<4;xi++){
+      showSegmentExam(xi);
+      // Auto-select correct answers
+      var seg=examSegData[xi];
+      for(var qi=0;qi<5;qi++){
+        var radios=document.querySelectorAll('input[name="seg'+xi+'q'+qi+'"]');
+        if(radios.length) radios[seg.questions[qi].ans].checked=true;
+      }
+      // Submit with perfect score
+      examStartTimes[xi]=Date.now()-2000;
+      doSubmitSegment(xi);
+    }
+    examPassed=true;
+    var step5Next=document.getElementById('step5Next');
+    if(step5Next) step5Next.style.display='inline-flex';
+  } else if(step===5){
+    setVal('bgName','James R Martinez');
+    setVal('bgDOB','1985-03-12');
+    setVal('bgSSN','***-**-4589');
+    setVal('bgIDType',"Driver's License");
+    setCheck('bgConsent',true);
+  } else if(step===6){
+    setCheck('contractRead',true);
+    setVal('eSigName','James R Martinez');
+    setVal('eSigDate',new Date().toISOString().split('T')[0]);
+  }
+  if(btn){
+    btn.innerHTML='<i class="fas fa-check"></i>Prefilled';
+    btn.style.background='#e8f5e9';btn.style.borderColor='#2e7d32';btn.style.color='#1b5e20';
+    setTimeout(function(){btn.innerHTML='<i class="fas fa-magic"></i>Prefill Data';btn.style.background='#fff3e0';btn.style.borderColor='#fb8c00';btn.style.color='#e65100';},2000);
+  }
+  if(typeof showToast==='function') showToast('Step '+(step+1)+' prefilled','success');
+}
+</script>
+<script>
+var currentStep = 0;
+var totalSteps = 8;
+var modsDone = 0;
+var examPassed = false;
+
+// Per-step draft tracking: true if step was skipped without completing all required fields
+var stepDrafts = [false, false, false, false, false, false]; // indices 0–5
+
+var STEP_NAMES = [
+  'Step 1: Invitation &amp; Registration',
+  'Step 2: Personal &amp; Business Information',
+  'Step 3: W-9 Tax Details &amp; Payment',
+  'Step 4: AHIP Certification &amp; License',
+  'Step 5: Training &amp; Certification',
+  'Step 6: Background &amp; Sanctions Check'
+];
+
+function isStepComplete(n) {
+  function hasVal(id) { var el = document.getElementById(id); return !!(el && el.value && el.value.trim()); }
+  function hasFile(id) { var el = document.getElementById(id); return !!(el && el.files && el.files.length); }
+  if(n===0) {
+    if(!hasVal('inviteType') || !hasVal('inviteToken') || !hasVal('regNPN')) return false;
+    var npn = document.getElementById('regNPN');
+    return !!(npn && /^\d{8,10}$/.test(npn.value.trim()));
+  }
+  if(n===1) return hasVal('piFirst') && hasVal('piLast') && hasVal('piDOB') && hasVal('piSSN') && hasVal('piPhone') && hasVal('piAddr');
+  if(n===2) return true;
+  if(n===3) {
+    if(!hasVal('ahipCert') || !hasVal('ahipDate')) return false;
+    if(!document.querySelectorAll('#stateCheckboxes input:checked').length) return false;
+    if(!document.querySelectorAll('.lob-checkbox input:checked').length) return false;
+    return true;
+  }
+  if(n===4) return true;
+  if(n===5) {
+    var bgConsent = document.getElementById('bgConsent');
+    return hasVal('bgName') && hasVal('bgDOB') && hasVal('bgSSN') && hasVal('bgIDType') && !!(bgConsent && bgConsent.checked);
+  }
+  return true;
+}
+
+function skipStep(n) {
+  stepDrafts[n] = true;
+  var badge = document.getElementById('draftBadge' + n);
+  if(badge) badge.style.display = 'flex';
+  if(typeof showToast==='function') showToast('Step '+(n+1)+' saved as draft','info');
+  obGoTo(n + 1);
+}
+
+function obGoTo(n) {
+  document.querySelectorAll('.ob-section').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('obStep' + n).classList.add('active');
+  for(var i=0; i<totalSteps; i++){
+    var bar = document.getElementById('bar'+i);
+    bar.classList.remove('active','done','draft');
+    var num = bar.querySelector('.ob-step-num');
+    if(i < n){
+      if(i < stepDrafts.length && stepDrafts[i]){
+        bar.classList.add('draft');
+        num.innerHTML = '<i class="fas fa-pencil-alt" style="font-size:10px"></i>';
+      } else {
+        bar.classList.add('done');
+        num.innerHTML = '<i class="fas fa-check"></i>';
+      }
+    } else if(i === n){
+      bar.classList.add('active');
+      num.innerHTML = (i+1);
+    } else {
+      num.innerHTML = (i+1);
+    }
+  }
+  // Show/build block banner when arriving at contract step (n=6)
+  if(n === 6){
+    var incompleteIdxs = [0,1,2,3,4,5].filter(function(i){ return stepDrafts[i] || !isStepComplete(i); });
+    var blockBanner = document.getElementById('blockBanner');
+    if(blockBanner){
+      if(incompleteIdxs.length > 0){
+        var listHtml = incompleteIdxs.map(function(i){
+          return '<li><a href="javascript:obGoTo('+i+')" style="color:#b71c1c;font-weight:600;text-decoration:underline">' + STEP_NAMES[i] + '</a></li>';
+        }).join('');
+        document.getElementById('blockBannerList').innerHTML = listHtml;
+        blockBanner.style.display = 'flex';
+      } else {
+        blockBanner.style.display = 'none';
+      }
+    }
+  }
+  // Update sidebar progress
+  var sbLabel = document.getElementById('sb-step-label');
+  var sbFill = document.getElementById('sb-prog-fill');
+  if(sbLabel) sbLabel.textContent = 'Step ' + (n+1) + ' of ' + totalSteps;
+  if(sbFill) sbFill.style.width = ((n+1)/totalSteps*100) + '%';
+  currentStep = n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function validateStep(n) {
+  var ok = true;
+  function req(id, errId) {
+    var el = document.getElementById(id);
+    var err = document.getElementById(errId);
+    if(!el) return;
+    var val = el.value ? el.value.trim() : '';
+    if(!val) { el.classList.add('field-err'); err && (err.style.display='block'); ok=false; }
+    else { el.classList.remove('field-err'); err && (err.style.display='none'); }
+  }
+  function reqChk(id, errId) {
+    var el = document.getElementById(id);
+    var err = document.getElementById(errId);
+    if(!el) return;
+    if(!el.checked) { err && (err.style.display='block'); ok=false; }
+    else { err && (err.style.display='none'); }
+  }
+  if(n===0){
+    req('inviteType','err_inviteType'); req('inviteToken','err_inviteToken');
+    req('regNPN','err_regNPN');
+    var npnEl = document.getElementById('regNPN');
+    if(npnEl && npnEl.value && !/^\d{8,10}$/.test(npnEl.value.trim())){
+      npnEl.classList.add('field-err');
+      document.getElementById('err_regNPN').style.display='block';
+      ok=false;
+    }
+  } else if(n===1){
+    req('piFirst','err_piFirst'); req('piLast','err_piLast'); req('piDOB','err_piDOB');
+    req('piSSN','err_piSSN'); req('piPhone','err_piPhone'); req('piAddr','err_piAddr');
+  } else if(n===2){
+    // W-9 step: non-blocking — allow navigation regardless. Draft state set by obNext.
+  } else if(n===3){
+    req('ahipCert','err_ahipCert'); req('ahipDate','err_ahipDate');
+    var states = document.querySelectorAll('#stateCheckboxes input:checked');
+    var stErr = document.getElementById('err_states');
+    if(!states.length){ stErr && (stErr.style.display='block'); ok=false; }
+    else { stErr && (stErr.style.display='none'); }
+    var lobs = document.querySelectorAll('.lob-checkbox input:checked');
+    var lobErr = document.getElementById('err_lob');
+    if(!lobs.length){ lobErr && (lobErr.style.display='block'); ok=false; }
+    else { lobErr && (lobErr.style.display='none'); }
+  } else if(n===4){
+    // Training step: non-blocking Ã¢â‚¬â€ allow navigation regardless
+  } else if(n===5){
+    req('bgName','err_bgName'); req('bgDOB','err_bgDOB'); req('bgSSN','err_bgSSN'); req('bgIDType','err_bgIDType');
+    reqChk('bgConsent','err_bgConsent');
+  } else if(n===6){
+    // Block final submit if any prior step is incomplete
+    var incompleteIdxs = [0,1,2,3,4,5].filter(function(i){ return stepDrafts[i] || !isStepComplete(i); });
+    if(incompleteIdxs.length > 0){
+      var listHtml = incompleteIdxs.map(function(i){
+        return '<li><a href="javascript:obGoTo('+i+')" style="color:#b71c1c;font-weight:600;text-decoration:underline">' + STEP_NAMES[i] + '</a></li>';
+      }).join('');
+      document.getElementById('blockBannerList').innerHTML = listHtml;
+      var blockBanner = document.getElementById('blockBanner');
+      if(blockBanner){ blockBanner.style.display='flex'; blockBanner.scrollIntoView({behavior:'smooth',block:'start'}); }
+      ok = false;
+    }
+    reqChk('contractRead','err_contractRead');
+    req('eSigName','err_eSigName');
+  }
+  return ok;
+}
+
+function obNext(n) {
+  if(!validateStep(n)) return;
+  // Update draft state: mark complete if all fields filled, draft if not
+  if(n < stepDrafts.length){
+    var complete = isStepComplete(n);
+    stepDrafts[n] = !complete;
+    var badge = document.getElementById('draftBadge' + n);
+    if(badge) badge.style.display = complete ? 'none' : 'flex';
+  }
+  if(n===6){
+    document.getElementById('submitDate').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    document.getElementById('caseID').textContent = 'OB-2026-' + Math.floor(1000+Math.random()*9000);
+  }
+  obGoTo(n+1);
+}
+
+function obBack(n) { obGoTo(n-1); }
+
+function validateNPN() {
+  var npn = document.getElementById('regNPN').value.trim();
+  if(!npn || !/^\d{8,10}$/.test(npn)) {
+    alert('Please enter a valid 8–10 digit NPN number.');
+    return;
+  }
+  document.getElementById('npnResult').style.display = 'block';
+}
+
+function handleUpload(inputId, zoneId, labelId) {
+  var input = document.getElementById(inputId);
+  if(!input || !input.files.length) return;
+  var fname = input.files[0].name;
+  if(zoneId) { var z = document.getElementById(zoneId); if(z) z.classList.add('has-file'); }
+  if(labelId) { var lb = document.getElementById(labelId); if(lb){ lb.textContent = '\u2713 ' + fname; lb.style.display='block'; } }
+}
+
+function togglePayFields() {
+  var ach = document.getElementById('payACH');
+  document.getElementById('achFields').style.display = ach.checked ? 'block' : 'none';
+  document.getElementById('checkFields').style.display = ach.checked ? 'none' : 'block';
+  document.getElementById('err_payMethod').style.display = 'none';
+}
+
+function updateStates() { /* visual only */ }
+
+function startModule(num) {
+  var labels = ['A','B','C','D'];
+  var colors = ['#0d47a1','#1b5e20','#6a1b9a','#e65100'];
+  var modEl = document.getElementById('mod'+(num+1));
+  var statusEl = document.getElementById('mod'+(num+1)+'Status');
+  var timeEl = document.getElementById('mod'+(num+1)+'Time');
+  var btn = document.getElementById('mod'+(num+1)+'Btn');
+  var progBar = document.getElementById('progBar'+labels[num]);
+  var progLabel = document.getElementById('progLabel'+labels[num]);
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> In Progress';
+  statusEl.innerHTML = '<span style="color:'+colors[num]+';font-weight:600"><i class="fas fa-spinner fa-spin"></i> In Progress</span>';
+
+  var segStartTime = Date.now();
+  modStartTimes[num] = segStartTime;
+
+  // Simulate progress over ~3 seconds (demo mode)
+  var progress = 0;
+  var interval = setInterval(function(){
+    progress += Math.random() * 15 + 5;
+    if(progress >= 100) progress = 100;
+    progBar.style.width = Math.round(progress) + '%';
+    progLabel.textContent = Math.round(progress) + '%';
+    document.getElementById('dashPct'+labels[num]).textContent = Math.round(progress) + '%';
+    document.getElementById('dashPct'+labels[num]).style.color = colors[num];
+    if(progress >= 100){
+      clearInterval(interval);
+      completeModule(num);
+    }
+  }, 400);
+}
+
+function completeModule(num) {
+  var labels = ['A','B','C','D'];
+  var statusEl = document.getElementById('mod'+(num+1)+'Status');
+  var timeEl = document.getElementById('mod'+(num+1)+'Time');
+  var btn = document.getElementById('mod'+(num+1)+'Btn');
+
+  var elapsed = Date.now() - modStartTimes[num];
+  var secs = Math.round(elapsed / 1000);
+  var timeStr = secs >= 60 ? Math.floor(secs/60) + 'm ' + (secs%60) + 's' : secs + 's';
+  modTimes[num] = elapsed;
+
+  statusEl.innerHTML = '<span style="color:#1b5e20;font-weight:600"><i class="fas fa-check-circle"></i> Complete</span>';
+  timeEl.innerHTML = '<i class="fas fa-clock"></i> ' + timeStr;
+  btn.style.display = 'none';
+  modsDone++;
+  modComplete[num] = true;
+
+  document.getElementById('dashTime'+labels[num]).textContent = timeStr;
+  document.getElementById('dashPct'+labels[num]).textContent = '100%';
+  document.getElementById('dashPct'+labels[num]).style.color = '#1b5e20';
+
+  var overallPct = Math.round((modsDone / 4) * 100);
+  document.getElementById('overallProgBar').style.width = overallPct + '%';
+  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments complete';
+  document.getElementById('dashPctTotal').textContent = overallPct + '%';
+
+  var totalMs = modTimes.reduce(function(a,b){return a+b;},0);
+  var totalSecs = Math.round(totalMs / 1000);
+  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs/60) + 'm ' + (totalSecs%60) + 's' : totalSecs + 's';
+  document.getElementById('dashTimeTotal').textContent = totalStr;
+
+  document.getElementById('examSection').style.display = 'block';
+  showSegmentExam(num);
+
+  if(typeof showToast==='function') showToast('Segment '+labels[num]+' training complete! Exam unlocked.','success');
+}
+
+function showSegmentExam(idx) {
+  var panel = document.getElementById('examSeg'+idx);
+  panel.style.display = 'block';
+  if(!panel.innerHTML.trim()) buildSegPanel(idx);
+}
+
+
+// -- Segmented Exam Engine --
+var examSegData = [
+  {
+    id:'A', label:'Video-Based', icon:'fa-video', accentBg:'#e3f2fd', accentColor:'#0d47a1',
+    material:'<div style="background:#1a1a2e;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;color:#fff;font-size:11px"><i class="fas fa-video" style="font-size:28px;margin-bottom:8px;display:block;color:#90caf9"></i><div style="font-weight:600;margin-bottom:6px">Gold Kidney 2026 &mdash; C-SNP Product Overview</div><div style="opacity:.7;font-size:10px;margin-bottom:10px">Duration: ~8 min &nbsp;|&nbsp; Watch the full video before answering questions</div><button class="btn-pr btn-sm" onclick="this.innerHTML=\'<i class=\\\'fas fa-spinner fa-spin\\\'></i> Playing...\';this.disabled=true"><i class="fas fa-play"></i>Play Video</button></div>',
+    questions:[
+      {q:"What is the primary target population for Gold Kidney's C-SNP plans?",opts:["Patients with diabetes only","Patients with ESRD or Chronic Kidney Disease (CKD)","All Medicare-eligible beneficiaries over 65","Patients with congestive heart failure"],ans:1},
+      {q:"Which plan type offers supplemental benefits such as dental and vision beyond Original Medicare?",opts:["Medicare Supplement (Medigap)","Part D Prescription Drug Plan","Medicare Advantage (Part C)","Medicare Savings Account (MSA)"],ans:2},
+      {q:"What does ESRD stand for?",opts:["Extended Systematic Renal Disorder","Early Stage Renal Deficiency","End Stage Renal Disease","Emergency Surgical Renal Diagnosis"],ans:2},
+      {q:"Gold Kidney Health Plan's C-SNP plans target members with which qualifying condition?",opts:["COPD and asthma","HIV/AIDS","Diabetes mellitus only","Chronic Kidney Disease (CKD) or End-Stage Renal Disease (ESRD)"],ans:3},
+      {q:"Which federal agency oversees and regulates Medicare Advantage plans?",opts:["Food and Drug Administration (FDA)","Centers for Medicare &amp; Medicaid Services (CMS)","Centers for Disease Control (CDC)","Office of Inspector General (OIG)"],ans:1}
+    ]
+  },
+  {
+    id:'B', label:'Training Material', icon:'fa-book', accentBg:'#e8f5e9', accentColor:'#1b5e20',
+    material:'<div style="padding:12px 14px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:16px;font-size:11px;line-height:1.9;max-height:130px;overflow-y:auto"><strong>Training Excerpt &mdash; Enrollment &amp; Compliance</strong><br>The <strong>AEP</strong> (Annual Enrollment Period) runs <strong>Oct 15 &ndash; Dec 7</strong> each year. The <strong>ICEP</strong> (Initial Coverage Election Period) applies to newly Medicare-eligible beneficiaries. A <strong>Scope of Appointment (SOA)</strong> must be obtained at least <strong>48 hours</strong> prior to any marketing appointment. CMS prohibits agents from offering gifts or incentives exceeding <strong>$15</strong> in value. <strong>SEPs</strong> are triggered by qualifying life events such as moving out of a plan\'s service area.</div>',
+    questions:[
+      {q:"The Annual Enrollment Period (AEP) for Medicare Advantage runs from:",opts:["January 1 &ndash; March 31","October 15 &ndash; December 7","November 1 &ndash; December 15","September 1 &ndash; October 31"],ans:1},
+      {q:"ICEP stands for:",opts:["Interim Coverage Eligibility Period","Individual Coverage Enrollment Plan","Initial Coverage Election Period","Initial Carrier Election Period"],ans:2},
+      {q:"A Scope of Appointment (SOA) must be obtained at least how many hours before a Medicare sales appointment?",opts:["24 hours","36 hours","48 hours","72 hours"],ans:2},
+      {q:"Under CMS marketing guidelines, agents are PROHIBITED from:",opts:["Providing members with plan Summary of Benefits","Discussing plan premium amounts","Offering gifts or incentives valued over $15","Scheduling a follow-up appointment"],ans:2},
+      {q:"A Special Enrollment Period (SEP) may be triggered by:",opts:["Annual calendar date only","A qualifying life event such as moving out of a plan's service area","A plan's premium increase","Agent request to the carrier"],ans:1}
+    ]
+  },
+  {
+    id:'C', label:'PDF Review', icon:'fa-file-pdf', accentBg:'#ede7f6', accentColor:'#6a1b9a',
+    material:'<div style="padding:12px 14px;background:#faf5ff;border:1px solid #ce93d8;border-radius:8px;margin-bottom:16px;font-size:11px;line-height:1.9"><i class="fas fa-file-pdf" style="color:#6a1b9a;margin-right:5px"></i><strong>C-SNP Product Guide &mdash; Summary Extract</strong><br>C-SNP enrollment requires <strong>Medicare Parts A &amp; B</strong> plus a qualifying chronic condition (ESRD/CKD). The <strong>PQAT</strong> assesses clinical appropriateness. Under <strong>HIPAA</strong>, all Protected Health Information (PHI) must remain strictly confidential and any breaches reported promptly. The <strong>Plan Recommendation Engine</strong> matches members to the most appropriate plan based on their chronic condition profile. CKD = Chronic Kidney Disease.</div>',
+    questions:[
+      {q:"To enroll in a C-SNP plan, a beneficiary must have:",opts:["Medicare Part A only","Medicare Parts A and B AND the qualifying chronic condition","An active Medigap plan","Part D enrollment in effect"],ans:1},
+      {q:"The PQAT questionnaire is used to:",opts:["Verify agent licensing credentials","Assess clinical appropriateness of the C-SNP plan for the member","Calculate a member's estimated annual premium","Determine the copay structure for the plan"],ans:1},
+      {q:"CKD stands for:",opts:["Comprehensive Kidney Diagnosis","Critical Kidney Deficiency","Chronic Kidney Disease","Cellular Kidney Disorder"],ans:2},
+      {q:"Under HIPAA, an agent's primary obligation is to:",opts:["Share member PHI with the member's spouse upon verbal request","Submit member diagnosis records to the state annually","Report any PHI breaches to the carrier and affected member promptly","Store member records on personal devices for easy access"],ans:2},
+      {q:"The Plan Recommendation Engine helps agents:",opts:["File claims on behalf of enrolled members","Match members to the most clinically appropriate plan based on their chronic conditions","Calculate a member's out-of-pocket maximum","Verify the member's NPI number"],ans:1}
+    ]
+  },
+  {
+    id:'D', label:'General MCQ', icon:'fa-list-ul', accentBg:'#fff3e0', accentColor:'#e65100',
+    material:'',
+    questions:[
+      {q:"What does MAPD stand for?",opts:["Medicare Advantage Prescription Drug Plan","Medicare Approved Provider Directory","Managed Advantage Plan with Disability","Medicare Agency Partnership Division"],ans:0},
+      {q:"Which enrollment period allows MA plan members to switch plans from January 1 &ndash; March 31?",opts:["Annual Enrollment Period (AEP)","Initial Coverage Election Period (ICEP)","Open Enrollment Period (OEP)","Special Enrollment Period (SEP)"],ans:2},
+      {q:"An agent's National Producer Number (NPN) is managed through:",opts:["Centers for Medicare &amp; Medicaid Services (CMS)","The state department of insurance","National Insurance Producer Registry (NIPR)","The appointing carrier"],ans:2},
+      {q:"Medicare Part D primarily covers:",opts:["Inpatient hospital stays","Outpatient physician services","Prescription drug costs","Long-term custodial care"],ans:2},
+      {q:"The maximum number of certification exam attempts allowed in this onboarding is:",opts:["2 attempts","3 attempts","4 attempts","Unlimited attempts"],ans:2}
+    ]
+  }
+];
+
+var currentSeg = 0;
+var segScores  = [-1,-1,-1,-1];
+var segAttempts = [0,0,0,0];
+var pendingSubmitSeg = -1;
+var modStartTimes = [0,0,0,0];
+var modTimes = [0,0,0,0];
+var modComplete = [false,false,false,false];
+var examStartTimes = [0,0,0,0];
+var examTimes = [0,0,0,0];
+
+function buildSegPanel(idx) {
+  var s = examSegData[idx];
+  var ab = s.accentBg, ac = s.accentColor;
+  var html = '<div style="background:'+ab+';border-left:3px solid '+ac+';padding:10px 14px;border-radius:6px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:'+ac+'"><i class="fas '+s.icon+'"></i> Segment '+s.id+' Exam &mdash; '+s.label+'<span style="margin-left:auto;font-size:10px;font-weight:400;color:#5f6368">5 Questions &bull; Pass: 60%</span></div>';
+  if(s.material) html += s.material;
+  html += '<div class="seg-questions" id="segQ'+idx+'">';
+  for(var qi=0;qi<5;qi++){
+    var q=s.questions[qi], nm='seg'+idx+'q'+qi;
+    html += '<div style="margin-bottom:14px;padding:12px 14px;border:1px solid #e8eaed;border-radius:8px;background:#fff"><div style="font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:flex-start;gap:7px"><span style="min-width:22px;height:22px;border-radius:50%;background:'+ab+';color:'+ac+';font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">'+(qi+1)+'</span>'+q.q+'</div>';
+    for(var oi=0;oi<q.opts.length;oi++){
+      html += '<label class="q-option-label"><input type="radio" name="'+nm+'" value="'+oi+'"> <span class="q-text">'+q.opts[oi]+'</span></label>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  html += '<div class="seg-submit-row" style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="btn-pr" onclick="submitSegment('+idx+')"><i class="fas fa-check"></i> Submit Segment '+s.id+' Exam</button></div>';
+  html += '<div id="segScore'+idx+'" style="display:none;margin-top:14px"></div>';
+  document.getElementById('examSeg'+idx).innerHTML = html;
+  examStartTimes[idx] = Date.now();
+}
+
+function submitSegment(idx) {
+  var missing = [];
+  for(var i=0;i<5;i++){ if(!document.querySelector('input[name="seg'+idx+'q'+i+'"]:checked')) missing.push(i+1); }
+  if(missing.length){
+    pendingSubmitSeg = idx;
+    document.getElementById('unansweredCount').textContent = missing.length;
+    document.getElementById('unansweredList').textContent  = missing.map(function(n){return'Q'+n;}).join(', ');
+    var w = document.getElementById('unansweredWarn');
+    w.style.display = 'flex';
+    w.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  doSubmitSegment(idx);
+}
+
+function dismissUnansweredWarn() {
+  document.getElementById('unansweredWarn').style.display = 'none';
+  pendingSubmitSeg = -1;
+}
+
+function submitSegmentForce() {
+  document.getElementById('unansweredWarn').style.display = 'none';
+  doSubmitSegment(pendingSubmitSeg);
+  pendingSubmitSeg = -1;
+}
+
+function doSubmitSegment(idx) {
+  var s = examSegData[idx], correct = 0;
+  segAttempts[idx]++;
+  for(var i=0;i<5;i++){
+    var sel = document.querySelector('input[name="seg'+idx+'q'+i+'"]:checked');
+    if(sel && parseInt(sel.value)===s.questions[i].ans) correct++;
+  }
+  var pct = Math.round((correct/5)*100);
+  segScores[idx] = pct;
+
+  var examElapsed = Date.now() - examStartTimes[idx];
+  examTimes[idx] = examElapsed;
+  var examSecs = Math.round(examElapsed / 1000);
+  var examTimeStr = examSecs >= 60 ? Math.floor(examSecs/60) + 'm ' + (examSecs%60) + 's' : examSecs + 's';
+
+  var sp = document.getElementById('examSeg'+idx);
+  sp.querySelector('.seg-questions').style.display   = 'none';
+  sp.querySelector('.seg-submit-row').style.display  = 'none';
+
+  var pass = pct >= 60;
+  var retryHtml = '';
+  if(!pass && segAttempts[idx] < 4){
+    retryHtml = '<div style="text-align:center;margin-top:8px"><button class="btn-ol btn-sm" onclick="retrySegExam('+idx+')"><i class="fas fa-redo"></i> Retry (Attempt '+(segAttempts[idx]+1)+' of 4)</button></div>';
+  } else if(!pass){
+    retryHtml = '<div style="text-align:center;color:#c62828;font-weight:600;font-size:10px;margin-top:6px"><i class="fas fa-ban"></i> Max attempts reached for Segment '+s.id+'</div>';
+  }
+
+  document.getElementById('segScore'+idx).innerHTML =
+    '<div style="padding:12px 14px;border-radius:8px;text-align:center;background:'+(pass?'#e8f5e9':'#fff8e1')+';border:1px solid '+(pass?'#c8e6c9':'#ffe082')+';font-size:12px;color:'+(pass?'#1b5e20':'#e65100')+'">'+
+    '<i class="fas '+(pass?'fa-check-circle':'fa-exclamation-circle')+'"></i> <strong>Segment '+s.id+' Exam</strong> &mdash; Score: '+correct+'/5 ('+pct+'%) &nbsp;|&nbsp; Time: '+examTimeStr+
+    '</div>' + retryHtml;
+  document.getElementById('segScore'+idx).style.display = 'block';
+
+  checkAllComplete();
+}
+
+function retrySegExam(idx) {
+  var panel = document.getElementById('examSeg'+idx);
+  panel.innerHTML = '';
+  buildSegPanel(idx);
+}
+
+function checkAllComplete() {
+  var allPassed = segScores.every(function(s){ return s >= 60; });
+  if(allPassed) showConsolidatedResult();
+}
+
+function showConsolidatedResult() {
+  var total = segScores.reduce(function(a,b){return a+b;},0);
+  var avg   = Math.round(total/4);
+  var pass  = avg >= 85;
+  examPassed = pass;
+  var segMeta = [['A','Video'],['B','Training'],['C','PDF'],['D','MCQ']];
+
+  var totalTrainMs = modTimes.reduce(function(a,b){return a+b;},0);
+  var totalExamMs = examTimes.reduce(function(a,b){return a+b;},0);
+  var totalMs = totalTrainMs + totalExamMs;
+  var totalSecs = Math.round(totalMs / 1000);
+  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs/60) + 'm ' + (totalSecs%60) + 's' : totalSecs + 's';
+
+  var grid = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;font-size:11px">';
+  for(var i=0;i<4;i++){
+    var sc = segScores[i]>=60;
+    var segTrainSecs = Math.round(modTimes[i]/1000);
+    var segExamSecs = Math.round(examTimes[i]/1000);
+    var segTotalSecs = segTrainSecs + segExamSecs;
+    var segTimeStr = segTotalSecs >= 60 ? Math.floor(segTotalSecs/60) + 'm ' + (segTotalSecs%60) + 's' : segTotalSecs + 's';
+    grid += '<div style="text-align:center;padding:10px 6px;border-radius:8px;background:'+(sc?'#e8f5e9':'#fce4ec')+';border:1px solid '+(sc?'#c8e6c9':'#ef9a9a')+'"><div style="font-size:9px;color:#5f6368;margin-bottom:3px">Seg '+segMeta[i][0]+' &mdash; '+segMeta[i][1]+'</div><div style="font-size:14px;font-weight:700;color:'+(sc?'#1b5e20':'#c62828')+'">'+segScores[i]+'%</div><div style="font-size:9px;color:#5f6368;margin-top:2px"><i class="fas fa-clock"></i> '+segTimeStr+'</div></div>';
+  }
+  grid += '</div>';
+  var banner = '<div style="text-align:center;padding:18px;border-radius:10px;background:'+(pass?'#e8f5e9':'#fce4ec')+';border:1px solid '+(pass?'#c8e6c9':'#ef9a9a')+';margin-bottom:14px"><i class="fas '+(pass?'fa-award':'fa-times-circle')+'" style="font-size:34px;color:'+(pass?'#1b5e20':'#c62828')+';margin-bottom:8px;display:block"></i><div style="font-size:15px;font-weight:700;color:'+(pass?'#1b5e20':'#c62828')+';">'+(pass?'Certification Passed!':'Did Not Pass &mdash; 85% Average Required')+'</div><div style="font-size:12px;margin-top:4px;color:#5f6368">Overall Score: <strong>'+avg+'%</strong> &nbsp;|&nbsp; Total Time: <strong>'+totalStr+'</strong></div></div>';
+
+  if(pass) document.getElementById('step5Next').style.display = 'inline-flex';
+
+  var el = document.getElementById('examConsolidatedResult');
+  el.innerHTML = banner + grid;
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 05 28,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

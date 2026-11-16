@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cost of Distribution | Sales Leadership</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#4a148c}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-chart-line" style="margin-right:8px;opacity:.8"></i>Sales Leadership</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Campaigns &amp; Leads</div>
+    <a href="agencies.html"><i class="fas fa-building"></i>View Agencies</a>
+    <a href="leads.html"><i class="fas fa-address-book"></i>View Leads</a>
+    <a href="leads.html#assign"><i class="fas fa-user-tag"></i>Assign Leads</a>
+    <a href="campaign-roi.html"><i class="fas fa-bullseye"></i>Campaign ROI</a>
+    <a href="lead-performance.html"><i class="fas fa-phone-volume"></i>Lead Performance</a>
+    <div class="sb-section">Producer Performance</div>
+    <a href="top-producers.html"><i class="fas fa-trophy"></i>Top Producers</a>
+    <a href="network-health.html"><i class="fas fa-heartbeat"></i>Agent Network Health</a>
+    <a href="active-agents.html"><i class="fas fa-user-check"></i>Active Agents</a>
+    <a href="hierarchy-view.html"><i class="fas fa-sitemap"></i>Hierarchy View</a>
+    <div class="sb-section">Enrollment &amp; Members</div>
+    <a href="enrollment-trends.html"><i class="fas fa-chart-area"></i>Enrollment Details</a>
+    <a href="geographic-insights.html"><i class="fas fa-map-marked-alt"></i>Geographic Insights</a>
+    <a href="patient-activation.html"><i class="fas fa-hand-holding-heart"></i>Patient Activation</a>
+    <div class="sb-section">Commissions &amp; Cost</div>
+    <a href="commission-trends.html"><i class="fas fa-dollar-sign"></i>Commission Trends</a>
+    <a href="cost-distribution.html" class="active"><i class="fas fa-balance-scale"></i>Cost of Distribution</a>
+    <div class="sb-section">Reports</div>
+    <a href="reports.html"><i class="fas fa-file-alt"></i>Scheduled Reports</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">RW</div><div><div class="sb-u-name">Rachel Williams</div><div class="sb-u-role">VP Sales</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><h4>Cost of Distribution</h4></div>
+    <div class="dflex g8">
+      <button class="btn-ol btn-sm" onclick="nfpExport('Cost of Distribution')"><i class="fas fa-download"></i>Export</button>
+      <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row-grid">
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-label">Avg Cost/Enrollment</div><div class="stat-val">$187</div><div class="stat-sub" style="color:#2e7d32">? $12 improvement</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-bullseye"></i></div><div><div class="stat-label">CY2026 Target</div><div class="stat-val">$175</div><div class="stat-sub">$12 remaining gap</div></div></div></div>
+      <div class="col-1"><div class="stat-card"><div class="stat-icon" style="background:#ede7f6;color:#4a148c"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Total Distribution Cost</div><div class="stat-val">$1.57M</div><div class="stat-sub">YTD</div></div></div></div>
+    </div>
+
+    <!-- By Hierarchy Level -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-balance-scale" style="color:#4a148c;margin-right:8px"></i>Cost per Enrollment by Hierarchy Level</h6></div>
+      <div class="table-wrap">
+        <table class="table table-hover" style="font-size:13px">
+          <thead><tr><th>Hierarchy Level</th><th>Enrollments</th><th>Initial Comm</th><th>Override Cost</th><th>Patient Activation</th><th>Total Cost/Enrollment</th><th>vs Target</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">SFMO / NFMO</td><td>1,240</td><td>$142</td><td>$62</td><td>$17</td><td style="font-weight:700;color:#c62828">$221</td><td style="color:#c62828">+$46</td></tr>
+            <tr><td style="font-weight:600">FMO</td><td>3,412</td><td>$142</td><td>$36</td><td>$17</td><td style="font-weight:700;color:#e65100">$195</td><td style="color:#e65100">+$20</td></tr>
+            <tr><td style="font-weight:600">SGA / MGA</td><td>2,068</td><td>$142</td><td>$19</td><td>$17</td><td style="font-weight:700">$178</td><td style="color:#e65100">+$3</td></tr>
+            <tr><td style="font-weight:600">GA (Direct)</td><td>1,692</td><td>$142</td><td>$0</td><td>$10</td><td style="font-weight:700;color:#2e7d32">$152</td><td style="color:#2e7d32">-$23 ?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Cost Breakdown -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-hdr"><h6><i class="fas fa-pie-chart" style="color:#0277bd;margin-right:8px"></i>Cost Component Breakdown</h6></div>
+      <div class="card-body" style="padding:20px">
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px;background:#f8f9fa;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#4a148c">$142</div>
+            <div style="font-size:12px;color:#5f6368;margin-top:4px">Avg Initial Commission</div>
+            <div style="font-size:11px;color:#5f6368">(76% of total cost)</div>
+          </div>
+          <div style="flex:1;min-width:200px;background:#f8f9fa;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#e65100">$28</div>
+            <div style="font-size:12px;color:#5f6368;margin-top:4px">Avg Override (all tiers)</div>
+            <div style="font-size:11px;color:#5f6368">(15% of total cost)</div>
+          </div>
+          <div style="flex:1;min-width:200px;background:#f8f9fa;border-radius:8px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#0277bd">$17</div>
+            <div style="font-size:12px;color:#5f6368;margin-top:4px">Avg Patient Activation Fee</div>
+            <div style="font-size:11px;color:#5f6368">(9% of total cost)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>

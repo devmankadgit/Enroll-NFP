@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications Config | Gold Kidney Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e} .modal-overlay.open{display:flex}
+.switch{position:relative;display:inline-block;width:36px;height:20px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:20px;transition:.3s}
+.slider:before{position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.switch input:checked+.slider{background:#1b5e20}
+.switch input:checked+.slider:before{transform:translateX(16px)}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html" class="active"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Notification Configuration</h4><ol class="breadcrumb-bar"><li>Template Management &amp; Delivery Rules</li></ol></div>
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+
+  <div class="page">
+    <!-- Template Management -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-file-alt" style="margin-right:8px;color:#0d47a1"></i>Notification Templates (18)</h5><button class="btn-pr btn-sm" onclick="openTemplateModal()"><i class="fas fa-plus"></i>Create Template</button><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport1','notifications-config_Table1')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead><tr><th>Template Name</th><th>Category</th><th>Audience</th><th>Channels</th><th>Mandatory</th><th>Created By</th><th>Updated By</th><th>Last Updated</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="tplTableBody">
+            <tr><td>Lead Assigned</td><td><span class="bdg b-blue">Lead</span></td><td>Portal, Email</td><td>No</td><td>05 01,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(0)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(0)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Enrollment CMS Accepted</td><td><span class="bdg b-green">Enrollment</span></td><td>Portal, Email</td><td>No</td><td>04 15,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(1)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(1)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Commission Payment Processed</td><td><span class="bdg b-purple">Commission</span></td><td>Portal, Email</td><td>No</td><td>03 20,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(2)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(2)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>HRA Due Reminder</td><td><span class="bdg b-amber">Action Item</span></td><td>Portal, Email, SMS</td><td>No</td><td>05 10,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(3)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(3)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr style="background:#fce4ec"><td><strong>AHIP Certification Expiry</strong></td><td><span class="bdg b-red">Compliance</span></td><td>Portal, Email</td><td><strong style="color:#c62828">Yes</strong></td><td>01 05,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(4)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(4)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr style="background:#fce4ec"><td><strong>Account Security Alert</strong></td><td><span class="bdg b-red">Security</span></td><td>Portal, Email, SMS</td><td><strong style="color:#c62828">Yes</strong></td><td>01 05,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(5)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(5)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Onboarding Welcome</td><td><span class="bdg b-teal">Onboarding</span></td><td>Portal, Email</td><td>No</td><td>04 02,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(6)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(6)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>License Renewal Reminder</td><td><span class="bdg b-red">Compliance</span></td><td>Portal, Email</td><td>No</td><td>03 15,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(7)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(7)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Enrollment CMS Rejected</td><td><span class="bdg b-green">Enrollment</span></td><td>Portal, Email</td><td>No</td><td>04 15,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(8)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(8)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Password Reset</td><td><span class="bdg b-red">Security</span></td><td>Email</td><td><strong style="color:#c62828">Yes</strong></td><td>01 10,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(9)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(9)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>SOA Expiry Warning</td><td><span class="bdg b-red">Compliance</span></td><td>Portal, Email</td><td>No</td><td>02 20,2026</td><td><span class="bdg b-grey">Inactive</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(10)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(10)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Lead Follow-Up Overdue</td><td><span class="bdg b-blue">Lead</span></td><td>Portal</td><td>No</td><td>05 05,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(11)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(11)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Commission Dispute Filed</td><td><span class="bdg b-purple">Commission</span></td><td>Portal, Email</td><td>No</td><td>03 28,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(12)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(12)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Agency Onboarding Approved</td><td><span class="bdg b-teal">Onboarding</span></td><td>Portal, Email</td><td>No</td><td>04 10,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(13)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(13)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Member ID Card Ready</td><td><span class="bdg b-green">Enrollment</span></td><td>Portal, Email</td><td>No</td><td>04 20,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(14)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(14)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Daily Action Item Digest</td><td><span class="bdg b-amber">Action Item</span></td><td>Email</td><td>No</td><td>05 12,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(15)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(15)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>Hierarchy Transfer Notice</td><td><span class="bdg b-blue">Lead</span></td><td>Portal, Email</td><td>No</td><td>02 05,2026</td><td><span class="bdg b-grey">Inactive</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(16)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(16)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+            <tr><td>System Maintenance Notice</td><td><span class="bdg b-amber">System</span></td><td>Portal, Email</td><td><strong style="color:#c62828">Yes</strong></td><td>05 20,2026</td><td><span class="bdg b-green">Active</span></td><td><button class="btn-ol btn-sm" onclick="editTemplate(17)"><i class="fas fa-edit"></i> Edit</button> <button class="btn-ol btn-sm" onclick="previewTemplate(17)"><i class="fas fa-eye"></i> Preview</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div style="padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f3f4">
+        <div style="font-size:13px;color:#5f6368" id="tplPageInfo">Showing 1-10 of 18 templates</div>
+        <div class="dflex g8">
+          <button class="btn-ol btn-sm" id="tplPrev" onclick="changeTplPage(-1)" disabled><i class="fas fa-chevron-left"></i>Previous</button>
+          <button class="btn-ol btn-sm" id="tplNext" onclick="changeTplPage(1)"><i class="fas fa-chevron-right"></i>Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Rules -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-route" style="margin-right:8px;color:#00695c"></i>Delivery Rules</h5><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','notifications-config_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+      <div class="card-body" style="font-size:13px">
+        <table class="tbl" id="tblExport2">
+          <thead><tr><th>Rule</th><th>Trigger</th><th>Channel</th><th>Delay</th><th>Repeat</th><th>Status</th><th>Active</th></tr></thead>
+          <tbody>
+            <tr><td>Lead Assignment — Immediate</td><td>Lead assigned to agent</td><td>Portal + Email</td><td>0 min</td><td>No</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+            <tr><td>HRA Due — 7 Day Warning</td><td>7 days before HRA deadline</td><td>Portal + Email</td><td>8:00 AM</td><td>Daily until complete</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+            <tr><td>HRA Due — 3 Day Warning</td><td>3 days before HRA deadline</td><td>Portal + Email + SMS</td><td>8:00 AM</td><td>Daily</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+            <tr><td>Commission Batch Complete</td><td>Monthly batch processed</td><td>Portal + Email</td><td>0 min</td><td>No</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+            <tr><td>Follow-Up Overdue</td><td>Lead follow-up past due date</td><td>Portal</td><td>9:00 AM next day</td><td>Daily for 3 days</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+            <tr><td>Daily Action Item Digest</td><td>Scheduled daily</td><td>Email</td><td>8:00 AM</td><td>Daily (if items exist)</td><td><span class="bdg b-green">Active</span></td><td><label class="switch"><input type="checkbox" checked onchange="toggleRule(this)"><span class="slider"></span></label></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CREATE / EDIT TEMPLATE MODAL -->
+<div id="templateModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:640px;max-height:90vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="tplModalTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-file-alt" style="margin-right:8px"></i>Create Template</h6>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn-ol btn-sm" onclick="prefillTemplate()" style="color:#e65100;border-color:#fb8c00;background:#fff3e0;font-size:12px"><i class="fas fa-magic" style="margin-right:4px"></i>Prefill Data</button>
+        <button onclick="closeTemplateModal()" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+      </div>
+    </div>
+    <div id="tplErr" style="display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:12px 14px;margin:12px 20px 0;font-size:12.5px;color:#b71c1c;align-items:flex-start;gap:8px"></div>
+    <div class="modal-body" style="padding:20px">
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Template Name <span style="color:#c62828">*</span></label><input id="tName" placeholder="e.g. Enrollment Confirmation"></div>
+        <div class="fg"><label>Category <span style="color:#c62828">*</span></label>
+          <select id="tCategory"><option value="">? Select ?</option><option>Lead</option><option>Enrollment</option><option>Commission</option><option>Action Item</option><option>Compliance</option><option>Security</option><option>Onboarding</option><option>System</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Delivery Channels <span style="color:#c62828">*</span></label>
+          <div id="tChannels" style="display:flex;gap:14px;margin-top:4px">
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="Portal"> Portal</label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="Email"> Email</label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:4px"><input type="checkbox" value="SMS"> SMS</label>
+          </div>
+        </div>
+        <div class="fg"><label>Mandatory <span style="color:#c62828">*</span></label>
+          <select id="tMandatory"><option value="No">No ? Users can opt out</option><option value="Yes">Yes ? Cannot be opted out</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Trigger Event <span style="color:#c62828">*</span></label><input id="tTrigger" placeholder="e.g. When a lead is assigned to an agent"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Subject Line <span style="color:#c62828">*</span></label><input id="tSubject" placeholder="e.g. New Lead Assigned: {{lead_name}}"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Body Template <span style="color:#c62828">*</span></label>
+          <textarea id="tBody" rows="4" style="width:100%;border:1px solid #e0e3e7;border-radius:8px;padding:10px 14px;font-size:13px;font-family:monospace;resize:vertical" placeholder="Hi {{agent_name}},&#10;&#10;A new lead has been assigned to you...&#10;&#10;Use {{variable}} for dynamic fields."></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Status</label>
+          <select id="tStatus"><option value="Active">Active</option><option value="Draft">Draft</option><option value="Inactive">Inactive</option></select>
+        </div>
+        <div class="fg"><label>Available Variables</label>
+          <div style="font-size:11px;color:#5f6368;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:8px;line-height:1.8">
+            <code>{{agent_name}}</code> <code>{{agent_npn}}</code> <code>{{lead_name}}</code> <code>{{member_name}}</code> <code>{{plan_name}}</code> <code>{{effective_date}}</code> <code>{{amount}}</code> <code>{{due_date}}</code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-ol" onclick="closeTemplateModal()">Cancel</button>
+      <button class="btn-pr" onclick="saveTemplate()"><i class="fas fa-save"></i>Save Template</button>
+    </div>
+  </div>
+</div>
+
+<!-- PREVIEW MODAL -->
+<div id="previewModal" class="modal-overlay">
+  <div class="modal-box" style="max-width:600px;max-height:85vh;overflow-y:auto">
+    <div class="modal-hdr">
+      <h6 id="prevTitle" style="margin:0;font-weight:700;color:#1a237e"><i class="fas fa-eye" style="margin-right:8px"></i>Preview</h6>
+      <button onclick="document.getElementById('previewModal').classList.remove('open')" style="border:none;background:none;font-size:20px;cursor:pointer">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px">
+      <div id="prevContent"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-ol" onclick="document.getElementById('previewModal').classList.remove('open')">Close</button></div>
+  </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:24px;right:24px;z-index:9999;min-width:320px;display:none"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var TEMPLATE_GRID_META=[
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'},
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Michael Chen'},
+  {audience:'Agent, Agency',createdBy:'James Rollins',updatedBy:'James Rollins'},
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Angela White'},
+  {audience:'Agent, Agency',createdBy:'Michael Chen',updatedBy:'Michael Chen'},
+  {audience:'Agent, Agency, Member',createdBy:'Michael Chen',updatedBy:'Sandra Adams'},
+  {audience:'Agent, Agency',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'},
+  {audience:'Agent',createdBy:'Angela White',updatedBy:'Angela White'},
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Michael Chen'},
+  {audience:'Agent, Agency, Member',createdBy:'Michael Chen',updatedBy:'Michael Chen'},
+  {audience:'Agent',createdBy:'Angela White',updatedBy:'Sandra Adams'},
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'},
+  {audience:'Agent, Agency',createdBy:'James Rollins',updatedBy:'James Rollins'},
+  {audience:'Agency',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'},
+  {audience:'Member',createdBy:'Michael Chen',updatedBy:'Michael Chen'},
+  {audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Angela White'},
+  {audience:'Agent, Agency',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'},
+  {audience:'Agent, Agency, Member',createdBy:'Michael Chen',updatedBy:'Michael Chen'}
+];
+
+function audienceBadgeHtml(audience){
+  if(audience==='Agent') return '<span class="bdg b-blue">Agent</span>';
+  if(audience==='Agency') return '<span class="bdg b-teal">Agency</span>';
+  if(audience==='Member') return '<span class="bdg b-green">Member</span>';
+  if(audience==='Agent, Agency') return '<span class="bdg b-blue">Agent</span> <span class="bdg b-teal">Agency</span>';
+  if(audience==='Agent, Agency, Member') return '<span class="bdg b-blue">Agent</span> <span class="bdg b-teal">Agency</span> <span class="bdg b-green">Member</span>';
+  return audience;
+}
+
+function enhanceTemplateGridMetadata(){
+  var rows=document.querySelectorAll('#tplTableBody tr');
+  rows.forEach(function(row,idx){
+    if(row.dataset.metaEnhanced==='true') return;
+    var meta=TEMPLATE_GRID_META[idx]||{audience:'Agent',createdBy:'Sandra Adams',updatedBy:'Sandra Adams'};
+
+    var tdAudience=document.createElement('td');
+    tdAudience.innerHTML=audienceBadgeHtml(meta.audience);
+    row.insertBefore(tdAudience,row.children[2]);
+
+    var tdCreated=document.createElement('td');
+    tdCreated.innerHTML='<span style="font-size:12px">'+meta.createdBy+'</span>';
+    row.insertBefore(tdCreated,row.children[5]);
+
+    var tdUpdated=document.createElement('td');
+    tdUpdated.innerHTML='<span style="font-size:12px">'+meta.updatedBy+'</span>';
+    row.insertBefore(tdUpdated,row.children[6]);
+
+    row.dataset.metaEnhanced='true';
+  });
+}
+
+var templates=[
+  {name:'Lead Assigned',category:'Lead',channels:['Portal','Email'],mandatory:'No',trigger:'When a new lead is assigned to an agent',subject:'New Lead Assigned: {{lead_name}}',body:'Hi {{agent_name}},\n\nA new lead has been assigned to you.\n\nLead: {{lead_name}}\nPhone: {{lead_phone}}\nSource: {{lead_source}}\n\nPlease contact within 24 hours.\n\n? Gold Kidney Health Plan'},
+  {name:'Enrollment CMS Accepted',category:'Enrollment',channels:['Portal','Email'],mandatory:'No',trigger:'When CMS confirms enrollment acceptance',subject:'Enrollment Accepted: {{member_name}} ? {{plan_name}}',body:'Hi {{agent_name}},\n\nGreat news! The enrollment for {{member_name}} has been accepted by CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\nMember ID: {{member_id}}\n\nCommission will appear in the next payment cycle.\n\n? Gold Kidney Health Plan'},
+  {name:'Commission Payment Processed',category:'Commission',channels:['Portal','Email'],mandatory:'No',trigger:'When a commission payment batch is processed',subject:'Commission Payment: ${{amount}} Deposited',body:'Hi {{agent_name}},\n\nYour commission payment of ${{amount}} has been processed.\n\nPayment Date: {{payment_date}}\nMethod: {{payment_method}}\nBatch ID: {{batch_id}}\n\nView details in your Commission Dashboard.\n\n? Gold Kidney Health Plan'},
+  {name:'HRA Due Reminder',category:'Action Item',channels:['Portal','Email','SMS'],mandatory:'No',trigger:'When HRA completion deadline approaches (7 days, 3 days)',subject:'Action Required: HRA Due for {{member_name}}',body:'Hi {{agent_name}},\n\nThe Health Risk Assessment for {{member_name}} is due by {{due_date}}.\n\nMember: {{member_name}}\nPlan: {{plan_name}}\nDeadline: {{due_date}}\n\nPlease schedule and complete the HRA to ensure compliance.\n\n? Gold Kidney Health Plan'},
+  {name:'AHIP Certification Expiry',category:'Compliance',channels:['Portal','Email'],mandatory:'Yes',trigger:'When AHIP certification is within 30 days of expiry',subject:'URGENT: AHIP Certification Expiring ? Action Required',body:'{{agent_name}},\n\nYour AHIP certification expires on {{expiry_date}}. You must renew before this date to maintain your active agent status.\n\nFailure to renew will result in:\n- Suspension of selling privileges\n- Removal from active campaign assignments\n- Hold on pending commission payments\n\nRenew now at: https://ahip.org/renew\n\n? Gold Kidney Compliance Team'},
+  {name:'Account Security Alert',category:'Security',channels:['Portal','Email','SMS'],mandatory:'Yes',trigger:'When suspicious login activity or password change is detected',subject:'Security Alert: Unusual Activity on Your Account',body:'{{agent_name}},\n\nWe detected unusual activity on your Gold Kidney portal account:\n\nEvent: {{security_event}}\nTime: {{event_time}}\nIP Address: {{ip_address}}\nLocation: {{location}}\n\nIf this was you, no action is needed. If not, reset your password immediately and contact IT Security.\n\n? Gold Kidney Security Team'}
+];
+function openTemplateModal(){
+  document.getElementById('tplErr').style.display='none';
+  document.getElementById('tplModalTitle').innerHTML='<i class="fas fa-file-alt" style="margin-right:8px"></i>Create Template';
+  ['tName','tTrigger','tSubject','tBody'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('tCategory').value='';
+  document.getElementById('tMandatory').value='No';
+  document.getElementById('tStatus').value='Active';
+  document.querySelectorAll('#tChannels input').forEach(function(cb){cb.checked=false;});
+  document.getElementById('templateModal').classList.add('open');
+}
+
+function closeTemplateModal(){
+  document.getElementById('templateModal').classList.remove('open');
+}
+
+function prefillTemplate(){
+  document.getElementById('tName').value='Enrollment Submission Confirmed';
+  document.getElementById('tCategory').value='Enrollment';
+  document.querySelectorAll('#tChannels input').forEach(function(cb){cb.checked=(cb.value==='Portal'||cb.value==='Email');});
+  document.getElementById('tMandatory').value='No';
+  document.getElementById('tTrigger').value='When an enrollment application is submitted to CMS';
+  document.getElementById('tSubject').value='Enrollment Submitted: {{member_name}} ? {{plan_name}}';
+  document.getElementById('tBody').value='Hi {{agent_name}},\n\nThe enrollment application for {{member_name}} has been successfully submitted to CMS.\n\nPlan: {{plan_name}}\nEffective Date: {{effective_date}}\n\nYou will be notified once CMS confirms acceptance. Track status in your Enrollment Dashboard.\n\n? Gold Kidney Health Plan';
+  document.getElementById('tStatus').value='Active';
+  showToast('Template form prefilled with sample data','success');
+}
+
+function saveTemplate(){
+  var errors=[];
+  var name=document.getElementById('tName').value.trim();
+  var category=document.getElementById('tCategory').value;
+  var channels=Array.from(document.querySelectorAll('#tChannels input:checked')).map(function(cb){return cb.value;});
+  var trigger=document.getElementById('tTrigger').value.trim();
+  var subject=document.getElementById('tSubject').value.trim();
+  var body=document.getElementById('tBody').value.trim();
+
+  if(!name) errors.push('Template Name is required.');
+  if(!category) errors.push('Category is required.');
+  if(channels.length===0) errors.push('At least one delivery channel must be selected.');
+  if(!trigger) errors.push('Trigger Event is required.');
+  if(!subject) errors.push('Subject Line is required.');
+  if(!body) errors.push('Body Template is required.');
+
+  var err=document.getElementById('tplErr');
+  if(errors.length){
+    err.innerHTML='<i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><div><strong>Please fix the following:</strong><ul style="margin:4px 0 0;padding-left:16px">'+errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+    err.style.display='flex';
+    err.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  err.style.display='none';
+  showToast('Template "'+name+'" created successfully.','success');
+  closeTemplateModal();
+}
+
+function showToast(msg,type){type=type||'info';var t=document.getElementById('toast');var c={'success':'#1b5e20','warn':'#e65100','info':'#0d47a1','error':'#c62828'};t.innerHTML='<div style="background:#fff;border-left:4px solid '+(c[type]||'#0d47a1')+';border-radius:8px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.18);font-size:13.5px">'+msg+'</div>';t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
+
+function editTemplate(idx){
+  var t=templates[idx]; if(!t) return;
+  document.getElementById('tplErr').style.display='none';
+  document.getElementById('tplModalTitle').innerHTML='<i class="fas fa-edit" style="margin-right:8px"></i>Edit Template: '+t.name;
+  document.getElementById('tName').value=t.name;
+  document.getElementById('tCategory').value=t.category;
+  document.querySelectorAll('#tChannels input').forEach(function(cb){cb.checked=t.channels.includes(cb.value);});
+  document.getElementById('tMandatory').value=t.mandatory;
+  document.getElementById('tTrigger').value=t.trigger;
+  document.getElementById('tSubject').value=t.subject;
+  document.getElementById('tBody').value=t.body.replace(/\\n/g,'\n');
+  document.getElementById('tStatus').value='Active';
+  document.getElementById('templateModal').classList.add('open');
+}
+
+function previewTemplate(idx){
+  var t=templates[idx]; if(!t) return;
+  var bodyHtml=t.body.replace(/\\n/g,'\n').replace(/\n/g,'<br>').replace(/\{\{(\w+)\}\}/g,'<span style="background:#e3f2fd;color:#1a237e;padding:1px 6px;border-radius:4px;font-size:12px;font-weight:600">$1</span>');
+  var channelBadges=t.channels.map(function(ch){return '<span class="bdg b-blue" style="font-size:11px">'+ch+'</span>';}).join(' ');
+  document.getElementById('prevTitle').innerHTML='<i class="fas fa-eye" style="margin-right:8px"></i>Preview: '+t.name;
+  document.getElementById('prevContent').innerHTML=
+    '<div style="margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">'+
+    '<div><div class="text-muted text-sm">Category</div><div style="font-weight:600">'+t.category+'</div></div>'+
+    '<div><div class="text-muted text-sm">Channels</div><div>'+channelBadges+'</div></div>'+
+    '<div><div class="text-muted text-sm">Mandatory</div><div style="font-weight:600;color:'+(t.mandatory==='Yes'?'#c62828':'#5f6368')+'">'+t.mandatory+'</div></div>'+
+    '<div><div class="text-muted text-sm">Trigger</div><div style="font-size:12px">'+t.trigger+'</div></div>'+
+    '</div>'+
+    '<div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:16px;margin-top:8px">'+
+    '<div style="font-size:11px;color:#5f6368;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Subject</div>'+
+    '<div style="font-size:14px;font-weight:600;margin-bottom:14px;color:#1a237e">'+t.subject.replace(/\{\{(\w+)\}\}/g,'<span style="background:#e3f2fd;padding:1px 6px;border-radius:4px;font-size:12px">$1</span>')+'</div>'+
+    '<div style="font-size:11px;color:#5f6368;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Body</div>'+
+    '<div style="font-size:13px;line-height:1.7;color:#3c4043">'+bodyHtml+'</div>'+
+    '</div>';
+  document.getElementById('previewModal').classList.add('open');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});});
+
+// Template Pagination
+var tplPage = 1;
+var TPL_PER_PAGE = 10;
+function renderTplPagination() {
+  var rows = document.querySelectorAll('#tplTableBody tr');
+  var total = rows.length;
+  var totalPages = Math.ceil(total / TPL_PER_PAGE);
+  var start = (tplPage - 1) * TPL_PER_PAGE;
+  var end = start + TPL_PER_PAGE;
+  rows.forEach(function(row, i) {
+    row.style.display = (i >= start && i < end) ? '' : 'none';
+  });
+  document.getElementById('tplPageInfo').textContent = 'Showing ' + (start + 1) + '-' + Math.min(end, total) + ' of ' + total + ' templates';
+  document.getElementById('tplPrev').disabled = tplPage <= 1;
+  document.getElementById('tplNext').disabled = tplPage >= totalPages;
+}
+function changeTplPage(dir) {
+  var rows = document.querySelectorAll('#tplTableBody tr');
+  var totalPages = Math.ceil(rows.length / TPL_PER_PAGE);
+  tplPage = Math.max(1, Math.min(totalPages, tplPage + dir));
+  renderTplPagination();
+}
+enhanceTemplateGridMetadata();
+renderTplPagination();
+
+// Toggle Rule Active/Inactive
+function toggleRule(el) {
+  var statusCell = el.closest('tr').querySelector('td:nth-child(6) .bdg');
+  if (el.checked) {
+    statusCell.className = 'bdg b-green';
+    statusCell.textContent = 'Active';
+    showToast('Rule activated', 'success');
+  } else {
+    statusCell.className = 'bdg b-grey';
+    statusCell.textContent = 'Inactive';
+    showToast('Rule deactivated', 'warn');
+  }
+}
+</script>
+
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 06 05,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carrier Admin Dashboard | Gold Kidney</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="../assets/nfp.css">
+<style>:root{--sb:#1a237e}</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sb-brand"><div class="carrier">Gold Kidney Health Plan</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-nav">
+    <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <div class="sb-section">Agent &amp; Producer</div>
+    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
+    <a href="agent-invitations.html"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
+    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
+    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
+    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
+    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
+    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
+    <div class="sb-section">Members &amp; Leads</div>
+    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
+    <div class="sb-section">Commissions &amp; Finance</div>
+    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+    <div class="sb-section">Training &amp; Compliance</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+      <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
+      <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
+      <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+    </div>
+    <div class="sb-section">System &amp; Configuration</div>
+    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
+    <div class="sb-sub">
+      <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
+      <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
+      <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    </div>
+    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
+    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
+    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
+    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
+    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
+    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
+    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
+    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
+    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
+  </div>
+  <div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left"><div class="brand-top-left" style="font-size:11px;font-weight:700;color:#1a237e;letter-spacing:.5px;margin-bottom:2px"><i class="fas fa-heartbeat" style="margin-right:4px;color:#c62828"></i>GOLD KIDNEY</div><h4>Carrier Admin Dashboard</h4></div>
+    <input type="text" class="tb-search" placeholder="Search">
+    <span class="tb-btn"><i class="fas fa-bell"></i></span>
+    <button class="btn-pr btn-sm" onclick="nfpSubmit('Request')"><i class="fas fa-download"></i>Reports</button>
+
+    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <div class="page">
+    <!-- KPIs -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='member-management.html'"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-users"></i></div><div><div class="stat-label">Total Active Members</div><div class="stat-val">1,847</div><div class="stat-sub" style="color:#2e7d32">+12 this month</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='agents.html'"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-user-tie"></i></div><div><div class="stat-label">Active Agents</div><div class="stat-val">143</div><div class="stat-sub" style="color:#1a237e">View all →</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='agency-details.html'"><div class="stat-icon" style="background:#e0f7fa;color:#00695c"><i class="fas fa-building"></i></div><div><div class="stat-label">Active Agencies</div><div class="stat-val">24</div><div class="stat-sub" style="color:#00695c">2 activated this month</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='enrollment-reports.html'"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-file-medical"></i></div><div><div class="stat-label">Enrollments (MTD)</div><div class="stat-val">28</div><div class="stat-sub" style="color:#1a237e">View details →</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='compliance-tracker.html'"><div class="stat-icon" style="background:#ffebee;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">7-Day Compliance Flags</div><div class="stat-val">3</div><div class="stat-sub" style="color:#c62828">Review flags →</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='onboarding-cases.html'"><div class="stat-icon" style="background:#ede7f6;color:#4527a0"><i class="fas fa-folder-open"></i></div><div><div class="stat-label">In-Flight Onboarding</div><div class="stat-val">10</div><div class="stat-sub" style="color:#4527a0">View queue</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='monitoring.html'"><div class="stat-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-heartbeat"></i></div><div><div class="stat-label">System Health Score</div><div class="stat-val">98%</div><div class="stat-sub" style="color:#2e7d32">All services nominal</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='audit-log.html'"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-users-cog"></i></div><div><div class="stat-label">Active Sessions</div><div class="stat-val">47</div><div class="stat-sub" style="color:#0d47a1">View sessions →</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='integrations.html'"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-plug"></i></div><div><div class="stat-label">Integration Status</div><div class="stat-val">3 / 4 OK</div><div class="stat-sub" style="color:#e65100">1 warning</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='monitoring.html'"><div class="stat-icon" style="background:#f3e5f5;color:#6a1b9a"><i class="fas fa-times-circle"></i></div><div><div class="stat-label">Failed Batch Jobs</div><div class="stat-val">0</div><div class="stat-sub" style="color:#2e7d32">None today</div></div></div></div>
+    </div>
+
+    <!-- Lead & Assignment Widgets -->
+    <div style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <h6 style="margin:0;font-size:13px;font-weight:700;color:#1a237e"><i class="fas fa-bullhorn" style="margin-right:6px"></i>Lead &amp; Assignment</h6>
+        <a href="leads.html" style="font-size:11px;color:#1a237e;font-weight:600;text-decoration:none"><i class="fas fa-external-link-alt" style="margin-right:3px"></i>View All Leads</a>
+      </div>
+      <div class="row-grid">
+        <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='leads.html'"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-bolt"></i></div><div><div class="stat-label">Today's Leads</div><div class="stat-val">14</div><div class="stat-sub">7 new &bull; 4 web &bull; 3 referral</div></div></div></div>
+        <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='leads.html'"><div class="stat-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-file-signature"></i></div><div><div class="stat-label">SOA Pending</div><div class="stat-val">9</div><div class="stat-sub">Awaiting member signature</div></div></div></div>
+        <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='leads.html'"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-phone-alt"></i></div><div><div class="stat-label">Follow-up Due</div><div class="stat-val">18</div><div class="stat-sub">6 today &bull; 12 this week</div></div></div></div>
+        <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='leads.html'"><div class="stat-icon" style="background:#fce4ec;color:#c62828"><i class="fas fa-exclamation-triangle"></i></div><div><div class="stat-label">Overdue</div><div class="stat-val">5</div><div class="stat-sub">Missed follow-up &gt; 48 hrs</div></div></div></div>
+        <div class="col-1"><div class="stat-card" style="cursor:pointer" onclick="location.href='leads.html'"><div class="stat-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-chart-line"></i></div><div><div class="stat-label">Enrollment Rate</div><div class="stat-val">32%</div><div class="stat-sub">23 enrolled of 72 contacted</div></div></div></div>
+      </div>
+    </div>
+
+    <!-- Last Refreshed Bar -->
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-bottom:12px;font-size:12px;color:#5f6368">
+      <i class="fas fa-sync-alt" style="color:#1a237e"></i>
+      <span id="adminRefreshTs">Last refreshed: <strong>Just now</strong></span>
+      <button onclick="refreshAdminDash()" style="border:1px solid #1a237e;background:#fff;color:#1a237e;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer"><i class="fas fa-redo" style="margin-right:4px"></i>Refresh Now</button>
+    </div>
+
+    <!-- Pending Actions -->
+    <div class="card mb16">
+      <div class="card-hdr"><h5><i class="fas fa-exclamation-circle" style="margin-right:6px;color:#c62828"></i>Pending Actions</h5><span class="bdg b-red" style="font-size:10px">5 items</span></div>
+      <div style="padding:0">
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-purple" style="font-size:10px">ONBOARDING</span>
+          <span style="font-size:13px;flex:1">10 agent applications are currently in onboarding queue and awaiting payer-side action</span>
+          <a href="onboarding-cases.html" class="btn-ol btn-sm" style="font-size:10px">View All</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-amber" style="font-size:10px">CONFIG CHANGE</span>
+          <span style="font-size:13px;flex:1">2 commission rule changes pending approval review</span>
+          <a href="commission-rules.html" class="btn-ol btn-sm" style="font-size:10px">Review</a>
+    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-red" style="font-size:10px">INTEGRATION ALERT</span>
+          <span style="font-size:13px;flex:1">1 integration warning ? CareLink Exchange SFTP latency elevated</span>
+          <a href="integrations.html" class="btn-ol btn-sm" style="font-size:10px">Open Hub</a>
+        </div>
+        <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-purple" style="font-size:10px">EXCEPTIONS</span>
+          <span style="font-size:13px;flex:1">5 items in exception queue awaiting admin review</span>
+          <a href="exceptions.html" class="btn-ol btn-sm" style="font-size:10px">View Queue</a>
+        </div>
+        <div style="padding:10px 16px;display:flex;align-items:center;gap:10px">
+          <span class="bdg b-blue" style="font-size:10px">FEATURE TOGGLE</span>
+          <span style="font-size:13px;flex:1">3 feature toggles scheduled for review before AEP 2027</span>
+          <a href="feature-toggles.html" class="btn-ol btn-sm" style="font-size:10px">Review</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Agency Widget -->
+    <div class="card mb16">
+      <div class="card-hdr" style="justify-content:space-between">
+        <h5><i class="fas fa-building" style="margin-right:6px;color:#00695c"></i>Active Agencies</h5>
+        <a href="agency-details.html" class="btn-pr btn-sm"><i class="fas fa-external-link-alt"></i> View All Agencies</a>
+      </div>
+      <!-- Summary chips -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid #f1f3f4">
+        <div style="padding:4px 12px;border-radius:20px;background:#e0f7fa;font-size:11px;font-weight:600;color:#00695c">24 Total Active</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#e8eaf6;font-size:11px;font-weight:600;color:#1a237e">4 FMO</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#e3f2fd;font-size:11px;font-weight:600;color:#0d47a1">6 MGA</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#e8f5e9;font-size:11px;font-weight:600;color:#1b5e20">9 GA</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#fff8e1;font-size:11px;font-weight:600;color:#e65100">5 SGA</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#fce4ec;font-size:11px;font-weight:600;color:#b71c1c">2 On Hold</div>
+        <div style="padding:4px 12px;border-radius:20px;background:#f1f3f4;font-size:11px;font-weight:600;color:#5f6368">1 Pending Approval</div>
+        <div style="margin-left:auto;font-size:11px;color:#5f6368;align-self:center">2 new agencies activated this month</div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="tblExport1">
+          <thead>
+            <tr>
+              <th>Agency Name</th>
+              <th>Tier / Level</th>
+              <th>State(s)</th>
+              <th>Active Agents</th>
+              <th>Enrollments MTD</th>
+              <th>Commission MTD</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700">HealthFirst Distribution</td>
+              <td><span class="bdg b-purple">GA</span></td>
+              <td>FL, TX, GA</td>
+              <td>48</td>
+              <td>11</td>
+              <td>$28,400</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700">Coastal Medicare Partners</td>
+              <td><span class="bdg b-purple">GA</span></td>
+              <td>FL, SC</td>
+              <td>22</td>
+              <td>5</td>
+              <td>$12,100</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700">SunBridge Medicare Advisors</td>
+              <td><span class="bdg b-blue">MGA</span></td>
+              <td>CA, NV, AZ</td>
+              <td>31</td>
+              <td>7</td>
+              <td>$19,650</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700">MedBridge Solutions Group</td>
+              <td><span class="bdg b-blue">MGA</span></td>
+              <td>TX, OK, LA</td>
+              <td>19</td>
+              <td>3</td>
+              <td>$8,920</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            <tr style="background:#fff8e1">
+              <td style="font-weight:700">Premier Senior Benefits</td>
+              <td><span class="bdg b-amber">SGA</span></td>
+              <td>IL, IN, OH</td>
+              <td>14</td>
+              <td>2</td>
+              <td>$5,340</td>
+              <td><span class="bdg b-amber">On Hold</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700">National Medicare Group</td>
+              <td><span class="bdg b-grey">FMO</span></td>
+              <td>Multi-State (12)</td>
+              <td>62</td>
+              <td>18</td>
+              <td>$41,200</td>
+              <td><span class="bdg b-green">Active</span></td>
+              <td><a href="agency-details.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Onboarding Cases Status Widget -->
+    <div class="card mb16">
+      <div class="card-hdr" style="justify-content:space-between">
+        <h5><i class="fas fa-folder-open" style="margin-right:6px;color:#4527a0"></i>Onboarding Cases Status</h5>
+        <div style="display:flex;align-items:center;gap:8px">
+          <select id="obCaseFilter" onchange="renderObCasesWidget()" style="font-size:11px;padding:4px 8px;border:1px solid #dadce0;border-radius:5px;color:#3c4043">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Pending Admin Approval">Pending Admin Approval</option>
+            <option value="In Review">In Review</option>
+            <option value="On Hold">On Hold</option>
+            <option value="Completed">Completed</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          <a href="onboarding-cases.html" class="btn-pr btn-sm"><i class="fas fa-external-link-alt"></i>Full Queue</a>
+        </div>
+      </div>
+      <!-- Summary chips -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid #f1f3f4">
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#e3f2fd;font-size:11px;font-weight:600;color:#0d47a1"><span id="ob-chip-pending">3</span> Pending</div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#ede7f6;font-size:11px;font-weight:600;color:#4527a0"><span id="ob-chip-approval">1</span> Needs Approval</div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#fff8e1;font-size:11px;font-weight:600;color:#e65100"><span id="ob-chip-inreview">3</span> In Review</div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#fce4ec;font-size:11px;font-weight:600;color:#b71c1c"><span id="ob-chip-onhold">2</span> On Hold</div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#e8f5e9;font-size:11px;font-weight:600;color:#1b5e20"><span id="ob-chip-completed">0</span> Completed</div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:#f1f3f4;font-size:11px;font-weight:600;color:#5f6368"><span id="ob-chip-rejected">1</span> Rejected</div>
+        <div style="margin-left:auto;font-size:11px;color:#5f6368;align-self:center"><span id="ob-chip-total">10</span> total cases</div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl" id="obCasesWidgetTable">
+          <thead>
+            <tr>
+              <th>Case ID</th>
+              <th>Agent Name</th>
+              <th>NPN</th>
+              <th>Level</th>
+              <th>Upline Org</th>
+              <th>Plan Year</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="obCasesWidgetTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Agent Attention Widget: Pending Approval / License Expiring / Certification Expiring -->
+    <div class="row-grid" style="margin-bottom:16px;align-items:stretch">
+
+      <!-- Panel 1: Agents Pending Payer Approval -->
+      <div class="col-1" style="min-width:300px">
+        <div class="card" style="height:100%">
+          <div class="card-hdr" style="justify-content:space-between">
+            <h5><i class="fas fa-user-check" style="margin-right:6px;color:#4527a0"></i>Pending Payer Approval</h5>
+            <span style="background:#ede7f6;color:#4527a0;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700">3 agents</span>
+          </div>
+          <div style="padding:0">
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#ede7f6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#4527a0;flex-shrink:0">RC</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Robert Chen</div>
+                <div style="font-size:10px;color:#5f6368">NPN 98765432 &nbsp;|&nbsp; Case OB-2026-0441</div>
+              </div>
+              <a href="onboarding-cases.html" class="btn-pr btn-sm" style="font-size:10px;background:#1b5e20;flex-shrink:0"><i class="fas fa-user-check"></i> Approve</a>
+            </div>
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#ede7f6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#4527a0;flex-shrink:0">PP</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Priya Patel</div>
+                <div style="font-size:10px;color:#5f6368">NPN 91827364 &nbsp;|&nbsp; Case OB-2026-0533</div>
+              </div>
+              <a href="onboarding-cases.html" class="btn-pr btn-sm" style="font-size:10px;background:#1b5e20;flex-shrink:0"><i class="fas fa-user-check"></i> Approve</a>
+            </div>
+            <div style="padding:10px 16px;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#ede7f6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#4527a0;flex-shrink:0">AW</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Angela Williams</div>
+                <div style="font-size:10px;color:#5f6368">NPN 88776655 &nbsp;|&nbsp; Case OB-2026-0291</div>
+              </div>
+              <a href="onboarding-cases.html" class="btn-pr btn-sm" style="font-size:10px;background:#1b5e20;flex-shrink:0"><i class="fas fa-user-check"></i> Approve</a>
+            </div>
+          </div>
+          <div style="padding:8px 16px;border-top:1px solid #f1f3f4;text-align:right">
+            <a href="onboarding-cases.html" style="font-size:11px;color:#4527a0;font-weight:600">View all pending approvals <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: License Expiring Soon -->
+      <div class="col-1" style="min-width:300px">
+        <div class="card" style="height:100%">
+          <div class="card-hdr" style="justify-content:space-between">
+            <h5><i class="fas fa-id-badge" style="margin-right:6px;color:#e65100"></i>License Expiring Soon</h5>
+            <span style="background:#fff3e0;color:#bf360c;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700">4 agents</span>
+          </div>
+          <div style="padding:0">
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">JM</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">James Martinez <span style="background:#fce4ec;color:#b71c1c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">12 days</span></div>
+                <div style="font-size:10px;color:#5f6368">FL License &nbsp;|&nbsp; Exp: 08 04,2026</div>
+              </div>
+              <a href="agent-lifecycle.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Notify</a>
+            </div>
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">MT</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Michael Torres <span style="background:#fff3e0;color:#bf360c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">28 days</span></div>
+                <div style="font-size:10px;color:#5f6368">FL License &nbsp;|&nbsp; Exp: 08 20,2026</div>
+              </div>
+              <a href="agent-lifecycle.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Notify</a>
+            </div>
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">SC</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Sarah Chen <span style="background:#fff3e0;color:#bf360c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">45 days</span></div>
+                <div style="font-size:10px;color:#5f6368">CA License &nbsp;|&nbsp; Exp: 09 06,2026</div>
+              </div>
+              <a href="agent-lifecycle.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Notify</a>
+            </div>
+            <div style="padding:10px 16px;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">LJ</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Lisa Johnson <span style="background:#fff3e0;color:#bf360c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">58 days</span></div>
+                <div style="font-size:10px;color:#5f6368">FL License &nbsp;|&nbsp; Exp: 09 19,2026</div>
+              </div>
+              <a href="agent-lifecycle.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Notify</a>
+            </div>
+          </div>
+          <div style="padding:8px 16px;border-top:1px solid #f1f3f4;text-align:right">
+            <a href="agent-lifecycle.html" style="font-size:11px;color:#e65100;font-weight:600">View all expiring licenses <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Certifications Expiring -->
+      <div class="col-1" style="min-width:300px">
+        <div class="card" style="height:100%">
+          <div class="card-hdr" style="justify-content:space-between">
+            <h5><i class="fas fa-certificate" style="margin-right:6px;color:#b71c1c"></i>Certifications Expiring</h5>
+            <span style="background:#fce4ec;color:#b71c1c;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700">3 expiring</span>
+          </div>
+          <div style="padding:0">
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#b71c1c;flex-shrink:0">JM</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">James Martinez <span style="background:#fce4ec;color:#b71c1c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">Expired</span></div>
+                <div style="font-size:10px;color:#5f6368"><span style="background:#e8eaf6;color:#1a237e;padding:1px 6px;border-radius:4px;font-weight:600">AHIP CY2025</span> &nbsp;Expired 01 14,2026</div>
+              </div>
+              <a href="ahip-renewals.html" class="btn-pr btn-sm" style="font-size:10px;background:#b71c1c;flex-shrink:0"><i class="fas fa-sync-alt"></i> Re-Cred</a>
+            </div>
+            <div style="padding:10px 16px;border-bottom:1px solid #f1f3f4;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">SC</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">Sarah Chen <span style="background:#fff3e0;color:#bf360c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">22 days</span></div>
+                <div style="font-size:10px;color:#5f6368"><span style="background:#e3f2fd;color:#0d47a1;padding:1px 6px;border-radius:4px;font-weight:600">E&amp;O Insurance</span> &nbsp;Exp: 08 14,2026</div>
+              </div>
+              <a href="agent-lifecycle.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Remind</a>
+            </div>
+            <div style="padding:10px 16px;display:flex;align-items:center;gap:10px">
+              <div style="width:34px;height:34px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#bf360c;flex-shrink:0">DK</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:12px;font-weight:700">David Kim <span style="background:#fff3e0;color:#bf360c;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700;margin-left:4px">55 days</span></div>
+                <div style="font-size:10px;color:#5f6368"><span style="background:#e8f5e9;color:#1b5e20;padding:1px 6px;border-radius:4px;font-weight:600">CKD Training Cert</span> &nbsp;Exp: 09 16,2026</div>
+              </div>
+              <a href="agent-training-progress.html" class="btn-ol btn-sm" style="font-size:10px;color:#e65100;border-color:#e65100;flex-shrink:0"><i class="fas fa-bell"></i> Remind</a>
+            </div>
+          </div>
+          <div style="padding:8px 16px;border-top:1px solid #f1f3f4;text-align:right">
+            <a href="agent-lifecycle.html" style="font-size:11px;color:#b71c1c;font-weight:600">View all expiring certifications <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Actions Tiles -->
+    <div class="row-grid" style="margin-bottom:16px">
+      <div class="col-1"><div class="stat-card" style="cursor:pointer;border-left:3px solid #1a237e" onclick="window.location='../compliance/audit-trail.html'"><div class="stat-icon" style="background:#e8eaf6;color:#1a237e"><i class="fas fa-history"></i></div><div><div class="stat-label" style="font-weight:700">Audit Log</div><div style="font-size:11px;color:#5f6368">View all system events</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer;border-left:3px solid #0d47a1" onclick="window.location='integrations.html'"><div class="stat-icon" style="background:#e3f2fd;color:#0d47a1"><i class="fas fa-plug"></i></div><div><div class="stat-label" style="font-weight:700">Integration Hub</div><div style="font-size:11px;color:#5f6368">Manage vendor connections</div></div></div></div>
+      <div class="col-1"><div class="stat-card" style="cursor:pointer;border-left:3px solid #4a148c" onclick="window.location='feature-toggles.html'"><div class="stat-icon" style="background:#f3e5f5;color:#4a148c"><i class="fas fa-toggle-on"></i></div><div><div class="stat-label" style="font-weight:700">Feature Toggles</div><div style="font-size:11px;color:#5f6368">Enable / disable features</div></div></div></div>
+    </div>
+
+    <div class="row-grid">
+      <!-- Recent Enrollments -->
+      <div class="col-3">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>Recent Enrollments</h5><a href="#" class="btn-ol btn-sm">View All</a><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport2','dashboard_Table2')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table class="tbl" id="tblExport2">
+              <thead>
+                <tr><th>Enrollment Ref</th><th>Member</th><th>Plan</th><th>Agent</th><th>Submit Date</th><th>Effective</th><th>CMS Status</th><th>7-Day</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>ENR-2026-00541</code></td><td class="text-bold">Frank Johnson</td><td><span class="bdg b-purple">ESRD SNP</span></td><td>James Martinez</td><td>May 23</td><td>Jun 1</td><td><span class="bdg b-amber">Processing</span></td><td><span class="bdg b-amber">Day 1</span></td></tr>
+                <tr><td><code>ENR-2026-00539</code></td><td class="text-bold">Alice Cooper</td><td><span class="bdg b-blue">CKD SNP</span></td><td>Sarah Chen</td><td>May 22</td><td>Jun 1</td><td><span class="bdg b-amber">Processing</span></td><td><span class="bdg b-amber">Day 2</span></td></tr>
+                <tr><td><code>ENR-2026-00537</code></td><td class="text-bold">George Harris</td><td><span class="bdg b-grey">HMO</span></td><td>Michael Torres</td><td>May 20</td><td>Jun 1</td><td><span class="bdg b-green">Accepted</span></td><td><span class="bdg b-green">Safe</span></td></tr>
+                <tr><td><code>ENR-2026-00530</code></td><td class="text-bold">Betty Moore</td><td><span class="bdg b-teal">H&amp;D SNP</span></td><td>James Martinez</td><td>May 18</td><td>Jun 1</td><td><span class="bdg b-green">Accepted</span></td><td><span class="bdg b-green">Safe</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Commission Batch Status -->
+        <div class="card">
+          <div class="card-hdr"><h5>Commission Batch Status — CY2026</h5><a href="../finance/batches.html" class="btn-ol btn-sm">Finance Portal</a><button class="btn-ol btn-sm" onclick="exportTableToExcel('tblExport3','dashboard_Table3')"><i class="fas fa-file-excel" style="margin-right:4px;color:#1b5e20"></i>Export to Excel</button></div>
+          <div class="table-wrap">
+            <table class="tbl" id="tblExport3">
+              <thead>
+                <tr><th>Batch Ref</th><th>Period</th><th>Agents</th><th>Total Paid</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>BATCH-2026-05</code></td><td>May 2026</td><td>143</td><td>$87,432</td><td><span class="bdg b-green">Paid May 17</span></td></tr>
+                <tr><td><code>BATCH-2026-04</code></td><td>Apr 2026</td><td>141</td><td>$82,110</td><td><span class="bdg b-green">Paid Apr 17</span></td></tr>
+                <tr style="background:#fffde7"><td><code>BATCH-2026-06</code></td><td>Jun 2026</td><td>143</td><td>$91,200 (est)</td><td><span class="bdg b-amber">Processing</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Alerts + Quick Links -->
+      <div class="col-1">
+        <div class="card mb16">
+          <div class="card-hdr"><h5>System Alerts</h5></div>
+          <div class="card-body" style="padding:14px">
+            <div class="al-warn mb8"><i class="fas fa-exclamation-triangle" style="flex-shrink:0"></i><span>3 enrollments in 7-day compliance monitoring window</span></div>
+            <div class="al-info mb8"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>2 agent licenses expiring within 90 days</span></div>
+            <div class="al-info"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span>AEP 2027 plan configuration window opens July 1</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr"><h5>Plan Year Overview</h5></div>
+          <div class="card-body" style="padding:14px;font-size:13px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="dflex ai-center g8"><span class="bdg b-purple" style="font-size:10px">ESRD SNP</span><span style="flex:1">StarPlus ESRD SNP 2026</span><strong>412 mbrs</strong></div>
+              <div class="dflex ai-center g8"><span class="bdg b-blue" style="font-size:10px">CKD SNP</span><span style="flex:1">KidneyCare CKD SNP 2026</span><strong>331 mbrs</strong></div>
+              <div class="dflex ai-center g8"><span class="bdg b-teal" style="font-size:10px">H&amp;D SNP</span><span style="flex:1">HeartCare H&amp;D SNP 2026</span><strong>298 mbrs</strong></div>
+              <div class="dflex ai-center g8"><span class="bdg b-grey" style="font-size:10px">HMO</span><span style="flex:1">BrightChoice HMO 2026</span><strong>524 mbrs</strong></div>
+              <div class="dflex ai-center g8"><span class="bdg b-teal" style="font-size:10px">DM SNP</span><span style="flex:1">DiabetesCare SNP 2026</span><strong>282 mbrs</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts & Reports Section -->
+    <div class="row-grid" style="margin-top:16px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-line" style="color:#1a237e;margin-right:6px"></i>Monthly Enrollment Trend</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="enrollmentTrendChart" height="200"></canvas></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-pie" style="color:#7b1fa2;margin-right:6px"></i>Plan Distribution</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="planDistChart" height="200"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-grid" style="margin-top:16px;margin-bottom:40px">
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-bar" style="color:#2e7d32;margin-right:6px"></i>Commission Payouts (6 Months)</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="commissionChart" height="180"></canvas></div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card">
+          <div class="card-hdr"><h5><i class="fas fa-chart-area" style="color:#e65100;margin-right:6px"></i>Agent Growth</h5></div>
+          <div class="card-body" style="padding:16px"><canvas id="agentGrowthChart" height="180"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// Enrollment Trend - Line Chart
+new Chart(document.getElementById('enrollmentTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [{
+      label: 'Enrollments',
+      data: [18, 22, 19, 25, 28, 31],
+      borderColor: '#1a237e',
+      backgroundColor: 'rgba(26,35,126,0.1)',
+      fill: true,
+      tension: 0.4
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+
+// Plan Distribution - Doughnut Chart
+new Chart(document.getElementById('planDistChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['ESRD SNP','CKD SNP','H&D SNP','HMO','DM SNP'],
+    datasets: [{
+      data: [412, 331, 298, 524, 282],
+      backgroundColor: ['#7b1fa2','#1565c0','#00897b','#757575','#00838f']
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'right' } } }
+});
+
+// Commission Payouts - Bar Chart
+new Chart(document.getElementById('commissionChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [{
+      label: 'Total Paid ($K)',
+      data: [72, 78, 75, 82, 87, 91],
+      backgroundColor: '#2e7d32',
+      borderRadius: 4
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+
+// Agent Growth - Area Chart
+new Chart(document.getElementById('agentGrowthChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets: [{
+      label: 'Active Agents',
+      data: [128, 131, 135, 138, 141, 143],
+      borderColor: '#e65100',
+      backgroundColor: 'rgba(230,81,0,0.1)',
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { min: 120 } } }
+});
+</script>
+<!-- Footer -->
+<footer style="background:#1a237e;color:#fff;text-align:center;padding:16px 24px;font-size:12px;margin-top:32px">
+  <div style="font-weight:700;margin-bottom:4px">Gold Kidney Health Plan, Inc.&reg;</div>
+  <div style="opacity:.85;margin-bottom:4px">Enrollment in Gold Kidney Health Plan depends on contract renewal.</div>
+  <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 Gold Kidney Health Plan</div>
+</footer>
+<script src="../assets/nfp-actions.js"></script>
+<script>
+/* -- Onboarding Cases Widget -- */
+var OB_CASES_WIDGET = [
+  { id:'OB-2026-0441', agentName:'Robert Chen',     npn:'98765432', level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'Pending Admin Approval', created:'2026-05-21' },
+  { id:'OB-2026-0467', agentName:'Jennifer Lopez',  npn:'—',        level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'Pending',                created:'2026-05-25' },
+  { id:'OB-2026-0449', agentName:'Maria Santos',    npn:'—',        level:'Agent/Broker', uplineOrg:'Coastal Medicare Partners (GA-2288)', planYear:'2026', status:'On Hold - Hierarchy Issue', created:'2026-05-22' },
+  { id:'OB-2026-0512', agentName:'Kevin Park',      npn:'77665544', level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'In Review',              created:'2026-05-28' },
+  { id:'OB-2026-0328', agentName:'Michael Torres',  npn:'55443322', level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'Pending',                created:'2026-05-15' },
+  { id:'OB-2026-0291', agentName:'Angela Williams', npn:'88776655', level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'In Review',              created:'2026-05-10' },
+  { id:'OB-2026-0510', agentName:'David Kim',       npn:'55443322', level:'GA',           uplineOrg:'SunBridge Medicare Advisors (MGA-1014)', planYear:'2026', status:'On Hold - Hierarchy Issue', created:'2026-05-26' },
+  { id:'OB-2026-0388', agentName:'Lisa Johnson',    npn:'66778899', level:'Agent/Broker', uplineOrg:'Coastal Medicare Partners (GA-2288)', planYear:'2026', status:'Pending',                created:'2026-05-26' },
+  { id:'OB-2026-0533', agentName:'Priya Patel',      npn:'91827364', level:'Agent/Broker', uplineOrg:'SunBridge Medicare Advisors (MGA-1014)', planYear:'2026', status:'In Review',              created:'2026-05-29' },
+  { id:'OB-2026-0201', agentName:'Carlos Mendez',   npn:'—',        level:'Agent/Broker', uplineOrg:'HealthFirst Distribution (GA-2201)', planYear:'2026', status:'Rejected',               created:'2026-05-14' }
+];
+
+function statusBadge(s) {
+  if(s === 'Completed')              return '<span style="background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Completed</span>';
+  if(s === 'Rejected')               return '<span style="background:#f1f3f4;color:#5f6368;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Rejected</span>';
+  if(s === 'Pending Admin Approval') return '<span style="background:#ede7f6;color:#4527a0;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Needs Approval</span>';
+  if(s.indexOf('On Hold') >= 0)      return '<span style="background:#fce4ec;color:#b71c1c;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">On Hold</span>';
+  if(s === 'In Review')              return '<span style="background:#fff8e1;color:#e65100;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">In Review</span>';
+  return                                    '<span style="background:#e3f2fd;color:#0d47a1;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">Pending</span>';
+}
+
+function actionBtn(c) {
+  if(c.status === 'Pending Admin Approval')
+    return '<a href="onboarding-cases.html" class="btn-pr btn-sm" style="background:#1b5e20;font-size:10px"><i class="fas fa-user-check"></i> Approve</a>';
+  if(c.status.indexOf('On Hold') >= 0)
+    return '<a href="onboarding-cases.html" class="btn-pr btn-sm" style="background:#1b5e20;font-size:10px"><i class="fas fa-unlock"></i> Release Hold</a>';
+  return '<a href="onboarding-cases.html" class="btn-ol btn-sm" style="font-size:10px"><i class="fas fa-eye"></i> View</a>';
+}
+
+function renderObCasesWidget() {
+  var filter = document.getElementById('obCaseFilter').value;
+  var rows = OB_CASES_WIDGET.filter(function(c) {
+    if(!filter) return true;
+    if(filter === 'On Hold') return c.status.indexOf('On Hold') >= 0;
+    return c.status === filter;
+  });
+
+  var counts = { pending:0, approval:0, inreview:0, onhold:0, completed:0, rejected:0 };
+  OB_CASES_WIDGET.forEach(function(c) {
+    if(c.status === 'Pending')                counts.pending++;
+    else if(c.status === 'Pending Admin Approval') counts.approval++;
+    else if(c.status === 'In Review')         counts.inreview++;
+    else if(c.status.indexOf('On Hold') >= 0) counts.onhold++;
+    else if(c.status === 'Completed')         counts.completed++;
+    else if(c.status === 'Rejected')          counts.rejected++;
+  });
+  document.getElementById('ob-chip-pending').textContent   = counts.pending;
+  document.getElementById('ob-chip-approval').textContent  = counts.approval;
+  document.getElementById('ob-chip-inreview').textContent  = counts.inreview;
+  document.getElementById('ob-chip-onhold').textContent    = counts.onhold;
+  document.getElementById('ob-chip-completed').textContent = counts.completed;
+  document.getElementById('ob-chip-rejected').textContent  = counts.rejected;
+  document.getElementById('ob-chip-total').textContent     = OB_CASES_WIDGET.length;
+
+  var tbody = document.getElementById('obCasesWidgetTbody');
+  if(!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#9e9e9e;padding:20px">No cases match the selected filter.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(function(c) {
+    return '<tr>'
+      + '<td style="font-weight:700;color:#1a237e">' + c.id + '</td>'
+      + '<td>' + c.agentName + '</td>'
+      + '<td style="font-family:monospace;font-size:11px">' + c.npn + '</td>'
+      + '<td>' + c.level + '</td>'
+      + '<td style="font-size:11px">' + c.uplineOrg + '</td>'
+      + '<td>' + c.planYear + '</td>'
+      + '<td>' + statusBadge(c.status) + '</td>'
+      + '<td style="font-size:11px;color:#5f6368">' + c.created + '</td>'
+      + '<td>' + actionBtn(c) + '</td>'
+      + '</tr>';
+  }).join('');
+}
+renderObCasesWidget();
+
+function refreshAdminDash(){
+  var now = new Date();
+  document.getElementById('adminRefreshTs').innerHTML = 'Last refreshed: <strong>' + now.toLocaleTimeString() + '</strong>';
+  showToast('Admin dashboard refreshed.', 'success');
+}
+refreshAdminDash();
+</script>
+</body>
