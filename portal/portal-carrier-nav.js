@@ -33,7 +33,7 @@
       title: "Agent & Producer",
       icon: "fa-id-card",
       items: [
-        item(ADMIN + "agents.html", "fa-id-card", "Agent Management", { active: true }),
+        item(ADMIN + "agents.html", "fa-id-card", "Agent Management"),
         item(ADMIN + "agent-invitations.html", "fa-paper-plane", "Agent Invitations"),
         item(ADMIN + "onboarding-cases.html", "fa-folder-open", "Onboarding Cases"),
         item(ADMIN + "hierarchy.html", "fa-sitemap", "Producer Hierarchy"),
@@ -356,6 +356,8 @@
       return;
     }
 
+    /* Submenu links are handled by portal-embed.js (capture) so pages stay in-shell. */
+
     var btn = event.target.closest("[data-group]");
     if (!btn || !navRoot.contains(btn)) return;
     event.preventDefault();
@@ -363,8 +365,12 @@
     if (key === "dashboard") {
       closeAllAccordions();
       setDashboardActive(true);
-      var ready = document.getElementById("landingReady");
-      if (ready) ready.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (window.PortalEmbed && typeof window.PortalEmbed.showDashboard === "function") {
+        window.PortalEmbed.showDashboard();
+      } else {
+        var ready = document.getElementById("landingReady");
+        if (ready) ready.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
       return;
     }
     toggleAccordion(key);

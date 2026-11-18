@@ -874,6 +874,10 @@ span.p-nav-item:hover [data-icon] {
   color: var(--p-text);
   letter-spacing: -0.01em;
   min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .p-topbar-actions {
   display: inline-flex;
@@ -1010,6 +1014,25 @@ span.p-nav-item:hover [data-icon] {
   flex: 1;
   padding: 1.25rem 1.5rem 1.5rem;
   width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.p-page.is-embedded {
+  padding: 0;
+  overflow: hidden;
+}
+.p-embed-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: calc(100vh - 68px - 51px);
+  border: 0;
+  display: block;
+  background: #fff;
+}
+.p-page.is-embedded .p-embed-frame {
+  min-height: 0;
+  height: 100%;
 }
 .p-footer {
   height: 51px;
@@ -1257,6 +1280,8 @@ span.p-nav-item:hover [data-icon] {
   .p-card-grid,
   .p-kpi-grid { grid-template-columns: 1fr; }
   .p-page { padding: 1rem; }
+  .p-page.is-embedded { padding: 0; }
+  .p-embed-frame { min-height: calc(100vh - 68px - 51px); }
   .p-carrier-name { font-size: 0.9375rem; }
   .p-header-product-logo { height: 24px; max-width: min(120px, 32vw); }
 }
