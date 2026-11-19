@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Email Templates | EnrollAxis</title>
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=74">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  .et-page-titles h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+  .et-page-titles .subtitle {
+    margin: 0.35rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--neutral-600);
+    line-height: 1.45;
+  }
+  .ui-topbar h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .ui-topbar .subtitle {
+    margin: 0.15rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--neutral-600);
+    line-height: 1.4;
+  }
+  .et-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--neutral-700);
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: var(--font-body);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .et-nav-item i { width: 1rem; text-align: center; color: var(--neutral-500); }
+  .et-nav-item.is-active {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .et-nav-item.is-active i { color: var(--primary); }
+  .et-card-title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .et-card-desc {
+    margin: 0.35rem 0 0;
+    font-size: 0.875rem;
+    color: var(--neutral-600);
+    line-height: 1.45;
+  }
+  .et-table-wrap {
+    overflow-x: auto;
+  }
+  .et-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .et-table th,
+  .et-table td {
+    padding: 0.875rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .et-table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--neutral-600);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: var(--muted);
+  }
+  .et-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .et-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--primary) 4%, transparent);
+  }
+  .et-name {
+    font-weight: 500;
+    color: var(--brand-ink);
+  }
+  .et-actions {
+    text-align: right;
+    white-space: nowrap;
+    width: 1%;
+  }
+  .et-table th.et-actions {
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="ui-shell" id="appShell">
+  <button type="button" class="ui-sidebar-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
+  <aside class="ui-sidebar" id="appSidebar">
+    <div class="ui-sidebar-brand">
+      <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis" height="28">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="ui-sidebar-nav" aria-label="Email Templates">
+      <a href="index.html" class="et-nav-item is-active" aria-current="page">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        Email Templates
+      </a>
+    </nav>
+  </aside>
+
+  <div class="ui-main">
+    <header class="ui-topbar">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <div>
+        <h1>Email Templates</h1>
+        <p class="subtitle">Preview transactional and notification emails</p>
+      </div>
+    </header>
+
+    <main class="ui-page">
+      <div class="et-page-titles">
+        <h1>Email Templates</h1>
+        <p class="subtitle">Preview transactional and notification emails</p>
+      </div>
+
+      <div class="ui-card">
+        <div class="ui-card-header">
+          <h2 class="et-card-title">Templates</h2>
+          <p class="et-card-desc">Select a template to view the email preview.</p>
+        </div>
+        <div class="ui-card-content" style="padding: 0;">
+          <div class="et-table-wrap">
+            <table class="et-table">
+              <thead>
+                <tr>
+                  <th scope="col">Email</th>
+                  <th scope="col" class="et-actions">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="et-name">Welcome Email</td>
+                  <td class="et-actions">
+                    <button type="button" class="ui-btn ui-btn-outline ui-btn-sm">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="et-name">Agent Invitation</td>
+                  <td class="et-actions">
+                    <a href="agent-invitation.html" class="ui-btn ui-btn-outline ui-btn-sm" target="_blank" rel="noopener">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="et-name">Set Password</td>
+                  <td class="et-actions">
+                    <a href="password-reset.html" class="ui-btn ui-btn-outline ui-btn-sm" target="_blank" rel="noopener">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="et-name">Set Password (brief)</td>
+                  <td class="et-actions">
+                    <a href="set-password-brief.html" class="ui-btn ui-btn-outline ui-btn-sm" target="_blank" rel="noopener">View</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="et-name">Onboarding Reminder</td>
+                  <td class="et-actions">
+                    <button type="button" class="ui-btn ui-btn-outline ui-btn-sm">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="et-name">Activation Confirmation</td>
+                  <td class="et-actions">
+                    <button type="button" class="ui-btn ui-btn-outline ui-btn-sm">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  var shell = document.getElementById('appShell');
+  var toggle = document.getElementById('sidebarToggle');
+  var closeBtn = document.getElementById('sidebarClose');
+  var backdrop = document.getElementById('sidebarBackdrop');
+
+  function openSidebar() {
+    shell.classList.add('sidebar-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeSidebar() {
+    shell.classList.remove('sidebar-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  if (toggle) toggle.addEventListener('click', openSidebar);
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if (backdrop) backdrop.addEventListener('click', closeSidebar);
+})();
+</script>
+</body>
+</html>
