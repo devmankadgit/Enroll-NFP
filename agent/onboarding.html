@@ -498,7 +498,522 @@
     border: 1px solid var(--warning-300);
     color: var(--warning-800);
   }
+  .exam-score-box.is-done {
+    background: var(--primary-50);
+    border: 1px solid var(--primary-200);
+    color: var(--primary-800);
+  }
+  .seg-tile.needs-retry {
+    border-color: var(--warning-400);
+    background: var(--warning-50);
+  }
+  .seg-tile.needs-retry strong { color: var(--warning-800); }
+  .seg-tile.is-locked { opacity: 0.72; cursor: default; }
+  .exam-result-panel {
+    margin-top: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--white);
+    overflow: hidden;
+  }
+  .exam-result-panel.is-pass { border-color: var(--success-200); }
+  .exam-result-panel.is-fail { border-color: var(--warning-300); }
+  .exam-result-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    padding: 1.3rem 1.35rem;
+  }
+  .is-pass .exam-result-hero { background: linear-gradient(135deg, var(--success-50) 0%, var(--white) 70%); }
+  .is-fail .exam-result-hero { background: linear-gradient(135deg, var(--warning-50) 0%, var(--white) 70%); }
+  .exam-score-ring {
+    --val: 0;
+    --ring: var(--primary);
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(var(--ring) calc(var(--val) * 1%), var(--neutral-200) 0);
+  }
+  .exam-score-ring::before {
+    content: '';
+    grid-area: 1 / 1;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--white);
+  }
+  .exam-score-ring .ring-inner {
+    grid-area: 1 / 1;
+    z-index: 1;
+    text-align: center;
+    line-height: 1;
+  }
+  .exam-score-ring .ring-val {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--brand-ink);
+  }
+  .exam-score-ring .ring-cap {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    margin-top: 0.15rem;
+  }
+  .exam-result-headline { flex: 1; min-width: 0; }
+  .exam-result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .exam-result-badge.is-pass { background: var(--success-100); color: var(--success-800); }
+  .exam-result-badge.is-fail { background: var(--warning-100); color: var(--warning-800); }
+  .exam-result-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+  }
+  .exam-result-sub {
+    margin: 0.3rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--neutral-700);
+    line-height: 1.5;
+  }
+  .exam-result-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+  .exam-result-meta .rm-cell {
+    flex: 1 1 33%;
+    min-width: 120px;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    border-right: 1px solid var(--border);
+  }
+  .exam-result-meta .rm-cell:last-child { border-right: none; }
+  .exam-result-meta .rm-cell strong {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+  }
+  .exam-result-body { padding: 1.1rem 1.25rem 1.25rem; }
+  .exam-fail-list {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .exam-fail-list-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    margin: 0.25rem 0 0.1rem;
+  }
+  .exam-fail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    padding: 0.8rem 0.95rem;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--white);
+    border: 1px solid var(--warning-300);
+  }
+  .exam-fail-row .fail-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: var(--warning-50);
+    color: var(--warning-700);
+    font-size: 0.95rem;
+  }
+  .exam-fail-row .fail-meta {
+    font-size: 0.8125rem;
+    color: var(--neutral-700);
+    flex: 1;
+    min-width: 0;
+  }
+  .exam-fail-row .fail-meta strong {
+    display: block;
+    color: var(--brand-ink);
+    font-size: 0.875rem;
+    margin-bottom: 0.1rem;
+  }
+  .exam-fail-row .fail-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warning-800);
+  }
+  .exam-fail-row .fail-action { flex-shrink: 0; margin-left: auto; }
+  .exam-attempt-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--neutral-700);
+  }
+  .exam-attempt-pill.is-low {
+    border-color: var(--warning-400);
+    color: var(--warning-800);
+    background: var(--warning-50);
+  }
+  .exam-attempt-pill.is-out {
+    border-color: var(--danger-300);
+    color: var(--danger-700);
+    background: var(--danger-50);
+  }
+  .exam-admin-box {
+    margin-top: 0.9rem;
+    padding: 0.85rem 1rem;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid var(--border);
+    background: var(--white);
+  }
+  .exam-admin-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .exam-admin-status.is-pending { background: var(--warning-100); color: var(--warning-800); }
+  .exam-admin-status.is-approved { background: var(--success-100); color: var(--success-800); }
+  .exam-admin-status.is-rejected { background: var(--danger-100); color: var(--danger-700); }
+  /* ===== Certification exam - overview + stepper (production-grade) ===== */
+  .exam-overview-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .exam-overview-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    color: var(--brand-ink);
+  }
+  .exam-overview-sub {
+    margin: 0.2rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+    max-width: 48ch;
+  }
+  .exam-meta-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .exam-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: var(--neutral-50);
+    border: 1px solid var(--border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--neutral-700);
+    white-space: nowrap;
+  }
+  .exam-meta-chip i { color: var(--primary); font-size: 0.72rem; }
+  .exam-progress-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 1rem;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--neutral-50);
+  }
+  .exam-progress-card .pc-ring {
+    --val: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(var(--primary) calc(var(--val) * 1%), var(--neutral-200) 0);
+  }
+  .exam-progress-card .pc-ring::before {
+    content: '';
+    grid-area: 1 / 1;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--neutral-50);
+  }
+  .exam-progress-card .pc-ring span {
+    grid-area: 1 / 1;
+    z-index: 1;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--brand-ink);
+  }
+  .exam-progress-card .pc-main { flex: 1; min-width: 0; }
+  .exam-progress-card .pc-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand-ink);
+  }
+  .exam-progress-card .pc-sub {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    margin-top: 0.1rem;
+  }
+  .exam-progress-track {
+    height: 7px;
+    border-radius: 999px;
+    background: var(--neutral-200);
+    overflow: hidden;
+    margin-top: 0.55rem;
+  }
+  .exam-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+  }
+  /* segment cards (overview) */
+  .seg-card-list { display: grid; gap: 0.6rem; margin-top: 1rem; }
+  .seg-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .seg-card:hover {
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-sm);
+  }
+  .seg-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .seg-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    background: var(--primary-50);
+    color: var(--primary);
+  }
+  .seg-card.is-completed .seg-card-icon,
+  .seg-card.is-met .seg-card-icon,
+  .seg-card.is-passed .seg-card-icon { background: var(--primary); color: var(--white); }
+  .seg-card.is-retry .seg-card-icon { background: var(--warning-50); color: var(--warning-700); }
+  .seg-card-main { flex: 1; min-width: 0; }
+  .seg-card-kicker {
+    display: block;
+    margin-bottom: 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--primary);
+    line-height: 1.2;
+  }
+  .seg-card-title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .seg-card-desc {
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+    line-height: 1.45;
+    margin-top: 0.15rem;
+  }
+  .seg-card-aside {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .seg-card-chevron { color: var(--neutral-400); font-size: 0.8rem; }
+  .seg-card:hover .seg-card-chevron { color: var(--primary); }
+  /* shared status badge */
+  .seg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .seg-badge.is-pending { background: var(--neutral-100); color: var(--neutral-700); }
+  .seg-badge.is-current { background: var(--info-50); color: var(--info-700); }
+  .seg-badge.is-completed { background: var(--primary-50); color: var(--primary-700); }
+  .seg-badge.is-met { background: var(--success-50); color: var(--success-800); }
+  .seg-badge.is-passed { background: var(--success-50); color: var(--success-800); }
+  .seg-badge.is-retry { background: var(--warning-50); color: var(--warning-800); }
+  /* in-exam stepper */
+  .exam-stepper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 0 0 1.1rem;
+  }
+  .exam-step {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .exam-step:hover { border-color: var(--primary-300); }
+  .exam-step:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .exam-step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--neutral-100);
+    color: var(--neutral-600);
+    border: 1px solid var(--border);
+  }
+  .exam-step-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .exam-step-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .exam-step-status {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    text-align: right;
+  }
+  .exam-step.is-current {
+    border-color: var(--primary);
+    background: var(--accent);
+    box-shadow: 0 0 0 1px var(--primary-200);
+  }
+  .exam-step.is-current .exam-step-dot { background: var(--primary); color: var(--white); border-color: var(--primary); }
+  .exam-step.is-current .exam-step-status { color: var(--primary-700); }
+  .exam-step.is-completed .exam-step-dot,
+  .exam-step.is-met .exam-step-dot,
+  .exam-step.is-passed .exam-step-dot { background: var(--primary); color: var(--white); border-color: var(--primary); }
+  .exam-step.is-completed .exam-step-status,
+  .exam-step.is-met .exam-step-status,
+  .exam-step.is-passed .exam-step-status { color: var(--primary); }
+  .exam-step.is-retry .exam-step-dot { background: var(--warning-500); color: var(--white); border-color: var(--warning-500); }
+  .exam-step.is-retry .exam-step-status { color: var(--warning-800); }
+  /* segment question progress */
+  .seg-answered {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+  }
+  .seg-answered.is-complete { color: var(--primary); }
+  @media (max-width: 1100px) {
+    .exam-stepper { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .seg-grid { grid-template-columns: repeat(2, 1fr); }
+    .seg-card { align-items: flex-start; }
+    .seg-card-aside {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.35rem;
+    }
+  }
+  @media (max-width: 520px) {
+    .seg-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 640px) {
+    .exam-stepper { grid-template-columns: 1fr 1fr; }
+    .exam-result-hero { flex-direction: column; text-align: center; }
+    .exam-result-meta .rm-cell { flex-basis: 50%; }
+    .seg-card-aside .seg-card-chevron { display: none; }
     .exam-meta-grid { grid-template-columns: 1fr 1fr; gap: 0.65rem 0.5rem; }
     .exam-seg-nav-top {
       grid-template-columns: 1fr 1fr;
@@ -1897,34 +2412,37 @@
           <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(4)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
         <div class="ui-card-content">
-          <div class="ui-alert ui-alert-info" style="margin-bottom:0.75rem" id="step5InfoAlert">
-            <i class="fas fa-info-circle"></i>
-            <div>Complete all 4 training segments. Each segment opens its certification exam. Pass score: <strong>85%</strong> overall. Maximum <strong>4</strong> attempts per segment.</div>
-          </div>
           <div class="ui-section" id="step5DashboardSection">
-            <h3 class="ui-section-title"><i class="fas fa-chart-line" aria-hidden="true"></i>Training Progress Dashboard</h3>
-            <div class="seg-grid" id="progressDashboard">
-              <div class="seg-tile" id="dashSegTab0" data-seg="0" onclick="openSegmentScreen(0)"><div>Seg A - Video</div><strong id="dashPctA">0%</strong><div class="seg-meta" id="dashTimeA">-</div><div id="dashStatusA">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab1" data-seg="1" onclick="openSegmentScreen(1)"><div>Seg B - Training</div><strong id="dashPctB">0%</strong><div class="seg-meta" id="dashTimeB">-</div><div id="dashStatusB">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab2" data-seg="2" onclick="openSegmentScreen(2)"><div>Seg C - PDF</div><strong id="dashPctC">0%</strong><div class="seg-meta" id="dashTimeC">-</div><div id="dashStatusC">Not completed</div></div>
-              <div class="seg-tile" id="dashSegTab3" data-seg="3" onclick="openSegmentScreen(3)"><div>Seg D - MCQ</div><strong id="dashPctD">0%</strong><div class="seg-meta" id="dashTimeD">-</div><div id="dashStatusD">Not completed</div></div>
-              <div class="seg-tile" style="cursor:default;background:var(--accent);border-color:var(--primary-300)"><div style="color:var(--primary);font-weight:600">Total</div><strong id="dashPctTotal" style="color:var(--primary)">0%</strong><div class="seg-meta" id="dashTimeTotal" style="color:var(--primary)">-</div><div id="overallProgLabel">0 of 4 complete</div></div>
+            <div class="exam-overview-head">
+              <div>
+                <h3 class="exam-overview-title">Certification Exam</h3>
+                <p class="exam-overview-sub">Finish all four segments to unlock your overall score. Segment scores stay hidden until you complete the exam.</p>
+              </div>
+              <div class="exam-meta-row">
+                <span class="exam-meta-chip"><i class="fas fa-bullseye" aria-hidden="true"></i> Pass 85%</span>
+                <span class="exam-meta-chip"><i class="fas fa-list-check" aria-hidden="true"></i> 20 questions</span>
+                <span class="exam-meta-chip" id="examAttemptChip"><i class="fas fa-rotate-right" aria-hidden="true"></i> 4 shared retries</span>
+              </div>
             </div>
-            <div class="ui-progress" style="margin-top:0.75rem"><div class="ui-progress-bar" id="overallProgBar" style="width:0%"></div></div>
-            <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0.5rem 0 0">Click a segment to open its certification exam.</p>
+            <div class="exam-progress-card">
+              <div class="pc-ring" id="examProgressRing" style="--val:0"><span id="examProgressRingVal">0/4</span></div>
+              <div class="pc-main">
+                <div class="pc-title" id="examProgressTitle">Ready to begin</div>
+                <div class="pc-sub" id="step5DashHint">Open any segment to start. You can move between segments freely.</div>
+                <div class="exam-progress-track"><div class="exam-progress-fill" id="overallProgBar" style="width:0%"></div></div>
+              </div>
+            </div>
+            <div id="examAttemptBar" style="display:none;margin-top:0.75rem"></div>
+            <div class="seg-card-list" id="segCardList" aria-label="Exam segments"></div>
+            <div id="examResultPanel" style="display:none"></div>
           </div>
           <div class="exam-workspace" id="examSection" style="display:none">
             <div class="exam-seg-nav-top">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
-              <h3>Certification Exams</h3>
-              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegTopBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">All segments</span></button>
+              <span class="exam-flow-progress-count" id="examFlowProgressCount" style="font-weight:600;font-size:0.78rem;color:var(--neutral-700)">0 of 4 Segments Completed</span>
+              <span class="exam-nav-next" id="examTopAttempt" style="justify-self:end"></span>
             </div>
-            <div class="exam-meta-grid" aria-label="Exam requirements">
-              <div class="exam-meta-cell"><div class="k">Pass Score</div><div class="v">85% avg</div></div>
-              <div class="exam-meta-cell"><div class="k">Total Questions</div><div class="v">20 (4 × 5)</div></div>
-              <div class="exam-meta-cell"><div class="k">Segments</div><div class="v">4</div></div>
-              <div class="exam-meta-cell"><div class="k">Max Attempts</div><div class="v">4 per seg</div></div>
-            </div>
+            <div class="exam-stepper" id="examFlowSteps" aria-label="Segment navigation"></div>
             <div id="examSeg0" class="exam-seg" style="display:none"></div>
             <div id="examSeg1" class="exam-seg" style="display:none"></div>
             <div id="examSeg2" class="exam-seg" style="display:none"></div>
@@ -1941,9 +2459,9 @@
               </div>
             </div>
             <div id="examConsolidatedResult" style="display:none"></div>
-            <div class="exam-seg-nav" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">Back to Step 5</span></button>
-              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegBottomBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next Segment</span> <i class="fas fa-arrow-right"></i></button>
+            <div class="exam-seg-nav" id="examSegNavBottom" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
+              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">All segments</span></button>
+              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegBottomBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next segment</span> <i class="fas fa-arrow-right"></i></button>
             </div>
           </div>
         </div>
@@ -2750,29 +3268,18 @@
       document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
       syncStep4ValidateButtons();
     } else if (step === 4) {
-      /* Match feat/enrolaxis-brand-theme: build each exam, auto-answer, submit */
-      var letters = ['A', 'B', 'C', 'D'];
-      var fakeTimes = [3200, 4100, 3500, 2800];
-      for (var si = 0; si < 4; si++) {
-        modComplete[si] = true;
-        modTimes[si] = fakeTimes[si];
-        var s2 = Math.round(fakeTimes[si] / 1000);
-        var ts = s2 >= 60 ? Math.floor(s2 / 60) + 'm ' + (s2 % 60) + 's' : s2 + 's';
-        document.getElementById('dashPct' + letters[si]).textContent = '100%';
-        document.getElementById('dashPct' + letters[si]).style.color = 'var(--primary)';
-        document.getElementById('dashTime' + letters[si]).textContent = ts;
-        document.getElementById('dashSegTab' + si).classList.add('done');
-      }
-      modsDone = 4;
-      document.getElementById('overallProgBar').style.width = '100%';
-      document.getElementById('overallProgLabel').textContent = '4 of 4 segments complete';
-      document.getElementById('dashPctTotal').textContent = '100%';
-      var totalMs2 = fakeTimes.reduce(function (a, b) { return a + b; }, 0);
-      var ts2 = Math.round(totalMs2 / 1000);
-      document.getElementById('dashTimeTotal').textContent = ts2 >= 60 ? Math.floor(ts2 / 60) + 'm ' + (ts2 % 60) + 's' : ts2 + 's';
-      document.getElementById('examSection').style.display = 'block';
       window.__prefillTraining = true;
+      examReattemptCount = 0;
+      examEvaluated = false;
+      examPassed = false;
+      adminRequestStatus = null;
+      adminExtraAttempts = 0;
+      retryCycle = null;
       for (var xi = 0; xi < 4; xi++) {
+        segScores[xi] = -1;
+        modComplete[xi] = false;
+        modTimes[xi] = 0;
+        document.getElementById('examSeg' + xi).innerHTML = '';
         showSegmentExam(xi);
         var seg = examSegData[xi];
         for (var qi = 0; qi < 5; qi++) {
@@ -2783,10 +3290,8 @@
         doSubmitSegment(xi);
       }
       window.__prefillTraining = false;
-      examPassed = true;
-      var step5Next = document.getElementById('step5Next');
-      if (step5Next) step5Next.style.display = 'inline-flex';
       closeSegmentScreen();
+      persistExamState();
     } else if (step === 5) {
       setCheck('bgConsent', true); sendBgInvitation();
     } else if (step === 6) {
@@ -2882,9 +3387,17 @@
   })();
 })();
 
-/* Step 5 certification exam - restored from feat/enrolaxis-brand-theme openSegmentScreen flow */
+/* Step 5 certification exam - overall 85% evaluation with shared reattempt pool */
 var modsDone = 0;
 var examPassed = false;
+var examEvaluated = false;
+var examReattemptCount = 0;
+var adminRequestStatus = null;
+var adminExtraAttempts = 0;
+var EXAM_PASS_PCT = 85;
+var SEG_RETRY_PCT = 85;
+var EXAM_MAX_REATTEMPTS = 4;
+var EXAM_STORAGE_KEY = 'ea_ob_training_exam_v1';
 var examSegData = [
   {
     id: 'A', label: 'Video-Based', icon: 'fa-video', accentBg: 'var(--accent)', accentColor: 'var(--primary)',
@@ -2927,34 +3440,371 @@ var examSegData = [
       { q: "Which enrollment period allows MA plan members to switch plans from January 1 - March 31?", opts: ["Annual Enrollment Period (AEP)", "Initial Coverage Election Period (ICEP)", "Open Enrollment Period (OEP)", "Special Enrollment Period (SEP)"], ans: 2 },
       { q: "An agent's National Producer Number (NPN) is managed through:", opts: ["Centers for Medicare &amp; Medicaid Services (CMS)", "The state department of insurance", "National Insurance Producer Registry (NIPR)", "The appointing carrier"], ans: 2 },
       { q: "Medicare Part D primarily covers:", opts: ["Inpatient hospital stays", "Outpatient physician services", "Prescription drug costs", "Long-term custodial care"], ans: 2 },
-      { q: "The maximum number of certification exam attempts allowed in this onboarding is:", opts: ["2 attempts", "3 attempts", "4 attempts", "Unlimited attempts"], ans: 2 }
+      { q: "The maximum number of shared reattempts allowed for the Training &amp; Certification exam is:", opts: ["2 reattempts", "3 reattempts", "4 reattempts", "Unlimited reattempts"], ans: 2 }
     ]
   }
 ];
 var segScores = [-1, -1, -1, -1];
-var segAttempts = [0, 0, 0, 0];
 var pendingSubmitSeg = -1;
 var modTimes = [0, 0, 0, 0];
 var modComplete = [false, false, false, false];
 var examStartTimes = [0, 0, 0, 0];
 var activeExamSeg = 0;
+var retryCycle = null;
+var SEG_LABELS = ['A', 'B', 'C', 'D'];
+var SEG_NAMES = ['Video', 'Training', 'PDF', 'MCQ'];
+var SEG_FULLNAMES = ['Video-Based Assessment', 'Training Material Review', 'PDF Product Guide', 'General Knowledge MCQ'];
+var SEG_DESCS = [
+  'Watch the C-SNP product overview, then answer 5 questions.',
+  'Read the enrollment & compliance excerpt and answer 5 questions.',
+  'Review the C-SNP product guide summary and answer 5 questions.',
+  'Answer 5 general Medicare knowledge questions.'
+];
 
-function openSegmentScreen(idx) {
-  activeExamSeg = idx;
+function isRetryCycleActive() {
+  return !!(retryCycle && retryCycle.segments && retryCycle.segments.length && !retryCycle.counted);
+}
+
+function isCycleSegment(idx) {
+  return isRetryCycleActive() && retryCycle.segments.indexOf(idx) !== -1;
+}
+
+function cycleSubmittedCount() {
+  if (!isRetryCycleActive()) return 0;
+  var n = 0;
+  for (var i = 0; i < retryCycle.segments.length; i++) {
+    if (retryCycle.submitted && retryCycle.submitted[retryCycle.segments[i]]) n++;
+  }
+  return n;
+}
+
+function nextCycleSegment(fromIdx) {
+  if (!isRetryCycleActive()) return -1;
+  var list = retryCycle.segments;
+  var start = list.indexOf(fromIdx);
+  var order = [];
+  var i;
+  for (i = start + 1; i < list.length; i++) order.push(list[i]);
+  for (i = 0; i < list.length; i++) order.push(list[i]);
+  for (i = 0; i < order.length; i++) {
+    if (!retryCycle.submitted || !retryCycle.submitted[order[i]]) return order[i];
+  }
+  return -1;
+}
+
+/* Unified status model used by overview cards and the in-exam stepper */
+function getSegStatus(idx) {
+  var completed = segScores[idx] >= 0;
+  if (isRetryCycleActive()) {
+    if (!isCycleSegment(idx)) return { key: 'completed', label: 'Completed', icon: 'fa-circle-check', dot: 'fa-check' };
+    if (retryCycle.submitted && retryCycle.submitted[idx]) return { key: 'completed', label: 'Done', icon: 'fa-circle-check', dot: 'fa-check' };
+    if (idx === activeExamSeg && document.getElementById('examSection') && document.getElementById('examSection').style.display === 'block') {
+      return { key: 'current', label: 'In progress', icon: 'fa-pen-to-square', dot: (idx + 1) };
+    }
+    return { key: 'pending', label: 'Pending', icon: 'fa-rotate-right', dot: (idx + 1) };
+  }
+  if (examPassed) return { key: 'completed', label: 'Completed', icon: 'fa-circle-check', dot: 'fa-check' };
+  if (examEvaluated) {
+    if (canRetrySegment(idx)) return { key: 'retry', label: 'Retake', icon: 'fa-rotate-right', dot: 'fa-rotate-right' };
+    if (completed) return { key: 'completed', label: 'Completed', icon: 'fa-circle-check', dot: 'fa-check' };
+  }
+  if (completed) return { key: 'completed', label: 'Completed', icon: 'fa-circle-check', dot: 'fa-check' };
+  if (idx === activeExamSeg && document.getElementById('examSection') && document.getElementById('examSection').style.display === 'block') {
+    return { key: 'current', label: 'In progress', icon: 'fa-pen-to-square', dot: (idx + 1) };
+  }
+  return { key: 'pending', label: 'Pending', icon: 'fa-circle', dot: (idx + 1) };
+}
+
+function getSegActionLabel(idx) {
+  var st = getSegStatus(idx).key;
+  if (st === 'retry') return 'Retry';
+  if (st === 'completed' || st === 'met' || st === 'passed') return 'Review';
+  if (st === 'current') return 'Resume';
+  return 'Start';
+}
+
+function getMaxExamReattempts() {
+  return EXAM_MAX_REATTEMPTS + (adminExtraAttempts || 0);
+}
+
+function getRemainingReattempts() {
+  return Math.max(0, getMaxExamReattempts() - examReattemptCount);
+}
+
+function formatDuration(ms) {
+  var secs = Math.round((ms || 0) / 1000);
+  return secs >= 60 ? Math.floor(secs / 60) + 'm ' + (secs % 60) + 's' : secs + 's';
+}
+
+function getOverallScore() {
+  if (!segScores.every(function (s) { return s >= 0; })) return null;
+  var total = segScores.reduce(function (a, b) { return a + b; }, 0);
+  return Math.round(total / 4);
+}
+
+function getLowScoringSegments() {
+  var list = [];
+  for (var i = 0; i < 4; i++) {
+    if (segScores[i] >= 0 && segScores[i] < SEG_RETRY_PCT) list.push(i);
+  }
+  return list;
+}
+
+function persistExamState() {
+  try {
+    localStorage.setItem(EXAM_STORAGE_KEY, JSON.stringify({
+      segScores: segScores,
+      modTimes: modTimes,
+      modComplete: modComplete,
+      modsDone: modsDone,
+      examPassed: examPassed,
+      examEvaluated: examEvaluated,
+      examReattemptCount: examReattemptCount,
+      adminRequestStatus: adminRequestStatus,
+      adminExtraAttempts: adminExtraAttempts,
+      retryCycle: retryCycle
+    }));
+  } catch (e) { /* ignore */ }
+}
+
+function resetExamStateOnRefresh() {
+  try { localStorage.removeItem(EXAM_STORAGE_KEY); } catch (e) { /* ignore */ }
+  segScores = [-1, -1, -1, -1];
+  modTimes = [0, 0, 0, 0];
+  modComplete = [false, false, false, false];
+  modsDone = 0;
+  examPassed = false;
+  examEvaluated = false;
+  examReattemptCount = 0;
+  adminRequestStatus = null;
+  adminExtraAttempts = 0;
+  retryCycle = null;
+  activeExamSeg = 0;
+  for (var i = 0; i < 4; i++) {
+    var panel = document.getElementById('examSeg' + i);
+    if (panel) panel.innerHTML = '';
+  }
+  var resultPanel = document.getElementById('examResultPanel');
+  if (resultPanel) {
+    resultPanel.innerHTML = '';
+    resultPanel.style.display = 'none';
+  }
+  var cons = document.getElementById('examConsolidatedResult');
+  if (cons) {
+    cons.innerHTML = '';
+    cons.style.display = 'none';
+  }
+  var attemptBar = document.getElementById('examAttemptBar');
+  if (attemptBar) {
+    attemptBar.innerHTML = '';
+    attemptBar.style.display = 'none';
+  }
+  var exam = document.getElementById('examSection');
+  if (exam) exam.style.display = 'none';
+  var dash = document.getElementById('step5DashboardSection');
+  if (dash) dash.style.display = 'block';
+  var info = document.getElementById('step5InfoAlert');
+  if (info) info.style.display = 'flex';
+  var nav = document.getElementById('step5Nav');
+  if (nav) nav.style.display = 'flex';
+  refreshExamDashboard();
+  updateExamFlowProgress();
+}
+
+function updateExamFlowProgress() {
+  var done = segScores.filter(function (s) { return s >= 0; }).length;
+  var countEl = document.getElementById('examFlowProgressCount');
+  if (countEl) {
+    if (isRetryCycleActive()) {
+      countEl.textContent = 'Retry ' + cycleSubmittedCount() + ' of ' + retryCycle.segments.length + ' segments';
+    } else {
+      countEl.textContent = done + ' of 4 Segments Completed';
+    }
+  }
+
+  var topAttempt = document.getElementById('examTopAttempt');
+  if (topAttempt) {
+    if (examEvaluated && !examPassed) {
+      var remA = getRemainingReattempts();
+      var maxA = getMaxExamReattempts();
+      var toneA = remA === 0 ? 'is-out' : (remA <= 1 ? 'is-low' : '');
+      topAttempt.innerHTML = '<span class="exam-attempt-pill ' + toneA + '"><i class="fas fa-rotate-right" aria-hidden="true"></i> ' + remA + ' of ' + maxA + '</span>';
+    } else {
+      topAttempt.innerHTML = '';
+    }
+  }
+
+  var wrap = document.getElementById('examFlowSteps');
+  if (!wrap) return;
+  var active = activeExamSeg;
+  var inExam = document.getElementById('examSection') && document.getElementById('examSection').style.display === 'block';
+  var html = '';
+  for (var i = 0; i < 4; i++) {
+    var st = getSegStatus(i);
+    var isActive = inExam && i === active;
+    var cls = 'exam-step is-' + st.key + (isActive ? ' is-current' : '');
+    var dot = (st.key === 'completed' || st.key === 'met' || st.key === 'passed')
+      ? '<i class="fas fa-check" aria-hidden="true"></i>'
+      : (st.key === 'retry' ? '<i class="fas fa-rotate-right" aria-hidden="true"></i>' : (i + 1));
+    var statusText = isActive && st.key === 'pending' ? 'In progress' : st.label;
+    html +=
+      '<button type="button" class="' + cls + '" data-flow-seg="' + i + '" onclick="openSegmentScreen(' + i + ')" aria-current="' + (isActive ? 'step' : 'false') + '">' +
+      '<span class="exam-step-dot">' + dot + '</span>' +
+      '<span class="exam-step-body">' +
+      '<span class="exam-step-name">' + SEG_NAMES[i] + '</span>' +
+      '<span class="exam-step-status">' + statusText + '</span>' +
+      '</span></button>';
+  }
+  wrap.innerHTML = html;
+}
+
+function renderSegOverview() {
+  var list = document.getElementById('segCardList');
+  if (!list) return;
+  var html = '';
+  for (var i = 0; i < 4; i++) {
+    var st = getSegStatus(i);
+    var seg = examSegData[i];
+    var badge = '<span class="seg-badge is-' + st.key + '"><i class="fas ' + st.icon + '" aria-hidden="true"></i> ' + st.label + '</span>';
+    var action = getSegActionLabel(i);
+    html +=
+      '<button type="button" class="seg-card is-' + st.key + '" onclick="openSegmentScreen(' + i + ')">' +
+      '<span class="seg-card-icon"><i class="fas ' + seg.icon + '" aria-hidden="true"></i></span>' +
+      '<span class="seg-card-main">' +
+      '<span class="seg-card-kicker">Segment ' + SEG_LABELS[i] + '</span>' +
+      '<span class="seg-card-title">' + SEG_FULLNAMES[i] + '</span>' +
+      '<span class="seg-card-desc">' + SEG_DESCS[i] + '</span>' +
+      '</span>' +
+      '<span class="seg-card-aside">' + badge +
+      '<span class="seg-card-chevron" aria-hidden="true">' + action + ' <i class="fas fa-chevron-right"></i></span>' +
+      '</span></button>';
+  }
+  list.innerHTML = html;
+}
+
+function getNextPendingSegment(fromIdx) {
+  for (var i = fromIdx + 1; i < 4; i++) {
+    if (segScores[i] < 0) return i;
+  }
+  for (var j = 0; j < 4; j++) {
+    if (segScores[j] < 0) return j;
+  }
+  return -1;
+}
+
+function showExamWorkspaceChrome(showResult) {
   var dash = document.getElementById('step5DashboardSection');
   var info = document.getElementById('step5InfoAlert');
   var nav = document.getElementById('step5Nav');
   var exam = document.getElementById('examSection');
+  var warn = document.getElementById('unansweredWarn');
+  var topNext = document.getElementById('nextSegTopBtn');
+  var bottomNext = document.getElementById('nextSegBottomBtn');
+  var bottomNav = document.getElementById('examSegNavBottom');
   if (dash) dash.style.display = 'none';
   if (info) info.style.display = 'none';
-  if (nav) nav.style.display = 'none';
   if (exam) exam.style.display = 'block';
-  selectExamSegment(idx);
-  if (segScores[idx] < 0) examStartTimes[idx] = Date.now();
-  if (examPassed || segScores.every(function (s) { return s >= 60; })) {
-    var cons = document.getElementById('examConsolidatedResult');
-    if (cons && cons.innerHTML.trim()) cons.style.display = 'block';
+  if (warn) warn.style.display = 'none';
+  if (showResult) {
+    if (nav) nav.style.display = 'flex';
+    if (topNext) topNext.style.display = 'none';
+    if (bottomNext) bottomNext.style.display = 'none';
+    if (bottomNav) bottomNav.style.display = 'none';
+  } else {
+    if (nav) nav.style.display = 'none';
+    if (topNext) topNext.style.display = '';
+    if (bottomNext) bottomNext.style.display = '';
+    if (bottomNav) bottomNav.style.display = 'flex';
   }
+}
+
+function showExamResultScreen() {
+  showExamWorkspaceChrome(true);
+  for (var i = 0; i < 4; i++) {
+    var panel = document.getElementById('examSeg' + i);
+    if (panel) panel.style.display = 'none';
+  }
+  renderExamResultPanel();
+  updateExamFlowProgress();
+  refreshExamDashboard();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(function () {
+    var cons = document.getElementById('examConsolidatedResult');
+    if (cons && cons.style.display !== 'none') cons.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80);
+}
+
+function showCompletedSegmentView(idx) {
+  var s = examSegData[idx];
+  var timeStr = formatDuration(modTimes[idx] || 0);
+  var nextIdx = getNextPendingSegment(idx);
+  var html =
+    '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' · ' + SEG_FULLNAMES[idx] + '</span></div>' +
+    '<div class="exam-seg-banner-meta"><span class="seg-badge is-completed"><i class="fas fa-circle-check" aria-hidden="true"></i> Completed</span></div></div>' +
+    '<div class="exam-score-box is-done" style="text-align:left;display:flex;align-items:flex-start;gap:0.65rem">' +
+    '<i class="fas fa-circle-check" style="font-size:1.1rem;margin-top:0.1rem"></i>' +
+    '<div><strong>Segment ' + s.id + ' submitted</strong> · Time taken: ' + timeStr +
+    '<div style="margin-top:0.3rem;font-weight:500;color:var(--neutral-700)">Your answers are saved. The segment score stays hidden and counts toward your overall result once all four segments are done.</div></div></div>';
+  if (nextIdx >= 0) {
+    html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="openSegmentScreen(' + nextIdx + ')"><i class="fas fa-arrow-right"></i> Continue to Segment ' + SEG_LABELS[nextIdx] + '</button></div>';
+  }
+  document.getElementById('examSeg' + idx).innerHTML = html;
+}
+
+function showCycleSubmittedView(idx) {
+  var s = examSegData[idx];
+  var nextIdx = nextCycleSegment(idx);
+  var html =
+    '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' · ' + SEG_FULLNAMES[idx] + '</span></div>' +
+    '<div class="exam-seg-banner-meta"><span class="seg-badge is-completed"><i class="fas fa-circle-check" aria-hidden="true"></i> Done this retry</span></div></div>' +
+    '<div class="exam-score-box is-done" style="text-align:left">' +
+    '<i class="fas fa-circle-check"></i> <strong>Segment ' + s.id + ' submitted for this retry.</strong>' +
+    '<div style="margin-top:0.35rem;font-weight:500">Your new answers are saved. The overall score updates after every segment in this retry is finished.</div></div>';
+  if (nextIdx >= 0) {
+    html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="openSegmentScreen(' + nextIdx + ')"><i class="fas fa-arrow-right"></i> Continue to Segment ' + SEG_LABELS[nextIdx] + '</button></div>';
+  }
+  document.getElementById('examSeg' + idx).innerHTML = html;
+}
+
+function openSegmentScreen(idx) {
+  if (examPassed) {
+    if (typeof showToast === 'function') showToast('Training exam already passed.', 'info');
+    return;
+  }
+  if (isRetryCycleActive()) {
+    if (!isCycleSegment(idx)) {
+      if (typeof showToast === 'function') showToast('This segment stays completed for this retry.', 'info');
+      return;
+    }
+  } else if (examEvaluated) {
+    if (typeof showToast === 'function') showToast('Use Retry Exam to retake every failed segment together.', 'info');
+    showExamResultScreen();
+    return;
+  } else if (segScores[idx] >= 0) {
+    showCompletedSegmentView(idx);
+    activeExamSeg = idx;
+    showExamWorkspaceChrome(false);
+    selectExamSegment(idx);
+    return;
+  }
+
+  activeExamSeg = idx;
+  var cons = document.getElementById('examConsolidatedResult');
+  if (cons) {
+    cons.style.display = 'none';
+    if (!isRetryCycleActive()) cons.innerHTML = '';
+  }
+  showExamWorkspaceChrome(false);
+
+  var panel = document.getElementById('examSeg' + idx);
+  if (isRetryCycleActive() && retryCycle.submitted && retryCycle.submitted[idx]) {
+    showCycleSubmittedView(idx);
+  } else if (panel && !panel.querySelector('.seg-questions')) {
+    buildSegPanel(idx);
+  }
+
+  selectExamSegment(idx);
+  updateExamFlowProgress();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2968,23 +3818,39 @@ function closeSegmentScreen() {
   var nav = document.getElementById('step5Nav');
   var exam = document.getElementById('examSection');
   var warn = document.getElementById('unansweredWarn');
+  var cons = document.getElementById('examConsolidatedResult');
+  var topNext = document.getElementById('nextSegTopBtn');
+  var bottomNext = document.getElementById('nextSegBottomBtn');
   if (dash) dash.style.display = 'block';
   if (info) info.style.display = 'flex';
   if (nav) nav.style.display = 'flex';
   if (exam) exam.style.display = 'none';
   if (warn) warn.style.display = 'none';
+  if (cons) {
+    cons.style.display = 'none';
+  }
+  if (topNext) topNext.style.display = '';
+  if (bottomNext) bottomNext.style.display = '';
+  refreshExamDashboard();
+  if (examEvaluated) renderExamResultPanel();
 }
 
 function goNextSegment() {
-  openSegmentScreen((activeExamSeg + 1) % 4);
+  if (isRetryCycleActive()) {
+    var nextCycle = nextCycleSegment(activeExamSeg);
+    if (nextCycle < 0) nextCycle = retryCycle.segments[0];
+    openSegmentScreen(nextCycle);
+    return;
+  }
+  if (!examEvaluated) {
+    openSegmentScreen((activeExamSeg + 1) % 4);
+    return;
+  }
+  closeSegmentScreen();
 }
 
 function updateExamSegmentButtons() {
-  for (var i = 0; i < 4; i++) {
-    var btn = document.getElementById('dashSegTab' + i);
-    if (!btn) continue;
-    btn.classList.toggle('active-seg', i === activeExamSeg);
-  }
+  updateExamFlowProgress();
 }
 
 function selectExamSegment(idx) {
@@ -2994,13 +3860,19 @@ function selectExamSegment(idx) {
     if (panel) panel.style.display = i === idx ? 'block' : 'none';
   }
   var activePanel = document.getElementById('examSeg' + idx);
-  if (activePanel && !activePanel.innerHTML.trim()) buildSegPanel(idx);
+  if (activePanel && !activePanel.innerHTML.trim()) {
+    if (!examEvaluated && segScores[idx] >= 0) showCompletedSegmentView(idx);
+    else buildSegPanel(idx);
+  }
   updateExamSegmentButtons();
+  updateExamFlowProgress();
 }
 
 function buildSegPanel(idx) {
   var s = examSegData[idx];
-  var html = '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' Exam - ' + s.label + '</span></div><div class="exam-seg-banner-meta">5 Questions · Pass: 60%</div></div>';
+  var isRetry = isRetryCycleActive() && isCycleSegment(idx);
+  var html = '<div class="exam-seg-banner"><div class="exam-seg-banner-title"><i class="fas ' + s.icon + '" aria-hidden="true"></i><span>Segment ' + s.id + ' · ' + SEG_FULLNAMES[idx] + (isRetry ? ' (Retry)' : '') + '</span></div>' +
+    '<div class="exam-seg-banner-meta"><span class="seg-answered" id="segAnswered' + idx + '"><i class="fas fa-list-check" aria-hidden="true"></i> 0 of 5 answered</span></div></div>';
   if (s.material) html += s.material;
   html += '<div class="seg-questions" id="segQ' + idx + '">';
   for (var qi = 0; qi < 5; qi++) {
@@ -3012,11 +3884,23 @@ function buildSegPanel(idx) {
     html += '</div>';
   }
   html += '</div>';
-  html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-check"></i> Submit Segment ' + s.id + ' Exam</button></div>';
+  html += '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="submitSegment(' + idx + ')"><i class="fas fa-paper-plane"></i> ' + (isRetry ? 'Resubmit Segment ' + s.id : 'Submit Segment ' + s.id) + '</button></div>';
   html += '<div id="segScore' + idx + '" style="display:none;margin-top:0.875rem"></div>';
   document.getElementById('examSeg' + idx).innerHTML = html;
   bindExamOptionSelection(idx);
+  updateSegAnswered(idx);
   examStartTimes[idx] = Date.now();
+}
+
+function updateSegAnswered(idx) {
+  var el = document.getElementById('segAnswered' + idx);
+  if (!el) return;
+  var n = 0;
+  for (var i = 0; i < 5; i++) {
+    if (document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked')) n++;
+  }
+  el.innerHTML = '<i class="fas ' + (n === 5 ? 'fa-circle-check' : 'fa-list-check') + '" aria-hidden="true"></i> ' + n + ' of 5 answered';
+  el.classList.toggle('is-complete', n === 5);
 }
 
 function bindExamOptionSelection(idx) {
@@ -3029,6 +3913,7 @@ function bindExamOptionSelection(idx) {
         var lab = r.closest('.q-option-label');
         if (lab) lab.classList.toggle('is-selected', r.checked);
       });
+      updateSegAnswered(idx);
     });
   });
 }
@@ -3061,9 +3946,33 @@ function submitSegmentForce() {
   pendingSubmitSeg = -1;
 }
 
+function canRetrySegment(idx) {
+  return examEvaluated && !examPassed && segScores[idx] >= 0 && segScores[idx] < SEG_RETRY_PCT;
+}
+
+function finishRetryCycle() {
+  if (!isRetryCycleActive()) return;
+  if (!retryCycle.counted) {
+    examReattemptCount++;
+    retryCycle.counted = true;
+    if (getRemainingReattempts() <= 0 && adminRequestStatus === 'approved') {
+      adminRequestStatus = null;
+    }
+  }
+  retryCycle = null;
+  evaluateExamResult();
+  if (!window.__prefillTraining) showExamResultScreen();
+}
+
 function doSubmitSegment(idx) {
+  if (idx < 0) return;
+  var inCycle = isRetryCycleActive() && isCycleSegment(idx);
+  if (examEvaluated && !inCycle) {
+    if (typeof showToast === 'function') showToast('Start Retry Exam to retake the failed segments together.', 'info');
+    return;
+  }
+
   var s = examSegData[idx], correct = 0;
-  segAttempts[idx]++;
   for (var i = 0; i < 5; i++) {
     var sel = document.querySelector('input[name="seg' + idx + 'q' + i + '"]:checked');
     if (sel && parseInt(sel.value, 10) === s.questions[i].ans) correct++;
@@ -3071,107 +3980,373 @@ function doSubmitSegment(idx) {
   var pct = Math.round((correct / 5) * 100);
   segScores[idx] = pct;
 
-  var examElapsed = Date.now() - examStartTimes[idx];
+  var start = examStartTimes[idx] || Date.now();
+  var examElapsed = Date.now() - start;
   modTimes[idx] = examElapsed;
-  var examSecs = Math.round(examElapsed / 1000);
-  var examTimeStr = examSecs >= 60 ? Math.floor(examSecs / 60) + 'm ' + (examSecs % 60) + 's' : examSecs + 's';
+  var examTimeStr = formatDuration(examElapsed);
 
   var sp = document.getElementById('examSeg' + idx);
-  sp.querySelector('.seg-questions').style.display = 'none';
-  sp.querySelector('.seg-submit-row').style.display = 'none';
-
-  var pass = pct >= 60;
-  var retryHtml = '';
-  if (!pass && segAttempts[idx] < 4) {
-    retryHtml = '<div style="text-align:center;margin-top:0.5rem"><button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="retrySegExam(' + idx + ')"><i class="fas fa-redo"></i> Retry (Attempt ' + (segAttempts[idx] + 1) + ' of 4)</button></div>';
-  } else if (!pass) {
-    retryHtml = '<div style="text-align:center;color:var(--danger);font-weight:600;font-size:0.75rem;margin-top:0.35rem"><i class="fas fa-ban"></i> Max attempts reached for Segment ' + s.id + '</div>';
+  if (sp) {
+    var qs = sp.querySelector('.seg-questions');
+    var sr = sp.querySelector('.seg-submit-row');
+    if (qs) qs.style.display = 'none';
+    if (sr) sr.style.display = 'none';
   }
 
-  document.getElementById('segScore' + idx).innerHTML =
-    '<div class="exam-score-box ' + (pass ? 'is-pass' : 'is-fail') + '">' +
-    '<i class="fas ' + (pass ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> <strong>Segment ' + s.id + ' Exam</strong> - Score: ' + correct + '/5 (' + pct + '%) | Time: ' + examTimeStr +
-    '</div>' + retryHtml;
-  document.getElementById('segScore' + idx).style.display = 'block';
-
-  var labels = ['A', 'B', 'C', 'D'];
-  var names = ['Video', 'Training', 'PDF', 'MCQ'];
-  var label = labels[idx];
-  var statusEl = document.getElementById('dashStatus' + label);
-  var pctEl = document.getElementById('dashPct' + label);
-  var timeEl = document.getElementById('dashTime' + label);
-  var tab = document.getElementById('dashSegTab' + idx);
-
-  if (pctEl) {
-    pctEl.textContent = pct + '%';
-    pctEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
-  }
-  if (timeEl) timeEl.textContent = examTimeStr;
-  if (statusEl) {
-    statusEl.textContent = pass ? ('Segment ' + label + ' - ' + names[idx] + ' Completed') : ('Segment ' + label + ' Needs Retry');
-    statusEl.style.color = pass ? 'var(--primary)' : 'var(--danger)';
-  }
-  if (tab) tab.classList.toggle('done', pass);
-
-  if (pass && !modComplete[idx]) {
+  if (!modComplete[idx]) {
     modComplete[idx] = true;
     modsDone++;
   }
 
-  var sumScores = 0;
-  for (var si = 0; si < 4; si++) sumScores += segScores[si] >= 0 ? segScores[si] : 0;
-  var overallPct = Math.round(sumScores / 4);
-  document.getElementById('overallProgBar').style.width = overallPct + '%';
-  document.getElementById('overallProgLabel').textContent = modsDone + ' of 4 segments completed';
-  document.getElementById('dashPctTotal').textContent = overallPct + '%';
+  if (inCycle) {
+    if (!retryCycle.submitted) retryCycle.submitted = {};
+    retryCycle.submitted[idx] = true;
+  }
 
-  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
-  document.getElementById('dashTimeTotal').textContent = totalStr;
+  refreshExamDashboard();
+  updateExamFlowProgress();
+  persistExamState();
 
-  if (modsDone === 4) document.getElementById('step5Next').style.display = 'inline-flex';
+  if (window.__prefillTraining) {
+    if (segScores.every(function (sc) { return sc >= 0; })) evaluateExamResult();
+    return;
+  }
 
-  if (!window.__prefillTraining) closeSegmentScreen();
-  checkAllComplete();
+  if (inCycle) {
+    var pending = nextCycleSegment(idx);
+    if (pending < 0) {
+      finishRetryCycle();
+    } else {
+      if (typeof showToast === 'function') showToast('Segment ' + s.id + ' saved. Opening the next segment in this retry.', 'info');
+      openSegmentScreen(pending);
+    }
+    return;
+  }
+
+  if (segScores.every(function (sc) { return sc >= 0; })) {
+    evaluateExamResult();
+    showExamResultScreen();
+    return;
+  }
+
+  var nextIdx = getNextPendingSegment(idx);
+  if (nextIdx >= 0) {
+    if (typeof showToast === 'function') {
+      showToast('Segment ' + s.id + ' completed. Opening the next segment.', 'info');
+    }
+    openSegmentScreen(nextIdx);
+  }
 }
 
 function retrySegExam(idx) {
-  document.getElementById('examSeg' + idx).innerHTML = '';
-  buildSegPanel(idx);
+  openSegmentScreen(idx);
+}
+
+function refreshExamDashboard() {
+  modsDone = modComplete.filter(Boolean).length;
+  var overall = getOverallScore();
+  var done = segScores.filter(function (s) { return s >= 0; }).length;
+
+  renderSegOverview();
+  var cardList = document.getElementById('segCardList');
+  if (cardList) cardList.style.display = (examEvaluated || isRetryCycleActive()) ? 'none' : '';
+
+  var pct = Math.round((done / 4) * 100);
+  var ring = document.getElementById('examProgressRing');
+  var ringVal = document.getElementById('examProgressRingVal');
+  var progBar = document.getElementById('overallProgBar');
+  if (ring) ring.style.setProperty('--val', pct);
+  if (ringVal) ringVal.textContent = done + '/4';
+  if (progBar) progBar.style.width = pct + '%';
+
+  var title = document.getElementById('examProgressTitle');
+  if (title) {
+    if (isRetryCycleActive()) title.textContent = 'Retry in progress';
+    else if (examPassed) title.textContent = 'Exam passed · ' + (overall !== null ? overall + '%' : '');
+    else if (examEvaluated) title.textContent = 'Exam complete · ' + (overall !== null ? overall + '% overall' : '');
+    else if (done === 0) title.textContent = 'Ready to begin';
+    else title.textContent = done + ' of 4 segments completed';
+  }
+
+  var chip = document.getElementById('examAttemptChip');
+  if (chip) {
+    if (examEvaluated && !examPassed) {
+      var remC = getRemainingReattempts();
+      var maxC = getMaxExamReattempts();
+      chip.innerHTML = '<i class="fas fa-rotate-right" aria-hidden="true"></i> ' + remC + ' of ' + maxC + ' retries left';
+    } else {
+      chip.innerHTML = '<i class="fas fa-rotate-right" aria-hidden="true"></i> 4 shared retries';
+    }
+  }
+
+  var attemptBar = document.getElementById('examAttemptBar');
+  if (attemptBar) attemptBar.style.display = 'none';
+
+  var overviewSub = document.querySelector('#step5DashboardSection .exam-overview-sub');
+  if (overviewSub) {
+    if (examPassed) overviewSub.textContent = 'You passed Training & Certification. Continue when you are ready.';
+    else if (isRetryCycleActive()) overviewSub.textContent = 'Finish this retry to update your overall score.';
+    else if (examEvaluated) overviewSub.textContent = 'Your overall result is below. Retry Exam covers every segment that still needs a try.';
+    else overviewSub.textContent = 'Finish all four segments to unlock your overall score. Segment scores stay hidden until you complete the exam.';
+  }
+
+  var hint = document.getElementById('step5DashHint');
+  if (hint) {
+    if (examPassed) hint.textContent = 'Great work. Continue to the next onboarding step below.';
+    else if (isRetryCycleActive()) hint.textContent = 'Finish every segment in this retry. It counts as one reattempt when you submit the last segment.';
+    else if (examEvaluated) hint.textContent = 'Use Retry Exam to retake every listed segment together. That counts as one reattempt.';
+    else hint.textContent = 'Open any segment to start. You can move between segments freely.';
+  }
+
+  var nextBtn = document.getElementById('step5Next');
+  if (nextBtn) nextBtn.style.display = examPassed ? 'inline-flex' : 'none';
+  if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
+}
+
+function evaluateExamResult() {
+  examEvaluated = true;
+  var overall = getOverallScore();
+  examPassed = overall !== null && overall >= EXAM_PASS_PCT;
+  if (examPassed) adminRequestStatus = null;
+  renderExamResultPanel();
+  refreshExamDashboard();
+  updateExamFlowProgress();
+  persistExamState();
+  if (typeof showToast === 'function') {
+    if (examPassed) showToast('Certification exam passed with ' + overall + '%.', 'info');
+    else showToast('Overall score ' + overall + '%. Retake the highlighted segments.', 'info');
+  }
+}
+
+function buildExamResultHtml() {
+  var overall = getOverallScore();
+  var totalStr = formatDuration(modTimes.reduce(function (a, b) { return a + b; }, 0));
+  var rem = getRemainingReattempts();
+  var max = getMaxExamReattempts();
+  var html = '';
+
+  var ringColor = examPassed ? 'var(--success-600)' : 'var(--warning-500)';
+  var scoreVal = overall === null ? 0 : overall;
+
+  if (examPassed) {
+    html =
+      '<div class="exam-result-panel is-pass">' +
+      '<div class="exam-result-hero">' +
+      '<div class="exam-score-ring" style="--val:' + scoreVal + ';--ring:' + ringColor + '"><div class="ring-inner"><span class="ring-val">' + overall + '%</span><span class="ring-cap">Overall</span></div></div>' +
+      '<div class="exam-result-headline">' +
+      '<span class="exam-result-badge is-pass"><i class="fas fa-circle-check"></i> Passed</span>' +
+      '<p class="exam-result-title">Certification exam passed</p>' +
+      '<p class="exam-result-sub">Congratulations, you completed Training &amp; Certification. Continue with <strong>Next: Background Check</strong> below.</p>' +
+      '</div></div>' +
+      '<div class="exam-result-meta">' +
+      '<div class="rm-cell">Overall score<strong>' + overall + '%</strong></div>' +
+      '<div class="rm-cell">Pass mark<strong>' + EXAM_PASS_PCT + '%</strong></div>' +
+      '<div class="rm-cell">Total time<strong>' + totalStr + '</strong></div>' +
+      '</div></div>';
+  } else {
+    var lows = getLowScoringSegments();
+    html =
+      '<div class="exam-result-panel is-fail">' +
+      '<div class="exam-result-hero">' +
+      '<div class="exam-score-ring" style="--val:' + scoreVal + ';--ring:' + ringColor + '"><div class="ring-inner"><span class="ring-val">' + overall + '%</span><span class="ring-cap">Overall</span></div></div>' +
+      '<div class="exam-result-headline">' +
+      '<span class="exam-result-badge is-fail"><i class="fas fa-circle-exclamation"></i> Not passed yet</span>' +
+      '<p class="exam-result-title">You are ' + Math.max(0, EXAM_PASS_PCT - overall) + '% away from passing</p>' +
+      '<p class="exam-result-sub">These segments need another try. Retry Exam walks through all of them in one cycle. Segments that do not need a retake stay completed.</p>' +
+      '</div></div>' +
+      '<div class="exam-result-meta">' +
+      '<div class="rm-cell">Overall score<strong>' + overall + '%</strong></div>' +
+      '<div class="rm-cell">Reattempts left<strong>' + rem + ' of ' + max + '</strong></div>' +
+      '<div class="rm-cell">Total time<strong>' + totalStr + '</strong></div>' +
+      '</div>' +
+      '<div class="exam-result-body">';
+
+    if (adminRequestStatus === 'approved' && rem > 0) {
+      html +=
+        '<div class="exam-admin-box" style="margin:0 0 0.9rem;border-color:var(--success-200);background:var(--success-50)">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;flex-wrap:wrap">' +
+        '<div style="font-size:0.875rem;font-weight:700;color:var(--brand-ink)">Additional attempts approved</div>' +
+        '<span class="exam-admin-status is-approved" style="margin-top:0"><i class="fas fa-circle-check"></i> Approved</span></div>' +
+        '<p style="margin:0.45rem 0 0;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">You now have ' + rem + ' of ' + max + ' shared reattempts. Retry the low-scoring segments below.</p></div>';
+    }
+
+    html += '<p class="exam-fail-list-label">Segments to retake</p>';
+    html += '<div class="exam-fail-list">';
+    for (var i = 0; i < lows.length; i++) {
+      var si = lows[i];
+      var seg = examSegData[si];
+      html +=
+        '<div class="exam-fail-row">' +
+        '<span class="fail-icon"><i class="fas ' + seg.icon + '"></i></span>' +
+        '<div class="fail-meta"><strong>Segment ' + SEG_LABELS[si] + ' · ' + SEG_FULLNAMES[si] + '</strong></div>' +
+        '</div>';
+    }
+    html += '</div>';
+    if (rem > 0 && adminRequestStatus !== 'pending') {
+      html +=
+        '<div style="margin-top:0.9rem">' +
+        '<button type="button" class="ui-btn" onclick="startRetryExam()"><i class="fas fa-rotate-right"></i> Retry Exam</button>' +
+        '<p style="margin:0.55rem 0 0;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">One Retry Exam covers every segment above. It counts as 1 shared reattempt when you submit the last segment.</p>' +
+        '</div>';
+    }
+
+    if (rem <= 0) {
+      html += '<div class="exam-admin-box">';
+      if (!adminRequestStatus) {
+        html +=
+          '<div style="display:flex;align-items:flex-start;gap:0.6rem"><i class="fas fa-user-shield" style="color:var(--primary);font-size:1.1rem;margin-top:0.1rem"></i><div>' +
+          '<div style="font-size:0.875rem;font-weight:700;color:var(--brand-ink);margin-bottom:0.2rem">Need another attempt?</div>' +
+          '<p style="margin:0 0 0.75rem;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">You have used all 4 shared reattempts. Request administrator approval to unlock more attempts.</p>' +
+          '<button type="button" class="ui-btn" onclick="requestAdminExamAttempt()"><i class="fas fa-paper-plane"></i> Request Admin for Another Attempt</button>' +
+          '</div></div>';
+      } else if (adminRequestStatus === 'pending') {
+        html +=
+          '<div style="font-size:0.875rem;font-weight:700;color:var(--brand-ink)">Admin request submitted <span class="exam-admin-status is-pending" style="margin-left:0.35rem"><i class="fas fa-clock"></i> Pending</span></div>' +
+          '<p style="margin:0.55rem 0 0;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">Further retries stay locked until an administrator approves your request.</p>' +
+          '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem">' +
+          '<button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="simulateAdminExamDecision(\'approved\')"><i class="fas fa-check"></i> Simulate Approve</button>' +
+          '<button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="simulateAdminExamDecision(\'rejected\')"><i class="fas fa-xmark"></i> Simulate Reject</button>' +
+          '</div>';
+      } else if (adminRequestStatus === 'rejected') {
+        html +=
+          '<div style="font-size:0.875rem;font-weight:700;color:var(--brand-ink)">Admin request rejected <span class="exam-admin-status is-rejected" style="margin-left:0.35rem"><i class="fas fa-circle-xmark"></i> Rejected</span></div>' +
+          '<p style="margin:0.55rem 0 0;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">Additional attempts are not available. Contact broker support at brokersupport@enrollaxis.com if you need help.</p>';
+      }
+      html += '</div>';
+    }
+
+    html += '</div></div>';
+  }
+
+  return html;
+}
+
+function buildCycleProgressHtml() {
+  var done = cycleSubmittedCount();
+  var total = retryCycle.segments.length;
+  var html =
+    '<div class="exam-result-panel">' +
+    '<div class="exam-result-hero">' +
+    '<div class="exam-result-headline">' +
+    '<span class="exam-result-badge is-fail"><i class="fas fa-rotate-right"></i> Retry in progress</span>' +
+    '<p class="exam-result-title">' + done + ' of ' + total + ' retry segments submitted</p>' +
+    '<p class="exam-result-sub">Finish every segment in this retry. Your overall score is calculated after the last one, and the cycle counts as a single reattempt.</p>' +
+    '</div></div><div class="exam-result-body"><div class="exam-fail-list">';
+  for (var i = 0; i < retryCycle.segments.length; i++) {
+    var si = retryCycle.segments[i];
+    var doneSeg = retryCycle.submitted && retryCycle.submitted[si];
+    html +=
+      '<div class="exam-fail-row">' +
+      '<span class="fail-icon"><i class="fas ' + examSegData[si].icon + '"></i></span>' +
+      '<div class="fail-meta"><strong>Segment ' + SEG_LABELS[si] + ' · ' + SEG_FULLNAMES[si] + '</strong></div>' +
+      '<span class="seg-badge ' + (doneSeg ? 'is-completed' : 'is-pending') + '">' + (doneSeg ? 'Done' : (si === activeExamSeg ? 'In progress' : 'Pending')) + '</span>' +
+      '</div>';
+  }
+  var next = nextCycleSegment(-1);
+  if (next < 0) next = retryCycle.segments[0];
+  html += '</div><div style="margin-top:0.9rem"><button type="button" class="ui-btn" onclick="openSegmentScreen(' + next + ')"><i class="fas fa-arrow-right"></i> Continue retry</button></div></div></div>';
+  return html;
+}
+
+function startRetryExam() {
+  if (examPassed) return;
+  if (adminRequestStatus === 'pending') {
+    if (typeof showToast === 'function') showToast('Admin request is still pending.', 'info');
+    return;
+  }
+  if (isRetryCycleActive()) {
+    var resume = nextCycleSegment(-1);
+    if (resume < 0) resume = retryCycle.segments[0];
+    openSegmentScreen(resume);
+    return;
+  }
+  if (getRemainingReattempts() <= 0) {
+    if (typeof showToast === 'function') showToast('No reattempts remaining. Request admin for another attempt.', 'info');
+    renderExamResultPanel();
+    return;
+  }
+  var lows = getLowScoringSegments();
+  if (!lows.length) return;
+  retryCycle = { segments: lows.slice(), submitted: {}, counted: false };
+  for (var i = 0; i < lows.length; i++) {
+    var panel = document.getElementById('examSeg' + lows[i]);
+    if (panel) panel.innerHTML = '';
+  }
+  persistExamState();
+  openSegmentScreen(lows[0]);
+}
+
+function renderExamResultPanel() {
+  var panel = document.getElementById('examResultPanel');
+  var cons = document.getElementById('examConsolidatedResult');
+  if (isRetryCycleActive()) {
+    var cycleHtml = buildCycleProgressHtml();
+    var examOpenCycle = document.getElementById('examSection') && document.getElementById('examSection').style.display === 'block';
+    var cycleTarget = examOpenCycle ? cons : panel;
+    var cycleOther = examOpenCycle ? panel : cons;
+    if (cycleOther) { cycleOther.innerHTML = ''; cycleOther.style.display = 'none'; }
+    if (cycleTarget) { cycleTarget.innerHTML = cycleHtml; cycleTarget.style.display = examOpenCycle ? 'none' : 'block'; }
+    return;
+  }
+  if (!examEvaluated) {
+    if (panel) {
+      panel.style.display = 'none';
+      panel.innerHTML = '';
+    }
+    if (cons) {
+      cons.style.display = 'none';
+      cons.innerHTML = '';
+    }
+    return;
+  }
+
+  var html = buildExamResultHtml();
+  var examOpen = document.getElementById('examSection') && document.getElementById('examSection').style.display === 'block';
+  var target = examOpen ? cons : panel;
+  var other = examOpen ? panel : cons;
+  if (other) {
+    other.innerHTML = '';
+    other.style.display = 'none';
+  }
+  if (target) {
+    target.innerHTML = html;
+    target.style.display = 'block';
+  }
+}
+
+function requestAdminExamAttempt() {
+  if (getRemainingReattempts() > 0 || examPassed) return;
+  adminRequestStatus = 'pending';
+  persistExamState();
+  renderExamResultPanel();
+  refreshExamDashboard();
+  if (typeof showToast === 'function') showToast('Admin request submitted. Status: Pending.', 'info');
+}
+
+function simulateAdminExamDecision(decision) {
+  if (adminRequestStatus !== 'pending') return;
+  if (decision === 'approved') {
+    adminRequestStatus = 'approved';
+    adminExtraAttempts += EXAM_MAX_REATTEMPTS;
+    if (typeof showToast === 'function') showToast('Admin approved ' + EXAM_MAX_REATTEMPTS + ' additional reattempts.', 'info');
+  } else {
+    adminRequestStatus = 'rejected';
+    if (typeof showToast === 'function') showToast('Admin rejected the additional attempt request.', 'info');
+  }
+  persistExamState();
+  renderExamResultPanel();
+  refreshExamDashboard();
 }
 
 function checkAllComplete() {
-  if (segScores.every(function (s) { return s >= 60; })) showConsolidatedResult();
+  if (segScores.every(function (s) { return s >= 0; })) evaluateExamResult();
 }
 
 function showConsolidatedResult() {
-  var total = segScores.reduce(function (a, b) { return a + b; }, 0);
-  var avg = Math.round(total / 4);
-  var pass = avg >= 85;
-  examPassed = pass;
-  var segMeta = [['A', 'Video'], ['B', 'Training'], ['C', 'PDF'], ['D', 'MCQ']];
-  var totalMs = modTimes.reduce(function (a, b) { return a + b; }, 0);
-  var totalSecs = Math.round(totalMs / 1000);
-  var totalStr = totalSecs >= 60 ? Math.floor(totalSecs / 60) + 'm ' + (totalSecs % 60) + 's' : totalSecs + 's';
-
-  var grid = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:1rem;font-size:0.75rem">';
-  for (var i = 0; i < 4; i++) {
-    var sc = segScores[i] >= 60;
-    var segSecs = Math.round(modTimes[i] / 1000);
-    var segTimeStr = segSecs >= 60 ? Math.floor(segSecs / 60) + 'm ' + (segSecs % 60) + 's' : segSecs + 's';
-    grid += '<div style="text-align:center;padding:0.625rem 0.4rem;border-radius:calc(var(--radius) - 2px);background:' + (sc ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (sc ? 'var(--success-200)' : 'var(--danger-200)') + '"><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-bottom:0.2rem">Seg ' + segMeta[i][0] + ' - ' + segMeta[i][1] + '</div><div style="font-size:0.875rem;font-weight:700;color:' + (sc ? 'var(--success-800)' : 'var(--danger)') + '">' + segScores[i] + '%</div><div style="font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.15rem"><i class="fas fa-clock"></i> ' + segTimeStr + '</div></div>';
-  }
-  grid += '</div>';
-  var banner = '<div style="text-align:center;padding:1.125rem;border-radius:calc(var(--radius) - 2px);background:' + (pass ? 'var(--success-50)' : 'var(--danger-50)') + ';border:1px solid ' + (pass ? 'var(--success-200)' : 'var(--danger-200)') + ';margin-bottom:0.875rem"><i class="fas ' + (pass ? 'fa-award' : 'fa-times-circle') + '" style="font-size:2rem;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + ';margin-bottom:0.5rem;display:block"></i><div style="font-size:0.9375rem;font-weight:700;color:' + (pass ? 'var(--success-800)' : 'var(--danger)') + '">' + (pass ? 'Certification Passed!' : 'Did Not Pass - 85% Average Required') + '</div><div style="font-size:0.8125rem;margin-top:0.25rem;color:var(--muted-foreground)">Overall Score: <strong>' + avg + '%</strong> &nbsp;|&nbsp; Total Time: <strong>' + totalStr + '</strong></div></div>';
-
-  if (pass) document.getElementById('step5Next').style.display = 'inline-flex';
-  if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
-
-  var el = document.getElementById('examConsolidatedResult');
-  el.innerHTML = banner + grid;
-  el.style.display = 'block';
+  evaluateExamResult();
 }
+
+resetExamStateOnRefresh();
 </script>
 </body>
 </html>
