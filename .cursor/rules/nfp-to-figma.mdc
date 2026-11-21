@@ -1,0 +1,54 @@
+---
+description: Put Enroll-NFP HTML prototype screens into Figma with exact icons and fonts (capture, never rebuild)
+globs:
+alwaysApply: false
+---
+
+# NFP to Figma
+
+Use this rule whenever the user asks to put NFP / prototype / HTML screens into Figma.
+Full guide: `tools/nfp-figma-capture/README.md`. Skill: `nfp-to-figma`.
+
+## Hard rules
+- NEVER rebuild a screen by hand with `use_figma` (frames, text, shapes, icons). That is
+  why icons come out wrong. ALWAYS capture the real page with `generate_figma_design`.
+- NEVER open capture URLs in the user's normal browser. Background tabs pause and the
+  capture stays pending. Use `open_captures.py` (headless Chrome).
+- NEVER edit NFP source files to capture a state. Use `?run=<js>` or a query param.
+  If a temporary copy is unavoidable (e.g. auto-redirect), delete it afterwards.
+- Target file key: `OH54yXEIQt5vwYEF6wfFQS`. Ask before writing to Figma.
+- No emojis and no em dashes in any Figma text. Simple English. Use a plain hyphen (`-`).
+- Starter plan: few MCP calls per month. Batch work: one `use_figma` script per section,
+  one poll per capture.
+
+## Steps
+1. Make sure `py tools/nfp-figma-capture/serve.py <nfp_dir> 8090` is running (start it
+   in the background if not). Confirm `http://localhost:8090/<page>` loads.
+2. List screens as a table: Code, Screen name, page path + query, `run` JS.
+3. For each screen call `generate_figma_design` with `fileKey` and `nodeId` = target
+   PAGE id. Save each `captureId`.
+4. Run, in ONE command:
+   `py tools/nfp-figma-capture/open_captures.py "<page>?<query>&run=document.title='CODE';<extra js>|<captureId>" ...`
+   - `document.title='CODE'` is required so frames can be found by name.
+   - If icons might not be loaded, prefix `$env:CAPTURE_DELAY_MS=5000;` (PowerShell) or
+     `CAPTURE_DELAY_MS=5000` (bash).
+5. After it prints `done`, poll each `captureId` once with `generate_figma_design`.
+6. With ONE `use_figma` call per section: find new top-level frames whose name matches the
+   codes, rename to `CODE · Screen name`, and lay them out with the Annotation Kit:
+   - Flow Header `30:28` (Eyebrow, Title, Description, Meta) at top of a Section.
+   - Screen Label `30:19` (Code, Title; hide Source line) 72 px above each frame.
+   - Note `30:33` (Heading "What this screen does", Body) 32 px below each frame.
+   - Flow Arrow `30:36` centred in the 200 px gap between frames.
+   - Section fill `#CDD2DA`, padding 120, first row = header bottom + 120.
+   - Frames 1440 wide. Brand green `#147966` / `#E8F2F1`.
+   Use component instances and set their TEXT properties. Do not create new components.
+7. `get_screenshot` each new section and check icons, fonts and overlap before reporting.
+
+## Known NFP triggers
+- `agent/onboarding.html`: `obGoTo(n)` (0-7), `openSegmentScreen(i)`, `prefillStep(n)`.
+- `portal/landing-carrier.html`: `document.querySelector('[data-group=KEY]').click()`
+  (agent-producer, members-leads, commissions-finance, training-compliance, support-ops,
+  sales-campaigns, enrollment-ops, system-config); `document.getElementById('sidebarRail').click()`
+  collapses the sidebar; `?state=loading`, `?state=error`.
+- `portal/signing-in.html?fail=1` (page auto-redirects after 1.4 s, see README).
+- `portal/select-carrier.html?noaccess=1`.

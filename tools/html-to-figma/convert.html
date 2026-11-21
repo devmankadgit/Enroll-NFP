@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EnrollAxis HTML to Figma</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --primary: #177e71;
+    --text: #1b1c1c;
+    --muted: #6a716f;
+    --border: #ced1d1;
+    --page: #e7e8e8;
+    --card: #fff;
+    --font: "Poppins", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 1.25rem;
+    background: var(--page);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .panel {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+  h1 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+  label { display: grid; gap: 0.35rem; font-size: 0.875rem; font-weight: 600; }
+  input, button {
+    font: inherit;
+    padding: 0.65rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    min-height: 44px;
+  }
+  button {
+    background: var(--primary);
+    color: #fff;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.secondary {
+    background: #fff;
+    color: var(--primary);
+    border: 1px solid var(--border);
+  }
+  .row { display: grid; grid-template-columns: 1fr 140px 140px; gap: 0.75rem; }
+  .hint { margin: 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.45; }
+  .log {
+    min-height: 8rem;
+    white-space: pre-wrap;
+    background: #f3f4f3;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .ok { color: var(--primary); font-weight: 600; }
+  .err { color: #b42318; font-weight: 600; }
+  @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <h1>HTML to Figma (Figit)</h1>
+    <p class="hint">
+      Converts a live localhost page into a Figma clipboard payload using
+      <code>@figit/dom-to-figma</code>. Paste into Figma with Ctrl+V.
+      Default desktop width is 1440px. Keep fonts, icons, images, and shadcn control sizes exact.
+    </p>
+    <label>
+      Page URL (localhost)
+      <input id="pageUrl" type="url" value="http://127.0.0.1:8791/agent/onboarding.html?fresh=1">
+    </label>
+    <div class="row">
+      <label>
+        Frame name
+        <input id="frameName" type="text" value="00 Welcome / Desktop">
+      </label>
+      <label>
+        Width
+        <input id="frameWidth" type="number" value="1440" min="320" step="1">
+      </label>
+      <label>
+        Height (0 = measured)
+        <input id="frameHeight" type="number" value="0" min="0" step="1">
+      </label>
+    </div>
+    <label>
+      Selector (root to convert)
+      <input id="selector" type="text" value="body">
+    </label>
+    <button type="button" id="openBtn">1. Open page in new tab</button>
+    <button type="button" class="secondary" id="copySnippetBtn">2. Copy inject snippet</button>
+    <p class="hint">
+      After opening the page, paste the inject snippet in DevTools console on that tab.
+      Then paste the copied design into Figma with Ctrl+V.
+    </p>
+    <div id="log" class="log">Ready.</div>
+  </div>
+<script type="module">
+const DEFAULT_WIDTH = 1440;
+function log(msg, cls) {
+  const el = document.getElementById("log");
+  el.innerHTML = cls ? `<span class="${cls}">${msg}</span>` : msg;
+}
+function buildSnippet() {
+  const width = Number(document.getElementById("frameWidth").value) || DEFAULT_WIDTH;
+  const height = Number(document.getElementById("frameHeight").value) || 0;
+  const name = document.getElementById("frameName").value.trim() || "Screen";
+  const selector = document.getElementById("selector").value.trim() || "body";
+  return `(() => {
+  const s = document.createElement("script");
+  s.type = "module";
+  s.textContent = \`
+import { createFigmaConverter, createFontsourceLoader } from "https://esm.sh/@figit/dom-to-figma@0.2.4";
+const width = ${width};
+const heightHint = ${height};
+const name = ${JSON.stringify(name)};
+const selector = ${JSON.stringify(selector)};
+async function run() {
+  const root = document.querySelector(selector) || document.body;
+  document.documentElement.style.width = width + "px";
+  document.body.style.width = width + "px";
+  document.body.style.maxWidth = width + "px";
+  window.scrollTo(0, 0);
+  await document.fonts.ready;
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const rect = root.getBoundingClientRect();
+  const height = heightHint > 0
+    ? heightHint
+    : Math.ceil(Math.max(rect.height, root.scrollHeight, document.documentElement.scrollHeight));
+  const figma = createFigmaConverter({
+    layout: "auto",
+    fontLoader: createFontsourceLoader({ subset: "latin" }),
+  });
+  const result = await figma.convert({ element: root, width, height, name });
+  await navigator.clipboard.write([result.toClipboardItem()]);
+  console.log("[html-to-figma] Copied", name, width + "x" + height);
+  alert("Copied to clipboard: " + name + " (" + width + "x" + height + "). Paste in Figma with Ctrl+V.");
+}
+run().catch((err) => {
+  console.error(err);
+  alert("html-to-figma failed: " + (err && err.message ? err.message : err));
+});
+\`;
+  document.documentElement.appendChild(s);
+})();`;
+}
+document.getElementById("openBtn").addEventListener("click", () => {
+  const url = document.getElementById("pageUrl").value.trim();
+  if (!url) return log("Enter a localhost page URL.", "err");
+  window.open(url, "_blank", "noopener");
+  log("Opened page. Next: copy inject snippet and run it in that tab's console.", "ok");
+});
+document.getElementById("copySnippetBtn").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(buildSnippet());
+    log("Inject snippet copied. Paste it in the target page DevTools console, then paste into Figma.", "ok");
+  } catch (err) {
+    log("Could not copy snippet: " + (err && err.message ? err.message : err), "err");
+  }
+});
+</script>
+</body>
+</html>

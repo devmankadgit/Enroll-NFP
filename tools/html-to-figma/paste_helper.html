@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paste Agent Onboarding into Figma</title>
+<style>
+  body { font-family: Poppins, system-ui, sans-serif; margin: 0; padding: 1.25rem; background: #e7e8e8; color: #1b1c1c; }
+  .panel { max-width: 720px; margin: 0 auto; background: #fff; border: 1px solid #ced1d1; border-radius: 12px; padding: 1.25rem; display: grid; gap: 0.75rem; }
+  h1 { margin: 0; font-size: 1.2rem; }
+  .hint { color: #6a716f; font-size: 0.85rem; line-height: 1.45; margin: 0; }
+  button { font: inherit; min-height: 44px; border-radius: 8px; border: 0; background: #177e71; color: #fff; font-weight: 600; cursor: pointer; padding: 0.65rem 0.85rem; text-align: left; }
+  button.secondary { background: #fff; color: #177e71; border: 1px solid #ced1d1; }
+  .row { display: grid; gap: 0.5rem; }
+  #log { white-space: pre-wrap; background: #f3f4f3; border-radius: 8px; padding: 0.75rem; min-height: 4rem; font-size: 0.8125rem; }
+  .ok { color: #177e71; font-weight: 600; }
+  .err { color: #b42318; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Agent Onboarding → Figma paste</h1>
+    <p class="hint">
+      1. Open the EnrollAxis Figma file on the <strong>Agent Onboarding</strong> page.<br>
+      2. Click a screen below to copy the Figit payload.<br>
+      3. Switch to Figma and press Ctrl+V.<br>
+      Frames are 1440px desktop captures from the onboarding worktree.
+    </p>
+    <div class="row" id="buttons"></div>
+    <button type="button" class="secondary" id="copyAllHint">Tip: paste left-to-right after Welcome</button>
+    <div id="log">Ready.</div>
+  </div>
+<script type="module">
+const files = [
+  { file: "01-Invitation-Registration.figma.html", label: "01 Invitation & Registration" },
+  { file: "02-Personal-Business-Info.figma.html", label: "02 Personal & Business Info" },
+  { file: "03-W9-Tax-Payment.figma.html", label: "03 W-9 & Tax / Payment" },
+  { file: "04-AHIP-License-Verification.figma.html", label: "04 AHIP & License Verification" },
+  { file: "05-Training-Certification.figma.html", label: "05 Training & Certification" },
+  { file: "06-Background-Check.figma.html", label: "06 Background Check" },
+  { file: "07-Contract-Execution.figma.html", label: "07 Contract Execution" },
+  { file: "08-Ready-to-Sell.figma.html", label: "08 Ready to Sell" },
+];
+
+const logEl = document.getElementById("log");
+function log(msg, cls) {
+  logEl.innerHTML = cls ? `<span class="${cls}">${msg}</span>` : msg;
+}
+
+const host = document.getElementById("buttons");
+for (const item of files) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = `Copy ${item.label}`;
+  btn.addEventListener("click", async () => {
+    try {
+      const res = await fetch(`./out/agent-onboarding/${item.file}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const html = await res.text();
+      await navigator.clipboard.write([
+        new ClipboardItem({ "text/html": new Blob([html], { type: "text/html" }) }),
+      ]);
+      log(`Copied ${item.label}. Switch to Figma and press Ctrl+V.`, "ok");
+    } catch (err) {
+      log(`Failed ${item.label}: ${err && err.message ? err.message : err}`, "err");
+    }
+  });
+  host.appendChild(btn);
+}
+</script>
+</body>
+</html>
