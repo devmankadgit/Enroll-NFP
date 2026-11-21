@@ -904,6 +904,15 @@
   .seg-badge.is-met { background: var(--success-50); color: var(--success-800); }
   .seg-badge.is-passed { background: var(--success-50); color: var(--success-800); }
   .seg-badge.is-retry { background: var(--warning-50); color: var(--warning-800); }
+  .exam-fail-row .seg-correct {
+    margin-left: auto;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+    white-space: nowrap;
+  }
+  .exam-fail-row.is-ok { border-color: var(--primary-200); }
+  .exam-fail-row.is-ok .fail-icon { background: var(--primary-50); color: var(--primary); }
   /* in-exam stepper */
   .exam-stepper {
     display: grid;
@@ -4118,6 +4127,26 @@ function evaluateExamResult() {
   }
 }
 
+function getSegCorrect(idx) {
+  if (segScores[idx] === undefined || segScores[idx] < 0) return null;
+  return Math.round(segScores[idx] / 20);
+}
+
+function buildSegResultListHtml(showRetake) {
+  var html = '<div class="exam-fail-list">';
+  for (var i = 0; i < 4; i++) {
+    var c = getSegCorrect(i);
+    var low = showRetake && segScores[i] >= 0 && segScores[i] < SEG_RETRY_PCT;
+    html +=
+      '<div class="exam-fail-row' + (low ? '' : ' is-ok') + '">' +
+      '<span class="fail-icon"><i class="fas ' + examSegData[i].icon + '"></i></span>' +
+      '<div class="fail-meta"><strong>Segment ' + SEG_LABELS[i] + ' · ' + SEG_FULLNAMES[i] + '</strong></div>' +
+      '<span class="seg-correct">' + (c === null ? '-' : c + ' of 5 correct') + '</span>' +
+      '</div>';
+  }
+  return html + '</div>';
+}
+
 function buildExamResultHtml() {
   var overall = getOverallScore();
   var totalStr = formatDuration(modTimes.reduce(function (a, b) { return a + b; }, 0));
@@ -4142,6 +4171,10 @@ function buildExamResultHtml() {
       '<div class="rm-cell">Overall score<strong>' + overall + '%</strong></div>' +
       '<div class="rm-cell">Pass mark<strong>' + EXAM_PASS_PCT + '%</strong></div>' +
       '<div class="rm-cell">Total time<strong>' + totalStr + '</strong></div>' +
+      '</div>' +
+      '<div class="exam-result-body">' +
+      '<p class="exam-fail-list-label">Segment results</p>' +
+      buildSegResultListHtml(false) +
       '</div></div>';
   } else {
     var lows = getLowScoringSegments();
@@ -4170,18 +4203,8 @@ function buildExamResultHtml() {
         '<p style="margin:0.45rem 0 0;font-size:0.8125rem;color:var(--neutral-700);line-height:1.45">You now have ' + rem + ' of ' + max + ' shared reattempts. Retry the low-scoring segments below.</p></div>';
     }
 
-    html += '<p class="exam-fail-list-label">Segments to retake</p>';
-    html += '<div class="exam-fail-list">';
-    for (var i = 0; i < lows.length; i++) {
-      var si = lows[i];
-      var seg = examSegData[si];
-      html +=
-        '<div class="exam-fail-row">' +
-        '<span class="fail-icon"><i class="fas ' + seg.icon + '"></i></span>' +
-        '<div class="fail-meta"><strong>Segment ' + SEG_LABELS[si] + ' · ' + SEG_FULLNAMES[si] + '</strong></div>' +
-        '</div>';
-    }
-    html += '</div>';
+    html += '<p class="exam-fail-list-label">Segment results</p>';
+    html += buildSegResultListHtml(true);
     if (rem > 0 && adminRequestStatus !== 'pending') {
       html +=
         '<div style="margin-top:0.9rem">' +
