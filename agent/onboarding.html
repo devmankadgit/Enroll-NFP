@@ -356,6 +356,7 @@
   }
   .exam-seg-nav-top .exam-nav-back { justify-self: start; }
   .exam-seg-nav-top .exam-nav-next { justify-self: end; }
+  .exam-top-actions { display: inline-flex; align-items: center; gap: 0.5rem; }
   .exam-seg-nav-top h3,
   .exam-seg-nav h3 {
     margin: 0;
@@ -739,7 +740,6 @@
     font-size: 0.8125rem;
     color: var(--muted-foreground);
     line-height: 1.5;
-    max-width: 48ch;
   }
   .exam-meta-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
   .exam-meta-chip {
@@ -913,6 +913,112 @@
   }
   .exam-fail-row.is-ok { border-color: var(--primary-200); }
   .exam-fail-row.is-ok .fail-icon { background: var(--primary-50); color: var(--primary); }
+  /* Step 5 certification list */
+  .cert-back { margin-bottom: 0.65rem; }
+  .exam-result-body .seg-submit-row { margin-top: 1rem; }
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+  .cert-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.1rem 1.15rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cert-card:hover { border-color: var(--primary-300); box-shadow: var(--shadow-sm); }
+  .cert-card.is-completed { border-color: var(--primary-200); background: var(--primary-50); }
+  .cert-card.is-completed:hover { border-color: var(--primary-200); box-shadow: none; }
+  .cert-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .cert-card-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+    background: var(--primary-50);
+    color: var(--primary);
+  }
+  .cert-card.is-completed .cert-card-icon { background: var(--primary); color: var(--white); }
+  .cert-card-name {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--brand-ink);
+  }
+  .cert-card-desc {
+    margin: 0.3rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+  }
+  .cert-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .cert-req-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--neutral-600);
+    border: 1px dashed var(--neutral-300);
+  }
+  .cert-req-badge.is-mandatory {
+    background: var(--danger-50);
+    color: var(--danger-700);
+    border: 1px solid var(--danger-200);
+  }
+  .cert-req-badge i { font-size: 0.55rem; }
+  .cert-card-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .cert-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+  .cert-card.is-completed .cert-card-foot { border-top-color: var(--primary-200); }
+  .cert-done-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--primary-800);
+  }
+  .cert-done-note i { color: var(--primary); }
+  @media (max-width: 520px) {
+    .cert-card-foot .ui-btn { width: 100%; justify-content: center; }
+  }
   /* in-exam stepper */
   .exam-stepper {
     display: grid;
@@ -2421,10 +2527,23 @@
           <button type="button" class="ui-btn ui-btn-secondary ui-btn-sm" onclick="prefillStep(4)"><i class="fas fa-magic"></i> Prefill Data</button>
         </div>
         <div class="ui-card-content">
-          <div class="ui-section" id="step5DashboardSection">
+          <div class="ui-section" id="step5CertSection">
             <div class="exam-overview-head">
               <div>
-                <h3 class="exam-overview-title">Certification Exam</h3>
+                <h3 class="exam-overview-title">Your Certifications</h3>
+                <p class="exam-overview-sub" id="certListSub">Choose a certification to begin. Certifications marked Mandatory must be completed to finish this step.</p>
+              </div>
+              <div class="exam-meta-row">
+                <span class="exam-meta-chip" id="certCountChip"><i class="fas fa-circle-exclamation" aria-hidden="true"></i> 0 of 2 mandatory completed</span>
+              </div>
+            </div>
+            <div class="cert-grid" id="certGrid" aria-label="Available certifications"></div>
+          </div>
+          <div class="ui-section" id="step5DashboardSection" style="display:none">
+            <div class="exam-overview-head">
+              <div>
+                <button type="button" class="ui-btn ui-btn-outline ui-btn-sm cert-back" onclick="showCertList()"><i class="fas fa-arrow-left" aria-hidden="true"></i> All certifications</button>
+                <h3 class="exam-overview-title" id="examCertTitle">Certification Exam</h3>
                 <p class="exam-overview-sub">Finish all four segments to unlock your overall score. Segment scores stay hidden until you complete the exam.</p>
               </div>
               <div class="exam-meta-row">
@@ -2449,7 +2568,10 @@
             <div class="exam-seg-nav-top">
               <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">All segments</span></button>
               <span class="exam-flow-progress-count" id="examFlowProgressCount" style="font-weight:600;font-size:0.78rem;color:var(--neutral-700)">0 of 4 Segments Completed</span>
-              <span class="exam-nav-next" id="examTopAttempt" style="justify-self:end"></span>
+              <span class="exam-nav-next exam-top-actions">
+                <span id="examTopAttempt"></span>
+                <button type="button" class="ui-btn ui-btn-sm" id="nextSegTopBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next segment</span> <i class="fas fa-arrow-right"></i></button>
+              </span>
             </div>
             <div class="exam-stepper" id="examFlowSteps" aria-label="Segment navigation"></div>
             <div id="examSeg0" class="exam-seg" style="display:none"></div>
@@ -2468,10 +2590,6 @@
               </div>
             </div>
             <div id="examConsolidatedResult" style="display:none"></div>
-            <div class="exam-seg-nav" id="examSegNavBottom" style="margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--border);margin-bottom:0">
-              <button type="button" class="ui-btn ui-btn-outline ui-btn-sm exam-nav-back" onclick="closeSegmentScreen()"><i class="fas fa-arrow-left"></i> <span class="exam-nav-label">All segments</span></button>
-              <button type="button" class="ui-btn ui-btn-sm exam-nav-next" id="nextSegBottomBtn" onclick="goNextSegment()"><span class="exam-nav-label">Next segment</span> <i class="fas fa-arrow-right"></i></button>
-            </div>
           </div>
         </div>
         <div class="ui-card-footer" id="step5Nav">
@@ -2874,8 +2992,7 @@
       return !!document.querySelectorAll('#stateCheckboxes input:checked').length;
     }
     if (n === 4) {
-      return typeof modsDone !== 'undefined' && modsDone === 4 &&
-        typeof examPassed !== 'undefined' && examPassed === true;
+      return typeof allRequiredCertsCompleted === 'function' && allRequiredCertsCompleted();
     }
     if (n === 5) {
       var bgConsent = document.getElementById('bgConsent');
@@ -3277,30 +3394,8 @@
       document.querySelectorAll('#stateCheckboxes input[value="FL"], #stateCheckboxes input[value="TX"]').forEach(function (c) { c.checked = true; });
       syncStep4ValidateButtons();
     } else if (step === 4) {
-      window.__prefillTraining = true;
-      examReattemptCount = 0;
-      examEvaluated = false;
-      examPassed = false;
-      adminRequestStatus = null;
-      adminExtraAttempts = 0;
-      retryCycle = null;
-      for (var xi = 0; xi < 4; xi++) {
-        segScores[xi] = -1;
-        modComplete[xi] = false;
-        modTimes[xi] = 0;
-        document.getElementById('examSeg' + xi).innerHTML = '';
-        showSegmentExam(xi);
-        var seg = examSegData[xi];
-        for (var qi = 0; qi < 5; qi++) {
-          var radios = document.querySelectorAll('input[name="seg' + xi + 'q' + qi + '"]');
-          if (radios.length) radios[seg.questions[qi].ans].checked = true;
-        }
-        examStartTimes[xi] = Date.now() - 2000;
-        doSubmitSegment(xi);
-      }
-      window.__prefillTraining = false;
-      closeSegmentScreen();
-      persistExamState();
+      /* Mark every certification as completed so the whole step can be previewed quickly */
+      prefillAllCertifications();
     } else if (step === 5) {
       setCheck('bgConsent', true); sendBgInvitation();
     } else if (step === 6) {
@@ -3460,6 +3555,15 @@ var modComplete = [false, false, false, false];
 var examStartTimes = [0, 0, 0, 0];
 var activeExamSeg = 0;
 var retryCycle = null;
+var CERTS = [
+  { id: 'csnp', name: 'C-SNP Product Certification', mandatory: true, desc: 'Product knowledge for EnrollAxis Chronic Condition Special Needs Plans, eligibility and benefits.' },
+  { id: 'compliance', name: 'Medicare Compliance Certification', mandatory: true, desc: 'Enrollment periods, scope of appointment rules and CMS marketing guidelines.' },
+  { id: 'fwa', name: 'Fraud, Waste &amp; Abuse Certification', mandatory: false, desc: 'Spot, prevent and report fraud, waste and abuse in Medicare Advantage sales.' }
+];
+/* Certifications are configured by the payer admin: the list, names and the mandatory flag come from the admin side. Every card uses the same icon. */
+var CERT_ICON = 'fa-award';
+var certStore = {};
+var activeCertId = null;
 var SEG_LABELS = ['A', 'B', 'C', 'D'];
 var SEG_NAMES = ['Video', 'Training', 'PDF', 'MCQ'];
 var SEG_FULLNAMES = ['Video-Based Assessment', 'Training Material Review', 'PDF Product Guide', 'General Knowledge MCQ'];
@@ -3576,8 +3680,193 @@ function persistExamState() {
   } catch (e) { /* ignore */ }
 }
 
+/* ---------- Step 5 certifications list ---------- */
+function captureExamState() {
+  return JSON.parse(JSON.stringify({
+    segScores: segScores, modTimes: modTimes, modComplete: modComplete, modsDone: modsDone,
+    examPassed: examPassed, examEvaluated: examEvaluated, examReattemptCount: examReattemptCount,
+    adminRequestStatus: adminRequestStatus, adminExtraAttempts: adminExtraAttempts, retryCycle: retryCycle
+  }));
+}
+
+function applyExamState(s) {
+  s = s || {};
+  segScores = s.segScores ? s.segScores.slice() : [-1, -1, -1, -1];
+  modTimes = s.modTimes ? s.modTimes.slice() : [0, 0, 0, 0];
+  modComplete = s.modComplete ? s.modComplete.slice() : [false, false, false, false];
+  modsDone = s.modsDone || 0;
+  examPassed = !!s.examPassed;
+  examEvaluated = !!s.examEvaluated;
+  examReattemptCount = s.examReattemptCount || 0;
+  adminRequestStatus = s.adminRequestStatus || null;
+  adminExtraAttempts = s.adminExtraAttempts || 0;
+  retryCycle = s.retryCycle || null;
+  activeExamSeg = 0;
+  clearExamDom();
+}
+
+function clearExamDom() {
+  for (var i = 0; i < 4; i++) {
+    var panel = document.getElementById('examSeg' + i);
+    if (panel) panel.innerHTML = '';
+  }
+  ['examResultPanel', 'examConsolidatedResult', 'examAttemptBar'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    el.style.display = 'none';
+  });
+  var exam = document.getElementById('examSection');
+  if (exam) exam.style.display = 'none';
+}
+
+function findCert(id) {
+  for (var i = 0; i < CERTS.length; i++) if (CERTS[i].id === id) return CERTS[i];
+  return null;
+}
+
+function getCertSnapshot(id) {
+  if (id === activeCertId) return captureExamState();
+  return certStore[id] || null;
+}
+
+function getCertStatus(id) {
+  var s = getCertSnapshot(id);
+  if (s && s.examPassed) return { key: 'completed', label: 'Completed', badge: 'is-passed', icon: 'fa-circle-check' };
+  var started = !!s && (s.segScores.some(function (x) { return x >= 0; }) || !!s.retryCycle);
+  if (started) return { key: 'in_progress', label: 'In progress', badge: 'is-current', icon: 'fa-hourglass-half' };
+  return { key: 'not_started', label: 'Not started', badge: 'is-pending', icon: 'fa-circle' };
+}
+
+function getCertOverall(id) {
+  var s = getCertSnapshot(id);
+  if (!s || !s.segScores.every(function (x) { return x >= 0; })) return null;
+  return Math.round(s.segScores.reduce(function (a, b) { return a + b; }, 0) / 4);
+}
+
+function getMandatoryCerts() {
+  /* The onboarding shell can call this before the certification data is assigned */
+  if (!CERTS) return [];
+  return CERTS.filter(function (c) { return c.mandatory; });
+}
+
+function countMandatoryCompleted() {
+  return getMandatoryCerts().filter(function (c) { return getCertStatus(c.id).key === 'completed'; }).length;
+}
+
+/* Only mandatory certifications gate the step. Optional ones never block Next. */
+function allRequiredCertsCompleted() {
+  return !!CERTS && countMandatoryCompleted() === getMandatoryCerts().length;
+}
+
+function updateStep5Next() {
+  var nextBtn = document.getElementById('step5Next');
+  if (nextBtn) nextBtn.style.display = allRequiredCertsCompleted() ? 'inline-flex' : 'none';
+}
+
+function renderCertList() {
+  var grid = document.getElementById('certGrid');
+  if (!grid) return;
+  var html = '';
+  CERTS.forEach(function (c) {
+    var st = getCertStatus(c.id);
+    var overall = getCertOverall(c.id);
+    var action;
+    if (st.key === 'completed') {
+      action = '<span class="cert-done-note"><i class="fas fa-circle-check" aria-hidden="true"></i> Certification completed' + (overall !== null ? ' · ' + overall + '%' : '') + '</span>';
+    } else {
+      var cont = st.key === 'in_progress';
+      action = '<button type="button" class="ui-btn" onclick="openCertification(\'' + c.id + '\')"><i class="fas ' + (cont ? 'fa-arrow-right' : 'fa-play') + '" aria-hidden="true"></i> ' + (cont ? 'Continue Certification' : 'Start Certification') + '</button>';
+    }
+    html +=
+      '<article class="cert-card is-' + st.key.replace('_', '-') + '" aria-label="' + c.name + '">' +
+      '<div class="cert-card-top">' +
+      '<span class="cert-card-icon"><i class="fas ' + CERT_ICON + '" aria-hidden="true"></i></span>' +
+      '<div class="cert-card-tags">' +
+      (c.mandatory
+        ? '<span class="cert-req-badge is-mandatory" title="Required by your payer admin"><i class="fas fa-asterisk" aria-hidden="true"></i> Mandatory</span>'
+        : '<span class="cert-req-badge">Optional</span>') +
+      '<span class="seg-badge ' + st.badge + '"><i class="fas ' + st.icon + '" aria-hidden="true"></i> ' + st.label + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div><h4 class="cert-card-name">' + c.name + '</h4><p class="cert-card-desc">' + c.desc + '</p></div>' +
+      '<div class="cert-card-meta">' +
+      '<span class="exam-meta-chip"><i class="fas fa-layer-group" aria-hidden="true"></i> 4 segments</span>' +
+      '<span class="exam-meta-chip"><i class="fas fa-list-check" aria-hidden="true"></i> 20 questions</span>' +
+      '<span class="exam-meta-chip"><i class="fas fa-bullseye" aria-hidden="true"></i> Pass ' + EXAM_PASS_PCT + '%</span>' +
+      '</div>' +
+      '<div class="cert-card-foot">' + action + '</div>' +
+      '</article>';
+  });
+  grid.innerHTML = html;
+
+  var reqTotal = getMandatoryCerts().length;
+  var reqDone = countMandatoryCompleted();
+  var chip = document.getElementById('certCountChip');
+  if (chip) {
+    chip.innerHTML = reqTotal === 0
+      ? '<i class="fas fa-circle-check" aria-hidden="true"></i> No mandatory certifications'
+      : '<i class="fas ' + (reqDone === reqTotal ? 'fa-circle-check' : 'fa-circle-exclamation') + '" aria-hidden="true"></i> ' + reqDone + ' of ' + reqTotal + ' mandatory completed';
+  }
+}
+
+function showCertList() {
+  if (activeCertId) {
+    certStore[activeCertId] = captureExamState();
+    activeCertId = null;
+  }
+  clearExamDom();
+  var certSec = document.getElementById('step5CertSection');
+  var dash = document.getElementById('step5DashboardSection');
+  var nav = document.getElementById('step5Nav');
+  if (certSec) certSec.style.display = 'block';
+  if (dash) dash.style.display = 'none';
+  if (nav) nav.style.display = 'flex';
+  renderCertList();
+  updateStep5Next();
+  if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openCertification(id) {
+  var cert = findCert(id);
+  if (!cert) return;
+  if (getCertStatus(id).key === 'completed') return;
+  if (activeCertId && activeCertId !== id) certStore[activeCertId] = captureExamState();
+  activeCertId = id;
+  applyExamState(certStore[id] || null);
+  var title = document.getElementById('examCertTitle');
+  if (title) title.innerHTML = cert.name;
+  var certSec = document.getElementById('step5CertSection');
+  var dash = document.getElementById('step5DashboardSection');
+  var nav = document.getElementById('step5Nav');
+  if (certSec) certSec.style.display = 'none';
+  if (dash) dash.style.display = 'block';
+  /* Inside a certification the only way out is "All certifications" - no step-level Back / Save Draft */
+  if (nav) nav.style.display = 'none';
+  refreshExamDashboard();
+  updateExamFlowProgress();
+  if (examEvaluated || isRetryCycleActive()) renderExamResultPanel();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prefillAllCertifications() {
+  CERTS.forEach(function (c) {
+    certStore[c.id] = {
+      segScores: [100, 100, 100, 100], modTimes: [62000, 48000, 71000, 55000], modComplete: [true, true, true, true],
+      modsDone: 4, examPassed: true, examEvaluated: true, examReattemptCount: 0,
+      adminRequestStatus: null, adminExtraAttempts: 0, retryCycle: null
+    };
+  });
+  activeCertId = null;
+  applyExamState(null);
+  showCertList();
+}
+
 function resetExamStateOnRefresh() {
   try { localStorage.removeItem(EXAM_STORAGE_KEY); } catch (e) { /* ignore */ }
+  certStore = {};
+  activeCertId = null;
   segScores = [-1, -1, -1, -1];
   modTimes = [0, 0, 0, 0];
   modComplete = [false, false, false, false];
@@ -3610,14 +3899,13 @@ function resetExamStateOnRefresh() {
   }
   var exam = document.getElementById('examSection');
   if (exam) exam.style.display = 'none';
-  var dash = document.getElementById('step5DashboardSection');
-  if (dash) dash.style.display = 'block';
   var info = document.getElementById('step5InfoAlert');
   if (info) info.style.display = 'flex';
-  var nav = document.getElementById('step5Nav');
-  if (nav) nav.style.display = 'flex';
   refreshExamDashboard();
   updateExamFlowProgress();
+  /* Land on the certification list after every load */
+  showCertList();
+  window.scrollTo(0, 0);
 }
 
 function updateExamFlowProgress() {
@@ -3708,23 +3996,12 @@ function showExamWorkspaceChrome(showResult) {
   var exam = document.getElementById('examSection');
   var warn = document.getElementById('unansweredWarn');
   var topNext = document.getElementById('nextSegTopBtn');
-  var bottomNext = document.getElementById('nextSegBottomBtn');
-  var bottomNav = document.getElementById('examSegNavBottom');
   if (dash) dash.style.display = 'none';
   if (info) info.style.display = 'none';
   if (exam) exam.style.display = 'block';
   if (warn) warn.style.display = 'none';
-  if (showResult) {
-    if (nav) nav.style.display = 'flex';
-    if (topNext) topNext.style.display = 'none';
-    if (bottomNext) bottomNext.style.display = 'none';
-    if (bottomNav) bottomNav.style.display = 'none';
-  } else {
-    if (nav) nav.style.display = 'none';
-    if (topNext) topNext.style.display = '';
-    if (bottomNext) bottomNext.style.display = '';
-    if (bottomNav) bottomNav.style.display = 'flex';
-  }
+  if (nav) nav.style.display = 'none';
+  if (topNext) topNext.style.display = showResult ? 'none' : '';
 }
 
 function showExamResultScreen() {
@@ -3829,17 +4106,15 @@ function closeSegmentScreen() {
   var warn = document.getElementById('unansweredWarn');
   var cons = document.getElementById('examConsolidatedResult');
   var topNext = document.getElementById('nextSegTopBtn');
-  var bottomNext = document.getElementById('nextSegBottomBtn');
   if (dash) dash.style.display = 'block';
   if (info) info.style.display = 'flex';
-  if (nav) nav.style.display = 'flex';
+  if (nav) nav.style.display = 'none';
   if (exam) exam.style.display = 'none';
   if (warn) warn.style.display = 'none';
   if (cons) {
     cons.style.display = 'none';
   }
   if (topNext) topNext.style.display = '';
-  if (bottomNext) bottomNext.style.display = '';
   refreshExamDashboard();
   if (examEvaluated) renderExamResultPanel();
 }
@@ -4093,7 +4368,7 @@ function refreshExamDashboard() {
 
   var overviewSub = document.querySelector('#step5DashboardSection .exam-overview-sub');
   if (overviewSub) {
-    if (examPassed) overviewSub.textContent = 'You passed Training & Certification. Continue when you are ready.';
+    if (examPassed) overviewSub.textContent = 'You passed this certification. It is now marked Completed.';
     else if (isRetryCycleActive()) overviewSub.textContent = 'Finish this retry to update your overall score.';
     else if (examEvaluated) overviewSub.textContent = 'Your overall result is below. Retry Exam covers every segment that still needs a try.';
     else overviewSub.textContent = 'Finish all four segments to unlock your overall score. Segment scores stay hidden until you complete the exam.';
@@ -4101,14 +4376,13 @@ function refreshExamDashboard() {
 
   var hint = document.getElementById('step5DashHint');
   if (hint) {
-    if (examPassed) hint.textContent = 'Great work. Continue to the next onboarding step below.';
+    if (examPassed) hint.textContent = 'Great work. Return to your certifications to continue.';
     else if (isRetryCycleActive()) hint.textContent = 'Finish every segment in this retry. It counts as one reattempt when you submit the last segment.';
     else if (examEvaluated) hint.textContent = 'Use Retry Exam to retake every listed segment together. That counts as one reattempt.';
     else hint.textContent = 'Open any segment to start. You can move between segments freely.';
   }
 
-  var nextBtn = document.getElementById('step5Next');
-  if (nextBtn) nextBtn.style.display = examPassed ? 'inline-flex' : 'none';
+  updateStep5Next();
   if (typeof window.updateFinalStepLock === 'function') window.updateFinalStepLock();
 }
 
@@ -4164,8 +4438,10 @@ function buildExamResultHtml() {
       '<div class="exam-score-ring" style="--val:' + scoreVal + ';--ring:' + ringColor + '"><div class="ring-inner"><span class="ring-val">' + overall + '%</span><span class="ring-cap">Overall</span></div></div>' +
       '<div class="exam-result-headline">' +
       '<span class="exam-result-badge is-pass"><i class="fas fa-circle-check"></i> Passed</span>' +
-      '<p class="exam-result-title">Certification exam passed</p>' +
-      '<p class="exam-result-sub">Congratulations, you completed Training &amp; Certification. Continue with <strong>Next: Background Check</strong> below.</p>' +
+      '<p class="exam-result-title">Certification completed</p>' +
+      '<p class="exam-result-sub">' + (allRequiredCertsCompleted()
+        ? 'Congratulations, every mandatory certification is complete. Head back to your certifications to continue to <strong>Background Check</strong>.'
+        : 'Congratulations, this certification is now marked <strong>Completed</strong>. Head back to your certifications to finish the mandatory ones.') + '</p>' +
       '</div></div>' +
       '<div class="exam-result-meta">' +
       '<div class="rm-cell">Overall score<strong>' + overall + '%</strong></div>' +
@@ -4175,6 +4451,7 @@ function buildExamResultHtml() {
       '<div class="exam-result-body">' +
       '<p class="exam-fail-list-label">Segment results</p>' +
       buildSegResultListHtml(false) +
+      '<div class="seg-submit-row"><button type="button" class="ui-btn" onclick="showCertList()"><i class="fas fa-award"></i> Back to certifications</button></div>' +
       '</div></div>';
   } else {
     var lows = getLowScoringSegments();
