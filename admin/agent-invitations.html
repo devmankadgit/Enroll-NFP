@@ -611,10 +611,38 @@ function sendInvitation(){
     token:token,message:document.getElementById('invMessage').value.trim()
   };
   INVITATIONS.unshift(newInv);
-  showInvToast('Invitation sent to '+first+' '+last+' ('+email+'). Token link expires in '+expiry+' hours.','success');
+  if (window.EAAccountCreation) {
+    EAAccountCreation.setDemoMode(true);
+    EAAccountCreation.createInvitation({
+      firstName: first,
+      lastName: last,
+      email: email,
+      token: token,
+      expiryHours: expiry,
+      agency: orgText,
+      level: level,
+      role: document.getElementById('invRole').value || 'Agent',
+      planYear: planYear,
+      inviter: INVITER.name,
+      invitationId: newInv.id
+    });
+  }
+  var inviteEmailUrl = (window.EAAccountCreation
+    ? EAAccountCreation.invitationEmailUrl(token)
+    : (location.origin + '/email-templates/agent-invitation.html?token=' + encodeURIComponent(token)));
+  showInvToast('Invitation sent to '+first+' '+last+' ('+email+'). Opening invitation email...','success');
   resetInviteForm();
-  // Update KPIs
   updateKPIs();
+  // Open immediately in the same click turn (iframe-safe)
+  if (window.EAAccountCreation && EAAccountCreation.openEmailPreview) {
+    EAAccountCreation.openEmailPreview(inviteEmailUrl);
+  } else {
+    try {
+      (window.top || window).location.assign(inviteEmailUrl);
+    } catch (e) {
+      location.assign(inviteEmailUrl);
+    }
+  }
 }
 
 function quickSendInvitation(){
@@ -644,10 +672,38 @@ function quickSendInvitation(){
     token:token,message:''
   };
   INVITATIONS.unshift(newInv);
-  showInvToast('Quick invitation sent to '+first+' '+last+'. Token: '+token,'success');
+  if (window.EAAccountCreation) {
+    EAAccountCreation.setDemoMode(true);
+    EAAccountCreation.createInvitation({
+      firstName: first,
+      lastName: last,
+      email: email,
+      token: token,
+      expiryHours: 72,
+      agency: orgText,
+      level: document.getElementById('qInvLevel').value,
+      role: 'Individual Agent',
+      planYear: '2026',
+      inviter: INVITER.name,
+      invitationId: newInv.id
+    });
+  }
+  var inviteEmailUrl = (window.EAAccountCreation
+    ? EAAccountCreation.invitationEmailUrl(token)
+    : (location.origin + '/email-templates/agent-invitation.html?token=' + encodeURIComponent(token)));
+  showInvToast('Quick invitation sent to '+first+' '+last+'. Opening invitation email...','success');
   document.getElementById('sendInviteQuickModal').style.display='none';
   ['qInvFirstName','qInvLastName','qInvEmail'].forEach(function(id){var el=document.getElementById(id);el.value='';el.classList.remove('inv-err');});
   updateKPIs();
+  if (window.EAAccountCreation && EAAccountCreation.openEmailPreview) {
+    EAAccountCreation.openEmailPreview(inviteEmailUrl);
+  } else {
+    try {
+      (window.top || window).location.assign(inviteEmailUrl);
+    } catch (e) {
+      location.assign(inviteEmailUrl);
+    }
+  }
 }
 
 function resetInviteForm(){
@@ -1158,5 +1214,6 @@ document.addEventListener('DOMContentLoaded',function(){
   updateKPIs();
 });
 </script>
+<script src="../assets/account-creation-mock.js"></script>
 </body>
 </html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accept Invitation | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="portal.css">
+<style>
+  .acc-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 1rem 0 0;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    background: #fff8e1;
+    color: #9a5b00;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .acc-status.is-ok {
+    background: #e8f2f1;
+    color: #12655a;
+  }
+  .acc-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    background: #e8f2f1;
+    color: #177e71;
+  }
+  .acc-icon.is-err {
+    background: #fce4ec;
+    color: #b71c1c;
+  }
+  .acc-details {
+    margin: 1.25rem 0;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    background: #f3f4f3;
+    text-align: left;
+  }
+  .acc-details dt {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--p-muted);
+    font-weight: 600;
+  }
+  .acc-details dd {
+    margin: 0 0 0.65rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--p-text);
+  }
+  .acc-details dd:last-child { margin-bottom: 0; }
+  .acc-actions { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.25rem; }
+  .acc-actions[hidden],
+  [hidden] { display: none !important; }
+  .p-auth-card { max-width: 440px; text-align: center; }
+  .p-auth-card h1 { font-family: var(--p-font-heading); font-size: 1.35rem; margin: 0 0 0.5rem; }
+  .p-auth-card .lead { margin: 0; color: var(--p-muted); font-size: 0.9rem; line-height: 1.55; }
+  .p-auth-logo { height: 28px; width: auto; margin: 0 auto 1.25rem; }
+</style>
+</head>
+<body>
+  <div class="p-auth">
+    <div class="p-auth-card" id="accCard">
+      <img class="p-auth-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+
+      <div id="stateLoading">
+        <div class="p-spinner" aria-hidden="true"></div>
+        <h1>Checking invitation…</h1>
+        <p class="lead">Please wait while we validate your invitation link.</p>
+      </div>
+
+      <div id="stateError" hidden>
+        <div class="acc-icon is-err" aria-hidden="true"><i class="fas fa-link"></i></div>
+        <h1 id="errTitle">This invitation is no longer valid</h1>
+        <p class="lead" id="errMsg">Ask your administrator to send a new invitation, or contact support.</p>
+        <div class="acc-actions">
+          <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
+        </div>
+      </div>
+
+      <div id="stateReady" hidden>
+        <div class="acc-icon" aria-hidden="true"><i class="fas fa-envelope-open-text"></i></div>
+        <h1>You're invited to EnrollAxis</h1>
+        <p class="lead" id="readyIntro">Review your invitation details, then accept to continue.</p>
+        <dl class="acc-details" id="readyDetails"></dl>
+        <div class="acc-actions">
+          <button type="button" class="p-btn p-btn-block" id="acceptBtn">Accept Invitation</button>
+          <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
+        </div>
+        <p id="acceptErr" class="lead" style="color:#b71c1c;margin-top:0.75rem" hidden></p>
+      </div>
+
+      <div id="stateSuccess" hidden>
+        <div class="acc-icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+        <h1>Invitation Successfully Accepted!</h1>
+        <p class="lead">
+          Your invitation has been successfully accepted.
+        </p>
+        <p class="lead" style="margin-top:0.75rem">
+          Your agent account creation is currently in progress. Kindly wait while we complete the account setup.
+        </p>
+        <p class="lead" style="margin-top:0.75rem">
+          You will receive an email notification once your account has been created.
+        </p>
+        <div class="acc-status" id="pendingBadge">
+          <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+          Account Creation In Progress
+        </div>
+        <div class="acc-actions" id="successActions">
+          <button type="button" class="p-btn p-btn-block" id="completeAccountBtn">
+            Open Account Created email
+          </button>
+          <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/account-creation-mock.js"></script>
+  <script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var token = params.get("token") || "mock-invitation-token";
+    var demo = params.get("demo") === "1" || (window.EAAccountCreation && EAAccountCreation.isDemoMode());
+
+    var elLoading = document.getElementById("stateLoading");
+    var elError = document.getElementById("stateError");
+    var elReady = document.getElementById("stateReady");
+    var elSuccess = document.getElementById("stateSuccess");
+
+    function show(which) {
+      elLoading.hidden = which !== "loading";
+      elError.hidden = which !== "error";
+      elReady.hidden = which !== "ready";
+      elSuccess.hidden = which !== "success";
+    }
+
+    function fillDetails(state) {
+      var dl = document.getElementById("readyDetails");
+      var rows = [
+        ["Carrier", state.carrier],
+        ["Agency", state.agency],
+        ["Hierarchy level", state.level],
+        ["Role", state.role],
+        ["Plan year", state.planYear],
+        ["Invitation for", state.email]
+      ];
+      dl.innerHTML = rows.map(function (r) {
+        return "<dt>" + r[0] + "</dt><dd>" + (r[1] || "-") + "</dd>";
+      }).join("");
+      document.getElementById("readyIntro").textContent =
+        (state.inviter || "An administrator") + " from " + (state.agency || "your agency") +
+        " has invited you to join " + (state.carrier || "EnrollAxis") + ".";
+    }
+
+    function showSuccess(state) {
+      show("success");
+      var badge = document.getElementById("pendingBadge");
+      var btn = document.getElementById("completeAccountBtn");
+      var pending = state.status === "account_creation_pending" || state.status === "invitation_accepted";
+
+      if (!pending && (state.status === "account_created" || state.status === "password_set")) {
+        badge.className = "acc-status is-ok";
+        badge.innerHTML = '<i class="fas fa-check-circle" aria-hidden="true"></i> Account created';
+        if (btn) btn.textContent = "Open Account Created email";
+      } else {
+        badge.className = "acc-status";
+        badge.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Account Creation In Progress';
+        if (btn) btn.textContent = "Open Account Created email";
+      }
+    }
+
+    function goToAccountCreatedEmail() {
+      var state = EAAccountCreation.completeAccountCreation();
+      location.href = EAAccountCreation.accountCreatedEmailUrl(state.passwordToken);
+    }
+
+    function showError(title, msg) {
+      show("error");
+      document.getElementById("errTitle").textContent = title;
+      document.getElementById("errMsg").textContent = msg;
+    }
+
+    setTimeout(function () {
+      if (!window.EAAccountCreation) {
+        showError("Something went wrong", "We could not load invitation data. Try again in a few minutes.");
+        return;
+      }
+
+      if (demo) EAAccountCreation.setDemoMode(true);
+
+      var found = EAAccountCreation.findByInviteToken(token);
+      if (!found.ok) {
+        if (found.reason === "expired") {
+          showError("This invitation has expired", "Ask your inviter or agency to send a new one.");
+        } else {
+          showError("This invitation is no longer valid", "The link may be cancelled, wrong, or broken. Contact support if you need help.");
+        }
+        return;
+      }
+
+      var state = found.state;
+      if (state.status === "account_creation_pending" || state.status === "invitation_accepted" ||
+          state.status === "account_created" || state.status === "password_set") {
+        showSuccess(state);
+        return;
+      }
+
+      fillDetails(state);
+      show("ready");
+    }, 450);
+
+    document.getElementById("acceptBtn").addEventListener("click", function () {
+      var btn = document.getElementById("acceptBtn");
+      var err = document.getElementById("acceptErr");
+      err.hidden = true;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Accepting...';
+      setTimeout(function () {
+        var result = EAAccountCreation.acceptInvitation(token);
+        if (!result.ok) {
+          err.textContent = "We couldn't accept the invitation. Try again in a few minutes.";
+          err.hidden = false;
+          btn.disabled = false;
+          btn.textContent = "Accept Invitation";
+          return;
+        }
+        showSuccess(result.state);
+      }, 700);
+    });
+
+    document.getElementById("completeAccountBtn").addEventListener("click", function () {
+      var btn = document.getElementById("completeAccountBtn");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Creating account...';
+      setTimeout(goToAccountCreatedEmail, 900);
+    });
+  })();
+  </script>
+</body>
+</html>

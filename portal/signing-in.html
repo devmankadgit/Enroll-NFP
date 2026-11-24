@@ -34,7 +34,17 @@
       bad.hidden = false;
     } else {
       setTimeout(function () {
-        location.href = 'select-carrier.html';
+        var role = "";
+        try { role = sessionStorage.getItem("eaRole") || ""; } catch (e) {}
+        if (role === "agent") {
+          location.href = "../agent/onboarding.html";
+          return;
+        }
+        if (role === "payer-admin") {
+          location.href = "landing-carrier.html?page=admin%2Fagent-invitations.html";
+          return;
+        }
+        location.href = "select-carrier.html";
       }, 1400);
     }
     document.getElementById('tryAgainBtn').addEventListener('click', function () {

@@ -220,6 +220,7 @@
       </div>
       <form class="sso-card-body" id="ssoForm" action="signing-in.html" method="get">
         <h1>Log In</h1>
+        <div id="ssoError" role="alert" style="display:none;margin:0 0 1rem;padding:0.75rem 0.9rem;border-radius:10px;background:#fce4ec;border:1px solid #ef9a9a;color:#b71c1c;font-size:14px;line-height:1.4;"></div>
         <div class="sso-field">
           <label for="ssoUser">Username</label>
           <div class="sso-input-wrap">
@@ -247,12 +248,21 @@
       <img src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
     </div>
   </div>
+  <script src="../assets/account-creation-mock.js"></script>
   <script>
     (function () {
       var pass = document.getElementById("ssoPass");
       var toggle = document.getElementById("togglePass");
       var form = document.getElementById("ssoForm");
       var forgot = document.getElementById("forgotLink");
+      var err = document.getElementById("ssoError");
+      var userInput = document.getElementById("ssoUser");
+
+      try {
+        var prefill = sessionStorage.getItem("eaPrefillUser");
+        if (prefill && userInput && !userInput.value) userInput.value = prefill;
+      } catch (ex) {}
+
       if (toggle && pass) {
         toggle.addEventListener("click", function () {
           var show = pass.type === "password";
@@ -272,17 +282,54 @@
       if (form) {
         form.addEventListener("submit", function (e) {
           e.preventDefault();
-          var user = (document.getElementById("ssoUser").value || "").trim();
-          var password = document.getElementById("ssoPass").value || "";
-          try {
-            if (user === "payeradmin" && password === "Test@123") {
-              sessionStorage.setItem("eaRole", "payer-admin");
-              sessionStorage.setItem("eaUser", "payeradmin");
+          if (err) { err.style.display = "none"; err.textContent = ""; }
+          var user = (userInput.value || "").trim();
+          var password = pass.value || "";
+
+          var auth = { ok: false };
+
+          if (window.EAAccountCreation) {
+            var flow = EAAccountCreation.get();
+            var looksLikeInvitedAgent =
+              !!flow.username &&
+              (user === flow.username || user === flow.email);
+
+            if (looksLikeInvitedAgent) {
+              auth = EAAccountCreation.authenticate(user, password);
+              if (!auth.ok) {
+                if (err) {
+                  err.textContent = "Invalid username or password. Please try again.";
+                  err.style.display = "block";
+                }
+                return;
+              }
             } else {
-              sessionStorage.setItem("eaRole", "carrier-staff");
-              sessionStorage.setItem("eaUser", user);
+              auth = EAAccountCreation.authenticate(user, password);
             }
-          } catch (ex) {}
+          }
+
+          if (!auth.ok) {
+            if (user === "payeradmin" && password === "Test@123") {
+              auth = { ok: true, role: "payer-admin", user: user };
+            } else if (user && password) {
+              auth = { ok: true, role: "carrier-staff", user: user };
+            }
+          }
+
+          if (!auth.ok) {
+            if (err) {
+              err.textContent = "Invalid username or password. Please try again.";
+              err.style.display = "block";
+            }
+            return;
+          }
+
+          try {
+            sessionStorage.setItem("eaRole", auth.role || "carrier-staff");
+            sessionStorage.setItem("eaUser", auth.user || user);
+            if (auth.email) sessionStorage.setItem("eaEmail", auth.email);
+            if (auth.name) sessionStorage.setItem("eaName", auth.name);
+          } catch (ex2) {}
           location.href = "signing-in.html";
         });
       }

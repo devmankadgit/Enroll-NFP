@@ -87,6 +87,7 @@
       iframe.className = "p-embed-frame";
       iframe.title = "Portal content";
       iframe.setAttribute("hidden", "");
+      iframe.setAttribute("allow", "popups; popups-to-escape-sandbox");
       pageEl.appendChild(iframe);
     }
     if (!loadBound) {

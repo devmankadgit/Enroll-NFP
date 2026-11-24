@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account Creation Demo | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="portal.css">
+<style>
+  .demo-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+  }
+  .demo-page h1 {
+    margin: 0 0 0.4rem;
+    font-family: var(--p-font-heading);
+    font-size: 1.5rem;
+  }
+  .demo-page .sub {
+    margin: 0 0 1.5rem;
+    color: var(--p-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .demo-card {
+    background: var(--p-card);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1rem;
+  }
+  .demo-card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-family: var(--p-font-heading);
+  }
+  .demo-card p {
+    margin: 0 0 0.85rem;
+    color: var(--p-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .demo-steps {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--p-text);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  .demo-steps li { margin-bottom: 0.45rem; }
+  .demo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.85rem;
+  }
+  .demo-status {
+    font-size: 0.8125rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #f3f4f3;
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    padding: 0.75rem 0.9rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .demo-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .demo-brand img { height: 28px; width: auto; }
+</style>
+</head>
+<body>
+  <div class="demo-page">
+    <div class="demo-brand">
+      <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+    </div>
+    <h1>NFP Agent Invitation Demo</h1>
+    <p class="sub">Clickable prototype: Payer Admin invite - emails - accept - set password - SSO login - Agent Onboarding. State is stored in localStorage.</p>
+
+    <div class="demo-card">
+      <h2>Current mock state</h2>
+      <div class="demo-status" id="demoState">Loading…</div>
+      <div class="demo-actions">
+        <button type="button" class="p-btn" id="btnReset">Reset demo data</button>
+        <button type="button" class="p-btn p-btn-outline" id="btnRefresh">Refresh status</button>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>1. Payer Admin login, then invite agent</h2>
+      <p>Sign in as Payer Admin (<code>payeradmin</code> / <code>Test@123</code>). After login you land on Agent Invitations inside the carrier portal. Send an invitation and the invitation email preview opens automatically.</p>
+      <div class="demo-actions">
+        <a class="p-btn" href="sso-login.html">Payer Admin SSO login</a>
+        <a class="p-btn p-btn-outline" href="landing-carrier.html?page=admin%2Fagent-invitations.html">Open Agent Invitations (portal)</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>2. Invitation email</h2>
+      <p>CTA label is Accept Invitation and links to the acceptance page.</p>
+      <div class="demo-actions">
+        <a class="p-btn" id="linkInviteEmail" href="../email-templates/agent-invitation.html">Open invitation email</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>3. Accept invitation</h2>
+      <p>Accept the invitation. On the success screen click <strong>Open Account Created email</strong> (always visible). That opens the Set Password email from email-templates.</p>
+      <div class="demo-actions">
+        <a class="p-btn" id="linkAccept" href="accept-invitation.html?token=mock-invitation-token">Open accept invitation</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>4. Account created / Set Password email</h2>
+      <p>Uses the email-templates branch pages. CTA <strong>Set Password</strong> opens the set-password page.</p>
+      <div class="demo-actions">
+        <button type="button" class="p-btn p-btn-outline" id="btnCompleteAccount">Mark account created</button>
+        <a class="p-btn" id="linkAccountEmail" href="../email-templates/password-reset.html">Open Set Password email</a>
+        <a class="p-btn p-btn-outline" href="../email-templates/set-password-brief.html">Open Set Password (brief)</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>5. Set password - SSO - Onboarding</h2>
+      <ol class="demo-steps">
+        <li>Set a password that meets the rules (8+ chars, upper, lower, number, symbol).</li>
+        <li>You are redirected to the existing SSO login page.</li>
+        <li>Sign in with the mock username shown in the email and the password you created.</li>
+        <li>You land on the existing Agent Onboarding form.</li>
+      </ol>
+      <div class="demo-actions">
+        <a class="p-btn" id="linkSetPassword" href="set-password.html?token=mock-password-token">Open set password</a>
+        <a class="p-btn p-btn-outline" href="sso-login.html">SSO login</a>
+        <a class="p-btn p-btn-outline" href="../agent/onboarding.html">Agent onboarding</a>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>Email template library</h2>
+      <p>Preview all transactional email templates used in this flow.</p>
+      <div class="demo-actions">
+        <a class="p-btn p-btn-outline" href="../email-templates/index.html">Email templates index</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/account-creation-mock.js"></script>
+  <script>
+  (function () {
+    EAAccountCreation.setDemoMode(true);
+
+    function render() {
+      var s = EAAccountCreation.get();
+      document.getElementById("demoState").textContent = JSON.stringify({
+        status: s.status,
+        firstName: s.firstName,
+        lastName: s.lastName,
+        email: s.email,
+        username: s.username,
+        invitationToken: s.invitationToken,
+        passwordToken: s.passwordToken,
+        passwordSet: !!s.password
+      }, null, 2);
+
+      document.getElementById("linkInviteEmail").href = EAAccountCreation.invitationEmailUrl();
+      document.getElementById("linkAccept").href =
+        "accept-invitation.html?token=" + encodeURIComponent(s.invitationToken);
+      document.getElementById("linkAccountEmail").href = EAAccountCreation.accountCreatedEmailUrl();
+      document.getElementById("linkSetPassword").href =
+        "set-password.html?token=" + encodeURIComponent(s.passwordToken);
+    }
+
+    document.getElementById("btnReset").addEventListener("click", function () {
+      EAAccountCreation.resetDemo();
+      EAAccountCreation.setDemoMode(true);
+      render();
+    });
+    document.getElementById("btnRefresh").addEventListener("click", render);
+    document.getElementById("btnCompleteAccount").addEventListener("click", function () {
+      EAAccountCreation.completeAccountCreation();
+      render();
+      location.href = EAAccountCreation.accountCreatedEmailUrl();
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>
