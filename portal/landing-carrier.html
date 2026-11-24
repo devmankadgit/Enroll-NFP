@@ -6,7 +6,8 @@
 <title>Carrier landing | EnrollAxis</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="portal.css?v=20261123b">
+<link rel="stylesheet" href="portal.css?v=20261124g">
+<link rel="stylesheet" href="payer-admin-dash.css?v=20261124i">
 </head>
 <body>
 <div class="p-shell" id="appShell">
@@ -57,24 +58,24 @@
       <button type="button" class="p-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
         <i class="fas fa-bars" aria-hidden="true"></i>
       </button>
-      <p class="p-carrier-name">EnrollAxis</p>
+      <p class="p-carrier-name" id="topTitle">EnrollAxis</p>
       <div class="p-topbar-actions">
         <button type="button" class="p-notify-btn" aria-label="Notifications">
           <i class="far fa-bell" aria-hidden="true"></i>
         </button>
         <div class="p-user-menu" id="userMenu">
           <button type="button" class="p-user-trigger" id="userMenuTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenuPanel" aria-label="Account menu">
-            <span class="p-avatar" aria-hidden="true">PB</span>
+            <span class="p-avatar" id="userAvatar" aria-hidden="true">PB</span>
           </button>
           <div class="p-user-panel" id="userMenuPanel" role="menu" hidden>
             <div class="p-user-head">
-              <p class="name">Preet B</p>
-              <p class="meta">preet.b@enrollaxis.com</p>
-              <p class="meta">Carrier Staff</p>
+              <p class="name" id="userName">Preet B</p>
+              <p class="meta" id="userEmail">preet.b@enrollaxis.com</p>
+              <p class="meta" id="userRole">Carrier Staff</p>
             </div>
             <hr class="p-user-sep">
             <button type="button" class="p-user-item" role="menuitem" disabled aria-disabled="true">My profile</button>
-            <a class="p-user-item" role="menuitem" href="../auth-carrier/login.html">Sign out</a>
+            <a class="p-user-item" role="menuitem" id="signOutLink" href="sso-login.html">Sign out</a>
           </div>
         </div>
         <div class="p-header-product">
@@ -85,8 +86,9 @@
     </header>
 
     <main class="p-page">
-      <div id="landingReady">
-        <h1 class="p-greeting">Welcome, Preet</h1>
+            <div id="landingReady">
+        <div id="dashStaff">
+<h1 class="p-greeting">Welcome, Preet</h1>
         <section class="p-portal-block" aria-labelledby="dash-network">
           <h2 class="p-portal-label" id="dash-network">Producer Network</h2>
           <div class="p-kpi-grid">
@@ -242,6 +244,499 @@
             </article>
           </div>
         </section>
+        </div>
+        <div id="dashPayer" class="pad-dash" hidden>
+<div class="pad-dash-head">
+          <div>
+            <h1 class="p-greeting">Welcome, Payer Admin</h1>
+            <p class="p-greeting-sub">Plan administration and operations overview</p>
+          </div>
+          <div class="pad-dash-refresh">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+            <span id="adminRefreshTs">Last refreshed: <strong>Just now</strong></span>
+            <button type="button" class="p-btn p-btn-outline pad-btn-sm" id="refreshDashBtn">
+              <i class="fas fa-redo" aria-hidden="true"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="pad-stat-grid" role="list">
+          <a class="pad-stat" role="listitem" href="../admin/agents.html">
+            <span class="pad-stat-ico" aria-hidden="true"><i class="fas fa-user-tie"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Active Agents</p>
+              <p class="pad-stat-value">143</p>
+              <p class="pad-stat-foot">View all</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/agency-details.html">
+            <span class="pad-stat-ico" data-tone="info" aria-hidden="true"><i class="fas fa-building"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Active Agencies</p>
+              <p class="pad-stat-value">24</p>
+              <p class="pad-stat-foot is-ok">2 activated this month</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/leads.html">
+            <span class="pad-stat-ico" aria-hidden="true"><i class="fas fa-users"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Total Active Members</p>
+              <p class="pad-stat-value">1,847</p>
+              <p class="pad-stat-foot is-ok">+12 this month</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/reports.html">
+            <span class="pad-stat-ico" aria-hidden="true"><i class="fas fa-file-medical"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Enrollments (MTD)</p>
+              <p class="pad-stat-value">28</p>
+              <p class="pad-stat-foot">View details</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/onboarding-cases.html">
+            <span class="pad-stat-ico" data-tone="violet" aria-hidden="true"><i class="fas fa-folder-open"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">In-Flight Onboarding</p>
+              <p class="pad-stat-value">10</p>
+              <p class="pad-stat-foot">View queue</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/exceptions.html">
+            <span class="pad-stat-ico" data-tone="danger" aria-hidden="true"><i class="fas fa-exclamation-triangle"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">7-Day Compliance Flags</p>
+              <p class="pad-stat-value">3</p>
+              <p class="pad-stat-foot is-danger">Review flags</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/integrations.html">
+            <span class="pad-stat-ico" data-tone="warn" aria-hidden="true"><i class="fas fa-plug"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Integration Status</p>
+              <p class="pad-stat-value">3 / 4 OK</p>
+              <p class="pad-stat-foot is-warn">1 warning</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/audit-log.html">
+            <span class="pad-stat-ico" data-tone="info" aria-hidden="true"><i class="fas fa-users-cog"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Active Sessions</p>
+              <p class="pad-stat-value">47</p>
+              <p class="pad-stat-foot">View sessions</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/integrations.html">
+            <span class="pad-stat-ico" data-tone="lime" aria-hidden="true"><i class="fas fa-heartbeat"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">System Health Score</p>
+              <p class="pad-stat-value">98%</p>
+              <p class="pad-stat-foot is-ok">All services nominal</p>
+            </span>
+          </a>
+          <a class="pad-stat" role="listitem" href="../admin/audit-log.html">
+            <span class="pad-stat-ico" data-tone="lime" aria-hidden="true"><i class="fas fa-times-circle"></i></span>
+            <span class="pad-stat-body">
+              <p class="pad-stat-label">Failed Batch Jobs</p>
+              <p class="pad-stat-value">0</p>
+              <p class="pad-stat-foot is-ok">None today</p>
+            </span>
+          </a>
+        </div>
+
+        <section>
+          <div class="pad-section-head">
+            <h2><i class="fas fa-bullhorn" aria-hidden="true"></i>Lead &amp; Assignment</h2>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/leads.html">View All Leads</a>
+          </div>
+          <div class="pad-stat-grid is-five">
+            <a class="pad-stat" href="../admin/leads.html">
+              <span class="pad-stat-ico" data-tone="info" aria-hidden="true"><i class="fas fa-bolt"></i></span>
+              <span class="pad-stat-body">
+                <p class="pad-stat-label">Today's Leads</p>
+                <p class="pad-stat-value">14</p>
+                <p class="pad-stat-foot">7 new - 4 web - 3 referral</p>
+              </span>
+            </a>
+            <a class="pad-stat" href="../admin/leads.html">
+              <span class="pad-stat-ico" data-tone="warn" aria-hidden="true"><i class="fas fa-file-signature"></i></span>
+              <span class="pad-stat-body">
+                <p class="pad-stat-label">SOA Pending</p>
+                <p class="pad-stat-value">9</p>
+                <p class="pad-stat-foot">Awaiting member signature</p>
+              </span>
+            </a>
+            <a class="pad-stat" href="../admin/leads.html">
+              <span class="pad-stat-ico" aria-hidden="true"><i class="fas fa-phone-alt"></i></span>
+              <span class="pad-stat-body">
+                <p class="pad-stat-label">Follow-up Due</p>
+                <p class="pad-stat-value">18</p>
+                <p class="pad-stat-foot">6 today - 12 this week</p>
+              </span>
+            </a>
+            <a class="pad-stat" href="../admin/leads.html">
+              <span class="pad-stat-ico" data-tone="danger" aria-hidden="true"><i class="fas fa-exclamation-triangle"></i></span>
+              <span class="pad-stat-body">
+                <p class="pad-stat-label">Overdue</p>
+                <p class="pad-stat-value">5</p>
+                <p class="pad-stat-foot is-danger">Missed follow-up &gt; 48 hrs</p>
+              </span>
+            </a>
+            <a class="pad-stat" href="../admin/leads.html">
+              <span class="pad-stat-ico" data-tone="lime" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+              <span class="pad-stat-body">
+                <p class="pad-stat-label">Enrollment Rate</p>
+                <p class="pad-stat-value">32%</p>
+                <p class="pad-stat-foot">23 enrolled of 72 contacted</p>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        <section class="pad-panel">
+          <div class="pad-panel-head">
+            <h3><i class="fas fa-exclamation-circle" aria-hidden="true"></i>Pending Actions</h3>
+            <span class="pad-badge" data-tone="danger">5 items</span>
+          </div>
+          <div class="pad-action-row">
+            <span class="pad-badge" data-tone="violet">ONBOARDING</span>
+            <p class="pad-action-copy">10 agent applications are in the onboarding queue and awaiting payer-side action</p>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/onboarding-cases.html">View All</a>
+          </div>
+          <div class="pad-action-row">
+            <span class="pad-badge" data-tone="warn">CONFIG CHANGE</span>
+            <p class="pad-action-copy">2 commission rule changes pending approval review</p>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/commission-approval.html">Review</a>
+          </div>
+          <div class="pad-action-row">
+            <span class="pad-badge" data-tone="danger">INTEGRATION ALERT</span>
+            <p class="pad-action-copy">1 integration warning - CareLink Exchange SFTP latency elevated</p>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/integrations.html">Open Hub</a>
+          </div>
+          <div class="pad-action-row">
+            <span class="pad-badge" data-tone="violet">EXCEPTIONS</span>
+            <p class="pad-action-copy">5 items in exception queue awaiting admin review</p>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/exceptions.html">View Queue</a>
+          </div>
+          <div class="pad-action-row">
+            <span class="pad-badge" data-tone="info">FEATURE TOGGLE</span>
+            <p class="pad-action-copy">3 feature toggles scheduled for review before AEP 2027</p>
+            <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/feature-toggles.html">Review</a>
+          </div>
+        </section>
+
+        <section class="pad-panel">
+          <div class="pad-panel-head">
+            <h3><i class="fas fa-building" aria-hidden="true"></i>Active Agencies</h3>
+            <a class="p-btn pad-btn-sm" href="../admin/agency-details.html">View All Agencies</a>
+          </div>
+          <div class="pad-chip-row">
+            <span class="pad-chip">24 Total Active</span>
+            <span class="pad-chip" data-tone="slate">4 FMO</span>
+            <span class="pad-chip" data-tone="info">6 MGA</span>
+            <span class="pad-chip" data-tone="lime">9 GA</span>
+            <span class="pad-chip" data-tone="warn">5 SGA</span>
+            <span class="pad-chip" data-tone="danger">2 On Hold</span>
+            <span class="pad-chip" data-tone="slate">1 Pending Approval</span>
+            <span class="pad-chip-meta">2 new agencies activated this month</span>
+          </div>
+          <div class="pad-table-wrap">
+            <table class="pad-table">
+              <thead>
+                <tr>
+                  <th>Agency Name</th>
+                  <th>Tier / Level</th>
+                  <th>State(s)</th>
+                  <th>Active Agents</th>
+                  <th>Enrollments MTD</th>
+                  <th>Commission MTD</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight:700">HealthFirst Distribution</td>
+                  <td><span class="pad-badge" data-tone="violet">GA</span></td>
+                  <td>FL, TX, GA</td>
+                  <td>48</td>
+                  <td>11</td>
+                  <td>$28,400</td>
+                  <td><span class="pad-badge" data-tone="success">Active</span></td>
+                  <td><a class="p-btn p-btn-outline pad-btn-sm" href="../admin/agency-details.html">View</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700">Coastal Medicare Partners</td>
+                  <td><span class="pad-badge" data-tone="violet">GA</span></td>
+                  <td>FL, SC</td>
+                  <td>22</td>
+                  <td>5</td>
+                  <td>$12,100</td>
+                  <td><span class="pad-badge" data-tone="success">Active</span></td>
+                  <td><a class="p-btn p-btn-outline pad-btn-sm" href="../admin/agency-details.html">View</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700">SunBridge Medicare Advisors</td>
+                  <td><span class="pad-badge" data-tone="info">MGA</span></td>
+                  <td>CA, NV, AZ</td>
+                  <td>31</td>
+                  <td>7</td>
+                  <td>$19,650</td>
+                  <td><span class="pad-badge" data-tone="success">Active</span></td>
+                  <td><a class="p-btn p-btn-outline pad-btn-sm" href="../admin/agency-details.html">View</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700">Premier Senior Benefits</td>
+                  <td><span class="pad-badge" data-tone="warn">SGA</span></td>
+                  <td>IL, IN, OH</td>
+                  <td>14</td>
+                  <td>2</td>
+                  <td>$5,340</td>
+                  <td><span class="pad-badge" data-tone="warn">On Hold</span></td>
+                  <td><a class="p-btn p-btn-outline pad-btn-sm" href="../admin/agency-details.html">View</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700">National Medicare Group</td>
+                  <td><span class="pad-badge" data-tone="slate">FMO</span></td>
+                  <td>Multi-State (12)</td>
+                  <td>62</td>
+                  <td>18</td>
+                  <td>$41,200</td>
+                  <td><span class="pad-badge" data-tone="success">Active</span></td>
+                  <td><a class="p-btn p-btn-outline pad-btn-sm" href="../admin/agency-details.html">View</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="pad-attn-grid">
+          <div class="pad-panel">
+            <div class="pad-panel-head">
+              <h3><i class="fas fa-user-check" aria-hidden="true"></i>Pending Payer Approval</h3>
+              <span class="pad-chip" data-tone="violet">3 agents</span>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="violet">RC</span>
+              <div class="pad-person-meta">
+                <strong>Robert Chen</strong>
+                <span>NPN 98765432 | Case OB-2026-0441</span>
+              </div>
+              <a class="p-btn pad-btn-sm" href="../admin/onboarding-cases.html">Approve</a>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="violet">PP</span>
+              <div class="pad-person-meta">
+                <strong>Priya Patel</strong>
+                <span>NPN 91827364 | Case OB-2026-0533</span>
+              </div>
+              <a class="p-btn pad-btn-sm" href="../admin/onboarding-cases.html">Approve</a>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="violet">AW</span>
+              <div class="pad-person-meta">
+                <strong>Angela Williams</strong>
+                <span>NPN 88776655 | Case OB-2026-0291</span>
+              </div>
+              <a class="p-btn pad-btn-sm" href="../admin/onboarding-cases.html">Approve</a>
+            </div>
+            <div class="pad-panel-foot"><a href="../admin/onboarding-cases.html">View all pending approvals</a></div>
+          </div>
+          <div class="pad-panel">
+            <div class="pad-panel-head">
+              <h3><i class="fas fa-id-badge" aria-hidden="true"></i>License Expiring Soon</h3>
+              <span class="pad-chip" data-tone="warn">4 agents</span>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="warn">JM</span>
+              <div class="pad-person-meta">
+                <strong>James Martinez <span class="pad-badge" data-tone="danger">12 days</span></strong>
+                <span>FL License | Exp: 08 04, 2026</span>
+              </div>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="warn">MT</span>
+              <div class="pad-person-meta">
+                <strong>Michael Torres <span class="pad-badge" data-tone="warn">28 days</span></strong>
+                <span>FL License | Exp: 08 20, 2026</span>
+              </div>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="warn">SC</span>
+              <div class="pad-person-meta">
+                <strong>Sarah Chen <span class="pad-badge" data-tone="warn">45 days</span></strong>
+                <span>CA License | Exp: 09 06, 2026</span>
+              </div>
+            </div>
+            <div class="pad-panel-foot"><a href="../admin/agents.html">View all expiring licenses</a></div>
+          </div>
+          <div class="pad-panel">
+            <div class="pad-panel-head">
+              <h3><i class="fas fa-certificate" aria-hidden="true"></i>Certifications Expiring</h3>
+              <span class="pad-chip" data-tone="danger">3 expiring</span>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="danger">JM</span>
+              <div class="pad-person-meta">
+                <strong>James Martinez <span class="pad-badge" data-tone="danger">Expired</span></strong>
+                <span>AHIP CY2025 - Expired 01 14, 2026</span>
+              </div>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="warn">SC</span>
+              <div class="pad-person-meta">
+                <strong>Sarah Chen <span class="pad-badge" data-tone="warn">22 days</span></strong>
+                <span>E&amp;O Insurance - Exp: 08 14, 2026</span>
+              </div>
+            </div>
+            <div class="pad-person">
+              <span class="pad-ava" data-tone="warn">DK</span>
+              <div class="pad-person-meta">
+                <strong>David Kim <span class="pad-badge" data-tone="warn">55 days</span></strong>
+                <span>CKD Training Cert - Exp: 09 16, 2026</span>
+              </div>
+            </div>
+            <div class="pad-panel-foot"><a href="../admin/recredentialing.html">View all expiring certifications</a></div>
+          </div>
+        </section>
+
+        <section class="pad-quick-grid">
+          <a class="pad-quick" href="../admin/audit-log.html">
+            <span class="pad-stat-ico" aria-hidden="true"><i class="fas fa-history"></i></span>
+            <span><strong>Audit Log</strong><span>View all system events</span></span>
+          </a>
+          <a class="pad-quick" href="../admin/integrations.html">
+            <span class="pad-stat-ico" data-tone="info" aria-hidden="true"><i class="fas fa-plug"></i></span>
+            <span><strong>Integration Hub</strong><span>Manage vendor connections</span></span>
+          </a>
+          <a class="pad-quick" href="../admin/feature-toggles.html">
+            <span class="pad-stat-ico" data-tone="violet" aria-hidden="true"><i class="fas fa-toggle-on"></i></span>
+            <span><strong>Feature Toggles</strong><span>Enable / disable features</span></span>
+          </a>
+        </section>
+
+        <section class="pad-split">
+          <div class="pad-panel">
+            <div class="pad-panel-head">
+              <h3>Recent Enrollments</h3>
+              <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/reports.html">View All</a>
+            </div>
+            <div class="pad-table-wrap">
+              <table class="pad-table">
+                <thead>
+                  <tr>
+                    <th>Enrollment Ref</th>
+                    <th>Member</th>
+                    <th>Plan</th>
+                    <th>Agent</th>
+                    <th>CMS Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>ENR-2026-00541</code></td>
+                    <td style="font-weight:700">Frank Johnson</td>
+                    <td><span class="pad-badge" data-tone="violet">ESRD SNP</span></td>
+                    <td>James Martinez</td>
+                    <td><span class="pad-badge" data-tone="warn">Processing</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>ENR-2026-00539</code></td>
+                    <td style="font-weight:700">Alice Cooper</td>
+                    <td><span class="pad-badge" data-tone="info">CKD SNP</span></td>
+                    <td>Sarah Chen</td>
+                    <td><span class="pad-badge" data-tone="warn">Processing</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>ENR-2026-00537</code></td>
+                    <td style="font-weight:700">George Harris</td>
+                    <td><span class="pad-badge" data-tone="slate">HMO</span></td>
+                    <td>Michael Torres</td>
+                    <td><span class="pad-badge" data-tone="success">Accepted</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pad-panel">
+            <div class="pad-panel-head">
+              <h3>Commission Batch Status - CY2026</h3>
+              <a class="p-btn p-btn-outline pad-btn-sm" href="../admin/commission-approval.html">Review</a>
+            </div>
+            <div class="pad-table-wrap">
+              <table class="pad-table">
+                <thead>
+                  <tr>
+                    <th>Batch Ref</th>
+                    <th>Period</th>
+                    <th>Total Paid</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>BATCH-2026-05</code></td>
+                    <td>May 2026</td>
+                    <td>$87,432</td>
+                    <td><span class="pad-badge" data-tone="success">Paid May 17</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>BATCH-2026-04</code></td>
+                    <td>Apr 2026</td>
+                    <td>$82,110</td>
+                    <td><span class="pad-badge" data-tone="success">Paid Apr 17</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>BATCH-2026-06</code></td>
+                    <td>Jun 2026</td>
+                    <td>$91,200 (est)</td>
+                    <td><span class="pad-badge" data-tone="warn">Processing</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="pad-charts" aria-label="Performance charts">
+          <div class="pad-section-head">
+            <h2><i class="fas fa-chart-area" aria-hidden="true"></i>Trends &amp; Distribution</h2>
+          </div>
+          <div class="pad-chart-grid">
+            <article class="pad-panel pad-chart-card">
+              <div class="pad-panel-head">
+                <h3><i class="fas fa-chart-line" aria-hidden="true"></i>Monthly Enrollment Trend</h3>
+              </div>
+              <div class="pad-chart-body">
+                <canvas id="padEnrollmentTrend" height="200" aria-label="Monthly enrollment trend chart"></canvas>
+              </div>
+            </article>
+            <article class="pad-panel pad-chart-card">
+              <div class="pad-panel-head">
+                <h3><i class="fas fa-chart-pie" aria-hidden="true"></i>Plan Distribution</h3>
+              </div>
+              <div class="pad-chart-body">
+                <canvas id="padPlanDist" height="200" aria-label="Plan distribution chart"></canvas>
+              </div>
+            </article>
+            <article class="pad-panel pad-chart-card">
+              <div class="pad-panel-head">
+                <h3><i class="fas fa-chart-bar" aria-hidden="true"></i>Commission Payouts (6 Months)</h3>
+              </div>
+              <div class="pad-chart-body">
+                <canvas id="padCommission" height="180" aria-label="Commission payouts chart"></canvas>
+              </div>
+            </article>
+            <article class="pad-panel pad-chart-card">
+              <div class="pad-panel-head">
+                <h3><i class="fas fa-chart-area" aria-hidden="true"></i>Agent Growth</h3>
+              </div>
+              <div class="pad-chart-body">
+                <canvas id="padAgentGrowth" height="180" aria-label="Agent growth chart"></canvas>
+              </div>
+            </article>
+          </div>
+        </section>
+        </div>
       </div>
 
       <div id="landingLoading" hidden>
@@ -271,8 +766,182 @@
 </div>
 <script src="portal-shell.js"></script>
 <!-- <script src="portal-role-switch.js"></script> -->
-<script src="portal-carrier-nav.js?v=20261118a"></script>
-<script src="portal-embed.js?v=20261123b"></script>
+<script src="portal-embed.js?v=20261124e"></script>
+<script src="portal-carrier-nav.js?v=20261124g"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  (function () {
+    var role = "";
+    try { role = sessionStorage.getItem("eaRole") || ""; } catch (e) {}
+    var isPayer = role === "payer-admin";
+    var staff = document.getElementById("dashStaff");
+    var payer = document.getElementById("dashPayer");
+    if (staff) {
+      staff.hidden = !!isPayer;
+      if (isPayer) staff.setAttribute("hidden", "");
+      else staff.removeAttribute("hidden");
+    }
+    if (payer) {
+      payer.hidden = !isPayer;
+      if (!isPayer) payer.setAttribute("hidden", "");
+      else payer.removeAttribute("hidden");
+    }
+
+    var title = document.getElementById("topTitle");
+    var avatar = document.getElementById("userAvatar");
+    var name = document.getElementById("userName");
+    var email = document.getElementById("userEmail");
+    var roleEl = document.getElementById("userRole");
+    if (isPayer) {
+      if (title) title.textContent = "Payer Admin Dashboard";
+      if (avatar) avatar.textContent = "PA";
+      if (name) name.textContent = "Payer Admin";
+      if (email) email.textContent = "payeradmin@enrollaxis.com";
+      if (roleEl) roleEl.textContent = "Payer Admin";
+      document.title = "Payer Admin Dashboard | EnrollAxis";
+    }
+
+    var signOut = document.getElementById("signOutLink");
+    if (signOut) {
+      signOut.addEventListener("click", function () {
+        try {
+          sessionStorage.removeItem("eaRole");
+          sessionStorage.removeItem("eaUser");
+        } catch (ex) {}
+      });
+    }
+
+    var btn = document.getElementById("refreshDashBtn");
+    var ts = document.getElementById("adminRefreshTs");
+    if (btn && ts) {
+      btn.addEventListener("click", function () {
+        var now = new Date();
+        ts.innerHTML = "Last refreshed: <strong>" + now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + "</strong>";
+      });
+    }
+
+    function initPayerCharts() {
+      if (!isPayer || typeof Chart === "undefined") return;
+      var primary = "#177e71";
+      var primarySoft = "rgba(23, 126, 113, 0.12)";
+      var accent = "#89c765";
+      var warn = "#b54708";
+      var muted = "#6a716f";
+      var grid = "#e7e8e8";
+      var tick = { color: muted, font: { size: 11, family: "Inter, system-ui, sans-serif" } };
+      var scaleOpts = {
+        grid: { color: grid },
+        ticks: tick,
+        border: { display: false }
+      };
+
+      var enrollEl = document.getElementById("padEnrollmentTrend");
+      if (enrollEl) {
+        new Chart(enrollEl, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+              label: "Enrollments",
+              data: [18, 22, 19, 25, 28, 31],
+              borderColor: primary,
+              backgroundColor: primarySoft,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 3,
+              pointBackgroundColor: primary
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: scaleOpts, y: Object.assign({ beginAtZero: true }, scaleOpts) }
+          }
+        });
+      }
+
+      var planEl = document.getElementById("padPlanDist");
+      if (planEl) {
+        new Chart(planEl, {
+          type: "doughnut",
+          data: {
+            labels: ["ESRD SNP", "CKD SNP", "H&D SNP", "HMO", "DM SNP"],
+            datasets: [{
+              data: [412, 331, 298, 524, 282],
+              backgroundColor: [primary, "#12655a", accent, muted, "#0e4c44"],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "right",
+                labels: { boxWidth: 12, color: muted, font: { size: 11, family: "Inter, system-ui, sans-serif" } }
+              }
+            }
+          }
+        });
+      }
+
+      var commissionEl = document.getElementById("padCommission");
+      if (commissionEl) {
+        new Chart(commissionEl, {
+          type: "bar",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+              label: "Total Paid ($K)",
+              data: [72, 78, 75, 82, 87, 91],
+              backgroundColor: primary,
+              borderRadius: 4,
+              maxBarThickness: 36
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: scaleOpts, y: Object.assign({ beginAtZero: true }, scaleOpts) }
+          }
+        });
+      }
+
+      var growthEl = document.getElementById("padAgentGrowth");
+      if (growthEl) {
+        new Chart(growthEl, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+              label: "Active Agents",
+              data: [128, 131, 135, 138, 141, 143],
+              borderColor: warn,
+              backgroundColor: "rgba(181, 71, 8, 0.1)",
+              fill: true,
+              tension: 0.3,
+              pointRadius: 3,
+              pointBackgroundColor: warn
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: scaleOpts, y: Object.assign({ min: 120 }, scaleOpts) }
+          }
+        });
+      }
+    }
+
+    if (isPayer) {
+      if (document.readyState === "complete") initPayerCharts();
+      else window.addEventListener("load", initPayerCharts);
+    }
+  })();
+</script>
 <script>
   (function () {
     var params = new URLSearchParams(location.search);

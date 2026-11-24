@@ -187,6 +187,98 @@
     "system-config"
   ];
 
+  /*
+   * Payer Admin allowlist from /admin/dashboard.html.
+   * Keep existing accordion hierarchy; hide items/groups not in that sidebar.
+   */
+  var PAYER_ADMIN_PATHS = {
+    "admin/agents.html": 1,
+    "admin/agent-invitations.html": 1,
+    "admin/onboarding-cases.html": 1,
+    "admin/hierarchy.html": 1,
+    "admin/recredentialing.html": 1,
+    "admin/agent-feed.html": 1,
+    "admin/agency-details.html": 1,
+    "admin/leads.html": 1,
+    "admin/commission-rules.html": 1,
+    "admin/commission-approval.html": 1,
+    "admin/training-admin.html": 1,
+    "admin/training-package-create.html": 1,
+    "admin/agent-training-progress.html": 1,
+    "admin/exceptions.html": 1,
+    "admin/reports.html": 1,
+    "admin/users.html": 1,
+    "admin/roles.html": 1,
+    "admin/feature-toggles.html": 1,
+    "admin/plan-catalog.html": 1,
+    "admin/carrier-setup.html": 1,
+    "admin/notifications-config.html": 1,
+    "admin/templates.html": 1,
+    "admin/master-data.html": 1,
+    "admin/integrations.html": 1,
+    "admin/audit-log.html": 1
+  };
+
+  function normalizeMenuPath(href) {
+    try {
+      var u = new URL(href, location.href);
+      var parts = u.pathname.replace(/\\/g, "/").split("/").filter(Boolean);
+      if (parts.length < 2) return "";
+      return parts.slice(-2).join("/").toLowerCase();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function isPayerAdminHref(href) {
+    var key = normalizeMenuPath(href);
+    return !!PAYER_ADMIN_PATHS[key];
+  }
+
+  function filterMenuItems(items) {
+    var out = [];
+    (items || []).forEach(function (entry) {
+      if (entry.type === "group") {
+        var children = filterMenuItems(entry.children || []);
+        if (!children.length) return;
+        out.push({
+          type: "group",
+          icon: entry.icon,
+          label: entry.label,
+          children: children
+        });
+        return;
+      }
+      if (isPayerAdminHref(entry.href)) out.push(entry);
+    });
+    return out;
+  }
+
+  function filterMenusForPayerAdmin() {
+    GROUP_ORDER.forEach(function (key) {
+      var menu = MENUS[key];
+      if (!menu) return;
+      menu.items = filterMenuItems(menu.items);
+      if (!menu.items.length) delete MENUS[key];
+    });
+    GROUP_ORDER = GROUP_ORDER.filter(function (key) {
+      return !!MENUS[key];
+    });
+  }
+
+  function isPayerAdminSession() {
+    try {
+      return sessionStorage.getItem("eaRole") === "payer-admin";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* Only Payer Admin login (payeradmin / Test@123) gets the filtered menu. */
+  if (isPayerAdminSession()) {
+    filterMenusForPayerAdmin();
+  }
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, "&amp;")
@@ -356,7 +448,47 @@
       return;
     }
 
-    /* Submenu links are handled by portal-embed.js (capture) so pages stay in-shell. */
+    /* Keep submenu pages in the portal body via iframe embed (do not leave this shell). */
+    var link = event.target.closest("a.p-nav-item[href]");
+    if (link && navRoot.contains(link)) {
+      var href = link.getAttribute("href");
+      if (href && href.charAt(0) !== "#") {
+        event.preventDefault();
+        event.stopPropagation();
+        if (window.PortalEmbed && typeof window.PortalEmbed.open === "function") {
+          if (window.PortalEmbed.open(href)) return;
+        }
+        try {
+          var abs = new URL(href, location.href);
+          var parts = abs.pathname.replace(/\\/g, "/").split("/").filter(Boolean);
+          var folders = [
+            "admin",
+            "broker-support",
+            "sales-leadership",
+            "finance",
+            "enrollment-ops",
+            "compliance",
+            "agent",
+            "agency-admin",
+            "member"
+          ];
+          var idx = -1;
+          var i;
+          for (i = 0; i < parts.length; i++) {
+            if (folders.indexOf(parts[i]) !== -1) {
+              idx = i;
+              break;
+            }
+          }
+          if (idx !== -1) {
+            var page = parts.slice(idx).join("/") + (abs.search || "") + (abs.hash || "");
+            location.href = location.pathname + "?page=" + encodeURIComponent(page);
+            return;
+          }
+        } catch (e) {}
+        return;
+      }
+    }
 
     var btn = event.target.closest("[data-group]");
     if (!btn || !navRoot.contains(btn)) return;

@@ -272,6 +272,17 @@
       if (form) {
         form.addEventListener("submit", function (e) {
           e.preventDefault();
+          var user = (document.getElementById("ssoUser").value || "").trim();
+          var password = document.getElementById("ssoPass").value || "";
+          try {
+            if (user === "payeradmin" && password === "Test@123") {
+              sessionStorage.setItem("eaRole", "payer-admin");
+              sessionStorage.setItem("eaUser", "payeradmin");
+            } else {
+              sessionStorage.setItem("eaRole", "carrier-staff");
+              sessionStorage.setItem("eaUser", user);
+            }
+          } catch (ex) {}
           location.href = "signing-in.html";
         });
       }

@@ -165,9 +165,37 @@
     }
   }
 
+  function pathParts(pathname) {
+    return String(pathname || "")
+      .replace(/\\/g, "/")
+      .split("/")
+      .filter(Boolean);
+  }
+
+  /* Find admin|broker-support|... even on Windows file:// paths (/E:/.../admin/x.html). */
+  function folderIndexInPath(pathname) {
+    var parts = pathParts(pathname);
+    var i;
+    for (i = 0; i < parts.length; i++) {
+      if (EMBED_FOLDERS.indexOf(parts[i]) !== -1 || AUTH_FOLDERS.indexOf(parts[i]) !== -1) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   function folderOfPath(pathname) {
-    var parts = String(pathname || "").split("/").filter(Boolean);
+    var parts = pathParts(pathname);
+    var idx = folderIndexInPath(pathname);
+    if (idx !== -1) return parts[idx];
     return parts.length ? parts[0] : "";
+  }
+
+  function relativeAppPath(pathname) {
+    var parts = pathParts(pathname);
+    var idx = folderIndexInPath(pathname);
+    if (idx === -1) return "";
+    return parts.slice(idx).join("/");
   }
 
   function isEmbeddablePath(pathname) {
@@ -179,11 +207,21 @@
     return AUTH_FOLDERS.indexOf(folderOfPath(pathname)) !== -1;
   }
 
+  function isSameAppOrigin(targetUrl) {
+    try {
+      var u = new URL(targetUrl, location.href);
+      if (u.protocol === "file:" && location.protocol === "file:") return true;
+      return u.origin === location.origin;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function isEmbeddableHref(href) {
     if (!href || href.charAt(0) === "#") return false;
     try {
       var u = new URL(href, location.href);
-      if (u.origin !== location.origin) return false;
+      if (!isSameAppOrigin(u.href)) return false;
       return isEmbeddablePath(u.pathname);
     } catch (e) {
       return false;
@@ -192,14 +230,16 @@
 
   function toPageParam(absUrl) {
     var u = new URL(absUrl, location.href);
-    var path = u.pathname.replace(/^\//, "");
-    return path + (u.search || "") + (u.hash || "");
+    var rel = relativeAppPath(u.pathname);
+    if (!rel) rel = u.pathname.replace(/^\//, "");
+    return rel + (u.search || "") + (u.hash || "");
   }
 
   function resolvePageParam(value) {
     if (!value) return null;
     var cleaned = String(value).replace(/^\/+/, "");
-    var abs = new URL("../" + cleaned, location.href).href;
+    var rel = relativeAppPath("/" + cleaned) || cleaned;
+    var abs = new URL("../" + rel, location.href).href;
     if (!isEmbeddableHref(abs)) return null;
     return abs;
   }
@@ -454,7 +494,7 @@
         } catch (e) {
           return;
         }
-        if (abs.origin !== location.origin) return;
+        if (!isSameAppOrigin(abs.href)) return;
         if (!isAuthPath(abs.pathname)) return;
         event.preventDefault();
         window.top.location.href = abs.href;
@@ -608,8 +648,8 @@
       try {
         var u = new URL(href, location.href);
         if (
-          u.origin === location.origin &&
-          /\/portal\/landing-[a-z0-9-]+\.html$/i.test(u.pathname) &&
+          isSameAppOrigin(u.href) &&
+          /(?:^|\/)portal\/landing-[a-z0-9-]+\.html$/i.test(u.pathname) &&
           u.pathname === location.pathname
         ) {
           event.preventDefault();
