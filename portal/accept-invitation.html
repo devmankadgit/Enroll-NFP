@@ -98,6 +98,7 @@
         <dl class="acc-details" id="readyDetails"></dl>
         <div class="acc-actions">
           <button type="button" class="p-btn p-btn-block" id="acceptBtn">Accept Invitation</button>
+          <button type="button" class="p-btn p-btn-outline p-btn-block" id="rejectBtn">Decline Invitation</button>
           <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
         </div>
         <p id="acceptErr" class="lead" style="color:#b71c1c;margin-top:0.75rem" hidden></p>
@@ -126,6 +127,24 @@
           <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
         </div>
       </div>
+
+      <div id="stateRejected" hidden>
+        <div class="acc-icon is-err" aria-hidden="true"><i class="fas fa-times"></i></div>
+        <h1>Invitation Declined</h1>
+        <p class="lead">
+          You declined this contracting invitation. No agent account will be created from this link.
+        </p>
+        <p class="lead" style="margin-top:0.75rem">
+          If this was a mistake, ask your agency administrator to send a new invitation.
+        </p>
+        <div class="acc-status" style="background:#fce4ec;color:#b71c1c">
+          <i class="fas fa-ban" aria-hidden="true"></i>
+          Invitation rejected
+        </div>
+        <div class="acc-actions">
+          <a class="p-btn p-btn-outline p-btn-block" href="sso-login.html">Return to Login</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -140,12 +159,14 @@
     var elError = document.getElementById("stateError");
     var elReady = document.getElementById("stateReady");
     var elSuccess = document.getElementById("stateSuccess");
+    var elRejected = document.getElementById("stateRejected");
 
     function show(which) {
       elLoading.hidden = which !== "loading";
       elError.hidden = which !== "error";
       elReady.hidden = which !== "ready";
       elSuccess.hidden = which !== "success";
+      elRejected.hidden = which !== "rejected";
     }
 
     function fillDetails(state) {
@@ -194,7 +215,39 @@
       document.getElementById("errMsg").textContent = msg;
     }
 
+    var view = params.get("view");
+
     setTimeout(function () {
+      if (view === "ready" || view === "success" || view === "rejected" || view === "error") {
+        if (view === "error") {
+          showError("This invitation is no longer valid", "The link may be cancelled, wrong, or broken. Contact support if you need help.");
+          return;
+        }
+        if (view === "rejected") {
+          show("rejected");
+          return;
+        }
+        if (view === "success") {
+          showSuccess({ status: "account_creation_pending" });
+          return;
+        }
+        if (window.EAAccountCreation) {
+          fillDetails(EAAccountCreation.get());
+        } else {
+          fillDetails({
+            carrier: "Gold Kidney Health Plan",
+            agency: "Sunrise Agency",
+            level: "Agent/Broker",
+            role: "Agent",
+            planYear: "2026",
+            email: "samira.adams@example.com",
+            inviter: "Mark Ellis"
+          });
+        }
+        show("ready");
+        return;
+      }
+
       if (!window.EAAccountCreation) {
         showError("Something went wrong", "We could not load invitation data. Try again in a few minutes.");
         return;
@@ -213,6 +266,10 @@
       }
 
       var state = found.state;
+      if (state.status === "invitation_rejected") {
+        show("rejected");
+        return;
+      }
       if (state.status === "account_creation_pending" || state.status === "invitation_accepted" ||
           state.status === "account_created" || state.status === "password_set") {
         showSuccess(state);
@@ -225,20 +282,50 @@
 
     document.getElementById("acceptBtn").addEventListener("click", function () {
       var btn = document.getElementById("acceptBtn");
+      var rejectBtn = document.getElementById("rejectBtn");
       var err = document.getElementById("acceptErr");
       err.hidden = true;
       btn.disabled = true;
+      if (rejectBtn) rejectBtn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Accepting...';
       setTimeout(function () {
         var result = EAAccountCreation.acceptInvitation(token);
         if (!result.ok) {
-          err.textContent = "We couldn't accept the invitation. Try again in a few minutes.";
+          err.textContent = result.reason === "rejected"
+            ? "This invitation was already declined."
+            : "We couldn't accept the invitation. Try again in a few minutes.";
           err.hidden = false;
           btn.disabled = false;
+          if (rejectBtn) rejectBtn.disabled = false;
           btn.textContent = "Accept Invitation";
+          if (result.reason === "rejected") show("rejected");
           return;
         }
         showSuccess(result.state);
+      }, 700);
+    });
+
+    document.getElementById("rejectBtn").addEventListener("click", function () {
+      var btn = document.getElementById("rejectBtn");
+      var acceptBtn = document.getElementById("acceptBtn");
+      var err = document.getElementById("acceptErr");
+      err.hidden = true;
+      btn.disabled = true;
+      if (acceptBtn) acceptBtn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Declining...';
+      setTimeout(function () {
+        var result = EAAccountCreation.rejectInvitation(token);
+        if (!result.ok) {
+          err.textContent = result.reason === "already_accepted"
+            ? "This invitation was already accepted."
+            : "We couldn't decline the invitation. Try again in a few minutes.";
+          err.hidden = false;
+          btn.disabled = false;
+          if (acceptBtn) acceptBtn.disabled = false;
+          btn.textContent = "Decline Invitation";
+          return;
+        }
+        show("rejected");
       }, 700);
     });
 
@@ -248,6 +335,7 @@
       btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Creating account...';
       setTimeout(goToAccountCreatedEmail, 900);
     });
+
   })();
   </script>
 </body>

@@ -177,6 +177,9 @@
     var found = findByInviteToken(token);
     if (!found.ok) return found;
     var state = found.state;
+    if (state.status === "invitation_rejected") {
+      return { ok: false, reason: "rejected", state: state };
+    }
     if (state.status === "invitation_accepted" || state.status === "account_creation_pending" ||
         state.status === "account_created" || state.status === "password_set") {
       return { ok: true, already: true, state: state };
@@ -184,6 +187,24 @@
     state = update({
       status: "account_creation_pending",
       acceptedAt: nowIso()
+    });
+    return { ok: true, already: false, state: state };
+  }
+
+  function rejectInvitation(token) {
+    var found = findByInviteToken(token);
+    if (!found.ok) return found;
+    var state = found.state;
+    if (state.status === "invitation_rejected") {
+      return { ok: true, already: true, state: state };
+    }
+    if (state.status === "invitation_accepted" || state.status === "account_creation_pending" ||
+        state.status === "account_created" || state.status === "password_set") {
+      return { ok: false, reason: "already_accepted", state: state };
+    }
+    state = update({
+      status: "invitation_rejected",
+      rejectedAt: nowIso()
     });
     return { ok: true, already: false, state: state };
   }
@@ -355,6 +376,7 @@
     isDemoMode: isDemoMode,
     createInvitation: createInvitation,
     acceptInvitation: acceptInvitation,
+    rejectInvitation: rejectInvitation,
     completeAccountCreation: completeAccountCreation,
     setPassword: setPassword,
     findByInviteToken: findByInviteToken,
