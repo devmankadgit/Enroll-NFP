@@ -45,6 +45,7 @@
       root.classList.remove('is-open');
       var trigger = root.querySelector('.ui-date-trigger');
       if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      if (typeof root._uiDateResetPopover === 'function') root._uiDateResetPopover();
     });
   }
 
@@ -180,6 +181,44 @@
       calendar.innerHTML = html;
     }
 
+    function resetPopover() {
+      popover.style.position = '';
+      popover.style.top = '';
+      popover.style.left = '';
+      popover.style.bottom = '';
+      popover.style.right = '';
+      popover.style.zIndex = '';
+      popover.style.width = '';
+      popover.style.minWidth = '';
+    }
+
+    function placePopover() {
+      /* Fixed to the viewport so accordion overflow / stacked rows cannot crop it */
+      var tr = trigger.getBoundingClientRect();
+      var minW = Math.max(tr.width, 280);
+      popover.style.position = 'fixed';
+      popover.style.zIndex = '1000';
+      popover.style.minWidth = minW + 'px';
+      popover.style.width = 'max-content';
+      popover.style.bottom = 'auto';
+      popover.style.right = 'auto';
+      var popH = popover.offsetHeight || 280;
+      var popW = Math.max(popover.offsetWidth || minW, minW);
+      var top = tr.bottom + 4;
+      if (top + popH > window.innerHeight - 8 && tr.top - popH - 4 > 8) {
+        top = tr.top - popH - 4;
+      }
+      var left = tr.left;
+      if (left + popW > window.innerWidth - 8) {
+        left = Math.max(8, window.innerWidth - popW - 8);
+      }
+      if (left < 8) left = 8;
+      popover.style.top = Math.round(top) + 'px';
+      popover.style.left = Math.round(left) + 'px';
+    }
+
+    root._uiDateResetPopover = resetPopover;
+
     function open() {
       if (native.disabled) return;
       closeAll(root);
@@ -189,6 +228,8 @@
       render();
       root.classList.add('is-open');
       trigger.setAttribute('aria-expanded', 'true');
+      placePopover();
+      requestAnimationFrame(placePopover);
     }
 
     function toggle() {

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Onboarding | EnrollAxis Agent Portal</title>
-<link rel="stylesheet" href="../assets/shadcn-ui.css?v=74">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=75">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap">
 <script src="../assets/minimal-icons.js"></script>
@@ -1975,6 +1975,26 @@
     background: var(--white);
     overflow: hidden;
   }
+  /* Let date popovers escape the accordion; keep radius clip only when collapsed */
+  .state-lic-panel.is-open {
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+  }
+  .state-lic-panel.is-open .ui-form-grid {
+    position: relative;
+    z-index: 5;
+  }
+  .state-lic-panel.is-open .ui-field:has(.ui-date-root.is-open) {
+    position: relative;
+    z-index: 90;
+  }
+  .state-lic-panel.is-open .ui-date-root.is-open {
+    z-index: 90;
+  }
+  .state-lic-panel.is-open .ui-date-popover {
+    z-index: 95;
+  }
   .state-lic-panel.is-complete { border-color: color-mix(in srgb, var(--success) 45%, var(--border)); }
   .state-lic-head {
     width: 100%;
@@ -1988,10 +2008,12 @@
     cursor: pointer;
     text-align: left;
     font-family: var(--font-body);
+    border-radius: 0.75rem;
   }
   .state-lic-panel.is-open .state-lic-head {
     background: color-mix(in srgb, var(--accent) 80%, var(--white));
     border-bottom: 1px solid var(--primary-200);
+    border-radius: 0.75rem 0.75rem 0 0;
   }
   .state-lic-head:hover { background: var(--accent); }
   .state-lic-head-icon {
@@ -2031,7 +2053,12 @@
     display: none;
     padding: 0.9rem 1rem 1rem;
   }
-  .state-lic-panel.is-open .state-lic-body { display: block; }
+  .state-lic-panel.is-open .state-lic-body {
+    display: block;
+    overflow: visible;
+    position: relative;
+    z-index: 3;
+  }
   .state-lic-panel .state-lic-err {
     display: none;
     margin: 0.35rem 0 0;
@@ -2870,7 +2897,7 @@
 </div>
 
 <script src="../assets/ui-select.js"></script>
-<script src="../assets/ui-calendar.js"></script>
+<script src="../assets/ui-calendar.js?v=2"></script>
 <script src="../assets/ui-label.js"></script>
 <script src="../assets/nfp-actions.js?v=2"></script>
 <script>
