@@ -394,6 +394,7 @@
     if (tag !== "BUTTON" && tag !== "A") return false;
     if (el.classList && el.classList.contains("sidebar-toggle")) return false;
     if (el.classList && el.classList.contains("ui-sidebar-toggle")) return false;
+    if (el.getAttribute("data-portal-skip-action") === "1") return false;
     if (isLogoutControl(el)) return false;
     return true;
   }
@@ -557,6 +558,84 @@
       if (current !== pageValue) writeHistory(pageValue, true);
       syncingFromIframe = false;
     }
+
+    /* Optional same-document flatten for Figma capture (iframes are invisible to capture.js). */
+    if (new URLSearchParams(location.search).get("flatten") === "1") {
+      flattenEmbedForCapture(frame, doc, win);
+    }
+  }
+
+  function flattenEmbedForCapture(frame, doc, win) {
+    if (!pageEl || !doc || !doc.body) return;
+    if (document.getElementById("portalCaptureFlat")) return;
+    try {
+      if (win && typeof win.prefillSendInvitation === "function") {
+        win.prefillSendInvitation({ silent: true });
+      }
+    } catch (ePrefill) {}
+    /* Reflect live values into markup so flatten/capture sees filled fields. */
+    Array.from(doc.querySelectorAll("input, textarea, select")).forEach(function (el) {
+      var tag = el.tagName;
+      if (tag === "TEXTAREA") {
+        el.textContent = el.value || "";
+        return;
+      }
+      if (tag === "SELECT") {
+        Array.from(el.options).forEach(function (opt) {
+          if (opt.value === el.value) opt.setAttribute("selected", "selected");
+          else opt.removeAttribute("selected");
+        });
+        return;
+      }
+      if (el.type === "checkbox" || el.type === "radio") {
+        if (el.checked) el.setAttribute("checked", "checked");
+        else el.removeAttribute("checked");
+        return;
+      }
+      el.setAttribute("value", el.value || "");
+    });
+    Array.from(doc.querySelectorAll("link[rel=\"stylesheet\"], style")).forEach(function (n) {
+      var clone = n.cloneNode(true);
+      if (clone.tagName === "LINK") {
+        var href = clone.getAttribute("href");
+        if (href && href.indexOf("http") !== 0 && href.charAt(0) !== "/") {
+          try {
+            clone.setAttribute("href", new URL(href, doc.baseURI).href);
+          } catch (eHref) {}
+        }
+      }
+      document.head.appendChild(clone);
+    });
+    var flat = document.createElement("div");
+    flat.id = "portalCaptureFlat";
+    flat.className = "portal-embed";
+    flat.setAttribute("data-capture-flat", "1");
+    flat.style.cssText =
+      "display:block;width:100%;min-height:100%;background:#f4f6f6;box-sizing:border-box;";
+    flat.innerHTML = doc.body.innerHTML;
+    try {
+      frame.setAttribute("hidden", "");
+      frame.remove();
+    } catch (eRm) {}
+    if (ready) setHidden(ready, true);
+    if (loading) setHidden(loading, true);
+    if (error) setHidden(error, true);
+    pageEl.classList.add("is-embedded");
+    pageEl.appendChild(flat);
+    if (!document.getElementById("portal-capture-flat-css")) {
+      var style = document.createElement("style");
+      style.id = "portal-capture-flat-css";
+      style.textContent =
+        "#portalCaptureFlat .sidebar,#portalCaptureFlat .topbar,#portalCaptureFlat .sidebar-toggle,#portalCaptureFlat .sidebar-overlay{display:none!important;}" +
+        "#portalCaptureFlat .main,#portalCaptureFlat .wrapper{margin-left:0!important;width:100%!important;max-width:100%!important;display:block!important;}" +
+        "#portalCaptureFlat .inv-page-intro,#portalCaptureFlat .inv-page-head{display:block!important;}" +
+        "#portalCaptureFlat .ui-page{padding:1.5rem 1.75rem 2rem!important;background:var(--base-100,#e7e8e8);}" +
+        "#portalCaptureFlat .page{padding:8px 0 24px;}";
+      document.head.appendChild(style);
+    }
+    try {
+      window.scrollTo(0, 0);
+    } catch (eScroll) {}
   }
 
   function showDashboard(opts) {

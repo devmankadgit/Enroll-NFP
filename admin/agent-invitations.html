@@ -1,434 +1,950 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Agent Invitations | Carrier Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Invitations | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/shadcn-ui.css?v=81">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css">
 <style>
-:root{--sb:#002624}
-.inv-tab{padding:9px 22px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
-.inv-tab:hover{background:#f1f3f4;color:#002624}
-.inv-tab.active{background:#e6efee;color:#002624}
-.inv-tab .tbadge{background:#002624;color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700}
-.kpi-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
-.kpi-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.kpi-val{font-size:26px;font-weight:800;color:#002624;line-height:1}
-.kpi-lbl{font-size:11px;color:#5f6368;margin-top:2px}
-.kpi-sub{font-size:10px;color:#5f6368;margin-top:3px}
-.status-badge{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
-.sb-draft{background:#f1f3f4;color:#5f6368}
-.sb-sent{background:#e8f5f2;color:#0f6a62}
-.sb-opened{background:#fff8e1;color:#e65100}
-.sb-accepted{background:#e8f5e9;color:#1b5e20}
-.sb-expired{background:#fce4ec;color:#b71c1c}
-.sb-cancelled{background:#f1f3f4;color:#5f6368}
-.sb-rejected{background:#fce4ec;color:#880e4f}
-.inv-form-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:24px}
-.inv-form-card h6{font-size:14px;font-weight:700;color:#002624;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.form-section{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:16px;margin-bottom:14px}
-.form-section-title{font-size:11px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.char-count{font-size:11px;color:#5f6368;text-align:right;margin-top:3px}
-.inv-timeline{position:relative;padding-left:24px}
-.inv-timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:2px;background:#e8eaed}
-.inv-tl-item{position:relative;margin-bottom:14px}
-.inv-tl-dot{position:absolute;left:-20px;width:14px;height:14px;border-radius:50%;border:2px solid;top:3px;background:#fff}
-.inv-tl-dot.active{border-color:#002624;background:#002624}
-.inv-tl-dot.done{border-color:#1b5e20;background:#1b5e20}
-.inv-tl-dot.warn{border-color:#e65100;background:#e65100}
-.inv-tl-dot.err{border-color:#b71c1c;background:#b71c1c}
-.inv-tl-dot.grey{border-color:#bdbdbd;background:#fff}
-.dup-warn{display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:7px 10px;font-size:11px;color:#e65100;margin-top:5px}
-.dup-err{display:none;background:#fce4ec;border:1px solid #ef9a9a;border-radius:6px;padding:7px 10px;font-size:11px;color:#b71c1c;margin-top:5px}
-.npn-ok{display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:7px 10px;font-size:11px;color:#1b5e20;margin-top:5px}
-.bulk-bar{background:#e6efee;border:1px solid #a6dace;border-radius:8px;padding:8px 14px;display:none;align-items:center;gap:12px;margin-bottom:10px;font-size:12px}
-.preview-card{background:#f8f9fa;border:1px dashed #a6dace;border-radius:8px;padding:14px;font-size:12px}
-.bulk-help{background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;padding:10px 12px;font-size:11px;color:#5f6368;margin-top:8px}
-.bulk-result{display:none;background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:10px 12px;font-size:12px;color:#0f6a62;margin-top:10px;white-space:pre-line}
-.kpi-row{display:grid;gap:14px}
-.data-table{width:100%;border-collapse:collapse;font-size:13px}
-.data-table thead{background:#f8f9fa}
-.data-table th,.data-table td{padding:10px 12px;border-bottom:1px solid #f1f3f4;text-align:left}
-.data-table tbody tr:hover{background:#f6fbfa}
-.inv-err{border-color:#ef9a9a!important;background:#fff5f5!important}
-.tbl-action-btn{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:#002624;transition:all .15s}
-.tbl-action-btn:hover{background:#e6efee;border-color:#a6dace}
-.tbl-action-btn.danger{color:#c62828;border-color:#ef9a9a}
-.tbl-action-btn.danger:hover{background:#fce4ec}
+  /* ---------- Shell chrome (matches payer-admin-dashboard) ---------- */
+  .ui-topbar h1 {
+    margin: 0;
+    font-size: 1.1875rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .ui-topbar .subtitle {
+    margin: 0.2rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--neutral-600);
+    line-height: 1.4;
+  }
+  .ob-customer-logo { display: block; height: 36px; width: auto; max-width: 100%; object-fit: contain; object-position: left center; }
+  .ob-powered-by { display: flex; flex-direction: column; align-items: flex-end; width: 100%; text-align: right; }
+  .ob-powered-by-label { font-size: 0.75rem; font-weight: 500; color: var(--neutral-600); line-height: 1.2; }
+  .ob-powered-by-logo { display: block; height: 24px; width: auto; max-width: 100%; object-fit: contain; object-position: right center; }
+  .ob-topbar-titles { min-width: 0; }
+  .ob-topbar-actions { display: inline-flex; align-items: center; gap: 0.75rem; margin-left: auto; flex-shrink: 0; }
+  .ob-topbar-customer-logo { display: none; height: 26px; width: auto; max-width: min(150px, 42vw); object-fit: contain; object-position: left center; min-width: 0; }
+
+  .inv-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+  .inv-nav-section {
+    margin: 0.85rem 0.8rem 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--neutral-500);
+  }
+  .inv-nav-section:first-child { margin-top: 0.1rem; }
+  .inv-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 0;
+    border-radius: calc(var(--radius) - 2px);
+    background: transparent;
+    color: var(--neutral-700);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .inv-nav-item i { width: 1.25rem; text-align: center; color: var(--neutral-500); flex-shrink: 0; }
+  .inv-nav-item:hover { background: var(--primary-50); color: var(--primary-800); }
+  .inv-nav-item:hover i { color: var(--primary); }
+  .inv-nav-item:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .inv-nav-item.is-active {
+    background: var(--primary-50);
+    color: var(--primary-800);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--primary);
+  }
+  .inv-nav-item.is-active i { color: var(--primary); }
+
+  /* ---------- Page header (mobile + portal embed only; topbar shows it on desktop) ---------- */
+  .inv-page-head { display: none; margin: 0 0 1rem; }
+  .inv-page-head h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .inv-page-head .subtitle { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--neutral-600); line-height: 1.4; }
+  html.portal-embed .inv-page-head { display: block; }
+
+  /* ---------- Portal embed spacing ---------- */
+  html.portal-embed .ui-page {
+    padding: 1.5rem 1.75rem 2rem;
+    background: var(--base-100);
+  }
+  html.portal-embed #topbarSendBtn,
+  html.portal-embed #portalEmbedActions { display: none !important; }
+  html.portal-embed .inv-sticky { top: 1rem; }
+
+  /* ---------- Tabs ---------- */
+  .inv-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.35rem;
+    margin-bottom: 1.1rem;
+    background: var(--white);
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) + 2px);
+    overflow-x: auto;
+  }
+  .inv-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    border: 0;
+    border-radius: calc(var(--radius) - 2px);
+    background: transparent;
+    color: var(--neutral-600);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .inv-tab:hover { background: var(--base-50); color: var(--primary-800); }
+  .inv-tab:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .inv-tab.active { background: var(--primary-50); color: var(--primary-800); }
+  .inv-tab .tbadge {
+    min-width: 1.25rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 9999px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+    text-align: center;
+  }
+
+  /* ---------- Send tab layout ---------- */
+  .inv-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .inv-sticky { position: sticky; top: 5rem; }
+  .inv-section {
+    background: var(--base-50);
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1rem;
+    margin-bottom: 0.9rem;
+  }
+  .inv-section:last-of-type { margin-bottom: 0; }
+  .inv-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--neutral-600);
+  }
+  .inv-section-title i { color: var(--primary); }
+  .inv-stack { display: flex; flex-direction: column; gap: 0.85rem; }
+  .inv-char-count { margin-top: 0.25rem; font-size: 0.75rem; color: var(--muted-foreground); text-align: right; }
+  .inv-form-alert { display: none; margin-bottom: 1rem; }
+  .inv-actions-split { display: flex; justify-content: space-between; align-items: center; gap: 0.625rem; flex-wrap: wrap; width: 100%; }
+  .inv-actions-group { display: flex; gap: 0.625rem; flex-wrap: wrap; }
+  .inv-btn-row { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 0.85rem; }
+
+  /* validation messages (toggled by JS via style.display) */
+  .inv-msg {
+    display: none;
+    margin-top: 0.4rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid;
+    border-radius: calc(var(--radius) - 4px);
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+  .inv-msg i { margin-right: 0.35rem; }
+  .inv-msg-err { background: var(--danger-bg); border-color: var(--danger-border); color: var(--danger); }
+  .inv-msg-warn { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning-800); }
+  .inv-msg-ok { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
+  .inv-msg .ui-check-row { margin-top: 0.4rem; font-size: 0.75rem; }
+
+  .ui-input.inv-err,
+  .ui-textarea.inv-err { border-color: var(--destructive); background: var(--danger-50); }
+  .ui-select-native.inv-err + .ui-select-trigger { border-color: var(--destructive); background: var(--danger-50); }
+
+  .inv-bulk-help {
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--white);
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) - 4px);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--neutral-600);
+  }
+  .inv-bulk-result {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.85rem;
+    background: var(--info-bg);
+    border: 1px solid var(--info-border);
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.8125rem;
+    color: var(--info);
+    white-space: pre-line;
+  }
+  .inv-upload-name { font-weight: 600; color: inherit; }
+
+  /* preview */
+  .inv-preview-card {
+    background: var(--base-50);
+    border: 1px dashed var(--primary-200);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 0.85rem;
+    font-size: 0.75rem;
+    overflow-x: auto;
+  }
+  .inv-preview-empty { text-align: center; padding: 1.25rem 0.5rem; color: var(--neutral-500); font-size: 0.8125rem; }
+  .inv-preview-empty i { display: block; margin-bottom: 0.5rem; font-size: 1.75rem; color: var(--primary-200); }
+  .inv-token-note {
+    margin-top: 0.85rem;
+    padding: 0.7rem 0.8rem;
+    background: var(--primary-50);
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--primary-800);
+  }
+  .inv-token-note i { margin-right: 0.35rem; }
+
+  /* ---------- Dashboard tab ---------- */
+  .inv-kpi-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.85rem; margin-bottom: 1.1rem; }
+  .inv-kpi {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.1rem;
+    background: var(--white);
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) + 2px);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent);
+  }
+  .inv-kpi-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    background: var(--primary-50);
+    color: var(--primary-700);
+  }
+  .inv-kpi-icon[data-tone="success"] { background: var(--success-50); color: var(--success-800); }
+  .inv-kpi-icon[data-tone="warn"] { background: var(--warning-50); color: var(--warning-800); }
+  .inv-kpi-icon[data-tone="danger"] { background: var(--danger-50); color: var(--danger-700); }
+  .inv-kpi-icon[data-tone="slate"] { background: var(--neutral-100); color: var(--neutral-700); }
+  .inv-kpi-val {
+    margin: 0;
+    font-size: 1.625rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--brand-ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .inv-kpi-lbl { margin: 0.25rem 0 0; font-size: 0.8125rem; font-weight: 600; color: var(--neutral-700); }
+  .inv-kpi-sub { margin: 0.1rem 0 0; font-size: 0.75rem; color: var(--neutral-600); }
+
+  .inv-panel {
+    background: var(--white);
+    border: 1px solid var(--base-200);
+    border-radius: calc(var(--radius) + 2px);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--base-950) 4%, transparent);
+    margin-bottom: 0.85rem;
+  }
+  .inv-panel-pad { padding: 1rem; }
+  .inv-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    gap: 0.75rem;
+    align-items: end;
+  }
+  .inv-filter-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.85rem; justify-content: flex-end; }
+
+  .inv-bulk-bar {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--primary-50);
+    border: 1px solid var(--primary-200);
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.8125rem;
+  }
+  .inv-bulk-bar .ui-select-root { min-width: 11rem; width: auto; }
+  .inv-bulk-bar i.lead { color: var(--primary); margin-right: 0.35rem; }
+
+  .inv-legend { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding: 0.65rem 1rem; }
+  .inv-legend-label { margin-right: 0.25rem; font-size: 0.75rem; font-weight: 600; color: var(--neutral-600); }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .status-badge i { font-size: 0.6rem; }
+  .sb-draft { background: var(--neutral-100); color: var(--neutral-700); }
+  .sb-sent { background: var(--primary-50); color: var(--primary-700); }
+  .sb-opened { background: var(--warning-100); color: var(--warning-800); }
+  .sb-accepted { background: var(--success-100); color: var(--success-800); }
+  .sb-expired { background: var(--danger-100); color: var(--danger-800); }
+  .sb-cancelled { background: var(--neutral-100); color: var(--neutral-700); }
+  .sb-rejected { background: var(--danger-100); color: var(--danger-900); }
+
+  .inv-table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; min-width: 68rem; border-collapse: collapse; font-size: 0.8125rem; }
+  .data-table thead { background: var(--base-50); }
+  .data-table th {
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--neutral-600);
+    border-bottom: 1px solid var(--base-200);
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--base-100);
+    color: var(--foreground);
+    vertical-align: middle;
+  }
+  .data-table tbody tr:hover { background: var(--primary-50); }
+  .data-table input[type="checkbox"] { accent-color: var(--primary); width: 1rem; height: 1rem; cursor: pointer; }
+  .inv-td-name { font-weight: 600; white-space: nowrap; }
+  .inv-td-sm { font-size: 0.75rem; }
+  .inv-td-nowrap { white-space: nowrap; }
+  .inv-td-org { font-size: 0.75rem; max-width: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .inv-td-empty { text-align: center; padding: 1.5rem; color: var(--neutral-500); }
+  .inv-code { padding: 0.1rem 0.4rem; background: var(--base-50); border-radius: 0.25rem; font-size: 0.75rem; }
+  .inv-muted { color: var(--neutral-400); font-size: 0.75rem; }
+  .inv-level-pill {
+    display: inline-block;
+    padding: 0.1rem 0.55rem;
+    border-radius: 9999px;
+    background: var(--primary-50);
+    color: var(--primary-700);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .inv-accepted { color: var(--success-800); font-weight: 600; font-size: 0.75rem; }
+  .inv-accepted i { margin-right: 0.25rem; font-size: 0.65rem; }
+  .inv-row-actions { display: flex; gap: 0.3rem; align-items: center; white-space: nowrap; }
+  .tbl-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 4px);
+    background: var(--white);
+    color: var(--primary-700);
+    font-size: 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .tbl-action-btn:hover { background: var(--primary-50); border-color: var(--primary-200); }
+  .tbl-action-btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .tbl-action-btn.danger { color: var(--danger-600); border-color: var(--danger-200); }
+  .tbl-action-btn.danger:hover { background: var(--danger-50); }
+
+  /* ---------- Modals ---------- */
+  .inv-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: color-mix(in srgb, var(--brand-ink) 45%, transparent);
+  }
+  .inv-modal-box {
+    width: 100%;
+    max-height: calc(100vh - 2rem);
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .inv-modal-hdr {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .inv-modal-hdr h2 {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .inv-modal-hdr h2 i { color: var(--primary); }
+  .inv-modal-body { padding: 1.25rem; overflow-y: auto; }
+  .inv-modal-foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .inv-modal-intro { margin: 0 0 1rem; font-size: 0.8125rem; color: var(--neutral-600); line-height: 1.5; }
+  .inv-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.85rem; }
+
+  .inv-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 1rem; }
+  .inv-detail-grid .span-2 { grid-column: span 2; }
+  .inv-dl-k { font-size: 0.75rem; color: var(--neutral-600); margin-bottom: 0.15rem; }
+  .inv-dl-v { font-size: 0.8125rem; color: var(--foreground); word-break: break-word; }
+  .inv-dl-v.strong { font-weight: 700; font-size: 0.875rem; }
+  .inv-dl-v.warn { color: var(--warning-800); }
+  .inv-dl-v.italic { font-style: italic; color: var(--neutral-600); }
+  .inv-dl-v a { color: var(--primary-700); font-weight: 700; text-decoration: none; }
+  .inv-dl-v a:hover { text-decoration: underline; }
+  .inv-timeline-wrap { border-top: 1px solid var(--base-100); padding-top: 0.85rem; }
+  .inv-timeline-title { margin: 0 0 0.7rem; font-size: 0.8125rem; font-weight: 700; color: var(--primary-700); }
+  .inv-timeline-title i { margin-right: 0.35rem; }
+  .inv-timeline { position: relative; padding-left: 1.5rem; }
+  .inv-timeline::before { content: ''; position: absolute; left: 0.45rem; top: 0.5rem; bottom: 0; width: 2px; background: var(--base-200); }
+  .inv-tl-item { position: relative; margin-bottom: 0.9rem; }
+  .inv-tl-item:last-child { margin-bottom: 0; }
+  .inv-tl-dot {
+    position: absolute;
+    left: -1.3rem;
+    top: 0.2rem;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--white);
+  }
+  .inv-tl-dot.active { border-color: var(--primary); background: var(--primary); }
+  .inv-tl-dot.done { border-color: var(--success-700); background: var(--success-700); }
+  .inv-tl-dot.warn { border-color: var(--warning-700); background: var(--warning-700); }
+  .inv-tl-dot.err { border-color: var(--danger-600); background: var(--danger-600); }
+  .inv-tl-dot.grey { border-color: var(--neutral-300); background: var(--white); }
+  .inv-tl-label { font-size: 0.8125rem; font-weight: 700; }
+  .inv-tl-date { font-size: 0.75rem; color: var(--neutral-600); }
+
+  /* ---------- Toast ---------- */
+  .inv-toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.75rem;
+    z-index: 200;
+    max-width: 25rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    box-shadow: var(--shadow-lg);
+  }
+  .inv-toast i { margin-right: 0.4rem; }
+  .inv-toast.success { background: var(--success-800); }
+  .inv-toast.danger { background: var(--danger-600); }
+  .inv-toast.warning { background: var(--warning-800); }
+  .inv-toast.info { background: var(--primary); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1200px) {
+    .inv-kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 1000px) {
+    .inv-layout { grid-template-columns: 1fr; }
+    .inv-sticky { position: static; }
+  }
+  @media (max-width: 900px) {
+    .ob-topbar-titles { display: none; }
+    .ob-topbar-customer-logo { display: block; margin-right: auto; }
+    .inv-page-head { display: block; }
+  }
+  @media (max-width: 700px) {
+    .inv-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .inv-detail-grid,
+    .inv-grid-2 { grid-template-columns: 1fr; }
+    .inv-detail-grid .span-2 { grid-column: auto; }
+    .inv-actions-split,
+    .inv-actions-group { width: 100%; }
+    .inv-actions-group .ui-btn,
+    .inv-actions-split > .ui-btn { flex: 1; justify-content: center; }
+    .inv-toast { left: 1rem; right: 1rem; max-width: none; }
+  }
+  @media (max-width: 480px) {
+    .inv-kpi-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<div class="wrapper">
-
-<!-- SIDEBAR -->
-<nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
-  <div class="sb-nav">
-    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-    <div class="sb-section">Agent &amp; Producer</div>
-    <a href="agents.html"><i class="fas fa-id-card"></i>Agent Management</a>
-    <a href="agent-invitations.html" class="active"><i class="fas fa-paper-plane"></i>Agent Invitations</a>
-    <a href="onboarding-cases.html"><i class="fas fa-folder-open"></i>Onboarding Cases</a>
-    <a href="hierarchy.html"><i class="fas fa-sitemap"></i>Producer Hierarchy</a>
-    <a href="recredentialing.html"><i class="fas fa-sync-alt"></i>Annual Re-Credentialing <span class="n-badge">5</span></a>
-    <a href="agent-feed.html"><i class="fas fa-rss"></i>Daily Agent Feed</a>
-    <a href="agency-details.html"><i class="fas fa-building"></i>Agency Details</a>
-    <div class="sb-section">Members &amp; Leads</div>
-    <a href="leads.html"><i class="fas fa-users"></i>Leads &amp; Assignment</a>
-    <div class="sb-section">Commissions &amp; Finance</div>
-    <a href="commission-rules.html"><i class="fas fa-cogs"></i>Commission Rules</a>
-    <a href="commission-approval.html"><i class="fas fa-check-circle"></i>Commission Approval</a>
-    <div class="sb-section">Training &amp; Compliance</div>
-    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-graduation-cap"></i>Training Management<i class="fas fa-chevron-down sb-chev"></i></a>
-    <div class="sb-sub">
-    <a href="training-admin.html"><i class="fas fa-chart-line"></i>Training Package</a>
-    <a href="training-package-create.html"><i class="fas fa-plus-circle"></i>Create Training Package</a>
-    <a href="agent-training-progress.html"><i class="fas fa-user-graduate"></i>Agent Training Progress</a>
+<div class="ui-shell" id="appShell">
+  <button type="button" class="ui-sidebar-backdrop" id="sidebarBackdrop" aria-label="Close menu"></button>
+  <aside class="ui-sidebar" id="appSidebar">
+    <div class="ui-sidebar-brand">
+      <img class="ob-customer-logo" src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
     </div>
-    <div class="sb-section">System &amp; Configuration</div>
-    <a href="#" class="sb-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('sb-sub-open');return false"><i class="fas fa-users-cog"></i>User Management<i class="fas fa-chevron-down sb-chev"></i></a>
-    <div class="sb-sub">
-    <a href="users.html"><i class="fas fa-id-card"></i>User Details</a>
-    <a href="roles.html"><i class="fas fa-user-shield"></i>Roles &amp; Permissions</a>
-    <a href="feature-toggles.html"><i class="fas fa-toggle-on"></i>Feature Toggles</a>
+    <nav class="ui-sidebar-nav" aria-label="Payer Admin">
+      <div class="inv-nav">
+        <a class="inv-nav-item" href="payer-admin-dashboard.html"><i class="fas fa-th-large" aria-hidden="true"></i>Dashboard</a>
+        <div class="inv-nav-section">Agent &amp; Producer</div>
+        <a class="inv-nav-item" href="agents.html"><i class="fas fa-id-card" aria-hidden="true"></i>Agent Management</a>
+        <a class="inv-nav-item is-active" href="agent-invitations.html" aria-current="page"><i class="fas fa-paper-plane" aria-hidden="true"></i>Agent Invitations</a>
+        <a class="inv-nav-item" href="onboarding-cases.html"><i class="fas fa-folder-open" aria-hidden="true"></i>Onboarding Cases</a>
+        <a class="inv-nav-item" href="hierarchy.html"><i class="fas fa-sitemap" aria-hidden="true"></i>Producer Hierarchy</a>
+        <a class="inv-nav-item" href="agency-details.html"><i class="fas fa-building" aria-hidden="true"></i>Agency Details</a>
+      </div>
+    </nav>
+    <div class="ui-sidebar-foot">
+      <div class="ob-powered-by">
+        <span class="ob-powered-by-label">Powered by</span>
+        <img class="ob-powered-by-logo" src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+      </div>
     </div>
-    <a href="plan-catalog.html"><i class="fas fa-clipboard-list"></i>Plan Catalog</a>
-    <a href="carrier-setup.html"><i class="fas fa-hospital"></i>Carrier Profile Management</a>
-    <a href="notifications-config.html"><i class="fas fa-bell"></i>Notifications Config</a>
-    <a href="templates.html"><i class="fas fa-file-alt"></i>Document Templates</a>
-    <a href="master-data.html"><i class="fas fa-database"></i>Master Data</a>
-    <a href="integrations.html"><i class="fas fa-plug"></i>Integration Hub</a>
-    <a href="reports.html"><i class="fas fa-chart-bar"></i>Reports</a>
-    <a href="exceptions.html"><i class="fas fa-exclamation-circle"></i>Exceptions &amp; Disputes</a>
-    <a href="audit-log.html"><i class="fas fa-history"></i>Audit Log</a>
-  </div><div class="sb-foot"><div class="dflex ai-center g8"><div class="sb-ava">SA</div><div><div class="sb-u-name">Sandra Adams</div><div class="sb-u-role">Carrier Admin</div></div></div></div>
-</nav>
+  </aside>
 
-<div class="main">
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <h4 style="margin:0;color:#002624;font-size:16px"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Agent Invitations</h4>
-    <div style="font-size:11px;color:#5f6368">Send &amp; Track Contracting Invitations</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
-    <button class="btn-pr btn-sm" onclick="openSendInviteModal()" style="white-space:nowrap"><i class="fas fa-plus" style="margin-right:4px"></i>Send Invitation</button>
-    <a href="../auth-carrier/login.html" class="tb-btn" title="Logout" style="color:#c62828"><i class="fas fa-sign-out-alt"></i></a>
-  </div>
-</div>
+  <div class="ui-main">
+    <header class="ui-topbar">
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon ui-sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="appSidebar">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <img class="ob-topbar-customer-logo" src="../assets/brand/aaneel-ensure.png?v=2" alt="AaNeel Ensure">
+      <div class="ob-topbar-titles">
+        <h1>Agent Invitations</h1>
+        <p class="subtitle">Send and track contracting invitations</p>
+      </div>
+      <div class="ob-topbar-actions">
+        <button type="button" class="ui-btn ui-btn-sm" id="topbarSendBtn" data-portal-skip-action="1" onclick="openSendInviteModal()"><i class="fas fa-plus" aria-hidden="true"></i>Send Invitation</button>
+        <a href="../auth-carrier/login.html" class="ui-btn ui-btn-ghost ui-btn-icon" title="Logout" aria-label="Logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></a>
+      </div>
+    </header>
 
-<div class="page">
-
-<!-- TAB NAV -->
-<div style="display:flex;gap:4px;background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:8px;margin-bottom:18px">
-  <button class="inv-tab active" id="itab-send" onclick="switchInvTab('send')"><i class="fas fa-paper-plane"></i>Send Invitation </button>
-  <button class="inv-tab" id="itab-track" onclick="switchInvTab('track')"><i class="fas fa-chart-bar"></i>Invitation Dashboard <span class="tbadge" id="pendingCountBadge">5</span></button>
-</div>
-
-<!-- ===== TAB 1: SEND INVITATION ===== -->
-<div id="invTabSend">
-<div class="row-grid" style="gap:18px">
-  <!-- FORM -->
-  <div class="fg" style="flex:1.4">
-    <div class="inv-form-card">
-      <h6><i class="fas fa-envelope-open-text" style="color:#002624"></i>New Contracting Invitation</h6>
-      <div id="invFormAlert" style="display:none;margin-bottom:12px"></div>
-
-      <!-- Recipient Section -->
-      <div class="form-section">
-        <div class="form-section-title"><i class="fas fa-user" style="margin-right:5px"></i>Recipient Information</div>
-        <div class="row-grid" style="gap:12px;margin-bottom:10px">
-          <div class="fg"><label>First Name <span class="req">*</span></label>
-            <input id="invFirstName" class="form-control" placeholder="e.g. James" oninput="buildInvitePreview()">
-          </div>
-          <div class="fg"><label>Last Name <span class="req">*</span></label>
-            <input id="invLastName" class="form-control" placeholder="e.g. Rivera" oninput="buildInvitePreview()">
-          </div>
-        </div>
-        <div class="fg mb-3">
-          <label>Email Address <span class="req">*</span></label>
-          <input id="invEmail" class="form-control" type="email" placeholder="agent@example.com" oninput="validateInviteEmail()" onblur="checkEmailDuplicate()">
-          <div id="emailFormatErr" class="dup-err">Please enter a valid email address.</div>
-          <div id="emailDupWarn" class="dup-warn"><i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>A user with this email already exists. Confirm you intend to send a new invitation. <label style="margin-left:6px"><input type="checkbox" id="emailDupConfirm"> I confirm</label></div>
-        </div>
-        <div class="fg">
-          <label>NPN <small style="font-weight:400;color:#5f6368">(optional ? triggers duplicate check)</small></label>
-          <input id="invNPN" class="form-control" maxlength="10" placeholder="e.g. 88234419" oninput="validateNPN()">
-          <div id="npnFormatErr" class="dup-err"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>NPN must be 8 to 10 numeric digits. No letters or special characters.</div>
-          <div id="npnDupErr" class="dup-err"><i class="fas fa-ban" style="margin-right:4px"></i>An active agent with this NPN already exists in the system. Please contact Broker Support.</div>
-          <div id="npnPendErr" class="dup-err"><i class="fas fa-clock" style="margin-right:4px"></i>An onboarding case for this NPN is already in progress. Please contact Broker Support.</div>
-          <div id="npnTermWarn" style="display:none;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 12px;font-size:11px;color:#e65100;margin-top:5px"><i class="fas fa-exclamation-triangle" style="margin-right:5px"></i>A terminated agent record with this NPN exists. <label style="cursor:pointer;display:inline;margin-left:4px"><input type="checkbox" id="npnTermConfirm" onchange="checkNpnTermConfirm()"> Admin confirms reuse of terminated NPN record</label></div>
-          <div id="npnOk" class="npn-ok"><i class="fas fa-check-circle" style="margin-right:4px"></i>NPN available ? not yet registered in portal.</div>
-        </div>
+    <main class="ui-page">
+      <div class="inv-page-head">
+        <h1>Agent Invitations</h1>
+        <p class="subtitle">Send and track contracting invitations</p>
       </div>
 
-      <!-- Hierarchy Section -->
-      <div class="form-section">
-        <div class="form-section-title"><i class="fas fa-sitemap" style="margin-right:5px"></i>Hierarchy Placement</div>
-        <div class="row-grid" style="gap:12px;margin-bottom:10px">
-          <div class="fg"><label>Hierarchy Level <span class="req">*</span></label>
-            <select id="invLevel" class="form-control" onchange="buildInvitePreview()">
-              <option value="" disabled selected>Select Level</option>
-              <option value="GA">GA (General Agency)</option>
-              <option value="MGA">MGA (Managing General Agency)</option>
-              <option value="Agent" selected>Agent/Broker</option>
-            </select>
+      <!-- TAB NAV -->
+      <div class="inv-tabs" role="tablist">
+        <button type="button" class="inv-tab active" id="itab-send" role="tab" onclick="switchInvTab('send')"><i class="fas fa-paper-plane" aria-hidden="true"></i>Send Invitation</button>
+        <button type="button" class="inv-tab" id="itab-track" role="tab" onclick="switchInvTab('track')"><i class="fas fa-chart-bar" aria-hidden="true"></i>Invitation Dashboard <span class="tbadge" id="pendingCountBadge">5</span></button>
+      </div>
+
+      <!-- ===== TAB 1: SEND INVITATION ===== -->
+      <div id="invTabSend">
+        <div class="inv-layout">
+          <!-- FORM -->
+          <section class="ui-card" aria-labelledby="invFormTitle">
+            <div class="ui-card-header">
+              <h2 class="ui-card-title" id="invFormTitle"><i class="fas fa-envelope-open-text" aria-hidden="true"></i>New Contracting Invitation</h2>
+            </div>
+            <div class="ui-card-content">
+              <div id="invFormAlert" class="inv-form-alert"></div>
+
+              <!-- Recipient -->
+              <div class="inv-section">
+                <h3 class="inv-section-title"><i class="fas fa-user" aria-hidden="true"></i>Recipient Information</h3>
+                <div class="inv-stack">
+                  <div class="ui-form-grid cols-2">
+                    <div class="ui-field">
+                      <label class="ui-label" for="invFirstName">First Name <span class="req">*</span></label>
+                      <input id="invFirstName" class="ui-input" placeholder="e.g. James" oninput="buildInvitePreview()">
+                    </div>
+                    <div class="ui-field">
+                      <label class="ui-label" for="invLastName">Last Name <span class="req">*</span></label>
+                      <input id="invLastName" class="ui-input" placeholder="e.g. Rivera" oninput="buildInvitePreview()">
+                    </div>
+                  </div>
+                  <div class="ui-field">
+                    <label class="ui-label" for="invEmail">Email Address <span class="req">*</span></label>
+                    <input id="invEmail" class="ui-input" type="email" placeholder="agent@example.com" oninput="validateInviteEmail()" onblur="checkEmailDuplicate()">
+                    <div id="emailFormatErr" class="inv-msg inv-msg-err">Please enter a valid email address.</div>
+                    <div id="emailDupWarn" class="inv-msg inv-msg-warn">
+                      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>A user with this email already exists. Confirm you intend to send a new invitation.
+                      <label class="ui-check-row"><input type="checkbox" id="emailDupConfirm"> I confirm</label>
+                    </div>
+                  </div>
+                  <div class="ui-field">
+                    <label class="ui-label" for="invNPN">NPN (optional)</label>
+                    <input id="invNPN" class="ui-input" maxlength="10" placeholder="e.g. 88234419" oninput="validateNPN()">
+                    <p class="ui-field-hint">Optional. Entering an NPN triggers a duplicate check.</p>
+                    <div id="npnFormatErr" class="inv-msg inv-msg-err"><i class="fas fa-exclamation-circle" aria-hidden="true"></i>NPN must be 8 to 10 numeric digits. No letters or special characters.</div>
+                    <div id="npnDupErr" class="inv-msg inv-msg-err"><i class="fas fa-ban" aria-hidden="true"></i>An active agent with this NPN already exists in the system. Please contact Broker Support.</div>
+                    <div id="npnPendErr" class="inv-msg inv-msg-err"><i class="fas fa-clock" aria-hidden="true"></i>An onboarding case for this NPN is already in progress. Please contact Broker Support.</div>
+                    <div id="npnTermWarn" class="inv-msg inv-msg-warn">
+                      <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>A terminated agent record with this NPN exists.
+                      <label class="ui-check-row"><input type="checkbox" id="npnTermConfirm" onchange="checkNpnTermConfirm()"> Admin confirms reuse of terminated NPN record</label>
+                    </div>
+                    <div id="npnOk" class="inv-msg inv-msg-ok"><i class="fas fa-check-circle" aria-hidden="true"></i>NPN available. Not yet registered in portal.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hierarchy -->
+              <div class="inv-section">
+                <h3 class="inv-section-title"><i class="fas fa-sitemap" aria-hidden="true"></i>Hierarchy Placement</h3>
+                <div class="inv-stack">
+                  <div class="ui-form-grid cols-2">
+                    <div class="ui-field">
+                      <label class="ui-label" for="invLevel">Hierarchy Level <span class="req">*</span></label>
+                      <select id="invLevel" class="ui-select" onchange="buildInvitePreview()">
+                        <option value="" disabled selected>Select Level</option>
+                        <option value="GA">GA (General Agency)</option>
+                        <option value="MGA">MGA (Managing General Agency)</option>
+                        <option value="Agent" selected>Agent/Broker</option>
+                      </select>
+                    </div>
+                    <div class="ui-field">
+                      <label class="ui-label" for="invRole">Role Type <span class="req">*</span></label>
+                      <select id="invRole" class="ui-select" onchange="buildInvitePreview()">
+                        <option value="Individual Agent">Individual Agent</option>
+                        <option value="Agency Admin">Agency Admin</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="ui-field">
+                    <label class="ui-label" for="invUplineOrg">Upline Organization <span class="req">*</span></label>
+                    <select id="invUplineOrg" class="ui-select" onchange="buildInvitePreview()">
+                      <option value="" disabled selected>Search / Select Upline Org</option>
+                      <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
+                      <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
+                      <option value="MGA-1014">SunBridge Medicare Advisors (MGA-1014)</option>
+                    </select>
+                  </div>
+                  <div class="ui-field">
+                    <label class="ui-label" for="invPlanYear">Plan Year <span class="req">*</span></label>
+                    <select id="invPlanYear" class="ui-select" onchange="buildInvitePreview()">
+                      <option value="2026" selected>2026 (Active)</option>
+                      <option value="2027">2027 (Draft)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Invitation settings -->
+              <div class="inv-section">
+                <h3 class="inv-section-title"><i class="fas fa-clock" aria-hidden="true"></i>Invitation Settings</h3>
+                <div class="inv-stack">
+                  <div class="ui-field">
+                    <label class="ui-label" for="invExpiry">Invitation Expiry (hours)</label>
+                    <input id="invExpiry" class="ui-input" type="number" min="1" max="720" value="72" oninput="buildInvitePreview()">
+                    <p class="ui-field-hint">Hours from send time. Default is 72.</p>
+                  </div>
+                  <div class="ui-field">
+                    <label class="ui-label" for="invMessage">Personal Message to Recipient</label>
+                    <textarea id="invMessage" class="ui-textarea" rows="3" maxlength="500" placeholder="E.g. We look forward to having you as part of our network! Please complete your contracting within 72 hours." oninput="invMsgCount()"></textarea>
+                    <div class="inv-char-count"><span id="invMsgLen">0</span>/500</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bulk -->
+              <div class="inv-section">
+                <h3 class="inv-section-title"><i class="fas fa-file-upload" aria-hidden="true"></i>Bulk Invitations</h3>
+                <div class="ui-field">
+                  <label class="ui-label" for="bulkInviteFile">Upload CSV</label>
+                  <label class="ui-upload" id="bulkUploadZone" for="bulkInviteFile">
+                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                    <span class="inv-upload-name" id="bulkUploadName">Click to choose a CSV file</span>
+                    <input id="bulkInviteFile" type="file" accept=".csv,.txt" onchange="loadBulkInviteFile(event)">
+                  </label>
+                </div>
+                <div class="inv-bulk-help">
+                  Columns: firstName, lastName, email, npn, level, role, uplineOrgId, planYear, message. Upload a CSV and send many invitations in one action. Optional columns can be omitted and defaults from the form will be applied.
+                </div>
+                <div id="bulkInviteResult" class="inv-bulk-result"></div>
+                <div class="inv-btn-row">
+                  <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="downloadBulkInviteTemplate()"><i class="fas fa-download" aria-hidden="true"></i>Download Template</button>
+                  <button type="button" class="ui-btn ui-btn-sm" onclick="sendBulkInvitations()"><i class="fas fa-paper-plane" aria-hidden="true"></i>Send Bulk Invitations</button>
+                </div>
+              </div>
+            </div>
+            <div class="ui-card-footer">
+              <div class="inv-actions-split">
+                <button type="button" class="ui-btn ui-btn-outline" onclick="prefillSendInvitation()"><i class="fas fa-fill-drip" aria-hidden="true"></i>Prefill Data</button>
+                <div class="inv-actions-group">
+                  <button type="button" class="ui-btn ui-btn-outline" onclick="resetInviteForm()"><i class="fas fa-undo" aria-hidden="true"></i>Reset</button>
+                  <button type="button" class="ui-btn" id="sendInviteBtn" onclick="sendInvitation()"><i class="fas fa-paper-plane" aria-hidden="true"></i>Send Invitation</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PREVIEW -->
+          <aside class="ui-card inv-sticky" aria-labelledby="invPreviewTitle">
+            <div class="ui-card-header">
+              <h2 class="ui-card-title" id="invPreviewTitle"><i class="fas fa-eye" aria-hidden="true"></i>Invitation Preview</h2>
+            </div>
+            <div class="ui-card-content">
+              <div id="invPreview" class="inv-preview-card">
+                <div class="inv-preview-empty"><i class="fas fa-envelope" aria-hidden="true"></i>Fill in the form to preview the invitation email</div>
+              </div>
+              <div class="inv-token-note">
+                <i class="fas fa-link" aria-hidden="true"></i><strong>Token Link:</strong> The invitation will contain a unique, single-use tokenized link that expires after the configured hours. Each resend creates a new token and invalidates the previous.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div><!-- /invTabSend -->
+
+      <!-- ===== TAB 2: INVITATION DASHBOARD ===== -->
+      <div id="invTabTrack" style="display:none">
+
+        <!-- KPI TILES -->
+        <div class="inv-kpi-grid" role="list">
+          <div class="inv-kpi" role="listitem">
+            <span class="inv-kpi-icon" aria-hidden="true"><i class="fas fa-paper-plane"></i></span>
+            <div><p class="inv-kpi-val" id="kpiSent">18</p><p class="inv-kpi-lbl">Total Sent</p><p class="inv-kpi-sub">Last 30 days</p></div>
           </div>
-          <div class="fg"><label>Role Type <span class="req">*</span></label>
-            <select id="invRole" class="form-control" onchange="buildInvitePreview()">
-              <option value="Individual Agent">Individual Agent</option>
-              <option value="Agency Admin">Agency Admin</option>
-            </select>
+          <div class="inv-kpi" role="listitem">
+            <span class="inv-kpi-icon" data-tone="success" aria-hidden="true"><i class="fas fa-check-circle"></i></span>
+            <div><p class="inv-kpi-val" id="kpiAccepted">7</p><p class="inv-kpi-lbl">Accepted</p><p class="inv-kpi-sub">38.9% conversion</p></div>
+          </div>
+          <div class="inv-kpi" role="listitem">
+            <span class="inv-kpi-icon" data-tone="warn" aria-hidden="true"><i class="fas fa-hourglass-half"></i></span>
+            <div><p class="inv-kpi-val" id="kpiPending">5</p><p class="inv-kpi-lbl">Pending / Open</p><p class="inv-kpi-sub">Awaiting action</p></div>
+          </div>
+          <div class="inv-kpi" role="listitem">
+            <span class="inv-kpi-icon" data-tone="danger" aria-hidden="true"><i class="fas fa-clock"></i></span>
+            <div><p class="inv-kpi-val" id="kpiExpired">4</p><p class="inv-kpi-lbl">Expired</p><p class="inv-kpi-sub">Not acted on</p></div>
+          </div>
+          <div class="inv-kpi" role="listitem">
+            <span class="inv-kpi-icon" data-tone="slate" aria-hidden="true"><i class="fas fa-ban"></i></span>
+            <div><p class="inv-kpi-val" id="kpiCancelled">2</p><p class="inv-kpi-lbl">Cancelled</p><p class="inv-kpi-sub">Revoked by sender</p></div>
           </div>
         </div>
-        <div class="fg mb-3">
-          <label>Upline Organization <span class="req">*</span></label>
-          <select id="invUplineOrg" class="form-control" onchange="buildInvitePreview()">
-            <option value="" disabled selected>Search / Select Upline Org</option>
-            <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
-            <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
-            <option value="MGA-1014">SunBridge Medicare Advisors (MGA-1014)</option>
+
+        <!-- FILTER BAR -->
+        <div class="inv-panel inv-panel-pad">
+          <div class="inv-filter-grid">
+            <div class="ui-field">
+              <label class="ui-label" for="invFilterStatus">Status</label>
+              <select id="invFilterStatus" class="ui-select" onchange="filterInvitations()">
+                <option value="">All Statuses</option>
+                <option>Draft</option><option>Sent</option><option>Opened</option><option>Accepted</option><option>Expired</option><option>Cancelled</option><option>Rejected</option>
+              </select>
+            </div>
+            <div class="ui-field">
+              <label class="ui-label" for="invFilterLevel">Hierarchy Level</label>
+              <select id="invFilterLevel" class="ui-select" onchange="filterInvitations()">
+                <option value="">All Levels</option>
+                <option>Agent/Broker</option><option>GA</option><option>MGA</option><option>SGA</option>
+              </select>
+            </div>
+            <div class="ui-field">
+              <label class="ui-label" for="invFilterBy">Sent By</label>
+              <select id="invFilterBy" class="ui-select" onchange="filterInvitations()">
+                <option value="">All Senders</option>
+                <option>Sandra Adams</option><option>James Rollins</option>
+              </select>
+            </div>
+            <div class="ui-field">
+              <label class="ui-label" for="invFilterFrom">Date From</label>
+              <input type="date" id="invFilterFrom" class="ui-input" onchange="filterInvitations()">
+            </div>
+            <div class="ui-field">
+              <label class="ui-label" for="invFilterOrg">Upline Org</label>
+              <select id="invFilterOrg" class="ui-select" onchange="filterInvitations()">
+                <option value="">All Orgs</option>
+                <option>HealthFirst Distribution</option><option>Coastal Medicare Partners</option><option>SunBridge Medicare</option>
+              </select>
+            </div>
+          </div>
+          <div class="inv-filter-actions">
+            <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="prefillDashboardFilters()"><i class="fas fa-fill-drip" aria-hidden="true"></i>Prefill Filters</button>
+            <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="resetInvFilters()"><i class="fas fa-undo" aria-hidden="true"></i>Reset</button>
+            <button type="button" class="ui-btn ui-btn-sm" onclick="exportInvCSV()"><i class="fas fa-file-csv" aria-hidden="true"></i>Export CSV</button>
+          </div>
+        </div>
+
+        <!-- BULK ACTIONS BAR -->
+        <div class="inv-bulk-bar" id="invBulkBar">
+          <div><i class="fas fa-check-square lead" aria-hidden="true"></i><strong id="invBulkCount">0</strong> selected</div>
+          <select id="invBulkAction" class="ui-select" aria-label="Bulk action">
+            <option value="">- Bulk Action -</option>
+            <option value="resend">Resend Selected</option>
+            <option value="cancel">Cancel Selected</option>
           </select>
+          <button type="button" class="ui-btn ui-btn-sm" onclick="applyBulkAction()"><i class="fas fa-play" aria-hidden="true"></i>Apply</button>
+          <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" onclick="clearBulkSelection()">Clear</button>
         </div>
-        <div class="fg">
-          <label>Plan Year <span class="req">*</span></label>
-          <select id="invPlanYear" class="form-control" onchange="buildInvitePreview()">
-            <option value="2026" selected>2026 (Active)</option>
-            <option value="2027">2027 (Draft)</option>
-          </select>
-        </div>
-      </div>
 
-      <!-- Invitation Config -->
-      <div class="form-section">
-        <div class="form-section-title"><i class="fas fa-clock" style="margin-right:5px"></i>Invitation Settings</div>
-        <div class="fg mb-3">
-          <label>Invitation Expiry <small style="font-weight:400;color:#5f6368">(hours from send time, default 72)</small></label>
-          <input id="invExpiry" class="form-control" type="number" min="1" max="720" value="72" oninput="buildInvitePreview()">
+        <!-- STATUS LEGEND -->
+        <div class="inv-panel inv-legend">
+          <span class="inv-legend-label">Status Legend:</span>
+          <span class="status-badge sb-draft" title="Draft - Invitation created but not yet sent"><i class="fas fa-pencil-alt"></i> Draft</span>
+          <span class="status-badge sb-sent" title="Sent - Invitation email delivered to recipient"><i class="fas fa-paper-plane"></i> Sent</span>
+          <span class="status-badge sb-opened" title="Opened - Recipient has opened the invitation email"><i class="fas fa-envelope-open"></i> Opened</span>
+          <span class="status-badge sb-accepted" title="Accepted - Recipient completed registration"><i class="fas fa-check-circle"></i> Accepted</span>
+          <span class="status-badge sb-expired" title="Expired - Invitation link passed its expiry date without action"><i class="fas fa-clock"></i> Expired</span>
+          <span class="status-badge sb-cancelled" title="Cancelled - Invitation was revoked by the sender before completion"><i class="fas fa-ban"></i> Cancelled</span>
+          <span class="status-badge sb-rejected" title="Rejected - Recipient actively declined the invitation"><i class="fas fa-times-circle"></i> Rejected</span>
         </div>
-        <div class="fg">
-          <label>Personal Message to Recipient <small style="font-weight:400;color:#5f6368">(optional, max 500 chars)</small></label>
-          <textarea id="invMessage" class="form-control" rows="3" maxlength="500" placeholder="E.g. We look forward to having you as part of our network! Please complete your contracting within 72 hours." oninput="invMsgCount()"></textarea>
-          <div class="char-count"><span id="invMsgLen">0</span>/500</div>
-        </div>
-      </div>
 
-      <!-- Bulk Invitation -->
-      <div class="form-section">
-        <div class="form-section-title"><i class="fas fa-file-upload" style="margin-right:5px"></i>Bulk Invitations</div>
-        <div class="fg mb-2">
-          <label>Upload CSV <small style="font-weight:400;color:#5f6368">(firstName,lastName,email,npn,level,role,uplineOrgId,planYear,message)</small></label>
-          <input id="bulkInviteFile" class="form-control" type="file" accept=".csv,.txt" onchange="loadBulkInviteFile(event)">
+        <!-- INVITATIONS TABLE -->
+        <div class="inv-panel" style="overflow:hidden">
+          <div class="inv-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:2.25rem"><input type="checkbox" id="invSelectAll" onchange="toggleSelectAll(this)" aria-label="Select all"></th>
+                  <th>Recipient</th>
+                  <th>Email</th>
+                  <th>NPN</th>
+                  <th>Level</th>
+                  <th>Upline Org</th>
+                  <th>Sent Date</th>
+                  <th>Status</th>
+                  <th>Expiry</th>
+                  <th>Accepted Date</th>
+                  <th>Sent By</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="invTableBody"></tbody>
+            </table>
+          </div>
         </div>
-        <div class="bulk-help">
-          Upload a CSV and send many invitations in one action. Optional columns can be omitted and defaults from the form will be applied.
-        </div>
-        <div id="bulkInviteResult" class="bulk-result"></div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap">
-          <button class="btn-ol btn-sm" onclick="downloadBulkInviteTemplate()"><i class="fas fa-download" style="margin-right:4px"></i>Download Template</button>
-          <button class="btn-pr btn-sm" onclick="sendBulkInvitations()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Bulk Invitations</button>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:10px;justify-content:space-between">
-        <button class="btn-ol" onclick="prefillSendInvitation()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Data</button>
-        <div style="display:flex;gap:10px">
-          <button class="btn-ol" onclick="resetInviteForm()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
-          <button class="btn-pr" id="sendInviteBtn" onclick="sendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Invitation</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PREVIEW PANEL -->
-  <div class="fg" style="flex:1">
-    <div class="inv-form-card" style="position:sticky;top:80px">
-      <h6><i class="fas fa-eye" style="color:#002624"></i>Invitation Preview</h6>
-      <div id="invPreview" class="preview-card">
-        <div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#cdebe4"></i>Fill in the form to preview the invitation email</div>
-      </div>
-      <div style="margin-top:12px;padding:10px;background:#e6efee;border-radius:8px;font-size:11px;color:#085a55">
-        <i class="fas fa-link" style="margin-right:4px"></i><strong>Token Link:</strong> The invitation will contain a unique, single-use tokenized link that expires after the configured hours. Each resend creates a new token and invalidates the previous.
-      </div>
-    </div>
+      </div><!-- /invTabTrack -->
+    </main>
   </div>
 </div>
-</div><!-- /invTabSend -->
 
-<!-- ===== TAB 2: INVITATION DASHBOARD ===== -->
-<div id="invTabTrack" style="display:none">
-
-  <!-- KPI TILES -->
-  <div class="kpi-row" style="margin-bottom:20px;grid-template-columns:repeat(5,1fr)">
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:#e6efee;color:#002624"><i class="fas fa-paper-plane"></i></div>
-      <div><div class="kpi-val" id="kpiSent">18</div><div class="kpi-lbl">Total Sent</div><div class="kpi-sub">Last 30 days</div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:#e8f5e9;color:#1b5e20"><i class="fas fa-check-circle"></i></div>
-      <div><div class="kpi-val" id="kpiAccepted">7</div><div class="kpi-lbl">Accepted</div><div class="kpi-sub">38.9% conversion</div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:#fff8e1;color:#e65100"><i class="fas fa-hourglass-half"></i></div>
-      <div><div class="kpi-val" id="kpiPending">5</div><div class="kpi-lbl">Pending / Open</div><div class="kpi-sub">Awaiting action</div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:#fce4ec;color:#b71c1c"><i class="fas fa-clock"></i></div>
-      <div><div class="kpi-val" id="kpiExpired">4</div><div class="kpi-lbl">Expired</div><div class="kpi-sub">Not acted on</div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:#f1f3f4;color:#5f6368"><i class="fas fa-ban"></i></div>
-      <div><div class="kpi-val" id="kpiCancelled">2</div><div class="kpi-lbl">Cancelled</div><div class="kpi-sub">Revoked by sender</div></div>
-    </div>
-  </div>
-
-  <!-- FILTER BAR -->
-  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:14px;margin-bottom:14px">
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
-      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Status</label>
-        <select id="invFilterStatus" class="form-control form-control-sm" onchange="filterInvitations()">
-          <option value="">All Statuses</option>
-          <option>Draft</option><option>Sent</option><option>Opened</option><option>Accepted</option><option>Expired</option><option>Cancelled</option><option>Rejected</option>
-        </select>
-      </div>
-      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Hierarchy Level</label>
-        <select id="invFilterLevel" class="form-control form-control-sm" onchange="filterInvitations()">
-          <option value="">All Levels</option>
-          <option>Agent/Broker</option><option>GA</option><option>MGA</option><option>SGA</option>
-        </select>
-      </div>
-      <div class="fg" style="min-width:140px"><label style="font-size:11px;color:#5f6368;font-weight:600">Sent By</label>
-        <select id="invFilterBy" class="form-control form-control-sm" onchange="filterInvitations()">
-          <option value="">All Senders</option>
-          <option>Sandra Adams</option><option>James Rollins</option>
-        </select>
-      </div>
-      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Date From</label>
-        <input type="date" id="invFilterFrom" class="form-control form-control-sm" onchange="filterInvitations()">
-      </div>
-      <div class="fg" style="min-width:130px"><label style="font-size:11px;color:#5f6368;font-weight:600">Upline Org</label>
-        <select id="invFilterOrg" class="form-control form-control-sm" onchange="filterInvitations()">
-          <option value="">All Orgs</option>
-          <option>HealthFirst Distribution</option><option>Coastal Medicare Partners</option><option>SunBridge Medicare</option>
-        </select>
-      </div>
-      <button class="btn-ol btn-sm" onclick="prefillDashboardFilters()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill Filters</button>
-      <button class="btn-ol btn-sm" onclick="resetInvFilters()"><i class="fas fa-undo" style="margin-right:4px"></i>Reset</button>
-      <button class="btn-pr btn-sm" onclick="exportInvCSV()"><i class="fas fa-file-csv" style="margin-right:4px"></i>Export CSV</button>
-    </div>
-  </div>
-
-  <!-- BULK ACTIONS BAR -->
-  <div class="bulk-bar" id="invBulkBar">
-    <div><i class="fas fa-check-square" style="color:#002624;margin-right:5px"></i><strong id="invBulkCount">0</strong> selected</div>
-    <select id="invBulkAction" class="form-control form-control-sm" style="width:auto;min-width:160px">
-      <option value="">? Bulk Action ?</option>
-      <option value="resend">Resend Selected</option>
-      <option value="cancel">Cancel Selected</option>
-    </select>
-    <button class="btn-pr btn-sm" onclick="applyBulkAction()"><i class="fas fa-play" style="margin-right:4px"></i>Apply</button>
-    <button class="btn-ol btn-sm" onclick="clearBulkSelection()">Clear</button>
-  </div>
-
-  <!-- STATUS LEGEND -->
-  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:10px 16px;margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-    <span style="font-size:11px;font-weight:600;color:#5f6368;margin-right:4px">Status Legend:</span>
-    <span class="status-badge sb-draft"    title="Draft — Invitation created but not yet sent"><i class="fas fa-pencil-alt"     style="font-size:9px"></i> Draft</span>
-    <span class="status-badge sb-sent"     title="Sent — Invitation email delivered to recipient"><i class="fas fa-paper-plane"  style="font-size:9px"></i> Sent</span>
-    <span class="status-badge sb-opened"   title="Opened — Recipient has opened the invitation email"><i class="fas fa-envelope-open" style="font-size:9px"></i> Opened</span>
-    <span class="status-badge sb-accepted" title="Accepted — Recipient completed registration"><i class="fas fa-check-circle"  style="font-size:9px"></i> Accepted</span>
-    <span class="status-badge sb-expired"  title="Expired — Invitation link passed its expiry date without action"><i class="fas fa-clock"        style="font-size:9px"></i> Expired</span>
-    <span class="status-badge sb-cancelled" title="Cancelled — Invitation was revoked by the sender before completion"><i class="fas fa-ban"         style="font-size:9px"></i> Cancelled</span>
-    <span class="status-badge sb-rejected"  title="Rejected — Recipient actively declined the invitation"><i class="fas fa-times-circle" style="font-size:9px"></i> Rejected</span>
-  </div>
-
-  <!-- INVITATIONS TABLE -->
-  <div style="background:#fff;border:1px solid #e8eaed;border-radius:10px;overflow:hidden">
-    <div style="overflow-x:auto">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="width:36px"><input type="checkbox" id="invSelectAll" onchange="toggleSelectAll(this)"></th>
-            <th>Recipient</th>
-            <th>Email</th>
-            <th>NPN</th>
-            <th>Level</th>
-            <th>Upline Org</th>
-            <th>Sent Date</th>
-            <th>Status</th>
-            <th>Expiry</th>
-            <th>Accepted Date</th>
-            <th>Sent By</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="invTableBody"></tbody>
-      </table>
-    </div>
-  </div>
-</div><!-- /invTabTrack -->
-
-</div><!-- /page -->
-</div><!-- /main -->
-</div><!-- /wrapper -->
 <!-- MODALS -->
 
 <!-- Invitation Detail Modal -->
-<div class="modal-overlay" id="invDetailModal" style="display:none">
-<div class="modal-box" style="max-width:640px">
-<div class="modal-hdr"><h5 id="invDetailTitle"><i class="fas fa-envelope" style="margin-right:8px"></i>Invitation Detail</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
-<div class="modal-body">
-  <div id="invDetailContent"></div>
-</div>
-<div class="modal-foot">
-  <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
-  <button class="btn-pr" id="invDetailResend" onclick="resendFromDetail()"><i class="fas fa-redo" style="margin-right:4px"></i>Resend</button>
-  <button class="btn-ol" id="invDetailCancel" style="color:#b71c1c;border-color:#ef9a9a" onclick="cancelFromDetail()"><i class="fas fa-ban" style="margin-right:4px"></i>Cancel Invitation</button>
-</div>
-</div>
-</div>
-
-<!-- Send Invitation Quick Modal (from topbar button) -->
-<div class="modal-overlay" id="sendInviteQuickModal" style="display:none">
-<div class="modal-box" style="max-width:460px">
-<div class="modal-hdr"><h5><i class="fas fa-paper-plane" style="margin-right:8px"></i>Quick Send Invitation</h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
-<div class="modal-body">
-  <div style="font-size:13px;color:#5f6368;margin-bottom:12px">For a full form with preview, use the <strong>Send Invitation</strong> tab. Quick send:</div>
-  <div class="row-grid" style="gap:10px;margin-bottom:10px">
-    <div class="fg"><label>First Name <span class="req">*</span></label><input id="qInvFirstName" class="form-control"></div>
-    <div class="fg"><label>Last Name <span class="req">*</span></label><input id="qInvLastName" class="form-control"></div>
-  </div>
-  <div class="fg mb-3"><label>Email <span class="req">*</span></label><input id="qInvEmail" class="form-control" type="email"></div>
-  <div class="row-grid" style="gap:10px;margin-bottom:10px">
-    <div class="fg"><label>Level <span class="req">*</span></label>
-      <select id="qInvLevel" class="form-control">
-        <option>Agent/Broker</option><option>GA</option><option>MGA</option>
-      </select>
+<div class="inv-modal" id="invDetailModal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="invDetailTitle">
+  <div class="inv-modal-box" style="max-width:40rem">
+    <div class="inv-modal-hdr">
+      <h2 id="invDetailTitle"><i class="fas fa-envelope" aria-hidden="true"></i>Invitation Detail</h2>
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon" aria-label="Close" onclick="this.closest('.inv-modal').style.display='none'"><i class="fas fa-times"></i></button>
     </div>
-    <div class="fg"><label>Upline Org <span class="req">*</span></label>
-      <select id="qInvOrg" class="form-control">
-        <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
-        <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
-      </select>
+    <div class="inv-modal-body">
+      <div id="invDetailContent"></div>
+    </div>
+    <div class="inv-modal-foot">
+      <button type="button" class="ui-btn ui-btn-outline" onclick="this.closest('.inv-modal').style.display='none'">Close</button>
+      <button type="button" class="ui-btn" id="invDetailResend" onclick="resendFromDetail()"><i class="fas fa-redo" aria-hidden="true"></i>Resend</button>
+      <button type="button" class="ui-btn ui-btn-outline" id="invDetailCancel" style="color:var(--danger-600);border-color:var(--danger-200)" onclick="cancelFromDetail()"><i class="fas fa-ban" aria-hidden="true"></i>Cancel Invitation</button>
     </div>
   </div>
 </div>
-<div class="modal-foot" style="justify-content:space-between">
-  <button class="btn-ol" onclick="prefillQuickSend()" style="color:#002624;border-color:#a6dace"><i class="fas fa-fill-drip" style="margin-right:4px"></i>Prefill</button>
-  <div style="display:flex;gap:8px">
-    <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Cancel</button>
-    <button class="btn-pr" onclick="quickSendInvitation()"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send</button>
+
+<!-- Quick Send Invitation Modal (from topbar button) -->
+<div class="inv-modal" id="sendInviteQuickModal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="quickSendTitle">
+  <div class="inv-modal-box" style="max-width:30rem">
+    <div class="inv-modal-hdr">
+      <h2 id="quickSendTitle"><i class="fas fa-paper-plane" aria-hidden="true"></i>Quick Send Invitation</h2>
+      <button type="button" class="ui-btn ui-btn-ghost ui-btn-icon" aria-label="Close" onclick="this.closest('.inv-modal').style.display='none'"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="inv-modal-body">
+      <p class="inv-modal-intro">For a full form with preview, use the <strong>Send Invitation</strong> tab. Quick send:</p>
+      <div class="inv-grid-2">
+        <div class="ui-field">
+          <label class="ui-label" for="qInvFirstName">First Name <span class="req">*</span></label>
+          <input id="qInvFirstName" class="ui-input">
+        </div>
+        <div class="ui-field">
+          <label class="ui-label" for="qInvLastName">Last Name <span class="req">*</span></label>
+          <input id="qInvLastName" class="ui-input">
+        </div>
+      </div>
+      <div class="ui-field" style="margin-bottom:0.85rem">
+        <label class="ui-label" for="qInvEmail">Email <span class="req">*</span></label>
+        <input id="qInvEmail" class="ui-input" type="email">
+      </div>
+      <div class="inv-grid-2" style="margin-bottom:0">
+        <div class="ui-field">
+          <label class="ui-label" for="qInvLevel">Level <span class="req">*</span></label>
+          <select id="qInvLevel" class="ui-select">
+            <option>Agent/Broker</option><option>GA</option><option>MGA</option>
+          </select>
+        </div>
+        <div class="ui-field">
+          <label class="ui-label" for="qInvOrg">Upline Org <span class="req">*</span></label>
+          <select id="qInvOrg" class="ui-select">
+            <option value="GA-2201">HealthFirst Distribution (GA-2201)</option>
+            <option value="GA-2288">Coastal Medicare Partners (GA-2288)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="inv-modal-foot" style="justify-content:space-between">
+      <button type="button" class="ui-btn ui-btn-outline" onclick="prefillQuickSend()"><i class="fas fa-fill-drip" aria-hidden="true"></i>Prefill</button>
+      <div class="inv-actions-group">
+        <button type="button" class="ui-btn ui-btn-outline" onclick="this.closest('.inv-modal').style.display='none'">Cancel</button>
+        <button type="button" class="ui-btn" onclick="quickSendInvitation()"><i class="fas fa-paper-plane" aria-hidden="true"></i>Send</button>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-</div>
 
-<script src="../assets/nfp-actions.js"></script>
+<script src="../assets/ui-label.js"></script>
+<script src="../assets/ui-select.js"></script>
+<script src="../assets/ui-calendar.js"></script>
 <script>
 /* =========================================================
-   DATA / */
-// NPN Registry ? status-aware
+   DATA
+   ========================================================= */
+// NPN Registry - status-aware
 var NPN_REGISTRY = {
   '8823441':  { status:'Active',     name:'James Martinez',    org:'HealthFirst Distribution' },
   '7745123':  { status:'Active',     name:'Sarah Williams',    org:'National FMO' },
@@ -458,6 +974,18 @@ var CURRENT_DETAIL_ID = null;
 var NPN_HAS_ERROR = false;
 var EMAIL_HAS_ERROR = false;
 var BULK_INVITE_RAW = '';
+
+/* HTML escape for user-provided text rendered via innerHTML */
+function invEsc(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Re-sync enhanced ui-select / ui-calendar triggers after programmatic value changes */
+function refreshUiControls(){
+  document.querySelectorAll('.ui-select-root select, .ui-date-root input[type="date"]').forEach(function(el){
+    el.dispatchEvent(new Event('change'));
+  });
+}
 
 /* =========================================================
    TAB NAVIGATION
@@ -524,7 +1052,7 @@ function validateNPN(){
 
 function checkNpnTermConfirm(){
   var cb = document.getElementById('npnTermConfirm');
-  NPN_HAS_ERROR = !cb.checked; // admin confirmed ? unblock
+  NPN_HAS_ERROR = !cb.checked; // admin confirmed - unblock
 }
 
 function addNpnAuditEntry(npn, result, rec){
@@ -543,30 +1071,30 @@ function buildInvitePreview(){
   var email = (document.getElementById('invEmail').value||'').trim();
   var level = document.getElementById('invLevel').value;
   var org = document.getElementById('invUplineOrg');
-  var orgText = org.options[org.selectedIndex]?org.options[org.selectedIndex].text:'?';
+  var orgText = org.options[org.selectedIndex]?org.options[org.selectedIndex].text:'-';
   var planYear = document.getElementById('invPlanYear').value;
   var expiry = document.getElementById('invExpiry').value||72;
   var msg = (document.getElementById('invMessage').value||'').trim();
   var role = document.getElementById('invRole').value;
   var preview = document.getElementById('invPreview');
-  if(!first&&!last&&!email){preview.innerHTML='<div style="text-align:center;padding:20px;color:#9e9e9e;font-size:13px"><i class="fas fa-envelope" style="font-size:28px;display:block;margin-bottom:8px;color:#cdebe4"></i>Fill in the form to preview the invitation email</div>';return;}
+  if(!first&&!last&&!email){preview.innerHTML='<div class="inv-preview-empty"><i class="fas fa-envelope"></i>Fill in the form to preview the invitation email</div>';return;}
   var recipientName = (first+' '+last).trim()||'[Recipient Name]';
   var expiryDate = new Date(Date.now()+expiry*3600000);
   var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
-  preview.innerHTML = '<div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden">'
-    +'<div style="background:#002624;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">EnrollAxis ? Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
+  preview.innerHTML = '<div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden;background:#fff">'
+    +'<div style="background:#177E71;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">EnrollAxis - Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
     +'<div style="padding:16px;font-size:12px;color:#333">'
-    +'<div style="margin-bottom:10px">Dear <strong>'+recipientName+'</strong>,</div>'
-    +'<div style="margin-bottom:8px">You have been invited to join the <strong>EnrollAxis</strong> producer network as a <strong>'+role+'</strong>.</div>'
-    +(msg?'<div style="background:#f8f9fa;border-left:3px solid #002624;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+msg+'</div>':'')
+    +'<div style="margin-bottom:10px">Dear <strong>'+invEsc(recipientName)+'</strong>,</div>'
+    +'<div style="margin-bottom:8px">You have been invited to join the <strong>EnrollAxis</strong> producer network as a <strong>'+invEsc(role)+'</strong>.</div>'
+    +(msg?'<div style="background:#f8f9fa;border-left:3px solid #177E71;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+invEsc(msg)+'</div>':'')
     +'<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:12px">'
-    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368;width:120px">Hierarchy Level:</td><td style="padding:5px;font-weight:600">'+(level||'?')+'</td></tr>'
-    +'<tr><td style="padding:5px;color:#5f6368">Upline Org:</td><td style="padding:5px;font-weight:600">'+orgText+'</td></tr>'
-    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Plan Year:</td><td style="padding:5px;font-weight:600">'+planYear+'</td></tr>'
-    +'<tr><td style="padding:5px;color:#5f6368">Invited By:</td><td style="padding:5px">'+INVITER.name+'</td></tr>'
+    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368;width:120px">Hierarchy Level:</td><td style="padding:5px;font-weight:600">'+invEsc(level||'-')+'</td></tr>'
+    +'<tr><td style="padding:5px;color:#5f6368">Upline Org:</td><td style="padding:5px;font-weight:600">'+invEsc(orgText)+'</td></tr>'
+    +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Plan Year:</td><td style="padding:5px;font-weight:600">'+invEsc(planYear)+'</td></tr>'
+    +'<tr><td style="padding:5px;color:#5f6368">Invited By:</td><td style="padding:5px">'+invEsc(INVITER.name)+'</td></tr>'
     +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368">Expires:</td><td style="padding:5px;color:#e65100;font-weight:600">'+expiryDate.toLocaleString()+'</td></tr>'
     +'</table>'
-    +'<div style="text-align:center;margin-bottom:12px"><a style="display:inline-block;background:#002624;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px" href="../auth/invite-accept.html?token='+token+'">Accept Invitation &amp; Begin Contracting</a></div>'
+    +'<div style="text-align:center;margin-bottom:12px"><a style="display:inline-block;background:#177E71;color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px" href="../auth/invite-accept.html?token='+token+'">Accept Invitation &amp; Begin Contracting</a></div>'
     +'<div style="font-size:10px;color:#9e9e9e;text-align:center">This is a single-use, time-limited link. Do not share it.<br>Token: '+token+'</div>'
     +'</div></div>';
 }
@@ -722,8 +1250,10 @@ function resetInviteForm(){
   if(bulkResult){bulkResult.style.display='none';bulkResult.textContent='';}
   var bulkFile=document.getElementById('bulkInviteFile');
   if(bulkFile){bulkFile.value='';}
+  updateBulkUploadLabel();
   BULK_INVITE_RAW='';
   NPN_HAS_ERROR=false;EMAIL_HAS_ERROR=false;
+  refreshUiControls();
   buildInvitePreview();
 }
 
@@ -755,8 +1285,18 @@ function parseCsvLine(line){
   return values.map(function(v){return v.trim();});
 }
 
+function updateBulkUploadLabel(){
+  var f = document.getElementById('bulkInviteFile');
+  var zone = document.getElementById('bulkUploadZone');
+  var name = document.getElementById('bulkUploadName');
+  var file = f && f.files ? f.files[0] : null;
+  if(zone) zone.classList.toggle('has-file',!!file);
+  if(name) name.textContent = file ? file.name : 'Click to choose a CSV file';
+}
+
 function loadBulkInviteFile(event){
   var file = event && event.target && event.target.files ? event.target.files[0] : null;
+  updateBulkUploadLabel();
   if(!file) return;
   var reader = new FileReader();
   reader.onload = function(e){
@@ -923,6 +1463,7 @@ function sendBulkInvitations(){
   if(created.length){
     showInvToast('Bulk send complete. '+created.length+' invitation(s) created.','success');
     document.getElementById('bulkInviteFile').value='';
+    updateBulkUploadLabel();
   } else {
     showInvToast('No invitations were created. Review row errors.','warning');
   }
@@ -935,7 +1476,7 @@ function renderInvitationsTable(data){
   var tbody = document.getElementById('invTableBody');
   if(!tbody) return;
   tbody.innerHTML='';
-  if(!data.length){tbody.innerHTML='<tr><td colspan="12" style="text-align:center;padding:20px;color:#9e9e9e">No invitations match the current filters.</td></tr>';return;}
+  if(!data.length){tbody.innerHTML='<tr><td colspan="12" class="inv-td-empty">No invitations match the current filters.</td></tr>';return;}
   data.forEach(function(inv){
     var statusClass={'Draft':'sb-draft','Sent':'sb-sent','Opened':'sb-opened','Accepted':'sb-accepted','Expired':'sb-expired','Cancelled':'sb-cancelled','Rejected':'sb-rejected'}[inv.status]||'sb-draft';
     var statusIcon={'Draft':'fa-pencil-alt','Sent':'fa-paper-plane','Opened':'fa-envelope-open','Accepted':'fa-check-circle','Expired':'fa-clock','Cancelled':'fa-ban','Rejected':'fa-times-circle'}[inv.status]||'fa-circle';
@@ -948,25 +1489,25 @@ function renderInvitationsTable(data){
     tr.setAttribute('data-sentby',inv.sentBy);
     tr.setAttribute('data-org',inv.uplineOrg);
     // NPN display
-    var npnHtml = inv.npn ? '<code style="background:#f5f5f5;padding:2px 6px;border-radius:4px;font-size:11px">'+inv.npn+'</code>' : '<span style="color:#bdbdbd;font-size:11px">N/A</span>';
+    var npnHtml = inv.npn ? '<code class="inv-code">'+invEsc(inv.npn)+'</code>' : '<span class="inv-muted">N/A</span>';
     // Accepted date display
-    var acceptedHtml = inv.acceptedDate ? '<span style="color:#1b5e20;font-weight:600;font-size:11px"><i class="fas fa-check-circle" style="font-size:9px;margin-right:3px"></i>'+inv.acceptedDate+'</span>' : '<span style="color:#bdbdbd;font-size:11px">&mdash;</span>';
-    tr.innerHTML = '<td><input type="checkbox" class="inv-row-cb" value="'+inv.id+'" onchange="onRowCheckChange()"></td>'
-      +'<td style="font-weight:600;white-space:nowrap">'+inv.firstName+' '+inv.lastName+'</td>'
-      +'<td style="font-size:11px">'+inv.email+'</td>'
+    var acceptedHtml = inv.acceptedDate ? '<span class="inv-accepted"><i class="fas fa-check-circle"></i>'+invEsc(inv.acceptedDate)+'</span>' : '<span class="inv-muted"> - </span>';
+    tr.innerHTML = '<td><input type="checkbox" class="inv-row-cb" value="'+inv.id+'" onchange="onRowCheckChange()" aria-label="Select invitation"></td>'
+      +'<td class="inv-td-name">'+invEsc(inv.firstName)+' '+invEsc(inv.lastName)+'</td>'
+      +'<td class="inv-td-sm">'+invEsc(inv.email)+'</td>'
       +'<td>'+npnHtml+'</td>'
-      +'<td><span style="font-size:11px;background:#e6efee;color:#002624;padding:2px 8px;border-radius:8px;font-weight:600">'+inv.level+'</span></td>'
-      +'<td style="font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis">'+inv.uplineOrg+'</td>'
-      +'<td style="font-size:11px;white-space:nowrap">'+inv.sentDate+'</td>'
-      +'<td><span class="status-badge '+statusClass+'"><i class="fas '+statusIcon+'" style="font-size:9px"></i> '+inv.status+'</span></td>'
-      +'<td style="font-size:11px;white-space:nowrap">'+inv.expiryDate+'</td>'
-      +'<td style="white-space:nowrap">'+acceptedHtml+'</td>'
-      +'<td style="font-size:11px">'+inv.sentBy+'</td>'
-      +'<td style="white-space:nowrap"><div style="display:flex;gap:4px;align-items:center">'
-        +'<button class="tbl-action-btn" onclick="viewInvDetail('+inv.id+')" title="View Detail"><i class="fas fa-eye"></i></button>'
-        +(canResend?'<button class="tbl-action-btn" onclick="resendInvitation('+inv.id+')" title="Resend"><i class="fas fa-redo"></i></button>':'')
-        +(canCancel?'<button class="tbl-action-btn danger" onclick="cancelInvitation('+inv.id+')" title="Cancel"><i class="fas fa-ban"></i></button>':'')
-        +(inv.onboardingCase?'<a href="../agency-admin/onboarding-cases.html" class="tbl-action-btn" title="Onboarding Case"><i class="fas fa-clipboard-check"></i></a>':'')
+      +'<td><span class="inv-level-pill">'+invEsc(inv.level)+'</span></td>'
+      +'<td class="inv-td-org" title="'+invEsc(inv.uplineOrg)+'">'+invEsc(inv.uplineOrg)+'</td>'
+      +'<td class="inv-td-sm inv-td-nowrap">'+invEsc(inv.sentDate)+'</td>'
+      +'<td><span class="status-badge '+statusClass+'"><i class="fas '+statusIcon+'"></i> '+invEsc(inv.status)+'</span></td>'
+      +'<td class="inv-td-sm inv-td-nowrap">'+invEsc(inv.expiryDate)+'</td>'
+      +'<td class="inv-td-nowrap">'+acceptedHtml+'</td>'
+      +'<td class="inv-td-sm">'+invEsc(inv.sentBy)+'</td>'
+      +'<td><div class="inv-row-actions">'
+        +'<button type="button" class="tbl-action-btn" onclick="viewInvDetail('+inv.id+')" title="View Detail" aria-label="View Detail"><i class="fas fa-eye"></i></button>'
+        +(canResend?'<button type="button" class="tbl-action-btn" onclick="resendInvitation('+inv.id+')" title="Resend" aria-label="Resend"><i class="fas fa-redo"></i></button>':'')
+        +(canCancel?'<button type="button" class="tbl-action-btn danger" onclick="cancelInvitation('+inv.id+')" title="Cancel" aria-label="Cancel"><i class="fas fa-ban"></i></button>':'')
+        +(inv.onboardingCase?'<a href="../agency-admin/onboarding-cases.html" class="tbl-action-btn" title="Onboarding Case" aria-label="Onboarding Case"><i class="fas fa-clipboard-check"></i></a>':'')
       +'</div></td>';
     tbody.appendChild(tr);
   });
@@ -1006,6 +1547,7 @@ function resetInvFilters(){
     var el=document.getElementById(id);if(el)el.value='';
   });
   document.getElementById('invFilterFrom').value='';
+  refreshUiControls();
   renderInvitationsTable(INVITATIONS);
   updateKPIs();
 }
@@ -1034,34 +1576,34 @@ function viewInvDetail(id){
   var statusClass={'Draft':'sb-draft','Sent':'sb-sent','Opened':'sb-opened','Accepted':'sb-accepted','Expired':'sb-expired','Cancelled':'sb-cancelled','Rejected':'sb-rejected'}[inv.status]||'sb-draft';
   // Timeline steps: Draft -> Sent -> Opened -> Accepted/Expired/Cancelled/Rejected
   var steps = [
-    {key:'Draft',label:'Draft Created',date:'?',done:true},
+    {key:'Draft',label:'Draft Created',date:'-',done:true},
     {key:'Sent',label:'Invitation Sent',date:inv.sentDate,done:true},
-    {key:'Opened',label:'Link Opened',date:inv.status==='Opened'||inv.status==='Accepted'?inv.sentDate+' (link opened)':'?',done:inv.status==='Opened'||inv.status==='Accepted'},
-    {key:'Accepted',label:inv.status==='Expired'?'Expired':inv.status==='Cancelled'?'Cancelled':inv.status==='Rejected'?'Rejected':'Accepted',date:inv.acceptedDate||(inv.status==='Expired'?inv.expiryDate:inv.status==='Cancelled'?'Cancelled by sender':'?'),done:inv.status==='Accepted'||inv.status==='Expired'||inv.status==='Cancelled'||inv.status==='Rejected'}
+    {key:'Opened',label:'Link Opened',date:inv.status==='Opened'||inv.status==='Accepted'?inv.sentDate+' (link opened)':'-',done:inv.status==='Opened'||inv.status==='Accepted'},
+    {key:'Accepted',label:inv.status==='Expired'?'Expired':inv.status==='Cancelled'?'Cancelled':inv.status==='Rejected'?'Rejected':'Accepted',date:inv.acceptedDate||(inv.status==='Expired'?inv.expiryDate:inv.status==='Cancelled'?'Cancelled by sender':'-'),done:inv.status==='Accepted'||inv.status==='Expired'||inv.status==='Cancelled'||inv.status==='Rejected'}
   ];
   var tlHtml = '<div class="inv-timeline">';
   steps.forEach(function(s){
     var dotClass = s.done?(s.key==='Accepted'&&inv.status!=='Accepted'?'err':'done'):'grey';
     tlHtml += '<div class="inv-tl-item"><div class="inv-tl-dot '+dotClass+'"></div>'
-      +'<div><div style="font-weight:700;font-size:12px">'+s.label+'</div><div style="font-size:11px;color:#5f6368">'+s.date+'</div></div></div>';
+      +'<div><div class="inv-tl-label">'+invEsc(s.label)+'</div><div class="inv-tl-date">'+invEsc(s.date)+'</div></div></div>';
   });
   tlHtml += '</div>';
-  var content = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">'
-    +'<div><div style="font-size:11px;color:#5f6368">Recipient</div><div style="font-weight:700">'+inv.firstName+' '+inv.lastName+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Status</div><span class="status-badge '+statusClass+'">'+inv.status+'</span></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Email</div><div style="font-size:12px">'+inv.email+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">NPN</div><div style="font-size:12px">'+(inv.npn||'?')+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Level / Role</div><div style="font-size:12px">'+inv.level+' &mdash; '+inv.role+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Upline Org</div><div style="font-size:12px">'+inv.uplineOrg+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Plan Year</div><div style="font-size:12px">'+inv.planYear+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Expiry Date</div><div style="font-size:12px;color:#e65100">'+inv.expiryDate+'</div></div>'
-    +'<div><div style="font-size:11px;color:#5f6368">Sent By</div><div style="font-size:12px">'+inv.sentBy+'</div></div>'
-    +(inv.onboardingCase?'<div><div style="font-size:11px;color:#5f6368">Onboarding Case</div><a href="../agency-admin/onboarding-cases.html" style="font-size:12px;color:#002624;font-weight:700">'+inv.onboardingCase+' <i class="fas fa-external-link-alt" style="font-size:9px"></i></a></div>':'')
-    +(inv.message?'<div style="grid-column:span 2"><div style="font-size:11px;color:#5f6368">Personal Message</div><div style="font-size:12px;font-style:italic;color:#5f6368">'+inv.message+'</div></div>':'')
+  var content = '<div class="inv-detail-grid">'
+    +'<div><div class="inv-dl-k">Recipient</div><div class="inv-dl-v strong">'+invEsc(inv.firstName)+' '+invEsc(inv.lastName)+'</div></div>'
+    +'<div><div class="inv-dl-k">Status</div><span class="status-badge '+statusClass+'">'+invEsc(inv.status)+'</span></div>'
+    +'<div><div class="inv-dl-k">Email</div><div class="inv-dl-v">'+invEsc(inv.email)+'</div></div>'
+    +'<div><div class="inv-dl-k">NPN</div><div class="inv-dl-v">'+invEsc(inv.npn||'-')+'</div></div>'
+    +'<div><div class="inv-dl-k">Level / Role</div><div class="inv-dl-v">'+invEsc(inv.level)+' - '+invEsc(inv.role)+'</div></div>'
+    +'<div><div class="inv-dl-k">Upline Org</div><div class="inv-dl-v">'+invEsc(inv.uplineOrg)+'</div></div>'
+    +'<div><div class="inv-dl-k">Plan Year</div><div class="inv-dl-v">'+invEsc(inv.planYear)+'</div></div>'
+    +'<div><div class="inv-dl-k">Expiry Date</div><div class="inv-dl-v warn">'+invEsc(inv.expiryDate)+'</div></div>'
+    +'<div><div class="inv-dl-k">Sent By</div><div class="inv-dl-v">'+invEsc(inv.sentBy)+'</div></div>'
+    +(inv.onboardingCase?'<div><div class="inv-dl-k">Onboarding Case</div><div class="inv-dl-v"><a href="../agency-admin/onboarding-cases.html">'+invEsc(inv.onboardingCase)+' <i class="fas fa-external-link-alt" style="font-size:9px"></i></a></div></div>':'')
+    +(inv.message?'<div class="span-2"><div class="inv-dl-k">Personal Message</div><div class="inv-dl-v italic">'+invEsc(inv.message)+'</div></div>':'')
     +'</div>'
-    +'<div style="border-top:1px solid #f1f3f4;padding-top:12px"><div style="font-weight:700;font-size:12px;color:#002624;margin-bottom:8px"><i class="fas fa-history" style="margin-right:5px"></i>Status Timeline</div>'+tlHtml+'</div>';
+    +'<div class="inv-timeline-wrap"><h3 class="inv-timeline-title"><i class="fas fa-history"></i>Status Timeline</h3>'+tlHtml+'</div>';
   document.getElementById('invDetailContent').innerHTML=content;
-  document.getElementById('invDetailTitle').innerHTML='<i class="fas fa-envelope" style="margin-right:8px"></i>'+inv.firstName+' '+inv.lastName+' &mdash; Invitation Detail';
+  document.getElementById('invDetailTitle').innerHTML='<i class="fas fa-envelope"></i>'+invEsc(inv.firstName)+' '+invEsc(inv.lastName)+' - Invitation Detail';
   document.getElementById('invDetailModal').style.display='flex';
 }
 
@@ -1150,42 +1692,43 @@ function exportInvCSV(){
 /* Utilities */
 function showInvAlert(zone,msg,type){
   if(!zone)return;
-  var c={danger:'#fce4ec',warning:'#fff8e1',success:'#e8f5e9',info:'#e8f5f2'};
-  var b={danger:'#ef9a9a',warning:'#ffe082',success:'#a5d6a7',info:'#a6dace'};
+  var cls={danger:'ui-alert-destructive',warning:'ui-alert-warning',success:'ui-alert-success',info:'ui-alert-info'};
   var ic={danger:'fa-exclamation-circle',warning:'fa-exclamation-triangle',success:'fa-check-circle',info:'fa-info-circle'};
-  zone.innerHTML='<div style="background:'+c[type]+';border:1px solid '+b[type]+';border-radius:8px;padding:10px 14px;font-size:13px"><i class="fas '+ic[type]+'" style="margin-right:6px"></i>'+msg+'</div>';
+  zone.innerHTML='<div class="ui-alert '+(cls[type]||cls.info)+'" role="alert"><i class="fas '+(ic[type]||ic.info)+'"></i><div>'+msg+'</div></div>';
   zone.style.display='block';
   setTimeout(function(){zone.style.display='none';},6000);
 }
 
 function showInvToast(msg,type){
-  var colors={success:'#1b5e20',danger:'#b71c1c',warning:'#e65100',info:'#0f6a62'};
   var t=document.createElement('div');
-  t.style.cssText='position:fixed;bottom:28px;right:24px;background:'+(colors[type]||colors.info)+';color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px';
-  t.innerHTML='<i class="fas '+(type==='success'?'fa-check-circle':'fa-info-circle')+'" style="margin-right:6px"></i>'+msg;
+  t.className='inv-toast '+(type||'info');
+  t.setAttribute('role','status');
+  t.innerHTML='<i class="fas '+(type==='success'?'fa-check-circle':'fa-info-circle')+'"></i>'+msg;
   document.body.appendChild(t);setTimeout(function(){t.remove();},4000);
 }
 
 /* Prefill Functions */
-function prefillSendInvitation(){
-  document.getElementById('invFirstName').value='Robert';
-  document.getElementById('invLastName').value='Chen';
-  document.getElementById('invEmail').value='rchen@newagent.com';
-  document.getElementById('invNPN').value='44556677';
+function prefillSendInvitation(opts){
+  opts = opts || {};
+  document.getElementById('invFirstName').value='Sandra';
+  document.getElementById('invLastName').value='Adams';
+  document.getElementById('invEmail').value='sandra.adams@example.com';
+  document.getElementById('invNPN').value='88234419';
   document.getElementById('invLevel').value='Agent';
   document.getElementById('invRole').value='Individual Agent';
   document.getElementById('invUplineOrg').value='GA-2201';
   document.getElementById('invPlanYear').value='2026';
   document.getElementById('invExpiry').value='72';
-  document.getElementById('invMessage').value='Welcome to EnrollAxis! We look forward to having you join our network. Please complete your contracting within 72 hours.';
+  document.getElementById('invMessage').value='Welcome to EnrollAxis! Mark Ellis from Sunrise Agency invited you to join Gold Kidney Health Plan. Please complete contracting within 72 hours.';
   document.getElementById('invMsgLen').textContent=document.getElementById('invMessage').value.length;
   // Reset NPN/email error states
   ['emailFormatErr','emailDupWarn','npnFormatErr','npnDupErr','npnPendErr','npnTermWarn'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
   NPN_HAS_ERROR=false;EMAIL_HAS_ERROR=false;
+  refreshUiControls();
   // Show NPN OK
   document.getElementById('npnOk').style.display='block';
   buildInvitePreview();
-  showInvToast('Form prefilled with sample data.','info');
+  if (!opts.silent) showInvToast('Form prefilled with sample data.','info');
 }
 
 function prefillQuickSend(){
@@ -1194,6 +1737,7 @@ function prefillQuickSend(){
   document.getElementById('qInvEmail').value='atorres@partner.com';
   document.getElementById('qInvLevel').value='Agent/Broker';
   document.getElementById('qInvOrg').value='GA-2288';
+  refreshUiControls();
   ['qInvFirstName','qInvLastName','qInvEmail'].forEach(function(id){document.getElementById(id).classList.remove('inv-err');});
   showInvToast('Quick send form prefilled.','info');
 }
@@ -1204,6 +1748,7 @@ function prefillDashboardFilters(){
   document.getElementById('invFilterBy').value='Sandra Adams';
   document.getElementById('invFilterOrg').value='HealthFirst Distribution';
   document.getElementById('invFilterFrom').value='2026-05-01';
+  refreshUiControls();
   filterInvitations();
   showInvToast('Dashboard filters prefilled with sample criteria.','info');
 }
@@ -1213,6 +1758,36 @@ document.addEventListener('DOMContentLoaded',function(){
   renderInvitationsTable(INVITATIONS);
   updateKPIs();
 });
+
+/* Mobile sidebar drawer + modal dismissal */
+(function(){
+  var shell = document.getElementById('appShell');
+  var toggle = document.getElementById('sidebarToggle');
+  var closeBtn = document.getElementById('sidebarClose');
+  var backdrop = document.getElementById('sidebarBackdrop');
+  function isMobile(){ return window.matchMedia('(max-width: 900px)').matches; }
+  function setOpen(open){
+    if(!shell) return;
+    shell.classList.toggle('sidebar-open', !!open);
+    if(toggle){
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    document.body.style.overflow = open && isMobile() ? 'hidden' : '';
+  }
+  if(toggle) toggle.addEventListener('click', function(){ setOpen(!shell.classList.contains('sidebar-open')); });
+  if(closeBtn) closeBtn.addEventListener('click', function(){ setOpen(false); });
+  if(backdrop) backdrop.addEventListener('click', function(){ setOpen(false); });
+  window.addEventListener('resize', function(){ if(!isMobile()) setOpen(false); });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    setOpen(false);
+    document.querySelectorAll('.inv-modal').forEach(function(m){ m.style.display='none'; });
+  });
+  document.querySelectorAll('.inv-modal').forEach(function(m){
+    m.addEventListener('click', function(e){ if(e.target === m) m.style.display='none'; });
+  });
+})();
 </script>
 <script src="../assets/account-creation-mock.js"></script>
 </body>

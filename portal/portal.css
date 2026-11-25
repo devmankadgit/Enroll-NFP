@@ -1021,16 +1021,19 @@ span.p-nav-item:hover [data-icon] {
   flex-direction: column;
 }
 .p-page.is-embedded {
-  padding: 0;
+  padding: 1rem 1.25rem 1.25rem;
   overflow: hidden;
 }
 .p-embed-frame {
   flex: 1 1 auto;
   width: 100%;
-  min-height: calc(100vh - 68px - 51px);
+  min-height: calc(100vh - 68px - 51px - 2.25rem);
   border: 0;
   display: block;
   background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in srgb, #0b1f1c 6%, transparent);
 }
 /* Author display must not keep a hidden iframe in the flex layout (empty page gap). */
 .p-embed-frame[hidden] {
@@ -1299,7 +1302,7 @@ span.p-nav-item:hover [data-icon] {
   .p-card-grid,
   .p-kpi-grid { grid-template-columns: 1fr; }
   .p-page { padding: 1rem; }
-  .p-page.is-embedded { padding: 0; }
+  .p-page.is-embedded { padding: 0.75rem; }
   .p-embed-frame { min-height: calc(100vh - 68px - 51px); }
   .p-carrier-name { font-size: 0.9375rem; }
   .p-header-product-logo { height: 24px; max-width: min(120px, 32vw); }
