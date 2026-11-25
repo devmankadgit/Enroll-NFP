@@ -1955,13 +1955,12 @@
   .ui-chip { margin: 0; font-family: var(--font-body); }
   .ob-vendor-panel .ui-card-content { padding: 1rem; }
 
-  /* Step 4 - per-state license details (tabbed, one state at a time) */
+  /* Step 4 - per-state license details (accordion: select opens form) */
   .state-lic-shell {
     margin-top: 0.9rem;
-    border: 1px solid var(--primary-200);
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--accent) 55%, var(--white));
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
   }
   .state-lic-shell[hidden] { display: none !important; }
   .state-lic-empty {
@@ -1970,58 +1969,69 @@
     color: var(--muted-foreground);
   }
   .state-lic-empty.is-error { color: var(--destructive); font-weight: 600; }
-  .state-lic-tabs {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    padding: 0.75rem 0.9rem 0;
+  .state-lic-panel {
+    border: 1px solid var(--primary-200);
+    border-radius: 0.75rem;
+    background: var(--white);
+    overflow: hidden;
   }
-  .state-lic-tab {
+  .state-lic-panel.is-complete { border-color: color-mix(in srgb, var(--success) 45%, var(--border)); }
+  .state-lic-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 0.9rem;
+    border: 0;
+    background: color-mix(in srgb, var(--accent) 55%, var(--white));
+    color: var(--brand-ink);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+  }
+  .state-lic-panel.is-open .state-lic-head {
+    background: color-mix(in srgb, var(--accent) 80%, var(--white));
+    border-bottom: 1px solid var(--primary-200);
+  }
+  .state-lic-head:hover { background: var(--accent); }
+  .state-lic-head-icon {
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 999px;
     display: inline-flex;
     align-items: center;
-    border: 1px solid var(--border);
-    background: var(--white);
-    color: var(--brand-ink);
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    font-family: var(--font-body);
-    cursor: pointer;
-    transition: border-color .15s, background .15s, color .15s;
-  }
-  .state-lic-tab:hover { border-color: var(--primary); background: var(--accent); }
-  .state-lic-tab.is-active {
-    border-color: var(--primary);
+    justify-content: center;
+    flex-shrink: 0;
     background: var(--primary);
     color: var(--white);
+    font-size: 0.7rem;
   }
-  .state-lic-tab.is-complete {
-    border-color: var(--success);
-  }
-  .state-lic-tab.is-active.is-complete {
-    border-color: var(--primary);
-  }
-  .state-lic-panels { padding: 0.75rem 0.9rem 0.95rem; }
-  .state-lic-panel {
-    display: none;
-    border: 1px solid var(--primary-200);
-    border-radius: 0.65rem;
-    background: var(--white);
-    padding: 0.9rem 1rem;
-  }
-  .state-lic-panel.is-active { display: block; }
-  .state-lic-panel-title {
-    margin: 0 0 0.85rem;
+  .state-lic-panel.is-complete .state-lic-head-icon { background: var(--success); }
+  .state-lic-head-copy { flex: 1; min-width: 0; }
+  .state-lic-head-title {
+    display: block;
     font-size: 0.8125rem;
     font-weight: 700;
-    color: var(--primary);
     font-family: var(--font-heading);
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
+    color: var(--primary);
   }
-  .state-lic-panel .ui-field-hint,
+  .state-lic-head-status {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.6875rem;
+    color: var(--muted-foreground);
+  }
+  .state-lic-panel.is-complete .state-lic-head-status { color: var(--success); font-weight: 600; }
+  .state-lic-head-chevron {
+    color: var(--muted-foreground);
+    transition: transform .15s ease;
+  }
+  .state-lic-panel.is-open .state-lic-head-chevron { transform: rotate(180deg); }
+  .state-lic-body {
+    display: none;
+    padding: 0.9rem 1rem 1rem;
+  }
+  .state-lic-panel.is-open .state-lic-body { display: block; }
   .state-lic-panel .state-lic-err {
     display: none;
     margin: 0.35rem 0 0;
@@ -2592,10 +2602,7 @@
               <label class="ui-chip"><input type="checkbox" value="IL" data-label="Illinois"> Illinois</label>
             </div>
             <p class="state-lic-empty" id="stateLicEmpty">Please select at least one state.</p>
-            <div class="state-lic-shell" id="stateLicenseDetails" hidden>
-              <div class="state-lic-tabs" id="stateLicTabs" role="tablist" aria-label="Selected states"></div>
-              <div class="state-lic-panels" id="stateLicPanels"></div>
-            </div>
+            <div class="state-lic-shell" id="stateLicenseDetails" hidden aria-live="polite"></div>
             <div class="ui-section-actions">
               <button type="button" class="ui-btn ui-btn-outline ui-btn-sm" id="btnValidateLicense" disabled onclick="typeof showToast==='function'&&showToast('License and state appointment validated.','success')"><i class="fas fa-id-badge"></i> Validate License &amp; State Appointment</button>
             </div>
@@ -3567,39 +3574,38 @@
   }
 
   function refreshStateLicStatuses() {
-    var checked = document.querySelectorAll('#stateCheckboxes input[type="checkbox"]:checked');
-    checked.forEach(function (c) {
-      var st = c.value;
+    document.querySelectorAll('.state-lic-panel').forEach(function (panel) {
+      var st = panel.getAttribute('data-state');
       var ok = isStateLicenseComplete(st);
-      var tab = document.querySelector('.state-lic-tab[data-state="' + st + '"]');
-      if (tab) tab.classList.toggle('is-complete', ok);
-      var panel = document.querySelector('.state-lic-panel[data-state="' + st + '"]');
-      if (panel) {
-        var numErr = panel.querySelector('#err_licNum_' + st);
-        var effErr = panel.querySelector('#err_licEff_' + st);
-        var expErr = panel.querySelector('#err_licExp_' + st);
-        var lobErr = panel.querySelector('#err_lob_' + st);
-        var numEl = document.getElementById('licNum_' + st);
-        var effEl = document.getElementById('licEff_' + st);
-        var expEl = document.getElementById('licExp_' + st);
-        if (numErr) numErr.classList.toggle('is-visible', !(numEl && numEl.value.trim()));
-        if (effErr) effErr.classList.toggle('is-visible', !(effEl && effEl.value));
-        if (expErr) expErr.classList.toggle('is-visible', !(expEl && expEl.value));
-        var lobOk = !!panel.querySelectorAll('.lob-row input[type="checkbox"]:checked').length;
-        if (lobErr) lobErr.classList.toggle('is-visible', !lobOk);
-      }
+      panel.classList.toggle('is-complete', ok);
+      var status = panel.querySelector('.state-lic-head-status');
+      if (status) status.textContent = ok ? 'Complete' : 'Needs license details';
+      var icon = panel.querySelector('.state-lic-head-icon');
+      if (icon) icon.innerHTML = ok
+        ? '<i class="fas fa-check" aria-hidden="true"></i>'
+        : '<i class="fas fa-map-marker-alt" aria-hidden="true"></i>';
+      var numErr = panel.querySelector('#err_licNum_' + st);
+      var effErr = panel.querySelector('#err_licEff_' + st);
+      var expErr = panel.querySelector('#err_licExp_' + st);
+      var lobErr = panel.querySelector('#err_lob_' + st);
+      var numEl = document.getElementById('licNum_' + st);
+      var effEl = document.getElementById('licEff_' + st);
+      var expEl = document.getElementById('licExp_' + st);
+      if (numErr) numErr.classList.toggle('is-visible', !(numEl && numEl.value.trim()));
+      if (effErr) effErr.classList.toggle('is-visible', !(effEl && effEl.value));
+      if (expErr) expErr.classList.toggle('is-visible', !(expEl && expEl.value));
+      var lobOk = !!panel.querySelectorAll('.lob-row input[type="checkbox"]:checked').length;
+      if (lobErr) lobErr.classList.toggle('is-visible', !lobOk);
     });
   }
 
-  function selectStateLicTab(st) {
+  function openStateLicPanel(st) {
     activeStateLic = st;
-    document.querySelectorAll('.state-lic-tab').forEach(function (tab) {
-      var on = tab.getAttribute('data-state') === st;
-      tab.classList.toggle('is-active', on);
-      tab.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
     document.querySelectorAll('.state-lic-panel').forEach(function (panel) {
-      panel.classList.toggle('is-active', panel.getAttribute('data-state') === st);
+      var on = panel.getAttribute('data-state') === st;
+      panel.classList.toggle('is-open', on);
+      var head = panel.querySelector('.state-lic-head');
+      if (head) head.setAttribute('aria-expanded', on ? 'true' : 'false');
     });
   }
 
@@ -3607,51 +3613,61 @@
     var panel = document.createElement('div');
     panel.className = 'state-lic-panel';
     panel.setAttribute('data-state', st);
-    panel.setAttribute('role', 'tabpanel');
     panel.id = 'stateLicPanel_' + st;
     panel.innerHTML =
-      '<h4 class="state-lic-panel-title"><i class="fas fa-map-marker-alt" aria-hidden="true"></i>' + label + ' (' + st + ') - License Details</h4>' +
-      '<div class="ui-form-grid cols-3">' +
-        '<div class="ui-field"><label class="ui-label" for="licNum_' + st + '">License Number <span class="req">*</span></label>' +
-          '<input class="ui-input" id="licNum_' + st + '" placeholder="e.g. ' + st + '-AG-000000">' +
-          '<p class="state-lic-err" id="err_licNum_' + st + '">Required.</p></div>' +
-        '<div class="ui-field"><label class="ui-label" for="licEff_' + st + '">Effective Date <span class="req">*</span></label>' +
-          '<input class="ui-input" id="licEff_' + st + '" type="date">' +
-          '<p class="state-lic-err" id="err_licEff_' + st + '">Required.</p></div>' +
-        '<div class="ui-field"><label class="ui-label" for="licExp_' + st + '">Expiry Date <span class="req">*</span></label>' +
-          '<input class="ui-input" id="licExp_' + st + '" type="date">' +
-          '<p class="state-lic-err" id="err_licExp_' + st + '">Required.</p></div>' +
-      '</div>' +
-      '<div class="ui-field">' +
-        '<label class="ui-label">Line(s) of Business for ' + label + ' <span class="req">*</span></label>' +
-        '<div class="lob-row">' +
-          '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_MA" value="MA"> Medicare Advantage (MA)</label>' +
-          '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_CSNP_ESRD" value="CSNP-ESRD"> C-SNP (ESRD)</label>' +
-          '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_CSNP_CKD" value="CSNP-CKD"> C-SNP (CKD)</label>' +
-          '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_MAPD" value="MAPD"> MAPD</label>' +
-          '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_PDP" value="PDP"> Part D (PDP)</label>' +
+      '<button type="button" class="state-lic-head" aria-expanded="false" aria-controls="stateLicBody_' + st + '">' +
+        '<span class="state-lic-head-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span>' +
+        '<span class="state-lic-head-copy">' +
+          '<span class="state-lic-head-title">' + label + ' - License Details</span>' +
+          '<span class="state-lic-head-status">Needs license details</span>' +
+        '</span>' +
+        '<i class="fas fa-chevron-down state-lic-head-chevron" aria-hidden="true"></i>' +
+      '</button>' +
+      '<div class="state-lic-body" id="stateLicBody_' + st + '">' +
+        '<div class="ui-form-grid cols-3">' +
+          '<div class="ui-field"><label class="ui-label" for="licNum_' + st + '">License Number <span class="req">*</span></label>' +
+            '<input class="ui-input" id="licNum_' + st + '" placeholder="e.g. ' + st + '-AG-000000">' +
+            '<p class="state-lic-err" id="err_licNum_' + st + '">Required.</p></div>' +
+          '<div class="ui-field"><label class="ui-label" for="licEff_' + st + '">Effective Date <span class="req">*</span></label>' +
+            '<input class="ui-input" id="licEff_' + st + '" type="date">' +
+            '<p class="state-lic-err" id="err_licEff_' + st + '">Required.</p></div>' +
+          '<div class="ui-field"><label class="ui-label" for="licExp_' + st + '">Expiry Date <span class="req">*</span></label>' +
+            '<input class="ui-input" id="licExp_' + st + '" type="date">' +
+            '<p class="state-lic-err" id="err_licExp_' + st + '">Required.</p></div>' +
         '</div>' +
-        '<p class="state-lic-err" id="err_lob_' + st + '">Please select at least one line of business for ' + st + '.</p>' +
-      '</div>' +
-      '<div class="ui-field" style="margin-top:0.75rem">' +
-        '<label class="ui-label" for="licFile_' + st + '">License Document (PDF/JPG)</label>' +
-        '<label class="ui-upload" id="licZone_' + st + '">' +
-          '<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Click to upload license document' +
-          '<span style="display:block;font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.2rem">Max 5 MB - PDF, JPG, PNG</span>' +
-          '<input type="file" id="licFile_' + st + '" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUpload(this,\'licZone_' + st + '\')">' +
-        '</label>' +
+        '<div class="ui-field">' +
+          '<label class="ui-label">Line(s) of Business for ' + label + ' <span class="req">*</span></label>' +
+          '<div class="lob-row">' +
+            '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_MA" value="MA"> Medicare Advantage (MA)</label>' +
+            '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_CSNP_ESRD" value="CSNP-ESRD"> C-SNP (ESRD)</label>' +
+            '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_CSNP_CKD" value="CSNP-CKD"> C-SNP (CKD)</label>' +
+            '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_MAPD" value="MAPD"> MAPD</label>' +
+            '<label class="ui-chip"><input type="checkbox" id="lob_' + st + '_PDP" value="PDP"> Part D (PDP)</label>' +
+          '</div>' +
+          '<p class="state-lic-err" id="err_lob_' + st + '">Please select at least one line of business for ' + label + '.</p>' +
+        '</div>' +
+        '<div class="ui-field" style="margin-top:0.75rem">' +
+          '<label class="ui-label" for="licFile_' + st + '">License Document (PDF/JPG)</label>' +
+          '<label class="ui-upload" id="licZone_' + st + '">' +
+            '<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Click to upload license document' +
+            '<span style="display:block;font-size:0.6875rem;color:var(--muted-foreground);margin-top:0.2rem">Max 5 MB - PDF, JPG, PNG</span>' +
+            '<input type="file" id="licFile_' + st + '" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUpload(this,\'licZone_' + st + '\')">' +
+          '</label>' +
+        '</div>' +
       '</div>';
+    var head = panel.querySelector('.state-lic-head');
+    if (head) {
+      head.addEventListener('click', function () { openStateLicPanel(st); });
+    }
     panel.addEventListener('input', function () { refreshStateLicStatuses(); syncStep4ValidateButtons(); updateFinalStepLock(); });
     panel.addEventListener('change', function () { refreshStateLicStatuses(); syncStep4ValidateButtons(); updateFinalStepLock(); });
     return panel;
   }
 
-  window.updateStates = function () {
+  window.updateStates = function (preferState) {
     var shell = document.getElementById('stateLicenseDetails');
-    var tabs = document.getElementById('stateLicTabs');
-    var panels = document.getElementById('stateLicPanels');
     var empty = document.getElementById('stateLicEmpty');
-    if (!shell || !tabs || !panels) return;
+    if (!shell) return;
 
     var checked = Array.prototype.slice.call(document.querySelectorAll('#stateCheckboxes input[type="checkbox"]:checked'));
     if (empty) {
@@ -3663,37 +3679,34 @@
     var selected = {};
     checked.forEach(function (c) { selected[c.value] = c.getAttribute('data-label') || c.value; });
 
-    Array.prototype.slice.call(panels.querySelectorAll('.state-lic-panel')).forEach(function (panel) {
+    Array.prototype.slice.call(shell.querySelectorAll('.state-lic-panel')).forEach(function (panel) {
       var st = panel.getAttribute('data-state');
       if (!selected[st]) panel.remove();
     });
-    tabs.innerHTML = '';
 
-    checked.forEach(function (chk, idx) {
+    var newlyAdded = null;
+    checked.forEach(function (chk) {
       var st = chk.value;
       var label = selected[st];
-      var tab = document.createElement('button');
-      tab.type = 'button';
-      tab.className = 'state-lic-tab';
-      tab.setAttribute('data-state', st);
-      tab.setAttribute('role', 'tab');
-      tab.setAttribute('aria-controls', 'stateLicPanel_' + st);
-      tab.textContent = label;
-      tab.addEventListener('click', function () { selectStateLicTab(st); });
-      tabs.appendChild(tab);
-
-      if (!panels.querySelector('.state-lic-panel[data-state="' + st + '"]')) {
-        panels.appendChild(buildStateLicPanel(st, label));
-        if (window.uiCalendar) window.uiCalendar.init(panels);
-        if (window.uiLabel) window.uiLabel.init(panels);
+      if (!shell.querySelector('.state-lic-panel[data-state="' + st + '"]')) {
+        shell.appendChild(buildStateLicPanel(st, label));
+        newlyAdded = st;
+        if (window.uiCalendar) window.uiCalendar.init(shell);
+        if (window.uiLabel) window.uiLabel.init(shell);
       }
-      if (!activeStateLic && idx === 0) activeStateLic = st;
     });
 
-    if (activeStateLic && !selected[activeStateLic]) {
+    if (preferState && selected[preferState]) {
+      activeStateLic = preferState;
+    } else if (newlyAdded) {
+      activeStateLic = newlyAdded;
+    } else if (activeStateLic && !selected[activeStateLic]) {
       activeStateLic = checked.length ? checked[checked.length - 1].value : null;
+    } else if (!activeStateLic && checked.length) {
+      activeStateLic = checked[0].value;
     }
-    if (activeStateLic) selectStateLicTab(activeStateLic);
+
+    if (activeStateLic) openStateLicPanel(activeStateLic);
     refreshStateLicStatuses();
     syncStep4ValidateButtons();
     updateFinalStepLock();
@@ -3718,7 +3731,7 @@
       if (!isStateLicenseComplete(st) && !firstBad) firstBad = st;
     });
     refreshStateLicStatuses();
-    if (firstBad) selectStateLicTab(firstBad);
+    if (firstBad) openStateLicPanel(firstBad);
   }
 
   function syncStep4ValidateButtons() {
@@ -3743,8 +3756,7 @@
   }
   document.querySelectorAll('#stateCheckboxes input[type="checkbox"]').forEach(function (cb) {
     cb.addEventListener('change', function () {
-      updateStates();
-      syncStep4ValidateButtons();
+      updateStates(this.checked ? this.value : null);
     });
   });
   syncStep4ValidateButtons();
