@@ -218,7 +218,11 @@
     var view = params.get("view");
 
     setTimeout(function () {
-      if (view === "ready" || view === "success" || view === "rejected" || view === "error") {
+      if (view === "ready" || view === "success" || view === "rejected" || view === "error" || view === "expired") {
+        if (view === "expired") {
+          showError("This invitation has expired", "Ask your inviter or agency to send a new one.");
+          return;
+        }
         if (view === "error") {
           showError("This invitation is no longer valid", "The link may be cancelled, wrong, or broken. Contact support if you need help.");
           return;
