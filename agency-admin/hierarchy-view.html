@@ -5,8 +5,7 @@
 <title>Hierarchy View | EnrollAxis Agency Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css?v=nfp-footer-1">
-<style> .tree-node{padding:8px 12px;margin:4px 0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s} .tree-node:hover{background:#fff3e0;border-color:#e65100} .tree-indent{margin-left:32px} .tree-indent-2{margin-left:64px} .node-toggle{width:22px;height:22px;border-radius:50%;border:1px solid #e0e0e0;display:inline-flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;flex-shrink:0;background:#fff;transition:all .15s} .node-toggle:hover{background:#fff3e0;border-color:#e65100} .tree-node.selected{background:#fff3e0;border-color:#e65100;box-shadow:0 1px 4px rgba(230,81,0,.12)} .level-badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}</style>
+<link rel="stylesheet" href="../assets/nfp.css?v=nfp-tree-1">
 </head>
 <body>
 <nav class="sidebar">
@@ -61,124 +60,108 @@
 
   <div class="page">
     <!-- PO-03 Info -->
-    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>PO-03 — Hierarchy Visualization:</strong> As an agency admin you see the full downline subtree beneath your organization. Use filters above to narrow by status (Active, Pending, Suspended, Terminated), state, or plan year. Individual agents see only their own data and direct upline.</span></div>
+    <div class="al-info mb16"><i class="fas fa-info-circle" style="flex-shrink:0"></i><span><strong>PO-03 - Hierarchy Visualization:</strong> As an agency admin you see the full downline subtree beneath your organization. Use filters above to narrow by status (Active, Pending, Suspended, Terminated), state, or plan year. Individual agents see only their own data and direct upline.</span></div>
 
     <!-- Filter Results -->
     <div id="filterInfo" style="font-size:11px;color:#5f6368;margin-bottom:8px;display:none"><i class="fas fa-filter" style="margin-right:4px;color:#e65100"></i><span id="filterText"></span> <a href="#" onclick="document.getElementById('statusFilter').value='';document.getElementById('stateFilter').value='';document.getElementById('yearFilter').value='2026';filterHierarchy();return false;" style="margin-left:8px;font-size:11px">Clear</a></div>
 
-    <!-- Hierarchy Tree -->
-    <div class="card mb16">
-      <div class="card-hdr"><h5>Organization Tree — HealthFirst Distribution <small style="font-weight:400;color:#5f6368">(Full Downline Subtree)</small></h5>
-        <div style="display:flex;gap:6px">
-          <button class="btn-ol btn-sm" onclick="expandAll()" style="font-size:10px"><i class="fas fa-expand-arrows-alt" style="margin-right:3px"></i>Expand All</button>
-          <button class="btn-ol btn-sm" onclick="collapseAll()" style="font-size:10px"><i class="fas fa-compress-arrows-alt" style="margin-right:3px"></i>Collapse</button>
-        </div>
-      </div>
-      <div class="card-body">
-        <!-- Level 0: This agency -->
-        <div class="tree-node" style="background:#fff3e0;border-color:#e65100" onclick="selectNode(this)">
-          <span class="node-toggle" onclick="event.stopPropagation();toggleChildren(this)"><i class="fas fa-minus"></i></span>
-          <i class="fas fa-building" style="color:#e65100;font-size:18px"></i>
-          <div style="flex:1">
-            <strong>HealthFirst Distribution</strong> <span class="level-badge" style="background:#fff3e0;color:#e65100">GA</span> <span class="badge bg-success">Active</span><br>
-            <small class="text-muted">GA-001 — General Agency — FL, TX — Rachel Vargas (Admin)</small>
-          </div>
-          <div style="text-align:right">
-            <div><strong>57</strong> <small>BoB Members</small></div>
-            <div><strong>5</strong> <small>Agents</small></div>
+    <!-- Hierarchy Tree + Node Detail (payer-admin style) -->
+    <div class="hier-layout mb16">
+      <div class="tree-container" id="orgTreeContainer">
+        <div class="tree-toolbar">
+          <h6><i class="fas fa-sitemap" style="margin-right:6px"></i>Organization Tree - HealthFirst Distribution</h6>
+          <div style="display:flex;gap:6px">
+            <button type="button" class="transfer-btn" onclick="expandAll()"><i class="fas fa-expand-arrows-alt"></i> Expand All</button>
+            <button type="button" class="transfer-btn" onclick="collapseAll()"><i class="fas fa-compress-arrows-alt"></i> Collapse</button>
           </div>
         </div>
 
-        <!-- Level 1: Direct reports -->
-        <div class="tree-indent" id="downlineGroup">
-          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="8823441">
-            <i class="fas fa-user-tie" style="color:#0f6a62"></i>
-            <div style="flex:1">
-              <strong>James Martinez</strong> <span class="level-badge" style="background:#e8f5f2;color:#0f6a62">Agent</span> <span class="badge bg-success">Active</span><br>
-              <small class="text-muted">NPN 8823441 — Agent — FL, TX</small>
+        <div class="tree-node tree-root" id="agencyTreeRoot">
+          <div class="node-item active-node" data-node="ga" onclick="selectHierNode('ga',this)">
+            <button type="button" class="node-toggle" aria-label="Collapse" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></button>
+            <div class="node-icon" style="background:#e65100;color:#fff"><i class="fas fa-building"></i></div>
+            <div class="node-copy">
+              <div class="node-name">HealthFirst Distribution (GA)</div>
+              <div class="node-meta">GA-001 - FL, TX - Rachel Vargas (Admin) - 57 BoB - 5 agents</div>
             </div>
-            <div style="text-align:right">
-              <div><strong>32</strong> <small>BoB</small></div>
-              <div><strong>$8,750</strong> <small>YTD</small></div>
+            <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
+          </div>
+
+          <div class="tree-node" data-level="Agent" data-status="Active" data-state="FL TX" data-npn="8823441">
+            <div class="node-item" data-node="agent-james" onclick="selectHierNode('agent-james',this)">
+              <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
+              <div class="node-copy">
+                <div class="node-name">James Martinez</div>
+                <div class="node-meta">Agent - NPN 8823441 - FL, TX - 32 BoB - $8,750 YTD</div>
+              </div>
+              <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
             </div>
           </div>
 
-          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="7734112">
-            <i class="fas fa-user-tie" style="color:#0f6a62"></i>
-            <div style="flex:1">
-              <strong>Maria Lopez</strong> <span class="level-badge" style="background:#e8f5f2;color:#0f6a62">Agent</span> <span class="badge bg-success">Active</span><br>
-              <small class="text-muted">NPN 7734112 — Agent — FL</small>
-            </div>
-            <div style="text-align:right">
-              <div><strong>18</strong> <small>BoB</small></div>
-              <div><strong>$5,200</strong> <small>YTD</small></div>
-            </div>
-          </div>
-
-          <div class="tree-node" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="7722118">
-            <i class="fas fa-user-tie" style="color:#0f6a62"></i>
-            <div style="flex:1">
-              <strong>Lisa Park</strong> <span class="level-badge" style="background:#e8f5f2;color:#0f6a62">Agent</span> <span class="badge bg-success">Active</span><br>
-              <small class="text-muted">NPN 7722118 — Agent — FL</small>
-            </div>
-            <div style="text-align:right">
-              <div><strong>7</strong> <small>BoB</small></div>
-              <div><strong>$2,100</strong> <small>YTD</small></div>
+          <div class="tree-node" data-level="Agent" data-status="Active" data-state="FL" data-npn="7734112">
+            <div class="node-item" data-node="agent-maria" onclick="selectHierNode('agent-maria',this)">
+              <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
+              <div class="node-copy">
+                <div class="node-name">Maria Lopez</div>
+                <div class="node-meta">Agent - NPN 7734112 - FL - 18 BoB - $5,200 YTD</div>
+              </div>
+              <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
             </div>
           </div>
 
-          <!-- Sub-agency -->
-          <div class="tree-node" style="background:#f5f5f5" onclick="selectNode(this)">
-            <i class="fas fa-building" style="color:#6a1b9a"></i>
-            <div style="flex:1">
-              <strong>Premier Health Agency</strong> <span class="level-badge" style="background:#f3e5f5;color:#6a1b9a">Sub-GA</span> <span class="badge bg-warning text-dark">Onboarding</span><br>
-              <small class="text-muted">Sub-GA — FL — Admin: Pending</small>
-            </div>
-            <div style="text-align:right">
-              <div><strong>0</strong> <small>Agents</small></div>
-            </div>
-          </div>
-
-          <div class="tree-node" style="opacity:0.6" onclick="selectNode(this)" data-profile="../agent/profile.html" data-npn="8834221">
-            <i class="fas fa-user-tie" style="color:#9e9e9e"></i>
-            <div style="flex:1">
-              <strong>Robert Chen</strong> <span class="level-badge" style="background:#ffebee;color:#c62828">Agent</span> <span class="badge bg-danger">Terminated</span><br>
-              <small class="text-muted">NPN 8834221 — Agent — FL — Terminated 05 24,2026</small>
-            </div>
-            <div style="text-align:right">
-              <div><strong>0</strong> <small>BoB</small></div>
+          <div class="tree-node" data-level="Agent" data-status="Active" data-state="FL" data-npn="7722118">
+            <div class="node-item" data-node="agent-lisa" onclick="selectHierNode('agent-lisa',this)">
+              <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
+              <div class="node-copy">
+                <div class="node-name">Lisa Park</div>
+                <div class="node-meta">Agent - NPN 7722118 - FL - 7 BoB - $2,100 YTD</div>
+              </div>
+              <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
             </div>
           </div>
 
-          <div class="tree-node" style="border-style:dashed" onclick="selectNode(this)" data-npn="8847123">
-            <i class="fas fa-user-clock" style="color:#e65100"></i>
-            <div style="flex:1">
-              <strong>Kevin Williams</strong> <span class="level-badge" style="background:#fff8e1;color:#e65100">Agent</span> <span class="badge bg-warning text-dark">Pending</span><br>
-              <small class="text-muted">NPN 8847123 — Onboarding in progress — FL, TX</small>
+          <div class="tree-node" data-level="Sub-GA" data-status="Pending" data-state="FL">
+            <div class="node-item" data-node="subga-premier" onclick="selectHierNode('subga-premier',this)">
+              <div class="node-icon" style="background:#6a1b9a;color:#fff"><i class="fas fa-building"></i></div>
+              <div class="node-copy">
+                <div class="node-name">Premier Health Agency (Sub-GA)</div>
+                <div class="node-meta">Sub-GA - FL - Admin: Pending - 0 agents</div>
+              </div>
+              <span class="node-badge" style="background:#fff8e1;color:#e65100">Onboarding</span>
             </div>
-            <div style="text-align:right">
-              <a href="onboarding-cases.html" class="btn-ol btn-sm" onclick="event.stopPropagation()">Track</a>
+          </div>
+
+          <div class="tree-node" data-level="Agent" data-status="Terminated" data-state="FL" data-npn="8834221">
+            <div class="node-item is-muted" data-node="agent-robert" onclick="selectHierNode('agent-robert',this)">
+              <div class="node-icon" style="background:#f1f3f4;color:#5f6368"><i class="fas fa-user-tie"></i></div>
+              <div class="node-copy">
+                <div class="node-name">Robert Chen</div>
+                <div class="node-meta">Agent - NPN 8834221 - FL - Terminated 05 24,2026</div>
+              </div>
+              <span class="node-badge" style="background:#ffebee;color:#c62828">Terminated</span>
+            </div>
+          </div>
+
+          <div class="tree-node" data-level="Agent" data-status="Pending" data-state="FL TX" data-npn="8847123">
+            <div class="node-item is-pending" data-node="agent-kevin" onclick="selectHierNode('agent-kevin',this)">
+              <div class="node-icon" style="background:#fff3e0;color:#e65100"><i class="fas fa-user-clock"></i></div>
+              <div class="node-copy">
+                <div class="node-name">Kevin Williams</div>
+                <div class="node-meta">Agent - NPN 8847123 - Onboarding in progress - FL, TX</div>
+              </div>
+              <a href="onboarding-cases.html" class="btn-ol btn-sm" style="margin-left:auto;flex-shrink:0" onclick="event.stopPropagation()">Track</a>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Upline Info -->
-    <div class="card">
-      <div class="card-hdr"><h5>Upline Information</h5></div>
-      <div class="card-body">
-        <div class="row-grid">
-          <div class="col-2">
-            <p><strong>Direct Upline:</strong> National Medicare Partners (FMO-101)</p>
-            <p><strong>FMO Contact:</strong> operations@natlmedicare.com</p>
-            <p><strong>Commission Routing:</strong> Override paid to FMO; direct commission to agents</p>
-          </div>
-          <div class="col-2">
-            <p><strong>Plan Year:</strong> 2026</p>
-            <p><strong>Override Tier:</strong> Tier 2 (GA level)</p>
-            <p><strong>States Contracted:</strong> FL, TX</p>
-          </div>
+      <div class="hier-detail" id="hierDetailPanel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+          <h6 style="margin:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Node Details</h6>
+          <span style="font-size:10px;background:#e6efee;color:#002624;padding:3px 8px;border-radius:10px;font-weight:700">Agency Admin View</span>
+        </div>
+        <div id="hierDetailContent">
+          <div class="hier-empty"><i class="fas fa-mouse-pointer"></i>Click any node in the tree to view profile, status, key dates, and quick actions.</div>
         </div>
       </div>
     </div>
@@ -362,66 +345,133 @@
 </footer>
 <script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
 <script>
-// PO-03: Interactive filter for agency-admin hierarchy
+var HIER_DETAILS = {
+  ga: {
+    title:'HealthFirst Distribution', type:'General Agency', status:'Active', statusTone:'ok',
+    rows:[
+      ['Agency ID','GA-001'],['Admin','Rachel Vargas'],['States','FL, TX'],
+      ['BoB Members','57'],['Agents','5'],['Plan Year','2026'],
+      ['Direct Upline','National Medicare Partners (FMO-101)'],
+      ['FMO Contact','operations@natlmedicare.com'],
+      ['Override Tier','Tier 2 (GA level)'],
+      ['Commission Routing','Override to FMO; direct commission to agents']
+    ],
+    actions:'<button type="button" class="btn-ol btn-sm" onclick="document.getElementById(\'addAgentModal\').style.display=\'flex\'"><i class="fas fa-user-plus"></i> Add Agent</button>'
+  },
+  'agent-james': {
+    title:'James Martinez', type:'Agent', status:'Active', statusTone:'ok',
+    rows:[['NPN','8823441'],['States','FL, TX'],['BoB Members','32'],['YTD Commission','$8,750'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="../agent/profile.html"><i class="fas fa-user"></i> View Profile</a>'
+  },
+  'agent-maria': {
+    title:'Maria Lopez', type:'Agent', status:'Active', statusTone:'ok',
+    rows:[['NPN','7734112'],['States','FL'],['BoB Members','18'],['YTD Commission','$5,200'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="../agent/profile.html"><i class="fas fa-user"></i> View Profile</a>'
+  },
+  'agent-lisa': {
+    title:'Lisa Park', type:'Agent', status:'Active', statusTone:'ok',
+    rows:[['NPN','7722118'],['States','FL'],['BoB Members','7'],['YTD Commission','$2,100'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="../agent/profile.html"><i class="fas fa-user"></i> View Profile</a>'
+  },
+  'subga-premier': {
+    title:'Premier Health Agency', type:'Sub-GA', status:'Onboarding', statusTone:'warn',
+    rows:[['Level','Sub-General Agency'],['States','FL'],['Admin','Pending'],['Agents','0'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="onboarding-cases.html"><i class="fas fa-folder-open"></i> Open Case</a>'
+  },
+  'agent-robert': {
+    title:'Robert Chen', type:'Agent', status:'Terminated', statusTone:'bad',
+    rows:[['NPN','8834221'],['States','FL'],['Terminated','05 24,2026'],['BoB Members','0'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<button type="button" class="btn-ol btn-sm" onclick="viewTransferDetail(\'TRF-2026-001\')"><i class="fas fa-exchange-alt"></i> View Transfer</button>'
+  },
+  'agent-kevin': {
+    title:'Kevin Williams', type:'Agent', status:'Pending', statusTone:'warn',
+    rows:[['NPN','8847123'],['States','FL, TX'],['Status','Onboarding in progress'],['BoB Members','0'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="onboarding-cases.html"><i class="fas fa-route"></i> Track Onboarding</a>'
+  }
+};
+
+function statusBadge(status, tone){
+  var bg = tone==='ok' ? '#e8f5e9' : tone==='warn' ? '#fff8e1' : tone==='bad' ? '#ffebee' : '#f1f3f4';
+  var color = tone==='ok' ? '#1b5e20' : tone==='warn' ? '#e65100' : tone==='bad' ? '#c62828' : '#5f6368';
+  return '<span class="node-badge" style="background:'+bg+';color:'+color+';margin:0">'+status+'</span>';
+}
+
+function selectHierNode(id, el){
+  document.querySelectorAll('#orgTreeContainer .node-item').forEach(function(n){ n.classList.remove('active-node'); });
+  if(el) el.classList.add('active-node');
+  var d = HIER_DETAILS[id];
+  var panel = document.getElementById('hierDetailContent');
+  if(!panel) return;
+  if(!d){
+    panel.innerHTML = '<div class="hier-empty"><i class="fas fa-mouse-pointer"></i>Click any node in the tree to view profile, status, key dates, and quick actions.</div>';
+    return;
+  }
+  var rows = d.rows.map(function(r){
+    return '<div class="detail-row"><span class="detail-label">'+r[0]+'</span><span class="detail-value">'+r[1]+'</span></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">'+
+      '<div><div style="font-size:16px;font-weight:700;color:#002624">'+d.title+'</div>'+
+      '<div style="font-size:12px;color:#5f6368;margin-top:2px">'+d.type+'</div></div>'+
+      statusBadge(d.status, d.statusTone)+
+    '</div>'+
+    '<div style="border:1px solid #e8eaed;border-radius:8px;padding:4px 12px;background:#f8faf9;margin-bottom:14px">'+rows+'</div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap">'+(d.actions||'')+'</div>';
+}
+
 function filterHierarchy(){
-  var status=document.getElementById('statusFilter').value;
-  var state=document.getElementById('stateFilter').value;
-  var nodes=document.querySelectorAll('#downlineGroup > .tree-node');
-  var shown=0,total=nodes.length;
+  var status = document.getElementById('statusFilter').value;
+  var state = document.getElementById('stateFilter').value;
+  var nodes = document.querySelectorAll('#agencyTreeRoot > .tree-node');
+  var shown = 0, total = nodes.length;
   nodes.forEach(function(n){
-    var text=n.textContent||'';
-    var matchStatus=!status||text.indexOf(status)>-1;
-    var matchState=!state||text.indexOf(state)>-1||(state==='FL'&&text.indexOf('Florida')>-1)||(state==='TX'&&text.indexOf('Texas')>-1);
-    if(matchStatus&&matchState){n.style.display='';shown++}
-    else{n.style.display='none'}
+    var st = n.getAttribute('data-status') || '';
+    var states = n.getAttribute('data-state') || '';
+    var matchStatus = !status || st === status || (status === 'Pending' && (st === 'Pending' || (n.textContent||'').indexOf('Onboarding') > -1));
+    var matchState = !state || states.indexOf(state) > -1;
+    if(matchStatus && matchState){ n.style.display = ''; shown++; }
+    else { n.style.display = 'none'; }
   });
-  var info=document.getElementById('filterInfo');
-  var txt=document.getElementById('filterText');
-  if(status||state){
-    info.style.display='block';
-    txt.textContent='Filtered: '+shown+' of '+total+' entities shown'+(status?' | Status: '+status:'')+(state?' | State: '+state:'');
+  var info = document.getElementById('filterInfo');
+  var txt = document.getElementById('filterText');
+  if(status || state){
+    info.style.display = 'block';
+    txt.textContent = 'Filtered: '+shown+' of '+total+' entities shown'+(status?' | Status: '+status:'')+(state?' | State: '+state:'');
   } else {
-    info.style.display='none';
+    info.style.display = 'none';
   }
 }
 
-// PO-03: Expand/Collapse toggle
-function toggleChildren(toggleBtn){
-  var parentNode=toggleBtn.closest('.tree-node');
-  var group=parentNode.nextElementSibling;
-  if(!group||!group.id) group=document.getElementById('downlineGroup');
-  if(!group) return;
-  var icon=toggleBtn.querySelector('i');
-  if(icon.classList.contains('fa-minus')){
-    icon.classList.replace('fa-minus','fa-plus');
-    group.style.display='none';
-  } else {
-    icon.classList.replace('fa-plus','fa-minus');
-    group.style.display='';
+function toggleNode(btn){
+  var nodeItem = btn.closest('.node-item');
+  if(!nodeItem) return;
+  var parentNode = nodeItem.parentElement;
+  if(!parentNode || !parentNode.classList.contains('tree-node')) return;
+  var childNodes = [];
+  for(var i=0;i<parentNode.children.length;i++){
+    if(parentNode.children[i].classList.contains('tree-node')) childNodes.push(parentNode.children[i]);
   }
+  if(!childNodes.length) return;
+  var isOpen = childNodes[0].style.display !== 'none';
+  childNodes.forEach(function(c){ c.style.display = isOpen ? 'none' : ''; });
+  var icon = btn.querySelector('i');
+  if(icon) icon.className = isOpen ? 'fas fa-plus' : 'fas fa-minus';
 }
+
 function expandAll(){
-  var group=document.getElementById('downlineGroup');
-  if(group) group.style.display='';
-  document.querySelectorAll('.node-toggle i.fa-plus').forEach(function(i){i.classList.replace('fa-plus','fa-minus')});
+  var container = document.getElementById('orgTreeContainer');
+  if(!container) return;
+  container.querySelectorAll('.tree-node').forEach(function(n){ n.style.display = ''; });
+  container.querySelectorAll('.node-toggle i').forEach(function(i){ i.className = 'fas fa-minus'; });
 }
+
 function collapseAll(){
-  var group=document.getElementById('downlineGroup');
-  if(group) group.style.display='none';
-  document.querySelectorAll('.node-toggle i.fa-minus').forEach(function(i){i.classList.replace('fa-minus','fa-plus')});
+  var root = document.getElementById('agencyTreeRoot');
+  if(!root) return;
+  root.querySelectorAll('.tree-node').forEach(function(n){ n.style.display = 'none'; });
+  root.querySelectorAll('.node-toggle i').forEach(function(i){ i.className = 'fas fa-plus'; });
 }
 
-// PO-03: Click node to select & view profile
-function selectNode(el){
-  document.querySelectorAll('.tree-node').forEach(function(n){n.classList.remove('selected')});
-  el.classList.add('selected');
-  var profile=el.getAttribute('data-profile');
-  var npn=el.getAttribute('data-npn');
-  var name=el.querySelector('strong');
-  if(name) showToast('Selected: '+name.textContent+(npn?' (NPN '+npn+')':''),'info');
-}
-
-// Add Agent to hierarchy tree and agents listing
 function prefillAddAgent(){
   document.getElementById('aaFirst').value='Angela';
   document.getElementById('aaLast').value='Ramirez';
@@ -432,6 +482,7 @@ function prefillAddAgent(){
   document.getElementById('aaStatus').value='Pending';
   showToast('Form prefilled with sample data.','info');
 }
+
 function addAgentToHierarchy(){
   var first=document.getElementById('aaFirst').value.trim();
   var last=document.getElementById('aaLast').value.trim();
@@ -441,31 +492,34 @@ function addAgentToHierarchy(){
   if(!first||!last||!npn||!states){showToast('Please fill all required fields','error');return;}
   if(npn.length<8||!/^\d+$/.test(npn)){showToast('NPN must be 8-10 digits','error');return;}
 
-  var group=document.getElementById('downlineGroup');
-  var newNode=document.createElement('div');
-  newNode.className='tree-node';
-  newNode.setAttribute('onclick','selectNode(this)');
-  newNode.setAttribute('data-profile','../agent/profile.html');
-  newNode.setAttribute('data-npn',npn);
-
+  var root=document.getElementById('agencyTreeRoot');
+  var id='agent-'+npn;
   var isActive=status==='Active';
-  var badgeClass=isActive?'bg-success':'bg-warning text-dark';
-  var icon=isActive?'fa-user-tie':'fa-user-clock';
-  var iconColor=isActive?'color:#0f6a62':'color:#e65100';
-  var borderStyle=isActive?'':'border-style:dashed;';
+  var node=document.createElement('div');
+  node.className='tree-node';
+  node.setAttribute('data-level','Agent');
+  node.setAttribute('data-status',status);
+  node.setAttribute('data-state',states.replace(/,/g,' '));
+  node.setAttribute('data-npn',npn);
+  node.innerHTML=
+    '<div class="node-item'+(isActive?'':' is-pending')+'" data-node="'+id+'" onclick="selectHierNode(\''+id+'\',this)">'+
+      '<div class="node-icon" style="background:'+(isActive?'#e8f5f2':'#fff3e0')+';color:'+(isActive?'#0f6a62':'#e65100')+'"><i class="fas '+(isActive?'fa-user-tie':'fa-user-clock')+'"></i></div>'+
+      '<div class="node-copy"><div class="node-name">'+first+' '+last+'</div>'+
+      '<div class="node-meta">Agent - NPN '+npn+' - '+states+' - 0 BoB - $0 YTD</div></div>'+
+      '<span class="node-badge" style="background:'+(isActive?'#e8f5e9':'#fff8e1')+';color:'+(isActive?'#1b5e20':'#e65100')+'">'+status+'</span>'+
+    '</div>';
+  if(root) root.appendChild(node);
 
-  newNode.style.cssText=borderStyle;
-  newNode.innerHTML='<i class="fas '+icon+'" style="'+iconColor+'"></i>'+
-    '<div style="flex:1"><strong>'+first+' '+last+'</strong> <span class="level-badge" style="background:#e8f5f2;color:#0f6a62">Agent</span> <span class="badge '+badgeClass+'">'+status+'</span><br>'+
-    '<small class="text-muted">NPN '+npn+' — Agent — '+states+'</small></div>'+
-    '<div style="text-align:right"><div><strong>0</strong> <small>BoB</small></div><div><strong>$0</strong> <small>YTD</small></div></div>';
-
-  if(group) group.appendChild(newNode);
+  HIER_DETAILS[id] = {
+    title:first+' '+last, type:'Agent', status:status, statusTone:isActive?'ok':'warn',
+    rows:[['NPN',npn],['States',states],['BoB Members','0'],['YTD Commission','$0'],['Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="../agent/profile.html"><i class="fas fa-user"></i> View Profile</a>'
+  };
 
   document.getElementById('addAgentModal').style.display='none';
   showToast('Agent "'+first+' '+last+'" (NPN '+npn+') added to your hierarchy','success');
+  selectHierNode(id, node.querySelector('.node-item'));
 
-  // Reset form
   document.getElementById('aaFirst').value='';
   document.getElementById('aaLast').value='';
   document.getElementById('aaNPN').value='';
@@ -473,6 +527,9 @@ function addAgentToHierarchy(){
   document.getElementById('aaEmail').value='';
   document.getElementById('aaPhone').value='';
 }
+
+selectHierNode('ga', document.querySelector('#orgTreeContainer .node-item[data-node="ga"]'));
+
 
 // Transfer workflow data
 var TRANSFER_IMPACT = {
@@ -483,9 +540,9 @@ var TRANSFER_IMPACT = {
 };
 var TRANSFER_CASES = {
   'TRF-2026-001': {agent:'Robert Chen',to:'Sunshine Medicare Group (GA-014)',type:'Permanent',date:'08 01,2026',status:'Under Review',submitted:'07 20,2026',
-    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">— 07 20,2026</span></div><div style="margin-bottom:6px"><span class="badge bg-warning text-dark">Step 2</span> Receiving agency review <span class="text-muted">— Pending approval from Sunshine Medicare Group</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval — EnrollAxis compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed — BoB, leads, commissions reassigned</div></div>'},
+    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">- 07 20,2026</span></div><div style="margin-bottom:6px"><span class="badge bg-warning text-dark">Step 2</span> Receiving agency review <span class="text-muted">- Pending approval from Sunshine Medicare Group</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval - EnrollAxis compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed - BoB, leads, commissions reassigned</div></div>'},
   'TRF-2026-002': {agent:'Lisa Park',to:'Premier Health Agency (Sub-GA)',type:'Temporary',date:'09 01,2026',status:'Submitted',submitted:'07 24,2026',
-    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">— 07 24,2026</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 2</span> Receiving agency review — Awaiting Premier Health Agency</div><div style="opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval — EnrollAxis compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed — BoB, leads, commissions temporarily reassigned</div></div>'}
+    workflow:'<div style="font-size:13px"><div style="margin-bottom:6px"><span class="badge bg-success">Step 1</span> Agency Admin submitted request <span class="text-muted">- 07 24,2026</span></div><div style="margin-bottom:6px;opacity:.5"><span class="badge bg-secondary">Step 2</span> Receiving agency review - Awaiting Premier Health Agency</div><div style="opacity:.5"><span class="badge bg-secondary">Step 3</span> Carrier approval - EnrollAxis compliance review</div><div style="opacity:.5"><span class="badge bg-secondary">Step 4</span> Transfer executed - BoB, leads, commissions temporarily reassigned</div></div>'}
 };
 
 function openTransferModal() {
@@ -535,7 +592,7 @@ function submitTransferRequest() {
 function viewTransferDetail(id) {
   var d = TRANSFER_CASES[id];
   if (!d) return;
-  document.getElementById('tdTitle').textContent = id + ' — ' + d.agent;
+  document.getElementById('tdTitle').textContent = id + ' - ' + d.agent;
   document.getElementById('tdID').textContent = id;
   document.getElementById('tdAgent').textContent = d.agent;
   document.getElementById('tdTo').textContent = d.to;

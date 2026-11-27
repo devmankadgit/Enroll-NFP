@@ -5,19 +5,12 @@
 <title>My Upline Hierarchy | EnrollAxis Agent Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css?v=nfp-footer-1">
+<link rel="stylesheet" href="../assets/nfp.css?v=nfp-tree-1">
 <style>
-
-.tree-node{padding:10px 14px;margin:4px 0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;display:flex;align-items:center;gap:10px}
-.tree-node:hover{background:#e8f5f2}
-.tree-indent{margin-left:32px}
-.tree-indent-2{margin-left:64px}
-.tree-indent-3{margin-left:96px}
-.upline-chain{display:flex;flex-direction:column;gap:2px}
-.upline-chain .connector{width:2px;height:16px;background:#bdbdbd;margin-left:20px}
-.highlight-me{background:#e8f5f2;border-color:#0f6a62;border-width:2px}
-.info-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+.info-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
 .info-row:last-child{border-bottom:none}
+.agent-hier-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:16px;align-items:start}
+@media (max-width:1024px){.agent-hier-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -59,14 +52,14 @@
       <span style="font-size:12px;font-weight:600">My Profile</span>
       <i class="fas fa-chevron-right" style="margin-left:auto;font-size:10px;opacity:.6"></i>
     </a>
-    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent — NPN 8823441</div></div></div>
+    <div class="dflex ai-center g8"><div class="sb-ava">JM</div><div><div class="sb-u-name">James Martinez</div><div class="sb-u-role">Agent - NPN 8823441</div></div></div>
   </div>
 </nav>
 
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="brand-name" style="font-weight:700;color:#0f6a62;font-size:15px;margin-bottom:2px"><i class="fas fa-kidneys" style="margin-right:6px"></i>EnrollAxis</div>
+      <div class="brand-top-left" style="font-size:11px;font-weight:700;color:#002624;letter-spacing:.5px;margin-bottom:2px"><img src="../assets/brand/enrollaxis-icon.png" alt="" width="13" height="13" style="margin-right:5px;vertical-align:-2px">ENROLLAXIS</div>
       <h4>My Upline Hierarchy</h4>
       <ol class="breadcrumb-bar"><li><a href="dashboard.html">Dashboard</a></li><li><i class="fas fa-chevron-right" style="font-size:9px;margin:0 4px"></i></li><li>My Upline</li></ol>
     </div>
@@ -79,112 +72,70 @@
 
   <div class="page">
     <!-- PO-03 Access Scope Notice -->
-    <div style="background:#e8f5f2;border:1px solid #a6dace;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#0f6a62;display:flex;align-items:flex-start;gap:10px">
-      <i class="fas fa-shield-alt" style="margin-top:2px;flex-shrink:0"></i>
-      <div>
-        <strong>PO-03 — Access Scope:</strong> As an individual agent, you can see only your own data and your direct upline (GA). FMO and carrier information shown here is limited to contact details only. You cannot view upline production data, commission overrides, or other agents' information. Agency admins see the full downline subtree; this restricted view applies to agent-level users only.
-      </div>
-    </div>
+    <div class="al-info mb16"><i class="fas fa-shield-alt" style="flex-shrink:0"></i><span><strong>PO-03 - Access Scope:</strong> As an individual agent, you can see only your own data and your direct upline (GA). FMO and carrier information shown here is limited to contact details only. You cannot view upline production data, commission overrides, or other agents' information.</span></div>
 
-    <!-- My Upline Chain -->
-    <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-sitemap" style="margin-right:6px;color:#0f6a62"></i>My Hierarchy Position</h5><span style="font-size:10px;color:#5f6368;background:#f1f3f4;padding:3px 8px;border-radius:10px">View: Own Data + Direct Upline</span></div>
-      <div class="card-body">
-        <p style="font-size:12px;color:#757575;margin-bottom:12px">This shows your position in the hierarchy and your direct upline (General Agency). You cannot navigate or view other agents, downline, or upline production data.</p>
+    <div class="agent-hier-layout mb16">
+      <div class="tree-container" id="orgTreeContainer">
+        <div class="tree-toolbar">
+          <h6><i class="fas fa-sitemap" style="margin-right:6px"></i>My Hierarchy Position</h6>
+          <span style="font-size:10px;color:#5f6368;background:#f1f3f4;padding:3px 8px;border-radius:10px;font-weight:600">Own data + direct upline</span>
+        </div>
+        <p style="font-size:12px;color:#5f6368;margin:0 0 12px">Your place in the producer tree. Production data for upline and peer agents is hidden.</p>
 
-        <!-- Level 0: Carrier -->
-        <div class="upline-chain">
-          <div class="tree-node" style="background:#f3e5f5;border-color:#7b1fa2;cursor:default">
-            <i class="fas fa-hospital" style="color:#7b1fa2;font-size:20px"></i>
-            <div style="flex:1">
-              <strong>EnrollAxis</strong> <span class="badge bg-dark">Carrier</span><br>
-              <small class="text-muted">Medicare Advantage Plan — All States</small>
+        <div class="tree-node tree-root">
+          <div class="node-item" data-node="carrier" onclick="selectAgentHierNode('carrier',this)">
+            <button type="button" class="node-toggle" aria-label="Collapse" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></button>
+            <div class="node-icon" style="background:#002624;color:#fff"><i class="fas fa-building"></i></div>
+            <div class="node-copy">
+              <div class="node-name">EnrollAxis</div>
+              <div class="node-meta">Carrier - Root Level - Plan Year 2026</div>
             </div>
+            <span class="node-badge" style="background:#e6efee;color:#002624">Carrier</span>
           </div>
-          <div class="connector"></div>
 
-          <!-- Level 1: FMO -->
-          <div class="tree-indent">
-            <div class="tree-node" style="background:#fff8e1;border-color:#f57f17;cursor:pointer" onclick="showToast('FMO Profile: National Medicare Partners (FMO-101)','info')">
-              <i class="fas fa-landmark" style="color:#f57f17;font-size:18px"></i>
-              <div style="flex:1">
-                <strong>National Medicare Partners</strong> <span class="badge bg-info text-dark">FMO</span><br>
-                <small class="text-muted">FMO-101 — Field Marketing Organization — FL, TX, CA, AZ</small>
+          <div class="tree-node" data-level="FMO">
+            <div class="node-item" data-node="fmo" onclick="selectAgentHierNode('fmo',this)">
+              <button type="button" class="node-toggle" aria-label="Collapse" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></button>
+              <div class="node-icon" style="background:#f57f17;color:#fff"><i class="fas fa-landmark"></i></div>
+              <div class="node-copy">
+                <div class="node-name">National Medicare Partners (FMO)</div>
+                <div class="node-meta">FMO-101 - FL, TX, CA, AZ - Contact only</div>
               </div>
-              <div style="text-align:right;font-size:12px">
-                <div><i class="fas fa-envelope" style="margin-right:4px"></i>operations@natlmedicare.com</div>
-                <div><i class="fas fa-phone" style="margin-right:4px"></i>(800) 555-1234</div>
-              </div>
-              <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+              <span class="node-badge" style="background:#fff8e1;color:#e65100">FMO</span>
             </div>
-            <div class="connector" style="margin-left:52px"></div>
 
-            <!-- Level 2: GA (Agency) -->
-            <div class="tree-indent">
-              <div class="tree-node" style="background:#fff3e0;border-color:#e65100;cursor:pointer" onclick="showToast('Agency Profile: HealthFirst Distribution (GA-001)','info')">
-                <i class="fas fa-building" style="color:#e65100;font-size:18px"></i>
-                <div style="flex:1">
-                  <strong>HealthFirst Distribution</strong> <span class="badge bg-warning text-dark">GA</span><br>
-                  <small class="text-muted">GA-001 — General Agency — FL, TX — Rachel Vargas (Admin)</small>
+            <div class="tree-node" data-level="GA">
+              <div class="node-item" data-node="ga" onclick="selectAgentHierNode('ga',this)">
+                <button type="button" class="node-toggle" aria-label="Collapse" onclick="event.stopPropagation();toggleNode(this)"><i class="fas fa-minus"></i></button>
+                <div class="node-icon" style="background:#e65100;color:#fff"><i class="fas fa-building"></i></div>
+                <div class="node-copy">
+                  <div class="node-name">HealthFirst Distribution (GA)</div>
+                  <div class="node-meta">GA-001 - FL, TX - Rachel Vargas (Admin)</div>
                 </div>
-                <div style="text-align:right;font-size:12px">
-                  <div><i class="fas fa-envelope" style="margin-right:4px"></i>rachel@healthfirstdist.com</div>
-                  <div><i class="fas fa-phone" style="margin-right:4px"></i>(305) 555-8899</div>
-                </div>
-                <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+                <span class="node-badge" style="background:#fff3e0;color:#e65100">GA</span>
               </div>
-              <div class="connector" style="margin-left:52px"></div>
 
-              <!-- Level 3: ME (Agent) -->
-              <div class="tree-indent">
-                <div class="tree-node highlight-me" style="cursor:pointer" onclick="window.location.href='profile.html'">
-                  <i class="fas fa-user-tie" style="color:#0f6a62;font-size:18px"></i>
-                  <div style="flex:1">
-                    <strong>James Martinez (You)</strong> <span class="badge bg-success">Active</span><br>
-                    <small class="text-muted">NPN 8823441 — Licensed Agent — FL, TX</small>
+              <div class="tree-node" data-level="Agent">
+                <div class="node-item is-you active-node" data-node="me" onclick="selectAgentHierNode('me',this)">
+                  <div class="node-icon" style="background:#e8f5f2;color:#0f6a62"><i class="fas fa-user-tie"></i></div>
+                  <div class="node-copy">
+                    <div class="node-name">James Martinez (You)</div>
+                    <div class="node-meta">NPN 8823441 - FL, TX - 32 BoB - $8,247 YTD</div>
                   </div>
-                  <div style="text-align:right;font-size:12px">
-                    <div><strong>32</strong> <small>BoB Members</small></div>
-                    <div><strong>$8,247</strong> <small>Commission YTD</small></div>
-                  </div>
-                  <i class="fas fa-chevron-right" style="color:#bdbdbd;font-size:12px"></i>
+                  <span class="node-badge" style="background:#e8f5e9;color:#1b5e20">Active</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Upline Details Card -->
-    <div class="card mb16">
-      <div class="card-hdr"><h5><i class="fas fa-info-circle" style="margin-right:6px;color:#147966"></i>Upline Details</h5></div>
-      <div class="card-body">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-          <!-- Direct Upline (GA) -->
-          <div>
-            <h6 style="font-size:13px;margin-bottom:8px;color:#e65100"><i class="fas fa-building" style="margin-right:4px"></i>Direct Upline — General Agency</h6>
-            <div class="info-row"><span>Agency Name:</span><strong>HealthFirst Distribution</strong></div>
-            <div class="info-row"><span>Agency ID:</span><strong>GA-001</strong></div>
-            <div class="info-row"><span>Admin Contact:</span><strong>Rachel Vargas</strong></div>
-            <div class="info-row"><span>Email:</span><strong>rachel@healthfirstdist.com</strong></div>
-            <div class="info-row"><span>Phone:</span><strong>(305) 555-8899</strong></div>
-            <div class="info-row"><span>Commission Routing:</span><strong>Direct to Agent; Override to GA</strong></div>
-            <div class="info-row"><span>States:</span><strong>FL, TX</strong></div>
-          </div>
-
-          <!-- FMO -->
-          <div>
-            <h6 style="font-size:13px;margin-bottom:8px;color:#f57f17"><i class="fas fa-landmark" style="margin-right:4px"></i>FMO — Field Marketing Organization</h6>
-            <div class="info-row"><span>FMO Name:</span><strong>National Medicare Partners</strong></div>
-            <div class="info-row"><span>FMO ID:</span><strong>FMO-101</strong></div>
-            <div class="info-row"><span>Contact:</span><strong>operations@natlmedicare.com</strong></div>
-            <div class="info-row"><span>Phone:</span><strong>(800) 555-1234</strong></div>
-            <div class="info-row"><span>Override Tier:</span><strong>Tier 2 (GA level)</strong></div>
-            <div class="info-row"><span>Plan Year:</span><strong>2026</strong></div>
-            <div class="info-row"><span>States:</span><strong>FL, TX, CA, AZ</strong></div>
-          </div>
+      <div class="hier-detail" id="hierDetailPanel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+          <h6 style="margin:0"><i class="fas fa-id-card" style="margin-right:6px"></i>Node Details</h6>
+          <span style="font-size:10px;background:#e6efee;color:#002624;padding:3px 8px;border-radius:10px;font-weight:700">Agent View</span>
         </div>
+        <div id="hierDetailContent"></div>
       </div>
     </div>
 
@@ -235,10 +186,10 @@
             <label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Send To</label>
             <div style="font-size:13px;padding:8px;background:#f8f9fa;border-radius:6px;margin-bottom:8px">
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px">
-                <input type="radio" name="sendTo" checked> Rachel Vargas — GA Admin (rachel@healthfirstdist.com)
+                <input type="radio" name="sendTo" checked> Rachel Vargas - GA Admin (rachel@healthfirstdist.com)
               </label>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-                <input type="radio" name="sendTo"> National Medicare Partners — FMO (operations@natlmedicare.com)
+                <input type="radio" name="sendTo"> National Medicare Partners - FMO (operations@natlmedicare.com)
               </label>
             </div>
             <button class="btn-pr" style="margin-top:8px"><i class="fas fa-paper-plane" style="margin-right:4px"></i>Send Message</button>
@@ -255,5 +206,69 @@
   <div style="opacity:.7">Last Updated: 03 31,2026 &nbsp;|&nbsp; Copyright &copy; 2026 EnrollAxis</div>
 </footer>
 <script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
+<script>
+var AGENT_HIER = {
+  carrier: {
+    title:'EnrollAxis', type:'Carrier', status:'Carrier', tone:'navy',
+    rows:[['Level','Root'],['Plan Year','2026'],['Access','Contact / brand only'],['Note','No production or override data visible to agents']]
+  },
+  fmo: {
+    title:'National Medicare Partners', type:'Field Marketing Organization', status:'FMO', tone:'warn',
+    rows:[['FMO ID','FMO-101'],['Email','operations@natlmedicare.com'],['Phone','(800) 555-1234'],['States','FL, TX, CA, AZ'],['Access','Contact details only']]
+  },
+  ga: {
+    title:'HealthFirst Distribution', type:'General Agency (Direct Upline)', status:'GA', tone:'warn',
+    rows:[['Agency ID','GA-001'],['Admin','Rachel Vargas'],['Email','rachel@healthfirstdist.com'],['Phone','(305) 555-8899'],['States','FL, TX'],['Commission Routing','Direct to Agent; Override to GA']]
+  },
+  me: {
+    title:'James Martinez (You)', type:'Licensed Agent', status:'Active', tone:'ok',
+    rows:[['NPN','8823441'],['States','FL, TX'],['BoB Members','32'],['Commission YTD','$8,247'],['Direct Upline','HealthFirst Distribution (GA-001)']],
+    actions:'<a class="btn-ol btn-sm" href="profile.html"><i class="fas fa-user"></i> My Profile</a>'
+  }
+};
+
+function agentToneBadge(status, tone){
+  var bg = tone==='ok' ? '#e8f5e9' : tone==='warn' ? '#fff8e1' : tone==='navy' ? '#e6efee' : '#f1f3f4';
+  var color = tone==='ok' ? '#1b5e20' : tone==='warn' ? '#e65100' : tone==='navy' ? '#002624' : '#5f6368';
+  return '<span class="node-badge" style="background:'+bg+';color:'+color+';margin:0">'+status+'</span>';
+}
+
+function selectAgentHierNode(id, el){
+  document.querySelectorAll('#orgTreeContainer .node-item').forEach(function(n){ n.classList.remove('active-node'); });
+  if(el) el.classList.add('active-node');
+  var d = AGENT_HIER[id];
+  var panel = document.getElementById('hierDetailContent');
+  if(!panel || !d) return;
+  var rows = d.rows.map(function(r){
+    return '<div class="detail-row"><span class="detail-label">'+r[0]+'</span><span class="detail-value">'+r[1]+'</span></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">'+
+      '<div><div style="font-size:16px;font-weight:700;color:#002624">'+d.title+'</div>'+
+      '<div style="font-size:12px;color:#5f6368;margin-top:2px">'+d.type+'</div></div>'+
+      agentToneBadge(d.status, d.tone)+
+    '</div>'+
+    '<div style="border:1px solid #e8eaed;border-radius:8px;padding:4px 12px;background:#f8faf9;margin-bottom:14px">'+rows+'</div>'+
+    (d.actions ? '<div style="display:flex;gap:8px;flex-wrap:wrap">'+d.actions+'</div>' : '');
+}
+
+function toggleNode(btn){
+  var nodeItem = btn.closest('.node-item');
+  if(!nodeItem) return;
+  var parentNode = nodeItem.parentElement;
+  if(!parentNode || !parentNode.classList.contains('tree-node')) return;
+  var childNodes = [];
+  for(var i=0;i<parentNode.children.length;i++){
+    if(parentNode.children[i].classList.contains('tree-node')) childNodes.push(parentNode.children[i]);
+  }
+  if(!childNodes.length) return;
+  var isOpen = childNodes[0].style.display !== 'none';
+  childNodes.forEach(function(c){ c.style.display = isOpen ? 'none' : ''; });
+  var icon = btn.querySelector('i');
+  if(icon) icon.className = isOpen ? 'fas fa-plus' : 'fas fa-minus';
+}
+
+selectAgentHierNode('me', document.querySelector('#orgTreeContainer .node-item[data-node="me"]'));
+</script>
 </body>
 </html>
