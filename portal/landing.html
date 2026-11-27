@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Switcher | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="portal-landing.css?v=nfp-land-2">
+</head>
+<body class="pl-body">
+  <div class="pl-shell">
+    <header class="pl-top">
+      <div class="pl-brand">
+        <img src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+        <div class="pl-brand-meta">
+          <strong>Portal Switcher</strong>
+          <span id="carrierLabel">Select a workspace to continue</span>
+        </div>
+      </div>
+      <div class="pl-top-actions">
+        <a class="pl-chip" href="select-carrier.html"><i class="fas fa-hospital" aria-hidden="true"></i> Change carrier</a>
+        <a class="pl-chip" href="sso-login.html"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sign out</a>
+      </div>
+    </header>
+
+    <section class="pl-hero">
+      <h1>Where do you want to work?</h1>
+      <p>One landing for every NFP portal. Jump into Payer Admin suites, Agent tools, Agency Admin, or Member - then switch back anytime from the sidebar.</p>
+    </section>
+
+    <div class="pl-toolbar">
+      <label class="pl-search" for="portalSearch">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input id="portalSearch" type="search" placeholder="Search portals (broker support, commissions, onboarding…)" autocomplete="off">
+      </label>
+      <div class="pl-toolbar-btns">
+        <button type="button" class="pl-ghost" id="expandAll">Expand all</button>
+        <button type="button" class="pl-ghost" id="collapseAll">Collapse</button>
+      </div>
+    </div>
+
+    <div class="pl-recent" id="recentBox" aria-live="polite">
+      <p class="pl-recent-label">Continue where you left off</p>
+      <div class="pl-recent-row" id="recentRow"></div>
+    </div>
+
+    <div class="pl-grid" id="portalGrid">
+      <!-- Payer Admin family -->
+      <article class="pl-hub is-open" data-hub="payer" data-tags="payer admin broker support finance commission enrollment ops compliance sales leadership agency onboarding">
+        <button type="button" class="pl-hub-toggle" aria-expanded="true" aria-controls="hub-payer">
+          <span class="pl-hub-ico" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+          <span class="pl-hub-copy">
+            <strong>Payer Admin</strong>
+            <span>Carrier operations, support desks, finance, enrollment, and compliance</span>
+          </span>
+          <span class="pl-hub-meta">
+            <span class="pl-count">7 portals</span>
+            <i class="fas fa-chevron-down pl-chev" aria-hidden="true"></i>
+          </span>
+        </button>
+        <div class="pl-hub-body" id="hub-payer">
+          <div class="pl-hub-panel">
+            <div class="pl-links">
+              <a class="pl-portal is-primary" href="../admin/dashboard.html" data-name="Payer Admin" data-tags="payer admin carrier dashboard hierarchy agents">
+                <span class="pl-portal-ico"><i class="fas fa-cog"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Payer Admin</strong>
+                  <span>Agent lifecycle, hierarchy, plan catalog, roles, and carrier config</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../broker-support/dashboard.html" data-name="Broker Support" data-tags="broker support onboarding queue nipr cases">
+                <span class="pl-portal-ico"><i class="fas fa-headset"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Broker Support</strong>
+                  <span>Onboarding queues, NIPR alerts, overrides, and case review</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../finance/dashboard.html" data-name="Commission &amp; Finance" data-tags="commission finance batches remittance payroll">
+                <span class="pl-portal-ico"><i class="fas fa-dollar-sign"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Commission &amp; Finance</strong>
+                  <span>Batches, remittance, reconciliation, and payment runs</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../enrollment-ops/dashboard.html" data-name="Enrollment Ops" data-tags="enrollment ops oec cms processing">
+                <span class="pl-portal-ico"><i class="fas fa-clipboard-check"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Enrollment Ops</strong>
+                  <span>OEC hub, CMS compliance tracker, and C-SNP review</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../compliance/dashboard.html" data-name="Compliance" data-tags="compliance audit soa exclusion">
+                <span class="pl-portal-ico"><i class="fas fa-balance-scale"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Compliance</strong>
+                  <span>Audit trails, SOA checks, holds, and export controls</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../sales-leadership/dashboard.html" data-name="Sales Leadership" data-tags="sales leadership analytics producers roi">
+                <span class="pl-portal-ico"><i class="fas fa-chart-line"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Sales Leadership</strong>
+                  <span>Producer rankings, campaign ROI, and enrollment trends</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../agency-onboarding/create-agency.html" data-name="Agency Onboarding" data-tags="agency onboarding contracting genesis">
+                <span class="pl-portal-ico"><i class="fas fa-building"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Agency Onboarding</strong>
+                  <span>Create agencies, direct contracting, and admin setup</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Agent Portal family -->
+      <article class="pl-hub is-open" data-hub="agent" data-tags="agent broker onboarding leads enrollment commissions">
+        <button type="button" class="pl-hub-toggle" aria-expanded="true" aria-controls="hub-agent">
+          <span class="pl-hub-ico" aria-hidden="true"><i class="fas fa-user-tie"></i></span>
+          <span class="pl-hub-copy">
+            <strong>Agent Portal</strong>
+            <span>Daily producer work and first-time agent activation</span>
+          </span>
+          <span class="pl-hub-meta">
+            <span class="pl-count">2 portals</span>
+            <i class="fas fa-chevron-down pl-chev" aria-hidden="true"></i>
+          </span>
+        </button>
+        <div class="pl-hub-body" id="hub-agent">
+          <div class="pl-hub-panel">
+            <div class="pl-links">
+              <a class="pl-portal is-primary" href="../agent/dashboard.html" data-name="Agent Portal" data-tags="agent dashboard leads bob commissions enrollment">
+                <span class="pl-portal-ico"><i class="fas fa-tachometer-alt"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Agent Portal</strong>
+                  <span>Leads, enrollment journey, Book of Business, and commissions</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../agent/onboarding.html" data-name="Agent Onboarding" data-tags="agent onboarding licensing ahip training contract">
+                <span class="pl-portal-ico"><i class="fas fa-user-plus"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Agent Onboarding</strong>
+                  <span>8-step ready-to-sell wizard: licensing, training, and contract</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Agency Admin -->
+      <article class="pl-hub is-open" data-hub="agency" data-tags="agency admin downline hierarchy invitations commissions">
+        <button type="button" class="pl-hub-toggle" aria-expanded="true" aria-controls="hub-agency">
+          <span class="pl-hub-ico" aria-hidden="true"><i class="fas fa-sitemap"></i></span>
+          <span class="pl-hub-copy">
+            <strong>Agency Admin</strong>
+            <span>Downline oversight, invitations, and agency commissions</span>
+          </span>
+          <span class="pl-hub-meta">
+            <span class="pl-count">1 portal</span>
+            <i class="fas fa-chevron-down pl-chev" aria-hidden="true"></i>
+          </span>
+        </button>
+        <div class="pl-hub-body" id="hub-agency">
+          <div class="pl-hub-panel">
+            <div class="pl-links">
+              <a class="pl-portal is-primary" href="../agency-admin/dashboard.html" data-name="Agency Admin" data-tags="agency admin agents hierarchy onboarding cases bob">
+                <span class="pl-portal-ico"><i class="fas fa-building"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Agency Admin</strong>
+                  <span>Agents, hierarchy, onboarding cases, and consolidated BOB</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Member -->
+      <article class="pl-hub is-open" data-hub="member" data-tags="member dtc enrollment plan finder">
+        <button type="button" class="pl-hub-toggle" aria-expanded="true" aria-controls="hub-member">
+          <span class="pl-hub-ico" aria-hidden="true"><i class="fas fa-user"></i></span>
+          <span class="pl-hub-copy">
+            <strong>Member</strong>
+            <span>Direct-to-consumer enrollment and member self-service</span>
+          </span>
+          <span class="pl-hub-meta">
+            <span class="pl-count">2 portals</span>
+            <i class="fas fa-chevron-down pl-chev" aria-hidden="true"></i>
+          </span>
+        </button>
+        <div class="pl-hub-body" id="hub-member">
+          <div class="pl-hub-panel">
+            <div class="pl-links">
+              <a class="pl-portal is-primary" href="../member/dtc-enrollment.html" data-name="Member DTC Enrollment" data-tags="member dtc enrollment plan finder">
+                <span class="pl-portal-ico"><i class="fas fa-notes-medical"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Member DTC Enrollment</strong>
+                  <span>Plan finder, eligibility, PQAT, and CMS-compliant enrollment</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+              <a class="pl-portal" href="../member/dashboard.html" data-name="Member Dashboard" data-tags="member dashboard self service">
+                <span class="pl-portal-ico"><i class="fas fa-home"></i></span>
+                <span class="pl-portal-copy">
+                  <strong>Member Dashboard</strong>
+                  <span>Member home for post-enrollment self-service</span>
+                </span>
+                <span class="pl-portal-go"><i class="fas fa-arrow-right"></i></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="pl-empty" id="emptyState">No portals match that search. Try "broker", "finance", or "onboarding".</div>
+
+    <footer class="pl-foot">
+      <div class="pl-powered">
+        <span>Powered by</span>
+        <img src="../assets/brand/aaneel-logo.png?v=1" alt="AaNeel">
+      </div>
+      <span>NFP prototype - switch portals anytime from the sidebar</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var carrierEl = document.getElementById("carrierLabel");
+      var search = document.getElementById("portalSearch");
+      var hubs = Array.prototype.slice.call(document.querySelectorAll(".pl-hub"));
+      var portals = Array.prototype.slice.call(document.querySelectorAll(".pl-portal"));
+      var empty = document.getElementById("emptyState");
+      var recentBox = document.getElementById("recentBox");
+      var recentRow = document.getElementById("recentRow");
+
+      try {
+        var carrier = sessionStorage.getItem("eaCarrier");
+        if (carrier) carrierEl.textContent = carrier + " session";
+      } catch (ex) {}
+
+      function setOpen(hub, open) {
+        hub.classList.toggle("is-open", open);
+        var btn = hub.querySelector(".pl-hub-toggle");
+        if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      hubs.forEach(function (hub) {
+        var btn = hub.querySelector(".pl-hub-toggle");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          setOpen(hub, !hub.classList.contains("is-open"));
+        });
+      });
+
+      document.getElementById("expandAll").addEventListener("click", function () {
+        hubs.forEach(function (hub) { setOpen(hub, true); });
+      });
+      document.getElementById("collapseAll").addEventListener("click", function () {
+        hubs.forEach(function (hub) { setOpen(hub, false); });
+      });
+
+      function filterPortals() {
+        var q = (search.value || "").trim().toLowerCase();
+        var any = false;
+        hubs.forEach(function (hub) {
+          var hubTags = (hub.getAttribute("data-tags") || "").toLowerCase();
+          var hubMatch = !q || hubTags.indexOf(q) !== -1;
+          var visibleLinks = 0;
+          hub.querySelectorAll(".pl-portal").forEach(function (link) {
+            var tags = ((link.getAttribute("data-tags") || "") + " " + (link.getAttribute("data-name") || "")).toLowerCase();
+            var show = !q || tags.indexOf(q) !== -1 || hubMatch;
+            link.classList.toggle("is-hidden", !show);
+            if (show) visibleLinks += 1;
+          });
+          var showHub = visibleLinks > 0;
+          hub.classList.toggle("is-hidden", !showHub);
+          if (showHub && q) setOpen(hub, true);
+          if (showHub) any = true;
+        });
+        empty.classList.toggle("is-on", !any);
+      }
+
+      search.addEventListener("input", filterPortals);
+
+      function remember(name, href) {
+        try {
+          var list = JSON.parse(sessionStorage.getItem("eaRecentPortals") || "[]");
+          list = list.filter(function (item) { return item.href !== href; });
+          list.unshift({ name: name, href: href, at: Date.now() });
+          sessionStorage.setItem("eaRecentPortals", JSON.stringify(list.slice(0, 4)));
+        } catch (ex) {}
+      }
+
+      function renderRecent() {
+        try {
+          var list = JSON.parse(sessionStorage.getItem("eaRecentPortals") || "[]");
+          if (!list.length) {
+            recentBox.classList.remove("is-on");
+            return;
+          }
+          recentRow.innerHTML = "";
+          list.forEach(function (item) {
+            var a = document.createElement("a");
+            a.className = "pl-chip";
+            a.href = item.href;
+            a.innerHTML = '<i class="fas fa-history" aria-hidden="true"></i> ' + item.name;
+            a.addEventListener("click", function () { remember(item.name, item.href); });
+            recentRow.appendChild(a);
+          });
+          recentBox.classList.add("is-on");
+        } catch (ex) {
+          recentBox.classList.remove("is-on");
+        }
+      }
+
+      portals.forEach(function (link) {
+        link.addEventListener("click", function () {
+          remember(link.getAttribute("data-name") || link.textContent.trim(), link.getAttribute("href"));
+        });
+      });
+
+      renderRecent();
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "/" && document.activeElement !== search) {
+          e.preventDefault();
+          search.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

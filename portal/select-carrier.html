@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choose a carrier | EnrollAxis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="portal-auth.css?v=nfp-sso-2">
+</head>
+<body class="carrier-page">
+  <div class="p-auth">
+    <div class="p-auth-card">
+      <img class="p-auth-logo" src="../assets/brand/enrollaxis-logo.png?v=2" alt="EnrollAxis">
+
+      <div id="chooseCarrier">
+        <h1>Choose a carrier</h1>
+        <p>Select the carrier you want to work in for this session.</p>
+        <div class="p-carrier-list" role="list">
+          <button type="button" class="p-btn p-btn-outline p-btn-block" data-carrier="AaNeel Ensure Health Plan" role="listitem">AaNeel Ensure Health Plan</button>
+          <button type="button" class="p-btn p-btn-outline p-btn-block" data-carrier="Gold Valley Health Plan" role="listitem">Gold Valley Health Plan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      document.querySelectorAll("[data-carrier]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          try {
+            sessionStorage.setItem("eaCarrier", btn.getAttribute("data-carrier") || "");
+          } catch (ex) {}
+          location.href = "landing.html";
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -443,6 +443,47 @@ function exportTableToExcel(tableId, filename) {
 }
 
 // ═══════════════════════════════════════════════════════
+// PORTAL SWITCHER (shared landing for every NFP portal)
+// Injects a sticky sidebar link back to portal/landing.html
+// ═══════════════════════════════════════════════════════
+(function applyNfpPortalSwitcher() {
+  function asset(path) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var src = scripts[i].src || '';
+      var m = src.match(/^(.*\/)assets\/nfp-actions\.js/i);
+      if (m) return m[1] + path;
+    }
+    return '../' + path;
+  }
+
+  function run() {
+    var sidebar = document.querySelector('nav.sidebar, .sidebar');
+    if (!sidebar || sidebar.getAttribute('data-nfp-switcher') === '1') return;
+    sidebar.setAttribute('data-nfp-switcher', '1');
+
+    var nav = sidebar.querySelector('.sb-nav');
+    if (!nav) return;
+
+    var landingHref = asset('portal/landing.html');
+    var wrap = document.createElement('div');
+    wrap.className = 'nfp-switcher';
+    wrap.innerHTML =
+      '<a class="nfp-switcher-link" href="' + landingHref + '">' +
+        '<i class="fas fa-th-large" aria-hidden="true"></i>' +
+        '<span>Portal Switcher</span>' +
+      '</a>';
+    nav.insertBefore(wrap, nav.firstChild);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+
+// ═══════════════════════════════════════════════════════
 // COBRAND PLACEMENT (landing-dashboard pattern)
 // Sidebar top: AaNeel Ensure | Header right: user + EnrollAxis
 // Sidebar foot: Powered by AaNeel

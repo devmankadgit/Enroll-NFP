@@ -1,0 +1,145 @@
+/**
+ * SSO auth + carrier selection - NFP post-login entry
+ */
+:root {
+  --p-primary: #177e71;
+  --p-primary-hover: #12655a;
+  --p-text: #1b1c1c;
+  --p-muted: #6a716f;
+  --p-border: #ced1d1;
+  --p-card: #ffffff;
+  --p-selected: #e8f2f1;
+  --p-radius: 12px;
+  --p-font-heading: "Poppins", system-ui, sans-serif;
+  --p-font-body: "DM Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--p-font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--p-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.p-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #0d0e0e 0%, #12655a 55%, #177e71 100%);
+}
+
+.p-auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 1.5rem;
+  border-radius: var(--p-radius);
+  background: var(--p-card);
+  box-shadow: 0 16px 40px rgba(13, 14, 14, 0.28);
+  text-align: center;
+  animation: p-card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.p-auth-logo {
+  height: 32px;
+  width: auto;
+  margin: 0 auto 1.25rem;
+  display: block;
+}
+
+.p-auth-card h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--p-font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--p-text);
+  letter-spacing: -0.02em;
+}
+
+.p-auth-card p {
+  margin: 0 0 1.25rem;
+  font-size: 14px;
+  color: var(--p-muted);
+  line-height: 1.5;
+}
+
+.p-carrier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  text-align: left;
+}
+
+.p-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--p-primary);
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.p-btn:hover {
+  background: var(--p-primary-hover);
+  color: #fff;
+  text-decoration: none;
+}
+
+.p-btn:focus-visible {
+  outline: 2px solid var(--p-primary);
+  outline-offset: 2px;
+}
+
+.p-btn-outline {
+  background: var(--p-card);
+  color: var(--p-primary);
+  border-color: var(--p-primary);
+}
+
+.p-btn-outline:hover {
+  background: var(--p-selected);
+  color: var(--p-primary-hover);
+  border-color: var(--p-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(18, 101, 90, 0.12);
+}
+
+.p-btn-block { width: 100%; }
+
+@keyframes p-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+::selection {
+  background: rgba(23, 126, 113, 0.22);
+  color: var(--p-text);
+}
+
+@media (max-width: 480px) {
+  .p-auth-card {
+    padding: 1.5rem 1.15rem;
+  }
+}
