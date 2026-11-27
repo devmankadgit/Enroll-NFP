@@ -5,9 +5,9 @@
 <title>Notification Templates | NFP Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css">
+<link rel="stylesheet" href="../assets/nfp.css?v=nfp-footer-1">
 <style>
-:root{--sb:#002624}
+
 .ts-active{background:#e8f5e9;color:#1b5e20;border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
 .ts-inactive{background:#f1f3f4;color:#9e9e9e;border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
 .ch-pill{display:inline-flex;align-items:center;gap:3px;background:#f1f3f4;border-radius:8px;padding:2px 8px;font-size:10px;color:#5f6368;margin:2px}
@@ -43,7 +43,7 @@
 <body>
 <div class="wrapper">
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">AaNeel Ensure</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -353,7 +353,7 @@
 
 <div id="toastEl" style="display:none;position:fixed;bottom:28px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:400px"></div>
 
-<script src="../assets/nfp-actions.js"></script>
+<script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
 <script>
 /* ============================================================
    US-2.8: Onboarding Notification Templates
@@ -435,7 +435,7 @@ var TEMPLATES = [
   {id:12, key:'train_assign', cat:'Training',   label:'Training Package Assigned',          mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Training Package Assigned ? Action Required', body:'Dear {agent_name},\n\nA training package has been assigned to you.\n\nPackage: {package_name}\nDue Date: {due_date}\nPassing Score: {pass_pct}\nStart here: {training_link}', sms:'EnrollAxis: Training "{package_name}" assigned. Due {due_date}. Start: {training_link}.', portal:'Training assigned: {package_name}. Due {due_date}. Click to begin.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
   {id:13, key:'exam_passed',  cat:'Training',   label:'Exam Passed',                        mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Congratulations ? Exam Passed!', body:'Dear {agent_name},\n\nCongratulations! You passed {exam_name}.\n\nScore: {score}\nPassed: {pass_date}\nNext Step: {next_step}', sms:'', portal:'Exam passed: {exam_name}. Score: {score}. Next step: {next_step}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
   {id:14, key:'exam_failed',  cat:'Training',   label:'Exam Failed / Max Attempts Reached', mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Exam Result ? Action Required', body:'Dear {agent_name},\n\nYou did not pass {exam_name}.\n\nScore: {score}\nAttempts Remaining: {attempts_remaining}\nRetry: {retry_link}', sms:'', portal:'Exam {exam_name} not passed. Score: {score}. Attempts remaining: {attempts_remaining}.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
-  {id:15, key:'activated',    cat:'Activation', label:'Agent Activated ? Ready to Sell',   mandatory:true,  status:'Active',   ver:2, ch:{email:true,sms:true,portal:true},  subj:'Congratulations ? You are now Active and Ready to Sell!', body:'Dear {agent_name},\n\nYou have successfully completed onboarding and are now an active agent.\n\nActivation Date: {activation_date}\nReady to Sell: {ready_to_sell_date}\nPlan Year: {plan_year}\nPortal: {portal_url}\n\nThank you for joining EnrollAxis.', sms:'EnrollAxis: You are now Active! Ready to Sell as of {ready_to_sell_date}. Login: {portal_url}.', portal:'You are now ACTIVE and Ready to Sell for PY {plan_year}. Welcome to EnrollAxis!', lastMod:'2026-05-20', modBy:'Sandra Adams', history:[{v:1,date:'2026-03-01',modBy:'SYSTEM',note:'Initial version'}]},
+  {id:15, key:'activated',    cat:'Activation', label:'Agent Activated ? Ready to Sell',   mandatory:true,  status:'Active',   ver:2, ch:{email:true,sms:true,portal:true},  subj:'Congratulations ? You are now Active and Ready to Sell!', body:'Dear {agent_name},\n\nYou have successfully completed onboarding and are now an active agent.\n\nActivation Date: {activation_date}\nReady to Sell: {ready_to_sell_date}\nPlan Year: {plan_year}\nPortal: {portal_url}\n\nThank you for joining EnrollAxis.', sms:'EnrollAxis: You are now Active! Ready to Sell as of {ready_to_sell_date}. Login: {portal_url}.', portal:'You are now ACTIVE and Ready to Sell for PY {plan_year}. Welcome to AaNeel Ensure!', lastMod:'2026-05-20', modBy:'Sandra Adams', history:[{v:1,date:'2026-03-01',modBy:'SYSTEM',note:'Initial version'}]},
   {id:16, key:'on_hold',      cat:'Compliance', label:'Onboarding On Hold',                 mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: Onboarding Placed On Hold', body:'Dear {agent_name},\n\nYour onboarding has been placed on hold.\n\nReason: {hold_reason}\nDate: {hold_date}\n\nContact {contact_name} to resolve: {support_phone}', sms:'EnrollAxis: Onboarding on hold. Reason: {hold_reason}. Contact {contact_name} at {support_phone}.', portal:'Onboarding on hold. Reason: {hold_reason}. Contact {contact_name} to resolve.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
   {id:17, key:'override',     cat:'Compliance', label:'Override Applied to Onboarding Step',mandatory:false, status:'Active',   ver:1, ch:{email:true,sms:false,portal:true}, subj:'Onboarding Step Override Applied ? {override_step}', body:'Dear {agent_name},\n\nAn override has been applied to your onboarding.\n\nStep: {override_step}\nReason: {override_reason}\nApplied By: {override_by}\nDate: {override_date}', sms:'', portal:'Override applied to step: {override_step}. Reason: {override_reason}. Your onboarding continues.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},
   {id:18, key:'recert',       cat:'Compliance', label:'Annual Recertification Reminder',    mandatory:true,  status:'Active',   ver:1, ch:{email:true,sms:true,portal:true},  subj:'Action Required: {cert_type} Expires in {days_remaining} Days', body:'Dear {agent_name},\n\nYour {cert_type} expires on {cert_expiry_date}.\n\nDays Remaining: {days_remaining}\nRenew now: {recert_link}\n\nFailure to renew may result in a Compliance Hold.', sms:'EnrollAxis: {cert_type} expires {cert_expiry_date} ({days_remaining} days). Renew at {recert_link}.', portal:'{cert_type} expires in {days_remaining} days ({cert_expiry_date}). Click to renew now.', lastMod:'2026-03-01', modBy:'SYSTEM', history:[]},

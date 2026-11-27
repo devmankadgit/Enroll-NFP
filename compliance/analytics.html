@@ -5,8 +5,8 @@
 <title>Compliance Analytics | EnrollAxis</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css">
-<style>:root{--sb:#004d40}
+<link rel="stylesheet" href="../assets/nfp.css?v=nfp-footer-1">
+<style>
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
 .modal-box{background:#fff;border-radius:12px;width:90%;max-width:540px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .modal-hdr{padding:16px 20px;border-bottom:1px solid #e8eaed;display:flex;align-items:center;justify-content:space-between}
@@ -29,7 +29,7 @@
 <body>
 <div class="wrapper">
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
+  <div class="sb-brand"><div class="carrier">AaNeel Ensure</div><div class="portal"><i class="fas fa-gavel" style="margin-right:8px;opacity:.8"></i>Compliance</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent Compliance</div>
@@ -223,7 +223,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="../assets/nfp-actions.js"></script>
+<script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
 <script>
 // Compliance Trends
 new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Overall',data:[91,92,93,93.5,94,94.2],borderColor:'#004d40',fill:false,tension:.3},{label:'License',data:[94,95,95,96,96,96],borderColor:'#147966',fill:false,tension:.3},{label:'AHIP',data:[89,90,91,92,93,93],borderColor:'#6a1b9a',fill:false,tension:.3}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{min:85,max:100,ticks:{callback:function(v){return v+'%'}}}}}});

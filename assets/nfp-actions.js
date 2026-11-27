@@ -1,5 +1,5 @@
 /**
- * EnrollAxis NFP — Shared Button Actions & Navigation
+ * EnrollAxis NFP - Shared Button Actions & Navigation
  * Provides working button behaviors for the non-functional prototype
  */
 
@@ -441,3 +441,185 @@ function exportTableToExcel(tableId, filename) {
   document.body.removeChild(link);
   showToast('Exported "' + (filename || 'data') + '" to Excel (CSV).', 'success');
 }
+
+// ═══════════════════════════════════════════════════════
+// COBRAND PLACEMENT (landing-dashboard pattern)
+// Sidebar top: AaNeel Ensure | Header right: user + EnrollAxis
+// Sidebar foot: Powered by AaNeel
+// ═══════════════════════════════════════════════════════
+(function applyNfpCobrand() {
+  function asset(path) {
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var src = scripts[i].src || '';
+      var m = src.match(/^(.*\/)assets\/nfp-actions\.js/i);
+      if (m) return m[1] + path;
+    }
+    return '../' + path;
+  }
+
+  function run() {
+    var sidebar = document.querySelector('nav.sidebar, .sidebar');
+    if (!sidebar || sidebar.getAttribute('data-nfp-cobrand') === '1') return;
+    sidebar.setAttribute('data-nfp-cobrand', '1');
+
+    var brandAssets = asset('assets/brand/');
+    var ensureLogo = brandAssets + 'aaneel-ensure.png?v=2';
+    var aaneelLogo = brandAssets + 'aaneel-logo.png?v=1';
+    var eaLogo = brandAssets + 'enrollaxis-logo.png?v=2';
+
+    var userName = '';
+    var userRole = '';
+    var userInitials = '';
+    var portalLabel = '';
+
+    var brand = sidebar.querySelector('.sb-brand');
+    if (brand) {
+      var portalEl = brand.querySelector('.portal');
+      if (portalEl) {
+        portalLabel = (portalEl.textContent || '').replace(/\s+/g, ' ').trim();
+      }
+      brand.innerHTML = '';
+      var logo = document.createElement('img');
+      logo.className = 'nfp-customer-logo';
+      logo.src = ensureLogo;
+      logo.alt = 'AaNeel Ensure';
+      brand.appendChild(logo);
+    }
+
+    var foot = sidebar.querySelector('.sb-foot');
+    if (foot) {
+      var nameEl = foot.querySelector('.sb-u-name');
+      var roleEl = foot.querySelector('.sb-u-role');
+      var avaEl = foot.querySelector('.sb-ava');
+      if (nameEl) userName = (nameEl.textContent || '').trim();
+      if (roleEl) userRole = (roleEl.textContent || '').trim();
+      if (avaEl) userInitials = (avaEl.textContent || '').trim();
+      foot.innerHTML = '';
+      var powered = document.createElement('div');
+      powered.className = 'nfp-powered-by';
+      powered.innerHTML =
+        '<span class="nfp-powered-by-label">Powered by</span>' +
+        '<img class="nfp-powered-by-logo" src="' + aaneelLogo + '" alt="AaNeel">';
+      foot.appendChild(powered);
+    }
+
+    if (!userName && portalLabel) userName = portalLabel;
+    if (!userInitials && userName) {
+      userInitials = userName.split(/\s+/).map(function (p) { return p.charAt(0); }).join('').slice(0, 2).toUpperCase();
+    }
+    if (!userRole && portalLabel && portalLabel !== userName) userRole = portalLabel;
+
+    var topbar = document.querySelector('.main > .topbar, .topbar');
+    if (!topbar) return;
+
+    topbar.querySelectorAll('.brand-top-left').forEach(function (el) {
+      el.remove();
+    });
+
+    if (topbar.querySelector('.nfp-topbar-end')) return;
+
+    var logoutBtn = null;
+    topbar.querySelectorAll('a.tb-btn, button.tb-btn, a[title], button[title]').forEach(function (el) {
+      if (logoutBtn) return;
+      var title = (el.getAttribute('title') || '') + ' ' + (el.getAttribute('aria-label') || '');
+      var hasIcon = !!el.querySelector('.fa-sign-out-alt, .fa-sign-out, .fa-arrow-right-from-bracket');
+      if (hasIcon || /logout|sign\s*out/i.test(title)) logoutBtn = el;
+    });
+
+    var end = document.createElement('div');
+    end.className = 'nfp-topbar-end';
+
+    var user = document.createElement('div');
+    user.className = 'nfp-topbar-user';
+    user.innerHTML =
+      '<span class="nfp-topbar-user-ava" aria-hidden="true">' + (userInitials || 'U') + '</span>' +
+      '<span class="nfp-topbar-user-meta">' +
+        '<span class="nfp-topbar-user-name">' + (userName || 'User') + '</span>' +
+        (userRole ? '<span class="nfp-topbar-user-role">' + userRole + '</span>' : '') +
+      '</span>';
+    end.appendChild(user);
+
+    // Order: avatar/name -> logout -> EnrollAxis logo
+    if (logoutBtn) {
+      logoutBtn.classList.add('nfp-topbar-logout');
+      end.appendChild(logoutBtn);
+    }
+
+    var product = document.createElement('div');
+    product.className = 'nfp-header-product';
+    product.innerHTML =
+      '<img class="nfp-header-product-logo" src="' + eaLogo + '" alt="EnrollAxis">' +
+      '<p class="nfp-header-product-ver">Version 0.1</p>';
+    end.appendChild(product);
+
+    topbar.appendChild(end);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+
+// ═══════════════════════════════════════════════════════
+// PAGE FOOTER (agent onboarding ui-page-footer pattern)
+// Replace green EnrollAxis Inc / contract-renewal bars with
+// the light Last Updated | Copyright footer used in onboarding.
+// ═══════════════════════════════════════════════════════
+(function applyNfpPageFooter() {
+  function isLegacyPortalFooter(el) {
+    if (!el || el.tagName !== 'FOOTER') return false;
+    if (el.classList.contains('ui-page-footer') || el.classList.contains('nfp-page-footer')) return false;
+    if (el.getAttribute('data-nfp-page-footer') === '1') return false;
+    var text = (el.textContent || '').replace(/\s+/g, ' ');
+    var style = (el.getAttribute('style') || '').toLowerCase();
+    var looksGreen =
+      /background\s*:\s*#(0{2}2624|0e4c44|0d0e0e|004d40|0f6a62|002624)/i.test(style) ||
+      /background\s*:\s*#0[0-9a-f]{5}/i.test(style);
+    var looksCopyright =
+      /EnrollAxis,\s*Inc/i.test(text) ||
+      /contract renewal/i.test(text) ||
+      (/Last Updated/i.test(text) && /Copyright/i.test(text));
+    return looksCopyright || (looksGreen && /EnrollAxis/i.test(text));
+  }
+
+  function formatUpdated(raw) {
+    if (!raw) return '05.28.2026';
+    var m = String(raw).match(/(\d{1,2})\D+(\d{1,2})\D+(\d{4})/);
+    if (!m) return '05.28.2026';
+    var mm = ('0' + m[1]).slice(-2);
+    var dd = ('0' + m[2]).slice(-2);
+    return mm + '.' + dd + '.' + m[3];
+  }
+
+  function run() {
+    var footers = Array.prototype.slice.call(document.querySelectorAll('footer'));
+    footers.forEach(function (footer) {
+      if (!isLegacyPortalFooter(footer)) return;
+
+      var text = (footer.textContent || '').replace(/\s+/g, ' ');
+      var dateMatch = text.match(/Last Updated:\s*([0-9]{1,2}[^|]*?[0-9]{4})/i);
+      var updated = formatUpdated(dateMatch && dateMatch[1]);
+
+      footer.removeAttribute('style');
+      footer.className = 'ui-page-footer';
+      footer.setAttribute('data-nfp-page-footer', '1');
+      footer.innerHTML =
+        'Last Updated: ' + updated + ' &nbsp;|&nbsp; Copyright © 2026 EnrollAxis';
+
+      var main = document.querySelector('.main');
+      if (main && !main.contains(footer)) {
+        main.appendChild(footer);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+

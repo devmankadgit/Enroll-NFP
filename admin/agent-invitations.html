@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agent Invitations | Carrier Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/nfp.css">
+<link rel="stylesheet" href="../assets/nfp.css?v=nfp-footer-1">
 <style>
-:root{--sb:#002624}
+}
 .inv-tab{padding:9px 22px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:600;color:#5f6368;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
 .inv-tab:hover{background:#f1f3f4;color:#002624}
 .inv-tab.active{background:#e6efee;color:#002624}
@@ -63,7 +63,7 @@
 
 <!-- SIDEBAR -->
 <nav class="sidebar">
-  <div class="sb-brand"><div class="carrier">EnrollAxis</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
+  <div class="sb-brand"><div class="carrier">AaNeel Ensure</div><div class="portal"><i class="fas fa-shield-alt" style="margin-right:8px;opacity:.8"></i>Payer Admin User</div></div>
   <div class="sb-nav">
     <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
     <div class="sb-section">Agent &amp; Producer</div>
@@ -424,7 +424,7 @@
 </div>
 </div>
 
-<script src="../assets/nfp-actions.js"></script>
+<script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
 <script>
 /* =========================================================
    DATA / */
@@ -554,10 +554,10 @@ function buildInvitePreview(){
   var expiryDate = new Date(Date.now()+expiry*3600000);
   var token = 'tk_'+Math.random().toString(36).substring(2,10).toUpperCase();
   preview.innerHTML = '<div style="border:1px solid #e8eaed;border-radius:8px;overflow:hidden">'
-    +'<div style="background:#002624;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">EnrollAxis ? Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@gkhealth.com</div></div>'
+    +'<div style="background:#002624;padding:14px 18px;color:#fff"><div style="font-size:12px;font-weight:700;margin-bottom:2px">AaNeel Ensure - Contracting Invitation</div><div style="font-size:10px;opacity:.8">noreply@aaneel.com</div></div>'
     +'<div style="padding:16px;font-size:12px;color:#333">'
     +'<div style="margin-bottom:10px">Dear <strong>'+recipientName+'</strong>,</div>'
-    +'<div style="margin-bottom:8px">You have been invited to join the <strong>EnrollAxis</strong> producer network as a <strong>'+role+'</strong>.</div>'
+    +'<div style="margin-bottom:8px">You have been invited to join the <strong>AaNeel Ensure</strong> producer network as a <strong>'+role+'</strong>.</div>'
     +(msg?'<div style="background:#f8f9fa;border-left:3px solid #002624;padding:8px 10px;margin-bottom:10px;font-style:italic;color:#5f6368">'+msg+'</div>':'')
     +'<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:12px">'
     +'<tr style="background:#f8f9fa"><td style="padding:5px;color:#5f6368;width:120px">Hierarchy Level:</td><td style="padding:5px;font-weight:600">'+(level||'?')+'</td></tr>'
@@ -715,7 +715,7 @@ function loadBulkInviteFile(event){
 function downloadBulkInviteTemplate(){
   var rows = [
     'firstName,lastName,email,npn,level,role,uplineOrgId,planYear,message',
-    'Ava,Ng,ava.ng@email.com,44556677,Agent/Broker,Individual Agent,GA-2201,2026,Welcome to EnrollAxis!',
+    'Ava,Ng,ava.ng@email.com,44556677,Agent/Broker,Individual Agent,GA-2201,2026,Welcome to AaNeel Ensure!',
     'Noah,Patel,noah.patel@email.com,,GA,Agency Admin,MGA-1014,2026,'
   ];
   var blob = new Blob([rows.join('\n')],{type:'text/csv'});
@@ -1121,7 +1121,7 @@ function prefillSendInvitation(){
   document.getElementById('invUplineOrg').value='GA-2201';
   document.getElementById('invPlanYear').value='2026';
   document.getElementById('invExpiry').value='72';
-  document.getElementById('invMessage').value='Welcome to EnrollAxis! We look forward to having you join our network. Please complete your contracting within 72 hours.';
+  document.getElementById('invMessage').value='Welcome to AaNeel Ensure! We look forward to having you join our network. Please complete your contracting within 72 hours.';
   document.getElementById('invMsgLen').textContent=document.getElementById('invMessage').value.length;
   // Reset NPN/email error states
   ['emailFormatErr','emailDupWarn','npnFormatErr','npnDupErr','npnPendErr','npnTermWarn'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
