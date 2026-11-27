@@ -120,49 +120,87 @@
   .obc-layout{
     display:flex;flex-direction:column;gap:16px;
   }
-  .obc-detail{width:100%}
-  .obc-detail-empty{
-    padding:28px 20px;text-align:center;color:var(--neutral-500);font-size:13px;
+  .obc-quick-modal .modal-box{max-width:640px;width:100%}
+  .obc-quick-modal .modal-body{padding:0}
+  .obc-quick-modal .modal-hdr{
+    background:linear-gradient(180deg,#f4faf8 0%,#fff 100%);
   }
-  .obc-detail-empty i{display:block;font-size:22px;margin-bottom:8px;color:var(--primary-500);opacity:.7}
-  .obc-detail-head{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--neutral-100);
+  .obc-detail-hero{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+    padding:18px 20px 16px;border-bottom:1px solid var(--neutral-100);
   }
-  .obc-detail-head h5{margin:0;font-size:16px;font-weight:600;color:var(--neutral-900)}
-  .obc-detail-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--neutral-700)}
-  .obc-kv-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:0 28px;
-    margin-bottom:16px;border:1px solid var(--neutral-100);border-radius:8px;
-    background:var(--neutral-50);padding:4px 14px;
+  .obc-detail-hero-main{min-width:0;flex:1}
+  .obc-detail-hero h5{
+    margin:0 0 6px;font-size:18px;font-weight:600;color:var(--neutral-900);
+    letter-spacing:-.01em;line-height:1.25;
   }
-  .obc-kv{
-    display:grid;grid-template-columns:168px minmax(0,1fr);gap:10px;align-items:baseline;
-    min-width:0;padding:9px 0;border-bottom:1px solid var(--neutral-100);
+  .obc-detail-meta{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--neutral-700);
   }
-  .obc-kv:nth-child(7),
-  .obc-kv:nth-child(8),
-  .obc-kv.is-full{border-bottom:0}
-  .obc-kv.is-full{
-    grid-column:1 / -1;
-    border-top:1px solid var(--neutral-100);
-    margin-top:2px;padding-top:10px;
+  .obc-detail-meta .obc-case-id{
+    font-weight:600;color:var(--neutral-800);
+    font-variant-numeric:tabular-nums;
   }
-  .obc-kv .k{
-    font-size:12px;font-weight:600;color:var(--neutral-700);
-    white-space:nowrap;
+  .obc-detail-meta .obc-meta-sep{color:var(--neutral-300);user-select:none}
+  .obc-step-banner{
+    display:flex;align-items:center;gap:12px;
+    margin:0 20px 14px;padding:12px 14px;
+    border-radius:10px;background:#e8f5f2;
+    border:1px solid #c8e6df;
   }
-  .obc-kv .k::after{content:":"}
-  .obc-kv .v{font-size:13px;color:var(--neutral-900);font-weight:500;word-break:break-word}
-  @media (max-width:900px){
-    .obc-kv-grid{grid-template-columns:1fr;gap:0}
-    .obc-kv:nth-child(7),.obc-kv:nth-child(8){border-bottom:1px solid var(--neutral-100)}
-    .obc-kv:last-child,.obc-kv.is-full{border-bottom:0}
+  .obc-step-banner-icon{
+    width:34px;height:34px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:#fff;color:var(--primary-700);font-size:14px;
+    border:1px solid #c8e6df;
   }
+  .obc-step-banner-copy{min-width:0}
+  .obc-step-banner-label{
+    display:block;font-size:11px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--primary-700);margin-bottom:2px;
+  }
+  .obc-step-banner-value{
+    font-size:13.5px;font-weight:600;color:var(--neutral-900);line-height:1.3;
+  }
+  .obc-field-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;
+    padding:0 20px 16px;
+  }
+  .obc-field{
+    min-width:0;padding:11px 12px;
+    border:1px solid var(--neutral-100);border-radius:8px;
+    background:var(--neutral-50);
+  }
+  .obc-field .k{
+    display:block;font-size:11px;font-weight:600;letter-spacing:.02em;
+    text-transform:uppercase;color:var(--neutral-600);margin-bottom:4px;
+  }
+  .obc-field .v{
+    display:block;font-size:13.5px;font-weight:500;color:var(--neutral-900);
+    line-height:1.35;word-break:break-word;
+  }
+  .obc-notes{
+    margin:0 20px 16px;padding:12px 14px;
+    border-radius:10px;background:#fffdf7;
+    border:1px solid #f0e6c8;
+  }
+  .obc-notes-head{
+    display:flex;align-items:center;gap:8px;margin-bottom:6px;
+    font-size:11px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:#8a6d1a;
+  }
+  .obc-notes-head i{font-size:12px}
+  .obc-notes .v{
+    margin:0;font-size:13.5px;font-weight:500;color:var(--neutral-900);
+    line-height:1.45;
+  }
+  body.obc-modal-open{overflow:hidden}
   @media (max-width:640px){
     .obc-page-intro{flex-wrap:wrap;align-items:flex-start}
-    .obc-kv{grid-template-columns:132px minmax(0,1fr);gap:8px}
+    .obc-field-grid{grid-template-columns:1fr}
     .obc-toolbar input[type=search]{min-width:0;width:100%}
+    .obc-detail-hero{flex-direction:column;gap:10px}
   }
 </style>
 </head>
@@ -211,7 +249,7 @@
 
   <div class="page">
     <div class="obc-page-intro">
-      <p>Track every downline agent and agency through invitation, credentials, appointments, and Ready to Sell. Select a case to review progress and take action.</p>
+      <p>Track every downline agent and agency through invitation, credentials, appointments, and Ready to Sell. Click a row for a quick case summary, or use View for full detail and actions.</p>
       <a href="invitations.html" class="btn-ol btn-sm"><i class="fas fa-paper-plane"></i> Go to Invitations</a>
     </div>
 
@@ -504,28 +542,6 @@
         </div>
       </div>
 
-      <div class="card obc-detail mb16" id="caseDetailPanel">
-        <div class="card-hdr"><h5>Case Detail</h5></div>
-        <div class="card-body" id="caseDetailBody">
-          <div class="obc-detail-head">
-            <div>
-              <h5 id="panelName">Kevin Williams</h5>
-              <div class="obc-detail-meta"><span id="panelCaseId">OB-2026-001</span> · <span id="panelStatusBadge"></span></div>
-            </div>
-          </div>
-          <div class="obc-kv-grid">
-            <div class="obc-kv"><span class="k">NPN</span><span class="v" id="panelNpn">8847123</span></div>
-            <div class="obc-kv"><span class="k">Email</span><span class="v" id="panelEmail">kwilliams@email.com</span></div>
-            <div class="obc-kv"><span class="k">Requested States</span><span class="v" id="panelReqStates">FL, TX</span></div>
-            <div class="obc-kv"><span class="k">Hierarchy Position</span><span class="v" id="panelHierarchy">Agent under HealthFirst (GA-001)</span></div>
-            <div class="obc-kv"><span class="k">Plan Year</span><span class="v" id="panelPlanYear">2026</span></div>
-            <div class="obc-kv"><span class="k">Current Step</span><span class="v" id="panelCurrentStep">Background Check (IBR)</span></div>
-            <div class="obc-kv"><span class="k">Background Check Status</span><span class="v" id="panelBgStatus">Submitted May 19 - awaiting result</span></div>
-            <div class="obc-kv"><span class="k">Estimated Completion</span><span class="v" id="panelEst">05 26,2026</span></div>
-            <div class="obc-kv is-full"><span class="k">Reviewer Notes</span><span class="v" id="panelNotes">All documents verified. Awaiting IBR clearance.</span></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -537,10 +553,55 @@
 </footer>
 <script src="../assets/nfp-actions.js?v=nfp-footer-1"></script>
 
+<!-- Case quick detail (row click) -->
+<div class="modal-overlay obc-quick-modal" id="caseQuickModal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="panelName" onclick="if(event.target===this)closeQuickDetail()">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h5><i class="fas fa-folder-open" style="margin-right:8px;color:#0f6a62"></i>Case Detail</h5>
+      <button type="button" class="modal-close" aria-label="Close" onclick="closeQuickDetail()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="obc-detail-hero">
+        <div class="obc-detail-hero-main">
+          <h5 id="panelName">Kevin Williams</h5>
+          <div class="obc-detail-meta">
+            <span class="obc-case-id" id="panelCaseId">OB-2026-001</span>
+            <span class="obc-meta-sep" aria-hidden="true">·</span>
+            <span id="panelStatusBadge"></span>
+          </div>
+        </div>
+      </div>
+      <div class="obc-step-banner" aria-live="polite">
+        <div class="obc-step-banner-icon" aria-hidden="true"><i class="fas fa-route"></i></div>
+        <div class="obc-step-banner-copy">
+          <span class="obc-step-banner-label">Current step</span>
+          <div class="obc-step-banner-value" id="panelCurrentStep">Background Check (IBR)</div>
+        </div>
+      </div>
+      <div class="obc-field-grid">
+        <div class="obc-field"><span class="k">NPN</span><span class="v" id="panelNpn">8847123</span></div>
+        <div class="obc-field"><span class="k">Email</span><span class="v" id="panelEmail">kwilliams@email.com</span></div>
+        <div class="obc-field"><span class="k">Requested states</span><span class="v" id="panelReqStates">FL, TX</span></div>
+        <div class="obc-field"><span class="k">Plan year</span><span class="v" id="panelPlanYear">2026</span></div>
+        <div class="obc-field"><span class="k">Background check</span><span class="v" id="panelBgStatus">Submitted May 19 - awaiting result</span></div>
+        <div class="obc-field"><span class="k">Est. completion</span><span class="v" id="panelEst">05 26,2026</span></div>
+        <div class="obc-field" style="grid-column:1 / -1"><span class="k">Hierarchy</span><span class="v" id="panelHierarchy">Agent under HealthFirst (GA-001)</span></div>
+      </div>
+      <div class="obc-notes">
+        <div class="obc-notes-head"><i class="fas fa-sticky-note" aria-hidden="true"></i> Reviewer notes</div>
+        <p class="v" id="panelNotes">All documents verified. Awaiting IBR clearance.</p>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn-ol" onclick="closeQuickDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Onboarding Case Detail Modal -->
-<div class="modal-overlay" id="caseDetailModal" style="display:none">
+<div class="modal-overlay" id="caseDetailModal" style="display:none" onclick="if(event.target===this)closeCaseDetailModal()">
   <div class="modal-box" style="max-width:760px;width:95%">
-    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#0f6a62"></i><span id="cdCaseName">Case Detail</span></h5><button class="modal-close" onclick="this.closest('.modal-overlay').style.display='none'">&times;</button></div>
+    <div class="modal-hdr"><h5><i class="fas fa-user-plus" style="margin-right:8px;color:#0f6a62"></i><span id="cdCaseName">Case Detail</span></h5><button type="button" class="modal-close" aria-label="Close" onclick="closeCaseDetailModal()">&times;</button></div>
     <div class="modal-body" style="padding:20px;max-height:75vh;overflow-y:auto">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin-bottom:16px;font-size:13px">
         <p style="margin:0"><strong>Case ID:</strong> <span id="cdCaseID"></span></p>
@@ -573,9 +634,9 @@
       <div id="cdActivity" style="font-size:12px;color:#555;background:#f8f9fa;border-radius:8px;padding:10px 14px"></div>
     </div>
     <div class="modal-foot">
-      <button class="btn-ol" onclick="this.closest('.modal-overlay').style.display='none'">Close</button>
-      <button class="btn-pr" onclick="sendReminder(document.getElementById('cdAgentName').textContent,''); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-bell" style="margin-right:4px"></i>Send Reminder</button>
-      <button class="btn-pr" onclick="nfpSubmit('Case status updated'); this.closest('.modal-overlay').style.display='none'"><i class="fas fa-check-circle"></i> Mark Step Complete</button>
+      <button type="button" class="btn-ol" onclick="closeCaseDetailModal()">Close</button>
+      <button type="button" class="btn-pr" onclick="sendReminder(document.getElementById('cdAgentName').textContent,''); closeCaseDetailModal()"><i class="fas fa-bell" style="margin-right:4px"></i>Send Reminder</button>
+      <button type="button" class="btn-pr" onclick="nfpSubmit('Case status updated'); closeCaseDetailModal()"><i class="fas fa-check-circle"></i> Mark Step Complete</button>
     </div>
   </div>
 </div>
@@ -711,7 +772,7 @@ function renderStateHtml(stateAppts, forModal) {
   return html;
 }
 
-function fillPanel(id) {
+function fillQuickDetail(id) {
   var d = caseData[id];
   if (!d) return;
   document.getElementById('panelName').textContent = d.name;
@@ -729,19 +790,40 @@ function fillPanel(id) {
   document.getElementById('panelNotes').textContent = d.notes;
 }
 
-function selectCaseRow(row, id) {
+function highlightCaseRow(row) {
   document.querySelectorAll('#onboardingCasesBody tr[data-case]').forEach(function(tr) {
     tr.classList.remove('is-selected');
   });
   if (row) row.classList.add('is-selected');
-  fillPanel(id);
+}
+
+function openQuickDetail(id) {
+  fillQuickDetail(id);
+  var modal = document.getElementById('caseQuickModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  document.body.classList.add('obc-modal-open');
+  var closeBtn = modal.querySelector('.modal-close');
+  if (closeBtn) closeBtn.focus();
+}
+
+function closeQuickDetail() {
+  var modal = document.getElementById('caseQuickModal');
+  if (modal) modal.style.display = 'none';
+  document.body.classList.remove('obc-modal-open');
+}
+
+function selectCaseRow(row, id) {
+  highlightCaseRow(row);
+  openQuickDetail(id);
 }
 
 function viewCase(id) {
   var d = caseData[id];
   if (!d) return;
+  closeQuickDetail();
   var row = document.querySelector('#onboardingCasesBody tr[data-case="' + id + '"]');
-  selectCaseRow(row, id);
+  highlightCaseRow(row);
   document.getElementById('cdCaseName').textContent = d.name + ' - ' + id;
   document.getElementById('cdCaseID').textContent = id;
   document.getElementById('cdAgentName').textContent = d.name;
@@ -767,6 +849,7 @@ function viewCase(id) {
     return line.replace(/\.$/, '') + '.<br>';
   }).join('');
   document.getElementById('caseDetailModal').style.display = 'flex';
+  document.body.classList.add('obc-modal-open');
 }
 
 function submitReview() {
@@ -833,11 +916,24 @@ function filterOnboardingCases() {
   if (noResults) noResults.style.display = visibleCount ? 'none' : '';
   if (countEl) countEl.textContent = 'Showing ' + visibleCount + ' of ' + total;
   if (firstVisible && !selectedStillVisible) {
-    selectCaseRow(firstVisible, firstVisible.getAttribute('data-case'));
+    highlightCaseRow(firstVisible);
   }
 }
 
-fillPanel('OB-2026-001');
+function closeCaseDetailModal() {
+  var modal = document.getElementById('caseDetailModal');
+  if (modal) modal.style.display = 'none';
+  document.body.classList.remove('obc-modal-open');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+  var quick = document.getElementById('caseQuickModal');
+  var full = document.getElementById('caseDetailModal');
+  if (quick && quick.style.display === 'flex') closeQuickDetail();
+  else if (full && full.style.display === 'flex') closeCaseDetailModal();
+});
+
 filterOnboardingCases();
 </script>
 </body>
